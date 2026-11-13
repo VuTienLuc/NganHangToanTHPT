@@ -175,7 +175,10 @@ class XuLy(BaseHTTPRequestHandler):
                 p = os.path.realpath(os.path.join(GOC, d.get("duong_dan", "")))
                 if not p.startswith(os.path.realpath(GOC)) or not os.path.exists(p):
                     return self.gui(400, {"ok": False})
-                subprocess.Popen(["open", p] if sys.platform == "darwin" else ["xdg-open", p])
+                if sys.platform.startswith("win"):
+                    os.startfile(p)
+                else:
+                    subprocess.Popen(["open", p] if sys.platform == "darwin" else ["xdg-open", p])
                 return self.gui(200, {"ok": True})
             if u.path == "/api/nhap":
                 import nhap_cau, tempfile
