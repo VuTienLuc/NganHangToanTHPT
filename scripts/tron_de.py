@@ -32,7 +32,7 @@ THONG_TIN_MAC_DINH = {
     "so_gd": "SỞ GD&ĐT TP. HỒ CHÍ MINH", "truong": "TRƯỜNG THPT NGUYỄN HỮU CẢNH",
     "ten_ky_thi": "ĐỀ KIỂM TRA", "nam_hoc": "NĂM HỌC 2026 -- 2027", "mon": "TOÁN -- Lớp 12",
     "thoi_gian": "90 phút", "khung": "DeThiChinhThuc", "so_ma_de": 4, "ma_de_bat_dau": 101,
-    "xao_cau": True, "xao_phuong_an": True, "sap_xep": "ngau_nhien",
+    "xao_cau": True, "xao_phuong_an": True, "xao_y_dung_sai": True, "sap_xep": "ngau_nhien",
     "moi_ma_de_cau_khac_nhau": False, "tranh_cau_da_dung": True,
 }
 CAC_LOAI = ["TN", "DS", "TLN", "TL"]
@@ -152,6 +152,36 @@ def xao_phuong_an(k):
     dung = [i for i, nd in enumerate(moi) if re.search(r"\\True(?![A-Za-z])", nd)]
     return out, ("ABCD"[dung[0]] if dung else None)
 
+THAM_CHIEU_Y = re.compile(r"(ý|Ý|câu|Câu|mệnh đề|khẳng định)\s*[abcd]\b|\b[abcd]\)")
+def xao_y_dung_sai(k, da):
+    """Câu Đúng/Sai: đảo thứ tự ý a, b, c (giữ ý d — ý khó — ở cuối); lời giải \\itemch đảo theo.
+    Bỏ qua câu mà lời giải không chia đúng 4 \\itemch hoặc nội dung có nhắc "ý a", "b)"…"""
+    m = tim_lenh(k, "choiceTF")
+    if not m or THAM_CHIEU_Y.search(k):
+        return k, da
+    ds, _ = doc_tham_so(k, m.end(), 4)
+    ml = tim_lenh(k, "loigiai")
+    if not ds or not ml or ml.start() < ds[-1][1]:
+        return k, da
+    lg, _ = doc_tham_so(k, ml.end(), 1)
+    if not lg:
+        return k, da
+    lg_dau, lg_cuoi, lg_nd = lg[0]
+    mi = re.search(r"\\begin\{itemchoice\}(.*)\\end\{itemchoice\}", lg_nd, re.S)
+    if not mi:
+        return k, da
+    phan = re.split(r"\\itemch(?![A-Za-z])", mi.group(1))
+    if len(phan) != 5:
+        return k, da
+    hv = [0, 1, 2]; rng.shuffle(hv); hv.append(3)
+    lg_moi = lg_nd[:mi.start(1)] + phan[0] + "".join("\\itemch" + phan[1 + i] for i in hv) + lg_nd[mi.end(1):]
+    out = k[:lg_dau] + "{" + lg_moi + "}" + k[lg_cuoi:]
+    moi = [ds[i][2] for i in hv]
+    for (dau, cuoi, _), nd in sorted(zip(ds, moi), key=lambda x: -x[0][0]):
+        out = out[:dau] + "{" + nd + "}" + out[cuoi:]
+    da_moi = "".join("Đ" if re.search(r"\\True(?![A-Za-z])", nd) else "S" for nd in moi)
+    return out, da_moi
+
 # ---------------------------------------------------------------- soạn thân đề
 SO_LA_MA = ["I", "II", "III", "IV"]
 PHAN = {
@@ -189,6 +219,8 @@ def soan_ma_de(bo, ma_de):
             k, da = c["noi_dung"], c["dap_an"]
             if loai == "TN" and mt.get("xao_phuong_an", True):
                 k, da = xao_phuong_an(k)
+            if loai == "DS" and mt.get("xao_y_dung_sai", True):
+                k, da = xao_y_dung_sai(k, da)
             khoi.append(k)
             dap_an_rows.append([ma_de, loai, i, da or "", c["ma"], c["id"]])
         if sf:

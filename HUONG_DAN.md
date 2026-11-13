@@ -92,7 +92,9 @@ Tên kỳ thi, môn/lớp, số mã đề… ghi trong một file JSON đi kèm 
  "so_ma_de": 4, "ma_de_bat_dau": 101, "sap_xep": "do_kho", "ma_tran_csv": "ma-tran/GHK1_12.csv"}
 ```
 - `sap_xep`: `ngau_nhien` · `do_kho` (N→H→V→C) · `noi_dung` (theo chương/bài) · `noi_dung_do_kho`
-- `xao_phuong_an`: đảo A/B/C/D của câu trắc nghiệm (tự bỏ qua câu có lời giải ghi "Chọn A…" hay phương án "Cả A và B"). Câu Đúng/Sai không đảo ý.
+- `xao_phuong_an`: đảo A/B/C/D của câu trắc nghiệm (tự bỏ qua câu có lời giải ghi "Chọn A…" hay phương án "Cả A và B").
+- `xao_y_dung_sai`: câu Đúng/Sai đảo thứ tự ý **a, b, c**, **giữ ý d (ý khó) ở cuối**; lời giải từng ý đảo theo.
+  Tự bỏ qua câu có nội dung nhắc "ý a", "b)"… hoặc lời giải không chia đủ 4 ý (`\\itemch`).
 - `moi_ma_de_cau_khac_nhau`: `true` = mỗi mã đề bốc bộ câu khác; mặc định các mã đề cùng bộ câu, chỉ hoán vị.
 - `tranh_cau_da_dung`: ưu tiên câu chưa dùng ở đề trước (`du-lieu/lich_su_dung.json`).
 - Chương trình báo khi kho thiếu câu cho một ô ma trận, và nhắc nếu đề không đúng cấu trúc 12–4–6.

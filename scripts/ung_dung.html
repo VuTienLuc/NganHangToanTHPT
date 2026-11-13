@@ -109,6 +109,7 @@ footer .gian{flex:1}
         <label>Mã đề bắt đầu<input type="number" id="ma_de_bat_dau" value="101"></label>
         <label>Sắp xếp câu<select id="sap_xep"><option value="ngau_nhien">Ngẫu nhiên</option><option value="do_kho" selected>Theo độ khó (N→C)</option><option value="noi_dung">Theo nội dung (chương, bài)</option><option value="noi_dung_do_kho">Nội dung rồi độ khó</option></select></label>
         <label>&nbsp;<span class="hop"><input type="checkbox" id="xao_phuong_an" checked> Đảo phương án A/B/C/D</span></label>
+        <label class="hop"><input type="checkbox" id="xao_y_dung_sai" checked> Đảo ý a, b, c câu Đúng/Sai (giữ ý d)</label>
         <label class="hop"><input type="checkbox" id="moi_ma_de_cau_khac_nhau"> Mỗi mã đề một bộ câu khác</label>
         <label class="hop"><input type="checkbox" id="tranh_cau_da_dung" checked> Ưu tiên câu chưa dùng</label>
         <label class="hop"><input type="checkbox" id="hien_tl"> Hiện cột Tự luận</label>
@@ -259,7 +260,7 @@ function maTran(){
   const mt={phan};
   for(const k of ["ten","ten_ky_thi","mon","thoi_gian","so_gd","truong","nam_hoc","khung","sap_xep"]) mt[k]=$("#"+k).value.trim();
   mt.so_ma_de=+$("#so_ma_de").value||1; mt.ma_de_bat_dau=+$("#ma_de_bat_dau").value||101;
-  for(const k of ["xao_phuong_an","moi_ma_de_cau_khac_nhau","tranh_cau_da_dung"]) mt[k]=$("#"+k).checked;
+  for(const k of ["xao_phuong_an","xao_y_dung_sai","moi_ma_de_cau_khac_nhau","tranh_cau_da_dung"]) mt[k]=$("#"+k).checked;
   mt.xao_cau=true;
   return mt;
 }
@@ -307,7 +308,7 @@ $("#ds-ma-tran").onchange=async e=>{
   const mt=await api("/api/ma-tran?ten="+encodeURIComponent(ten));
   for(const k of ["ten","ten_ky_thi","mon","thoi_gian","so_gd","truong","nam_hoc","khung","sap_xep"]) if(mt[k]!=null&&$("#"+k)) $("#"+k).value=mt[k];
   for(const k of ["so_ma_de","ma_de_bat_dau"]) if(mt[k]!=null) $("#"+k).value=mt[k];
-  for(const k of ["xao_phuong_an","moi_ma_de_cau_khac_nhau","tranh_cau_da_dung"]) if(mt[k]!=null) $("#"+k).checked=!!mt[k];
+  for(const k of ["xao_phuong_an","xao_y_dung_sai","moi_ma_de_cau_khac_nhau","tranh_cau_da_dung"]) if(mt[k]!=null) $("#"+k).checked=!!mt[k];
   chon={}; const khongKhop=[]; const biet=new Map(DL.dang.map(d=>[d.k,d]));
   for(const p of mt.phan||[]) for(const y of p.yeu_cau){
     const muc=Array.isArray(y.muc)?y.muc:[y.muc];
