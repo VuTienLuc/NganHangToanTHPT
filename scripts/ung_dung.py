@@ -177,6 +177,19 @@ class XuLy(BaseHTTPRequestHandler):
                     return self.gui(400, {"ok": False})
                 subprocess.Popen(["open", p] if sys.platform == "darwin" else ["xdg-open", p])
                 return self.gui(200, {"ok": True})
+            if u.path == "/api/nhap":
+                import nhap_cau, tempfile
+                thu_muc = tempfile.mkdtemp(prefix="nhap_")
+                duong = []
+                for t in d.get("tep", []):
+                    ten = os.path.basename(t["ten"]) or "cau_moi.tex"
+                    p = os.path.join(thu_muc, ten)
+                    open(p, "w", encoding="utf-8").write(t["noi_dung"])
+                    duong.append(p)
+                dong = []
+                so = nhap_cau.nhap(duong, thu=d.get("thu", True), in_ra=dong.append)
+                shutil.rmtree(thu_muc, ignore_errors=True)
+                return self.gui(200, {"ok": True, "so_cau": so, "nhat_ky": "\n".join(dong)})
             if u.path == "/api/lap-chi-muc":
                 rc, log = chay([os.path.join(SCRIPTS, "lap_chi_muc.py")])
                 return self.gui(200, {"ok": rc == 0, "nhat_ky": log})

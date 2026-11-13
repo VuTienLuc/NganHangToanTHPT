@@ -1,0 +1,552 @@
+\documentclass[12pt,a4paper,openany,oneside]{book}
+\usepackage[utf8]{vietnam}
+\usepackage{xcolor}
+\usepackage{diagbox}
+\usepackage[shortlabels]{enumitem}
+\usepackage[a4paper,left=1.8cm,right=1.5cm,top=1.5cm,bottom=1.6cm]{geometry}
+\usepackage{setspace}
+\usepackage{fontawesome}
+\setstretch{1.1}
+\setlength{\parskip}{6pt}
+\input{Khaibao/KhaibaoToan}
+\input{Khaibao/Khaibao}
+\input{Khaibao/MucLuc}
+\input{Khaibao/CacHop}
+\input{Khaibao/CacHopThem}
+\usepackage{ex_test}
+\setlist[enumerate,1]{label*=\circlenum{\arabic*},itemsep=-1pt,topsep=0pt}
+\setlist[enumerate,2]{itemsep=0pt,topsep=0pt,label=\circlenumH{\alph*},wide=0cm,leftmargin=!}
+\setlist[enumerate,3]{itemsep=0pt,topsep=0pt,label=\protect{\textcolor{teal}{\roman*)}},wide=1cm,leftmargin=1cm}
+\setlist[itemize,1]{itemsep=0pt,topsep=0pt,label=\protect{\small\color{teal}\rhombusdot}}
+\setlist[itemize,2]{itemsep=0pt,topsep=0pt,label=\protect{\small\color{teal}\starletdot},wide=0.35cm,
+leftmargin=0.35cm}
+\setlist[itemize,3]{itemsep=0pt,topsep=0pt,label=\protect{\small\color{teal}\faAngellist},wide=0.5cm,leftmargin=.5cm}
+\input{Khaibao/PhanTracNghiemV2}
+\usepackage{tkz-euclide,tkz-tab}
+\usetikzlibrary{angles,intersections,shapes.geometric,arrows,decorations.markings,arrows.meta,patterns.meta}
+\usetikzlibrary{shadows.blur,patterns,quotes}
+\raggedbottom
+\tikzset{>=stealth,line join=round,line cap=butt}
+\newcommand{\khungct}[1]{\tcboxmath[colback=mausection!5,colframe=mausection,boxsep=1pt,boxrule=1pt,arc is angular]{#1}}
+\newcommand{\khung}[1]{\tcbox[colback=mausection!5,colframe=mausection,boxsep=1pt,boxrule=1pt,arc is angular]{#1}}
+\usetikzlibrary{bending,matrix}%Mũi tên chỗ vòng cung
+\tikzset{line cap=round,line join=round,>=stealth}
+\def\chongbang{\rule[-14pt]{0pt}{33pt}}
+\usepackage{tasks}
+\usepackage{bm}
+\usepackage{paracol}
+\usepackage{casio580x}
+\usepackage[hidelinks]{hyperref}
+\def\xuongdong{\break}
+\input{Image/GImage.tex}
+\usepackage{tikz-3dplot}
+\usetikzlibrary{positioning,calc}
+%==================== ĐỀ CHÍNH THỨC: in đen trắng, đầu đề Sở/Trường ====================
+\definecolor{mauchuong}{HTML}{000000}
+\definecolor{mausubsection}{HTML}{000000}
+\definecolor{mausection}{HTML}{000000}
+\usepackage{fancyhdr}
+\pagestyle{fancy}\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\def\madehientai{}
+\newcommand{\dauDe}[1]{%
+  \setcounter{page}{1}\gdef\madehientai{#1}%
+  \fancyfoot[C]{\small Trang \thepage/\pageref{cuoide\madehientai} -- Mã đề \madehientai}%
+  \noindent\begin{minipage}[t]{0.47\textwidth}\centering
+    {\small SỞ GD\&ĐT TP. HỒ CHÍ MINH}\\[1pt]
+    {\small\bfseries TRƯỜNG THPT NGUYỄN HỮU CẢNH}\\[-6pt]
+    \rule{3.2cm}{0.5pt}\\[1pt]
+    {\small\itshape (Đề thi có \pageref{cuoide#1} trang)}
+  \end{minipage}\hfill
+  \begin{minipage}[t]{0.52\textwidth}\centering
+    {\bfseries ĐỀ KIỂM TRA GIỮA HỌC KỲ I}\\[1pt]
+    {\bfseries NĂM HỌC 2026 -- 2027}\\[1pt]
+    {\bfseries Môn: TOÁN -- Lớp 12}\\[1pt]
+    {\small\itshape Thời gian làm bài: 90 phút, không kể thời gian phát đề}
+  \end{minipage}\par\medskip
+  \noindent Họ, tên thí sinh: \makebox[7.2cm]{\dotfill}\hfill
+  \fbox{\bfseries\,Mã đề #1\,}\par\noindent
+  Số báo danh: \makebox[5.5cm]{\dotfill}\par\medskip}
+\newcommand{\phanDe}[1]{\par\medskip\noindent #1\par\smallskip}
+\newcommand{\hetDe}[1]{\par\bigskip\begin{center}{\bfseries ------ HẾT ------}\end{center}\label{cuoide#1}}
+\newcommand{\phanDapAn}[1]{\newpage\fancyfoot[C]{\small Đáp án -- Mã đề #1}%
+  \begin{center}{\large\bfseries ĐÁP ÁN -- MÃ ĐỀ #1}\end{center}}
+\begin{document}
+\setcounter{tocdepth}{1}
+\setcounter{secnumdepth}{3}
+\hienthiloigiai
+\dauDe{103}
+
+\phanDe{\textbf{PHẦN I. Câu trắc nghiệm nhiều phương án lựa chọn.} Thí sinh trả lời từ câu 1 đến câu 12. Mỗi câu hỏi thí sinh chỉ chọn một phương án.}
+
+\setcounter{ex}{0}
+
+\Opensolutionfile{ans}[Ans/GHK1_12_103_TN]
+
+\begin{ex}%[0D1N2-3]%[ma:b26dadc3]
+	Trong các tập hợp sau, tập nào là  tập rỗng?
+	 \choice
+		 {$B=\{  x \in \mathbb{Q} |~ 3x^2-5x+2=0 \}$}
+		{$D=\{ x \in \mathbb{R} |~ x^2+5x-1=0 \}$}
+		{\True $C=\{ x\in \mathbb{Z} |~ x^2+x-1=0  \}$}
+		{$A= \{ x \in \mathbb{R} |~ x^2+5x-6=0 \}$} 
+	 \loigiai{
+		Ta có\\ 
+		 $x^2+5x-6=0
+		\Leftrightarrow \hoac{&x=1 \in \mathbb{R}\\&x=-6 \in \mathbb{R}}$. Vậy $A=\{ -6;1  \} \neq \varnothing$.\\
+		$3x^2-5x+2=0 
+		\Leftrightarrow \hoac{&x=1 \in \mathbb{Q}\\&x=\dfrac{2}{3} \in \mathbb{Q}}$. Vậy $B=\left\{ 1;\dfrac{2}{3}  \right\} \neq \varnothing$.\\
+		 $x^2+x-1=0
+		\Leftrightarrow \hoac{&x=\dfrac{-1+\sqrt{5}}{2} \notin \mathbb{Z}\\&x=\dfrac{-1-\sqrt{5}}{2} \notin \mathbb{Z}}$. Vì $x \in \mathbb{Z}$  nên $C=\varnothing$.\\
+		$x^2+5x-1=0 
+		\Leftrightarrow \hoac{&x=\dfrac{-5+\sqrt{29}}{2} \in \mathbb{R}\\&x=\dfrac{-5-\sqrt{29}}{2} \in \mathbb{R}}$.  Vậy $D=\left\{ \dfrac{-5+\sqrt{29}}{2};\dfrac{-5-\sqrt{29}}{2} \right\} \neq \varnothing$.
+	} 
+\end{ex}
+
+\begin{ex}%[0D1B1-5]%[ma:ca8f23aa]
+	Cho mệnh đề ``$\forall x \in  \mathbb{R} : x^2+x+1>0$''. Mệnh đề phủ định của mệnh đề đã cho là
+	\choice{``$\exists x  \in \mathbb{R} :x^2+x+1 < 0$''} 
+		 {``$\forall x \in \mathbb{R} :x^2+x+1 = 0$''}
+		{``$\forall x \in \mathbb{R} :x^2+x+1 < 0$''}
+		{\True ``$\exists x \in \mathbb{R} :x^2+x+1  \le 0$''}
+	\loigiai{ Mệnh đề phủ định của mệnh đề ``$\forall x \in \mathbb{R} : x^2+x+1>0$'' là mệnh đề  ``$\exists x \in \mathbb{R} :x^2+x+1 \le 0$''.
+	 }
+\end{ex}
+
+\begin{ex}%[0D1B2-1]%[ma:f3f80b92]
+	Cho tập hợp $A = \left\{n \in \mathbb{Z}\big| \,6 \, \vdots \, n\right\}$. Hãy  viết tập hợp $A$ dưới dạng liệt kê?
+	\choice{$A  = \left\{-6;-1;1;6\right\}$}
+		 {$A = \left\{1;2;3;6\right\}$}
+		{$A = \left\{-6;-3;-2;-1\right\}$} 
+		{\True $A =  \left\{-6;-3;-2;-1;1;2;3;6\right\}$}
+	 \loigiai{
+		$A$ là tập các ước nguyên  của $6$, do đó $A = \left\{-6;-3;-2;-1;1;2;3;6\right\}$.
+	} 
+\end{ex}
+
+\begin{ex}%[0D1B1-3]%[ma:5c0c30c1]
+	Mệnh đề nào sau đây là phủ định của  mệnh đề “Mọi động vật đều di chuyển” ?
+	 \choice
+		{ Có ít nhất một động vật di  chuyển}
+		{ Mọi động vật đều đứng  yên}
+		{ Mọi động vật đều không di  chuyển}
+		{ \True Có  ít nhất một động vật không di chuyển}
+	 \loigiai{
+		Theo định nghĩa, phủ định của mệnh đề “Mọi động vật đều di chuyển” là mệnh đề “Có ít nhất một động vật không di  chuyển”.
+	 }
+\end{ex}
+
+\begin{ex}%[0D1B3-1]%[ma:a97e4b36]
+	Cho hai tập hợp $A=\left\{1;2;3;4\right\}$, $B=\left\{ 2;4;6;8 \right\}$. Tập hợp nào sau đây  bằng tập hợp $A\cap B$?
+	 \choice
+		{$\left\{1;3 \right\}$}
+		 {\True$\left\{ 2;4  \right\}$}
+		{$\left\{6;8  \right\}$}
+		 {$\left\{1;2;3;4;6;8 \right\}$}
+	\loigiai{ 
+		Ta có $A\cap B=\left\{ 2;4 \right\}.$ 
+	 }
+\end{ex}
+
+\begin{ex}%[0D1B3-3]%[ma:5f619861]
+	Để thành lập đội tuyển học sinh giỏi khối $ 10 $, nhà trường tổ chức thi chọn các môn Toán, Văn, Anh trên tổng số $ 111 $ học sinh. Kết quả  có: $ 70 $ học sinh giỏi Toán, $ 65 $ học sinh giỏi Văn, $ 62 $ học sinh giỏi Anh. Trong đó có $ 49 $ học sinh giỏi cả hai môn Văn và Toán, $ 32 $ học sinh giỏi cả hai môn Toán và Anh, $ 34 $ học sinh giỏi cả hai môn Văn và Anh. Xác định số học sinh giỏi cả ba môn Văn, Toán, Anh. Biết rằng có $ 6 $ học sinh không đạt yêu cầu cả ba môn.
+	\choice 
+		 {$ 34  $}
+		{$ 36 $}
+		{\True $ 23 $}
+		 {$  32 $}
+	 \loigiai{
+	 \immini
+		{ 
+		Có $ 111-6=105 $ học sinh thi đạt ít nhất $ 1 $ môn.\\ 
+		Gọi $ A $ là số học sinh giỏi môn  Toán và Tiếng Anh nhưng không giỏi Văn.\\
+		Gọi $ B $ là số học sinh giỏi môn Toán và Văn nhưng không giỏi Tiếng Anh.\\ 
+		Gọi $ C  $ là số học sinh giỏi môn Văn và Tiếng Anh nhưng không giỏi Toán.\\
+		Gọi $ D $ là  số học sinh giỏi cả ba môn. Ta có hệ:\\
+		$\begin{cases}
+		 B+D=49\\
+		A+D=32\\ 
+		 C+D=34\\
+		70+65+62-(A+B+C+2D)=105 
+	\end{cases}\\
+	\Rightarrow  92=32-D+49-D+34-D+2D\\
+	\Rightarrow D=23$.\\ 
+	Vậy có $  23 $ học sinh giỏi cả ba môn.
+	 }
+	{ 
+	\begin{tikzpicture}[scale=.8]
+			\def\radius{2cm} 
+			\coordinate  (ceni);
+			\coordinate[xshift=.8*\radius,yshift=.2*\radius] (cenii); 
+			\coordinate[xshift=.6*\radius,yshift=-.8*\radius] (ceniii); 
+			\draw (ceni)  circle (.9*\radius);
+			\draw (cenii)  circle (\radius);
+			\draw (ceniii)  circle (\radius);
+			 \node[xshift=.3*\radius,yshift=.25*\radius] at (ceni) {A};
+			\node[xshift=.1*\radius,yshift=-.5*\radius] at (ceni) {B}; 
+			\node[xshift=.45*\radius,yshift=-.25*\radius] at (ceni) {D}; 
+			\node[xshift=.1*\radius,yshift=-.55*\radius] at (cenii)  {C};
+		\end{tikzpicture}
+	} 
+} 
+\end{ex}
+
+\begin{ex}%[0D1H2-3]%[ma:e60745e5]
+	Tìm tất cả các giá trị của  tham số $m$ sao cho $(m;+\infty)\subset(1;+\infty)$?
+	 \choice
+		{\True $m\geq 1$} 
+		 {$m<1$}
+		{$m\leq 1$} 
+		 {$m>1$}
+	 \loigiai{
+		Do $(m;+\infty)\subset(1;+\infty)$  nên $m\geq 1$.
+	} 
+\end{ex}
+
+\begin{ex}%[0D1H1-5]%[ma:9a292bba]
+	Trong các mệnh đề dưới đây, mệnh đề nào  là mệnh đề đúng?
+	 \choice
+		{\lq\lq $\exists x\in  \mathbb{R}\mid x^2< 0$\rq\rq} 
+		{\lq\lq $\exists x\in \mathbb{R}\mid x^2+1=0$\rq\rq}
+		{\lq\lq $\exists x\in \mathbb{N}\mid x^2-2=0$\rq\rq}
+		{\True \lq\lq $\exists x\in \mathbb{N}\mid 2x^2-1<  0$\rq\rq} 
+	 \loigiai{
+		Ta  có $x^2\ge 0\Leftrightarrow x^2+1\ge 1$, $\forall x\in \mathbb{R}$.
+		Nên  $\exists x\in \mathbb{R}\mid x^2+1=0$ là mệnh đề sai.\\
+		Ta có $x^2\ge 0$, $\forall x\in \mathbb{R}$. Nên $\exists x\in \mathbb{R}\mid x^2< 0$ là  mệnh đề sai.\\
+		$2x^2-1< 0\Leftrightarrow x^2< \dfrac{1}{2} \Leftrightarrow-\dfrac{\sqrt{2}}{2} < x < \dfrac{\sqrt{2}}{2}$, mà $x\in \mathbb{N}\Rightarrow x=0$. Vậy $\exists x\in \mathbb{N}\mid 2x^2-1< 0$ là mệnh  đề đúng.\\
+		$x^2-2=0\Leftrightarrow x=\pm \sqrt{2} \notin \mathbb{N}$. Vậy $\exists x\in  \mathbb{N}\mid x^2-2=0$ là mệnh đề sai.
+	 }
+\end{ex}
+
+\begin{ex}%[0D1H3-5]%[ma:1d662c9d]
+	Lớp 10A có $45$ học sinh trong đó có $25$ em học giỏi môn Toán, $23$ em học giỏi  môn Lý, $20$ em học giỏi môn Hóa, $11$ em học giỏi cả môn Toán và môn Lý, $8$ em học giỏi cả môn Lý và môn Hóa, $9$ em học giỏi cả môn Toán và môn Học. Hỏi lớp $10$ A có bao nhiêu bạn học giỏi cả ba môn Toán, Lý, Hóa, biết rằng mỗi học sinh trong lớp học giỏi ít nhất một trong $3$ môn Toán, Lý, Hóa?
+	\choice 
+		{$6$} 
+		 {$4$}
+		 {$3$}
+		{\True $5$} 
+	 \loigiai{
+		\begin{center}
+			\begin{tikzpicture}[scale=.8,font=\footnotesize,line join=round,line cap=round,>=stealth]
+					\coordinate  (A) at (0,0);
+					 \coordinate (B) at (2,0);
+					\coordinate  (C) at (1,-1.5);
+					\begin{scope}
+						 \clip (C) circle (1.5);
+						 \clip (A) circle (1.5);
+						\fill[pattern=north west lines]  (B) circle (1.5);
+					\end{scope}
+					\draw (A)  circle (1.5);
+					\draw (B)  circle (1.5);
+					\draw (C) circle  (1.5);
+					 \path
+						 (A)++(90:.6) node[fill=white,above]{$L$}
+						(B)++(90:.6)  node[fill=white,above]{$T$}
+						(C)++(-90:1)  node[fill=white,above]{$H$};
+				\end{tikzpicture}
+		\end{center}
+		Gọi $T$, $L$, $H$ lần lượt là tập hợp các học sinh giỏi môn Toán,  Lý, Hóa.\\
+		Khi đó 
+		\begin{eqnarray*}
+			|T \cup L \cup H|&=&|T|+|L|+|H|-|T \cap L|-|L \cap H|-|H \cap T|+|T \cap L  \cap H| \\
+			 45&=&25+23+20-11-8-9+|T \cap L \cap H|\\
+			|T  \cap L \cap H|&=&5
+		\end{eqnarray*}
+		Vậy có $5$ học  sinh giỏi cả $3$ môn.
+	 }
+\end{ex}
+
+\begin{ex}%[0D1H3-3]%[ma:76b2c2a1]
+	Tổng các  số nguyên của tập $[-3;2]\setminus(1;2)$ bằng
+	 \choice
+		 {$4$}
+		 {\True$-3$}
+		 {$-5$}
+		{$6$} 
+	 \loigiai{
+		Ta có $[-3;2]\setminus(1;2)=[3;1]\cup\{2\}$ nên chứa các số nguyên  là $-3;-2;-1;0;1;2$.\\
+		Vậy tổng các số nguyên là $-3$. 
+	 }
+\end{ex}
+
+\begin{ex}%[0D1K1-3]%[ma:a990ffed]
+	Phát biểu mệnh đề  phủ định của mệnh đề "Tồn tại một loài thú có nhiệt độ thân thể nhỏ hơn $35^\circ$C".
+	\choice 
+		{\True "Mọi loài thú có nhiệt độ thân thể  không nhỏ hơn $35^\circ$C"}
+		{"Mọi loài thú có nhiệt độ thân thể lớn hơn $35^\circ$C"}
+		{"Mọi loài thú có nhiệt độ thân thể  nhỏ hơn $35^\circ$C"}
+		{"Tồn tại một loài thú có nhiệt  độ thân thể lớn hơn $35^\circ$C"} 
+	\loigiai{Mệnh đề phủ định của mệnh đề "Tồn tại một loài thú có nhiệt độ thân thể nhỏ hơn $35^\circ$C" là  mệnh đề "Mọi loài thú có nhiệt độ thân thể không nhỏ hơn $35^\circ$C".}
+\end{ex}
+
+\begin{ex}%[0D1K1-5]%[ma:2b89aaa2]
+	Trong các mệnh đề sau,  mệnh đề nào \textbf{sai}?
+	\choice 
+		{Tồn tại số nguyên  tố chia hết cho $5$}
+		{$\exists n\in \mathbb{N}$, $n^2+11n+2$ chia  hết cho $11$} 
+		{$\exists n\in \mathbb{Z}$, $2x^2-8=0$}
+		 {\True $\exists n\in \mathbb{N}$, $n^2+1$ chia hết cho $4$}
+	 \loigiai{
+		\begin{itemize}
+			\item Xét  mệnh đề ``$\exists n\in \mathbb{N}$, $n^2+11n+2$ chia hết cho $11$''.\\
+			Khi $n=3$ thì  giá trị của $(n^2+11n+2)$ bằng $44\vdots 11$ nên mệnh đề đúng.
+			\item Xét mệnh đề ``$\exists n\in \mathbb{N}$, $n^2+1$  chia hết cho $4$''.\\
+			Khi  $n=2k,k\in \mathbb{N} \Rightarrow n^2+1=4k^2+1$ không chia hết cho $4$, $k\in \mathbb{N}$.\\
+			Khi $n=2k+1,k\in \mathbb{N} \Rightarrow n^2+1=(2k+1)^2+1=4k^2+4k+2$ không  chia hết cho $4$, $k\in \mathbb{N}$.
+			\item Xét mệnh đề ``Tồn tại  số nguyên tố chia hết cho $5$''.\\
+			Tồn tại số nguyên tố $5$ chia hết cho $5$  nên mệnh đề đúng.
+			\item  Xét mệnh đề ``$\exists n\in \mathbb{Z}$, $2x^2-8=0$ ''.\\
+			Phương trình $2x^2-8=0 \Leftrightarrow x^2=4 \Leftrightarrow x=-2;x=2\in  \Bbb{Z}$ nên mệnh đề đúng.
+		\end{itemize}
+	 }
+\end{ex}
+
+\Closesolutionfile{ans}
+
+\phanDe{\textbf{PHẦN II. Câu trắc nghiệm đúng sai.} Thí sinh trả lời từ câu 1 đến câu 4. Trong mỗi ý a), b), c), d) ở mỗi câu, thí sinh chọn đúng hoặc sai.}
+
+\setcounter{ex}{0}
+
+\Opensolutionfile{ansbook}[Ansbook/GHK1_12_103_DS]
+
+\begin{ex}%[0D1H1-3]%[ma:f76fc24c]
+	Cho  mệnh đề $P(x):$ \lq\lq $\forall x\in \mathbb{R},x^2-4x+1> 0$\rq\rq.
+	 \choiceTF
+		{$P(x)$: \lq\lq Có ít nhất một số thực $x$ thoả mãn $x^2-4x+1> 0$\rq\rq} 
+		{$P(x)$ là mệnh đề chứa biến} 
+		{\True  $\overline{P(x)}$: \lq\lq $\exists x\in \mathbb{R}, x^2-4x+1\le 0$\rq\rq}
+		{Mệnh đề $\overline{P(x)}$ là mệnh  đề sai}
+	 \loigiai{
+		\begin{itemchoice}
+			\itemch  SAI.\\
+			Ta có phát biểu đúng của mệnh đề $P(x):$\lq\lq Với mọi số thực  $x$ thoả mãn $x^2-4x+1> 0$\rq\rq.
+			\itemch SAI.\\ 
+			$P(x)$ là mệnh đề sai nên không phải là  mệnh đề chứa biến.
+			\itemch  ĐÚNG.\\
+			Mệnh đề phủ định  của $P(x)$ là $\overline{P(x)}:$ \lq\lq $\exists x\in \mathbb{R}, x^2-4x+1\le 0$\rq\rq.
+			\itemch SAI.\\ 
+			Ta có $\overline{P(x)}:$ \lq\lq $\exists x\in \mathbb{R}, x^2-4x+1\le 0$\rq\rq. Mệnh đề $\overline{P(x)}$ đúng vì giả sử ta  chọn $x=1$ thì $1^2-4.1+1=-2< 0$.
+		\end{itemchoice}
+	} 
+\end{ex}
+
+\begin{ex}%[0D1H1-2]%[ma:bff4f470]
+	Cho $\Delta ABC$ có $A'$, $B'$, $C'$ lần lượt là các trung điểm của các  cạnh $BC$, $CA$, $AB$. Khi đó
+	 \choiceTF
+		{\True $B{C'}=C' A=A'{B'}=\dfrac{AB}{2}{\rm}$} 
+		{Hai vectơ $\overrightarrow{BC'}$,  $\overrightarrow{A'B'}$ ngược hướng}
+		{\True $\overrightarrow{B{C'}}=\overrightarrow{C' A} =\overrightarrow{A'B'}$} 
+		{\True $\overrightarrow{B'  C'}=\overrightarrow{CA'}$}
+	\loigiai{ 
+		\begin{center}
+			\begin{tikzpicture}[scale=1,line join=round,line cap=round,font=\footnotesize,>=stealth]
+					\def\r{3} 
+					\path (180:\r)  coordinate (B)
+						(0:\r)  coordinate (C)
+						(120:\r) coordinate  (A)
+						($(B)!0.5!(C)$) coordinate  (A')
+						($(C)!0.5!(A)$) coordinate (B') 
+						($(B)!0.5!(A)$)  coordinate (C');
+					\draw  (A)--(B)--(C)--cycle;
+					\foreach \x/ \goc in  {A/135,B/-135,C/-45,A'/-90,B'/30,C'/180}
+					 \fill (\x) circle (1pt)
+						 ($(\x)+(\goc:3mm)$) node {$\x$};
+				\end{tikzpicture}
+		\end{center}
+		\begin{itemchoice}
+			\itemch Ta có $C'$ là trung điểm của $AB$ và $A'B'$ là đường trung bình của tam giác $ABC$ ứng với  cạnh đáy $AB$ nên $BC'=C'A=A'B'=\dfrac{AB}{2}$.
+			\itemch  Vì Hai vectơ $\overrightarrow{BC'}$, $\overrightarrow{A'{B'}}$ cùng hướng.
+			\itemch Vì $C'$ là trung điểm của $AB$ và $A'B'$ là đường trung bình của tam giác $ABC$ ứng với cạnh đáy $AB$ nên $\overrightarrow{BC'}=\overrightarrow{C'A}  =\overrightarrow{A'B'}$.
+			\itemch Vì $A'$ là trung điểm của $BC$ và $B'C'$ là đường trung bình  của tam giác $ABC$ ứng với cạnh đáy $BC$ nên $\overrightarrow{B'C'}=\overrightarrow{CA'}$.
+		\end{itemchoice}
+	 }
+\end{ex}
+
+\begin{ex}%[0D1V2-1]%[ma:161eac9d]
+	 Cho các tập hợp sau: A các số nguyên tố nhỏ hơn 11; $B=\left\{\left. x\in \mathbb{R}\right|3x^2-4x+1=0\right\}$;
+	$C=\left\{\left. x\in  \mathbb{N}\right|\left(x^2-5x+6\right)\left(2x+1\right)=0\right\}$; $D=\{\left. x\in \mathbb{Z}\right|\left|x+1\right|<3\}$.
+	 \choiceTF
+		{\True Tập hợp $A$ có $4$ phần tử} 
+		{Tập hợp $B$ có  $3$ phần tử}
+		{Tập hợp  $C$ có $3$ phần tử}
+		{\True Tập  hợp $D$ có $3$ phần tử}
+	 \loigiai{
+		\begin{itemchoice}
+			\itemch Ta  có các số nguyên tố nhỏ hơn $11$ là $2$; $3$; $5$; $7$. \\
+			Vậy $A=\{2; 3; 5; 7\}$. 
+			\itemch Ta có $3x^2-4x+1=0\Leftrightarrow \hoac{ 
+			&x=1\in \mathbb{R} \\ 
+			 &x=\dfrac{1}{3}\in \mathbb{R}.}$ \\
+			Vậy $B=\left\{\dfrac{1}{3};  1\right\}$.
+			 \itemch Ta có $\left(x^2-5x+6\right)\left(2x+1\right)=0\Leftrightarrow \hoac{
+			& x^2-5x+6=0 \\ 
+			& 2x+1=0}\Leftrightarrow  \hoac{
+			 & x=2\in \mathbb{N} \\
+			& x=3\in \mathbb{N}  \\
+			&  x=\dfrac{-1}{2}\notin \mathbb{N}.} $\\
+			Vậy  $C=\left\{2; 3\right\}$.
+			 \itemch Ta có $\heva{
+			&x\in \mathbb{Z}  \\
+			 &|x+1|<2}\Rightarrow \hoac{
+			&x=-2  \\
+			 &x=-1 \\
+			 &x=0.} $\\
+			Vậy $D=\{-2;-1; 0\}$. 
+		\end{itemchoice}
+	} 
+\end{ex}
+
+\begin{ex}%[0D1V1-2]%[ma:d97640b0]
+	Cho hình thang $ABCD$ vuông tại $A$ và có $AB=AD=\dfrac{1}{2}DC=a$. Gọi $BF$ là  đường phân giác trong của tam giác $ABD$ ($F\in AD$). Khi đó
+	 \choiceTF
+		{\True  $CA^2=DA^2+DC^2$}
+		{$\left|\overrightarrow{CA}\right|=a\sqrt  3 $}
+		 {$\widehat{ABF}=45^\circ$}
+		{$\left|\overrightarrow{BF}\right|\approx 2{,}08a$} 
+	\loigiai{\begin{center}
+		\begin{tikzpicture}[>=stealth,line join=round,line cap=round,font=\footnotesize,scale=0.8]
+				\def\a{2.4} 
+				\path 
+					 (0,4) coordinate (A)
+					(0,0) coordinate  (D)
+					(8,0) coordinate (C) 
+					(4,4)  coordinate (B)
+					($(A)!1/\a!(D)$) coordinate  (F);
+				 \draw (A)--(B)--(C)--(D)--(A)
+					 (A)--(C)
+					(F)--(B)--(D); 
+				\foreach \x/\g in  {B/60,A/120,C/30,D/-60,F/-140} \fill (\x) circle (1pt) +(\g:3mm) node[scale=.8] {$\x$};
+				 \draw pic[thin,draw,angle radius=2mm] {right angle= B--A--D};
+				 \draw pic[thin,draw,angle radius=2mm] {right angle= A--D--C};
+			\end{tikzpicture}
+	\end{center}
+	\begin{itemchoice}
+		\itemch Áp dụng định lí Pytago cho tam giác $ADC$ vuông  tại $D$.
+		\itemch Áp dụng  định lí Pytago cho tam giác $ADC$ vuông tại $D$, ta có\\
+		$C{A^2}=D{A^2}+D{C^2}=a^2+(2a)^2=5a^2$\\ 
+		 $\Rightarrow \left|\overrightarrow{CA}\right|=CA=a\sqrt 5$.
+		\itemch Ta có  $\Delta ABD$ vuông cân tại $A$, do đó\\
+		$\widehat{ABD}=45^\circ  \Rightarrow \widehat{ABF}=22{,}5^\circ$.
+		\itemch Xét  $\Delta ABF$ vuông tại $A$, ta có\\
+		$ \left| \overrightarrow{BF} \right| =BF=\dfrac{AB}{\cos \left(  ABF \right)}=\dfrac{a}{\cos{22{,}5^\circ}}\approx 1{,}08a$.
+	\end{itemchoice}
+ }
+\end{ex}
+
+\Closesolutionfile{ansbook}
+
+\phanDe{\textbf{PHẦN III. Câu trắc nghiệm trả lời ngắn.} Thí sinh trả lời từ câu 1 đến câu 5.}
+
+\setcounter{bt}{0}
+
+\Opensolutionfile{ansbt}[Ansbook/GHK1_12_103_TLN]
+
+\begin{bt}%[0D1H1-6]%[ma:deff5465]
+	Cho phát biểu $\forall x\in\mathbb{R}$, $x^{2}+a-5>0$ với $a$ là số thực cho trước. Có bao giá trị  nguyên của $a<20$ để phát biểu đã cho là mệnh đề đúng?
+	\shortans{14} 
+	 \loigiai{
+		Mệnh đề $\forall x\in\mathbb{R}$, $x^{2}+a-5>0$ đúng $\Leftrightarrow  x^{2}>5-a$ đúng $\forall x\in\mathbb{R}$.\\
+		Điều này xảy ra khi và chỉ khi  $\max(5-a, 0) < 0$.\\
+		Vì $x^2 \ge 0$, nên ta cần  $5-a$ phải nhỏ hơn $0$.\\
+		 $5-a<0\Leftrightarrow a>5$.\\
+		Kết hợp  với điều kiện $a<20$, ta có $5<a<20$.\\
+		Các giá trị nguyên của $a$ là $6, 7, 8, \dots,  19$.\\
+		Số giá trị nguyên của  $a$ là $19-6+1=14$.
+	} 
+\end{bt}
+
+\begin{bt}%[0D1H1-3]%[ma:d05bebba]
+	Cho mệnh đề $P$: \lq\lq $x^2+x+1$ là số dương với $x$ là số thực\rq\rq\ và các  mệnh đề sau.
+	\begin{itemize}
+		\item \lq\lq $x^2+x+1$  là số không dương với $x$ là số thực\rq\rq.
+		\item \lq\lq $x^2+x+1$ là khác $0$ với $x$ là số thực\rq\rq. 
+		\item \lq\lq $x^2+x+1$ là số âm với $x$ là số thực\rq\rq. 
+		\item \lq\lq $x^2+x+1$  là số không âm với $x$ là số thực\rq\rq.
+	\end{itemize}
+	Có bao nhiêu phát biểu là phủ định của mệnh  đề $P$?
+	\shortans{1} 
+	 \loigiai{
+		Phủ định của mệnh đề $P$ là $\overline{P}$: \lq\lq $x^2+x+1$ là số không dương  với $x$ là số thực\rq\rq.\\
+		Vậy  có $1$ mệnh đề thỏa. Các mệnh đề còn lại không phải là phủ định của mệnh đề $P$.
+	 }
+\end{bt}
+
+\begin{bt}%[0D1K1-3]%[ma:7f419606]
+	Cho mệnh đề $P\colon$ \lq\lq Bình phương của một số thực lớn hơn $ 2 $ \rq\rq, tìm số số  nguyên thỏa mãn mệnh đề phủ định của mệnh đề $P$.
+	\shortans{3} 
+	 \loigiai{
+		Ta  có: $P\colon$ \lq\lq $x^2>2$\rq\rq.
+		Suy ra $\overline{P}\colon$  \lq\lq $ x^2 \leq 2 $\rq\rq.\\
+		Vì $x \in \mathbb{Z}$ nên $x$ là $ -1 $; $ 0 $;  $ 1 $.\\
+	Vậy có $ 3 $ số nguyên  thỏa mãn mệnh đề $\overline{P}$.}
+\end{bt}
+
+\begin{bt}%[0D1V2-2]%[ma:8c3a2e78]
+	Lớp $10$A có $10$ học sinh giỏi Toán, $10$ học sinh giỏi Lý, $11$ học sinh giỏi hóa, $6$ học sinh giỏi cả Toán và Lý, $5$ học sinh giỏi cả Hóa và Lý, $4$ học sinh giỏi cả Toán và Hóa, $3$ học sinh giỏi cả ba môn Toán, Lý,  Hóa. Tính học sinh giỏi ít nhất một trong ba môn (Toán, Lý, Hóa) của lớp $10$A?
+	 \shortans{18}
+	\loigiai{ 
+		Theo giả thiết đề bài cho, ta có  biểu đồ Ven
+		\begin{center}
+			\begin{tikzpicture}[>=stealth,line join=round,line cap=round,font=\footnotesize,scale=1]
+					\draw [thick,green!60!black] (0,0) circle (1.5) 
+						(1.5,-0.5)  circle (1)
+						(1.5,0.5) circle  (0.8);
+					\draw (1,.8) node {$6$} 
+						 (1.2,.2) node {$3$}
+						(2,.8) node {Lý} 
+						 (1.8,.1) node {$5$}
+						(1.8,-1)  node {Hoá}
+						(.8,-.8)  node {$4$}
+						(-1,0) node  {Toán};
+				\end{tikzpicture}
+		\end{center}
+		Dựa vào biểu đồ Ven, ta có học sinh giỏi ít nhất một trong ba môn (Toán, Lý, Hóa)  của lớp $10$A là
+		\begin{itemize}
+			\item Số học  sinh giỏi Toán $6+4+3=13$.
+			\item Số học sinh  giỏi Lý $6+5+3=14$.
+			\item Số học  sinh giỏi Hóa $4+5+3=12$.
+		\end{itemize}
+		Ta lại có 
+		\begin{itemize}
+			\item Số học  sinh giỏi cả Toán và Lý $6$.
+			\item Số học sinh giỏi cả Toán và Hóa $4$. 
+			\item Số học sinh giỏi cả Hóa  và Lý $5$.
+			\item Và số học  sinh giỏi cả Toán, Lý và Hóa là $3$.
+			\item Số học sinh giỏi hơn một môn  là $4+6+5+3=18$.
+		\end{itemize}
+	 }
+\end{bt}
+
+\begin{bt}%[0D1V3-4]%[ma:bd954b33]
+	Cho các tập hợp $A=\left(2;+\infty \right)$ và $B=\left[m^2-7;+\infty \right)$ với  $m > 0$. Số giá trị nguyên của $m$ để $A\setminus B$ là một khoảng $\left(a; b\right)$ thoả mãn $b-a$ thuộc đoạn $\left[3; 16\right]$ là?
+	\shortans{2} 
+	 \loigiai{
+		Điều kiện để $A\setminus  B\ne \varnothing$ là $\heva{&m^2-7> 2\\
+		&m > 0} \Leftrightarrow  \heva{&m^2> 9\\
+		&m > 0} 
+		\Leftrightarrow m  > 3$.\\
+		 Khi đó $A\setminus B=\left(2;m^2-7\right)\Rightarrow a=2$, $b=m^2-7$.\\
+		Ta có $b-a$ thuộc đoạn $\left[3; 16\right]\Leftrightarrow 3\le m^2-9\le 16\Leftrightarrow 12\le  m^2\le 25$.\\
+		Do $m > 3$ và $m\in \mathbb{Z}$ nên $m\in \left\{4; 5\right\}$.\\ Vậy có  $2$ giá trị $m$ nguyên thoả mãn.
+	} 
+\end{bt}
+
+\Closesolutionfile{ansbt}
+
+\hetDe{103}
+
+\phanDapAn{103}
+\par\noindent\textbf{PHẦN I.}\par
+\begin{flushleft}
+\input{Ans/GHK1_12_103_TN}
+\end{flushleft}
+\par\noindent\textbf{PHẦN II.}\par
+\begin{flushleft}
+\input{Ansbook/GHK1_12_103_DS}
+\end{flushleft}
+\par\noindent\textbf{PHẦN III.}\par
+\begin{flushleft}
+\input{Ansbook/GHK1_12_103_TLN}
+\end{flushleft}
+\end{document}

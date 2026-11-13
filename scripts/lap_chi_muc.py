@@ -93,6 +93,13 @@ with open(os.path.join(dl, "thong_ke_theo_dang.csv"), "w", encoding="utf-8-sig",
         w.writerow([k, ten.get("chap_name", ""), ten.get("lesson_name", ""), ten.get("type_name", ""),
                     sum(bang[k].values())] + [bang[k][x] or "" for x in cot_tk])
 
+# ---- danh mục toàn bộ mã dạng (để tra khi soạn câu mới)
+with open(os.path.join(dl, "danh_muc_ma_dang.csv"), "w", encoding="utf-8-sig", newline="") as fo:
+    w = csv.writer(fo); w.writerow(["ma_dang", "lop", "chuong", "bai", "dang", "so_cau_trong_kho"])
+    for k in sorted(id_map, key=lambda k: (k[0], "DHC".find(k[1]), k)):
+        t = id_map[k]
+        w.writerow([k, 10 + int(k[0]), t["chap_name"], t["lesson_name"], t["type_name"], sum(bang.get(k, {}).values())])
+
 # ---- báo cáo
 tk_loai = collections.Counter(c["loai"] for c in ds_cau)
 tk_lop = collections.Counter(c["lop"] for c in ds_cau)

@@ -41,6 +41,31 @@ Nhấp đúp **`Ra de theo ma tran.app`** trong thư mục này. Giao diện m�
 Nếu macOS báo không mở được ứng dụng: nhấp phải vào file `.app` → **Mở** → **Mở** (chỉ cần làm một lần),
 hoặc nhấp đúp `Ra de theo ma tran.command` (mở bằng Terminal). Nhật ký lỗi: `/tmp/ra_de_theo_ma_tran.log`.
 
+## Thêm câu hỏi mới vào ngân hàng
+
+**Cách 1: thêm vài câu.** Mở file dạng tương ứng trong `cau-hoi/lopXX/<chương>/<dạng>.tex`, chép một khối mẫu từ
+`mau_cau_moi.tex` vào cuối file, sửa nội dung. Mã `%[ma:…]` không cần gõ, chương trình tự gắn.
+Xong bấm **Cập nhật kho** trong ứng dụng (hoặc `python3 scripts/lap_chi_muc.py`).
+
+**Cách 2: nhập cả file** (câu thầy tự soạn, đồng nghiệp gửi, đề cũ, file đã trộn của phần mềm cũ…).
+Trong ứng dụng bấm **Nhập câu hỏi** → chọn một hay nhiều file `.tex` → xem trước → **Nhập vào ngân hàng**. Hoặc:
+```bash
+python3 scripts/nhap_cau.py duong/dan/file1.tex file2.tex --thu   # xem trước, chưa ghi
+python3 scripts/nhap_cau.py duong/dan/file1.tex file2.tex         # nhập thật
+```
+Chương trình tự: tách từng câu, xếp vào đúng file dạng theo mã `%[..]` (tạo file dạng mới nếu chưa có),
+**bỏ câu trùng** với câu đã có, gỡ lệnh rác nếu file bị mã hoá, gắn mã câu, rồi cập nhật chỉ mục.
+Câu chưa có mã dạng vào `cau-hoi/_chua_phan_loai/<tên file>.tex`; gắn mã cho chúng rồi chuyển vào đúng file dạng.
+
+**Quy ước để câu được nhận đúng loại:**
+- Trắc nghiệm: `\begin{ex}` + `\choice{…}{…}{…}{…}`, đúng **một** `\True`
+- Đúng/Sai: `\begin{ex}` + `\choiceTF{…}{…}{…}{…}`, ý đúng có `\True`
+- Trả lời ngắn: `\begin{bt}` + `\shortans{đáp số}`
+- Tự luận: `\begin{bt}` không có `\shortans`
+- Mã dạng ngay sau `\begin{..}`: `%[2D1N1-2]` → tra trong `du-lieu/danh_muc_ma_dang.csv`
+
+Sau khi nhập, nhớ lưu lên GitHub: `git add -A && git commit -m "Nhập câu …" && git push`.
+
 ## Các lệnh
 
 ```bash

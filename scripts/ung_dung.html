@@ -81,6 +81,8 @@ footer .gian{flex:1}
   <span class="phu" id="tom-tat">Đang tải ngân hàng…</span>
   <span class="gian"></span>
   <select id="ds-ma-tran" title="Mở ma trận đã lưu"><option value="">Mở ma trận đã lưu…</option></select>
+  <button id="nut-nhap" title="Thêm câu từ file .tex (có mã %[2D1N1-2]) vào ngân hàng">Nhập câu hỏi</button>
+  <input type="file" id="tep-nhap" accept=".tex" multiple hidden>
   <button id="nut-luu">Lưu ma trận</button>
   <button id="nut-cap-nhat" title="Đọc lại cau-hoi/ sau khi thầy thêm/sửa câu">Cập nhật kho</button>
   <button id="nut-thoat">Thoát</button>
@@ -315,6 +317,20 @@ $("#ds-ma-tran").onchange=async e=>{
   }
   veCay(); veBang(); e.target.value="";
   if(khongKhop.length) alert("Các dòng ma trận viết theo chương/bài (không theo từng dạng) không hiện được trên bảng:\n"+khongKhop.join("\n"));
+};
+$("#nut-nhap").onclick=()=>$("#tep-nhap").click();
+$("#tep-nhap").onchange=async e=>{
+  const fs=[...e.target.files]; if(!fs.length) return;
+  const tep=await Promise.all(fs.map(async f=>({ten:f.name,noi_dung:await f.text()})));
+  e.target.value="";
+  hopThoai("Đang đọc file…","");
+  const r=await api("/api/nhap",{tep,thu:true});
+  if(!r.so_cau){hopThoai("Không có câu mới để nhập",r.nhat_ky);return}
+  hopThoai(`Xem trước: ${r.so_cau} câu mới`,r.nhat_ky,[["Nhập vào ngân hàng",async()=>{
+    $("#ht-noi").textContent="Đang nhập…";
+    const r2=await api("/api/nhap",{tep,thu:false});
+    hopThoai(`Đã nhập ${r2.so_cau} câu`,r2.nhat_ky); tai();
+  },true]]);
 };
 tai();
 </script>

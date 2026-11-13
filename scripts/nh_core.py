@@ -24,9 +24,10 @@ def cau_hinh():
 # ---------------------------------------------------------------- gỡ lệnh rác
 TOKEN = re.compile(r"\\\\|\\([A-Za-z]+)(?=(.?))", re.S)
 DEF_PATS = [
-    r"\\(?:def|gdef|edef|xdef|let|newcommand\*?|renewcommand\*?|providecommand\*?|DeclareMathOperator\*?|"
+    r"\\let\s*\\([A-Za-z]+)\s*=?\s*\\",
+    r"\\(?:def|gdef|edef|xdef|newcommand\*?|renewcommand\*?|providecommand\*?|DeclareMathOperator\*?|"
     r"NewDocumentCommand|RenewDocumentCommand|newlength|newcounter|newif|pgfmathsetmacro|pgfmathtruncatemacro|"
-    r"pgfmathsetlengthmacro|newsavebox|tikzmath)\s*\{?\s*\\([A-Za-z]+)",
+    r"pgfmathsetlengthmacro|newsavebox|tikzmath)\s*\{?\s*\\([A-Za-z]+)(?=\s*[{}#(\[=])",
     r"(?:count|remember)\s*=\s*\\([A-Za-z]+)", r"\bas\s*\\([A-Za-z]+)\s*(?:using|\]|,)",
     r"\\foreach\s*(?:\[[^\]]*\]\s*)?((?:\\[A-Za-z]+\s*/\s*)*\\[A-Za-z]+)\s*(?:\[[^\]]*\]\s*)?in\b",
 ]
