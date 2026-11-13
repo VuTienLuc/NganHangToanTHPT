@@ -159,6 +159,92 @@ def tao_prompt(pham_vi):
     dm, so = danh_muc(pham_vi)
     return MAU.replace("{SO}", str(so)).replace("{DANH_MUC}", dm)
 
+# ======================================================================= SOẠN CÂU HỎI MỚI THEO BÀI HỌC
+LOAI_TEN = {"TN": "Trắc nghiệm 4 phương án", "DS": "Đúng/Sai (4 ý)", "TLN": "Trả lời ngắn", "TL": "Tự luận"}
+MUC_TEN = {"N": "Nhận biết", "H": "Thông hiểu", "V": "Vận dụng", "C": "Vận dụng cao"}
+CACH_SOAN = {
+    "bam_sat": "BÁM SÁT tài liệu: lấy ý tưởng từ lý thuyết, ví dụ, luyện tập, bài tập trong tài liệu; ĐỔI số liệu, "
+               "đổi ngữ cảnh để thành câu mới (không chép nguyên văn).",
+    "sang_tao": "SOẠN MỚI cùng dạng, cùng mức với nội dung tài liệu: câu hỏi mới hoàn toàn nhưng chỉ dùng kiến thức có trong tài liệu.",
+    "ket_hop": "KẾT HỢP: khoảng một nửa bám sát ví dụ/bài tập của tài liệu (đổi số liệu), một nửa soạn mới cùng dạng.",
+}
+
+def danh_sach_dang():
+    """Toàn bộ dạng trong danh mục (kể cả dạng chưa có câu) cho ứng dụng chọn bài."""
+    id_map = tai_id_map()
+    ra = []
+    for k, t in id_map.items():
+        m = re.match(r"(\d)([A-Z])(\d+)\?(\d+)-(\d+)$", k)
+        if m:
+            ra.append({"k": k, "lop": 10 + int(m.group(1)), "mon": m.group(2), "chuong": int(m.group(3)),
+                       "bai": int(m.group(4)), "dang": int(m.group(5)), "ten_chuong": t.get("chap_name", "").strip(),
+                       "ten_bai": t.get("lesson_name", "").strip(), "ten_dang": t.get("type_name", "").strip()})
+    ra.sort(key=lambda d: (d["lop"], "DHC".find(d["mon"]), d["chuong"], d["bai"], d["dang"]))
+    return ra
+
+def tao_prompt_soan(cac_dang, so_cau, tai_lieu="", cach="ket_hop", thuc_te=False, ghi_chu=""):
+    """cac_dang: danh sách mã '2D1?1-2'; so_cau: {"TN":[N,H,V,C], ...}."""
+    id_map = tai_id_map()
+    cac_dang = [k for k in cac_dang if k in id_map]
+    if not cac_dang:
+        raise ValueError("Chưa chọn dạng nào.")
+    bai = sorted({(id_map[k]["chap_name"].strip(), id_map[k]["lesson_name"].strip(), k.split("?")[0], k.split("?")[1].split("-")[0])
+                  for k in cac_dang})
+    lop = 10 + int(cac_dang[0][0])
+    ten_bai = "; ".join(f"{b[1]}" for b in bai)
+    dong_bang, tong = [], 0
+    for l in ("TN", "DS", "TLN", "TL"):
+        v = [int(x or 0) for x in (so_cau.get(l) or [0, 0, 0, 0])][:4]
+        if sum(v):
+            tong += sum(v)
+            dong_bang.append(f"| {LOAI_TEN[l]} | " + " | ".join(str(x) for x in v) + f" | **{sum(v)}** |")
+    if not tong:
+        raise ValueError("Chưa nhập số câu.")
+    dang_txt = "\n".join(f"- `{k}` {id_map[k]['type_name'].strip()}  _(bài: {id_map[k]['lesson_name'].strip()})_" for k in cac_dang)
+    chung = MAU[MAU.index("# ĐỊNH DẠNG BẮT BUỘC"):MAU.index("# KẾT QUẢ TRẢ VỀ")]
+    chung = chung.replace("Lấy từ DANH MỤC DẠNG ở cuối", "Lấy từ DANH SÁCH DẠNG ở trên").replace(
+        "Mã lấy từ DANH MỤC DẠNG ở cuối", "Mã lấy từ DANH SÁCH DẠNG ĐƯỢC CHỌN ở trên")
+    chung = re.sub(r"- Đề có đáp án/lời giải: dùng của đề\. Đề \*\*không\*\* có: ", "- ", chung)
+    i, j = chung.find("# CHỌN MÃ DẠNG CHO ĐÚNG"), chung.find("# TỰ KIỂM TRA")
+    if 0 <= i < j:
+        chung = chung[:i] + chung[j:]
+    chung = chung.replace("Đủ số câu như đề", "Đủ số câu theo loại × mức như bảng")
+    p = f"""# NHIỆM VỤ
+Thầy là giáo viên Toán THPT (chương trình GDPT 2018). Đính kèm là **tài liệu học tập**{(': ' + tai_lieu) if tai_lieu else ''}.
+Hãy **đọc kỹ tài liệu** (lý thuyết, định nghĩa, công thức, ví dụ, luyện tập, bài tập) rồi **SOẠN CÂU HỎI MỚI** cho:
+**Lớp {lop} — {ten_bai}** ({bai[0][0]}).
+Câu hỏi phải đúng phạm vi bài học: chỉ dùng kiến thức có trong tài liệu và các bài trước, KHÔNG dùng kiến thức của bài sau.
+
+## Cách soạn
+- {CACH_SOAN.get(cach, CACH_SOAN['ket_hop'])}
+- Mỗi câu đúng MỘT dạng trong danh sách dưới; **rải đều các dạng** (mỗi dạng có ít nhất 1 câu nếu đủ số câu), không dồn một dạng.
+{'- Ưu tiên **toán thực tế** (đời sống, khoa học, kinh tế, kĩ thuật): khoảng một nửa số câu Vận dụng / Vận dụng cao là bài toán thực tế.' if thuc_te else '- Có một số câu vận dụng gắn với tình huống thực tế khi phù hợp.'}
+- Trắc nghiệm: phương án nhiễu lấy từ **lỗi sai thường gặp** của học sinh (sai dấu, nhầm công thức, quên điều kiện…);
+  đáp án đúng **rải đều A, B, C, D**; không dùng phương án "Cả A, B đều đúng", "Không có đáp án".
+- Đúng/Sai: 4 ý **tăng dần độ khó** a → d (ý d khó nhất); các câu có số ý đúng khác nhau (không phải lúc nào cũng 2 Đúng 2 Sai).
+- Trả lời ngắn: đáp số là một số, tối đa 4 ký tự (kể cả `-` và `,`); nếu cần làm tròn thì nói rõ trong đề ("làm tròn đến hàng phần mười").
+- Mọi câu có **lời giải chi tiết**, tính toán đã được kiểm tra lại; số liệu đẹp, đáp án duy nhất.
+{('- Yêu cầu thêm của thầy: ' + ghi_chu) if ghi_chu else ''}
+
+## Số lượng câu cần soạn (tổng {tong} câu)
+| Loại câu | Nhận biết (N) | Thông hiểu (H) | Vận dụng (V) | Vận dụng cao (C) | Cộng |
+|---|---|---|---|---|---|
+{chr(10).join(dong_bang)}
+
+Mức của từng câu phải đúng như bảng (chữ mức N/H/V/C ghi trong mã `%[…]`).
+
+## DANH SÁCH DẠNG ĐƯỢC CHỌN — chỉ dùng các mã dưới đây (thay `?` bằng N/H/V/C)
+{dang_txt}
+
+{chung}
+# KẾT QUẢ TRẢ VỀ
+Một khối mã duy nhất ```latex … ``` chứa các câu xếp theo loại (Trắc nghiệm → Đúng/Sai → Trả lời ngắn → Tự luận), trong mỗi loại xếp theo mức N → H → V → C.
+Dòng đầu khối: `% nguồn: Soạn theo {ten_bai} – {tai_lieu or 'tài liệu đính kèm'}`.
+Sau khối mã, liệt kê ngắn: số câu theo loại × mức, số câu mỗi dạng, các câu có `% KIEM_TRA` hoặc `% CAN_VE_HINH`.
+Thầy sẽ lưu khối mã thành file `.tex` (hoặc `.txt`) rồi nhập vào ngân hàng.
+"""
+    return re.sub(r"\n{3,}", "\n\n", p)
+
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--pham-vi", default="", help="tiền tố mã chương, vd 2D1,2H2 (bỏ trống = mọi lớp)")

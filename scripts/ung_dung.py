@@ -193,6 +193,17 @@ class XuLy(BaseHTTPRequestHandler):
             if u.path == "/api/prompt":
                 import tao_prompt
                 return self.gui(200, {"ok": True, "noi_dung": tao_prompt.tao_prompt(d.get("pham_vi") or [])})
+            if u.path == "/api/prompt-soan":
+                import tao_prompt
+                try:
+                    nd = tao_prompt.tao_prompt_soan(d.get("dang") or [], d.get("so_cau") or {}, d.get("tai_lieu") or "",
+                                                    d.get("cach") or "ket_hop", bool(d.get("thuc_te")), d.get("ghi_chu") or "")
+                except ValueError as e:
+                    return self.gui(200, {"ok": False, "loi": str(e)})
+                return self.gui(200, {"ok": True, "noi_dung": nd})
+            if u.path == "/api/danh-muc-dang":
+                import tao_prompt
+                return self.gui(200, {"ok": True, "dang": tao_prompt.danh_sach_dang()})
             if u.path == "/api/nhap":
                 import nhap_cau, tempfile
                 thu_muc = tempfile.mkdtemp(prefix="nhap_")

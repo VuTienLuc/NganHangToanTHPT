@@ -75,6 +75,22 @@ footer .gian{flex:1}
 #hop-thoai pre{margin:0;padding:14px 18px;overflow:auto;white-space:pre-wrap;font:12.5px/1.5 ui-monospace,Menlo,monospace;flex:1}
 #hop-thoai .nut{display:flex;gap:8px;justify-content:flex-end;padding:12px 18px;border-top:1px solid var(--vien)}
 .goiy{font-size:12px;color:var(--phu)}
+#hop-soan{position:fixed;inset:0;background:rgba(17,24,39,.35);display:none;align-items:center;justify-content:center;z-index:9}
+#hop-soan .noi{background:#fff;border-radius:14px;width:min(900px,94vw);max-height:90vh;display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.25)}
+#hop-soan h2{margin:0;padding:14px 18px;font-size:16px;border-bottom:1px solid var(--vien)}
+#hop-soan .than{padding:14px 18px;overflow:auto;display:grid;gap:12px}
+#hop-soan .hang{display:grid;grid-template-columns:110px minmax(0,1fr) minmax(0,1fr);gap:10px}
+#hop-soan .than>*,#hop-soan .hang>*{min-width:0}
+#hop-soan label{display:flex;flex-direction:column;gap:4px;font-size:13px}
+#hop-soan select,#hop-soan input[type=text]{width:100%;box-sizing:border-box;padding:6px 8px;border:1px solid var(--vien);border-radius:8px;font:inherit}
+#soan-dang{border:1px solid var(--vien);border-radius:10px;padding:8px 10px;max-height:190px;overflow:auto;display:grid;gap:3px;font-size:13px}
+#soan-dang label{flex-direction:row;align-items:center;gap:6px}
+#soan-dang .ma{font:12px ui-monospace,Menlo,monospace;color:#555}
+#soan-bang{border-collapse:collapse;font-size:13px;width:100%}
+#soan-bang th,#soan-bang td{border:1px solid var(--vien);padding:4px 8px;text-align:center}
+#soan-bang td:first-child,#soan-bang th:first-child{text-align:left}
+#soan-bang input{width:52px;padding:3px;text-align:center;border:1px solid var(--vien);border-radius:6px}
+#hop-soan .nut{display:flex;gap:8px;justify-content:flex-end;padding:12px 18px;border-top:1px solid var(--vien)}
 </style>
 </head>
 <body>
@@ -83,7 +99,7 @@ footer .gian{flex:1}
   <span class="phu" id="tom-tat">Đang tải ngân hàng…</span>
   <span class="gian"></span>
   <select id="ds-ma-tran" title="Mở ma trận đã lưu"><option value="">Mở ma trận đã lưu…</option></select>
-  <button id="nut-prompt" title="Sinh prompt để AI gõ lại đề thi thành câu hỏi đúng định dạng kho">Prompt cho AI</button>
+  <button id="nut-prompt" title="Sinh prompt cho AI: gõ lại đề thi, hoặc soạn câu hỏi mới theo bài học từ tài liệu">Prompt cho AI</button>
   <button id="nut-nhap" title="Thêm câu từ file .tex / .txt / .json (đúng cấu trúc \\begin{ex}…, hoặc JSON các trường Nội dung, Lựa chọn, Đáp án, Lời giải) vào ngân hàng">Nhập câu hỏi</button>
   <input type="file" id="tep-nhap" accept=".tex,.txt,.md,.json" multiple hidden>
   <button id="nut-lich-su" title="Các đề đã ra và số câu đã dùng">Lịch sử đã dùng</button>
@@ -147,6 +163,30 @@ footer .gian{flex:1}
   <button id="nut-xem">Xem trước câu được chọn</button>
   <button id="nut-xuat" class="chinh">Xuất đề</button>
 </footer>
+<div id="hop-soan"><div class="noi">
+  <h2>Prompt cho AI — soạn câu hỏi theo bài học từ tài liệu</h2>
+  <div class="than">
+    <div class="hang">
+      <label>Lớp<select id="soan-lop"><option>10</option><option>11</option><option selected>12</option></select></label>
+      <label>Chương<select id="soan-chuong"></select></label>
+      <label>Bài học<select id="soan-bai"></select></label>
+    </div>
+    <div><div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:4px"><b>Dạng toán của bài</b>
+      <span><a href="#" id="soan-het">chọn hết</a> · <a href="#" id="soan-bo">bỏ hết</a></span></div>
+      <div id="soan-dang"></div></div>
+    <div><b style="font-size:13px">Loại câu và số câu theo mức</b>
+      <table id="soan-bang"><tr><th>Loại câu</th><th>Nhận biết</th><th>Thông hiểu</th><th>Vận dụng</th><th>Vận dụng cao</th><th>Cộng</th></tr></table></div>
+    <div class="hang" style="grid-template-columns:minmax(0,1.4fr) minmax(0,1fr)">
+      <label>Tài liệu đính kèm cho AI<input type="text" id="soan-tai-lieu" placeholder="vd: SGK Toán 12 KNTT tập 1 – Bài 1 (PDF)"></label>
+      <label>Cách soạn<select id="soan-cach"><option value="ket_hop">Kết hợp: nửa bám tài liệu, nửa soạn mới</option>
+        <option value="bam_sat">Bám sát ví dụ, bài tập của tài liệu (đổi số liệu)</option><option value="sang_tao">Soạn mới hoàn toàn cùng dạng</option></select></label>
+    </div>
+    <label style="flex-direction:row;align-items:center;gap:6px"><input type="checkbox" id="soan-thuc-te"> Ưu tiên toán thực tế ở câu Vận dụng</label>
+    <label>Yêu cầu thêm (không bắt buộc)<input type="text" id="soan-ghi-chu" placeholder="vd: không dùng máy tính cầm tay; có 2 câu đọc đồ thị"></label>
+  </div>
+  <div class="nut"><span id="soan-tong" style="margin-right:auto;font-size:13px;align-self:center"></span>
+    <button id="soan-tao" class="chinh">Tạo prompt</button><button id="soan-dong">Đóng</button></div>
+</div></div>
 <div id="hop-thoai"><div class="noi"><h2 id="ht-tieu">…</h2><pre id="ht-noi"></pre><div class="nut" id="ht-nut"></div></div></div>
 
 <script>
@@ -367,7 +407,73 @@ async function moLichSu(){
   hopThoai("Lịch sử câu đã dùng",noi,nut);
 }
 $("#nut-lich-su").onclick=moLichSu;
-$("#nut-prompt").onclick=async()=>{
+$("#nut-prompt").onclick=()=>hopThoai("Prompt cho AI — chọn việc cần làm",
+  "• Gõ lại đề thi: đính kèm đề (PDF/ảnh/Word) → AI gõ lại từng câu đúng định dạng kho, gắn mã dạng.\n"
+  +"  (Tích các chương của đề ở cột trái trước để prompt ngắn gọn.)\n\n"
+  +"• Soạn câu hỏi theo bài học: chọn lớp – chương – bài, dạng toán, loại câu và số câu từng mức;\n"
+  +"  đính kèm tài liệu (SGK, chuyên đề, phiếu…) → AI đọc tài liệu và soạn câu hỏi mới đúng bài, đúng dạng, đúng mức.",
+  [["Soạn câu hỏi theo bài học",()=>{$("#hop-thoai").style.display="none";moSoan()},true],
+   ["Gõ lại đề thi",()=>{$("#hop-thoai").style.display="none";promptGoDe()}]]);
+let DM_DANG=null;
+const SOAN_MAC_DINH={TN:[3,3,2,0],DS:[0,1,1,0],TLN:[0,1,2,1],TL:[0,0,0,0]};
+async function moSoan(){
+  if(!DM_DANG){const r=await api("/api/danh-muc-dang",{});DM_DANG=r.dang}
+  const bang=$("#soan-bang");
+  if(bang.rows.length<2) for(const l of LOAI){
+    const tr=bang.insertRow();tr.innerHTML=`<td>${TEN_LOAI[l]}</td>`+MUC.map((m,i)=>`<td><input type="number" min="0" max="40" data-l="${l}" data-i="${i}" value="${SOAN_MAC_DINH[l][i]}"></td>`).join("")+`<td class="cong" data-l="${l}"></td>`;
+  }
+  bang.oninput=demSoan;
+  const cc=[...chuongChon][0];
+  if(cc){const [lop]=cc.split("|");$("#soan-lop").value=lop}
+  dienChuong(cc);demSoan();
+  $("#hop-soan").style.display="flex";
+}
+function dienChuong(cc){
+  const lop=+$("#soan-lop").value, seen=new Map();
+  for(const d of DM_DANG) if(d.lop===lop){const k=`${d.lop}|${d.mon}|${d.chuong}`;if(!seen.has(k))seen.set(k,`${d.mon==="H"?"Hình":d.mon==="D"?"Đại số":"Chuyên đề"} – Ch.${d.chuong}: ${d.ten_chuong}`)}
+  $("#soan-chuong").innerHTML=[...seen].map(([k,t])=>`<option value="${k}">${esc(t)}</option>`).join("");
+  if(cc&&seen.has(cc))$("#soan-chuong").value=cc;
+  dienBai();
+}
+function dienBai(){
+  const [lop,mon,ch]=$("#soan-chuong").value.split("|"), seen=new Map();
+  for(const d of DM_DANG) if(d.lop==+lop&&d.mon===mon&&d.chuong==+ch&&!seen.has(d.bai))seen.set(d.bai,`Bài ${d.bai}. ${d.ten_bai}`);
+  $("#soan-bai").innerHTML=[...seen].map(([b,t])=>`<option value="${b}">${esc(t)}</option>`).join("");
+  dienDang();
+}
+function dienDang(){
+  const [lop,mon,ch]=$("#soan-chuong").value.split("|"), bai=+$("#soan-bai").value;
+  const kho={};for(const d of (DL?.dang||[]))kho[d.k]=LOAI.reduce((s,l)=>s+d.kho[l].reduce((a,b)=>a+b,0),0);
+  $("#soan-dang").innerHTML=DM_DANG.filter(d=>d.lop==+lop&&d.mon===mon&&d.chuong==+ch&&d.bai===bai)
+    .map(d=>`<label><input type="checkbox" value="${d.k}" checked> ${esc(d.ten_dang)} <span class="ma">${d.k} · kho ${kho[d.k]||0} câu</span></label>`).join("");
+}
+function demSoan(){
+  let tong=0;
+  for(const l of LOAI){const v=[...document.querySelectorAll(`#soan-bang input[data-l="${l}"]`)].reduce((s,x)=>s+(+x.value||0),0);
+    tong+=v;const o=document.querySelector(`#soan-bang .cong[data-l="${l}"]`);if(o)o.textContent=v}
+  $("#soan-tong").textContent=`Tổng: ${tong} câu`;
+}
+$("#soan-lop").onchange=()=>dienChuong();
+$("#soan-chuong").onchange=dienBai;
+$("#soan-bai").onchange=dienDang;
+$("#soan-het").onclick=e=>{e.preventDefault();document.querySelectorAll("#soan-dang input").forEach(x=>x.checked=true)};
+$("#soan-bo").onclick=e=>{e.preventDefault();document.querySelectorAll("#soan-dang input").forEach(x=>x.checked=false)};
+$("#soan-dong").onclick=()=>$("#hop-soan").style.display="none";
+$("#soan-tao").onclick=async()=>{
+  const dang=[...document.querySelectorAll("#soan-dang input:checked")].map(x=>x.value);
+  const so_cau={};for(const l of LOAI)so_cau[l]=MUC.map((m,i)=>+document.querySelector(`#soan-bang input[data-l="${l}"][data-i="${i}"]`).value||0);
+  const r=await api("/api/prompt-soan",{dang,so_cau,tai_lieu:$("#soan-tai-lieu").value.trim(),cach:$("#soan-cach").value,
+    thuc_te:$("#soan-thuc-te").checked,ghi_chu:$("#soan-ghi-chu").value.trim()});
+  if(!r.ok){alert(r.loi);return}
+  const ten=$("#soan-bai").selectedOptions[0]?.textContent||"bai";
+  const huongDan="CÁCH DÙNG: 1) Bấm “Chép prompt”. 2) Mở ChatGPT / Gemini / Claude, dán prompt, ĐÍNH KÈM TÀI LIỆU của bài (SGK, chuyên đề…), gửi. "
+   +"3) Chép khối mã LaTeX AI trả về, lưu thành file .txt hoặc .tex. 4) Bấm “Nhập câu hỏi” chọn file đó → xem trước → nhập.\n"+"─".repeat(60)+"\n\n";
+  hopThoai(`Prompt soạn câu hỏi — ${ten} (${r.noi_dung.length.toLocaleString("vi-VN")} ký tự)`,huongDan+r.noi_dung,[
+    ["Chép prompt",async e=>{try{await navigator.clipboard.writeText(r.noi_dung);e.target.textContent="Đã chép ✓"}catch(_){alert("Không chép tự động được — thầy bôi đen nội dung rồi Cmd+C.")}},true],
+    ["Lưu file .md",()=>{const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([r.noi_dung],{type:"text/markdown"}));
+      a.download=`prompt_soan_${dang[0]?dang[0].split("-")[0].replace("?","_"):"bai"}.md`;a.click();}]]);
+};
+async function promptGoDe(){
   const pv=[...chuongChon].map(k=>{const [lop,mon,ch]=k.split("|");return `${+lop-10}${mon}${ch}`});
   if(!pv.length&&!confirm("Chưa tích chương nào ở cột trái — tạo prompt kèm danh mục dạng của MỌI lớp (rất dài)?\nBấm Huỷ để tích chương trước.")) return;
   const r=await api("/api/prompt",{pham_vi:pv});

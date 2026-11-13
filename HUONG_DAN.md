@@ -84,6 +84,17 @@ Câu chưa có mã dạng vào `cau-hoi/_chua_phan_loai/<tên file>.tex`; gắn 
    Đúng/Sai thiếu `itemchoice` hoặc lời giải ghi "Đúng/Sai" không khớp `\True`, đáp số trả lời ngắn quá 4 ô,
    lời giải trắc nghiệm ghi "Chọn A…". Câu có cảnh báo vẫn nhập được; sửa trong file dạng sau.
 
+**Cách 4: nhờ AI soạn câu hỏi MỚI theo bài học** (từ SGK, chuyên đề, phiếu… của bài)
+1. Bấm **Prompt cho AI** → **Soạn câu hỏi theo bài học**.
+2. Chọn **Lớp → Chương → Bài học**; tích các **dạng toán** muốn có (mỗi dạng hiện số câu đang có trong kho — dạng ít câu nên ưu tiên).
+3. Điền **số câu theo loại × mức** (Trắc nghiệm / Đúng-Sai / Trả lời ngắn / Tự luận × N / H / V / C),
+   tên tài liệu sẽ đính kèm, **cách soạn** (bám sát ví dụ – bài tập của tài liệu / soạn mới / kết hợp),
+   tuỳ chọn ưu tiên toán thực tế và yêu cầu thêm → **Tạo prompt** → **Chép prompt**.
+4. Mở AI, dán prompt, **đính kèm tài liệu của bài**, gửi. Prompt buộc AI: đúng phạm vi bài, rải đều các dạng đã chọn,
+   đúng số câu từng mức, nhiễu trắc nghiệm theo lỗi sai thường gặp, đáp án rải đều A–D, Đúng/Sai tăng dần độ khó a → d,
+   lời giải chi tiết, đúng định dạng kho và tự kiểm tra trước khi trả.
+5. Lưu kết quả thành `.txt`/`.tex` → **Nhập câu hỏi** → xem trước → nhập.
+
 **Quy ước để câu được nhận đúng loại:**
 - Trắc nghiệm: `\begin{ex}` + `\choice{…}{…}{…}{…}`, đúng **một** `\True`
 - Đúng/Sai: `\begin{ex}` + `\choiceTF{…}{…}{…}{…}`, ý đúng có `\True`
