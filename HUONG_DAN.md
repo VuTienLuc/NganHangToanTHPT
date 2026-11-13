@@ -143,6 +143,21 @@ Nạp đáp án: Chấm Phiếu AI → ô **Đáp án** → **Nhập từ file E
 Khung đề chính thức nằm ở `khung/DeThiChinhThuc/mau_de.tex` (in đen trắng). Muốn dạng ôn tập có màu
 như phần mềm cũ thì ghi `"khung": "DeThi"` trong file JSON.
 
+## Xuất Word theo mẫu K12Online
+
+Tích **Xuất Word K12Online (công thức SVG)** trong ứng dụng, hoặc thêm `--word` khi chạy `tron_de.py`
+(cũng có thể chạy riêng: `python3 scripts/k12word.py "de-da-ra/<thư mục đề>"`).
+Mỗi mã đề có thêm file `Word_K12Online_<mã>.docx` trong thư mục đề:
+
+- Đúng mẫu nhập câu hỏi của K12Online: `Câu 1: [NB] …`, câu Đúng/Sai có `[TF4]`, câu trả lời ngắn có `[SAQ]`,
+  mức độ `[NB] [TH] [VDT] [VDC]`; phương án `A. B. C. D.` mỗi dòng một; `--- HẾT ---`; bảng **ĐÁP ÁN** 5 cột
+  (`13. A,C` là các ý đúng, `NULL` nếu không ý nào đúng); phần **LỜI GIẢI CHI TIẾT**.
+- Chữ Times New Roman 12. Công thức, bảng biến thiên, hình vẽ được LaTeX vẽ ở cỡ 12pt rồi chèn thành ảnh **SVG**
+  (kèm PNG 600 dpi dự phòng cho Word cũ). Ảnh được hạ đúng phần nằm dưới chân chữ nên công thức thẳng dòng.
+  Word 2019/365 hiển thị đúng; LibreOffice/Pages có thể bỏ qua phần hạ ảnh (công thức nhô lên một chút).
+- Cần MacTeX đầy đủ (có sẵn `dvisvgm` và Ghostscript `gs`). Mất thêm khoảng 15–40 giây.
+- Ảnh tạm nằm ở `tex/_k12/`, có thể xoá sau khi đã có file Word.
+
 ## Biên dịch đề
 Mở file trong `de-da-ra/<tên>/` bằng TeXstudio, biên dịch **pdfLaTeX** như các đề cũ của phần mềm
 (cần gói `vietnam` — có sẵn trong MacTeX đầy đủ). Hoặc thêm `--bien-dich` khi trộn.

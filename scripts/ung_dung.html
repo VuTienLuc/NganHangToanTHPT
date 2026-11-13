@@ -122,6 +122,7 @@ footer .gian{flex:1}
         <label class="hop"><input type="checkbox" id="mo_rong_dang_khac" checked> Vẫn thiếu: lấy dạng khác cùng bài/chương</label>
         <label class="hop"><input type="checkbox" id="hien_tl"> Hiện cột Tự luận</label>
         <label class="hop" id="o-bien-dich"><input type="checkbox" id="bien_dich" checked> Xuất PDF từng mã đề (cần MacTeX)</label>
+        <label class="hop" id="o-word" title="Mỗi mã đề một file Word đúng mẫu nhập câu hỏi K12Online; công thức, bảng, hình là ảnh SVG sắc nét, thẳng dòng chữ cỡ 12"><input type="checkbox" id="xuat_word_k12"> Xuất Word K12Online (công thức SVG)</label>
       </div>
     </details>
 
@@ -165,7 +166,7 @@ async function tai(){
   DL=await api("/api/du-lieu");
   $("#tom-tat").textContent=`${DL.tong_cau.toLocaleString("vi-VN")} câu · ${DL.dang.length} dạng có câu`;
   for(const k of ["so_gd","truong","nam_hoc","thoi_gian"]) if(!$("#"+k).value) $("#"+k).value=DL.thong_tin[k]||"";
-  if(!DL.pdflatex){$("#bien_dich").checked=false;$("#bien_dich").disabled=true;$("#o-bien-dich").title="Không tìm thấy pdflatex (MacTeX) — biên dịch bằng TeXstudio";$("#o-bien-dich").style.opacity=.5}
+  if(!DL.pdflatex){$("#bien_dich").checked=false;$("#bien_dich").disabled=true;$("#o-bien-dich").title="Không tìm thấy pdflatex (MacTeX) — biên dịch bằng TeXstudio";$("#o-bien-dich").style.opacity=.5;$("#xuat_word_k12").disabled=true;$("#o-word").style.opacity=.5}
   const sel=$("#ds-ma-tran"); sel.length=1;
   for(const t of DL.ma_tran){const o=document.createElement("option");o.value=o.textContent=t;sel.appendChild(o)}
   tinhKhoBai(); veCay(); veBang(); veMucTieu();
@@ -286,7 +287,7 @@ function maTran(){
   mt.so_ma_de=+$("#so_ma_de").value||1; mt.ma_de_bat_dau=+$("#ma_de_bat_dau").value||101;
   for(const k of ["xao_phuong_an","xao_y_dung_sai","moi_ma_de_cau_khac_nhau","bu_cung_nhom","mo_rong_dang_khac"]) mt[k]=$("#"+k).checked;
   mt.cau_da_dung=$("#cau_da_dung").value;
-  mt.co_chu=+$("#kho_in").value; mt.tiet_kiem=mt.co_chu<12; mt.hai_cot=mt.tiet_kiem&&$("#hai_cot").checked;
+  mt.co_chu=+$("#kho_in").value; mt.tiet_kiem=mt.co_chu<12; mt.hai_cot=mt.tiet_kiem&&$("#hai_cot").checked; mt.xuat_word_k12=$("#xuat_word_k12").checked;
   mt.xao_cau=true;
   return mt;
 }
@@ -337,7 +338,7 @@ $("#ds-ma-tran").onchange=async e=>{
   for(const k of ["so_ma_de","ma_de_bat_dau"]) if(mt[k]!=null) $("#"+k).value=mt[k];
   for(const k of ["xao_phuong_an","xao_y_dung_sai","moi_ma_de_cau_khac_nhau","bu_cung_nhom","mo_rong_dang_khac"]) if(mt[k]!=null) $("#"+k).checked=!!mt[k];
   $("#cau_da_dung").value=mt.cau_da_dung||(mt.tranh_cau_da_dung===false?"khong":"uu_tien");
-  $("#kho_in").value=String(mt.tiet_kiem?(mt.co_chu||11):12); $("#hai_cot").checked=!!mt.hai_cot;
+  $("#kho_in").value=String(mt.tiet_kiem?(mt.co_chu||11):12); $("#hai_cot").checked=!!mt.hai_cot; $("#xuat_word_k12").checked=!!mt.xuat_word_k12;
   chon={}; const khongKhop=[]; const biet=new Map(DL.dang.map(d=>[d.k,d]));
   for(const d of DL.dang) if(!biet.has(khoaBai(d))) biet.set(khoaBai(d),d);
   for(const p of mt.phan||[]) for(const y of p.yeu_cau){

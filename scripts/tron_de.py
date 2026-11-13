@@ -23,6 +23,7 @@ ap = argparse.ArgumentParser()
 ap.add_argument("ma_tran")
 ap.add_argument("--thu", action="store_true")
 ap.add_argument("--bien-dich", action="store_true")
+ap.add_argument("--word", action="store_true", help="xuất thêm Word theo mẫu K12Online (công thức SVG)")
 ap.add_argument("--so-ma-de", type=int)
 ap.add_argument("--ten")
 a = ap.parse_args()
@@ -283,6 +284,8 @@ CHINH_THUC = mt.get("khung", "DeThiChinhThuc") == "DeThiChinhThuc"
 TIET_KIEM = bool(mt.get("tiet_kiem")) and CHINH_THUC
 HAI_COT = TIET_KIEM and bool(mt.get("hai_cot"))
 
+CAU_THEO_DE = {}          # mã đề → danh sách câu (đã xáo) cho bản Word K12Online
+
 def soan_ma_de(bo, ma_de):
     """Trả (thân đề, phần đáp án cuối, các dòng đáp án)."""
     khoi, dap_an_rows, bang = [], [], []
@@ -316,6 +319,7 @@ def soan_ma_de(bo, ma_de):
                 k, da = xao_y_dung_sai(k, da)
             khoi.append(k)
             dap_an_rows.append([ma_de, loai, i, da or "", c["ma"], c["id"]])
+            CAU_THEO_DE.setdefault(ma_de, []).append({"loai": loai, "noi_dung": k, "dap_an": da or "", "muc": c["muc_chuan"]})
         if sf:
             khoi.append(f"\\Closesolutionfile{{{sf}}}")
             bang.append(f"\\par\\noindent\\textbf{{PHẦN {so_la_ma}.}}\\par\n\\begin{{flushleft}}\n\\input{{{tm}/{tep}}}\n\\end{{flushleft}}")
@@ -452,6 +456,7 @@ with open(os.path.join(out, "danh_sach_cau.csv"), "w", encoding="utf-8-sig", new
     for c in ds_cau_dung.values():
         w.writerow([c["ma"], c["loai"], c["id"], c["muc_chuan"], c["ten_dang"], c["file"]])
 json.dump(mt, open(os.path.join(out, "ma_tran_da_dung.json"), "w", encoding="utf-8"), ensure_ascii=False, indent=2)
+json.dump(CAU_THEO_DE, open(os.path.join(out, "_k12_cau.json"), "w", encoding="utf-8"), ensure_ascii=False)
 
 for ma in ds_cau_dung:
     lich_su.setdefault(ma, []).append(os.path.basename(out_goc))
@@ -464,3 +469,9 @@ print("THU_MUC:" + rel)
 
 if a.bien_dich:
     bien_dich_thu_muc(out_goc)
+if a.word or mt.get("xuat_word_k12"):
+    import k12word
+    try:
+        k12word.xuat(out_goc)
+    except Exception as e:
+        print("  ✗ Không xuất được Word:", e)
