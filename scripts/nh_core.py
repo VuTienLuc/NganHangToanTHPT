@@ -363,4 +363,22 @@ def bien_dich_thu_muc(thu_muc_de, in_ra=print):
             _sh.copyfile(pdf, os.path.join(thu_muc_de, ten_ra + ".pdf"))
         ok_het &= ok
         in_ra(f"  {'✓' if ok else '✗ lỗi (xem tex/' + f[:-4] + '.log)'} {f[:-4]}")
+    # quyển đề cương ôn tập (bìa, mục lục, mọi mã đề, lời giải) — biên dịch 3 lần cho đúng mục lục/số trang
+    if os.path.exists(os.path.join(tex, "DeCuong.tex")):
+        in_ra("Biên dịch quyển đề cương ôn tập…")
+        bat_dau = _t.time()
+        for _ in range(3):
+            subprocess.run([pdfl, "-interaction=nonstopmode", "DeCuong.tex"], cwd=tex, stdout=subprocess.DEVNULL,
+                           stderr=subprocess.DEVNULL, timeout=1800)
+        pdf = os.path.join(tex, "DeCuong.pdf")
+        ok = os.path.exists(pdf) and os.path.getmtime(pdf) >= bat_dau - 1
+        ten = "De cuong on tap"
+        try:
+            ten = open(os.path.join(tex, "_ten_de_cuong.txt"), encoding="utf-8").read().strip() or ten
+        except OSError:
+            pass
+        if ok:
+            _sh.copyfile(pdf, os.path.join(thu_muc_de, ten + ".pdf"))
+        ok_het &= ok
+        in_ra(f"  {'✓' if ok else '✗ lỗi (xem tex/DeCuong.log)'} {ten}.pdf")
     return ok_het

@@ -143,6 +143,13 @@ Nạp đáp án: Chấm Phiếu AI → ô **Đáp án** → **Nhập từ file E
 Khung đề chính thức nằm ở `khung/DeThiChinhThuc/mau_de.tex` (in đen trắng). Muốn dạng ôn tập có màu
 như phần mềm cũ thì ghi `"khung": "DeThi"` trong file JSON.
 
+## Quyển đề cương ôn tập (1 file PDF)
+
+Ô **"Gộp thành 1 quyển đề cương ôn tập (PDF)"** (bật sẵn) tạo thêm file `Đề cương ôn tập - <Tên kỳ thi>.pdf` trong thư mục đề:
+bìa (Sở, Trường, tên kỳ thi, môn, năm học, giáo viên) → mục lục → **Phần 1**: tất cả mã đề → **Phần 2**: đáp án và lời giải chi tiết từng đề.
+Chân trang mọi trang: `GV: <tên giáo viên> | <tên kỳ thi> | Trang x/y`. Tên giáo viên mặc định **Vũ Tiến Lực**, sửa ở ô
+"Giáo viên" (hoặc `giao_vien` trong `cau_hinh.json` / ma trận). Mã nguồn: `tex/DeCuong.tex`. Bỏ quyển này: `"de_cuong": false`.
+
 ## Xuất Word theo mẫu K12Online
 
 Tích **Xuất Word K12Online** trong ứng dụng, hoặc thêm `--word` khi chạy `tron_de.py`

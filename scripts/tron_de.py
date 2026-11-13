@@ -32,7 +32,7 @@ CH = cau_hinh()
 THONG_TIN_MAC_DINH = {
     "so_gd": "SỞ GD&ĐT TP. HỒ CHÍ MINH", "truong": "TRƯỜNG THPT NGUYỄN HỮU CẢNH",
     "ten_ky_thi": "ĐỀ KIỂM TRA", "nam_hoc": "NĂM HỌC 2026 -- 2027", "mon": "TOÁN -- Lớp 12",
-    "thoi_gian": "90 phút", "khung": "DeThiChinhThuc", "so_ma_de": 4, "ma_de_bat_dau": 101,
+    "thoi_gian": "90 phút", "giao_vien": "Vũ Tiến Lực", "de_cuong": True, "khung": "DeThiChinhThuc", "so_ma_de": 4, "ma_de_bat_dau": 101,
     "xao_cau": True, "xao_phuong_an": True, "xao_y_dung_sai": True,
     "tiet_kiem": False, "co_chu": 12, "hai_cot": False, "sap_xep": "ngau_nhien",
     "moi_ma_de_cau_khac_nhau": False, "tranh_cau_da_dung": True, "bu_cung_nhom": True, "mo_rong_dang_khac": True,
@@ -410,7 +410,7 @@ if TIET_KIEM:
 def tai_lieu(than, loi_giai):
     return mau.replace("<<CHE_DO_LOI_GIAI>>", "\\hienthiloigiai" if loi_giai else "\\anloigiai").replace("<<NOI_DUNG>>", than)
 
-tat_ca_dap_an, ds_cau_dung, gop_de, gop_lg, cac_ma = [], {}, [], [], []
+tat_ca_dap_an, ds_cau_dung, gop_de, gop_lg, gop_cuoi, cac_ma = [], {}, [], [], [], []
 for s in range(so_ma):
     ma_de = str(bat_dau + s).zfill(3); cac_ma.append(ma_de)
     bo = cac_bo[s]
@@ -421,9 +421,69 @@ for s in range(so_ma):
     tat_ca_dap_an += rows
     ghi(os.path.join(out, f"De_{ma_de}.tex"), tai_lieu(than, False))
     ghi(os.path.join(out, f"De_{ma_de}_LoiGiai.tex"), tai_lieu(than + "\n\n" + cuoi, True))
-    gop_de.append(than); gop_lg.append(than + "\n\n" + cuoi)
+    gop_de.append(than); gop_lg.append(than + "\n\n" + cuoi); gop_cuoi.append(cuoi)
 ghi(os.path.join(out, "TatCa_De.tex"), tai_lieu("\n\n\\newpage\n".join(gop_de), False))
 ghi(os.path.join(out, "TatCa_LoiGiai.tex"), tai_lieu("\n\n\\newpage\n".join(gop_lg), True))
+
+# ---- QUYỂN ĐỀ CƯƠNG ÔN TẬP: bìa + mục lục + tất cả mã đề + đáp án & lời giải; chân trang có tên giáo viên
+def thoat(v):
+    return re.sub(r"(?<!\\)([&%#])", r"\\\1", v or "")
+
+def lam_de_cuong():
+    gv, ky = thoat(mt.get("giao_vien") or "Vũ Tiến Lực"), thoat(mt["ten_ky_thi"])
+    pre, _ = mau.split("\\begin{document}", 1)
+    pre = pre.replace("(Đề thi có \\pageref{cuoide#1} trang)", "(Đề số \\thesoDeDC)")
+    pre += (
+        "%==================== QUYỂN ĐỀ CƯƠNG ====================\n"
+        "\\usepackage{fancyhdr}\\newcounter{soDeDC}\n"
+        "\\newcommand{\\chanTrangDC}{\\fancyhf{}\\renewcommand{\\headrulewidth}{0pt}\\renewcommand{\\footrulewidth}{0.4pt}%\n"
+        f"  \\fancyfoot[L]{{\\small GV: {gv}}}\\fancyfoot[C]{{\\small {ky}}}"
+        "\\fancyfoot[R]{\\small Trang \\thepage/\\pageref{trangcuoiDC}}}\n"
+        "\\fancypagestyle{plain}{\\chanTrangDC}\n"
+        "\\makeatletter\n"
+        "\\@ifundefined{dauDe}{}{\\let\\dauDeGoc\\dauDe\n"
+        "  \\renewcommand{\\dauDe}[1]{\\stepcounter{soDeDC}\\edef\\trangDC{\\the\\value{page}}\\dauDeGoc{#1}"
+        "\\setcounter{page}{\\trangDC}\\chanTrangDC}}\n"
+        "\\@ifundefined{phanDapAn}{}{\\let\\phanDapAnGoc\\phanDapAn"
+        "\\renewcommand{\\phanDapAn}[1]{\\phanDapAnGoc{#1}\\chanTrangDC}}\n"
+        "\\makeatother\n")
+    hoa = lambda x: thoat((x or "").upper())
+    bia = (
+        "\\begin{titlepage}\n"
+        "\\begin{tikzpicture}[remember picture,overlay]\n"
+        "\\draw[line width=2pt] ([shift={(1.3cm,1.3cm)}]current page.south west) rectangle ([shift={(-1.3cm,-1.3cm)}]current page.north east);\n"
+        "\\draw[line width=0.6pt] ([shift={(1.5cm,1.5cm)}]current page.south west) rectangle ([shift={(-1.5cm,-1.5cm)}]current page.north east);\n"
+        "\\end{tikzpicture}\n\\centering\n"
+        f"{{\\large {thoat(mt['so_gd'])}}}\\\\[4pt]{{\\large\\bfseries {thoat(mt['truong'])}}}\\\\[2pt]\\rule{{5cm}}{{0.6pt}}\n"
+        "\\vspace*{5cm}\n\n"
+        "{\\fontsize{34}{42}\\selectfont\\bfseries ĐỀ CƯƠNG ÔN TẬP}\\\\[18pt]\n"
+        f"{{\\LARGE\\bfseries {hoa(mt['ten_ky_thi'])}}}\\\\[14pt]\n"
+        f"{{\\Large Môn: {thoat(mt['mon'])}}}\\\\[8pt]{{\\large {thoat(mt['nam_hoc'])}}}\\\\[24pt]\n"
+        f"{{\\large\\itshape Gồm {len(cac_ma)} đề, có đáp án và lời giải chi tiết}}\n"
+        "\\vfill\n"
+        f"{{\\Large Giáo viên: \\textbf{{{hoa(mt.get('giao_vien') or 'Vũ Tiến Lực')}}}}}\\\\[2cm]\n"
+        "\\end{titlepage}\n\\setcounter{page}{2}\\pagestyle{fancy}\\chanTrangDC\n")
+    muc = ["\\begin{center}{\\Large\\bfseries MỤC LỤC}\\end{center}\\medskip",
+           "\\noindent\\textbf{PHẦN 1. ĐỀ ÔN TẬP}\\par\\smallskip"]
+    muc += [f"\\noindent\\hspace*{{1em}}Đề số {i} -- Mã đề {m}\\dotfill\\pageref{{dcde{m}}}\\par" for i, m in enumerate(cac_ma, 1)]
+    muc += ["\\medskip\\noindent\\textbf{PHẦN 2. ĐÁP ÁN VÀ LỜI GIẢI CHI TIẾT}\\dotfill\\pageref{dclg}\\par\\smallskip"]
+    muc += [f"\\noindent\\hspace*{{1em}}Lời giải đề số {i} -- Mã đề {m}\\dotfill\\pageref{{dclg{m}}}\\par" for i, m in enumerate(cac_ma, 1)]
+    phan1 = [f"\\newpage\\phantomsection\\label{{dcde{m}}}\n{t}" for m, t in zip(cac_ma, gop_de)]
+    phan2 = ["\\newpage\\phantomsection\\label{dclg}\n\\vspace*{6cm}\\begin{center}{\\fontsize{26}{32}\\selectfont\\bfseries PHẦN 2}\\\\[14pt]"
+             "{\\LARGE\\bfseries ĐÁP ÁN VÀ LỜI GIẢI CHI TIẾT}\\end{center}\n\\hienthiloigiai"]
+    for i, (m, t, c) in enumerate(zip(cac_ma, gop_de, gop_cuoi), 1):
+        t2 = t.replace(f"\\dauDe{{{m}}}", "").replace(f"\\hetDe{{{m}}}", "")
+        t2 = re.sub(r"\\section\{[^\n]*\}", "", t2, count=1)
+        phan2.append(f"\\newpage\\phantomsection\\label{{dclg{m}}}\n"
+                     f"\\begin{{center}}{{\\large\\bfseries LỜI GIẢI ĐỀ SỐ {i} -- MÃ ĐỀ {m}}}\\end{{center}}\n{t2}\n\n{c}")
+    than = (bia + "\n".join(muc) + "\n\n" + "\n\n".join(phan1)
+            + "\n\n"
+            + "\n\n".join(phan2) + "\n\\label{trangcuoiDC}\n")
+    ghi(os.path.join(out, "DeCuong.tex"), pre + "\\begin{document}\n\\anloigiai\n" + than + "\\end{document}\n")
+    ghi(os.path.join(out, "_ten_de_cuong.txt"), ten_thu_muc(f"Đề cương ôn tập - {mt['ten_ky_thi']}"))
+
+if mt.get("de_cuong", True):
+    lam_de_cuong()
 
 # ---- Đáp án Excel theo mẫu Chấm Phiếu AI: sheet "Đáp án", A1 = Câu, dòng 1 = mã đề, các dòng 1…, II.1…, III.1…
 def chuan_tln(v):

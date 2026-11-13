@@ -59,7 +59,7 @@ def du_lieu_cay():
     ds.sort(key=lambda d: (d["lop"], "DHC".find(d["mon"]), d["chuong"], d["bai"], d["dang"]))
     ch = cau_hinh()
     mac_dinh = {"so_gd": "SỞ GD&ĐT TP. HỒ CHÍ MINH", "truong": "TRƯỜNG THPT NGUYỄN HỮU CẢNH",
-                "nam_hoc": "NĂM HỌC 2026 -- 2027", "thoi_gian": "90 phút"}
+                "nam_hoc": "NĂM HỌC 2026 -- 2027", "thoi_gian": "90 phút", "giao_vien": "Vũ Tiến Lực"}
     mac_dinh.update({k: v for k, v in ch.get("thong_tin_de", {}).items() if not k.startswith("_")})
     ma_tran = sorted(os.path.splitext(f)[0] for f in os.listdir(os.path.join(GOC, "ma-tran")) if f.endswith(".json"))
     return {"dang": ds, "thong_tin": mac_dinh, "ma_tran": ma_tran, "pdflatex": bool(tim_pdflatex()),

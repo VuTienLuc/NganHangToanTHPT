@@ -108,6 +108,7 @@ footer .gian{flex:1}
         <label>Sở / Phòng<input type="text" id="so_gd"></label>
         <label>Trường<input type="text" id="truong"></label>
         <label>Năm học<input type="text" id="nam_hoc"></label>
+        <label>Giáo viên (chân trang đề cương)<input type="text" id="giao_vien" value="Vũ Tiến Lực"></label>
         <label>Kiểu trình bày<select id="khung"><option value="DeThiChinhThuc">Đề chính thức (đen trắng, Sở/Trường)</option><option value="DeThi">Ôn tập (khung màu)</option></select></label>
         <label>Khổ in (tiết kiệm giấy)<select id="kho_in"><option value="12">Bình thường – chữ 12</option><option value="11">Tiết kiệm – chữ 11, lề hẹp</option><option value="10">Siêu tiết kiệm – chữ 10, lề hẹp</option></select></label>
         <label class="hop" title="Chỉ áp dụng khi chọn khổ tiết kiệm; hình vẽ thu nhỏ 75%"><input type="checkbox" id="hai_cot" disabled> In 2 cột (giảm thêm ~40% số trang)</label>
@@ -122,6 +123,7 @@ footer .gian{flex:1}
         <label class="hop"><input type="checkbox" id="mo_rong_dang_khac" checked> Vẫn thiếu: lấy dạng khác cùng bài/chương</label>
         <label class="hop"><input type="checkbox" id="hien_tl"> Hiện cột Tự luận</label>
         <label class="hop" id="o-bien-dich"><input type="checkbox" id="bien_dich" checked> Xuất PDF từng mã đề (cần MacTeX)</label>
+        <label class="hop" title="Gộp bìa, mục lục, tất cả mã đề, đáp án và lời giải thành một file PDF; chân trang ghi tên giáo viên, tên kỳ thi, số trang"><input type="checkbox" id="de_cuong" checked> Gộp thành 1 quyển đề cương ôn tập (PDF)</label>
         <label class="hop" id="o-word" title="Mỗi mã đề một file Word đúng mẫu nhập câu hỏi K12Online; công thức là Equation của Word, bảng biến thiên và hình là ảnh SVG"><input type="checkbox" id="xuat_word_k12"> Xuất Word K12Online (công thức Equation)</label>
       </div>
     </details>
@@ -165,7 +167,7 @@ setInterval(()=>fetch("/api/ping").catch(()=>{}),30000);
 async function tai(){
   DL=await api("/api/du-lieu");
   $("#tom-tat").textContent=`${DL.tong_cau.toLocaleString("vi-VN")} câu · ${DL.dang.length} dạng có câu`;
-  for(const k of ["so_gd","truong","nam_hoc","thoi_gian"]) if(!$("#"+k).value) $("#"+k).value=DL.thong_tin[k]||"";
+  for(const k of ["so_gd","truong","nam_hoc","thoi_gian","giao_vien"]) if(!$("#"+k).value) $("#"+k).value=DL.thong_tin[k]||"";
   if(!DL.pdflatex){$("#bien_dich").checked=false;$("#bien_dich").disabled=true;$("#o-bien-dich").title="Không tìm thấy pdflatex (MacTeX) — biên dịch bằng TeXstudio";$("#o-bien-dich").style.opacity=.5;$("#xuat_word_k12").disabled=true;$("#o-word").style.opacity=.5}
   const sel=$("#ds-ma-tran"); sel.length=1;
   for(const t of DL.ma_tran){const o=document.createElement("option");o.value=o.textContent=t;sel.appendChild(o)}
@@ -283,7 +285,8 @@ function maTran(){
     for(const [k,o] of Object.entries(chon)) (o[l]||[]).forEach((v,i)=>{if(v>0) yc.push({dang:k,muc:MUC[i],so:v})});
     if(yc.length) phan.push({loai:l,yeu_cau:yc});}
   const mt={phan};
-  for(const k of ["ten","ten_ky_thi","mon","thoi_gian","so_gd","truong","nam_hoc","khung","sap_xep"]) mt[k]=$("#"+k).value.trim();
+  for(const k of ["ten","ten_ky_thi","mon","thoi_gian","so_gd","truong","nam_hoc","giao_vien","khung","sap_xep"]) mt[k]=$("#"+k).value.trim();
+  mt.de_cuong=$("#de_cuong").checked;
   mt.so_ma_de=+$("#so_ma_de").value||1; mt.ma_de_bat_dau=+$("#ma_de_bat_dau").value||101;
   for(const k of ["xao_phuong_an","xao_y_dung_sai","moi_ma_de_cau_khac_nhau","bu_cung_nhom","mo_rong_dang_khac"]) mt[k]=$("#"+k).checked;
   mt.cau_da_dung=$("#cau_da_dung").value;
@@ -334,7 +337,8 @@ $("#nut-thoat").onclick=async()=>{await api("/api/thoat",{});document.body.inner
 $("#ds-ma-tran").onchange=async e=>{
   const ten=e.target.value; if(!ten) return;
   const mt=await api("/api/ma-tran?ten="+encodeURIComponent(ten));
-  for(const k of ["ten","ten_ky_thi","mon","thoi_gian","so_gd","truong","nam_hoc","khung","sap_xep"]) if(mt[k]!=null&&$("#"+k)) $("#"+k).value=mt[k];
+  for(const k of ["ten","ten_ky_thi","mon","thoi_gian","so_gd","truong","nam_hoc","giao_vien","khung","sap_xep"]) if(mt[k]!=null&&$("#"+k)) $("#"+k).value=mt[k];
+  if(mt.de_cuong!=null) $("#de_cuong").checked=!!mt.de_cuong;
   for(const k of ["so_ma_de","ma_de_bat_dau"]) if(mt[k]!=null) $("#"+k).value=mt[k];
   for(const k of ["xao_phuong_an","xao_y_dung_sai","moi_ma_de_cau_khac_nhau","bu_cung_nhom","mo_rong_dang_khac"]) if(mt[k]!=null) $("#"+k).checked=!!mt[k];
   $("#cau_da_dung").value=mt.cau_da_dung||(mt.tranh_cau_da_dung===false?"khong":"uu_tien");
