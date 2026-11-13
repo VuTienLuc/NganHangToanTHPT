@@ -15,6 +15,42 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from nh_core import *
 import doc_nhap
 
+def sua_thap_phan(k):
+    """Trong $…$: 15,25 → 15{,}25 (bỏ qua dãy số 1,2,3 và chỗ đã viết {,}). Trả (khối mới, số chỗ sửa)."""
+    dem = [0]
+    def trong_toan(m):
+        def thay(x):
+            dem[0] += 1
+            return x.group(1) + "{,}" + x.group(2)
+        return re.sub(r"(?<![\d,])(\d+),(\d+)(?!\d*,\d)", thay, m.group(0))
+    k2 = re.sub(r"(?<!\\)\$(?!\$)(.+?)(?<!\\)\$", trong_toan, k, flags=re.S)
+    return k2, dem[0]
+
+def kiem_tra_cau(k, info):
+    """Cảnh báo định dạng hay gặp ở câu do AI gõ (không chặn nhập)."""
+    canh_bao = []
+    toan = " ".join(re.findall(r"(?<!\\)\$(.+?)(?<!\\)\$", k, re.S))
+    if re.search(r"(?<![\d{])\d+,\d", toan):
+        canh_bao.append("số thập phân trong $…$ nên viết {,}")
+    if info["loai"] == "DS":
+        mi = re.search(r"\\begin\{itemchoice\}(.*?)\\end\{itemchoice\}", k, re.S)
+        if not mi:
+            canh_bao.append("lời giải Đúng/Sai chưa có itemchoice")
+        else:
+            ys = re.split(r"\\itemch(?![A-Za-z])", mi.group(1))[1:]
+            if len(ys) != 4:
+                canh_bao.append(f"itemchoice có {len(ys)} \\itemch (cần 4)")
+            elif info.get("dap_an"):
+                for j, y in enumerate(ys):
+                    m = re.match(r"\s*(?:\\textbf\{)?\s*(Đúng|Sai)", y)
+                    if m and (m.group(1) == "Đúng") != (info["dap_an"][j] == "Đ"):
+                        canh_bao.append(f"ý {'abcd'[j]}: lời giải ghi '{m.group(1)}' nhưng \\True không khớp")
+    if info["loai"] == "TLN" and info.get("dap_an") and len(info["dap_an"].replace("{,}", ",")) > 4:
+        canh_bao.append(f"đáp số '{info['dap_an']}' dài hơn 4 ô phiếu")
+    if re.search(r"Chọn\s+[ABCD]\b|[Đđ]áp án\s+[ABCD]\b|phương án\s+[ABCD]\b", k) and info["loai"] == "TN":
+        canh_bao.append("lời giải nhắc 'Chọn/Đáp án A..D' (sẽ sai khi đảo phương án)")
+    return canh_bao
+
 def nhap(cac_file, thu=False, in_ra=print, ma_dang=None):
     id_map = tai_id_map()
     # 1. băm toàn bộ câu đang có để chống trùng
@@ -57,14 +93,18 @@ def nhap(cac_file, thu=False, in_ra=print, ma_dang=None):
         else:
             so_rac = 0
             khoi = tach_khoi(t)
-        tk = collections.Counter()
+        tk = collections.Counter(); canh_bao_tep = []
         for k in khoi:
             ma = ma_bam(k)
             if ma in da_co:
                 tk["trung"] += 1; continue
             da_co[ma] = "(file đang nhập)"
             k = gan_ma(k, ma)
+            k, sua = sua_thap_phan(k)
+            tk["sua_tp"] += sua
             info = phan_tich_cau(k)
+            for cb in kiem_tra_cau(k, info):
+                canh_bao_tep.append(f"   ⚠ {info.get('id') or 'chưa có mã'} [{info['loai']}] {cb}")
             p = duong_dan_dang(info, id_map) or os.path.join("_chua_phan_loai", ten_khong_dau(ten_nguon, 60) + ".tex")
             them[p].append((info, k, ten_nguon))
             tk[info["loai"]] += 1
@@ -76,7 +116,9 @@ def nhap(cac_file, thu=False, in_ra=print, ma_dang=None):
         bao_cao.append(f"{os.path.basename(f)}: {len(khoi)} câu — TN {tk['TN']}, ĐS {tk['DS']}, TLN {tk['TLN']}, TL {tk['TL']}"
                        f"; trùng bỏ {tk['trung']}; chưa có mã {tk['chua_ma']}; TN thiếu/thừa \\True {tk['loi_dap_an']}"
                        + (f"; đã gỡ {so_rac} lệnh rác" if so_rac else "")
+                       + (f"; tự sửa {tk['sua_tp']} số thập phân 15,25 → 15{{,}}25" if tk['sua_tp'] else "")
                        + (f"\n   (đã gỡ cả các tên trùng lệnh LaTeX, nếu đề lỗi thì kiểm tra: {', '.join(nghi_ngo[:20])})" if nghi_ngo else ""))
+        bao_cao += canh_bao_tep[:30] + ([f"   … và {len(canh_bao_tep) - 30} cảnh báo khác"] if len(canh_bao_tep) > 30 else [])
     for d in bao_cao:
         in_ra(d)
     moi = sum(len(v) for v in them.values())

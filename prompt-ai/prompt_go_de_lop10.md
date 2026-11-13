@@ -74,21 +74,47 @@ Nếu không có dạng nào phù hợp, chọn dạng gần nhất cùng bài/c
 ```
 
 # QUY TẮC GÕ
-- Công thức trong `$...$`; dùng `\dfrac`, `\sqrt`, `\left(…\right)`, `\mathbb{R}`, `\overrightarrow{AB}`, hệ `\heva{&x=1\\&y=2}`, tuyển `\hoac{&x=1\\&x=2}`.
+- Công thức trong `$...$`; dùng `\dfrac`, `\sqrt`, `\left(…\right)`, `\mathbb{R}`, hệ `\heva{&x=1\\&y=2}`, tuyển `\hoac{&x=1\\&x=2}`.
+- **Vectơ** viết `\overrightarrow{AB}`, `\overrightarrow{F_1}` (không dùng `\vec`).
+- **Số thập phân trong công thức** viết dấu phẩy trong ngoặc nhọn: `$15{,}25$`, `$0{,}33\%$`, `$\approx 4{,}11$`
+  (viết `$15,25$` LaTeX sẽ in thành "15, 25"). Riêng `\shortans{4,1}` viết phẩy thường, không có `$`.
+- Số lớn tách nhóm bằng `\,`: `$10\,000$`. Đơn vị: `$40\text{ km}$`, `$50\text{ N}$`, `$180{,}57\text{ cm}^2$`.
+- **Xuống dòng trong đề và lời giải**: mỗi ý/bước tính cuối dòng thêm `\\` (LaTeX bỏ qua xuống dòng thường, các câu sẽ dính vào nhau).
+  Công thức dài hoặc quan trọng đặt riêng một dòng: `\[ \overline{x}=\dfrac{1525}{100}=15{,}25. \]`
+- Bảng số liệu: `\begin{center}\begin{tabular}{|l|c|c|…|}\hline … \\ \hline\end{tabular}\end{center}`;
+  bảng nhiều hơn 8 cột bọc thêm `\resizebox{\linewidth}{!}{ … }` để in 2 cột không tràn.
 - Bảng biến thiên / bảng xét dấu: dùng `tkz-tab` trong `\begin{tikzpicture}…\end{tikzpicture}`.
 - Hình vẽ: vẽ lại bằng TikZ nếu làm được. Không chắc thì để
   `\begin{center}\textit{[Hình: mô tả ngắn]}\end{center} % CAN_VE_HINH` — thầy sẽ vẽ sau.
 - Hình đặt cạnh đề bài: `\immini{nội dung câu hỏi}{\begin{tikzpicture}…\end{tikzpicture}}`.
-- Đề có đáp án/lời giải: dùng của đề. Đề **không** có: tự giải cẩn thận, kiểm tra lại tính toán, viết lời giải ngắn gọn đúng chuẩn.
+- Đề có đáp án/lời giải: dùng của đề. Đề **không** có: tự giải cẩn thận, tính lại từng phép tính, viết lời giải ngắn gọn đúng chuẩn.
   Câu nào không chắc chắn, thêm chú thích cuối dòng mở khối: `%[2D1V3-6] % KIEM_TRA: lý do`.
+- Lời giải không nhắc tới thứ tự phương án/ý ("Chọn B", "phương án A", "ý a)…") vì khi trộn đề thứ tự bị đảo.
 - KHÔNG viết `\documentclass`, `\begin{document}`, lời dẫn hay giải thích ngoài các khối câu hỏi.
 - Không đánh số "Câu 1." trong nội dung (số câu tự sinh khi in).
+
+# CHỌN MÃ DẠNG CHO ĐÚNG (quan trọng nhất)
+1. Xác định **việc câu hỏi yêu cầu làm** (tính trung bình, tìm trung vị, tính độ lớn hợp lực, đọc giá trị từ bảng…),
+   không dựa vào chủ đề bề ngoài (câu "giá cước bưu điện" là *đọc giá trị hàm số cho bởi bảng*, không phải "tính đồng biến").
+2. Tìm trong DANH MỤC dạng có **tên mô tả đúng việc đó**, đúng lớp – chương – bài. Đề tổng hợp (cuối kì) gồm nhiều chương: mỗi câu chọn chương riêng.
+3. Câu toán thực tế: ưu tiên dạng có tên "Toán thực tế …" / "ứng dụng thực tế" của đúng bài nếu có.
+4. Mức độ theo thang N/H/V/C ở trên, xét **độ khó thật** của câu (không mặc định theo phần I/II/III).
+5. Không có dạng khớp: chọn dạng gần nhất cùng bài và thêm `% KIEM_TRA: dạng gần đúng`; không có cả bài phù hợp thì ghi `%[?]`.
+
+# TỰ KIỂM TRA TRƯỚC KHI TRẢ KẾT QUẢ
+- [ ] Đủ số câu như đề; mỗi câu đúng một khối `\begin{ex}…\end{ex}` hoặc `\begin{bt}…\end{bt}`, ngoặc `{}` đóng mở khớp.
+- [ ] Trắc nghiệm: đúng 4 phương án, đúng **một** `\True`, đáp án `\True` khớp với lời giải.
+- [ ] Đúng/Sai: đúng 4 ý trong `\choiceTF`; lời giải có `\begin{itemchoice}` với đúng 4 `\itemch` **cùng thứ tự**,
+      mỗi `\itemch` bắt đầu bằng "Đúng." hoặc "Sai." **khớp** với `\True` của ý tương ứng.
+- [ ] Trả lời ngắn: `\shortans{…}` là một số, tối đa 4 ký tự (kể cả `-` và `,`), đúng yêu cầu làm tròn, khớp kết quả cuối lời giải.
+- [ ] Mọi mã `%[…]` có trong DANH MỤC (sau khi thay `?` bằng N/H/V/C).
+- [ ] Số thập phân trong `$…$` đã viết `{,}`; các bước lời giải đã có `\\` cuối dòng hoặc `\[…\]`.
 
 # KẾT QUẢ TRẢ VỀ
 Một khối mã duy nhất ```latex … ``` chứa lần lượt mọi câu theo thứ tự trong đề (Phần I → II → III → Tự luận).
 Ngay dòng đầu khối ghi chú thích nguồn: `% nguồn: <tên đề, trường, năm học nếu có>`.
 Sau khối mã, liệt kê ngắn: số câu mỗi loại, các câu có `% KIEM_TRA` hoặc `% CAN_VE_HINH`.
-Thầy sẽ lưu khối mã thành file `.tex` rồi nhập vào ngân hàng.
+Thầy sẽ lưu khối mã thành file `.tex` (hoặc `.txt`) rồi nhập vào ngân hàng.
 
 # DANH MỤC DẠNG (182 dạng) — chỉ dùng các mã dưới đây
 

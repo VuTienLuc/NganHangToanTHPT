@@ -80,6 +80,9 @@ Câu chưa có mã dạng vào `cau-hoi/_chua_phan_loai/<tên file>.tex`; gắn 
 3. Chép khối mã AI trả về, lưu thành file `.tex` → **Nhập câu hỏi** → xem trước → nhập.
    Câu AI ghi `%[?]` (không tìm được dạng) vào `cau-hoi/_chua_phan_loai/` để thầy phân loại.
    Nên dò lại các câu có `% KIEM_TRA` / `% CAN_VE_HINH` (tìm trong thư mục `cau-hoi/`).
+4. Khi nhập, chương trình **tự sửa** số thập phân trong công thức (`$15,25$` → `$15{,}25$`) và **cảnh báo** (⚠ ở bước xem trước):
+   Đúng/Sai thiếu `itemchoice` hoặc lời giải ghi "Đúng/Sai" không khớp `\True`, đáp số trả lời ngắn quá 4 ô,
+   lời giải trắc nghiệm ghi "Chọn A…". Câu có cảnh báo vẫn nhập được; sửa trong file dạng sau.
 
 **Quy ước để câu được nhận đúng loại:**
 - Trắc nghiệm: `\begin{ex}` + `\choice{…}{…}{…}{…}`, đúng **một** `\True`
