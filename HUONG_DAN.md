@@ -95,8 +95,17 @@ Tên kỳ thi, môn/lớp, số mã đề… ghi trong một file JSON đi kèm 
 - `xao_phuong_an`: đảo A/B/C/D của câu trắc nghiệm (tự bỏ qua câu có lời giải ghi "Chọn A…" hay phương án "Cả A và B").
 - `xao_y_dung_sai`: câu Đúng/Sai đảo thứ tự ý **a, b, c**, **giữ ý d (ý khó) ở cuối**; lời giải từng ý đảo theo.
   Tự bỏ qua câu có nội dung nhắc "ý a", "b)"… hoặc lời giải không chia đủ 4 ý (`\\itemch`).
-- `moi_ma_de_cau_khac_nhau`: `true` = mỗi mã đề bốc bộ câu khác; mặc định các mã đề cùng bộ câu, chỉ hoán vị.
-- `tranh_cau_da_dung`: ưu tiên câu chưa dùng ở đề trước (`du-lieu/lich_su_dung.json`).
+- `moi_ma_de_cau_khac_nhau`: `true` = mỗi mã đề một bộ câu riêng (4 mã × 12 câu TN = 48 câu khác nhau); mặc định các mã đề cùng bộ câu, chỉ hoán vị.
+- **Bù câu thông minh** khi kho thiếu (nhất là lúc nhiều mã đề khác câu):
+  1. lấy câu đúng dạng, đúng mức;
+  2. thiếu thì lấy **mức cùng nhóm, cùng dạng**: nhóm 1 = Nhận biết + Thông hiểu (N↔H), nhóm 2 = Vận dụng + VDC (V↔C) — `bu_cung_nhom`;
+  3. vẫn thiếu thì lấy dạng khác **cùng bài**, rồi bài khác **cùng chương**, giữ nhóm mức — `mo_rong_dang_khac`;
+  4. còn thiếu nữa thì cho vài câu dùng chung giữa các mã (không bao giờ trùng trong cùng một mã).
+  Câu bù được rải đều cho các mã đề để độ khó các mã ngang nhau; chương trình in rõ đã bù bao nhiêu câu, từ đâu.
+- `cau_da_dung` — câu đã ra ở đề trước (ghi trong `du-lieu/lich_su_dung.json` mỗi lần xuất):
+  `uu_tien` (mặc định: dùng câu chưa ra trước, hết mới lấy câu cũ ít dùng nhất) · `loai_bo` (**không bao giờ lấy lại**) · `khong` (không xét).
+  Trong ứng dụng: ô số nhỏ dưới mỗi ô ma trận ghi `chưa dùng/tổng` (vd `8/12`); nút **Lịch sử đã dùng** xem các đề đã ra,
+  **Bỏ một đề…** (trả câu của đề thử về kho) hoặc **Xoá toàn bộ lịch sử** (đầu năm học mới).
 - Chương trình báo khi kho thiếu câu cho một ô ma trận, và nhắc nếu đề không đúng cấu trúc 12–4–6.
 - Ma trận viết thẳng bằng JSON (không cần CSV) vẫn dùng được: xem `ma-tran/vi_du_GHK1_lop12.json`.
 

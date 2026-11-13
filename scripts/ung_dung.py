@@ -37,9 +37,14 @@ def hop_le(c):
 def du_lieu_cay():
     id_map = tai_id_map()
     kho = collections.defaultdict(lambda: {l: [0, 0, 0, 0] for l in CAC_LOAI})
+    moi = collections.defaultdict(lambda: {l: [0, 0, 0, 0] for l in CAC_LOAI})
+    ls = doc_lich_su()
     for c in map(json.loads, open(os.path.join(GOC, "du-lieu", "chi_muc.jsonl"), encoding="utf-8")):
         if c["dang_key"] and hop_le(c) and c["muc_chuan"] in CAC_MUC:
-            kho[c["dang_key"]][c["loai"]][CAC_MUC.index(c["muc_chuan"])] += 1
+            i = CAC_MUC.index(c["muc_chuan"])
+            kho[c["dang_key"]][c["loai"]][i] += 1
+            if not ls.get(c["ma"]):
+                moi[c["dang_key"]][c["loai"]][i] += 1
     ds = []
     for k, v in kho.items():
         m = re.match(r"(\d)([A-Z])(\d+)\?(\d+)-(\d+)", k)
@@ -50,7 +55,7 @@ def du_lieu_cay():
                    "bai": int(m.group(4)), "dang": int(m.group(5)),
                    "ten_chuong": t.get("chap_name") or f"Chương {m.group(3)} ({k[:3]})",
                    "ten_bai": t.get("lesson_name") or f"Bài {m.group(4)}",
-                   "ten_dang": t.get("type_name") or f"Dạng {m.group(5)}", "kho": v})
+                   "ten_dang": t.get("type_name") or f"Dạng {m.group(5)}", "kho": v, "moi": moi[k]})
     ds.sort(key=lambda d: (d["lop"], "DHC".find(d["mon"]), d["chuong"], d["bai"], d["dang"]))
     ch = cau_hinh()
     mac_dinh = {"so_gd": "SỞ GD&ĐT TP. HỒ CHÍ MINH", "truong": "TRƯỜNG THPT NGUYỄN HỮU CẢNH",
@@ -59,6 +64,19 @@ def du_lieu_cay():
     ma_tran = sorted(os.path.splitext(f)[0] for f in os.listdir(os.path.join(GOC, "ma-tran")) if f.endswith(".json"))
     return {"dang": ds, "thong_tin": mac_dinh, "ma_tran": ma_tran, "pdflatex": bool(tim_pdflatex()),
             "tong_cau": sum(sum(sum(x) for x in d["kho"].values()) for d in ds)}
+
+def doc_lich_su():
+    p = os.path.join(GOC, "du-lieu", "lich_su_dung.json")
+    try:
+        return json.load(open(p, encoding="utf-8"))
+    except Exception:
+        return {}
+
+def tom_tat_lich_su():
+    ls = doc_lich_su()
+    theo_de = collections.Counter(d for v in ls.values() for d in v)
+    return {"so_cau": sum(1 for v in ls.values() if v),
+            "de": [{"ten": d, "so_cau": n} for d, n in sorted(theo_de.items())]}
 
 def doc_csv(p):
     phan = collections.OrderedDict((l, []) for l in CAC_LOAI)
@@ -123,6 +141,8 @@ class XuLy(BaseHTTPRequestHandler):
                 return self.gui(200, du_lieu_cay())
             if u.path == "/api/ma-tran":
                 return self.gui(200, doc_ma_tran(q["ten"][0]))
+            if u.path == "/api/lich-su":
+                return self.gui(200, tom_tat_lich_su())
             if u.path == "/api/trang-thai":
                 return self.gui(200, cong_viec)
             if u.path == "/api/ping":
@@ -183,6 +203,16 @@ class XuLy(BaseHTTPRequestHandler):
                 so = nhap_cau.nhap(duong, thu=d.get("thu", True), in_ra=dong.append)
                 shutil.rmtree(thu_muc, ignore_errors=True)
                 return self.gui(200, {"ok": True, "so_cau": so, "nhat_ky": "\n".join(dong)})
+            if u.path == "/api/lich-su":
+                p = os.path.join(GOC, "du-lieu", "lich_su_dung.json")
+                ls = doc_lich_su()
+                if d.get("xoa_het"):
+                    ls = {}
+                elif d.get("bo_de"):
+                    ls = {k: [x for x in v if x != d["bo_de"]] for k, v in ls.items()}
+                    ls = {k: v for k, v in ls.items() if v}
+                json.dump(ls, open(p, "w", encoding="utf-8"), ensure_ascii=False)
+                return self.gui(200, {"ok": True, **tom_tat_lich_su()})
             if u.path == "/api/lap-chi-muc":
                 rc, log = chay([os.path.join(SCRIPTS, "lap_chi_muc.py")])
                 return self.gui(200, {"ok": rc == 0, "nhat_ky": log})

@@ -33,7 +33,7 @@ THONG_TIN_MAC_DINH = {
     "ten_ky_thi": "ĐỀ KIỂM TRA", "nam_hoc": "NĂM HỌC 2026 -- 2027", "mon": "TOÁN -- Lớp 12",
     "thoi_gian": "90 phút", "khung": "DeThiChinhThuc", "so_ma_de": 4, "ma_de_bat_dau": 101,
     "xao_cau": True, "xao_phuong_an": True, "xao_y_dung_sai": True, "sap_xep": "ngau_nhien",
-    "moi_ma_de_cau_khac_nhau": False, "tranh_cau_da_dung": True,
+    "moi_ma_de_cau_khac_nhau": False, "tranh_cau_da_dung": True, "bu_cung_nhom": True, "mo_rong_dang_khac": True,
 }
 CAC_LOAI = ["TN", "DS", "TLN", "TL"]
 CAC_MUC = ["N", "H", "V", "C"]
@@ -90,28 +90,91 @@ def hop_le(c, loai):
         return bool(c["dap_an"])
     return True
 
-def loc(loai, yc, da_chon):
-    rx = mau_dang(yc["dang"])
-    muc = yc.get("muc")
-    muc = [muc] if isinstance(muc, str) else muc
-    ds = [c for c in tat_ca if c["loai"] == loai and rx.match(c["dang_key"]) and c["ma"] not in da_chon
-          and (not muc or c["muc_chuan"] in muc) and hop_le(c, loai)]
-    rng.shuffle(ds)
-    if mt.get("tranh_cau_da_dung", True):
-        ds.sort(key=lambda c: len(lich_su.get(c["ma"], [])))
-    return ds
+NHOM_MUC = {"N": "NH", "H": "NH", "V": "VC", "C": "VC"}      # nhóm 1: nhận biết + thông hiểu; nhóm 2: vận dụng + VDC
+CHE_DO_DA_DUNG = mt.get("cau_da_dung") or ("uu_tien" if mt.get("tranh_cau_da_dung", True) else "khong")
 
-def chon_bo_cau():
-    da_chon, bo, thieu = set(), collections.OrderedDict(), []
+def so_lan_dung(c):
+    return len(lich_su.get(c["ma"], []))
+
+def ung_vien(loai, yc):
+    """Các tầng câu ứng viên theo thứ tự ưu tiên: (danh sách, ghi chú bù)."""
+    rx = mau_dang(yc["dang"])
+    muc = yc.get("muc"); muc = [muc] if isinstance(muc, str) else list(muc or [])
+    co_ban = [c for c in tat_ca if c["loai"] == loai and hop_le(c, loai)
+              and (CHE_DO_DA_DUNG != "loai_bo" or not so_lan_dung(c))]
+    tang = []
+    def them(ds, ghi_chu):
+        ds = list(ds); rng.shuffle(ds)
+        if CHE_DO_DA_DUNG == "uu_tien":
+            ds.sort(key=so_lan_dung)
+        tang.append((ds, ghi_chu))
+    khop = [c for c in co_ban if rx.match(c["dang_key"])]
+    them([c for c in khop if not muc or c["muc_chuan"] in muc], None)
+    nhom = ({x for m in muc for x in NHOM_MUC.get(m, "")} - set(muc)) if muc else set()
+    if mt.get("bu_cung_nhom", True) and nhom:
+        them([c for c in khop if c["muc_chuan"] in nhom], "mức cùng nhóm, cùng dạng")
+    if mt.get("mo_rong_dang_khac", True):
+        mm = set(muc) | (nhom if mt.get("bu_cung_nhom", True) else set())
+        k = yc["dang"]
+        mb = re.match(r"(\d[A-Z]\d+)[?A-Z](\d+)-", k)
+        mc = re.match(r"(\d[A-Z]\d+)", k)
+        tien_to_bai = f"{mb.group(1)}?{mb.group(2)}-" if mb else None
+        if tien_to_bai:
+            them([c for c in co_ban if c["dang_key"].startswith(tien_to_bai) and not rx.match(c["dang_key"])
+                  and (not mm or c["muc_chuan"] in mm)], "dạng khác cùng bài")
+        if mc:
+            them([c for c in co_ban if c["dang_key"].startswith(mc.group(1) + "?") and not rx.match(c["dang_key"])
+                  and not (tien_to_bai and c["dang_key"].startswith(tien_to_bai))
+                  and (not mm or c["muc_chuan"] in mm)], "bài khác cùng chương")
+    return tang
+
+def lap_ke_hoach(so_ma, khac_cau):
+    """Chọn câu cho mọi mã đề một lượt. Thiếu câu đúng mức thì bù mức cùng nhóm (N↔H, V↔C),
+    rồi dạng khác cùng bài, rồi bài khác cùng chương. Nhiều mã đề khác câu: rải đều câu bù cho các mã."""
+    da_lay = set()
+    bo = [collections.OrderedDict() for _ in range(so_ma)]
+    ghi_chu, thieu = [], []
     for phan in mt["phan"]:
-        loai = phan["loai"]; bo.setdefault(loai, [])
+        loai = phan["loai"]
+        for b in bo:
+            b.setdefault(loai, [])
         for yc in phan["yeu_cau"]:
-            lay = loc(loai, yc, da_chon)[:yc["so"]]
-            if len(lay) < yc["so"]:
-                thieu.append(f"{loai} {yc['dang']} mức {yc.get('muc', '*')}: cần {yc['so']}, kho chỉ có {len(lay)}")
-            for c in lay:
-                da_chon.add(c["ma"]); bo[loai].append(c)
-    return bo, thieu
+            k = int(yc["so"]); can = k * so_ma if khac_cau else k
+            lay, co = [], set()
+            for ds, gc in ung_vien(loai, yc):
+                for c in ds:
+                    if len(lay) >= can:
+                        break
+                    if c["ma"] in da_lay or c["ma"] in co:
+                        continue
+                    lay.append((c, gc)); co.add(c["ma"])
+                if len(lay) >= can:
+                    break
+            da_lay |= co
+            nhan = f"{LOAI_TEN[loai]} {yc['dang']} mức {yc.get('muc') or '*'}"
+            bu = collections.Counter(gc for _, gc in lay if gc)
+            if bu:
+                ghi_chu.append(f"{nhan}: thiếu câu đúng mức → đã bù " + ", ".join(f"{v} câu {g}" for g, v in bu.items()))
+            if len(lay) < k:
+                thieu.append(f"{nhan}: cần {k}, kho (kể cả bù) chỉ có {len(lay)}")
+            elif khac_cau and len(lay) < can:
+                ghi_chu.append(f"{nhan}: có {len(lay)} câu cho {so_ma} mã đề × {k} → vài câu dùng chung giữa các mã")
+            if not khac_cau:
+                for b in bo:
+                    b[loai].extend(c for c, _ in lay[:k])
+                continue
+            # rải vòng: mỗi lượt mỗi mã đề nhận 1 câu, câu bù chia đều, không trùng trong cùng một mã
+            dong = [c for c, _ in lay]
+            p = 0
+            rieng = [set() for _ in range(so_ma)]
+            for _ in range(min(k, len(dong))):
+                for s_ in range(so_ma):
+                    for _t in range(len(dong)):
+                        c = dong[p % len(dong)]; p += 1
+                        if c["ma"] not in rieng[s_]:
+                            rieng[s_].add(c["ma"]); bo[s_][loai].append(c)
+                            break
+    return bo, ghi_chu, thieu
 
 THU_MUC = {"N": 0, "H": 1, "V": 2, "C": 3}
 THU_MON = {"D": 0, "H": 1, "C": 2}
@@ -240,19 +303,31 @@ so_ma = int(mt["so_ma_de"]); bat_dau = int(mt["ma_de_bat_dau"])
 if not any(p["yeu_cau"] for p in mt.get("phan", [])):
     sys.exit("Ma trận chưa có số câu nào. Mở file ma trận (CSV) bằng Numbers/Excel, điền số câu vào các cột "
              "TN_N, TN_H, DS_H, TLN_V… ở dòng dạng toán cần lấy, lưu lại dạng CSV rồi chạy lại.")
-bo_chung, thieu = chon_bo_cau()
+khac_cau = bool(mt.get("moi_ma_de_cau_khac_nhau"))
+cac_bo, ghi_chu_bu, thieu = lap_ke_hoach(so_ma, khac_cau)
+bo_chung = cac_bo[0]
 for x in thieu:
     print("  ⚠ thiếu câu:", x)
+for x in ghi_chu_bu:
+    print("  ↻", x)
 dem = {l: len(v) for l, v in bo_chung.items() if v}
 print("Đã chọn: " + ", ".join(f"{LOAI_TEN[k]} {v}" for k, v in dem.items()))
 if not dem:
     sys.exit("Không chọn được câu nào (kho không có câu khớp ma trận).")
 if CHINH_THUC and (dem.get("TN"), dem.get("DS"), dem.get("TLN")) != (12, 4, 6):
     print("  (lưu ý: cấu trúc đề tốt nghiệp 2025 là 12 TN – 4 Đúng/Sai – 6 Trả lời ngắn)")
+if khac_cau and so_ma > 1:
+    tap = [set(c["ma"] for v in b.values() for c in v) for b in cac_bo]
+    chung = len(set.intersection(*tap))
+    tong_rieng = len(set.union(*tap))
+    print(f"  Mỗi mã đề một bộ câu: dùng {tong_rieng} câu khác nhau cho {so_ma} mã đề; số câu có mặt ở mọi mã: {chung}")
+print(f"  Câu đã dùng ở đề trước: " + {"uu_tien": "ưu tiên câu chưa dùng", "loai_bo": "KHÔNG lấy lại",
+      "khong": "không xét"}.get(CHE_DO_DA_DUNG, CHE_DO_DA_DUNG))
 if a.thu:
     for loai, ds in bo_chung.items():
         for c in ds:
-            print(f"  {loai:<3} {c['id']:<10} {c['ma']}  {c['muc_chuan'] or '?'}  {c['ten_dang'] or ''}")
+            dd = f" (đã dùng {so_lan_dung(c)} lần)" if so_lan_dung(c) else ""
+            print(f"  {loai:<3} {c['id']:<10} {c['ma']}  {c['muc_chuan'] or '?'}  {c['ten_dang'] or ''}{dd}")
     sys.exit(0)
 
 khung = mt["khung"]
@@ -282,7 +357,7 @@ def tai_lieu(than, loi_giai):
 tat_ca_dap_an, ds_cau_dung, gop_de, gop_lg, cac_ma = [], {}, [], [], []
 for s in range(so_ma):
     ma_de = str(bat_dau + s).zfill(3); cac_ma.append(ma_de)
-    bo = chon_bo_cau()[0] if (mt.get("moi_ma_de_cau_khac_nhau") and s > 0) else bo_chung
+    bo = cac_bo[s]
     for v in bo.values():
         for c in v:
             ds_cau_dung[c["ma"]] = c

@@ -83,6 +83,7 @@ footer .gian{flex:1}
   <select id="ds-ma-tran" title="Mở ma trận đã lưu"><option value="">Mở ma trận đã lưu…</option></select>
   <button id="nut-nhap" title="Thêm câu từ file .tex (có mã %[2D1N1-2]) vào ngân hàng">Nhập câu hỏi</button>
   <input type="file" id="tep-nhap" accept=".tex" multiple hidden>
+  <button id="nut-lich-su" title="Các đề đã ra và số câu đã dùng">Lịch sử đã dùng</button>
   <button id="nut-luu">Lưu ma trận</button>
   <button id="nut-cap-nhat" title="Đọc lại cau-hoi/ sau khi thầy thêm/sửa câu">Cập nhật kho</button>
   <button id="nut-thoat">Thoát</button>
@@ -111,7 +112,9 @@ footer .gian{flex:1}
         <label>&nbsp;<span class="hop"><input type="checkbox" id="xao_phuong_an" checked> Đảo phương án A/B/C/D</span></label>
         <label class="hop"><input type="checkbox" id="xao_y_dung_sai" checked> Đảo ý a, b, c câu Đúng/Sai (giữ ý d)</label>
         <label class="hop"><input type="checkbox" id="moi_ma_de_cau_khac_nhau"> Mỗi mã đề một bộ câu khác</label>
-        <label class="hop"><input type="checkbox" id="tranh_cau_da_dung" checked> Ưu tiên câu chưa dùng</label>
+        <label>Câu đã dùng ở đề trước<select id="cau_da_dung"><option value="uu_tien">Ưu tiên câu chưa dùng</option><option value="loai_bo">Không lấy lại câu đã dùng</option><option value="khong">Không xét</option></select></label>
+        <label class="hop"><input type="checkbox" id="bu_cung_nhom" checked> Thiếu câu: lấy mức cùng nhóm (N↔H, V↔C)</label>
+        <label class="hop"><input type="checkbox" id="mo_rong_dang_khac" checked> Vẫn thiếu: lấy dạng khác cùng bài/chương</label>
         <label class="hop"><input type="checkbox" id="hien_tl"> Hiện cột Tự luận</label>
         <label class="hop" id="o-bien-dich"><input type="checkbox" id="bien_dich" checked> Xuất PDF từng mã đề (cần MacTeX)</label>
       </div>
@@ -193,8 +196,9 @@ function veBang(){
     if(d.bai+""!==bai){bai=d.bai+"";h+=`<tr class="bai"><td colspan="17">Bài ${d.bai}. ${esc(d.ten_bai)}</td></tr>`}
     h+=`<tr><td class="ten">${esc(d.ten_dang)}<span class="ma">${d.k}</span></td>`;
     for(const l of LOAI) for(let i=0;i<4;i++){
-      const kho=d.kho[l][i], v=chon[d.k]?.[l]?.[i]||"";
-      h+=`<td class="o g-${l} cot-${l}" style="color:var(--${l.toLowerCase()})"><input type="number" min="0" max="${kho}" data-k="${d.k}" data-l="${l}" data-i="${i}" value="${v}" ${kho?"":"disabled"} title="Kho có ${kho} câu ${TEN_LOAI[l]} mức ${MUC[i]}" class="${v?"co":""} ${v>kho?"qua":""}"><span class="k">${kho||""}</span></td>`;
+      const kho=d.kho[l][i], moi=d.moi?d.moi[l][i]:kho, v=chon[d.k]?.[l]?.[i]||"";
+      const nhanKho=kho?(moi<kho?`${moi}/${kho}`:`${kho}`):"";
+      h+=`<td class="o g-${l} cot-${l}" style="color:var(--${l.toLowerCase()})"><input type="number" min="0" max="${kho}" data-k="${d.k}" data-l="${l}" data-i="${i}" value="${v}" ${kho?"":"disabled"} title="Kho có ${kho} câu ${TEN_LOAI[l]} mức ${MUC[i]}, ${moi} câu chưa dùng ở đề nào" class="${v?"co":""} ${v>kho?"qua":""}"><span class="k">${nhanKho}</span></td>`;
     }
     h+="</tr>";
   }
@@ -260,7 +264,8 @@ function maTran(){
   const mt={phan};
   for(const k of ["ten","ten_ky_thi","mon","thoi_gian","so_gd","truong","nam_hoc","khung","sap_xep"]) mt[k]=$("#"+k).value.trim();
   mt.so_ma_de=+$("#so_ma_de").value||1; mt.ma_de_bat_dau=+$("#ma_de_bat_dau").value||101;
-  for(const k of ["xao_phuong_an","xao_y_dung_sai","moi_ma_de_cau_khac_nhau","tranh_cau_da_dung"]) mt[k]=$("#"+k).checked;
+  for(const k of ["xao_phuong_an","xao_y_dung_sai","moi_ma_de_cau_khac_nhau","bu_cung_nhom","mo_rong_dang_khac"]) mt[k]=$("#"+k).checked;
+  mt.cau_da_dung=$("#cau_da_dung").value;
   mt.xao_cau=true;
   return mt;
 }
@@ -308,7 +313,8 @@ $("#ds-ma-tran").onchange=async e=>{
   const mt=await api("/api/ma-tran?ten="+encodeURIComponent(ten));
   for(const k of ["ten","ten_ky_thi","mon","thoi_gian","so_gd","truong","nam_hoc","khung","sap_xep"]) if(mt[k]!=null&&$("#"+k)) $("#"+k).value=mt[k];
   for(const k of ["so_ma_de","ma_de_bat_dau"]) if(mt[k]!=null) $("#"+k).value=mt[k];
-  for(const k of ["xao_phuong_an","xao_y_dung_sai","moi_ma_de_cau_khac_nhau","tranh_cau_da_dung"]) if(mt[k]!=null) $("#"+k).checked=!!mt[k];
+  for(const k of ["xao_phuong_an","xao_y_dung_sai","moi_ma_de_cau_khac_nhau","bu_cung_nhom","mo_rong_dang_khac"]) if(mt[k]!=null) $("#"+k).checked=!!mt[k];
+  $("#cau_da_dung").value=mt.cau_da_dung||(mt.tranh_cau_da_dung===false?"khong":"uu_tien");
   chon={}; const khongKhop=[]; const biet=new Map(DL.dang.map(d=>[d.k,d]));
   for(const p of mt.phan||[]) for(const y of p.yeu_cau){
     const muc=Array.isArray(y.muc)?y.muc:[y.muc];
@@ -319,6 +325,18 @@ $("#ds-ma-tran").onchange=async e=>{
   veCay(); veBang(); e.target.value="";
   if(khongKhop.length) alert("Các dòng ma trận viết theo chương/bài (không theo từng dạng) không hiện được trên bảng:\n"+khongKhop.join("\n"));
 };
+async function moLichSu(){
+  const r=await api("/api/lich-su");
+  const noi=r.de.length?`${r.so_cau} câu đã được dùng.\n\nCác đề đã ra:\n`+r.de.map(d=>`  • ${d.ten}: ${d.so_cau} câu`).join("\n")
+    +"\n\nBấm “Bỏ một đề…” để trả câu của đề đó về kho chưa dùng (ví dụ đề thử, đề không dùng nữa).":"Chưa có đề nào được ghi vào lịch sử.";
+  const nut=r.de.length?[
+    ["Bỏ một đề…",async()=>{const ten=prompt("Gõ đúng tên đề cần bỏ khỏi lịch sử:\n"+r.de.map(d=>d.ten).join("\n"));if(!ten)return;
+      const x=await api("/api/lich-su",{bo_de:ten.trim()});await tai();moLichSu();}],
+    ["Xoá toàn bộ lịch sử",async()=>{if(!confirm("Xoá toàn bộ lịch sử? Mọi câu sẽ được coi là chưa dùng."))return;
+      await api("/api/lich-su",{xoa_het:true});await tai();moLichSu();}]]:[];
+  hopThoai("Lịch sử câu đã dùng",noi,nut);
+}
+$("#nut-lich-su").onclick=moLichSu;
 $("#nut-nhap").onclick=()=>$("#tep-nhap").click();
 $("#tep-nhap").onchange=async e=>{
   const fs=[...e.target.files]; if(!fs.length) return;
