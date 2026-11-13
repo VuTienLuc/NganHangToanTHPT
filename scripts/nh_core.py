@@ -363,6 +363,21 @@ def bien_dich_thu_muc(thu_muc_de, in_ra=print):
             _sh.copyfile(pdf, os.path.join(thu_muc_de, ten_ra + ".pdf"))
         ok_het &= ok
         in_ra(f"  {'✓' if ok else '✗ lỗi (xem tex/' + f[:-4] + '.log)'} {f[:-4]}")
+    # bản Leftnote (lề ghi chú) và Beamer trình chiếu sửa bài (trắng / xanh) cho từng mã đề
+    phu = sorted(f for f in os.listdir(tex) if re.match(r"(Leftnote|BeamerTrang|BeamerXanh)_\d+\.tex$", f))
+    if phu:
+        in_ra(f"Biên dịch {len(phu)} file Leftnote / Beamer…")
+    for f in phu:
+        bat_dau = _t.time()
+        for _ in range(2):
+            subprocess.run([pdfl, "-interaction=nonstopmode", f], cwd=tex, stdout=subprocess.DEVNULL,
+                           stderr=subprocess.DEVNULL, timeout=1800)
+        pdf = os.path.join(tex, f[:-4] + ".pdf")
+        ok = os.path.exists(pdf) and os.path.getmtime(pdf) >= bat_dau - 1
+        if ok:
+            _sh.copyfile(pdf, os.path.join(thu_muc_de, f[:-4] + ".pdf"))
+        ok_het &= ok
+        in_ra(f"  {'✓' if ok else '✗ lỗi (xem tex/' + f[:-4] + '.log)'} {f[:-4]}")
     # quyển đề cương ôn tập: 2 file riêng (Câu hỏi / Lời giải) — biên dịch 3 lần cho đúng mục lục, số trang
     ten = "De cuong on tap"
     try:

@@ -188,6 +188,18 @@ Dòng lệnh: `python3 scripts/tron_de.py --tu-file de.txt --so-ma-de 4 --co-chu
 - `Word_LoiGiai_101.docx`: như trên + lời giải dưới từng câu (đáp án đúng gạch chân) + bảng đáp án cuối.
 - Cỡ chữ theo ô Khổ in / Cỡ chữ (10, 11, 12). Công thức: Equation của Word hoặc ảnh SVG (ô "Công thức trong Word").
 
+## Bộ 4 file cho mỗi mã đề (như phần mềm cũ)
+
+Ngoài `De_101.pdf` (đề in) và `LoiGiai_101.pdf` (đề + lời giải), mỗi mã đề có thêm (bật sẵn, bỏ tích nếu không cần):
+- **`Leftnote_101.pdf`** — ô *Bản Leftnote (chừa lề ghi chú)*: đề in 0,7 bề rộng trang, 0,3 bên phải là cột **GHI CHÚ** có dòng kẻ
+  để học sinh ghi lời giải, sửa lỗi sai cạnh câu hỏi.
+- **`BeamerTrang_101.pdf`** — ô *Bản Beamer trình chiếu sửa bài*: trình chiếu 16:9, nền trắng chữ đen, chữ to, **mỗi slide 1 câu**
+  (chiếu lên bảng để viết, sửa bài trực tiếp). Slide đề → bấm tiếp: tô đáp án đúng / hiện Đúng–Sai từng ý / hiện đáp số
+  → slide **Lời giải câu n** (dài thì tự sang nhiều slide).
+- **`BeamerXanh_101.pdf`** — cùng nội dung, nền xanh, thanh tiêu đề xanh, hiệu ứng chuyển slide (thao giảng, ôn tập).
+Cùng thứ tự câu, cùng phương án với mã đề tương ứng. Mở PDF Beamer bằng chế độ toàn màn hình (Preview/Acrobat) để trình chiếu.
+Mã nguồn trong `tex/` (`Leftnote_101.tex`, `BeamerTrang_101.tex`, `BeamerXanh_101.tex`).
+
 ## Quyển đề cương ôn tập (2 file PDF: Câu hỏi / Lời giải)
 
 Ô **"Gộp thành quyển đề cương ôn tập (PDF)"** (bật sẵn) tạo thêm 2 file trong thư mục đề:

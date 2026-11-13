@@ -594,6 +594,14 @@ for w in canh_bao:
     print("  ⚠", w)
 print("THU_MUC:" + rel)
 
+# ---- BỘ 4 FILE như phần mềm cũ: Đề/Lời giải (đã có) + Leftnote (lề ghi chú) + Beamer trắng/xanh (sửa bài)
+if mt.get("xuat_leftnote", True) or mt.get("xuat_beamer", True):
+    import beamer_de
+    try:
+        beamer_de.xuat(out_goc, leftnote=mt.get("xuat_leftnote", True), beamer=mt.get("xuat_beamer", True))
+    except Exception as e:
+        print("  ✗ Không tạo được Leftnote/Beamer:", e)
+
 if a.bien_dich:
     bien_dich_thu_muc(out_goc)
 if a.word or a.k12_giu_thu_tu or mt.get("xuat_word_k12"):
