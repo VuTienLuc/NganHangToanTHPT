@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ra đề theo ma trận</title>
+<style>
+:root{--nen:#f6f5f1;--giay:#fff;--muc:#1f2a37;--phu:#6b7280;--vien:#e5e2da;--nhan:#0f5f8c;
+--tn:#2563eb;--tn-n:#eff5ff;--ds:#7c3aed;--ds-n:#f5f0ff;--tln:#c2410c;--tln-n:#fff4ec;--tl:#0f766e;--tl-n:#ecfbf8;
+--dat:#15803d;--loi:#b91c1c}
+*{box-sizing:border-box}
+body{margin:0;font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;color:var(--muc);background:var(--nen)}
+header{display:flex;align-items:center;gap:14px;padding:10px 18px;background:var(--giay);border-bottom:1px solid var(--vien);position:sticky;top:0;z-index:5}
+header h1{font-size:17px;margin:0;font-weight:650;letter-spacing:.2px}
+header .phu{color:var(--phu);font-size:12.5px}
+header .gian{flex:1}
+button,select,input{font:inherit}
+button{border:1px solid var(--vien);background:var(--giay);border-radius:8px;padding:6px 12px;cursor:pointer;color:var(--muc)}
+button:hover{border-color:#c9c4b8;background:#fbfaf7}
+button.chinh{background:var(--nhan);border-color:var(--nhan);color:#fff;font-weight:600}
+button.chinh:hover{background:#0c4f75}
+button:disabled{opacity:.5;cursor:default}
+.khung{display:grid;grid-template-columns:270px 1fr;height:calc(100vh - 53px - 58px)}
+aside{border-right:1px solid var(--vien);background:var(--giay);overflow:auto;padding:12px 10px}
+aside h3{font-size:12px;text-transform:uppercase;letter-spacing:.6px;color:var(--phu);margin:4px 6px 8px}
+.lop{margin-bottom:8px}
+.lop>summary{font-weight:650;padding:5px 6px;cursor:pointer;border-radius:6px}
+.lop>summary:hover{background:var(--nen)}
+.chuong{display:flex;gap:7px;align-items:flex-start;padding:4px 6px 4px 18px;border-radius:6px;cursor:pointer;font-size:13px}
+.chuong:hover{background:var(--nen)}
+.chuong input{margin-top:3px}
+.chuong .so{margin-left:auto;color:var(--phu);font-size:11.5px;white-space:nowrap;padding-left:6px}
+.chuong.co-chon .ten{font-weight:600}
+main{overflow:auto;padding:14px 18px 30px}
+.the{background:var(--giay);border:1px solid var(--vien);border-radius:12px;padding:12px 14px;margin-bottom:14px}
+.the>summary{cursor:pointer;font-weight:650}
+.luoi{display:grid;grid-template-columns:repeat(4,minmax(160px,1fr));gap:9px 14px;margin-top:10px}
+.luoi label{display:flex;flex-direction:column;gap:3px;font-size:12px;color:var(--phu)}
+.luoi input[type=text],.luoi input[type=number],.luoi select{border:1px solid var(--vien);border-radius:7px;padding:6px 8px;color:var(--muc);background:#fff}
+.luoi .hop{flex-direction:row;align-items:center;gap:7px;color:var(--muc);font-size:13px}
+.thanh{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:2px 0 12px}
+.thanh .muctieu{display:flex;gap:6px;align-items:center;font-size:12.5px;color:var(--phu);flex-wrap:wrap}
+.thanh .muctieu input{width:42px;border:1px solid var(--vien);border-radius:6px;padding:3px 4px;text-align:center}
+.thanh .nhom{display:inline-flex;align-items:center;gap:3px;padding:3px 7px;border-radius:7px}
+table{border-collapse:separate;border-spacing:0;width:100%;background:var(--giay);border:1px solid var(--vien);border-radius:12px;overflow:hidden}
+th,td{padding:4px 5px;border-bottom:1px solid #efece5;text-align:center}
+thead th{position:sticky;top:0;background:#faf9f6;z-index:2;font-size:12px;font-weight:650}
+th.ten,td.ten{text-align:left;padding-left:12px}
+td.ten{max-width:420px}
+td.ten .ma{color:var(--phu);font-size:11px;margin-left:6px;font-family:ui-monospace,Menlo,monospace}
+tr.bai td{background:#fbfaf7;text-align:left;font-weight:600;color:#374151;font-size:12.5px;padding:6px 12px}
+tr.chuongh td{background:#f1efe9;text-align:left;font-weight:700;padding:8px 12px}
+.g-TN{background:var(--tn-n)} .g-DS{background:var(--ds-n)} .g-TLN{background:var(--tln-n)} .g-TL{background:var(--tl-n)}
+th.g-TN{color:var(--tn)} th.g-DS{color:var(--ds)} th.g-TLN{color:var(--tln)} th.g-TL{color:var(--tl)}
+td.o input{width:40px;border:1px solid transparent;border-radius:6px;padding:3px 2px;text-align:center;background:transparent;color:var(--muc)}
+td.o input:hover{border-color:#d6d1c6;background:#fff}
+td.o input:focus{outline:2px solid var(--nhan);background:#fff}
+td.o input.co{background:#fff;border-color:currentColor;font-weight:700}
+td.o input.qua{color:var(--loi);border-color:var(--loi)}
+td.o input:disabled{visibility:hidden}
+td.o .k{display:block;font-size:10px;color:#9ca3af;line-height:1}
+.an-TL .cot-TL{display:none}
+footer{position:fixed;left:0;right:0;bottom:0;height:58px;background:var(--giay);border-top:1px solid var(--vien);display:flex;align-items:center;gap:16px;padding:0 18px;z-index:6}
+.dem{display:flex;gap:10px}
+.dem span{padding:4px 10px;border-radius:999px;background:var(--nen);font-weight:600;font-size:13px}
+.dem span.dat{background:#e7f6ec;color:var(--dat)}
+.dem span.lech{background:#fdecec;color:var(--loi)}
+footer .gian{flex:1}
+.rong{color:var(--phu);padding:40px;text-align:center}
+#hop-thoai{position:fixed;inset:0;background:rgba(17,24,39,.35);display:none;align-items:center;justify-content:center;z-index:10}
+#hop-thoai .noi{background:#fff;border-radius:14px;width:min(820px,92vw);max-height:84vh;display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.25)}
+#hop-thoai h2{margin:0;padding:14px 18px;font-size:16px;border-bottom:1px solid var(--vien)}
+#hop-thoai pre{margin:0;padding:14px 18px;overflow:auto;white-space:pre-wrap;font:12.5px/1.5 ui-monospace,Menlo,monospace;flex:1}
+#hop-thoai .nut{display:flex;gap:8px;justify-content:flex-end;padding:12px 18px;border-top:1px solid var(--vien)}
+.goiy{font-size:12px;color:var(--phu)}
+</style>
+</head>
+<body>
+<header>
+  <h1>Ra đề theo ma trận</h1>
+  <span class="phu" id="tom-tat">Đang tải ngân hàng…</span>
+  <span class="gian"></span>
+  <select id="ds-ma-tran" title="Mở ma trận đã lưu"><option value="">Mở ma trận đã lưu…</option></select>
+  <button id="nut-luu">Lưu ma trận</button>
+  <button id="nut-cap-nhat" title="Đọc lại cau-hoi/ sau khi thầy thêm/sửa câu">Cập nhật kho</button>
+  <button id="nut-thoat">Thoát</button>
+</header>
+<div class="khung">
+  <aside>
+    <h3>Phạm vi kiến thức</h3>
+    <div id="cay"></div>
+    <p class="goiy" style="margin:12px 6px">Tích chương cần ra đề. Bảng bên phải chỉ hiện các chương đã tích.</p>
+  </aside>
+  <main>
+    <details class="the" open>
+      <summary>Thông tin đề</summary>
+      <div class="luoi">
+        <label>Tên file đề<input type="text" id="ten" value="GHK1_12"></label>
+        <label>Tên kỳ thi<input type="text" id="ten_ky_thi" value="ĐỀ KIỂM TRA GIỮA HỌC KỲ I"></label>
+        <label>Môn – lớp<input type="text" id="mon" value="TOÁN -- Lớp 12"></label>
+        <label>Thời gian<input type="text" id="thoi_gian"></label>
+        <label>Sở / Phòng<input type="text" id="so_gd"></label>
+        <label>Trường<input type="text" id="truong"></label>
+        <label>Năm học<input type="text" id="nam_hoc"></label>
+        <label>Kiểu trình bày<select id="khung"><option value="DeThiChinhThuc">Đề chính thức (đen trắng, Sở/Trường)</option><option value="DeThi">Ôn tập (khung màu)</option></select></label>
+        <label>Số mã đề<input type="number" id="so_ma_de" value="4" min="1" max="40"></label>
+        <label>Mã đề bắt đầu<input type="number" id="ma_de_bat_dau" value="101"></label>
+        <label>Sắp xếp câu<select id="sap_xep"><option value="ngau_nhien">Ngẫu nhiên</option><option value="do_kho" selected>Theo độ khó (N→C)</option><option value="noi_dung">Theo nội dung (chương, bài)</option><option value="noi_dung_do_kho">Nội dung rồi độ khó</option></select></label>
+        <label>&nbsp;<span class="hop"><input type="checkbox" id="xao_phuong_an" checked> Đảo phương án A/B/C/D</span></label>
+        <label class="hop"><input type="checkbox" id="moi_ma_de_cau_khac_nhau"> Mỗi mã đề một bộ câu khác</label>
+        <label class="hop"><input type="checkbox" id="tranh_cau_da_dung" checked> Ưu tiên câu chưa dùng</label>
+        <label class="hop"><input type="checkbox" id="hien_tl"> Hiện cột Tự luận</label>
+        <label class="hop" id="o-bien-dich"><input type="checkbox" id="bien_dich" checked> Biên dịch PDF sau khi xuất</label>
+      </div>
+    </details>
+
+    <div class="thanh">
+      <button id="nut-tu-dong" class="chinh" style="background:#334155;border-color:#334155">Tự động điền</button>
+      <span class="muctieu" id="muc-tieu"></span>
+      <span class="gian" style="flex:1"></span>
+      <button id="nut-xoa">Xoá số đã điền</button>
+    </div>
+
+    <div id="bang-boc"><div class="rong">Tích ít nhất một chương ở cột bên trái.</div></div>
+  </main>
+</div>
+<footer>
+  <div class="dem" id="dem"></div>
+  <span class="goiy" id="goi-y-cau-truc"></span>
+  <span class="gian"></span>
+  <button id="nut-xem">Xem trước câu được chọn</button>
+  <button id="nut-xuat" class="chinh">Xuất đề</button>
+</footer>
+<div id="hop-thoai"><div class="noi"><h2 id="ht-tieu">…</h2><pre id="ht-noi"></pre><div class="nut" id="ht-nut"></div></div></div>
+
+<script>
+const LOAI=["TN","DS","TLN","TL"], MUC=["N","H","V","C"];
+const TEN_LOAI={TN:"Trắc nghiệm",DS:"Đúng/Sai",TLN:"Trả lời ngắn",TL:"Tự luận"};
+const CHUAN={TN:12,DS:4,TLN:6};
+const MUC_TIEU_MAC_DINH={TN:[6,4,2,0],DS:[0,2,2,0],TLN:[0,2,3,1],TL:[0,0,0,0]};
+let DL=null, chon={}, chuongChon=new Set(), mucTieu=JSON.parse(JSON.stringify(MUC_TIEU_MAC_DINH));
+const $=s=>document.querySelector(s);
+const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const khoaChuong=d=>`${d.lop}|${d.mon}|${d.chuong}`;
+
+async function api(duong,than){
+  const r=await fetch(duong,than?{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(than)}:{});
+  return r.json();
+}
+setInterval(()=>fetch("/api/ping").catch(()=>{}),30000);
+
+async function tai(){
+  DL=await api("/api/du-lieu");
+  $("#tom-tat").textContent=`${DL.tong_cau.toLocaleString("vi-VN")} câu · ${DL.dang.length} dạng có câu`;
+  for(const k of ["so_gd","truong","nam_hoc","thoi_gian"]) if(!$("#"+k).value) $("#"+k).value=DL.thong_tin[k]||"";
+  if(!DL.pdflatex){$("#bien_dich").checked=false;$("#bien_dich").disabled=true;$("#o-bien-dich").title="Không tìm thấy pdflatex (MacTeX) — biên dịch bằng TeXstudio";$("#o-bien-dich").style.opacity=.5}
+  const sel=$("#ds-ma-tran"); sel.length=1;
+  for(const t of DL.ma_tran){const o=document.createElement("option");o.value=o.textContent=t;sel.appendChild(o)}
+  veCay(); veBang(); veMucTieu();
+}
+
+function veCay(){
+  const theoLop={};
+  for(const d of DL.dang){const L=(theoLop[d.lop]??={});const k=khoaChuong(d);
+    (L[k]??={ten:d.ten_chuong,ma:d.k.slice(0,3),so:0}).so+=Object.values(d.kho).flat().reduce((a,b)=>a+b,0)}
+  let h="";
+  for(const lop of Object.keys(theoLop)){
+    h+=`<details class="lop" ${lop==="12"?"open":""}><summary>Lớp ${lop}</summary>`;
+    for(const [k,c] of Object.entries(theoLop[lop]))
+      h+=`<label class="chuong ${chuongChon.has(k)?"co-chon":""}"><input type="checkbox" data-k="${k}" ${chuongChon.has(k)?"checked":""}><span class="ten">${esc(c.ten)} <span class="ma">${c.ma}</span></span><span class="so">${c.so}</span></label>`;
+    h+="</details>";
+  }
+  $("#cay").innerHTML=h;
+  $("#cay").querySelectorAll("input").forEach(i=>i.onchange=()=>{i.checked?chuongChon.add(i.dataset.k):chuongChon.delete(i.dataset.k);i.closest(".chuong").classList.toggle("co-chon",i.checked);veBang()});
+}
+
+function dangHienThi(){return DL.dang.filter(d=>chuongChon.has(khoaChuong(d)))}
+
+function veBang(){
+  const ds=dangHienThi();
+  if(!ds.length){$("#bang-boc").innerHTML='<div class="rong">Tích ít nhất một chương ở cột bên trái.</div>';capNhatDem();return}
+  let h=`<table class="${$("#hien_tl").checked?"":"an-TL"}"><thead><tr><th class="ten" rowspan="2">Dạng toán</th>`;
+  for(const l of LOAI) h+=`<th colspan="4" class="g-${l} cot-${l}">${TEN_LOAI[l]}</th>`;
+  h+="</tr><tr>"; for(const l of LOAI) for(const m of MUC) h+=`<th class="g-${l} cot-${l}">${m}</th>`;
+  h+="</tr></thead><tbody>";
+  let ch="",bai="";
+  for(const d of ds){
+    const kc=khoaChuong(d);
+    if(kc!==ch){ch=kc;bai="";h+=`<tr class="chuongh"><td colspan="17">Lớp ${d.lop} · ${esc(d.ten_chuong)}</td></tr>`}
+    if(d.bai+""!==bai){bai=d.bai+"";h+=`<tr class="bai"><td colspan="17">Bài ${d.bai}. ${esc(d.ten_bai)}</td></tr>`}
+    h+=`<tr><td class="ten">${esc(d.ten_dang)}<span class="ma">${d.k}</span></td>`;
+    for(const l of LOAI) for(let i=0;i<4;i++){
+      const kho=d.kho[l][i], v=chon[d.k]?.[l]?.[i]||"";
+      h+=`<td class="o g-${l} cot-${l}" style="color:var(--${l.toLowerCase()})"><input type="number" min="0" max="${kho}" data-k="${d.k}" data-l="${l}" data-i="${i}" value="${v}" ${kho?"":"disabled"} title="Kho có ${kho} câu ${TEN_LOAI[l]} mức ${MUC[i]}" class="${v?"co":""} ${v>kho?"qua":""}"><span class="k">${kho||""}</span></td>`;
+    }
+    h+="</tr>";
+  }
+  $("#bang-boc").innerHTML=h+"</tbody></table>";
+  $("#bang-boc").querySelectorAll("input").forEach(i=>i.oninput=()=>{
+    const v=Math.max(0,parseInt(i.value)||0),{k,l}=i.dataset,idx=+i.dataset.i;
+    ((chon[k]??={})[l]??=[0,0,0,0])[idx]=v;
+    i.classList.toggle("co",v>0); i.classList.toggle("qua",v>+i.max); capNhatDem();
+  });
+  capNhatDem();
+}
+
+function tong(){
+  const t={TN:0,DS:0,TLN:0,TL:0};
+  for(const [k,o] of Object.entries(chon)) for(const l in o) t[l]+=o[l].reduce((a,b)=>a+b,0);
+  return t;
+}
+function capNhatDem(){
+  const t=tong(), ct=$("#khung").value==="DeThiChinhThuc";
+  let h="";
+  for(const l of LOAI){ if(l==="TL"&&!t.TL&&!$("#hien_tl").checked) continue;
+    const cls=ct&&CHUAN[l]!==undefined?(t[l]===CHUAN[l]?"dat":"lech"):"";
+    h+=`<span class="${cls}">${TEN_LOAI[l]}: ${t[l]}${ct&&CHUAN[l]!==undefined?"/"+CHUAN[l]:""}</span>`;}
+  $("#dem").innerHTML=h;
+  $("#goi-y-cau-truc").textContent=ct?"Cấu trúc 2025: 12 – 4 – 6":"";
+}
+
+function veMucTieu(){
+  let h="Mục tiêu:";
+  for(const l of ["TN","DS","TLN"]){h+=`<span class="nhom g-${l}" style="color:var(--${l.toLowerCase()})"><b>${l}</b>`;
+    for(let i=0;i<4;i++) h+=` ${MUC[i]}<input type="number" min="0" data-l="${l}" data-i="${i}" value="${mucTieu[l][i]}">`;
+    h+="</span>";}
+  $("#muc-tieu").innerHTML=h;
+  $("#muc-tieu").querySelectorAll("input").forEach(i=>i.oninput=()=>{mucTieu[i.dataset.l][+i.dataset.i]=Math.max(0,parseInt(i.value)||0)});
+}
+
+function tronMang(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function tuDong(){
+  const ds=dangHienThi(); if(!ds.length){alert("Tích chương trước đã.");return}
+  chon={}; const thieu=[];
+  for(const l of ["TN","DS","TLN"]) for(let i=0;i<4;i++){
+    let can=mucTieu[l][i]; if(!can) continue;
+    const ung=tronMang(ds.filter(d=>d.kho[l][i]>0));
+    // rải đều: mỗi vòng lấy 1 câu ở mỗi dạng còn chỗ
+    while(can>0&&ung.length){
+      let lay=false;
+      for(const d of ung){ if(!can) break;
+        const cur=((chon[d.k]??={})[l]??=[0,0,0,0]);
+        if(cur[i]<d.kho[l][i]){cur[i]++;can--;lay=true}}
+      if(!lay) break;
+    }
+    if(can>0) thieu.push(`${TEN_LOAI[l]} mức ${MUC[i]}: thiếu ${can}`);
+  }
+  veBang();
+  if(thieu.length) alert("Kho trong phạm vi đã chọn không đủ:\n"+thieu.join("\n")+"\n\nThầy tích thêm chương hoặc đổi mục tiêu.");
+}
+
+function maTran(){
+  const phan=[];
+  for(const l of LOAI){const yc=[];
+    for(const [k,o] of Object.entries(chon)) (o[l]||[]).forEach((v,i)=>{if(v>0) yc.push({dang:k,muc:MUC[i],so:v})});
+    if(yc.length) phan.push({loai:l,yeu_cau:yc});}
+  const mt={phan};
+  for(const k of ["ten","ten_ky_thi","mon","thoi_gian","so_gd","truong","nam_hoc","khung","sap_xep"]) mt[k]=$("#"+k).value.trim();
+  mt.so_ma_de=+$("#so_ma_de").value||1; mt.ma_de_bat_dau=+$("#ma_de_bat_dau").value||101;
+  for(const k of ["xao_phuong_an","moi_ma_de_cau_khac_nhau","tranh_cau_da_dung"]) mt[k]=$("#"+k).checked;
+  mt.xao_cau=true;
+  return mt;
+}
+
+function hopThoai(tieu,noi,nut=[]){
+  $("#ht-tieu").textContent=tieu; $("#ht-noi").textContent=noi;
+  const n=$("#ht-nut"); n.innerHTML="";
+  for(const [nhan,fn,chinh] of [...nut,["Đóng",()=>$("#hop-thoai").style.display="none"]]){
+    const b=document.createElement("button");b.textContent=nhan;if(chinh)b.className="chinh";b.onclick=fn;n.appendChild(b)}
+  $("#hop-thoai").style.display="flex";
+}
+
+async function xuat(thu){
+  const mt=maTran();
+  if(!mt.phan.length){alert("Ma trận chưa có số câu nào.");return}
+  const b=thu?$("#nut-xem"):$("#nut-xuat"); b.disabled=true; b.textContent=thu?"Đang chọn…":"Đang xuất…";
+  try{
+    const r=await api("/api/xuat",{ma_tran:mt,thu,bien_dich:!thu&&$("#bien_dich").checked});
+    if(thu){hopThoai("Xem trước các câu được chọn",r.nhat_ky);return}
+    if(!r.ok){hopThoai("Chưa xuất được",r.nhat_ky);return}
+    const nut=[["Mở thư mục đề",()=>api("/api/mo",{duong_dan:"de-da-ra/"+r.ten}),true]];
+    hopThoai(`Đã xuất: de-da-ra/${r.ten}`,r.nhat_ky,nut);
+    if(!thu&&$("#bien_dich").checked&&DL.pdflatex) theoDoi(r.nhat_ky);
+    tai();
+  }finally{b.disabled=false;b.textContent=thu?"Xem trước câu được chọn":"Xuất đề"}
+}
+async function theoDoi(dau){
+  await new Promise(r=>setTimeout(r,1200));
+  const s=await api("/api/trang-thai");
+  $("#ht-noi").textContent=dau+"\n"+s.nhat_ky;
+  if(!s.xong) theoDoi(dau);
+}
+
+$("#nut-tu-dong").onclick=tuDong;
+$("#nut-xoa").onclick=()=>{chon={};veBang()};
+$("#nut-xem").onclick=()=>xuat(true);
+$("#nut-xuat").onclick=()=>xuat(false);
+$("#hien_tl").onchange=()=>{veBang()};
+$("#khung").onchange=capNhatDem;
+$("#nut-luu").onclick=async()=>{const r=await api("/api/luu-ma-tran",{ma_tran:maTran()});alert(r.ok?`Đã lưu ma-tran/${r.ten}.json`:"Không lưu được");tai()};
+$("#nut-cap-nhat").onclick=async()=>{const b=$("#nut-cap-nhat");b.disabled=true;b.textContent="Đang cập nhật…";const r=await api("/api/lap-chi-muc",{});b.disabled=false;b.textContent="Cập nhật kho";hopThoai("Cập nhật kho",r.nhat_ky);tai()};
+$("#nut-thoat").onclick=async()=>{await api("/api/thoat",{});document.body.innerHTML='<div class="rong" style="padding-top:20vh">Đã thoát ứng dụng. Thầy có thể đóng thẻ này.</div>'};
+$("#ds-ma-tran").onchange=async e=>{
+  const ten=e.target.value; if(!ten) return;
+  const mt=await api("/api/ma-tran?ten="+encodeURIComponent(ten));
+  for(const k of ["ten","ten_ky_thi","mon","thoi_gian","so_gd","truong","nam_hoc","khung","sap_xep"]) if(mt[k]!=null&&$("#"+k)) $("#"+k).value=mt[k];
+  for(const k of ["so_ma_de","ma_de_bat_dau"]) if(mt[k]!=null) $("#"+k).value=mt[k];
+  for(const k of ["xao_phuong_an","moi_ma_de_cau_khac_nhau","tranh_cau_da_dung"]) if(mt[k]!=null) $("#"+k).checked=!!mt[k];
+  chon={}; const khongKhop=[]; const biet=new Map(DL.dang.map(d=>[d.k,d]));
+  for(const p of mt.phan||[]) for(const y of p.yeu_cau){
+    const muc=Array.isArray(y.muc)?y.muc:[y.muc];
+    if(!biet.has(y.dang)||muc.length!==1||!y.muc){khongKhop.push(`${p.loai} ${y.dang} ${y.muc||"*"} ×${y.so}`);continue}
+    ((chon[y.dang]??={})[p.loai]??=[0,0,0,0])[MUC.indexOf(muc[0])]+=y.so;
+    const d=biet.get(y.dang); chuongChon.add(khoaChuong(d));
+  }
+  veCay(); veBang(); e.target.value="";
+  if(khongKhop.length) alert("Các dòng ma trận viết theo chương/bài (không theo từng dạng) không hiện được trên bảng:\n"+khongKhop.join("\n"));
+};
+tai();
+</script>
+</body>
+</html>

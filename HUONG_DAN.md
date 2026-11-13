@@ -26,6 +26,21 @@ Mọi thứ chạy bằng Python 3 trên Mac (Terminal), mở thư mục `NganHa
 - `%[2D1N1-2]`: lớp 12 (2), Đại số (D), chương 1, mức N, bài 1, dạng 2.
 - `%[ma:e42229d3]`: mã riêng của câu (để theo dõi câu đã dùng). Câu mới chưa có mã sẽ được tự gắn.
 
+## Ứng dụng "Ra đề theo ma trận" (nhấp đúp, không cần gõ lệnh)
+
+Nhấp đúp **`Ra de theo ma tran.app`** trong thư mục này. Giao diện mở trong trình duyệt (chạy ngay trên máy, không cần mạng):
+
+1. Cột trái: tích các chương cần ra đề.
+2. Bảng giữa: mỗi dòng một dạng toán, mỗi ô là số câu cần lấy theo loại (Trắc nghiệm / Đúng-Sai / Trả lời ngắn) và mức (N/H/V/C). Số nhỏ dưới ô là số câu kho đang có.
+   Nút **Tự động điền** rải đều số câu theo "Mục tiêu" (mặc định 12 TN – 4 ĐS – 6 TLN) qua các dạng đã chọn.
+3. Điền thông tin đề (tên kỳ thi, môn – lớp, số mã đề…), bấm **Xem trước** để xem câu được chọn, rồi **Xuất đề**.
+   Nếu máy có MacTeX, ứng dụng tự biên dịch 2 file gộp ra PDF; nút **Mở thư mục đề** mở kết quả trong Finder.
+4. **Lưu ma trận** để lần sau mở lại (ô "Mở ma trận đã lưu…"). **Cập nhật kho** sau khi thầy sửa/thêm câu trong `cau-hoi/`.
+5. Bấm **Thoát** khi xong (ứng dụng cũng tự tắt sau 3 phút không còn cửa sổ nào mở).
+
+Nếu macOS báo không mở được ứng dụng: nhấp phải vào file `.app` → **Mở** → **Mở** (chỉ cần làm một lần),
+hoặc nhấp đúp `Ra de theo ma tran.command` (mở bằng Terminal). Nhật ký lỗi: `/tmp/ra_de_theo_ma_tran.log`.
+
 ## Các lệnh
 
 ```bash

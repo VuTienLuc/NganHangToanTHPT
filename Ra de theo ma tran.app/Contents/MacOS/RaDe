@@ -1,0 +1,13 @@
+#!/bin/bash
+# Mở ứng dụng "Ra đề theo ma trận": chạy máy chủ nhỏ trên máy và mở giao diện trong trình duyệt.
+APP_DIR="$(cd "$(dirname "$0")/../.." && pwd)"
+GOC="$(dirname "$APP_DIR")"          # thư mục NganHangCaNhan (chứa file .app này)
+export PATH="/Library/TeX/texbin:/usr/local/bin:/opt/homebrew/bin:/Library/Frameworks/Python.framework/Versions/Current/bin:/usr/bin:/bin:$PATH"
+PY="$(command -v python3)"
+if [ -z "$PY" ]; then
+  osascript -e 'display alert "Chưa có Python 3" message "Thầy cài Python 3 từ python.org rồi mở lại ứng dụng."'
+  exit 1
+fi
+cd "$GOC" || exit 1
+"$PY" scripts/ung_dung.py >> /tmp/ra_de_theo_ma_tran.log 2>&1 &
+exit 0
