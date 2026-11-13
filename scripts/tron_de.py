@@ -449,7 +449,7 @@ def lam_de_cuong():
         "\\renewcommand{\\phanDapAn}[1]{\\phanDapAnGoc{#1}\\chanTrangDC}}\n"
         "\\makeatother\n")
     hoa = lambda x: thoat((x or "").upper())
-    bia = (
+    bia = lambda phu_de, mo_ta: (
         "\\begin{titlepage}\n"
         "\\begin{tikzpicture}[remember picture,overlay]\n"
         "\\draw[line width=2pt] ([shift={(1.3cm,1.3cm)}]current page.south west) rectangle ([shift={(-1.3cm,-1.3cm)}]current page.north east);\n"
@@ -459,29 +459,34 @@ def lam_de_cuong():
         "\\vspace*{5cm}\n\n"
         "{\\fontsize{34}{42}\\selectfont\\bfseries ĐỀ CƯƠNG ÔN TẬP}\\\\[18pt]\n"
         f"{{\\LARGE\\bfseries {hoa(mt['ten_ky_thi'])}}}\\\\[14pt]\n"
+        f"{{\\Large\\bfseries --- {phu_de} ---}}\\\\[14pt]\n"
         f"{{\\Large Môn: {thoat(mt['mon'])}}}\\\\[8pt]{{\\large {thoat(mt['nam_hoc'])}}}\\\\[24pt]\n"
-        f"{{\\large\\itshape Gồm {len(cac_ma)} đề, có đáp án và lời giải chi tiết}}\n"
+        f"{{\\large\\itshape {mo_ta}}}\n"
         "\\vfill\n"
         f"{{\\Large Giáo viên: \\textbf{{{hoa(mt.get('giao_vien') or 'Vũ Tiến Lực')}}}}}\\\\[2cm]\n"
         "\\end{titlepage}\n\\setcounter{page}{2}\\pagestyle{fancy}\\chanTrangDC\n")
-    muc = ["\\begin{center}{\\Large\\bfseries MỤC LỤC}\\end{center}\\medskip",
-           "\\noindent\\textbf{PHẦN 1. ĐỀ ÔN TẬP}\\par\\smallskip"]
-    muc += [f"\\noindent\\hspace*{{1em}}Đề số {i} -- Mã đề {m}\\dotfill\\pageref{{dcde{m}}}\\par" for i, m in enumerate(cac_ma, 1)]
-    muc += ["\\medskip\\noindent\\textbf{PHẦN 2. ĐÁP ÁN VÀ LỜI GIẢI CHI TIẾT}\\dotfill\\pageref{dclg}\\par\\smallskip"]
-    muc += [f"\\noindent\\hspace*{{1em}}Lời giải đề số {i} -- Mã đề {m}\\dotfill\\pageref{{dclg{m}}}\\par" for i, m in enumerate(cac_ma, 1)]
-    phan1 = [f"\\newpage\\phantomsection\\label{{dcde{m}}}\n{t}" for m, t in zip(cac_ma, gop_de)]
-    phan2 = ["\\newpage\\phantomsection\\label{dclg}\n\\vspace*{6cm}\\begin{center}{\\fontsize{26}{32}\\selectfont\\bfseries PHẦN 2}\\\\[14pt]"
-             "{\\LARGE\\bfseries ĐÁP ÁN VÀ LỜI GIẢI CHI TIẾT}\\end{center}\n\\hienthiloigiai"]
+    muc_luc = lambda dong: ("\\begin{center}{\\Large\\bfseries MỤC LỤC}\\end{center}\\medskip\n" + "\n".join(dong) + "\n")
+    cuoi = "\n\\label{trangcuoiDC}\n\\end{document}\n"
+    ten_goc = ten_thu_muc(f"Đề cương ôn tập - {mt['ten_ky_thi']}")
+    # ---- quyển CÂU HỎI: bìa, mục lục, tất cả mã đề (không lời giải)
+    muc = [f"\\noindent Đề số {i} -- Mã đề {m}\\dotfill\\pageref{{dcde{m}}}\\par" for i, m in enumerate(cac_ma, 1)]
+    phan = [f"\\newpage\\phantomsection\\label{{dcde{m}}}\n{t}" for m, t in zip(cac_ma, gop_de)]
+    ghi(os.path.join(out, "DeCuong_CauHoi.tex"),
+        pre + "\\begin{document}\n\\anloigiai\n" + bia("PHẦN CÂU HỎI", f"Gồm {len(cac_ma)} đề ôn tập")
+        + muc_luc(muc) + "\n\n".join(phan) + cuoi)
+    # ---- quyển LỜI GIẢI: bìa, mục lục, đề kèm lời giải chi tiết + bảng đáp án từng đề
+    muc = [f"\\noindent Lời giải đề số {i} -- Mã đề {m}\\dotfill\\pageref{{dclg{m}}}\\par" for i, m in enumerate(cac_ma, 1)]
+    phan = []
     for i, (m, t, c) in enumerate(zip(cac_ma, gop_de, gop_cuoi), 1):
         t2 = t.replace(f"\\dauDe{{{m}}}", "").replace(f"\\hetDe{{{m}}}", "")
         t2 = re.sub(r"\\section\{[^\n]*\}", "", t2, count=1)
-        phan2.append(f"\\newpage\\phantomsection\\label{{dclg{m}}}\n"
-                     f"\\begin{{center}}{{\\large\\bfseries LỜI GIẢI ĐỀ SỐ {i} -- MÃ ĐỀ {m}}}\\end{{center}}\n{t2}\n\n{c}")
-    than = (bia + "\n".join(muc) + "\n\n" + "\n\n".join(phan1)
-            + "\n\n"
-            + "\n\n".join(phan2) + "\n\\label{trangcuoiDC}\n")
-    ghi(os.path.join(out, "DeCuong.tex"), pre + "\\begin{document}\n\\anloigiai\n" + than + "\\end{document}\n")
-    ghi(os.path.join(out, "_ten_de_cuong.txt"), ten_thu_muc(f"Đề cương ôn tập - {mt['ten_ky_thi']}"))
+        phan.append(f"\\newpage\\phantomsection\\label{{dclg{m}}}\n"
+                    f"\\begin{{center}}{{\\large\\bfseries LỜI GIẢI ĐỀ SỐ {i} -- MÃ ĐỀ {m}}}\\end{{center}}\n{t2}\n\n{c}")
+    ghi(os.path.join(out, "DeCuong_LoiGiai.tex"),
+        pre + "\\begin{document}\n\\hienthiloigiai\n"
+        + bia("ĐÁP ÁN VÀ LỜI GIẢI CHI TIẾT", f"Lời giải chi tiết {len(cac_ma)} đề ôn tập")
+        + muc_luc(muc) + "\n\n".join(phan) + cuoi)
+    ghi(os.path.join(out, "_ten_de_cuong.txt"), ten_goc)
 
 if mt.get("de_cuong", True):
     lam_de_cuong()

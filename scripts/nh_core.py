@@ -363,22 +363,24 @@ def bien_dich_thu_muc(thu_muc_de, in_ra=print):
             _sh.copyfile(pdf, os.path.join(thu_muc_de, ten_ra + ".pdf"))
         ok_het &= ok
         in_ra(f"  {'✓' if ok else '✗ lỗi (xem tex/' + f[:-4] + '.log)'} {f[:-4]}")
-    # quyển đề cương ôn tập (bìa, mục lục, mọi mã đề, lời giải) — biên dịch 3 lần cho đúng mục lục/số trang
-    if os.path.exists(os.path.join(tex, "DeCuong.tex")):
-        in_ra("Biên dịch quyển đề cương ôn tập…")
+    # quyển đề cương ôn tập: 2 file riêng (Câu hỏi / Lời giải) — biên dịch 3 lần cho đúng mục lục, số trang
+    ten = "De cuong on tap"
+    try:
+        ten = open(os.path.join(tex, "_ten_de_cuong.txt"), encoding="utf-8").read().strip() or ten
+    except OSError:
+        pass
+    for f, duoi in (("DeCuong_CauHoi.tex", "Câu hỏi"), ("DeCuong_LoiGiai.tex", "Lời giải")):
+        if not os.path.exists(os.path.join(tex, f)):
+            continue
+        in_ra(f"Biên dịch quyển đề cương – {duoi}…")
         bat_dau = _t.time()
         for _ in range(3):
-            subprocess.run([pdfl, "-interaction=nonstopmode", "DeCuong.tex"], cwd=tex, stdout=subprocess.DEVNULL,
+            subprocess.run([pdfl, "-interaction=nonstopmode", f], cwd=tex, stdout=subprocess.DEVNULL,
                            stderr=subprocess.DEVNULL, timeout=1800)
-        pdf = os.path.join(tex, "DeCuong.pdf")
+        pdf = os.path.join(tex, f[:-4] + ".pdf")
         ok = os.path.exists(pdf) and os.path.getmtime(pdf) >= bat_dau - 1
-        ten = "De cuong on tap"
-        try:
-            ten = open(os.path.join(tex, "_ten_de_cuong.txt"), encoding="utf-8").read().strip() or ten
-        except OSError:
-            pass
         if ok:
-            _sh.copyfile(pdf, os.path.join(thu_muc_de, ten + ".pdf"))
+            _sh.copyfile(pdf, os.path.join(thu_muc_de, f"{ten} - {duoi}.pdf"))
         ok_het &= ok
-        in_ra(f"  {'✓' if ok else '✗ lỗi (xem tex/DeCuong.log)'} {ten}.pdf")
+        in_ra(f"  {'✓' if ok else '✗ lỗi (xem tex/' + f[:-4] + '.log)'} {ten} - {duoi}.pdf")
     return ok_het

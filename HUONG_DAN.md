@@ -143,12 +143,15 @@ Nạp đáp án: Chấm Phiếu AI → ô **Đáp án** → **Nhập từ file E
 Khung đề chính thức nằm ở `khung/DeThiChinhThuc/mau_de.tex` (in đen trắng). Muốn dạng ôn tập có màu
 như phần mềm cũ thì ghi `"khung": "DeThi"` trong file JSON.
 
-## Quyển đề cương ôn tập (1 file PDF)
+## Quyển đề cương ôn tập (2 file PDF: Câu hỏi / Lời giải)
 
-Ô **"Gộp thành 1 quyển đề cương ôn tập (PDF)"** (bật sẵn) tạo thêm file `Đề cương ôn tập - <Tên kỳ thi>.pdf` trong thư mục đề:
-bìa (Sở, Trường, tên kỳ thi, môn, năm học, giáo viên) → mục lục → **Phần 1**: tất cả mã đề → **Phần 2**: đáp án và lời giải chi tiết từng đề.
+Ô **"Gộp thành quyển đề cương ôn tập (PDF)"** (bật sẵn) tạo thêm 2 file trong thư mục đề:
+- `Đề cương ôn tập - <Tên kỳ thi> - Câu hỏi.pdf`: bìa → mục lục → tất cả mã đề (không lời giải).
+- `Đề cương ôn tập - <Tên kỳ thi> - Lời giải.pdf`: bìa → mục lục → lời giải chi tiết + bảng đáp án từng đề.
+
 Chân trang mọi trang: `GV: <tên giáo viên> | <tên kỳ thi> | Trang x/y`. Tên giáo viên mặc định **Vũ Tiến Lực**, sửa ở ô
-"Giáo viên" (hoặc `giao_vien` trong `cau_hinh.json` / ma trận). Mã nguồn: `tex/DeCuong.tex`. Bỏ quyển này: `"de_cuong": false`.
+"Giáo viên" (hoặc `giao_vien` trong `cau_hinh.json` / ma trận). Mã nguồn: `tex/DeCuong_CauHoi.tex`, `tex/DeCuong_LoiGiai.tex`.
+Bỏ quyển này: bỏ tích ô, hoặc `"de_cuong": false`.
 
 ## Xuất Word theo mẫu K12Online
 
