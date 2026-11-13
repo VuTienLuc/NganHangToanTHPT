@@ -8,9 +8,13 @@ Công thức toán, bảng biến thiên, hình vẽ được biên dịch bằn
   python3 scripts/k12word.py "de-da-ra/<thư mục đề>"
 (tron_de.py tự gọi khi có --word; ứng dụng: tích "Xuất Word K12Online").
 
-Mẫu K12Online: "Câu 1: [NB] …" / "Câu 13: [TF4] [TH] …" / "Câu 17: [SAQ] [VDT] …"; phương án A. B. C. D. mỗi dòng một;
-"--- HẾT ---"; "ĐÁP ÁN" (bảng 5 cột: "1. A", "13. A,C", "17. 2,5"; Đúng/Sai không ý nào đúng = NULL); "LỜI GIẢI CHI TIẾT".
-Cần: pdflatex + latex + dvisvgm (SVG) và Ghostscript gs (PNG) — có sẵn trong MacTeX đầy đủ.
+Mẫu K12Online (3 phần, đánh số câu lại từ 1 ở mỗi phần):
+  Phần I: / Trắc nghiệm nhiều lựa chọn (…) / Câu 1: … / A. B. C. D. (chữ cái đáp án đúng được gạch chân) / Lời giải: …
+  Phần II: / Trắc nghiệm đúng – sai (…) / Câu 1: … / a) … (ý đúng gạch chân "a)") / Lời giải: … (sau từng ý)
+  Phần III: / Trả lời ngắn (…) / Câu 1: … / Đáp án: / 2024 / Lời giải: …
+Công thức toán: mặc định chuyển thành Equation của Word (pandoc) → luôn thẳng dòng, sửa được, K12Online nhận đúng;
+công thức pandoc không đọc được và hình vẽ/bảng biến thiên thì dùng ảnh SVG (+PNG). Đặt NH_CONG_THUC=svg để ép dùng ảnh.
+Cần: pandoc (brew install pandoc hoặc pip3 install pypandoc_binary); pdflatex + latex + dvisvgm + gs (MacTeX đầy đủ).
 """
 import os, sys, re, json, glob, shutil, subprocess, zipfile, hashlib
 from xml.sax.saxutils import escape as xe
@@ -383,12 +387,70 @@ def bien_dich_manh(manh, thu_muc_tex, in_ra=print):
           + (f" · {len(loi)} mảnh lỗi (xem tex/_k12_pdf.log)" if loi else ""))
     return kq
 
+# ======================================================================= công thức → Equation (OMML) bằng pandoc
+MACRO_PANDOC = ("\\newcommand{\\heva}[1]{\\left\\{\\begin{aligned}#1\\end{aligned}\\right.}\n"
+                "\\newcommand{\\hoac}[1]{\\left[\\begin{aligned}#1\\end{aligned}\\right.}\n"
+                "\\newcommand{\\vv}[1]{\\overrightarrow{#1}}\n\\newcommand{\\Bbb}[1]{\\mathbb{#1}}\n"
+                "\\newcommand{\\rm}{}\n\\newcommand{\\allowdisplaybreaks}{}\n\n")
+
+def tim_pandoc():
+    p = tim("pandoc")
+    if p:
+        return p
+    try:
+        import pypandoc
+        return pypandoc.get_pandoc_path()
+    except Exception:
+        return None
+
+def ma_toan_tran(loai, ma):
+    """Mã TeX của công thức (bỏ $…$) để đưa cho pandoc."""
+    t = ma_manh(loai, ma).strip()
+    t = t[1:-1] if t.startswith("$") and t.endswith("$") else t
+    t = re.sub(r"^\\textstyle\s*", "", t)
+    return " ".join(t.split())
+
+def omml_cong_thuc(manh, in_ra=print):
+    """{khoá: '<m:oMath>…</m:oMath>'} cho các công thức pandoc chuyển được."""
+    if os.environ.get("NH_CONG_THUC", "").lower() == "svg":
+        return {}
+    pd = tim_pandoc()
+    if not pd:
+        in_ra("  (Không thấy pandoc → công thức dùng ảnh SVG. Cài: brew install pandoc  hoặc  pip3 install pypandoc_binary)")
+        return {}
+    khoa = [k for k, (l, _) in manh.items() if l in ("im", "dm", "env")]
+    if not khoa:
+        return {}
+    md = MACRO_PANDOC + "\n\n".join("$" + (ma_toan_tran(*manh[k]) or "{}") + "$" for k in khoa) + "\n"
+    import tempfile
+    with tempfile.TemporaryDirectory() as tm:
+        ra = os.path.join(tm, "ct.docx")
+        try:
+            subprocess.run([pd, "-f", "markdown", "-o", ra], input=md.encode("utf-8"),
+                           stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, timeout=600)
+            x = zipfile.ZipFile(ra).read("word/document.xml").decode("utf-8")
+        except Exception as e:
+            in_ra(f"  (pandoc lỗi: {e} → công thức dùng ảnh SVG)")
+            return {}
+    doan = re.findall(r"<w:p>(.*?)</w:p>", x, re.S)
+    if len(doan) != len(khoa):
+        in_ra("  (pandoc trả về sai số đoạn → công thức dùng ảnh SVG)")
+        return {}
+    kq = {}
+    for k, d in zip(khoa, doan):
+        m = re.findall(r"<m:oMath>.*?</m:oMath>", d, re.S)
+        ngoai = re.sub(r"<m:oMath>.*?</m:oMath>", "", d, flags=re.S)
+        if len(m) == 1 and "<w:t" not in ngoai:
+            kq[k] = m[0]
+    return kq
+
 # ======================================================================= ghi DOCX
 NS = ('xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main" '
       'xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships" '
       'xmlns:wp="http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing" '
       'xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main" '
-      'xmlns:pic="http://schemas.openxmlformats.org/drawingml/2006/picture"')
+      'xmlns:pic="http://schemas.openxmlformats.org/drawingml/2006/picture" '
+      'xmlns:m="http://schemas.openxmlformats.org/officeDocument/2006/math"')
 
 class Docx:
     def __init__(self):
@@ -476,6 +538,8 @@ class Docx:
             for duong_anh, (rid, ten) in self.media.items():
                 z.write(duong_anh, "word/" + ten)
 
+OMML = {}
+
 def chay_xml(doc, doan, anh):
     x = []
     for r in doan.chay:
@@ -483,6 +547,8 @@ def chay_xml(doc, doan, anh):
             x.append(Docx.chu(r[1], r[2]))
         elif r[0] == "br":
             x.append("<w:r><w:br/></w:r>")
+        elif r[1] in OMML:
+            x.append(OMML[r[1]])
         else:
             m = anh.get(r[1]) or {}
             if "w" in m and (m.get("png") or m.get("svg")):
@@ -503,6 +569,19 @@ def ghi_cac_doan(doc, ds, anh, dau_xml=""):
         doc.doan(chay_xml(doc, d, anh), d.can)
 
 # ======================================================================= ghép đề
+PHAN_K12 = [
+    ("TN", "Phần I:", "Trắc nghiệm nhiều lựa chọn (Thí sinh trả lời các câu hỏi 1 đến {n}; mỗi câu hỏi chỉ chọn 1 đáp án)."),
+    ("DS", "Phần II:", "Trắc nghiệm đúng – sai (Thí sinh trả lời các câu hỏi 1 đến câu hỏi {n}. Trong mỗi câu hỏi, "
+                       "thí sinh trả lời đúng hoặc sai cho mỗi ý (mệnh đề))."),
+    ("TLN", "Phần III:", "Trả lời ngắn (Thí sinh trả lời các câu hỏi 1 đến câu hỏi {n}. Trong mỗi câu hỏi, "
+                         "thí sinh trả lời câu hỏi bằng cách nhập câu trả lời cho câu hỏi)."),
+    ("TL", "Phần IV:", "Tự luận (Thí sinh trình bày lời giải các câu hỏi 1 đến câu hỏi {n})."),
+]
+
+def dap_so_tln(q, da):
+    v = (q["tln"] or da or "").replace("$", "").replace("{,}", ",").replace("\\,", "").replace(" ", "").replace(".", ",")
+    return v.replace("−", "-").replace("–", "-")
+
 def xuat(thu_muc_de, in_ra=print):
     tex = os.path.join(thu_muc_de, "tex")
     du_lieu = json.load(open(os.path.join(tex, "_k12_cau.json"), encoding="utf-8"))
@@ -519,41 +598,49 @@ def xuat(thu_muc_de, in_ra=print):
                 q["lg"] = chuyen(p["lg"], manh)
             cau_tach[(ma_de, i)] = q
     in_ra(f"Xuất Word K12Online cho {len(du_lieu)} mã đề…")
-    anh = bien_dich_manh(manh, tex, in_ra)
+    OMML.clear()
+    OMML.update(omml_cong_thuc(manh, in_ra))
+    con_lai = {k: v for k, v in manh.items() if k not in OMML}
+    so_ct = sum(1 for l, _ in manh.values() if l != "fig")
+    in_ra(f"  Công thức → Equation của Word: {len(OMML)}/{so_ct}")
+    anh = bien_dich_manh(con_lai, tex, in_ra) if con_lai else {}
+    B, BU = ("b",), ("b", "u")
     for ma_de, ds in du_lieu.items():
-        doc, dap_an = Docx(), []
-        for i, c in enumerate(ds):
-            so, q = i + 1, cau_tach[(ma_de, i)]
-            nhan = {"DS": " [TF4]", "TLN": " [SAQ]"}.get(c["loai"], "")
-            muc = (" " + MUC_K12.get(c.get("muc") or "", "[NB]")) if c["loai"] != "TL" else ""
-            ghi_cac_doan(doc, q["de"], anh, Docx.chu(f"Câu {so}:", ("b",)) + Docx.chu(f"{nhan}{muc} "))
-            for j, pa in enumerate(q["pa"]):
-                ghi_cac_doan(doc, pa or [Doan()], anh, Docx.chu(f"{'ABCD'[j]}. "))
-            da = c.get("dap_an") or ""
-            if c["loai"] == "TN":
-                dap_an.append(f"{so}. {da}")
-            elif c["loai"] == "DS":
-                dung = ",".join("ABCD"[j] for j, x in enumerate(da) if x == "Đ")
-                dap_an.append(f"{so}. {dung or 'NULL'}")
-            elif c["loai"] == "TLN":
-                v = (q["tln"] or da or "").replace("$", "").replace("{,}", ",").replace(" ", "").replace(".", ",")
-                dap_an.append(f"{so}. {v}")
-        doc.doan(Docx.chu("--- HẾT ---", ("b",)), "center", 200)
-        doc.doan(Docx.chu("ĐÁP ÁN", ("b",)), "left", 80)
-        doc.bang(dap_an)
-        doc.doan("", "left", 200)
-        doc.doan(Docx.chu("LỜI GIẢI CHI TIẾT", ("b",)), "left", 80)
-        for i, c in enumerate(ds):
-            q = cau_tach[(ma_de, i)]
-            nhan = Docx.chu(f"Câu {i + 1}:", ("b",)) + Docx.chu(" ")
-            if q["y_giai"]:
-                dau, ys, cuoi = q["y_giai"]
-                ghi_cac_doan(doc, dau, anh, nhan)
-                for j, y in enumerate(ys):
-                    ghi_cac_doan(doc, y or [Doan()], anh, Docx.chu(f"{'ABCD'[j]}. "))
-                ghi_cac_doan(doc, cuoi, anh)
-            else:
-                ghi_cac_doan(doc, q["lg"] or [], anh, nhan)
+        doc = Docx()
+        for loai, ten_phan, gioi_thieu in PHAN_K12:
+            cac = [(i, c) for i, c in enumerate(ds) if c["loai"] == loai]
+            if not cac:
+                continue
+            doc.doan(Docx.chu(ten_phan, B))
+            doc.doan(Docx.chu(gioi_thieu.format(n=len(cac))))
+            for so, (i, c) in enumerate(cac, 1):
+                q, da = cau_tach[(ma_de, i)], c.get("dap_an") or ""
+                ghi_cac_doan(doc, q["de"], anh, Docx.chu(f"Câu {so}:", B) + Docx.chu(" "))
+                if loai == "TN":
+                    for j, pa in enumerate(q["pa"]):
+                        ghi_cac_doan(doc, pa or [Doan()], anh,
+                                     Docx.chu(f"{'ABCD'[j]}.", BU if 'ABCD'[j] == da else B) + Docx.chu(" "))
+                    doc.doan(Docx.chu("Lời giải:", B))
+                    ghi_cac_doan(doc, q["lg"] or ([] if not q["y_giai"] else q["y_giai"][0]), anh)
+                elif loai == "DS":
+                    for j, pa in enumerate(q["pa"]):
+                        dung = j < len(da) and da[j] == "Đ"
+                        ghi_cac_doan(doc, pa or [Doan()], anh,
+                                     Docx.chu(f"{'abcd'[j]})", BU if dung else B) + Docx.chu(" "))
+                        if q["y_giai"]:
+                            dau, ys, cuoi = q["y_giai"]
+                            doc.doan(Docx.chu("Lời giải:", B))
+                            ghi_cac_doan(doc, (dau if j == 0 else []) + (ys[j] if j < len(ys) else [])
+                                         + (cuoi if j == 3 else []), anh)
+                        elif j == len(q["pa"]) - 1 and q["lg"]:
+                            doc.doan(Docx.chu("Lời giải:", B))
+                            ghi_cac_doan(doc, q["lg"], anh)
+                else:
+                    if loai == "TLN":
+                        doc.doan(Docx.chu("Đáp án:", B))
+                        doc.doan(Docx.chu(dap_so_tln(q, da)))
+                    doc.doan(Docx.chu("Lời giải:", B))
+                    ghi_cac_doan(doc, q["lg"] or [], anh)
         ra = os.path.join(thu_muc_de, f"Word_K12Online_{ma_de}.docx")
         doc.luu(ra)
         in_ra(f"  ✓ {os.path.basename(ra)}")

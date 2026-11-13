@@ -145,18 +145,17 @@ như phần mềm cũ thì ghi `"khung": "DeThi"` trong file JSON.
 
 ## Xuất Word theo mẫu K12Online
 
-Tích **Xuất Word K12Online (công thức SVG)** trong ứng dụng, hoặc thêm `--word` khi chạy `tron_de.py`
-(cũng có thể chạy riêng: `python3 scripts/k12word.py "de-da-ra/<thư mục đề>"`).
-Mỗi mã đề có thêm file `Word_K12Online_<mã>.docx` trong thư mục đề:
+Tích **Xuất Word K12Online** trong ứng dụng, hoặc thêm `--word` khi chạy `tron_de.py`
+(chạy riêng: `python3 scripts/k12word.py "de-da-ra/<thư mục đề>"`). Mỗi mã đề có thêm `Word_K12Online_<mã>.docx`:
 
-- Đúng mẫu nhập câu hỏi của K12Online: `Câu 1: [NB] …`, câu Đúng/Sai có `[TF4]`, câu trả lời ngắn có `[SAQ]`,
-  mức độ `[NB] [TH] [VDT] [VDC]`; phương án `A. B. C. D.` mỗi dòng một; `--- HẾT ---`; bảng **ĐÁP ÁN** 5 cột
-  (`13. A,C` là các ý đúng, `NULL` nếu không ý nào đúng); phần **LỜI GIẢI CHI TIẾT**.
-- Chữ Times New Roman 12. Công thức, bảng biến thiên, hình vẽ được LaTeX vẽ ở cỡ 12pt rồi chèn thành ảnh **SVG**
-  (kèm PNG 600 dpi dự phòng cho Word cũ). Ảnh được hạ đúng phần nằm dưới chân chữ nên công thức thẳng dòng.
-  Word 2019/365 hiển thị đúng; LibreOffice/Pages có thể bỏ qua phần hạ ảnh (công thức nhô lên một chút).
-- Cần MacTeX đầy đủ (có sẵn `dvisvgm` và Ghostscript `gs`). Mất thêm khoảng 15–40 giây.
-- Ảnh tạm nằm ở `tex/_k12/`, có thể xoá sau khi đã có file Word.
+- **Phần I:** Trắc nghiệm nhiều lựa chọn — `Câu 1:` … `A.` `B.` `C.` `D.` (chữ cái đáp án đúng **gạch chân**), rồi `Lời giải:`.
+- **Phần II:** Trắc nghiệm đúng – sai — `Câu 1:` … mỗi ý `a)` `b)` `c)` `d)` (ý **đúng** gạch chân `a)`), sau mỗi ý là `Lời giải:` của ý đó.
+- **Phần III:** Trả lời ngắn — `Câu 1:` … `Đáp án:` (dòng dưới là đáp số, dấu phẩy thập phân) rồi `Lời giải:`.
+- Số câu đánh lại từ 1 ở mỗi phần. Chữ Times New Roman 12.
+- **Công thức** chuyển thành **Equation của Word** (thẳng dòng với chữ, sửa được, K12Online nhận được).
+  Cần **pandoc**: `brew install pandoc` hoặc `pip3 install pypandoc_binary`. Không có pandoc thì công thức thành ảnh SVG.
+- Bảng biến thiên, hình vẽ (và công thức pandoc không đọc được) là **ảnh SVG** sắc nét (kèm PNG 600 dpi) — cần MacTeX đầy đủ.
+- Muốn mọi công thức đều là ảnh: chạy với biến môi trường `NH_CONG_THUC=svg`.
 
 ## Biên dịch đề
 Mở file trong `de-da-ra/<tên>/` bằng TeXstudio, biên dịch **pdfLaTeX** như các đề cũ của phần mềm
