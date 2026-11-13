@@ -1,0 +1,787 @@
+\documentclass[12pt,a4paper,openany,oneside]{book}
+\usepackage[utf8]{vietnam}
+\usepackage{xcolor}
+\usepackage{diagbox}
+\usepackage[shortlabels]{enumitem}
+\usepackage[a4paper,left=1.8cm,right=1.5cm,top=1.5cm,bottom=1.6cm]{geometry}
+\usepackage{setspace}
+\usepackage{fontawesome}
+\setstretch{1.1}
+\setlength{\parskip}{6pt}
+\input{Khaibao/KhaibaoToan}
+\input{Khaibao/Khaibao}
+\input{Khaibao/MucLuc}
+\input{Khaibao/CacHop}
+\input{Khaibao/CacHopThem}
+\usepackage{ex_test}
+\setlist[enumerate,1]{label*=\circlenum{\arabic*},itemsep=-1pt,topsep=0pt}
+\setlist[enumerate,2]{itemsep=0pt,topsep=0pt,label=\circlenumH{\alph*},wide=0cm,leftmargin=!}
+\setlist[enumerate,3]{itemsep=0pt,topsep=0pt,label=\protect{\textcolor{teal}{\roman*)}},wide=1cm,leftmargin=1cm}
+\setlist[itemize,1]{itemsep=0pt,topsep=0pt,label=\protect{\small\color{teal}\rhombusdot}}
+\setlist[itemize,2]{itemsep=0pt,topsep=0pt,label=\protect{\small\color{teal}\starletdot},wide=0.35cm,
+leftmargin=0.35cm}
+\setlist[itemize,3]{itemsep=0pt,topsep=0pt,label=\protect{\small\color{teal}\faAngellist},wide=0.5cm,leftmargin=.5cm}
+\input{Khaibao/PhanTracNghiemV2}
+\usepackage{tkz-euclide,tkz-tab}
+\usetikzlibrary{angles,intersections,shapes.geometric,arrows,decorations.markings,arrows.meta,patterns.meta}
+\usetikzlibrary{shadows.blur,patterns,quotes}
+\raggedbottom
+\tikzset{>=stealth,line join=round,line cap=butt}
+\newcommand{\khungct}[1]{\tcboxmath[colback=mausection!5,colframe=mausection,boxsep=1pt,boxrule=1pt,arc is angular]{#1}}
+\newcommand{\khung}[1]{\tcbox[colback=mausection!5,colframe=mausection,boxsep=1pt,boxrule=1pt,arc is angular]{#1}}
+\usetikzlibrary{bending,matrix}%Mũi tên chỗ vòng cung
+\tikzset{line cap=round,line join=round,>=stealth}
+\def\chongbang{\rule[-14pt]{0pt}{33pt}}
+\usepackage{tasks}
+\usepackage{bm}
+\usepackage{paracol}
+\usepackage{casio580x}
+\usepackage[hidelinks]{hyperref}
+\def\xuongdong{\break}
+\input{Image/GImage.tex}
+\usepackage{tikz-3dplot}
+\usetikzlibrary{positioning,calc}
+%==================== ĐỀ CHÍNH THỨC: in đen trắng, đầu đề Sở/Trường ====================
+\definecolor{mauchuong}{HTML}{000000}
+\definecolor{mausubsection}{HTML}{000000}
+\definecolor{mausection}{HTML}{000000}
+\usepackage{fancyhdr}
+\pagestyle{fancy}\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\def\madehientai{}
+\newcommand{\dauDe}[1]{%
+  \setcounter{page}{1}\gdef\madehientai{#1}%
+  \fancyfoot[C]{\small Trang \thepage/\pageref{cuoide\madehientai} -- Mã đề \madehientai}%
+  \noindent\begin{minipage}[t]{0.47\textwidth}\centering
+    {\small SỞ GD\&ĐT TP. HỒ CHÍ MINH}\\[1pt]
+    {\small\bfseries TRƯỜNG THPT NGUYỄN HỮU CẢNH}\\[-6pt]
+    \rule{3.2cm}{0.5pt}\\[1pt]
+    {\small\itshape (Đề thi có \pageref{cuoide#1} trang)}
+  \end{minipage}\hfill
+  \begin{minipage}[t]{0.52\textwidth}\centering
+    {\bfseries ĐỀ KIỂM TRA GIỮA HỌC KỲ I}\\[1pt]
+    {\bfseries NĂM HỌC 2026 -- 2027}\\[1pt]
+    {\bfseries Môn: TOÁN -- Lớp 12}\\[1pt]
+    {\small\itshape Thời gian làm bài: 90 phút, không kể thời gian phát đề}
+  \end{minipage}\par\medskip
+  \noindent Họ, tên thí sinh: \makebox[7.2cm]{\dotfill}\hfill
+  \fbox{\bfseries\,Mã đề #1\,}\par\noindent
+  Số báo danh: \makebox[5.5cm]{\dotfill}\par\medskip}
+\newcommand{\phanDe}[1]{\par\medskip\noindent #1\par\smallskip}
+\newcommand{\hetDe}[1]{\par\bigskip\begin{center}{\bfseries ------ HẾT ------}\end{center}\label{cuoide#1}}
+\newcommand{\phanDapAn}[1]{\newpage\fancyfoot[C]{\small Đáp án -- Mã đề #1}%
+  \begin{center}{\large\bfseries ĐÁP ÁN -- MÃ ĐỀ #1}\end{center}}
+\begin{document}
+\setcounter{tocdepth}{1}
+\setcounter{secnumdepth}{3}
+\anloigiai
+\dauDe{103}
+
+\phanDe{\textbf{PHẦN I. Câu trắc nghiệm nhiều phương án lựa chọn.} Thí sinh trả lời từ câu 1 đến câu 12. Mỗi câu hỏi thí sinh chỉ chọn một phương án.}
+
+\setcounter{ex}{0}
+
+\Opensolutionfile{ans}[Ans/VD_GHK1_12_103_TN]
+
+\begin{ex}%[2D1Y2-2]%[ma:23ad91db]
+	Cho hàm số $y=f(x)$ liên tục trên $\mathbb{R}$ và có bảng xét  dấu đạo hàm như sau:
+	\begin{center}
+		\begin{tikzpicture}
+			\tkzTabInit[nocadre=true,lgt=2,espcl=2,deltacl=0.5] 
+				{$x$/1,$f'(x)$/1} 
+				 {$-\infty$,$0$,$1$,$2$,$4$,$+\infty$}
+			 \tkzTabLine{,-,0,+,d,-,0,+,0,+}
+		\end{tikzpicture}
+	\end{center}
+	Khẳng định nào sau đây đúng? 
+	 \choice
+		{Hàm số có $2$ điểm cực đại và $2$ điểm cực tiểu}
+		 {Hàm số có $1$ điểm  cực tiểu và $2$ điểm cực đại}
+		{\True Hàm số có $2$ điểm  cực tiểu và $1$ điểm cực đại}
+		{Hàm số có $2$ điểm cực tiểu và  không có điểm cực đại}
+	 \loigiai{
+	Dựa vào bảng biến thiên, hàm số có $2$ điểm  cực tiểu và $1$ điểm cực đại.}
+\end{ex}
+
+\begin{ex}%[2D1N1-2]%[ma:d4f22c65]
+	Cho hàm số $y=f(x)$ có bảng xét dấu đạo hàm  như sau
+	\begin{center}
+		\begin{tikzpicture}[font=\footnotesize,>=stealth]
+		\tikzset{double style/.append style={double distance=1.5pt}}
+		 \tkzTabInit[nocadre=false,lgt=1.2,espcl=2.5,deltacl=0.6]
+			{$x$ /0.7,$y'$  /0.6}
+			{$-\infty$,$-2$,$0$,$2$,$+\infty$} 
+		 \tkzTabLine{,+,$0$,-,d,-,$0$,+,}
+	\end{tikzpicture}
+	\end{center}
+	Mệnh đề nào dưới đây  đúng?
+	 \choice
+		{Hàm số  đồng biến trên khoảng $(-2;0)$}
+		{Hàm số đồng biến trên  khoảng $(-\infty;0)$}
+		{\True Hàm số nghịch  biến trên khoảng $(0;2)$}
+		{Hàm số nghịch biến trên khoảng  $(-\infty;-2)$}
+	\loigiai{ 
+		Dựa vào bảng xét dấu ta thấy hàm số  nghịch biến trên khoảng $(0;2)$.
+	} 
+\end{ex}
+
+\begin{ex}%[2D1N4-1]%[ma:548414cd]
+	 Xét hàm số $y=f(x)$ có bảng biến thiên như sau
+	\begin{center}
+		\begin{tikzpicture}[scale=1,font=\footnotesize,line join=round,line cap=round,>=stealth]
+			 \tkzTabInit[nocadre=true,lgt=1,espcl=3,deltacl=0.5]
+				{$x$/.7,$y'$/.7,$y$/2} 
+				 {$-\infty$,$1$,$+\infty$}
+			\tkzTabLine{,-,d,-,} 
+			\tkzTabVar{+/$2$,-D+/$-\infty$/$+\infty$,-/$2$} 
+		\end{tikzpicture}
+	\end{center}
+	 Mệnh đề nào dưới đây đúng?
+	 \choice
+		{Đồ thị  hàm số chỉ có một đường tiệm cận}
+		{\True Đồ thị hàm số có tiệm  cận đứng là đường thẳng $x=1$ và đường tiệm cận ngang là đường thẳng $y=2$}
+		{Đồ thị hàm số không có  đường tiệm cận}
+		{Đồ thị hàm số có tiệm  cận ngang là đường thẳng $x=1$ và tiệm cận đứng là đường thẳng $y=2$}
+	 \loigiai{
+		Từ  bảng biến thiên, ta có
+		\begin{itemize}
+			\item $\lim\limits_{x\to +\infty}y=2$ và $\lim\limits_{x\to -\infty}y=2$.\\ 
+			Suy ra đường tiệm cận ngang của đồ thị hàm số là  đường thẳng $y=2$.
+			\item $\lim\limits_{x\to  1^+}y=+\infty $và $\lim\limits_{x\to 1^-}y=-\infty$.\\
+			Suy ra đường tiệm cận đứng của  đồ thị hàm số là đường thẳng $x=1$.
+		\end{itemize}
+	 }
+\end{ex}
+
+\begin{ex}%[2D1N2-2]%[ma:76bea38b]
+	\immini{Cho hàm số $f(x)=ax^3+bx^2+cx+d$ có đồ thị là đường cong  như hình vẽ. Hàm số đạt cực tiểu tại
+	\choice 
+		 {$y=0$}
+		 {\True$x=2$}
+		 {$y=-2$}
+		 {$x=0$}}{
+		\begin{tikzpicture}[>=stealth,x=1cm,y=1cm,scale=.65]
+			\def\a{1} 
+			 \def\b{-3}
+			 \def\c{0}
+			\def\d{2} 
+			\draw[->]  (-1.5,0) -- (3.5,0) node[below]{\scriptsize $x$};
+			\draw[->] (0,-2.5) -- (0,3)  node[left] {\scriptsize $y$};
+			\draw[dashed] (0,0) node[below  left]{\scriptsize $O$}
+				(0,2)  node[above left]{\scriptsize $2$}
+				 (1,0) node[below]{\scriptsize $1$}
+				(0,-2)  node[left]{\scriptsize $-2$}-|(2,0) node[above]{\scriptsize $2$};
+			\clip (-1.5,-2.5) rectangle (3.5,2.5); 
+			\draw[samples=150,smooth,domain=-5:5]  plot (\x,{\a*(\x)^3+(\b)*(\x)^2+(\c)*\x+(\d)});
+			\fill (0,0) circle  (1.25pt);
+			\fill  (1,0) circle (1.25pt);
+			\fill (2,-2) circle (1.25pt); 
+			\fill  (0,2) circle (1.25pt);
+		\end{tikzpicture}
+		 }
+	 \loigiai{
+		 Hàm số đạt cực tiểu tại $x=2$.
+	} 
+\end{ex}
+
+\begin{ex}%[2D1N1-2]%[ma:7c47a278]
+	Cho hàm số $y=f(x)$ liên tục $\mathbb R$ và có bảng biến thiên như sau.  Hỏi hàm số đồng biến trên khoảng nào?
+	\begin{center}
+		\begin{tikzpicture}
+			 \tkzTabInit[nocadre=true,lgt=1.2,espcl=1.8,deltacl=0.4]
+				{$x$/0.75,$f'(x)$/0.75,$f  (x)$/2}{$-\infty$,$-1$,$0$,$1$,$+\infty$}
+			\tkzTabLine{,+,0,-,0,+,0,-,} 
+			 \path
+				 (N13) node[shift={(0,0)}](A){$-\infty$}
+				 (N22) node[shift={(0,-0.3)}](B){$-1$}
+				(N33)  node[shift={(0,0.4)}](C){$-2$}
+				(N42) node[shift={(0,-0.3)}](D){$-1$} 
+				 (N53) node[shift={(0,0)}](E){$-\infty$};
+			 \foreach\X/\Y in{A/B,B/C,C/D,D/E}\draw[-stealth](\X)--(\Y);
+		\end{tikzpicture}
+	\end{center}
+	\choice 
+		 {$\left(  -1;0 \right)$}
+		{$\left( -\infty;1 \right)$}
+		{$\left( 1;+\infty \right)$} {\True $\left( 0;1 \right)$} 
+	\loigiai{Dựa vào bảng biến thiên ta có hàm số  đồng biến trên $\left( 0;1 \right)$.}
+\end{ex}
+
+\begin{ex}%[2D1N4-1]%[ma:1cb19f38]
+	\immini{Cho hàm số $y=f(x)$ có đồ thị  như hình bên. Đường tiệm cận ngang của đồ thị hàm số là
+	\choice 
+		{$y=2$} 
+		{$x=-2$} 
+		{\True $y=1$} 
+		{$x=-1$}} 
+		{\begin{tikzpicture}[scale=0.85,font=\footnotesize,line join=round,line cap=round,>=stealth]
+		 \draw[->] (-3.75,0)--(2.75,0) node[above] {$x$};
+		\draw[->] (0,-3)--(0,5.75) node[right] {$y$}; 
+		\draw (0,0) node [below left] {$O$}; 
+		\foreach \x in {1,2}\draw  (\x,0.1)--(\x,-0.1) node[below] {$\x$};
+		\draw (-1,0.1)--(-1,-0.1) node[above  left] {$-1$};
+		\draw (-2,0.1)--(-2,-0.1) node[below  left] {$-2$}
+			(-3,0.1)--(-3,-0.1) node[below left] {$-3$}; 
+		\foreach \y in {-2,-1,2,3,4,5}\draw  (-0.1,\y)--(0.1,\y) node[right] {$\y$};
+		\draw (-0.1,1)--(0.1,1) node[above  right] {$1$};
+		 \draw[dashed] (-3.75,1)--(2.5,1)
+			 (-1,-3)--(-1,5.75);
+		\draw[smooth,samples=200] plot[domain=-3.7:-1.25]  (\x,{(\x+2)/(\x+1)});
+		 \draw[smooth,samples=200] plot[domain=-0.785:2] (\x,{(\x+2)/(\x+1)});
+	\end{tikzpicture}
+		 }
+	\loigiai{ 
+		Dựa vào  đồ thị của hàm số $y=f(x)$, ta có đường tiệm cận ngang của đồ thị hàm số là $y=1$.
+	} 
+\end{ex}
+
+\begin{ex}%[2D1N1-1]%[ma:73141b32]
+	Hàm số $y=x^4-2x^2+1$ nghịch biến  trên các khoảng nào sau đây?
+	 \choice
+		{$(-\infty;-1)$ và  $(0;+\infty)$}
+		{$(-1;0)$ và $(1;+\infty)$}
+		{$(-\infty;0)$ và  $(1;+\infty)$}
+		 {\True  $(-\infty;-1)$ và $(0;1)$}
+	\loigiai{Ta có $y'=4x^3-4x=0\Leftrightarrow \hoac{&x=0\\ 
+		&x=-1\\ 
+		 &x=1.\\
+		}$ \\ 
+		 Bảng biến thiên
+		\begin{center}
+			\begin{tikzpicture}
+				\tkzTabInit[nocadre =  false,lgt = 1,espcl = 2]
+					{$x$ /1,$y'$  /1,$y$ /2}{$-\infty$,$-1$,$0$,$1$,$+\infty$}
+				 \tkzTabLine{,-,$0$,+,$0$,-,$0$,+}
+				\tkzTabVar{+/ $+\infty$,-/ $0$,+/ $1$,-/ $0$,+/ $+\infty$} 
+			\end{tikzpicture}
+		\end{center}
+		Vậy hàm số nghịch biến  trên các khoảng
+	$(-\infty;-1)$ và  $( 0;1)$.}
+\end{ex}
+
+\begin{ex}%[2D1H2-1]%[ma:6ffd7e14]
+	\immini{Cho hàm số $y=f(x)$ có  đồ thị đạo hàm $f'(x)$ như hình bên. Giá trị lớn nhất của hàm số $y=f(x)$ trên đoạn $[-1; 2]$ bằng
+	 \choice
+		{$f(2)$} 
+		 {\True  $f(1)$}
+		{$f(0)$}
+		{$f(-1)$}} 
+		{\resizebox{!}{5cm}{\begin{tikzpicture}[line join=round,line cap=round,>=stealth]
+		\begin{scope}
+			\clip (-3,-4)  rectangle (3.2,4);
+			 \draw[gray!20](-4,-4) grid (4,4);
+			\draw[samples=100,domain=-5.5:5.5,smooth,variable=\x] 
+				 plot (\x,{(\x)^3+-2*(\x)^2+-(\x)+2});
+		\end{scope}
+		 \draw[->] (-3,0)--(3.2,0) node[below left] {$x$};
+		 \draw[->] (0,-4)--(0,4) node[below left] {$y$};
+		\draw (0,0) node  [below left] {\footnotesize $O$};
+		\foreach \x  in {-3,-2,-1,1,2,3}
+		\draw[thin] (\x,1pt)--(\x,-1pt) node [below]  {\footnotesize $\x$};
+		\foreach \y in {-3,-2,-1,1,2,3} 
+		\draw[thin] (1pt,\y)--(-1pt,\y) node [left] {\footnotesize  $\y$};
+	\end{tikzpicture}
+		}} 
+	 \loigiai{
+		Ta  có: $f'(x)=0\Leftrightarrow \hoac{&x=-1\\&x=1\\&x=2.}$\\
+		Bảng  biên thiên
+		\begin{center}
+			\begin{tikzpicture}
+				 \tkzTabInit[nocadre,lgt=1,espcl=2]
+					{$x$ /1,$y'$ /1,$y$ /2} 
+					{$-\infty$,$-1$,$1$,$2$,$+\infty$} 
+				 \tkzTabLine{,-,0,+,0,-,0,+}
+				\tkzTabVar{+/$+\infty$,-/$f (-1)$,+/$f  (1)$,-/$f (2)$,+/$+\infty$}
+			\end{tikzpicture}
+		\end{center}
+		 Dựa vào bảng biến thiên trên đoạn $[-1;2]$ hàm số có giá trị lớn nhất là $f(1)$.
+	 }
+\end{ex}
+
+\begin{ex}%[2D1H2-1]%[ma:a4cac9a3]
+	Cho hàm số $y=f(x)$ có đạo hàm trên $\mathbb{R}$ và có bảng xét  dấu của đạo hàm như sau
+	\begin{center}
+		\begin{tikzpicture}
+			 \tkzTabInit[nocadre,lgt=1.2,espcl=2.0]
+				{$x$ /1,$f'(x)$ /1} 
+				 {$-\infty$,$8$,$11$,$12$,$+\infty$}
+			 \tkzTabLine{,+,0,-,0,+,0,-,}
+		\end{tikzpicture}
+	\end{center}
+	Giá trị nhỏ nhất của hàm số $y=f(x)$  trên đoạn $[8;12]$ bằng
+	 \choice
+		{$f(12)$} 
+		{$f(8)$} 
+		 {$f(10)$}
+		 {\True $f(11)$}
+	 \loigiai{
+		 Ta có bảng biến thiên của hàm số như sau
+		\begin{center}
+			\begin{tikzpicture}
+				 \tkzTabInit[nocadre,lgt=1.2,espcl=2.0]
+					{$x$  /1,$f'(x)$ /1,$f (x)$/2}
+					{$-\infty$,$8$,$11$,$12$,$+\infty$} 
+				\tkzTabLine{,+,0,-,0,+,0,-,} 
+				\tkzTabVar{-/,+/$f (8)$,-/$f (11)$,+/$f  (12)$,-/}
+			\end{tikzpicture}
+		\end{center}
+		Vậy, giá trị nhỏ nhất của hàm  số $y=f(x)$ trên đoạn $[8;12]$ bằng $f(11)$.
+	} 
+\end{ex}
+
+\begin{ex}%[2D1H1-1]%[ma:31889049]
+	Hàm số $ y=-x^4+8x^2+6$ đồng  biến trên khoảng nào dưới đây?
+	 \choice
+		{$(-2;0)$  và $(2;+\infty)$}
+		{\True $(-\infty;-2)$ và  $(0;2)$}
+		{$(-\infty;-2)$ và $(2;+\infty)$} 
+		 {$(-2;2)$}
+	 \loigiai{
+		Tập xác  định $\mathscr{D}=\mathbb{R}$.\\
+		$y'=-4x^3+16x$;  $y'=0\Leftrightarrow-4x^3+16x=0\Leftrightarrow \hoac{& x=0\Rightarrow y=6\\
+		& x=2\Rightarrow y=22\\ 
+		& x=-2\Rightarrow  y=22.}$\\
+		 Bảng biến thiên
+		\begin{center}
+			\begin{tikzpicture}[font=\footnotesize,>=stealth]
+			\tikzset{double style/.append style={double distance=1.5pt}}
+			 \tkzTabInit[nocadre=false,lgt=1.2,espcl=2.5,deltacl=0.6]
+				{$x$ /0.7,$y'$ /0.6,$y$ /2} 
+				 {$-\infty$,$-2$,$0$,$2$,$+\infty$}
+			 \tkzTabLine{,+,$0$,-,$0$,-,$0$,+,}
+			 \tkzTabVar{-/$-\infty$,+/$22$,-/$6$,+/$22$,-/$-\infty$}
+		\end{tikzpicture}
+		\end{center}
+	Vậy hàm số $ y=-x^4+8x^2+6$ đồng biến trên khoảng $(-\infty;-2)$ và  $(0;2)$.}
+\end{ex}
+
+\begin{ex}%[2D1H3-1]%[ma:799aaf1b]
+	Tiệm cận xiên của đồ thị hàm số $f(x)  = \dfrac{x^2+x-1}{x}$ là đường thẳng
+	\choice 
+		 {$y=x-1$}
+		 {$y=x-2$}
+		{\True$y=x+1$} 
+		 {$y=x-3$}
+	\loigiai{Gọi đường thẳng $y=ax+b, a\neq 0$ là đường tiệm cận xiên của hàm  số\\
+		Ta có $a=\displaystyle\lim_{x\to +\infty  }\dfrac{\dfrac{x^2+x-1}{x}}{x}=1$.;
+		$b=\displaystyle\lim_{x\to  +\infty }\left[\dfrac{x^2+x-1}{x}-x \right]=1$.\\
+		Vậy đường tiệm cận  xiên cần tìm của đồ thị hàm số $f(x)$ có phương trình $y=x+1$.
+	 }
+\end{ex}
+
+\begin{ex}%[2D1H3-1]%[ma:d32100d4]
+	Cho hàm số $f(x)$ xác định và liên tục trên $\mathbb{R}\setminus \{-1\}$  có bảng biến thiên như sau
+	\begin{center}
+		\begin{tikzpicture}
+			 \tkzTabInit[lgt=1.5,espcl=4,deltacl=.5]
+				 {$x$/0.7,$f’(x)$/0.7,$f (x)$/2}
+				 {$-\infty$,$-1$,$+\infty$}
+			\tkzTabLine{,-,d,-,} 
+			 \tkzTabVar{+/$5$,-D+/ $-\infty$/$+\infty$,-/$2$}
+		\end{tikzpicture}
+	\end{center}
+	Khẳng định nào sau đây đúng? 
+	 \choice
+		{Đồ thị hàm số có một  đường tiệm cận}
+		{Đồ  thị hàm số có bốn đường tiệm cận}
+		{\True Đồ thị hàm số $f(x)$ có hai tiệm cận ngang  là các đường thẳng $y=2$, $y=5$ và có một tiệm cận đứng là đường thẳng $x=-1$}
+		{Đồ thị hàm số có  hai đường tiệm cận}
+	\loigiai{ 
+		Dựa vào bảng biên thiên ta thấy hàm số $f(x)$ có 3 đường tiệm cận đó là hai tiệm cận ngang $y=2$, $y=5$  và có một tiệm cận đứng là đường thẳng $x=-1$.
+	} 
+\end{ex}
+
+\Closesolutionfile{ans}
+
+\phanDe{\textbf{PHẦN II. Câu trắc nghiệm đúng sai.} Thí sinh trả lời từ câu 1 đến câu 4. Trong mỗi ý a), b), c), d) ở mỗi câu, thí sinh chọn đúng hoặc sai.}
+
+\setcounter{ex}{0}
+
+\Opensolutionfile{ansbook}[Ansbook/VD_GHK1_12_103_DS]
+
+\begin{ex}%[2H2H2-5]%[ma:598dfba0]
+	Trong không gian $Oxyz$, với ba vectơ đơn vị $\overrightarrow{i}, \overrightarrow{j}, \overrightarrow{k}$, cho $A(1; 1; 2), B(2; -1;  0), \overrightarrow{u}=(1; -2; -1)$.
+	\choiceTF 
+		{\True Tích có hướng của hai vectơ  $\overrightarrow{i}$ và $\overrightarrow{j}$ là vectơ $\overrightarrow{k}$}
+		{$[\overrightarrow{u}, \overrightarrow{i}] =  (0; 1; 2)$}
+		{$[\overrightarrow{AB}, \overrightarrow{u}] = (6; 1; 0)$} 
+		{\True $[\overrightarrow{OA}, \overrightarrow{OB}] = (2; 4; -3)$} 
+	 \loigiai{
+		\begin{itemchoice}
+			\itemch $\heva{ 
+			&\overrightarrow{i} = (1; 0;  0) \\
+			&\overrightarrow{j} = (0; 1;  0)
+			} \Rightarrow [\overrightarrow{i}, \overrightarrow{j}] = (0; 0; 1)  = \overrightarrow{k}.$
+			\itemch $\heva{ 
+			&\overrightarrow{u} = (1; -2;  -1) \\
+			&\overrightarrow{i}  = (1; 0; 0)
+			} \Rightarrow [\overrightarrow{u}, \overrightarrow{i}] = (0; -1; 2) \neq (0; 1; 2)$. 
+			\itemch  $\heva{
+			&\overrightarrow{AB} = (1; -2; -2)  \\
+			&\overrightarrow{u} = (1;  -2; -1)
+			}  \Rightarrow [\overrightarrow{AB}, \overrightarrow{u}] = (-2; -1; 0) \neq (6; 1; 0)$.
+			\itemch $\heva{ 
+			&\overrightarrow{OA} = (1; 1;  2) \\
+			&\overrightarrow{OB} = (2;  -1; 0)
+			} \Rightarrow  [\overrightarrow{OA}, \overrightarrow{OB}] = (2; 4; -3)$.
+		\end{itemchoice}
+	} 
+\end{ex}
+
+\begin{ex}%[2D1H1-1]%[ma:9a245b8c]
+		Cho hàm số  $y=\dfrac{x+3}{x-1}$
+	 \choiceTF
+			{\True Tập  xác định của hàm số $\mathscr{D} = \mathbb{R} \setminus \{1 \}$}
+			{Hàm số đã cho đồng biến trên  $\mathbb{R} \setminus \{1 \}$}
+			{\True Đạo hàm của  hàm số luôn nhỏ hơn $0$ với mọi $x \neq 1$}
+			{\True Hàm  số đã cho không có cực trị}
+	\loigiai{ 
+			Tập xác định $\mathscr{D} = \mathbb{R} \setminus \{1 \}$ có đạo  hàm $y' = \dfrac{-4}{(x-1)^2} <0$, $\forall x \neq 1$.\\
+			Do đó  hàm số không có cực trị.
+			\begin{itemchoice}
+				\itemch Tập xác định của hàm số $\mathscr{D} = \mathbb{R} \setminus \{1 \}$. 
+				\itemch Hàm số đồng biến trên  các khoảng $(-\infty;1)$ và $(1;+\infty)$.
+				\itemch Đạo hàm của  hàm số luôn nhỏ hơn $0$ với mọi $x \neq 1$.
+				 \itemch Hàm số đã cho không có cực trị.
+			\end{itemchoice}
+		 }
+	\end{ex}
+
+\begin{ex}%[2D1H2-2]%[ma:16cdede5]
+	Đạo hàm $f'(x)$ của hàm số $y=f(x)$ có đồ thị như hình  vẽ.
+	\begin{center}
+		\begin{tikzpicture}[scale=0.7,font=\footnotesize,line join=round,line cap=round,>=stealth]
+			\def\a{0.125} \def\b{-0.625} \def\c{0.25}  \def\d{1}
+			\def\xt{-3}  \def\xp{6} \def\yt{2.5} \def\yd{-3}
+			\draw[->] (\xt,0)--(\xp,0) node [below]{$x$}; 
+			\draw[->] (0,\yd)--(0,\yt) node  [left]{$y$};
+			\node at (0,0)  [below right]{$O$};
+			 \clip (\xt+0.1,\yd-1) rectangle (\xp-0.1,\yt-0.1);
+			\draw[smooth,samples=200,domain=-2:5] plot (\x,{\a*(\x)^3+\b*(\x)^2+\c*(\x)+\d}) node [below  left]{$y=f'(x)$};
+			\draw[dashed] (-2,0) node [below left]{$-2$} --  (-2,-3)
+				(5,0) node [below]{$5$} -- (5,2.25); 
+			\fill (-1,0) circle (1.5pt)  node[below right]{$-1$}
+				(1,0)  circle (1.5pt) node[below]{$1$}
+				(3,0)  circle (1.5pt) node[above]{$3$}
+				(2,0)  circle (1.5pt) node[below left]{$2$}
+				(4,0) circle (1.5pt) node[below right]{$4$}; 
+		\end{tikzpicture}
+	\end{center}
+	 \choiceTF
+		{Hàm số đạt cực tiểu  tại $x=-1$ và $x=3$}
+		{\True  Hàm số đồng biến trên $(-1;2)$ và $(4;5)$}
+		{Hàm số nghịch  biến trên $(0; 3)$}
+		 {\True $f(2)>f(3)>f(4)$}
+	 \loigiai{
+		Từ đồ thị ta  thấy $f'(x)=0 \Leftrightarrow \hoac{& x=-1\\ & x=2\\ & x=4.}$\\
+		Ta có bảng biến thiên như  sau
+		\begin{center}
+			\begin{tikzpicture}
+				\tkzTabInit[nocadre=true,lgt=1.2,espcl=2.5,deltacl=0.6] 
+					{$x$  /0.6,$f'(x)$ /0.6,$f (x)$ /2}
+					 {$-2$,$-1$,$2$,$4$,$5$}
+				\tkzTabLine{,-,$0$,+,$0$,-,$0$,+,} 
+				 \tkzTabVar{+/,-/,+/,-/,+/}
+			\end{tikzpicture}
+		\end{center}
+		Từ  bảng biến thiên suy ra
+		\begin{itemchoice}
+			\itemch Hàm số đạt cực  tiểu tại $x=-1$, $x=4$.
+			 \itemch Hàm số đồng biến trên $(-1;2)$ và $(4;5)$.
+			 \itemch Hàm số nghịch biến trên $(-2;-1)$ và $(2;4)$.
+			\itemch Hàm số $f(x)$ nghịch  biến trên khoảng $(2; 4)$, ta có $2<3<4\Rightarrow f(2)>f(3)>f(4)$.
+		\end{itemchoice}
+	 }
+\end{ex}
+
+\begin{ex}%[2H2V1-3]%[ma:88840d9d]
+	\immini{Cho tứ diện đều $ABCD$ có cạnh bằng  $a$ và $M$ là trung điểm của $CD$.
+	\choiceTF 
+		 {\True $\overrightarrow{AM}\cdot \overrightarrow{CD}=0$}
+		{\True $\overrightarrow{AB}\cdot  \overrightarrow{AC}=\dfrac{a^2}{2}$}
+		{\True $\overrightarrow{AB}\cdot  \overrightarrow{CD}=0$}
+		{$\overrightarrow{AM}\cdot  \overrightarrow{AB}=-\dfrac{a^2}{2}$}}
+		{\begin{tikzpicture}[>=stealth,line join=round,line cap=round,font=\footnotesize,scale=1.5]
+		\path 
+			(0,0) coordinate  (B)
+			 (3.5,0) coordinate (D)
+			(-35:1.5cm)  coordinate (C)
+			(1.5,2) coordinate  (A)
+			($(C)!0.5!(D)$) coordinate  (M);
+		\draw  (A)--(C)
+			 (A)--(B)--(C)--(D)--cycle;
+		\draw[dashed](B)--(D); 
+		\foreach  \i/\j in {A/B,A/C,A/M,A/D}{
+			\draw[->]  (\i)--(\j);
+		} 
+		 \foreach \x/\y in {D/M,C/M}{
+			\path (\x)--(\y)  node[midway,sloped]{\tikz{\draw (270:1pt)--(90:1pt);}};
+		} 
+		\foreach \x/\goc  in {A/90,B/240,D/-60,C/-90,M/-90}
+		 \draw (\x) node[shift={(\goc:7pt)},font=\scriptsize]{$\x$} circle (1pt);
+	\end{tikzpicture}
+		} 
+	 \loigiai{
+		\begin{itemchoice}
+			\itemch Tam giác $ACD$ đều suy ra $AM$ vuông  góc với $CD$ nên $\overrightarrow{AM}\cdot\overrightarrow{CD}=0$.
+			\itemch Ta có $\overrightarrow{AB}\cdot \overrightarrow{AC} = \left|\overrightarrow{AB}\right|\cdot  \left|\overrightarrow{AC}\right|\cos\left(\overrightarrow{AB},\overrightarrow{AC}\right) = AB\cdot AC\cdot \cos 60^\circ = a\cdot a\cdot \cos 60^\circ = \dfrac{a^2}{2}$.
+			\itemch Ta có  $AM$, $BM$ là trung tuyến của các tam giác đều $ACD$, $BCD$ nên $\heva{&AM \perp CD\\& MB \perp CD.}$\\
+			Suy ra $\overrightarrow{AM}\cdot \overrightarrow{CD} = \overrightarrow{MB}\cdot \overrightarrow{CD} = 0$.\\ 
+			Do đó $\overrightarrow{AB}\cdot  \overrightarrow{CD} = \left(\overrightarrow{AM}+\overrightarrow{MB}\right)\cdot \overrightarrow{CD} = \overrightarrow{AM}\cdot \overrightarrow{CD} + \overrightarrow{MB}\cdot\overrightarrow{CD}=0$.
+			\itemch Ta có $\overrightarrow{AM} =  \dfrac{1}{2}\left(\overrightarrow{AC}+\overrightarrow{AD}\right)$.
+			\\ Suy ra $\overrightarrow{AB}\cdot \overrightarrow{AM} = \overrightarrow{AB}\cdot \dfrac{1}{2} \left(\overrightarrow{AC}+\overrightarrow{AD}\right) = \dfrac{1}{2}\left(\overrightarrow{AB}\cdot \overrightarrow{AC} + \overrightarrow{AB}\cdot \overrightarrow{AD}\right) = \dfrac{1}{2}\cdot \left(\dfrac{a^2}{2} +  \dfrac{a^2}{2}\right) = \dfrac{a^2}{2}$.
+		\end{itemchoice}
+	 }
+\end{ex}
+
+\Closesolutionfile{ansbook}
+
+\phanDe{\textbf{PHẦN III. Câu trắc nghiệm trả lời ngắn.} Thí sinh trả lời từ câu 1 đến câu 6.}
+
+\setcounter{bt}{0}
+
+\Opensolutionfile{ansbt}[Ansbook/VD_GHK1_12_103_TLN]
+
+\begin{bt}%[2H2V2-6]%[ma:3c7abcc9]
+	Có ba lực cùng tác động vào một vật. Hai trong ba lực này hợp với nhau một góc $100^\circ$ và có độ lớn lần lượt là $25$ N và $12$ N. Lực thứ ba vuông góc với mặt phẳng tạo bởi hai lực đã cho và có độ lớn $4$  N. Tính độ lớn của hợp lực (N) của ba lực trên (làm tròn kết quả đến hàng đơn vị).
+	\begin{center}
+		\begin{tikzpicture}[line join=round,line cap=round,>=stealth,scale=0.6,font=\footnotesize]
+				 \foreach \x/\y/\n in {0/0/A,6/0/C,2/-2/B} \coordinate (\n) at (\x,\y);
+				\coordinate (S)  at ($(A)+(0,4)$);
+				\coordinate (M) at  ($(B)!1/2!(C)$);
+				 \coordinate (G) at ($(A)!2/3!(M)$);
+				\draw (S)--(A)--(B)--(C)--(S)--(B); 
+				 \draw[dashed] (A)--(C)
+					 (A)--(M);
+				\foreach \t/\g in {A/180,B/-110,C/0,S/90,M/-40,G/-90}{ 
+					\fill (\t) circle (1pt) node[shift={(\g:8pt)}]{$  \t $};
+				 }
+				 \draw pic[thin,draw,angle radius=2mm] {right angle= A--B--C};
+			\end{tikzpicture}2
+		 2
+	\end{center}
+	 \shortans{26}
+	\loigiai{ 
+		Hợp lực của  hai lực đầu tiên là $\overrightarrow{F}_{12}=\overrightarrow{F}_{1}+\overrightarrow{F}_{2}$.\\
+		Độ lớn hợp lực của hai lực đó là $\left|\overrightarrow{F}_{12}\right|=\sqrt{{F}_{1}^{2}+{F}_{2}^{2}+2 \cdot F_1 \cdot  F_2 \cdot \cos \left(F_1, F_2\right)}=25{,}78$ (N).\\
+		Lực $\overrightarrow{F}_{3}$ vuông góc với mặt phẳng tạo bởi hai lực đã cho nên $\overrightarrow{F}_{3}$ vuông  góc với mọi véc-tơ nằm trong mặt phẳng tạo bởi $\overrightarrow{F}_{1}$ và $\overrightarrow{F}_{2}$.
+		\[\left|\overrightarrow{F}\right|=\left|\overrightarrow{F}_{3}+\overrightarrow{F}_{12}\right|=\sqrt{F_{3}^{2}+F_{12}^{2}+2 \cdot F_3 \cdot F_{12} \cdot  \cos \left(F_3, F_{12}\right)}=26\,(\mathrm{N}).\]
+		Vậy độ lớn tổng  hợp lực là $26$ (N).
+	} 
+\end{bt}
+
+\begin{bt}%[2D1V3-6]%[ma:500d94db]
+	\immini{Bạn An có một đoạn dây thép dài $16$ dm, muốn uốn thành một kim tự tháp có dạng chóp tứ giác đều (đoạn dây thép được uốn thành $4$ cạnh bên và $4$ cạnh đáy của kim tự tháp). Hỏi thể tích lớn nhất của kim tự tháp bạn An  có thể làm được là bao nhiêu (đơn vị: $\mathrm{dm}^3$, kết quả làm tròn đến hàng phần trăm)?
+	\shortans{1,95} 
+	} 
+	 {
+	\begin{tikzpicture}[scale=.7,font=\footnotesize,line join=round,line cap=round,>=stealth]
+		\coordinate (A) at (0,0); 
+		\coordinate  (B) at (3,0);
+		 \coordinate (C) at (4.5,1.2);
+		\coordinate (D)  at ($(A)+(C)-(B)$);
+		\coordinate  (O) at ($(A)!.5!(C)$);
+		\coordinate (S)  at ($(O)+(0,3)$);
+		 \draw (B)--(A)--(S)--(B)--(C)--(S);
+		\draw [dashed] (A)--(D)--(C); 
+		\draw [dashed]  (S)--(D);
+		 \draw (A) circle (1pt);
+		\draw (B)  circle (1pt);
+		\draw (C) circle  (1pt);
+		\draw (D) circle (1pt); 
+		\draw  (S) circle (1pt);
+	\end{tikzpicture}
+	 }
+	 \loigiai{
+		\begin{center}
+			\begin{tikzpicture}[scale=1,font=\footnotesize,line join=round,line cap=round,>=stealth]
+				\coordinate (A) at (0,0); 
+				\coordinate (B)  at (3,0);
+				\coordinate (C)  at (4.5,1.2);
+				\coordinate  (D) at ($(A)+(C)-(B)$);
+				 \coordinate (O) at ($(A)!.5!(C)$);
+				 \coordinate (S) at ($(O)+(0,3)$);
+				\draw  (B)--(A)--(S)--(B)--(C)--(S);
+				\draw  [dashed] (A)--(D)--(C);
+				\draw  [dashed] (S)--(D);
+				\draw  [dashed] (A)--(C);
+				\draw [dashed] (B)--(D); 
+				\draw  [dashed] (S)--(O);
+				\draw (A) circle  (1pt) node [below left] {$A$};
+				\draw  (B) circle (1pt) node [below right] {$B$};
+				\draw (C) circle (1pt) node [above right] {$C$}; 
+				\draw (D) circle (1pt)  node [above left] {$D$};
+				\draw (S) circle (1pt) node [above] {$S$}; 
+				\draw (O) circle (1pt) node [below]  {$O$};
+			\end{tikzpicture}
+		\end{center}
+		Kí hiệu kim tự tháp dạng chóp tứ giác đều là $S.ABCD$ có đáy tâm  $O$ như hình vẽ.
+		Đặt $AB=x$.\\ Do tổng độ dài các cạnh bằng $16$ dm, ta có $4AB + 4SA = 16 \Leftrightarrow AB+SA=4 \Rightarrow  SA=4-x$.\\
+		Điều kiện để tồn tại hình chóp là cạnh bên lớn  hơn nửa đường chéo đáy:
+		\[SA > OA \Leftrightarrow 4-x > \dfrac{x\sqrt{2}}{2} \Leftrightarrow 8 > (2+\sqrt{2})x \Leftrightarrow x < \dfrac{8}{2+\sqrt{2}} =  8-4\sqrt{2}.\]
+		Kết hợp các điều kiện, ta  có miền xác định của $x$ là $0<x<8-4\sqrt{2}$.\\
+		Thể tích của chóp là $V = \dfrac{1}{3}SO \cdot  S_{ABCD} = \dfrac{1}{3}x^2\sqrt{16-8x+\dfrac{x^2}{2}}$.\\
+		Để $V$ lớn nhất, ta tìm giá  trị lớn nhất của $V^2 = \dfrac{1}{9}x^4\left(16-8x+\dfrac{x^2}{2}\right) = \dfrac{1}{18}\left(32x^4-16x^5+x^6\right)$.\\
+		Xét hàm số  $f(x) = x^6-16x^5+32x^4$ trên đoạn $[0; 8-4\sqrt{2}]$.\\
+		Ta có $f'(x) = 6x^5-80x^4+128x^3 =  2x^3(3x^2-40x+64)$.\\
+		Cho $f'(x)=0 \Leftrightarrow \hoac{&x=0 \quad \text{ (loại)}\\&x=\dfrac{20-4\sqrt{13}}{3}  \quad \text{ (nhận)}\\&x=\dfrac{20+4\sqrt{13}}{3} \quad \text{ (loại).}}$\\
+		Ta có $f(0)=f\left(8-4\sqrt2\right)=0$,  $f\left(\dfrac{20-4\sqrt{13}}{3}\right)\approx 1{,}95$.\\
+		Vậy thể tích lớn nhất của kim tự tháp là $1{,}95\,\mathrm{dm}^3$. 
+	 }
+\end{bt}
+
+\begin{bt}%[2H2V2-6]%[ma:8a5d9a9a]
+	Cho ba lực $\overrightarrow{F}_1=\overrightarrow{MA}$, $\overrightarrow{F}_2=\overrightarrow{MB}$, $\overrightarrow{F}_3=\overrightarrow{MC}$ cùng tác động vào một ô tô tại điểm $M$ và ô tô đứng yên. Cho biết cường độ hai lực $\overrightarrow{F}_1$, $\overrightarrow{F}_2$ đều bằng $25$N và góc $\widehat{AMB}=60^\circ$. Khi đó tính cường độ $\overrightarrow{F}_3$ (làm tròn đến hàng  phần chục).
+	\begin{center}
+		\begin{tikzpicture}[line join=round,line cap=round,font=\footnotesize,scale=1,>=stealth]
+				\def \r{3} 
+				 \path
+					 (0,0) coordinate (B)
+					 (0:\r) coordinate (D)
+					(-50:0.5*\r) coordinate (C) 
+					($(C)!0.5!(D)$) coordinate (M) 
+					($(B)!2/3!(M)$)  coordinate (G_0)
+					($(B)!(G_0)!(D)$) coordinate (X) 
+					 ($(X)!1.1!90:(D)$) coordinate (A)
+					 ($(A)!0.6!(G_0)$) coordinate (G);
+				\draw  (A)--(B)--(C)--(D)--(A)--(C);
+				 \draw[dashed] (B)--(D)
+					 (A)--(G_0)
+					(G)--(B)--(M); 
+				\foreach \x/\g in {A/90,B/180,C/-90,D/0,M/-30,G_0/-90,G/0}\fill (\x) circle (1pt)+(\g:.3) node{$\x$}; 
+			\end{tikzpicture}7
+		7 
+	\end{center}
+	 \shortans{43,3}
+	 \loigiai{
+		\begin{center}
+			\begin{tikzpicture}[line join=round,line cap=round,font=\footnotesize,scale=1,>=stealth]
+					\def \r{3} 
+					 \path
+						(0,0) coordinate  (B)
+						(0:\r) coordinate  (D)
+						(-50:0.5*\r)  coordinate (C)
+						($(C)!0.5!(D)$) coordinate  (M)
+						($(B)!2/3!(M)$) coordinate  (G_0)
+						($(B)!(G_0)!(D)$) coordinate  (X)
+						($(X)!1.1!90:(D)$)  coordinate (A)
+						($(A)!0.6!(G_0)$) coordinate (G); 
+					 \draw (A)--(B)--(C)--(D)--(A)--(C);
+					\draw[dashed]  (B)--(D)
+						 (A)--(G_0)
+						(G)--(B)--(M); 
+					\foreach \x/\g in {A/90,B/180,C/-90,D/0,M/-30,G_0/-90,G/0}\fill (\x) circle (1pt)+(\g:.3) node{$\x$}; 
+				\end{tikzpicture}8
+			8 
+		\end{center}
+		Ta có  $\overrightarrow{F_1}+\overrightarrow{F_2}=\overrightarrow{MA}+\overrightarrow{MB}=\overrightarrow{MD}$ (với $D$ là điểm sao cho $AMBD$ là hình bình hành). \\
+		 Ta có $MA=\left|\overrightarrow{MA}\right|=\left|\overrightarrow{F}_1\right|=25$N và $MB=\left|\overrightarrow{MB}\right|=\left|\overrightarrow{F}_2\right|=25$N. \\
+		Do  $\widehat{AMB}=60^\circ$ nên $\Delta MAB$ là tam giác đều. \\Khi đó $MD=2\cdot \dfrac{25\sqrt{3}}{2}=25\sqrt{3}$ (N).\\
+		Do ô tô đứng yên nên cường độ lực tác dụng lên ô tô bằng $0$  hay $\overrightarrow{F}_1+\overrightarrow{F}_2+\overrightarrow{F}_3=\overrightarrow{0}$.\\
+		Suy  ra
+		$\overrightarrow{F}_3=-(\overrightarrow{F}_1+\overrightarrow{F}_2) 
+		\Rightarrow \left|\overrightarrow{F}_3\right|=\left| -(\overrightarrow{F}_1+\overrightarrow{F}_2)\right| 
+		=\left|\overrightarrow{DM}\right|=MD=25\sqrt{3}$ (N).\\ 
+		Vậy cường độ của $\overrightarrow{F}_3$ là $25\sqrt{3}\approx  43{,}3$ (N).
+	 }
+\end{bt}
+
+\begin{bt}%[2D1V3-6]%[ma:f0fc0aef]
+		Trận bóng đá giao hữu giữa đội tuyển Việt Nam và Thái Lan ở sân vận động Mỹ Đình có sức chứa $55\,000$ khán giả. Ban tổ chức bán vé với giá mỗi vé là $100$ nghìn đồng, số khán giả trung bình đến  sân xem bóng đá là $27\,000$ người. Qua thăm dò dư luận, người ta thấy rằng mỗi khi giá vé giảm thêm $10$ nghìn đồng, sẽ có thêm khoảng $3\,000$ khán giả. Hỏi ban tổ chức nên đặt giá vé là bao nhiêu để doanh thu từ tiền bán vé là lớn nhất với đơn vị tính giá vé là nghìn đồng?
+	 \shortans{95}
+	\loigiai{ 
+		Gọi $x\,(x>0)$ nghìn là số tiền giá vé giảm.\\ 
+		Khi đó giá vé sau khi giảm là  $100-x$ (nghìn đồng).\\
+		 Sau mỗi lần giảm giá thì có thêm $300x$ khán giả.\\
+		Do đó tổng số khán giả đến  xem là $27\,000+300x$.\\
+		Vì sân vận động có  sức chứa $55\,000$ khán giá nên $27\,000+300 x\leq 55\,000\Leftrightarrow x\leq\dfrac{280}{3}$.\\
+		Doanh thu từ tiền bán vé là $y=(27\,000+300x)(100-x)=-300 x^2+3\,000x+2\,700\,000$.\\ 
+		Yêu cầu bài toán trở  thành tìm giá trị lớn nhất của hàm số $y=-300x^2+3\,000 x+2\,700\,000$.\\
+		Tập  xác định $\mathscr{D}=\left(0;\dfrac{280}{3}\right]$.\\
+		$y'=-600x+3\,000$, $y'=0 \Leftrightarrow x=5$.\\ 
+		Bảng biến  thiên
+		\begin{center}
+			\begin{tikzpicture}
+				\tkzTabInit[nocadre=true,lgt=1.2,espcl=3.5,deltacl=1] 
+					{$x$  /1,$y'$ /1,$y$ /2.6}
+					 {$0$,$5$,$\dfrac{280}{3}$}
+				 \tkzTabLine{,+,$0$,-,}
+				 \tkzTabVar{-/$2\,700\,000$,+/$2\,707\,500$,-/$2\,700\,000$}
+			\end{tikzpicture}
+		\end{center}
+	Dựa vào bảng biến thiên, ta thấy ban tổ chức nên đặt giá  vé là $95$ nghìn đồng thì doanh thu tiền bán vé là lớn nhất.}
+\end{bt}
+
+\begin{bt}%[2D1V3-1]%[ma:e45115c6]
+	\immini{Trên mảnh đất hình chữ nhật $ABCD$ có diện tích $25$\,m$^2$, người chủ lấy một phần đất để trồng cỏ.  Biết phần đất trồng cỏ này có dạng hình chữ nhật với hai đỉnh đối diện là $A$ và $H$, với $H$ thuộc cạnh $BD$. Hỏi số tiền lớn nhất người chủ cần chuẩn bị để trồng cỏ (miền tô đậm) là bao nhiêu (làm tròn đến nghìn đồng) với chi phí trồng cỏ là $70\,000$ đồng/$m^2$?}
+	{\begin{tikzpicture}
+		\def\a{4} 
+		\path (0:0) coordinate  (A)
+			 (0:\a) coordinate (D)
+			(-90:.65*\a) coordinate  (B)
+			($(D)-(A)+(B)$)  coordinate (C)
+			 ($(D)!.4!(A)$) coordinate (N)
+			($(D)!.4!(B)$)  coordinate (H)
+			($(B)!(H)!(A)$) coordinate  (M);
+		\fill[pattern=dots](A)--(N)--(H)--(M); 
+		\draw  (A)--(B)--(C)--(D)--cycle (B)--(D)
+			(M)--(H)--(N); 
+		\foreach \x/\g in  {A/135,B/-135,C/-45,D/45,M/180,N/90,H/-45}
+		 \fill (\x) circle (1pt)
+			($(\g:3mm)+(\x)$) node {$\x$}; 
+	\end{tikzpicture}
+	 }
+	 \shortans{438}
+	\loigiai{ 
+	\immini{Ta có $AB\cdot  AD=25\,\left(\mathrm{m}^2\right)$; $\dfrac{NH}{AB}=\dfrac{DN}{DA}$.\\
+		Đặt $\dfrac{NH}{AB}=\dfrac{DN}{DA}=x \Rightarrow  NH=x\cdot AB$; $AN=(1-x) AD$.\\
+		Diện tích  đất trồng cỏ là \allowdisplaybreaks
+		\begin{eqnarray*}
+			S&=&AN\cdot NH\\ 
+			&=&x \cdot(1-x) \cdot  AB\cdot AD\\
+			&=&25\cdot  x \cdot(1-x).
+		\end{eqnarray*}}
+		{\begin{tikzpicture}
+		 \def\a{4}
+		\path (0:0) coordinate (A) 
+			(0:\a)  coordinate (D)
+			(-90:.65*\a) coordinate (B) 
+			($(D)-(A)+(B)$)  coordinate (C)
+			($(D)!.4!(A)$)  coordinate (N)
+			($(D)!.4!(B)$) coordinate  (H)
+			($(B)!(H)!(A)$) coordinate  (M);
+		 \fill[pattern=dots](A)--(N)--(H)--(M);
+		 \draw (A)--(B)--(C)--(D)--cycle (B)--(D)
+			(M)--(H)--(N); 
+		\foreach \x/\g  in {A/135,B/-135,C/-45,D/45,M/180,N/90,H/-45}
+		\fill  (\x) circle (1pt)
+			($(\g:3mm)+(\x)$) node {$\x$}; 
+	\end{tikzpicture}
+		} 
+		\noindent Mà $x\cdot (1-x) \leq  \dfrac{(x+1-x)^2}{4}=\dfrac{1}{4}$.\\
+		Diện tích đất trồng cỏ lớn nhất  $S=\dfrac{1}{4}\cdot 25=\dfrac{25}{4}$.\\
+		Số tiền lớn nhất để trồng cỏ $T=\dfrac{25}{4} \cdot 70\,000=437\,500$ (đồng)  $\approx 438$ (nghìn đồng).
+	} 
+\end{bt}
+
+\begin{bt}%[2D1V1-3]%[ma:a0e26698]
+	Có bao~nhiêu giá trị nguyên của tham số $m$ thuộc $[-2024;2024]$ để hàm số $y = \dfrac{\sin  x + m}{\sin x - 1}$ nghịch biến trên khoảng $\left(\dfrac{\pi}{2}; \pi\right)$?
+	\shortans{2025} 
+	\loigiai{ 
+		Đặt $t  = \sin x$, với $( -1 \leq t \leq 1)$.\\
+		Xét $x \in \left( \dfrac{\pi}{2}; \pi \right) \Rightarrow t \in (0;1)  $.\\
+		 Với $t = \sin x $, ta có $y(t) = \dfrac{t + m}{t - 1}$.\\
+		Tính đạo hàm  $y'(t) = \dfrac{-1 - m}{(t - 1)^2}$.\\
+		Để hàm số nghịch biến trên  khoảng $\left(\dfrac{\pi}{2}; \pi \right)$, ta cần $y'(t)<0$ với mọi $t \neq 1\Rightarrow -1 - m < 0 \Rightarrow m > -1$.\\
+		Mà  $m$ là số nguyên thuộc khoảng $[-2024; 2024]$, ta có
+		\[ 
+		 m \in \{0;1;\dots;2024\}.
+		\] 
+		Vậy có $2025$ giá trị nguyên của $m$  thỏa mãn bài toán.
+	} 
+\end{bt}
+
+\Closesolutionfile{ansbt}
+
+\hetDe{103}
+\end{document}
