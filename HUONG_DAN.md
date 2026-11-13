@@ -162,7 +162,10 @@ Tích **Xuất Word K12Online** trong ứng dụng, hoặc thêm `--word` khi ch
 - **Công thức** chuyển thành **Equation của Word** (thẳng dòng với chữ, sửa được, K12Online nhận được).
   Cần **pandoc**: `brew install pandoc` hoặc `pip3 install pypandoc_binary`. Không có pandoc thì công thức thành ảnh SVG.
 - Bảng biến thiên, hình vẽ (và công thức pandoc không đọc được) là **ảnh SVG** sắc nét (kèm PNG 600 dpi) — cần MacTeX đầy đủ.
-- Muốn mọi công thức đều là ảnh: chạy với biến môi trường `NH_CONG_THUC=svg`.
+- **Công thức là ảnh SVG**: chọn ô "Công thức trong Word → Ảnh SVG sắc nét, thẳng hàng chữ" (hoặc `--word-svg`).
+  Mỗi công thức được LaTeX vẽ cỡ 12pt bằng phông Times (khớp chữ Times New Roman) và hạ xuống đúng phần nằm dưới
+  chân chữ (Font → Advanced → Position: Lowered) nên **thẳng hàng với dòng chữ trong Word (Windows/Mac)**.
+  Pages, LibreOffice, Google Docs không hiểu thông số hạ ảnh nên ở đó công thức sẽ nhô lên — hãy mở bằng Word.
 
 ## Biên dịch đề
 Mở file trong `de-da-ra/<tên>/` bằng TeXstudio, biên dịch **pdfLaTeX** như các đề cũ của phần mềm

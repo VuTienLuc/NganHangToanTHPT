@@ -279,6 +279,8 @@ def dau_van_ban(thu_muc_tex):
     pre = pre.replace("\\usepackage[hidelinks]{hyperref}", "")
     if os.environ.get("NH_THAY_VIETNAM"):          # chỉ dùng khi thử trên máy không có gói vietnam
         pre = pre.replace("\\usepackage[utf8]{vietnam}", os.environ["NH_THAY_VIETNAM"])
+    # công thức dùng phông Times (mathptmx) cho hợp với chữ Times New Roman của Word; giữ nguyên phông chữ thường
+    pre += ("\\let\\rmgocKW\\rmdefault\\usepackage{mathptmx}\\let\\rmdefault\\rmgocKW\n")
     pre += ("\\usepackage[active,tightpage]{preview}\n\\setlength\\PreviewBorder{0pt}\n"
             "\\pagestyle{empty}\n\\newsavebox\\hopmanh\n")
     return pre
@@ -340,7 +342,9 @@ def bien_dich_manh(manh, thu_muc_tex, in_ra=print):
         i = int(so) - 1
         if i < len(khoa) and float(w) > 0:
             b = vien[khoa[i]]          # ảnh gồm cả viền: rộng w+2b, cao h+d+2b, phần dưới baseline d+b
-            kq[khoa[i]].update(w=float(w) + 2 * b, h=float(h) + b, d=max(0.0, float(d)) + b, b=b)
+            bp = 72 / 72.27            # pt của TeX → pt của Word/SVG (big point)
+            kq[khoa[i]].update(w=(float(w) + 2 * b) * bp, h=(float(h) + b) * bp,
+                               d=(max(0.0, float(d)) + b) * bp, b=b * bp)
     pdf = os.path.join(thu_muc_tex, "_k12_pdf.pdf")
     if not os.path.exists(pdf):
         raise RuntimeError("Biên dịch công thức thất bại — xem tex/_k12_pdf.log")
@@ -410,9 +414,9 @@ def ma_toan_tran(loai, ma):
     t = re.sub(r"^\\textstyle\s*", "", t)
     return " ".join(t.split())
 
-def omml_cong_thuc(manh, in_ra=print):
+def omml_cong_thuc(manh, in_ra=print, cong_thuc="equation"):
     """{khoá: '<m:oMath>…</m:oMath>'} cho các công thức pandoc chuyển được."""
-    if os.environ.get("NH_CONG_THUC", "").lower() == "svg":
+    if (os.environ.get("NH_CONG_THUC") or cong_thuc or "").lower() == "svg":
         return {}
     pd = tim_pandoc()
     if not pd:
@@ -582,7 +586,8 @@ def dap_so_tln(q, da):
     v = (q["tln"] or da or "").replace("$", "").replace("{,}", ",").replace("\\,", "").replace(" ", "").replace(".", ",")
     return v.replace("−", "-").replace("–", "-")
 
-def xuat(thu_muc_de, in_ra=print):
+def xuat(thu_muc_de, in_ra=print, cong_thuc="equation"):
+    """cong_thuc = "equation" (Equation của Word) hoặc "svg" (ảnh SVG sắc nét, hạ đúng baseline → thẳng dòng)."""
     tex = os.path.join(thu_muc_de, "tex")
     du_lieu = json.load(open(os.path.join(tex, "_k12_cau.json"), encoding="utf-8"))
     manh, cau_tach = {}, {}
@@ -599,10 +604,11 @@ def xuat(thu_muc_de, in_ra=print):
             cau_tach[(ma_de, i)] = q
     in_ra(f"Xuất Word K12Online cho {len(du_lieu)} mã đề…")
     OMML.clear()
-    OMML.update(omml_cong_thuc(manh, in_ra))
+    OMML.update(omml_cong_thuc(manh, in_ra, cong_thuc))
     con_lai = {k: v for k, v in manh.items() if k not in OMML}
     so_ct = sum(1 for l, _ in manh.values() if l != "fig")
-    in_ra(f"  Công thức → Equation của Word: {len(OMML)}/{so_ct}")
+    in_ra(f"  Công thức → Equation của Word: {len(OMML)}/{so_ct}" if OMML else
+          f"  Công thức → ảnh SVG thẳng hàng chữ: {so_ct}")
     anh = bien_dich_manh(con_lai, tex, in_ra) if con_lai else {}
     B, BU = ("b",), ("b", "u")
     for ma_de, ds in du_lieu.items():
@@ -646,4 +652,5 @@ def xuat(thu_muc_de, in_ra=print):
         in_ra(f"  ✓ {os.path.basename(ra)}")
 
 if __name__ == "__main__":
-    xuat(sys.argv[1])
+    # python3 scripts/k12word.py "<thư mục đề>" [svg|equation]
+    xuat(sys.argv[1], cong_thuc=(sys.argv[2] if len(sys.argv) > 2 else "equation"))

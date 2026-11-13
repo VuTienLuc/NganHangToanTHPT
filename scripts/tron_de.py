@@ -23,7 +23,8 @@ ap = argparse.ArgumentParser()
 ap.add_argument("ma_tran")
 ap.add_argument("--thu", action="store_true")
 ap.add_argument("--bien-dich", action="store_true")
-ap.add_argument("--word", action="store_true", help="xuất thêm Word theo mẫu K12Online (công thức SVG)")
+ap.add_argument("--word", action="store_true", help="xuất thêm Word theo mẫu K12Online (công thức Equation)")
+ap.add_argument("--word-svg", action="store_true", help="xuất Word K12Online với công thức là ảnh SVG thẳng dòng")
 ap.add_argument("--so-ma-de", type=int)
 ap.add_argument("--ten")
 a = ap.parse_args()
@@ -529,9 +530,9 @@ print("THU_MUC:" + rel)
 
 if a.bien_dich:
     bien_dich_thu_muc(out_goc)
-if a.word or mt.get("xuat_word_k12"):
+if a.word or a.word_svg or mt.get("xuat_word_k12"):
     import k12word
     try:
-        k12word.xuat(out_goc)
+        k12word.xuat(out_goc, cong_thuc="svg" if a.word_svg or mt.get("word_cong_thuc") == "svg" else "equation")
     except Exception as e:
         print("  ✗ Không xuất được Word:", e)
