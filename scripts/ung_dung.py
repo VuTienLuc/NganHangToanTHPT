@@ -190,6 +190,26 @@ class XuLy(BaseHTTPRequestHandler):
                 else:
                     subprocess.Popen(["open", p] if sys.platform == "darwin" else ["xdg-open", p])
                 return self.gui(200, {"ok": True})
+            if u.path == "/api/tron-file":
+                # TRỘN ĐỀ CÓ SẴN: lưu file đề vào de-da-ra/_nguon/, chạy tron_de với tu_file
+                t = d.get("tep") or {}
+                ten_goc = os.path.basename(t.get("ten") or "de.tex")
+                thu_nguon = os.path.join(GOC, "de-da-ra", "_nguon"); os.makedirs(thu_nguon, exist_ok=True)
+                p_nguon = os.path.join(thu_nguon, time.strftime("%Y%m%d-%H%M%S_") + ten_goc)
+                open(p_nguon, "w", encoding="utf-8").write(t.get("noi_dung") or "")
+                mt = {**(d.get("ma_tran") or {}), "tu_file": os.path.relpath(p_nguon, GOC), "phan": []}
+                mt["ten"] = ten_khong_dau(os.path.splitext(ten_goc)[0], 60) or "De"
+                p = os.path.join(GOC, "du-lieu", "_tron_file.json")
+                json.dump(mt, open(p, "w", encoding="utf-8"), ensure_ascii=False, indent=2)
+                rc, log = chay([os.path.join(SCRIPTS, "tron_de.py"), p], timeout=1800)
+                m = re.search(r"^THU_MUC:(.*)$", log, re.M)
+                rel = m.group(1).strip() if m else ""
+                log = re.sub(r"^THU_MUC:.*\n?", "", log, flags=re.M)
+                dang_bd = False
+                if rc == 0 and rel and d.get("bien_dich") and tim_pdflatex():
+                    dang_bd = True
+                    threading.Thread(target=bien_dich_nen, args=(rel,), daemon=True).start()
+                return self.gui(200, {"ok": rc == 0, "nhat_ky": log, "thu_muc": rel, "bien_dich": dang_bd})
             if u.path == "/api/prompt":
                 import tao_prompt
                 return self.gui(200, {"ok": True, "noi_dung": tao_prompt.tao_prompt(d.get("pham_vi") or [])})

@@ -457,8 +457,11 @@ NS = ('xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main" '
       'xmlns:m="http://schemas.openxmlformats.org/officeDocument/2006/math"')
 
 class Docx:
-    def __init__(self):
+    def __init__(self, co_chu=12, le=(1134, 1134, 1134, 1418), chan_trang=None):
+        """co_chu: cỡ chữ (pt); le: lề (trên, phải, dưới, trái) twip; chan_trang: XML các đoạn của chân trang."""
         self.p, self.media, self.so = [], {}, 0
+        self.co_chu, self.le, self.chan_trang = co_chu, le, chan_trang
+        self.ti_le = co_chu / 12.0             # ảnh công thức vẽ ở 12pt → co giãn theo cỡ chữ
 
     def rel_anh(self, duong):
         if duong not in self.media:
@@ -468,6 +471,8 @@ class Docx:
 
     def anh(self, m, ha_xuong=True):
         w, h, d = m["w"], m["h"] + m["d"], m["d"]
+        tl0 = getattr(self, "ti_le", 1.0)
+        w, h, d = w * tl0, h * tl0, d * tl0
         if w > RONG_TOI_DA:
             tl = RONG_TOI_DA / w; w, h, d = w * tl, h * tl, d * tl
         cx, cy = max(1, int(round(w * PT))), max(1, int(round(h * PT)))
@@ -512,15 +517,19 @@ class Docx:
         self.p.append(x + "</w:tbl>")
 
     def luu(self, duong):
-        body = "".join(self.p) + ('<w:sectPr><w:pgSz w:w="11906" w:h="16838"/>'
-                                  '<w:pgMar w:top="1134" w:right="1134" w:bottom="1134" w:left="1418" w:header="567" w:footer="567" w:gutter="0"/></w:sectPr>')
+        tren, phai, duoi, trai = self.le
+        chan = '<w:footerReference w:type="default" r:id="rIdChan"/>' if self.chan_trang else ""
+        body = "".join(self.p) + (f'<w:sectPr>{chan}<w:pgSz w:w="11906" w:h="16838"/>'
+                                  f'<w:pgMar w:top="{tren}" w:right="{phai}" w:bottom="{duoi}" w:left="{trai}" w:header="454" w:footer="397" w:gutter="0"/></w:sectPr>')
         doc = f'<?xml version="1.0" encoding="UTF-8" standalone="yes"?><w:document {NS}><w:body>{body}</w:body></w:document>'
-        styles = ('<?xml version="1.0" encoding="UTF-8" standalone="yes"?><w:styles xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main">'
+        styles = (f'<?xml version="1.0" encoding="UTF-8" standalone="yes"?><w:styles xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main">'
                   '<w:docDefaults><w:rPrDefault><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:eastAsia="Times New Roman" w:cs="Times New Roman"/>'
-                  '<w:sz w:val="24"/><w:szCs w:val="24"/><w:lang w:val="vi-VN"/></w:rPr></w:rPrDefault>'
+                  f'<w:sz w:val="{int(self.co_chu * 2)}"/><w:szCs w:val="{int(self.co_chu * 2)}"/><w:lang w:val="vi-VN"/></w:rPr></w:rPrDefault>'
                   '<w:pPrDefault><w:pPr><w:spacing w:after="40" w:line="264" w:lineRule="auto"/></w:pPr></w:pPrDefault></w:docDefaults>'
                   '<w:style w:type="paragraph" w:default="1" w:styleId="Normal"><w:name w:val="Normal"/></w:style></w:styles>')
         rels = ['<Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles" Target="styles.xml"/>']
+        if self.chan_trang:
+            rels.append('<Relationship Id="rIdChan" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/footer" Target="footer1.xml"/>')
         rels += [f'<Relationship Id="{rid}" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/image" Target="{ten}"/>'
                  for rid, ten in self.media.values()]
         with zipfile.ZipFile(duong, "w", zipfile.ZIP_DEFLATED) as z:
@@ -530,12 +539,16 @@ class Docx:
                        '<Default Extension="xml" ContentType="application/xml"/>'
                        '<Default Extension="png" ContentType="image/png"/><Default Extension="svg" ContentType="image/svg+xml"/>'
                        '<Override PartName="/word/document.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml"/>'
-                       '<Override PartName="/word/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.styles+xml"/></Types>')
+                       '<Override PartName="/word/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.styles+xml"/>'
+                       + ('<Override PartName="/word/footer1.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.footer+xml"/>'
+                          if self.chan_trang else "") + '</Types>')
             z.writestr("_rels/.rels",
                        '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">'
                        '<Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="word/document.xml"/></Relationships>')
             z.writestr("word/document.xml", doc)
             z.writestr("word/styles.xml", styles)
+            if self.chan_trang:
+                z.writestr("word/footer1.xml", f'<?xml version="1.0" encoding="UTF-8" standalone="yes"?><w:ftr {NS}>{self.chan_trang}</w:ftr>')
             z.writestr("word/_rels/document.xml.rels",
                        '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">'
                        + "".join(rels) + "</Relationships>")

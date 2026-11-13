@@ -169,6 +169,25 @@ Nạp đáp án: Chấm Phiếu AI → ô **Đáp án** → **Nhập từ file E
 Khung đề chính thức nằm ở `khung/DeThiChinhThuc/mau_de.tex` (in đen trắng). Muốn dạng ôn tập có màu
 như phần mềm cũ thì ghi `"khung": "DeThi"` trong file JSON.
 
+## Trộn đề có sẵn từ file (đề AI gõ lại, đề tự soạn…)
+
+Bấm **Trộn đề từ file** → chọn file `.tex` / `.txt` / `.json` đúng cấu trúc `\begin{ex}…\end{ex}` (ví dụ đề AI gõ lại bằng
+"Prompt cho AI → Gõ lại đề thi") → chọn số mã đề, mã bắt đầu, thứ tự câu (đảo trong từng phần / giữ nguyên / theo độ khó),
+đảo phương án, đảo ý a b c, **cỡ chữ 10/11/12**, PDF 2 cột, **Xuất PDF**, **Xuất Word**, Word K12Online, quyển đề cương → **Trộn đề**.
+Mọi mã đề dùng đúng các câu trong file. Kết quả giống khi ra đề theo ma trận: thư mục `<Tên kỳ thi> - <ngày>` gồm
+`De_101.pdf`, `LoiGiai_101.pdf`, `Word_De_101.docx`, `Word_LoiGiai_101.docx`, `DapAn.xlsx` (Chấm Phiếu AI), `tex/`.
+File gốc được lưu lại trong `de-da-ra/_nguon/`. Câu trong file không ghi vào lịch sử dùng câu của kho.
+Dòng lệnh: `python3 scripts/tron_de.py --tu-file de.txt --so-ma-de 4 --co-chu 11 --word-de --bien-dich`.
+
+## Word đề thi (bố cục như đề PDF)
+
+Ô **"Xuất Word đề thi (bố cục như PDF)"** (khi ra đề theo ma trận) hoặc ô **Xuất Word** (khi trộn từ file): mỗi mã đề 2 file
+- `Word_De_101.docx`: đầu đề 2 cột (Sở/Trường – Kỳ thi/Năm học/Môn/Thời gian), "(Đề thi có N trang)", Họ tên/Số báo danh,
+  ô **Mã đề 101**, PHẦN I/II/III, `Câu 1.`, phương án A. B. C. D. **tự xếp 4 cột / 2 cột / 1 cột** theo độ dài như đề PDF,
+  ý a) b) c) d), "HẾT", chân trang `Trang x/y – Mã đề 101`.
+- `Word_LoiGiai_101.docx`: như trên + lời giải dưới từng câu (đáp án đúng gạch chân) + bảng đáp án cuối.
+- Cỡ chữ theo ô Khổ in / Cỡ chữ (10, 11, 12). Công thức: Equation của Word hoặc ảnh SVG (ô "Công thức trong Word").
+
 ## Quyển đề cương ôn tập (2 file PDF: Câu hỏi / Lời giải)
 
 Ô **"Gộp thành quyển đề cương ôn tập (PDF)"** (bật sẵn) tạo thêm 2 file trong thư mục đề:

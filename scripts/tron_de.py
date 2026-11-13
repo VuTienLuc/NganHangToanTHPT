@@ -20,12 +20,15 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from nh_core import *
 
 ap = argparse.ArgumentParser()
-ap.add_argument("ma_tran")
+ap.add_argument("ma_tran", nargs="?", default="", help="ma trận .json/.csv (bỏ trống khi trộn từ file đề)")
+ap.add_argument("--tu-file", nargs="+", help="TRỘN ĐỀ CÓ SẴN: file đề .tex/.txt/.json (đúng cấu trúc ex/bt) → nhiều mã đề")
+ap.add_argument("--word-de", action="store_true", help="xuất Word bố cục đề thi chuẩn (như PDF) cho mỗi mã đề")
 ap.add_argument("--thu", action="store_true")
 ap.add_argument("--bien-dich", action="store_true")
 ap.add_argument("--word", action="store_true", help="xuất thêm Word theo mẫu K12Online (công thức Equation)")
 ap.add_argument("--word-svg", action="store_true", help="xuất Word K12Online với công thức là ảnh SVG thẳng dòng")
 ap.add_argument("--so-ma-de", type=int)
+ap.add_argument("--co-chu", type=int, help="cỡ chữ đề PDF (10/11 = tiết kiệm giấy, 12 thường) và Word")
 ap.add_argument("--ten")
 a = ap.parse_args()
 
@@ -58,7 +61,9 @@ def doc_ma_tran_csv(p):
                         phan[l].append({"dang": dang, "muc": m, "so": int(float(v))})
     return [{"loai": l, "yeu_cau": yc} for l, yc in phan.items() if yc]
 
-if a.ma_tran.lower().endswith(".csv"):
+if not a.ma_tran:
+    mt = {"ten": "tron_file"}
+elif a.ma_tran.lower().endswith(".csv"):
     mt = {"ten": os.path.splitext(os.path.basename(a.ma_tran))[0], "phan": doc_ma_tran_csv(a.ma_tran)}
 else:
     mt = json.load(open(a.ma_tran, encoding="utf-8"))
@@ -68,6 +73,8 @@ else:
         mt["phan"] = doc_ma_tran_csv(p)
 mt = {**THONG_TIN_MAC_DINH, **CH.get("thong_tin_de", {}), **mt}
 if a.so_ma_de: mt["so_ma_de"] = a.so_ma_de
+if a.co_chu:
+    mt["co_chu"] = a.co_chu; mt["tiet_kiem"] = a.co_chu < 12
 if a.ten: mt["ten"] = a.ten
 ten = mt["ten"]
 rng = random.Random(mt.get("seed", int(time.time())))
@@ -211,6 +218,8 @@ def khoa_noi_dung(c):
 
 def sap_xep(ds):
     ds = list(ds)
+    if mt.get("sap_xep") == "giu_nguyen":
+        return ds
     if mt.get("xao_cau", True):
         rng.shuffle(ds)
     kieu = mt.get("sap_xep", "ngau_nhien")
@@ -337,11 +346,51 @@ def soan_ma_de(bo, ma_de):
 
 # ---------------------------------------------------------------- chạy
 so_ma = int(mt["so_ma_de"]); bat_dau = int(mt["ma_de_bat_dau"])
-if not any(p["yeu_cau"] for p in mt.get("phan", [])):
+TU_FILE = a.tu_file or mt.get("tu_file")
+if isinstance(TU_FILE, str):
+    TU_FILE = [TU_FILE]
+
+def doc_cau_tu_file(cac_tep):
+    """Đọc đề có sẵn (đã gõ đúng cấu trúc) → danh sách câu như trong chỉ mục (giữ thứ tự trong file)."""
+    import doc_nhap
+    from nhap_cau import sua_thap_phan
+    qd = CH.get("quy_doi_muc", {})
+    ra = []
+    for f in cac_tep:
+        f = f if os.path.isabs(f) else os.path.join(GOC, f)
+        for k in tach_khoi(doc_nhap.doc_tep(f)):
+            k, _ = sua_thap_phan(k)                 # 15,25 → 15{,}25 trong công thức
+            info = phan_tich_cau(k)
+            muc = info["muc"] or ""
+            info.update(ma=ma_bam(k), muc_chuan=qd.get(muc, muc if muc in CAC_MUC else None), noi_dung=k,
+                        ten_dang="", ten_chuong="", ten_bai="", file=os.path.basename(f), dang_key=info["dang_key"] or "",
+                        id=info["id"] or "")
+            ra.append(info)
+    return ra
+
+if TU_FILE:
+    # ---- TRỘN ĐỀ CÓ SẴN: mọi mã đề dùng đúng các câu của file, chỉ đảo thứ tự câu / phương án / ý a,b,c
+    cau_file = doc_cau_tu_file(TU_FILE)
+    if not cau_file:
+        sys.exit("File đề không có khối \\begin{ex}…\\end{ex} / \\begin{bt}…\\end{bt} nào.")
+    if not mt.get("ten") or mt.get("ten") == "tron_file":
+        mt["ten"] = ten = os.path.splitext(os.path.basename(TU_FILE[0]))[0]
+    loi = [c for c in cau_file if not hop_le(c, c["loai"])]
+    for c in loi:
+        print(f"  ⚠ câu {c['loai']} thiếu/sai đáp án (\\True hoặc \\shortans): {c['noi_dung'][:70]!r}")
+    mt["phan"] = [{"loai": l, "yeu_cau": [{"dang": "(từ file)", "muc": "", "so": sum(1 for c in cau_file if c["loai"] == l)}]}
+                  for l in CAC_LOAI if any(c["loai"] == l for c in cau_file)]
+
+elif not any(p["yeu_cau"] for p in mt.get("phan", [])):
     sys.exit("Ma trận chưa có số câu nào. Mở file ma trận (CSV) bằng Numbers/Excel, điền số câu vào các cột "
              "TN_N, TN_H, DS_H, TLN_V… ở dòng dạng toán cần lấy, lưu lại dạng CSV rồi chạy lại.")
-khac_cau = bool(mt.get("moi_ma_de_cau_khac_nhau"))
-cac_bo, ghi_chu_bu, thieu = lap_ke_hoach(so_ma, khac_cau)
+khac_cau = bool(mt.get("moi_ma_de_cau_khac_nhau")) and not TU_FILE
+if TU_FILE:
+    cac_bo = [collections.OrderedDict((l, [c for c in cau_file if c["loai"] == l]) for l in CAC_LOAI
+                                      if any(c["loai"] == l for c in cau_file)) for _ in range(so_ma)]
+    ghi_chu_bu, thieu = [], []
+else:
+    cac_bo, ghi_chu_bu, thieu = lap_ke_hoach(so_ma, khac_cau)
 bo_chung = cac_bo[0]
 for x in thieu:
     print("  ⚠ thiếu câu:", x)
@@ -351,14 +400,15 @@ dem = {l: len(v) for l, v in bo_chung.items() if v}
 print("Đã chọn: " + ", ".join(f"{LOAI_TEN[k]} {v}" for k, v in dem.items()))
 if not dem:
     sys.exit("Không chọn được câu nào (kho không có câu khớp ma trận).")
-if CHINH_THUC and (dem.get("TN"), dem.get("DS"), dem.get("TLN")) != (12, 4, 6):
+if CHINH_THUC and not TU_FILE and (dem.get("TN"), dem.get("DS"), dem.get("TLN")) != (12, 4, 6):
     print("  (lưu ý: cấu trúc đề tốt nghiệp 2025 là 12 TN – 4 Đúng/Sai – 6 Trả lời ngắn)")
 if khac_cau and so_ma > 1:
     tap = [set(c["ma"] for v in b.values() for c in v) for b in cac_bo]
     chung = len(set.intersection(*tap))
     tong_rieng = len(set.union(*tap))
     print(f"  Mỗi mã đề một bộ câu: dùng {tong_rieng} câu khác nhau cho {so_ma} mã đề; số câu có mặt ở mọi mã: {chung}")
-print(f"  Câu đã dùng ở đề trước: " + {"uu_tien": "ưu tiên câu chưa dùng", "loai_bo": "KHÔNG lấy lại",
+if not TU_FILE:
+  print(f"  Câu đã dùng ở đề trước: " + {"uu_tien": "ưu tiên câu chưa dùng", "loai_bo": "KHÔNG lấy lại",
       "khong": "không xét"}.get(CHE_DO_DA_DUNG, CHE_DO_DA_DUNG))
 if a.thu:
     for loai, ds in bo_chung.items():
@@ -523,21 +573,33 @@ with open(os.path.join(out, "danh_sach_cau.csv"), "w", encoding="utf-8-sig", new
         w.writerow([c["ma"], c["loai"], c["id"], c["muc_chuan"], c["ten_dang"], c["file"]])
 json.dump(mt, open(os.path.join(out, "ma_tran_da_dung.json"), "w", encoding="utf-8"), ensure_ascii=False, indent=2)
 json.dump(CAU_THEO_DE, open(os.path.join(out, "_k12_cau.json"), "w", encoding="utf-8"), ensure_ascii=False)
+json.dump({k: mt.get(k) for k in ("so_gd", "truong", "ten_ky_thi", "nam_hoc", "mon", "thoi_gian", "co_chu", "giao_vien")},
+          open(os.path.join(out, "_thong_tin_de.json"), "w", encoding="utf-8"), ensure_ascii=False)
 
-for ma in ds_cau_dung:
-    lich_su.setdefault(ma, []).append(os.path.basename(out_goc))
-json.dump(lich_su, open(p_ls, "w", encoding="utf-8"), ensure_ascii=False)
+if not TU_FILE:                      # đề trộn từ file ngoài: không ghi lịch sử dùng câu của kho
+    for ma in ds_cau_dung:
+        lich_su.setdefault(ma, []).append(os.path.basename(out_goc))
+    json.dump(lich_su, open(p_ls, "w", encoding="utf-8"), ensure_ascii=False)
 rel = os.path.relpath(out_goc, GOC)
-print(f"Đã tạo {so_ma} mã đề ({', '.join(cac_ma)}) trong {rel}/: DapAn.xlsx + thư mục tex/. Lịch sử dùng câu đã cập nhật.")
+print(f"Đã tạo {so_ma} mã đề ({', '.join(cac_ma)}) trong {rel}/: DapAn.xlsx + thư mục tex/."
+      + ("" if TU_FILE else " Lịch sử dùng câu đã cập nhật."))
 for w in canh_bao:
     print("  ⚠", w)
 print("THU_MUC:" + rel)
 
 if a.bien_dich:
     bien_dich_thu_muc(out_goc)
-if a.word or a.word_svg or mt.get("xuat_word_k12"):
+if a.word or mt.get("xuat_word_k12"):
     import k12word
     try:
         k12word.xuat(out_goc, cong_thuc="svg" if a.word_svg or mt.get("word_cong_thuc") == "svg" else "equation")
     except Exception as e:
         print("  ✗ Không xuất được Word:", e)
+if a.word_de or mt.get("xuat_word_de"):
+    import word_de
+    try:
+        word_de.xuat(out_goc, cong_thuc="svg" if a.word_svg or mt.get("word_cong_thuc") == "svg" else "equation",
+                     co_chu=int(mt.get("co_chu_word") or mt.get("co_chu") or 12))
+    except Exception as e:
+        import traceback; traceback.print_exc()
+        print("  ✗ Không xuất được Word đề thi:", e)

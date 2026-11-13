@@ -10,13 +10,14 @@
 --dat:#15803d;--loi:#b91c1c}
 *{box-sizing:border-box}
 body{margin:0;font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;color:var(--muc);background:var(--nen)}
-header{display:flex;align-items:center;gap:14px;padding:10px 18px;background:var(--giay);border-bottom:1px solid var(--vien);position:sticky;top:0;z-index:5}
+header{display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;padding:10px 18px;background:var(--giay);border-bottom:1px solid var(--vien);position:sticky;top:0;z-index:5}
 header h1{font-size:17px;margin:0;font-weight:650;letter-spacing:.2px}
 header .phu{color:var(--phu);font-size:12.5px}
 header .gian{flex:1}
 button,select,input{font:inherit}
 button{border:1px solid var(--vien);background:var(--giay);border-radius:8px;padding:6px 12px;cursor:pointer;color:var(--muc)}
 button:hover{border-color:#c9c4b8;background:#fbfaf7}
+header button{white-space:nowrap}
 button.chinh{background:var(--nhan);border-color:var(--nhan);color:#fff;font-weight:600}
 button.chinh:hover{background:#0c4f75}
 button:disabled{opacity:.5;cursor:default}
@@ -91,6 +92,15 @@ footer .gian{flex:1}
 #soan-bang td:first-child,#soan-bang th:first-child{text-align:left}
 #soan-bang input{width:52px;padding:3px;text-align:center;border:1px solid var(--vien);border-radius:6px}
 #hop-soan .nut{display:flex;gap:8px;justify-content:flex-end;padding:12px 18px;border-top:1px solid var(--vien)}
+#hop-tron{position:fixed;inset:0;background:rgba(17,24,39,.35);display:none;align-items:center;justify-content:center;z-index:9}
+#hop-tron .noi{background:#fff;border-radius:14px;width:min(820px,94vw);max-height:90vh;display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.25)}
+#hop-tron h2{margin:0;padding:14px 18px;font-size:16px;border-bottom:1px solid var(--vien)}
+#hop-tron .than{padding:14px 18px;overflow:auto;display:grid;gap:12px}
+#hop-tron .hang{display:grid;gap:10px}
+#hop-tron label{display:flex;flex-direction:column;gap:4px;font-size:13px}
+#hop-tron label.hop{flex-direction:row;align-items:center;gap:6px}
+#hop-tron select,#hop-tron input[type=number]{width:100%;box-sizing:border-box;padding:6px 8px;border:1px solid var(--vien);border-radius:8px;font:inherit}
+#hop-tron .nut{display:flex;gap:8px;justify-content:flex-end;padding:12px 18px;border-top:1px solid var(--vien)}
 </style>
 </head>
 <body>
@@ -100,6 +110,8 @@ footer .gian{flex:1}
   <span class="gian"></span>
   <select id="ds-ma-tran" title="Mở ma trận đã lưu"><option value="">Mở ma trận đã lưu…</option></select>
   <button id="nut-prompt" title="Sinh prompt cho AI: gõ lại đề thi, hoặc soạn câu hỏi mới theo bài học từ tài liệu">Prompt cho AI</button>
+  <button id="nut-tron-file" title="Trộn một đề có sẵn (file .tex/.txt/.json đúng cấu trúc, vd đề AI gõ lại) thành nhiều mã đề, xuất PDF / Word / đáp án Excel">Trộn đề từ file</button>
+  <input type="file" id="tep-tron" accept=".tex,.txt,.md,.json" hidden>
   <button id="nut-nhap" title="Thêm câu từ file .tex / .txt / .json (đúng cấu trúc \\begin{ex}…, hoặc JSON các trường Nội dung, Lựa chọn, Đáp án, Lời giải) vào ngân hàng">Nhập câu hỏi</button>
   <input type="file" id="tep-nhap" accept=".tex,.txt,.md,.json" multiple hidden>
   <button id="nut-lich-su" title="Các đề đã ra và số câu đã dùng">Lịch sử đã dùng</button>
@@ -141,6 +153,7 @@ footer .gian{flex:1}
         <label class="hop" id="o-bien-dich"><input type="checkbox" id="bien_dich" checked> Xuất PDF từng mã đề (cần MacTeX)</label>
         <label class="hop" title="2 file PDF: quyển Câu hỏi (bìa, mục lục, tất cả mã đề) và quyển Lời giải (bìa, mục lục, lời giải chi tiết); chân trang ghi tên giáo viên, tên kỳ thi, số trang"><input type="checkbox" id="de_cuong" checked> Gộp quyển đề cương ôn tập (PDF Câu hỏi + PDF Lời giải)</label>
         <label class="hop" id="o-word" title="Mỗi mã đề một file Word đúng mẫu nhập câu hỏi K12Online; công thức là Equation của Word hoặc ảnh SVG (chọn ở ô bên cạnh); bảng biến thiên và hình là ảnh SVG"><input type="checkbox" id="xuat_word_k12"> Xuất Word K12Online</label>
+        <label class="hop" title="Mỗi mã đề 2 file Word: đề (bố cục giống đề PDF: đầu đề Sở/Trường, mã đề, phần I/II/III, phương án xếp cột) và đề kèm lời giải + bảng đáp án; cỡ chữ theo ô Khổ in"><input type="checkbox" id="xuat_word_de"> Xuất Word đề thi (bố cục như PDF)</label>
         <label>Công thức trong Word<select id="word_cong_thuc"><option value="equation">Equation của Word (sửa được)</option><option value="svg">Ảnh SVG sắc nét, thẳng hàng chữ</option></select></label>
       </div>
     </details>
@@ -186,6 +199,30 @@ footer .gian{flex:1}
   </div>
   <div class="nut"><span id="soan-tong" style="margin-right:auto;font-size:13px;align-self:center"></span>
     <button id="soan-tao" class="chinh">Tạo prompt</button><button id="soan-dong">Đóng</button></div>
+</div></div>
+<div id="hop-tron" class="hop-mo"><div class="noi">
+  <h2>Trộn đề từ file — <span id="tron-ten"></span></h2>
+  <div class="than">
+    <p style="margin:0;font-size:13px;color:#555">Mọi mã đề dùng đúng các câu trong file; chỉ đảo thứ tự câu trong từng phần, phương án A–D và ý a, b, c.
+      Thông tin đầu đề (Sở, Trường, Tên kỳ thi, Môn, Thời gian, Năm học, Kiểu trình bày) lấy ở khung <b>Thông tin đề</b>.</p>
+    <div class="hang" style="grid-template-columns:repeat(3,minmax(0,1fr))">
+      <label>Số mã đề<input type="number" id="tron-so" value="4" min="1" max="40"></label>
+      <label>Mã đề bắt đầu<input type="number" id="tron-bat-dau" value="101"></label>
+      <label>Thứ tự câu<select id="tron-thu-tu"><option value="ngau_nhien">Đảo câu trong từng phần</option><option value="giu_nguyen">Giữ thứ tự như file</option><option value="do_kho">Đảo rồi xếp theo độ khó</option></select></label>
+      <label>Cỡ chữ (PDF và Word)<select id="tron-co"><option value="12">12 – bình thường</option><option value="11">11 – tiết kiệm giấy</option><option value="10">10 – siêu tiết kiệm</option></select></label>
+      <label>Công thức trong Word<select id="tron-ct"><option value="equation">Equation của Word</option><option value="svg">Ảnh SVG thẳng hàng chữ</option></select></label>
+      <label>&nbsp;<span class="hop"><input type="checkbox" id="tron-hai-cot"> PDF in 2 cột (cỡ 10/11)</span></label>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;gap:6px 18px;font-size:13px">
+      <label class="hop"><input type="checkbox" id="tron-xao-pa" checked> Đảo phương án A/B/C/D</label>
+      <label class="hop"><input type="checkbox" id="tron-xao-y" checked> Đảo ý a, b, c (giữ ý d)</label>
+      <label class="hop"><input type="checkbox" id="tron-pdf" checked> Xuất PDF</label>
+      <label class="hop"><input type="checkbox" id="tron-word" checked> Xuất Word (bố cục như đề PDF)</label>
+      <label class="hop"><input type="checkbox" id="tron-k12"> Word K12Online</label>
+      <label class="hop"><input type="checkbox" id="tron-de-cuong"> Quyển đề cương (PDF)</label>
+    </div>
+  </div>
+  <div class="nut"><button id="tron-chay" class="chinh">Trộn đề</button><button id="tron-dong">Đóng</button></div>
 </div></div>
 <div id="hop-thoai"><div class="noi"><h2 id="ht-tieu">…</h2><pre id="ht-noi"></pre><div class="nut" id="ht-nut"></div></div></div>
 
@@ -331,7 +368,7 @@ function maTran(){
   mt.so_ma_de=+$("#so_ma_de").value||1; mt.ma_de_bat_dau=+$("#ma_de_bat_dau").value||101;
   for(const k of ["xao_phuong_an","xao_y_dung_sai","moi_ma_de_cau_khac_nhau","bu_cung_nhom","mo_rong_dang_khac"]) mt[k]=$("#"+k).checked;
   mt.cau_da_dung=$("#cau_da_dung").value;
-  mt.co_chu=+$("#kho_in").value; mt.tiet_kiem=mt.co_chu<12; mt.hai_cot=mt.tiet_kiem&&$("#hai_cot").checked; mt.xuat_word_k12=$("#xuat_word_k12").checked; mt.word_cong_thuc=$("#word_cong_thuc").value;
+  mt.co_chu=+$("#kho_in").value; mt.tiet_kiem=mt.co_chu<12; mt.hai_cot=mt.tiet_kiem&&$("#hai_cot").checked; mt.xuat_word_k12=$("#xuat_word_k12").checked; mt.xuat_word_de=$("#xuat_word_de").checked; mt.word_cong_thuc=$("#word_cong_thuc").value;
   mt.xao_cau=true;
   return mt;
 }
@@ -383,7 +420,7 @@ $("#ds-ma-tran").onchange=async e=>{
   for(const k of ["so_ma_de","ma_de_bat_dau"]) if(mt[k]!=null) $("#"+k).value=mt[k];
   for(const k of ["xao_phuong_an","xao_y_dung_sai","moi_ma_de_cau_khac_nhau","bu_cung_nhom","mo_rong_dang_khac"]) if(mt[k]!=null) $("#"+k).checked=!!mt[k];
   $("#cau_da_dung").value=mt.cau_da_dung||(mt.tranh_cau_da_dung===false?"khong":"uu_tien");
-  $("#kho_in").value=String(mt.tiet_kiem?(mt.co_chu||11):12); $("#hai_cot").checked=!!mt.hai_cot; $("#xuat_word_k12").checked=!!mt.xuat_word_k12; if(mt.word_cong_thuc) $("#word_cong_thuc").value=mt.word_cong_thuc;
+  $("#kho_in").value=String(mt.tiet_kiem?(mt.co_chu||11):12); $("#hai_cot").checked=!!mt.hai_cot; $("#xuat_word_k12").checked=!!mt.xuat_word_k12; $("#xuat_word_de").checked=!!mt.xuat_word_de; if(mt.word_cong_thuc) $("#word_cong_thuc").value=mt.word_cong_thuc;
   chon={}; const khongKhop=[]; const biet=new Map(DL.dang.map(d=>[d.k,d]));
   for(const d of DL.dang) if(!biet.has(khoaBai(d))) biet.set(khoaBai(d),d);
   for(const p of mt.phan||[]) for(const y of p.yeu_cau){
@@ -499,6 +536,37 @@ $("#tep-nhap").onchange=async e=>{
     const r2=await api("/api/nhap",{tep,thu:false,ma_dang});
     hopThoai(`Đã nhập ${r2.so_cau} câu`,r2.nhat_ky); tai();
   },true]]);
+};
+
+// ---------------- TRỘN ĐỀ TỪ FILE
+let TEP_TRON=null;
+$("#nut-tron-file").onclick=()=>$("#tep-tron").click();
+$("#tep-tron").onchange=async e=>{
+  const f=e.target.files[0]; e.target.value=""; if(!f) return;
+  TEP_TRON={ten:f.name,noi_dung:await f.text()};
+  const so=(TEP_TRON.noi_dung.match(/\\begin\{(ex|bt)\}/g)||[]).length;
+  $("#tron-ten").textContent=`${f.name} (${so} câu)`;
+  $("#tron-so").value=$("#so_ma_de").value; $("#tron-bat-dau").value=$("#ma_de_bat_dau").value;
+  $("#tron-co").value=$("#kho_in").value; $("#tron-ct").value=$("#word_cong_thuc").value;
+  $("#tron-pdf").disabled=!DL.pdflatex; if(!DL.pdflatex) $("#tron-pdf").checked=false;
+  $("#hop-tron").style.display="flex";
+};
+$("#tron-dong").onclick=()=>$("#hop-tron").style.display="none";
+$("#tron-chay").onclick=async()=>{
+  const mt=maTran(), b=$("#tron-chay");
+  const co=+$("#tron-co").value;
+  Object.assign(mt,{so_ma_de:+$("#tron-so").value,ma_de_bat_dau:+$("#tron-bat-dau").value,sap_xep:$("#tron-thu-tu").value,
+    xao_cau:$("#tron-thu-tu").value!=="giu_nguyen",xao_phuong_an:$("#tron-xao-pa").checked,xao_y_dung_sai:$("#tron-xao-y").checked,
+    co_chu:co,tiet_kiem:co<12,hai_cot:co<12&&$("#tron-hai-cot").checked,xuat_word_de:$("#tron-word").checked,
+    xuat_word_k12:$("#tron-k12").checked,word_cong_thuc:$("#tron-ct").value,de_cuong:$("#tron-de-cuong").checked,moi_ma_de_cau_khac_nhau:false});
+  b.disabled=true;b.textContent="Đang trộn…";
+  try{
+    const r=await api("/api/tron-file",{tep:TEP_TRON,ma_tran:mt,bien_dich:$("#tron-pdf").checked});
+    $("#hop-tron").style.display="none";
+    if(!r.ok){hopThoai("Chưa trộn được",r.nhat_ky);return}
+    hopThoai(`Đã trộn: ${r.thu_muc}`,r.nhat_ky+(r.bien_dich?"\nĐang biên dịch PDF…":""),[["Mở thư mục đề",()=>api("/api/mo",{duong_dan:r.thu_muc}),true]]);
+    if(r.bien_dich) theoDoi(r.nhat_ky);
+  }finally{b.disabled=false;b.textContent="Trộn đề"}
 };
 tai();
 </script>
