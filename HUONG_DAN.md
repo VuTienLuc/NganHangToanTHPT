@@ -107,6 +107,9 @@ Tên kỳ thi, môn/lớp, số mã đề… ghi trong một file JSON đi kèm 
 - `xao_phuong_an`: đảo A/B/C/D của câu trắc nghiệm (tự bỏ qua câu có lời giải ghi "Chọn A…" hay phương án "Cả A và B").
 - `xao_y_dung_sai`: câu Đúng/Sai đảo thứ tự ý **a, b, c**, **giữ ý d (ý khó) ở cuối**; lời giải từng ý đảo theo.
   Tự bỏ qua câu có nội dung nhắc "ý a", "b)"… hoặc lời giải không chia đủ 4 ý (`\\itemch`).
+- **In tiết kiệm giấy** (khung đề chính thức): `"tiet_kiem": true, "co_chu": 10` (hoặc 11) — chữ nhỏ, lề hẹp, giãn dòng sát;
+  thêm `"hai_cot": true` để in 2 cột (hình vẽ thu nhỏ 75%, hình cạnh đề chuyển xuống dưới). Thử với đề 12–4–6:
+  chữ 12 = 5 trang · chữ 11 = 4 trang · chữ 10 = 4 trang · chữ 10 + 2 cột = 3 trang. Trong ứng dụng: ô **Khổ in** và **In 2 cột**.
 - `moi_ma_de_cau_khac_nhau`: `true` = mỗi mã đề một bộ câu riêng (4 mã × 12 câu TN = 48 câu khác nhau); mặc định các mã đề cùng bộ câu, chỉ hoán vị.
 - **Chọn ngẫu nhiên theo bài**: trong ứng dụng, hàng **Bài …** (nhãn "ngẫu nhiên theo bài") cũng có ô nhập; điền số ở đó thì
   hệ thống lấy câu ở **các dạng khác nhau trong bài**, mỗi mã đề phủ càng nhiều dạng càng tốt và các mã đề khác nhau về dạng.

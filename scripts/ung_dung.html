@@ -109,6 +109,8 @@ footer .gian{flex:1}
         <label>Trường<input type="text" id="truong"></label>
         <label>Năm học<input type="text" id="nam_hoc"></label>
         <label>Kiểu trình bày<select id="khung"><option value="DeThiChinhThuc">Đề chính thức (đen trắng, Sở/Trường)</option><option value="DeThi">Ôn tập (khung màu)</option></select></label>
+        <label>Khổ in (tiết kiệm giấy)<select id="kho_in"><option value="12">Bình thường – chữ 12</option><option value="11">Tiết kiệm – chữ 11, lề hẹp</option><option value="10">Siêu tiết kiệm – chữ 10, lề hẹp</option></select></label>
+        <label class="hop" title="Chỉ áp dụng khi chọn khổ tiết kiệm; hình vẽ thu nhỏ 75%"><input type="checkbox" id="hai_cot" disabled> In 2 cột (giảm thêm ~40% số trang)</label>
         <label>Số mã đề<input type="number" id="so_ma_de" value="4" min="1" max="40"></label>
         <label>Mã đề bắt đầu<input type="number" id="ma_de_bat_dau" value="101"></label>
         <label>Sắp xếp câu<select id="sap_xep"><option value="ngau_nhien">Ngẫu nhiên</option><option value="do_kho" selected>Theo độ khó (N→C)</option><option value="noi_dung">Theo nội dung (chương, bài)</option><option value="noi_dung_do_kho">Nội dung rồi độ khó</option></select></label>
@@ -284,6 +286,7 @@ function maTran(){
   mt.so_ma_de=+$("#so_ma_de").value||1; mt.ma_de_bat_dau=+$("#ma_de_bat_dau").value||101;
   for(const k of ["xao_phuong_an","xao_y_dung_sai","moi_ma_de_cau_khac_nhau","bu_cung_nhom","mo_rong_dang_khac"]) mt[k]=$("#"+k).checked;
   mt.cau_da_dung=$("#cau_da_dung").value;
+  mt.co_chu=+$("#kho_in").value; mt.tiet_kiem=mt.co_chu<12; mt.hai_cot=mt.tiet_kiem&&$("#hai_cot").checked;
   mt.xao_cau=true;
   return mt;
 }
@@ -322,7 +325,8 @@ $("#nut-xoa").onclick=()=>{chon={};veBang()};
 $("#nut-xem").onclick=()=>xuat(true);
 $("#nut-xuat").onclick=()=>xuat(false);
 $("#hien_tl").onchange=()=>{veBang()};
-$("#khung").onchange=capNhatDem;
+$("#khung").onchange=()=>{capNhatDem();const ct=$("#khung").value==="DeThiChinhThuc";$("#kho_in").disabled=!ct;$("#hai_cot").disabled=!ct};
+$("#kho_in").onchange=()=>{$("#hai_cot").disabled=$("#kho_in").value==="12";if($("#kho_in").value==="12")$("#hai_cot").checked=false};
 $("#nut-luu").onclick=async()=>{const r=await api("/api/luu-ma-tran",{ma_tran:maTran()});alert(r.ok?`Đã lưu ma-tran/${r.ten}.json`:"Không lưu được");tai()};
 $("#nut-cap-nhat").onclick=async()=>{const b=$("#nut-cap-nhat");b.disabled=true;b.textContent="Đang cập nhật…";const r=await api("/api/lap-chi-muc",{});b.disabled=false;b.textContent="Cập nhật kho";hopThoai("Cập nhật kho",r.nhat_ky);tai()};
 $("#nut-thoat").onclick=async()=>{await api("/api/thoat",{});document.body.innerHTML='<div class="rong" style="padding-top:20vh">Đã thoát ứng dụng. Thầy có thể đóng thẻ này.</div>'};
@@ -333,6 +337,7 @@ $("#ds-ma-tran").onchange=async e=>{
   for(const k of ["so_ma_de","ma_de_bat_dau"]) if(mt[k]!=null) $("#"+k).value=mt[k];
   for(const k of ["xao_phuong_an","xao_y_dung_sai","moi_ma_de_cau_khac_nhau","bu_cung_nhom","mo_rong_dang_khac"]) if(mt[k]!=null) $("#"+k).checked=!!mt[k];
   $("#cau_da_dung").value=mt.cau_da_dung||(mt.tranh_cau_da_dung===false?"khong":"uu_tien");
+  $("#kho_in").value=String(mt.tiet_kiem?(mt.co_chu||11):12); $("#hai_cot").checked=!!mt.hai_cot;
   chon={}; const khongKhop=[]; const biet=new Map(DL.dang.map(d=>[d.k,d]));
   for(const d of DL.dang) if(!biet.has(khoaBai(d))) biet.set(khoaBai(d),d);
   for(const p of mt.phan||[]) for(const y of p.yeu_cau){

@@ -32,7 +32,8 @@ THONG_TIN_MAC_DINH = {
     "so_gd": "SỞ GD&ĐT TP. HỒ CHÍ MINH", "truong": "TRƯỜNG THPT NGUYỄN HỮU CẢNH",
     "ten_ky_thi": "ĐỀ KIỂM TRA", "nam_hoc": "NĂM HỌC 2026 -- 2027", "mon": "TOÁN -- Lớp 12",
     "thoi_gian": "90 phút", "khung": "DeThiChinhThuc", "so_ma_de": 4, "ma_de_bat_dau": 101,
-    "xao_cau": True, "xao_phuong_an": True, "xao_y_dung_sai": True, "sap_xep": "ngau_nhien",
+    "xao_cau": True, "xao_phuong_an": True, "xao_y_dung_sai": True,
+    "tiet_kiem": False, "co_chu": 12, "hai_cot": False, "sap_xep": "ngau_nhien",
     "moi_ma_de_cau_khac_nhau": False, "tranh_cau_da_dung": True, "bu_cung_nhom": True, "mo_rong_dang_khac": True,
 }
 CAC_LOAI = ["TN", "DS", "TLN", "TL"]
@@ -279,6 +280,8 @@ PHAN = {
     "TL": ("Tự luận.", "Thí sinh trình bày lời giải từ câu 1 đến câu {n}.", "bt", None, None),
 }
 CHINH_THUC = mt.get("khung", "DeThiChinhThuc") == "DeThiChinhThuc"
+TIET_KIEM = bool(mt.get("tiet_kiem")) and CHINH_THUC
+HAI_COT = TIET_KIEM and bool(mt.get("hai_cot"))
 
 def soan_ma_de(bo, ma_de):
     """Trả (thân đề, phần đáp án cuối, các dòng đáp án)."""
@@ -286,6 +289,8 @@ def soan_ma_de(bo, ma_de):
     stt = 0
     if CHINH_THUC:
         khoi.append(f"\\dauDe{{{ma_de}}}")
+        if HAI_COT:
+            khoi.append("\\begin{multicols}{2}")
     else:
         khoi.append(f"\\section{{{mt.get('ten_ky_thi', ten)} -- Mã đề {ma_de}}}")
     for loai in CAC_LOAI:
@@ -315,6 +320,8 @@ def soan_ma_de(bo, ma_de):
             khoi.append(f"\\Closesolutionfile{{{sf}}}")
             bang.append(f"\\par\\noindent\\textbf{{PHẦN {so_la_ma}.}}\\par\n\\begin{{flushleft}}\n\\input{{{tm}/{tep}}}\n\\end{{flushleft}}")
     if CHINH_THUC:
+        if HAI_COT:
+            khoi.append("\\end{multicols}")
         khoi.append(f"\\hetDe{{{ma_de}}}")
     cuoi = ""
     if bang:
@@ -376,6 +383,26 @@ for k, v in {"<<SO_GD>>": mt["so_gd"], "<<TRUONG>>": mt["truong"], "<<TEN_KY_THI
              "<<NAM_HOC>>": mt["nam_hoc"], "<<MON>>": mt["mon"], "<<THOI_GIAN>>": mt["thoi_gian"],
              "<<CHAN_TRANG>>": mt.get("chan_trang", mt["ten_ky_thi"])}.items():
     mau = mau.replace(k, re.sub(r"(?<!\\)([&%#])", r"\\\1", v))   # tự thoát ký tự & % # cho LaTeX
+if TIET_KIEM:
+    # ĐỀ TIẾT KIỆM GIẤY: chữ 10/11pt, lề hẹp, giãn dòng sát, (tuỳ chọn) 2 cột
+    co = str(int(mt.get("co_chu") or 11))
+    if co not in ("10", "11", "12"):
+        co = "11"
+    mau = re.sub(r"\\documentclass\[\d+pt,", f"\\\\documentclass[{co}pt,", mau, count=1)
+    mau = re.sub(r"\\usepackage\[a4paper,[^\]]*\]\{geometry\}",
+                 lambda m: "\\usepackage[a4paper,left=1.1cm,right=1.0cm,top=0.9cm,bottom=1.1cm,footskip=0.5cm]{geometry}", mau, count=1)
+    mau = mau.replace("\\setstretch{1.1}", "\\setstretch{1.0}").replace("\\setlength{\\parskip}{6pt}", "\\setlength{\\parskip}{1pt}")
+    gon = ["%==================== TIẾT KIỆM GIẤY ====================",
+           "\\makeatletter\\g@addto@macro\\normalsize{\\setlength{\\abovedisplayskip}{2pt}\\setlength{\\belowdisplayskip}{2pt}"
+           "\\setlength{\\abovedisplayshortskip}{1pt}\\setlength{\\belowdisplayshortskip}{1pt}}\\makeatother",
+           "\\renewcommand{\\phanDe}[1]{\\par\\smallskip\\noindent #1\\par}"]
+    if HAI_COT:
+        gon += ["\\usepackage{multicol}\\setlength{\\columnsep}{0.55cm}\\setlength{\\columnseprule}{0.3pt}",
+                "\\tikzset{every picture/.append style={scale=0.75,transform shape}}",
+                # hình cạnh đề (\\immini) quá hẹp trong 2 cột → đặt hình xuống dưới, căn giữa
+                "\\renewcommand{\\immini}[3][]{{\\tieudehinh #2}\\par\\nopagebreak{\\centering #3\\par}}"]
+    mau = mau.replace("\\begin{document}", "\n".join(gon) + "\n\\begin{document}", 1)
+
 def tai_lieu(than, loi_giai):
     return mau.replace("<<CHE_DO_LOI_GIAI>>", "\\hienthiloigiai" if loi_giai else "\\anloigiai").replace("<<NOI_DUNG>>", than)
 
