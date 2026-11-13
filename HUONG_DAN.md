@@ -57,6 +57,18 @@ Chương trình tự: tách từng câu, xếp vào đúng file dạng theo mã 
 **bỏ câu trùng** với câu đã có, gỡ lệnh rác nếu file bị mã hoá, gắn mã câu, rồi cập nhật chỉ mục.
 Câu chưa có mã dạng vào `cau-hoi/_chua_phan_loai/<tên file>.tex`; gắn mã cho chúng rồi chuyển vào đúng file dạng.
 
+**Nhập file .txt / .json** (cùng nút **Nhập câu hỏi**, cùng lệnh `nhap_cau.py`):
+- `.txt` / `.md`: chứa các khối `\begin{ex}…\end{ex}` đúng cấu trúc như file `.tex` (AI trả về kèm rào ```latex cũng được).
+- `.json`: mảng câu hỏi, mỗi câu là
+  - một chuỗi chứa sẵn khối `\begin{ex}…\end{ex}`, hoặc
+  - một đối tượng theo trường — đúng **mẫu 13 trường** của thầy (xem `mau_cau_moi.json`):
+    `Loại` (Trắc nghiệm | Đúng/Sai | Trả lời ngắn | Tự luận), `Mức độ nhận thức`, `Nội dung`,
+    `Lựa chọn A / Mệnh đề a` … `D`, `Đáp án đúng` (`B` | `a-Đúng, b-Sai, c-Đúng, d-Sai` | `2,5`), `Lời giải`;
+    thêm trường `Mã dạng` (vd `2D1N1-2`) nếu có. Tên trường tiếng Anh (`question`, `options`, `answer`, `solution`…) cũng nhận.
+  - Công thức trong `$…$`; viết `\\frac` hay lỡ viết `\frac` đều đọc đúng.
+- Khi nhập, ứng dụng hỏi **mã dạng mặc định** cho các câu chưa có mã (vd `2D1?1-2`, dấu `?` tự thay bằng mức độ của câu
+  N/H/V/C). Để trống thì câu chưa có mã vào `cau-hoi/_chua_phan_loai/`. Dòng lệnh: thêm `--ma-dang 2D1?1-2`.
+
 **Cách 3: nhờ AI gõ lại đề thi** (đề PDF, ảnh chụp, Word chưa có LaTeX)
 1. Trong ứng dụng, tích các chương của đề ở cột trái → bấm **Prompt cho AI** → **Chép prompt**
    (hoặc dùng file soạn sẵn theo lớp trong `prompt-ai/prompt_go_de_lop10.md`, `…lop11.md`, `…lop12.md`;

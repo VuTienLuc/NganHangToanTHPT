@@ -3,6 +3,8 @@
 NHẬP THÊM CÂU HỎI vào ngân hàng (cộng dồn, không ghi đè).
   python3 scripts/nhap_cau.py file1.tex [file2.tex ...] --thu    # chỉ báo cáo, chưa ghi gì
   python3 scripts/nhap_cau.py file1.tex [file2.tex ...]          # nhập thật
+  Nhận cả .txt/.md (chứa khối \\begin{ex}…) và .json (mảng câu: khối tex, hoặc các trường Nội dung/Lựa chọn/Đáp án/Lời giải…,
+  kể cả mẫu 13 trường). --ma-dang 2D1?1-2 : gán mã dạng cho câu chưa có mã ("?" = mức độ của câu).
 Mỗi câu \\begin{ex}…\\end{ex} hoặc \\begin{bt}…\\end{bt} có mã %[2D1N1-2] được chép vào đúng file dạng
 trong cau-hoi/ (tạo file mới nếu dạng chưa có). Câu chưa có mã vào cau-hoi/_chua_phan_loai/<tên file>.tex.
 Câu trùng y hệt câu đã có trong ngân hàng bị bỏ qua. File bị mã hoá (lệnh rác) được tự gỡ.
@@ -11,8 +13,9 @@ Xong tự chạy lap_chi_muc.py.
 import os, sys, glob, json, re, argparse, subprocess, collections, time
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from nh_core import *
+import doc_nhap
 
-def nhap(cac_file, thu=False, in_ra=print):
+def nhap(cac_file, thu=False, in_ra=print, ma_dang=None):
     id_map = tai_id_map()
     # 1. băm toàn bộ câu đang có để chống trùng
     da_co = {}
@@ -30,7 +33,11 @@ def nhap(cac_file, thu=False, in_ra=print):
         tu_vung |= set(re.findall(r"\\([A-Za-z]+)", doc(f)))
     them = collections.defaultdict(list); bao_cao = []; tong = collections.Counter()
     for f in cac_file:
-        t = doc(f); ten_nguon = os.path.splitext(os.path.basename(f))[0]
+        try:
+            t = doc_nhap.doc_tep(f, ma_dang)            # .tex/.txt/.md/.json → khối LaTeX
+        except Exception as e:
+            in_ra(f"{os.path.basename(f)}: không đọc được ({e})"); continue
+        ten_nguon = os.path.splitext(os.path.basename(f))[0]
         hop = lenh_hop_le([t], sty)
         rac, _, dem = tim_lenh_rac([t], hop)
         nghi_ngo = []
@@ -109,8 +116,9 @@ if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("files", nargs="+")
     ap.add_argument("--thu", action="store_true")
+    ap.add_argument("--ma-dang", help="gán mã dạng cho câu chưa có mã, vd 2D1?1-2 (? = theo mức độ câu)")
     a = ap.parse_args()
     fs = [f for f in a.files if os.path.isfile(f)]
     if not fs:
         sys.exit("Không thấy file nào.")
-    nhap(fs, a.thu)
+    nhap(fs, a.thu, ma_dang=a.ma_dang)

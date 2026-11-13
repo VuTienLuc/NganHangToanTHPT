@@ -84,8 +84,8 @@ footer .gian{flex:1}
   <span class="gian"></span>
   <select id="ds-ma-tran" title="Mở ma trận đã lưu"><option value="">Mở ma trận đã lưu…</option></select>
   <button id="nut-prompt" title="Sinh prompt để AI gõ lại đề thi thành câu hỏi đúng định dạng kho">Prompt cho AI</button>
-  <button id="nut-nhap" title="Thêm câu từ file .tex (có mã %[2D1N1-2]) vào ngân hàng">Nhập câu hỏi</button>
-  <input type="file" id="tep-nhap" accept=".tex" multiple hidden>
+  <button id="nut-nhap" title="Thêm câu từ file .tex / .txt / .json (đúng cấu trúc \\begin{ex}…, hoặc JSON các trường Nội dung, Lựa chọn, Đáp án, Lời giải) vào ngân hàng">Nhập câu hỏi</button>
+  <input type="file" id="tep-nhap" accept=".tex,.txt,.md,.json" multiple hidden>
   <button id="nut-lich-su" title="Các đề đã ra và số câu đã dùng">Lịch sử đã dùng</button>
   <button id="nut-luu">Lưu ma trận</button>
   <button id="nut-cap-nhat" title="Đọc lại cau-hoi/ sau khi thầy thêm/sửa câu">Cập nhật kho</button>
@@ -384,12 +384,13 @@ $("#tep-nhap").onchange=async e=>{
   const fs=[...e.target.files]; if(!fs.length) return;
   const tep=await Promise.all(fs.map(async f=>({ten:f.name,noi_dung:await f.text()})));
   e.target.value="";
+  const ma_dang=(prompt("Mã dạng gán cho câu CHƯA có mã %[..] (ví dụ 2D1?1-2, dấu ? = theo mức độ của câu).\nĐể trống nếu các câu đã có mã hoặc muốn để vào mục chưa phân loại:","")||"").trim();
   hopThoai("Đang đọc file…","");
-  const r=await api("/api/nhap",{tep,thu:true});
+  const r=await api("/api/nhap",{tep,thu:true,ma_dang});
   if(!r.so_cau){hopThoai("Không có câu mới để nhập",r.nhat_ky);return}
   hopThoai(`Xem trước: ${r.so_cau} câu mới`,r.nhat_ky,[["Nhập vào ngân hàng",async()=>{
     $("#ht-noi").textContent="Đang nhập…";
-    const r2=await api("/api/nhap",{tep,thu:false});
+    const r2=await api("/api/nhap",{tep,thu:false,ma_dang});
     hopThoai(`Đã nhập ${r2.so_cau} câu`,r2.nhat_ky); tai();
   },true]]);
 };

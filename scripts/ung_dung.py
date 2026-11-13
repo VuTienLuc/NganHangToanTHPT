@@ -203,7 +203,7 @@ class XuLy(BaseHTTPRequestHandler):
                     open(p, "w", encoding="utf-8").write(t["noi_dung"])
                     duong.append(p)
                 dong = []
-                so = nhap_cau.nhap(duong, thu=d.get("thu", True), in_ra=dong.append)
+                so = nhap_cau.nhap(duong, thu=d.get("thu", True), in_ra=dong.append, ma_dang=(d.get("ma_dang") or None))
                 shutil.rmtree(thu_muc, ignore_errors=True)
                 return self.gui(200, {"ok": True, "so_cau": so, "nhat_ky": "\n".join(dong)})
             if u.path == "/api/lich-su":
