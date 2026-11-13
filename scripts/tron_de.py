@@ -103,16 +103,31 @@ def ung_vien(loai, yc):
     co_ban = [c for c in tat_ca if c["loai"] == loai and hop_le(c, loai)
               and (CHE_DO_DA_DUNG != "loai_bo" or not so_lan_dung(c))]
     tang = []
+    def xen_ke_dang(ds):
+        """Xếp xen kẽ theo dạng (dạng A, dạng B, dạng C, dạng A…) để chọn theo bài/chương được nhiều dạng khác nhau."""
+        nhom = collections.OrderedDict()
+        for c in ds:
+            nhom.setdefault(c["dang_key"], []).append(c)
+        hang = list(nhom.values()); rng.shuffle(hang)
+        out = []
+        while any(hang):
+            for h in hang:
+                if h:
+                    out.append(h.pop(0))
+        return out
     def them(ds, ghi_chu):
         ds = list(ds); rng.shuffle(ds)
         if CHE_DO_DA_DUNG == "uu_tien":
-            ds.sort(key=so_lan_dung)
+            ds = xen_ke_dang([c for c in ds if not so_lan_dung(c)]) + \
+                 sorted(xen_ke_dang([c for c in ds if so_lan_dung(c)]), key=so_lan_dung)
+        else:
+            ds = xen_ke_dang(ds)
         tang.append((ds, ghi_chu))
     khop = [c for c in co_ban if rx.match(c["dang_key"])]
     them([c for c in khop if not muc or c["muc_chuan"] in muc], None)
     nhom = ({x for m in muc for x in NHOM_MUC.get(m, "")} - set(muc)) if muc else set()
     if mt.get("bu_cung_nhom", True) and nhom:
-        them([c for c in khop if c["muc_chuan"] in nhom], "mức cùng nhóm, cùng dạng")
+        them([c for c in khop if c["muc_chuan"] in nhom], "mức cùng nhóm (N↔H / V↔C)")
     if mt.get("mo_rong_dang_khac", True):
         mm = set(muc) | (nhom if mt.get("bu_cung_nhom", True) else set())
         k = yc["dang"]
@@ -159,21 +174,31 @@ def lap_ke_hoach(so_ma, khac_cau):
                 thieu.append(f"{nhan}: cần {k}, kho (kể cả bù) chỉ có {len(lay)}")
             elif khac_cau and len(lay) < can:
                 ghi_chu.append(f"{nhan}: có {len(lay)} câu cho {so_ma} mã đề × {k} → vài câu dùng chung giữa các mã")
+            dong = [c for c, _ in lay]
             if not khac_cau:
                 for b in bo:
-                    b[loai].extend(c for c, _ in lay[:k])
+                    b[loai].extend(dong[:k])
                 continue
-            # rải vòng: mỗi lượt mỗi mã đề nhận 1 câu, câu bù chia đều, không trùng trong cùng một mã
-            dong = [c for c, _ in lay]
-            p = 0
-            rieng = [set() for _ in range(so_ma)]
+            # Chia câu cho các mã đề: mỗi lượt mỗi mã nhận 1 câu; ưu tiên dạng mà mã đó CHƯA có
+            # và dạng ít được chia nhất → mỗi mã đề phủ nhiều dạng, các mã đề khác nhau về dạng.
+            con = list(dong)                      # câu chưa chia (theo thứ tự ưu tiên)
+            dem_dang = collections.Counter()
+            rieng = [set() for _ in range(so_ma)]; dang_de = [collections.Counter() for _ in range(so_ma)]
             for _ in range(min(k, len(dong))):
                 for s_ in range(so_ma):
-                    for _t in range(len(dong)):
-                        c = dong[p % len(dong)]; p += 1
-                        if c["ma"] not in rieng[s_]:
-                            rieng[s_].add(c["ma"]); bo[s_][loai].append(c)
-                            break
+                    nguon = con                     # ưu tiên câu chưa chia cho mã nào
+                    ung = [c for c in nguon if c["ma"] not in rieng[s_]]
+                    if not ung:                     # hết câu riêng → dùng lại câu đã chia (không trùng trong mã)
+                        nguon = dong
+                        ung = [c for c in nguon if c["ma"] not in rieng[s_]]
+                    if not ung:
+                        continue
+                    thu_tu = {id(c): i for i, c in enumerate(nguon)}
+                    c = min(ung, key=lambda c: (dang_de[s_][c["dang_key"]], dem_dang[c["dang_key"]], thu_tu[id(c)]))
+                    rieng[s_].add(c["ma"]); dang_de[s_][c["dang_key"]] += 1; dem_dang[c["dang_key"]] += 1
+                    bo[s_][loai].append(c)
+                    if c in con:
+                        con.remove(c)
     return bo, ghi_chu, thieu
 
 THU_MUC = {"N": 0, "H": 1, "V": 2, "C": 3}

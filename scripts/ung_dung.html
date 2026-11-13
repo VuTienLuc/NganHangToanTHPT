@@ -48,7 +48,9 @@ thead th{position:sticky;top:0;background:#faf9f6;z-index:2;font-size:12px;font-
 th.ten,td.ten{text-align:left;padding-left:12px}
 td.ten{max-width:420px}
 td.ten .ma{color:var(--phu);font-size:11px;margin-left:6px;font-family:ui-monospace,Menlo,monospace}
-tr.bai td{background:#fbfaf7;text-align:left;font-weight:600;color:#374151;font-size:12.5px;padding:6px 12px}
+tr.bai td{background:#f7f4ec;font-weight:600;color:#374151;font-size:12.5px}
+tr.bai td.ten{padding:6px 12px}
+.ngau-nhien{font-weight:500;font-size:10.5px;color:#92400e;background:#fdf1dc;border-radius:999px;padding:1px 7px;margin-left:6px;white-space:nowrap}
 tr.chuongh td{background:#f1efe9;text-align:left;font-weight:700;padding:8px 12px}
 .g-TN{background:var(--tn-n)} .g-DS{background:var(--ds-n)} .g-TLN{background:var(--tln-n)} .g-TL{background:var(--tl-n)}
 th.g-TN{color:var(--tn)} th.g-DS{color:var(--ds)} th.g-TLN{color:var(--tln)} th.g-TL{color:var(--tl)}
@@ -123,6 +125,7 @@ footer .gian{flex:1}
 
     <div class="thanh">
       <button id="nut-tu-dong" class="chinh" style="background:#334155;border-color:#334155">Tự động điền</button>
+      <select id="dien-theo" title="Tự động điền vào hàng dạng hay hàng bài"><option value="dang">theo từng dạng</option><option value="bai">theo bài (ngẫu nhiên các dạng)</option></select>
       <span class="muctieu" id="muc-tieu"></span>
       <span class="gian" style="flex:1"></span>
       <button id="nut-xoa">Xoá số đã điền</button>
@@ -163,7 +166,7 @@ async function tai(){
   if(!DL.pdflatex){$("#bien_dich").checked=false;$("#bien_dich").disabled=true;$("#o-bien-dich").title="Không tìm thấy pdflatex (MacTeX) — biên dịch bằng TeXstudio";$("#o-bien-dich").style.opacity=.5}
   const sel=$("#ds-ma-tran"); sel.length=1;
   for(const t of DL.ma_tran){const o=document.createElement("option");o.value=o.textContent=t;sel.appendChild(o)}
-  veCay(); veBang(); veMucTieu();
+  tinhKhoBai(); veCay(); veBang(); veMucTieu();
 }
 
 function veCay(){
@@ -181,6 +184,18 @@ function veCay(){
   $("#cay").querySelectorAll("input").forEach(i=>i.onchange=()=>{i.checked?chuongChon.add(i.dataset.k):chuongChon.delete(i.dataset.k);i.closest(".chuong").classList.toggle("co-chon",i.checked);veBang()});
 }
 
+const khoaBai=d=>d.k.split("-")[0];          // "2D1?1"
+let KHO_BAI={};
+function tinhKhoBai(){
+  KHO_BAI={};
+  for(const d of DL.dang){const b=(KHO_BAI[khoaBai(d)]??={kho:{},moi:{},chuong:khoaChuong(d)});
+    for(const l of LOAI){b.kho[l]??=[0,0,0,0];b.moi[l]??=[0,0,0,0];
+      for(let i=0;i<4;i++){b.kho[l][i]+=d.kho[l][i];b.moi[l][i]+=(d.moi?d.moi[l][i]:d.kho[l][i])}}}
+}
+function oNhap(k,l,i,kho,moi){
+  const v=chon[k]?.[l]?.[i]||"", nhanKho=kho?(moi<kho?`${moi}/${kho}`:`${kho}`):"";
+  return `<td class="o g-${l} cot-${l}" style="color:var(--${l.toLowerCase()})"><input type="number" min="0" max="${kho}" data-k="${k}" data-l="${l}" data-i="${i}" value="${v}" ${kho?"":"disabled"} title="Kho có ${kho} câu ${TEN_LOAI[l]} mức ${MUC[i]}, ${moi} câu chưa dùng ở đề nào" class="${v?"co":""} ${v>kho?"qua":""}"><span class="k">${nhanKho}</span></td>`;
+}
 function dangHienThi(){return DL.dang.filter(d=>chuongChon.has(khoaChuong(d)))}
 
 function veBang(){
@@ -194,13 +209,13 @@ function veBang(){
   for(const d of ds){
     const kc=khoaChuong(d);
     if(kc!==ch){ch=kc;bai="";h+=`<tr class="chuongh"><td colspan="17">Lớp ${d.lop} · ${esc(d.ten_chuong)}</td></tr>`}
-    if(d.bai+""!==bai){bai=d.bai+"";h+=`<tr class="bai"><td colspan="17">Bài ${d.bai}. ${esc(d.ten_bai)}</td></tr>`}
+    if(d.bai+""!==bai){bai=d.bai+"";
+      const bk=khoaBai(d), kb=KHO_BAI[bk];
+      h+=`<tr class="bai"><td class="ten">Bài ${d.bai}. ${esc(d.ten_bai)} <span class="ngau-nhien" title="Điền số ở hàng này: hệ thống lấy ngẫu nhiên các dạng KHÁC NHAU trong bài, rải cho các mã đề">ngẫu nhiên theo bài</span></td>`;
+      for(const l of LOAI) for(let i=0;i<4;i++) h+=oNhap(bk,l,i,kb.kho[l][i],kb.moi[l][i]);
+      h+=`</tr>`}
     h+=`<tr><td class="ten">${esc(d.ten_dang)}<span class="ma">${d.k}</span></td>`;
-    for(const l of LOAI) for(let i=0;i<4;i++){
-      const kho=d.kho[l][i], moi=d.moi?d.moi[l][i]:kho, v=chon[d.k]?.[l]?.[i]||"";
-      const nhanKho=kho?(moi<kho?`${moi}/${kho}`:`${kho}`):"";
-      h+=`<td class="o g-${l} cot-${l}" style="color:var(--${l.toLowerCase()})"><input type="number" min="0" max="${kho}" data-k="${d.k}" data-l="${l}" data-i="${i}" value="${v}" ${kho?"":"disabled"} title="Kho có ${kho} câu ${TEN_LOAI[l]} mức ${MUC[i]}, ${moi} câu chưa dùng ở đề nào" class="${v?"co":""} ${v>kho?"qua":""}"><span class="k">${nhanKho}</span></td>`;
-    }
+    for(const l of LOAI) for(let i=0;i<4;i++) h+=oNhap(d.k,l,i,d.kho[l][i],d.moi?d.moi[l][i]:d.kho[l][i]);
     h+="</tr>";
   }
   $("#bang-boc").innerHTML=h+"</tbody></table>";
@@ -238,7 +253,9 @@ function veMucTieu(){
 
 function tronMang(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
 function tuDong(){
-  const ds=dangHienThi(); if(!ds.length){alert("Tích chương trước đã.");return}
+  const dsDang=dangHienThi(); if(!dsDang.length){alert("Tích chương trước đã.");return}
+  const theoBai=$("#dien-theo").value==="bai";
+  const ds=theoBai?[...new Set(dsDang.map(khoaBai))].map(bk=>({k:bk,kho:KHO_BAI[bk].kho})):dsDang;
   chon={}; const thieu=[];
   for(const l of ["TN","DS","TLN"]) for(let i=0;i<4;i++){
     let can=mucTieu[l][i]; if(!can) continue;
@@ -317,6 +334,7 @@ $("#ds-ma-tran").onchange=async e=>{
   for(const k of ["xao_phuong_an","xao_y_dung_sai","moi_ma_de_cau_khac_nhau","bu_cung_nhom","mo_rong_dang_khac"]) if(mt[k]!=null) $("#"+k).checked=!!mt[k];
   $("#cau_da_dung").value=mt.cau_da_dung||(mt.tranh_cau_da_dung===false?"khong":"uu_tien");
   chon={}; const khongKhop=[]; const biet=new Map(DL.dang.map(d=>[d.k,d]));
+  for(const d of DL.dang) if(!biet.has(khoaBai(d))) biet.set(khoaBai(d),d);
   for(const p of mt.phan||[]) for(const y of p.yeu_cau){
     const muc=Array.isArray(y.muc)?y.muc:[y.muc];
     if(!biet.has(y.dang)||muc.length!==1||!y.muc){khongKhop.push(`${p.loai} ${y.dang} ${y.muc||"*"} ×${y.so}`);continue}
@@ -324,7 +342,7 @@ $("#ds-ma-tran").onchange=async e=>{
     const d=biet.get(y.dang); chuongChon.add(khoaChuong(d));
   }
   veCay(); veBang(); e.target.value="";
-  if(khongKhop.length) alert("Các dòng ma trận viết theo chương/bài (không theo từng dạng) không hiện được trên bảng:\n"+khongKhop.join("\n"));
+  if(khongKhop.length) alert("Các dòng ma trận viết theo chương (không theo dạng/bài) không hiện được trên bảng:\n"+khongKhop.join("\n"));
 };
 async function moLichSu(){
   const r=await api("/api/lich-su");

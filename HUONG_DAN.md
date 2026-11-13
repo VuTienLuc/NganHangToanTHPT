@@ -108,6 +108,9 @@ Tên kỳ thi, môn/lớp, số mã đề… ghi trong một file JSON đi kèm 
 - `xao_y_dung_sai`: câu Đúng/Sai đảo thứ tự ý **a, b, c**, **giữ ý d (ý khó) ở cuối**; lời giải từng ý đảo theo.
   Tự bỏ qua câu có nội dung nhắc "ý a", "b)"… hoặc lời giải không chia đủ 4 ý (`\\itemch`).
 - `moi_ma_de_cau_khac_nhau`: `true` = mỗi mã đề một bộ câu riêng (4 mã × 12 câu TN = 48 câu khác nhau); mặc định các mã đề cùng bộ câu, chỉ hoán vị.
+- **Chọn ngẫu nhiên theo bài**: trong ứng dụng, hàng **Bài …** (nhãn "ngẫu nhiên theo bài") cũng có ô nhập; điền số ở đó thì
+  hệ thống lấy câu ở **các dạng khác nhau trong bài**, mỗi mã đề phủ càng nhiều dạng càng tốt và các mã đề khác nhau về dạng.
+  "Tự động điền" chọn được **theo từng dạng** hoặc **theo bài**. Trong bảng CSV là dòng `(CẢ BÀI …)` có mã kiểu `2D1?1`.
 - **Bù câu thông minh** khi kho thiếu (nhất là lúc nhiều mã đề khác câu):
   1. lấy câu đúng dạng, đúng mức;
   2. thiếu thì lấy **mức cùng nhóm, cùng dạng**: nhóm 1 = Nhận biết + Thông hiểu (N↔H), nhóm 2 = Vận dụng + VDC (V↔C) — `bu_cung_nhom`;

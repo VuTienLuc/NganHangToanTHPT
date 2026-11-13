@@ -3,7 +3,7 @@
 Sinh BẢNG MA TRẬN (CSV, mở bằng Excel/Numbers) để thầy điền số câu cần lấy.
   python3 scripts/tao_mau_ma_tran.py GHK1_12 --pham-vi 2D1,2D2,2H2
   python3 scripts/tao_mau_ma_tran.py HK1_10 --pham-vi 0D1,0D2,0D3,0H4 --cham-phay   (Excel tiếng Việt)
-Mỗi dòng là một dạng toán. Các cột "kho_..." cho biết kho đang có bao nhiêu câu theo mức N/H/V/C.
+Mỗi dòng là một dạng toán; dòng "(CẢ BÀI …)" (mã 2D1?1) để lấy ngẫu nhiên các dạng khác nhau trong bài. Các cột "kho_..." cho biết kho đang có bao nhiêu câu theo mức N/H/V/C.
 Thầy điền số vào các cột TN_N … TL_C (để trống = 0), lưu lại dạng CSV, rồi:
   python3 scripts/tron_de.py ma-tran/GHK1_12.csv
 Thông tin đầu đề (Sở, trường, kỳ thi…) đặt trong cau_hinh.json → "thong_tin_de",
@@ -45,8 +45,15 @@ os.makedirs(os.path.dirname(p), exist_ok=True)
 with open(p, "w", encoding="utf-8-sig", newline="") as f:
     w = csv.writer(f, delimiter=";" if a.cham_phay else ",")
     w.writerow(["ma_dang", "chuong", "bai", "dang"] + [f"kho_{l}(N/H/V/C)" for l in L] + [f"{l}_{m}" for l in L for m in M])
+    bai_truoc = None
     for k in dang:
         t = id_map.get(k, {})
+        bk = k.split("-")[0]                         # "2D1?1": hàng theo BÀI — lấy ngẫu nhiên các dạng khác nhau trong bài
+        if bk != bai_truoc:
+            bai_truoc = bk
+            cac = [x for x in dang if x.split("-")[0] == bk]
+            w.writerow([bk, t.get("chap_name", ""), t.get("lesson_name", ""), "(CẢ BÀI – ngẫu nhiên các dạng khác nhau)"]
+                       + ["/".join(str(sum(kho[x][(l, m)] for x in cac)) for m in M) for l in L] + [""] * 16)
         w.writerow([k, t.get("chap_name", ""), t.get("lesson_name", ""), t.get("type_name", "")]
                    + ["/".join(str(kho[k][(l, m)]) for m in M) for l in L] + [""] * 16)
 print(f"Đã tạo {os.path.relpath(p, GOC)}: {len(dang)} dạng. Mở bằng Excel/Numbers, điền số câu, lưu lại (CSV).")
