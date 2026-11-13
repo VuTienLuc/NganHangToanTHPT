@@ -1,0 +1,695 @@
+\documentclass[12pt,a4paper,openany,oneside]{book}
+\usepackage[utf8]{vietnam}
+\usepackage{xcolor}
+\usepackage{diagbox}
+\usepackage[shortlabels]{enumitem}
+\usepackage[a4paper,left=1.8cm,right=1.5cm,top=1.5cm,bottom=1.6cm]{geometry}
+\usepackage{setspace}
+\usepackage{fontawesome}
+\setstretch{1.1}
+\setlength{\parskip}{6pt}
+\input{Khaibao/KhaibaoToan}
+\input{Khaibao/Khaibao}
+\input{Khaibao/MucLuc}
+\input{Khaibao/CacHop}
+\input{Khaibao/CacHopThem}
+\usepackage{ex_test}
+\setlist[enumerate,1]{label*=\circlenum{\arabic*},itemsep=-1pt,topsep=0pt}
+\setlist[enumerate,2]{itemsep=0pt,topsep=0pt,label=\circlenumH{\alph*},wide=0cm,leftmargin=!}
+\setlist[enumerate,3]{itemsep=0pt,topsep=0pt,label=\protect{\textcolor{teal}{\roman*)}},wide=1cm,leftmargin=1cm}
+\setlist[itemize,1]{itemsep=0pt,topsep=0pt,label=\protect{\small\color{teal}\rhombusdot}}
+\setlist[itemize,2]{itemsep=0pt,topsep=0pt,label=\protect{\small\color{teal}\starletdot},wide=0.35cm,
+leftmargin=0.35cm}
+\setlist[itemize,3]{itemsep=0pt,topsep=0pt,label=\protect{\small\color{teal}\faAngellist},wide=0.5cm,leftmargin=.5cm}
+\input{Khaibao/PhanTracNghiemV2}
+\usepackage{tkz-euclide,tkz-tab}
+\usetikzlibrary{angles,intersections,shapes.geometric,arrows,decorations.markings,arrows.meta,patterns.meta}
+\usetikzlibrary{shadows.blur,patterns,quotes}
+\raggedbottom
+\tikzset{>=stealth,line join=round,line cap=butt}
+\newcommand{\khungct}[1]{\tcboxmath[colback=mausection!5,colframe=mausection,boxsep=1pt,boxrule=1pt,arc is angular]{#1}}
+\newcommand{\khung}[1]{\tcbox[colback=mausection!5,colframe=mausection,boxsep=1pt,boxrule=1pt,arc is angular]{#1}}
+\usetikzlibrary{bending,matrix}%Mũi tên chỗ vòng cung
+\tikzset{line cap=round,line join=round,>=stealth}
+\def\chongbang{\rule[-14pt]{0pt}{33pt}}
+\usepackage{tasks}
+\usepackage{bm}
+\usepackage{paracol}
+\usepackage{casio580x}
+\usepackage[hidelinks]{hyperref}
+\def\xuongdong{\break}
+\input{Image/GImage.tex}
+\usepackage{tikz-3dplot}
+\usetikzlibrary{positioning,calc}
+%==================== ĐỀ CHÍNH THỨC: in đen trắng, đầu đề Sở/Trường ====================
+\definecolor{mauchuong}{HTML}{000000}
+\definecolor{mausubsection}{HTML}{000000}
+\definecolor{mausection}{HTML}{000000}
+\usepackage{fancyhdr}
+\pagestyle{fancy}\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\def\madehientai{}
+\newcommand{\dauDe}[1]{%
+  \setcounter{page}{1}\gdef\madehientai{#1}%
+  \fancyfoot[C]{\small Trang \thepage/\pageref{cuoide\madehientai} -- Mã đề \madehientai}%
+  \noindent\begin{minipage}[t]{0.47\textwidth}\centering
+    {\small SỞ GD\&ĐT TP. HỒ CHÍ MINH}\\[1pt]
+    {\small\bfseries TRƯỜNG THPT NGUYỄN HỮU CẢNH}\\[-6pt]
+    \rule{3.2cm}{0.5pt}\\[1pt]
+    {\small\itshape (Đề thi có \pageref{cuoide#1} trang)}
+  \end{minipage}\hfill
+  \begin{minipage}[t]{0.52\textwidth}\centering
+    {\bfseries ĐỀ KIỂM TRA GIỮA HỌC KỲ I}\\[1pt]
+    {\bfseries NĂM HỌC 2026 -- 2027}\\[1pt]
+    {\bfseries Môn: TOÁN -- Lớp 11}\\[1pt]
+    {\small\itshape Thời gian làm bài: 90 phút, không kể thời gian phát đề}
+  \end{minipage}\par\medskip
+  \noindent Họ, tên thí sinh: \makebox[7.2cm]{\dotfill}\hfill
+  \fbox{\bfseries\,Mã đề #1\,}\par\noindent
+  Số báo danh: \makebox[5.5cm]{\dotfill}\par\medskip}
+\newcommand{\phanDe}[1]{\par\medskip\noindent #1\par\smallskip}
+\newcommand{\hetDe}[1]{\par\bigskip\begin{center}{\bfseries ------ HẾT ------}\end{center}\label{cuoide#1}}
+\newcommand{\phanDapAn}[1]{\newpage\fancyfoot[C]{\small Đáp án -- Mã đề #1}%
+  \begin{center}{\large\bfseries ĐÁP ÁN -- MÃ ĐỀ #1}\end{center}}
+\begin{document}
+\setcounter{tocdepth}{1}
+\setcounter{secnumdepth}{3}
+\hienthiloigiai
+\dauDe{101}
+
+\phanDe{\textbf{PHẦN I. Câu trắc nghiệm nhiều phương án lựa chọn.} Thí sinh trả lời từ câu 1 đến câu 12. Mỗi câu hỏi thí sinh chỉ chọn một phương án.}
+
+\setcounter{ex}{0}
+
+\Opensolutionfile{ans}[Ans/GHK1_12_2_101_TN]
+
+\begin{ex}%[0H5N4-4]%[ma:3a2afdc2]
+	Cho tam giác $ABC$  vuông cân tại $A$ và $AB=1$. Khẳng định nào sau đây \textbf{sai}?
+	 \choice
+		{$\vv{BA}\cdot \vv{BC}=1$} 
+		 {\True $\vv{AB}\cdot \vv{AC}=1$}
+		{$\vv{AB}\cdot \vv{BC}=-1$} 
+		{$\vv{CA}\cdot \vv{CB}=1$} 
+	\loigiai{ 
+		\begin{center}
+			\begin{tikzpicture}[scale=1,line join=round,font=\footnotesize,line cap=round,thick]
+					 \coordinate (B) at (-2,0);
+					\coordinate (C) at  (2.25,0);
+					\coordinate (Temp) at ($(B) + (45:1)$); 
+					 \coordinate (A) at ($(B)!(C)!(Temp)$);
+					\path ($(A)!0.5!(B)$)  node [left]{$1$};
+					 \draw (A)--(B)--(C)--cycle;
+					\pic[draw,thin,angle radius=2mm] {right angle = B--A--C}; 
+					\foreach  \i/\g in {A/90,B/-90,C/-90}{\draw[fill=white](\i) circle (1pt)
+						 ($(\i)+(\g:3mm)$) node[scale=1]{$\i$};}
+				\end{tikzpicture}
+		\end{center}
+		\begin{enumerate}[$\bullet$]
+			\allowdisplaybreaks 
+			 \item Xét $\vv{BA}\cdot \vv{BC}$.
+			\begin{align*}
+				\vv{BA}\cdot \vv{BC}&=\left|\vv{BA}  \right|\cdot\left|\vv{BC} \right|\cdot\cos\left(\vv{BA},\vv{BC} \right)\\
+				&=1\cdot \sqrt{2}\cdot  \cos 45^\circ=1.
+			\end{align*}
+			\item Xét  $\vv{CA}\cdot \vv{CB}$.
+			\begin{align*}
+				\vv{CA}\cdot \vv{CB}&=\left|\vv{CA}  \right|\cdot\left|\vv{CB} \right|\cdot\cos\left(\vv{CA},\vv{CB} \right)\\
+				&=1\cdot \sqrt{2}\cdot \cos 45^\circ=1. 
+			\end{align*}
+			\item  Xét $\vv{AB}\cdot \vv{AC}$.\\
+			Do tam giác $ABC$ vuông cân tại $A$ nên $AB\perp  AC\Rightarrow \vv{AB}\cdot \vv{AC}=0$.
+			\item Xét  $\vv{AB}\cdot \vv{BC}$.
+			\begin{align*}
+				\vv{AB}\cdot  \vv{BC}&=-\vv{BA}\cdot \vv{BC}\\
+				&=-\left|\vv{BA}\right|\cdot\left|\vv{BC} \right|\cdot\cos\left(\vv{BA},\vv{BC}  \right)\\
+				&=-1\cdot  \sqrt{2}\cdot \cos 45^\circ=-1.
+			\end{align*}
+		\end{enumerate}
+	} 
+\end{ex}
+
+\begin{ex}%[0D3B2-6]%[ma:ecd46391]
+	Từ các chữ số $1$; $2$; $4$; $6$; $8$; $9$  lấy ngẫu nhiên một số. Xác suất để lấy được một số nguyên tố là
+	\choice 
+		{$\dfrac{1}{2}$} 
+		{\True $\dfrac{1}{6}$} 
+		{$\dfrac{1}{3}$} 
+		 {$\dfrac{1}{4}$}
+	 \loigiai{
+		 Ta có $n(\Omega)=6$.\\
+		Biến cố $A$ \lq\lq Lấy được một  số nguyên tố\rq\rq.\\
+		 $A=\left\{2\right\}$, suy ra $n(A)=1$.\\
+		Vậy xác suất biến cố $A$ là $\mathrm{P}(A)=\dfrac{n(A)}{n(\Omega)}=\dfrac{1}{6}$. 
+	} 
+\end{ex}
+
+\begin{ex}%[0D1B3-3]%[ma:26e03ce1]
+	Trong số $ 45 $ học sinh của lớp $ 10A $ có $ 15 $ bạn xếp học lực giỏi, $ 20 $  bạn xếp hạnh kiểm tốt, trong đó $ 10 $ bạn vừa học lực giỏi vừa hạnh kiểm tốt. Hỏi lớp $ 10A $ có bao nhiêu bạn chưa được xếp học lực giỏi hoặc hạnh kiểm tốt?
+	 \choice
+		{$  25 $} 
+		{$ 10 $}
+		 {\True $ 20 $}
+		{$ 15 $} 
+	\loigiai{ 
+		Giả sử $ A = \text{``Học  sinh xếp học lực giỏi''} $.\\
+		$ B = \text{``Học sinh hạnh  kiểm tốt''} $.\\
+		$ |A \cup B| =  \text{``Học sinh xếp học lực giỏi hoặc hạnh kiểm tốt''} $.\\
+		$ |A \cap B| = \text{``Học sinh vừa học lực giỏi vừa hạnh kiểm  tốt''} $.\\
+		Số phần tử của $ |A  \cup B| $ là $ 15+20-10=25 $.\\
+		Số  học sinh có học lực giỏi hoặc hạnh kiểm tốt: $ 25 $.\\
+		Số học sinh chưa có học lực giỏi hoặc  hạnh kiểm tốt: $ 45-25=20 $.\\
+		Câu B, C, D do học  sinh tính sai đọc và hiểu chưa kỹ đề bài.
+	 }
+\end{ex}
+
+\begin{ex}%[0D3Y2-3]%[ma:054ab3d7]
+	Cho hàm số bậc hai $y=ax^2+bx+c$ $(a \neq 0)$ có đồ thị $(P)$. Đỉnh  của $(P)$ được xác định bởi công thức nào?
+	 \choice
+		 {$I\left(-\dfrac{b}{2a};\dfrac{\Delta}{4a}\right)$}
+		{$I\left(\dfrac{b}{2a};\dfrac{\Delta}{4a}\right)$} 
+		{$I\left(-\dfrac{b}{a};-\dfrac{\Delta}{4a}\right)$}
+		{\True  $I\left(-\dfrac{b}{2a};-\dfrac{\Delta}{4a}\right)$} 
+	\loigiai{ 
+		$I\left(-\dfrac{b}{2a};-\dfrac{\Delta}{4a}\right)$ là đỉnh của parabol  $(P) \colon y=ax^2+bx+c$.
+	 }
+\end{ex}
+
+\begin{ex}%[0D7N1-3]%[ma:c6cd0727]
+	Cho tam thức bậc hai $y=ax^2+bx+c$ với $a\ne  0$ có bảng xét dấu sau
+	\begin{center}
+		\begin{tikzpicture}
+				\tkzTabInit[nocadre=false,lgt=1.2,espcl=2.5,deltacl=0.6] 
+					{$x$ /0.6,$f (x)$  /0.6}
+					{$-\infty$,$1$,$2$,$+\infty$} 
+				\tkzTabLine{,+,$0$,-,$0$,+,} 
+			\end{tikzpicture}
+	\end{center}
+	Dựa vào bảng xét dấu trên cho biết $f(x)\ge  0$ khi $x$ thuộc khoảng nào sau đây?
+	 \choice
+		 {\True  $[2;+\infty)$}
+		 {$(-\infty;2)$}
+		{$( 1;2)$}
+		{$(-\infty;+\infty)$} 
+	\loigiai{ 
+		Dựa vào bảng xét dấu, suy ra $f(x)\ge 0\Leftrightarrow x\in \left(-\infty;1\right] \cup  \left[2;+\infty\right)$.
+	} 
+\end{ex}
+
+\begin{ex}%[0D7N2-2]%[ma:344abdff]
+	Bất phương trình  $9x^2+1\leq 6x$ có tập nghiệm là
+	 \choice
+		 {$\mathbb{R}$}
+		{$\varnothing$} 
+		{\True $\left\{\dfrac{1}{3}\right\}$} 
+		{$\left\{-\dfrac{1}{3}\right\}$} 
+	 \loigiai{
+		Ta có  $9x^2+1\leq6x\Leftrightarrow9x^2-6x+1\leq0\Leftrightarrow(3x-1)^2\le0\Leftrightarrow x=\dfrac{1}{3}$.\\
+		Vậy tập  nghiệm của bất phương trình là $S=\left\{\dfrac{1}{3}\right\}$.
+	 }
+\end{ex}
+
+\begin{ex}%[0H5H2-6]%[ma:ac9d4213]
+	Một máy bay đang bay từ hướng Đông sang hướng Tây với tốc độ $650$ km/h thì gặp luồng gió thổi từ hướng Đông Bắc sang hướng Tây Nam  với vận tốc $35$ km/h. Máy bay bị thay đổi vận tốc sau khi gặp gió thổi.
+	\begin{center}
+		\begin{tikzpicture}[scale=1,font=\footnotesize,line join=round,line cap=round,>=stealth]
+				\foreach  \a/\text in {0/Đông,45/Đông Bắc,90/Bắc,135/Tây Bắc,180/Tây,225/Tây Nam,270/Nam,315/Đông Nam}{
+					\draw[->] (0,0)  -- (\a:1.8);
+					\node at  (\a:2.4) {\text};}
+			\end{tikzpicture}
+			\begin{tikzpicture}[line cap=round,line join=round]
+				\path[left color=cyan!80!black,right color=cyan!80!black] 
+					(2.32,0.03).. controls (2.27,0.11) and (2.93,1.15).. 
+					(3.21,1.64)..  controls (3.21,1.64) and (1.91,1.29)..
+					(1.26,1.12).. controls (1.26,1.12)  and (1.55,1.43)..
+					(1.34,1.62).. controls  (1.21,1.72) and (0.82,1.57)..
+					(0.65,1.52).. controls (0.63,1.51)  and (0.01,2.28)..
+					(0.01,2.31)..  controls (0.01,2.32) and (0.02,2.34)..
+					(0.03,2.35).. controls (0.03,2.35)  and (0.47,2.5)..
+					(0.56,2.47).. controls  (0.65,2.45) and (1.2,1.89)..
+					(1.24,1.9).. controls  (1.26,1.9) and (4.22,2.69)..
+					 (4.58,2.79).. controls (4.82,2.86) and (5.12,2.87)..
+					(5.32,2.71).. controls (5.29,2.67) and  (4.86,2.63)..
+					(4.86,2.52)..  controls (4.86,2.49) and (4.87,2.47)..
+					(4.9,2.46).. controls  (5.07,2.44) and (5.53,2.61)..
+					(5.53,2.61).. controls (5.7,2.65)  and (5.93,2.53)..
+					(5.94,2.38).. controls (5.94,2.38) and  (4.25,1.92)..
+					(4.24,1.92).. controls (4.24,1.91) and  (3.46,0.62)..
+					(3.44,0.59).. controls  (3.18,0.25) and (2.38,-0.07).. cycle
+					(2.02,2.65).. controls  (1.76,2.8) and (1.54,2.94)..
+					(1.53,2.95).. controls (1.52,2.97) and  (1.52,2.98)..
+					 (1.54,3).. controls (1.55,3.02) and (1.56,3.03)..
+					(1.57,3.03).. controls (1.58,3.03) and  (1.71,3.05)..
+					(1.86,3.07).. controls (2.01,3.09)  and (2.17,3.12)..
+					(2.23,3.12).. controls (2.43,3.14) and (2.67,3.1).. 
+					(2.84,3.01).. controls  (3.04,2.91) and (3.5,2.65)..
+					(3.48,2.65).. controls (3.47,2.64) and (3.24,2.58).. 
+					(2.98,2.51) -- (2.49,2.38)  -- cycle
+					(4.4,1.81).. controls  (4.53,1.86) and (5.93,2.22)..
+					 (5.97,2.23).. controls (5.99,2.24) and (5.99,2.24)..
+					(5.98,2.21).. controls (5.92,1.79) and (4.81,1.61).. 
+					(4.15,1.47).. controls (4.12,1.46)  and (4.33,1.79)..
+					(4.4,1.81) -- cycle 
+					 (1.45,1.02).. controls (1.83,1.13) and (2.87,1.4)..
+					 (2.91,1.41).. controls (2.86,1.3) and (2.81,1.19)..
+					(2.74,1.1)..  controls (2.32,1.02) and (1.88,0.97)..
+					 (1.45,1.02) -- cycle
+					(0.5,0.64).. controls (0.49,0.65) and (0.48,0.68).. 
+					(0.48,0.69).. controls (0.56,0.91) and (0.64,1.16).. 
+					(0.73,1.39).. controls (0.89,1.44) and  (1.04,1.48)..
+					(1.21,1.52).. controls (1.26,1.53)  and (1.28,1.49)..
+					(1.27,1.45).. controls (1.25,1.4) and (0.93,0.85).. 
+					(0.89,0.8).. controls (0.82,0.69) and  (0.54,0.62).. cycle;
+				\path (2.2,1.8)  coordinate (ta)
+					(4.3,2.4) coordinate  (tb);
+				 \foreach \x in {0,1,...,5}{
+					 \pgfmathsetmacro{\vt}{\x/5}
+					\fill[white]  ($(ta)!\vt!(tb)$) circle (0.08);
+				} 
+			\end{tikzpicture}
+	\end{center}
+	Tìm tốc độ mới của máy  bay (kết quả làm tròn đến hàng đơn vị, đơn vị: km/h).
+	\choice 
+		{$676$} 
+		 {$673$}
+		{$674$} 
+		 {\True $675$}
+	 \loigiai{Dựng hình bình hành $MNPQ$ thỏa mãn $\left|\overrightarrow{MN}\right|=650, \left|\overrightarrow{MQ}\right|=35$.\\
+	\begin{center}
+		\begin{tikzpicture}[scale=1,font=\footnotesize,line join=round,line cap=round,>=stealth]
+				\coordinate  (M) at (13.3,0);
+				\coordinate (N) at (6.8,0); 
+				 \coordinate (Q) at (11.8,-1.5);
+				\coordinate (P)  at (5.3,-1.5);
+				\draw[dashed,->]  (M) -- (N)
+					(M)--(Q); 
+				 \draw[dashed] (N)--(P)--(Q);
+				\draw[->,blue]  (M)--(P);
+				\foreach  \x/\y in {M/90,N/90,P/-90,Q/-90} \fill[black](\x) circle (1pt)
+					 ($(\x)+(\y:3mm)$) node{$\x$};
+			\end{tikzpicture}
+	\end{center}
+	 Khi đó hướng bay và vận tốc mới của máy bay chính là vectơ $\overrightarrow{MP}$.\\
+	Theo định lý cosintrong  tam giác $MNP$, ta có
+	\[MP=\sqrt{MN^2+MQ^2-2\cdot MN\cdot MQ\cdot \cos  135^\circ}=\sqrt{423725+22750\sqrt{2}}\approx 675.\]
+	 Tốc độ mới của máy bay là $675$ km/h.
+	} 
+\end{ex}
+
+\begin{ex}%[0H4H3-2]%[ma:46e44f8d]
+	\immini[thm]{ 
+	Từ đỉnh  của một tòa nhà người ta đo được góc tạo bởi hướng nhìn đến đỉnh của tháp truyền thông và phương ngang là $15^\circ$. Từ chân tòa nhà đó người ta đo được góc tạo bởi hướng nhìn đến đỉnh của tháp truyền thông và phương ngang là $29^\circ$. Biết tòa nhà cao $50$ m, tính chiều cao của tháp.
+	\choice 
+		{$93{,}9$ m}
+		{$90{,}6$  m}
+		{$91{,}5$  m} 
+		{\True $96{,}8$  m}
+		} 
+		{ 
+		\begin{tikzpicture}[scale=1,font=\footnotesize,line join=round,line cap=round,>=stealth]
+				 \path
+					 (0,4.5) coordinate (A)
+					(0,-1) coordinate (H) 
+					(4,3)  coordinate (B)
+					(4,-1) coordinate  (C)
+					(0,3) coordinate (K); 
+				\draw  [fill=gray!60]
+					(-0.4,-1) 
+					.. controls  ++(50:0.5) and ++(265: 1).. (0,4.5)
+					.. controls ++(-85:1)  and ++(130: 0.5).. (0.4,-1)--cycle;
+				\draw[pattern=bricks,pattern color=brown]  (B)--(6,3)--(6,-1)--(4,-1)--(B);
+				\foreach \i in  {2,3,4,5}
+				 \draw[fill=white] ({4+1/3},{-1+(2/3)*(\i-1)})--({4+1/3},{-1+(2/3)*(\i-1)+0.5})--({4+2/3},{-1+(2/3)*(\i-1)+0.5})--({4+2/3},{-1+(2/3)*(\i-1)})--cycle
+					 ({5+1/3},{-1+(2/3)*(\i-1)})--({5+1/3},{-1+(2/3)*(\i-1)+0.5})--({5+2/3},{-1+(2/3)*(\i-1)+0.5})--({5+2/3},{-1+(2/3)*(\i-1)})--cycle;
+				\draw[dashed](A)--(B)--(K) 
+					(A)--(C); 
+				\draw pic["$29^{\circ}$",draw=black,angle  eccentricity=1.4,angle radius=0.9cm]{angle=A--C--H};
+				\draw  pic["$15^{\circ}$",draw=black,double,angle eccentricity=1.5,angle radius=1.2cm]{angle=A--B--K};
+				\foreach \x/\g in {A/180,B/90,C/140} 
+				\fill[black] (\x) circle (1pt)+(\g:3mm)  node {$\x$};
+				\clip (-0.7,{-1-0.25}) rectangle (6.6,-1); 
+				 \draw[fill=gray!30] (-0.7,-1)--(6.6,-1)--(6.6,{-1-0.25})--(-0.7,{-1-0.25})--cycle;
+				\foreach \i  in {1,2,...,35}
+				\draw  ({-0.5+0.2*(\i)},-1)--($({-0.5+0.2*(\i)},-1)+(-120:0.3)$);
+			\end{tikzpicture}
+		} 
+	 \loigiai{
+		\begin{center}
+			\begin{tikzpicture}[scale=1,font=\footnotesize,line join=round,line cap=round,>=stealth]
+					 \path
+						(0,4.5)  coordinate (A)
+						(0,-1) coordinate (H) 
+						(4,3) coordinate (B) 
+						(4,-1) coordinate (C) 
+						(0,3)  coordinate (K);
+					 \draw [fill=gray!60]
+						(-0.4,-1) 
+						 .. controls ++(50:0.5) and ++(265: 1).. (0,4.5)
+						.. controls ++(-85:1)  and ++(130: 0.5).. (0.4,-1)--cycle;
+					\draw[pattern=bricks,pattern color=brown] (B)--(6,3)--(6,-1)--(4,-1)--(B); 
+					\foreach \i in {2,3,4,5} 
+					\draw[fill=white]  ({4+1/3},{-1+(2/3)*(\i-1)})--({4+1/3},{-1+(2/3)*(\i-1)+0.5})--({4+2/3},{-1+(2/3)*(\i-1)+0.5})--({4+2/3},{-1+(2/3)*(\i-1)})--cycle
+						 ({5+1/3},{-1+(2/3)*(\i-1)})--({5+1/3},{-1+(2/3)*(\i-1)+0.5})--({5+2/3},{-1+(2/3)*(\i-1)+0.5})--({5+2/3},{-1+(2/3)*(\i-1)})--cycle;
+					\draw[dashed](A)--(B)--(K) 
+						(A)--(C) 
+						(A)--(H); 
+					\draw pic["$29^{\circ}$",draw=black,angle eccentricity=1.4,angle radius=0.9cm]{angle=A--C--H}; 
+					\draw pic["$15^{\circ}$",draw=black,double,angle  eccentricity=1.5,angle radius=1.2cm]{angle=A--B--K};
+					 \foreach \x/\g in {A/180,B/90,C/140,K/180}
+					\fill[black] (\x) circle (1pt)+(\g:3mm)  node {$\x$};
+					\draw (-0.5,-.8)  node{$H$};
+					\clip (-0.7,{-1-0.25}) rectangle  (6.6,-1);
+					\draw[fill=gray!30] (-0.7,-1)--(6.6,-1)--(6.6,{-1-0.25})--(-0.7,{-1-0.25})--cycle; 
+					 \foreach \i in {1,2,...,35}
+					\draw  ({-0.5+0.2*(\i)},-1)--($({-0.5+0.2*(\i)},-1)+(-120:0.3)$);
+				\end{tikzpicture}
+		\end{center}
+		Gọi $H$ là hình chiếu vuông góc của $A$ trên mặt đất, $K$ là hình chiếu vuông góc  của $B$ trên $AH$. \\
+		 Ta có $AH=CH\tan \widehat{ACH}=CH\tan 29^\circ$,
+		$AK=BK\tan  \widehat{ABK}=CH\tan 15^\circ$. \\
+		 Khi đó
+		\begin{align*}
+			&AH-AK =  BC \\
+			&\Leftrightarrow CH\tan 29^\circ- CH\tan  15^\circ=50\\
+			&\Leftrightarrow CH=\dfrac{50}{\tan 29^\circ-\tan 15^\circ}. 
+		\end{align*}
+		Chiều cao của tháp là 
+		\[AH=CH\tan 29^\circ=\dfrac{50\tan  29^\circ}{\tan 29^\circ-\tan 15^\circ} \approx 96{,}8\text{m}.\]
+	} 
+\end{ex}
+
+\begin{ex}%[0H4H2-4]%[ma:73382595]
+	Tam  giác đều cạnh $a$ nội tiếp trong đường tròn bán kính $R$ bằng
+	 \choice
+		{$\dfrac{a\sqrt 2}{3}$}
+		{\True  $\dfrac{a\sqrt 3}{3}$}
+		 {$\dfrac{a\sqrt  3}{4}$}
+		{$\dfrac{a\sqrt  3}{2}$}
+	\loigiai{ 
+		Bán kính đường tròn ngoại tiếp tam giác đều cạnh $a$  thì $R=\dfrac{2}{3}h=\dfrac{2}{3}\cdot\dfrac{a\sqrt 3}{2}=\dfrac{a\sqrt 3}{3}$.
+	 }
+\end{ex}
+
+\begin{ex}%[0H5H3-5]%[ma:6379812f]
+	Cho tam giác $ABC$ gọi $D$ là điểm sao cho $\overrightarrow{BD}=-\dfrac{2}{3}\overrightarrow{CB}$ và $M$ là trung điểm  $AD$, $\overrightarrow{BM}$ được phân tích theo hai vectơ $\overrightarrow{BA}$ và $\overrightarrow{BC}$. Hãy chọn khẳng định đúng trong các khẳng định sau:
+	\choice 
+		{$\dfrac{1}{2}\left(\overrightarrow{BA}-\dfrac{2}{3}\overrightarrow{BC}\right)$} 
+		 {\True  $\dfrac{1}{2}\left(\overrightarrow{BA}+\dfrac{2}{3}\overrightarrow{BC}\right)$}
+		{$\dfrac{1}{2}\overrightarrow{BA}+\dfrac{2}{3}\overrightarrow{BC}$} 
+		{$\overrightarrow{BA}+\dfrac{2}{3}\overrightarrow{BC}$}
+	\loigiai{ 
+	Theo  quy tắc trung điểm ta có $\overrightarrow{BM}=\dfrac{1}{2}\left(\overrightarrow{BA}+\overrightarrow{BD}\right)=\dfrac{1}{2}\left(\overrightarrow{BA}-\dfrac{2}{3}\overrightarrow{CB}\right)=\dfrac{1}{2}\left(\overrightarrow{BA}+\dfrac{2}{3}\overrightarrow{BC}\right)$.}
+\end{ex}
+
+\begin{ex}%[0D1K2-1]%[ma:48507098]
+	Tập hợp $A=\left\lbrace x\in\mathbb{N}|x<2019\right\rbrace $  có bao nhiêu tập hợp con?
+	\choice 
+		 {$2^{2018}+1$}
+		 {$2^{2018}$}
+		 {\True  $2^{2019}$}
+		{$2^{2019}-1$}
+	 \loigiai{
+		Dạng liệt kê của tập hợp $A=\left\lbrace 0;1;2;3\dots2018\right\rbrace$ nên $A$ có $2019$ phần tử. Vậy $A$ có tất cả $2^{2019}$ tập hợp con. 
+	 }
+\end{ex}
+
+\begin{ex}%[0H4K3-1]%[ma:cd6b3f10]
+	\immini{Khoảng cách từ nhà An ở vị trí $A$ đến nhà Bình ở vị trí $B$ là $500$ m. Từ nhà Bình đi $x$ mét theo phương tạo với $AB$ một góc $60^\circ$ thì sẽ đến nhà bác Mai ở vị trí $M$  và nếu đi thêm $300$ m nữa thì sẽ đến siêu thị ở vị trí $S$ (hình vẽ). Biết rằng quãng đường từ nhà An đến siêu thị bằng $\dfrac{7}{5}$ quãng đường từ nhà An đến nhà bác Mai. Khi đó quãng đường từ nhà Bình đến nhà bác Mai là
+	\choice 
+		 {$550$ m}
+		 {\True $625$ m}
+		 {$600$ m}
+		{$400$ m}}{\begin{tikzpicture}[scale=0.7]
+		 \path
+			(0,0)  coordinate (B)
+			++(0:6)  coordinate (A)
+			(B)++(60:4.5)  coordinate (M)
+			(B)++(60:7)  coordinate (S);
+		\draw (S)--(B)--(A)--cycle (M)--(A); 
+		\foreach \x/\g in  {M/180,B/180,A/0,S/90}
+		\fill[black] (\x)  circle (1pt)
+			 ($(\g:3mm)+(\x)$) node {$\x$};
+		 \path
+			(M)--(B)  node[pos=0.5,left]{$x$}
+			(M)--(S) node[pos=0.5,left]{$300$} 
+			(M)--(A) node[pos=0.5,below]{} 
+			 (B)--(A) node[pos=0.5,below]{$500$};
+		 \draw
+			pic["$60^\circ$",angle radius=15mm]{angle=A--B--S} 
+			pic[draw,angle radius=6mm]{angle=A--B--S}; 
+	\end{tikzpicture}
+		 }
+	 \loigiai{
+		Vì $x$ là khoảng cách $BM$  nên $x>0$, $BS = x+300$. \\
+		Áp dụng định lí  côsin cho tam giác $ABM$:
+		$$AM^2 = AB^2 +BM^2 - 2\cdot AB\cdot  BM\cdot \cos 60^\circ = 500^2 +x^2 - 2\cdot 500\cdot x\cdot \dfrac{1}{2}= x^2 -500x +250000.$$
+		 Áp dụng định lí cô-sin cho $\triangle ABS$\\
+		$AS^2 = AB^2 +BS^2 - 2\cdot AB\cdot BS\cdot \cos 60^\circ = 500^2 +(x+300)^2 -  2\cdot 500\cdot (x+300)\cdot \dfrac{1}{2}\\= x^2 +100x +190000.$\\
+		Ta  có:\\
+		$AS = \dfrac{7}{5} AM \Leftrightarrow AS^2 = \dfrac{49}{25}AM^2 \Leftrightarrow  25\cdot AS^2 = 49\cdot AM^2$\\
+		$\Leftrightarrow 25\cdot  (x^2 +100x +190000) = 49\cdot (x^2 -500x +250000)$\\
+		$\Leftrightarrow  24x^2 -27000x + 7500000 =0 \Leftrightarrow \hoac{&x=625 \\ & x=500.}$
+	} 
+\end{ex}
+
+\Closesolutionfile{ans}
+
+\phanDe{\textbf{PHẦN II. Câu trắc nghiệm đúng sai.} Thí sinh trả lời từ câu 1 đến câu 4. Trong mỗi ý a), b), c), d) ở mỗi câu, thí sinh chọn đúng hoặc sai.}
+
+\setcounter{ex}{0}
+
+\Opensolutionfile{ansbook}[Ansbook/GHK1_12_2_101_DS]
+
+\begin{ex}%[0D1H2-3]%[ma:0b912f6c]
+	Cho các tập hợp $G=\left\{\left. x\in \mathbb{R}\right|-12\le x\le 21\right\}$; $H=\left\{\left. x\in \mathbb{R}\right|0\le  x\le 17\right\}$.
+	\choiceTF 
+		{\True  $G=\left[-12; 21\right]$}
+		{\True $H=\left[0;17\right]$} 
+		{$G\subset H$} 
+		{\True  $H\subset G$}
+	\loigiai{ 
+		\begin{center}
+			\begin{tikzpicture}[line join = round,line cap = round,>=stealth,font=\footnotesize,scale=.6]
+					\draw[->,>=stealth,black] (-5,0)  node[left]{$G$}--(5,0);
+					\path (-2.5,0)  node[below=5pt,black]{$-12$}node[black]{$[$};
+					\path (3.5,0) node[below=5pt,black]{$21$}node[black]{$]$}; 
+					\path[pattern=north west lines,pattern color=blue]  (-5,-3pt) rectangle (-2.5,3pt);
+					\path[pattern=north west lines,pattern color=blue] (3.5,-3pt) rectangle (5,3pt); 
+				\end{tikzpicture}\\
+			\begin{tikzpicture}[line join = round,line cap = round,>=stealth,font=\footnotesize,scale=.6]
+					\draw[->,>=stealth,black] (-5,0)  node[left]{$H$}--(5,0);
+					\path (0,0) node[below=5pt,black]{$0$}node[black]{$[$}; 
+					\path (2,0)  node[below=5pt,black]{$17$}node[black]{$]$};
+					\path[pattern=north west lines,pattern color=blue] (-5,-3pt) rectangle  (0,3pt);
+					\path[pattern=north west lines,pattern color=blue] (2,-3pt) rectangle  (5,3pt);
+				\end{tikzpicture}
+		\end{center}
+		\begin{itemchoice}
+			\itemch  $G=[-12;21]$.
+			\itemch  $H=[0;17]$.
+			 \itemch $G\not\subset H$.
+			 \itemch $H\subset G$.
+		\end{itemchoice}
+	} 
+\end{ex}
+
+\begin{ex}%[0D1H1-3]%[ma:3f5bc29e]
+	Cho biết mệnh đề phủ định của mệnh đề sau  đúng hay sai?
+	\choiceTF 
+		{$P$: \lq\lq Hình thoi có hai đường chéo vuông góc với nhau\rq\rq. Ta  có mệnh đề phủ định là $\overline{P}$: \lq\lq Hình thoi có hai đường chéo không vuông góc với nhau\rq\rq}
+		{$S$: \lq\lq $1>-3$\rq\rq.  Ta có mệnh đề phủ định là $\overline{S}$: \lq\lq $1\leq-3$\rq\rq}
+		 {\True $K$: \lq\lq Phương trình $x^4-2x^2+2=0$ có nghiệm\rq\rq. Ta có mệnh đề phủ định là $\overline{K}$: \lq\lq Phương trình $x^4-2x^2+2=0$ vô nghiệm\rq\rq}
+		{$H$: \lq\lq $(\sqrt{3}-\sqrt{12})^2=3$\rq\rq. Ta có mệnh đề phủ định là  $\overline{H}:$ \lq\lq $(\sqrt{3}-\sqrt{12})^2\neq 3$\rq\rq}
+	\loigiai{ 
+		\begin{itemchoice}
+			 \itemch Mệnh đề này sai.
+			 \itemch Mệnh đề này sai.
+			\itemch Mệnh  đề này đúng
+			\itemch Mệnh đề  này sai.
+		\end{itemchoice}
+	 }
+\end{ex}
+
+\begin{ex}%[0H5V3-2]%[ma:5a5ae7f1]
+	Cho tam giác $ABC$ có $M$ là trung điểm $BC$. Gọi $G$ là trọng tâm, $H$ là trực tâm, $O$ là tâm đường tròn ngoại tiếp tam giác $ABC,AA^\prime$ là đường kính của $(O)$. Các mệnh đề sau đúng  hay sai?
+	 \choiceTF
+		{\True  $\overrightarrow{BH}=\overrightarrow{A'C}$}
+		{\True  $\overrightarrow{AH}=2\overrightarrow{OM}$}
+		{$\overrightarrow{HA}+\overrightarrow{HB}+\overrightarrow{HC}=3\overrightarrow{HO}$} 
+		 {$\overrightarrow{OA}+\overrightarrow{OB}+\overrightarrow{OC}=3\overrightarrow{OH}$}
+	\loigiai{ 
+		\begin{center}
+			\begin{tikzpicture}[scale=1,font=\footnotesize,line join=round,line cap=round,>=stealth]
+					\path (0,0) coordinate (A) 
+						(-1,-3) coordinate (B) 
+						($(B)+(4,0)$) coordinate  (C)
+						($(B)!1/2!(C)$)  coordinate (M)
+						 ($(A)!2/3!(M)$) coordinate (G)
+						($(B)!(A)!(C)$) coordinate (a') 
+						($(A)!(C)!(B)$) coordinate (c') 
+						($(A)!(B)!(C)$) coordinate  (b')
+						(intersection of A--a' and B--b')  coordinate (H)
+						 ($(H)!2!(M)$) coordinate (A')
+						($(A)!1/2!(A')$) coordinate (O); 
+					\draw (O)  let \p1=($(O)-(A)$) in circle ({veclen (\x1,\y1)});
+					 \draw (A)--(B)--(C)--cycle (H)--(A')--(A)--(M)
+						(A)--(a') 
+						 (B)--(b')
+						(C)--(c') 
+						 (B)--(A')--(C);
+					\foreach \x/\g in {A/90,B/-150,C/-45,M/-90,G/165,H/125,A'/-80,O/45}  \fill (\x) circle (1.2pt)+(\g:.35) node {$\x$};
+					\draw[fill]  (M) circle (1pt)
+						($(A)!1/3!(M)$)  circle (1pt);
+				\end{tikzpicture}
+		\end{center}
+		\begin{itemchoice}
+			\itemch  Do tứ giác $BHCA^\prime$ có $BH\parallel A^\prime C(\perp AC)$ và $CH\parallel BA^\prime(\perp AB)$ nên $BHCA^\prime$ là hình bình hành
+			$ 
+			\Rightarrow  \overrightarrow{BH}=\overrightarrow{A^\prime C}.$
+			\itemch Lại có $M$ là trung điểm của đường  chéo $BC$ nên $M$ là trung điểm của $HA^\prime$ hay $H,M,A^\prime$ thẳng hàng.\\
+			Do $OM$ là đường trung bình của $\triangle AHA^\prime$  nên $AH=2OM$, mà $\overrightarrow{AH}$ và $\overrightarrow{OM}$ cùng hướng
+			$\Rightarrow  \overrightarrow{AH}=2\overrightarrow{OM}.$
+			\itemch $\overrightarrow{HA}+\overrightarrow{HB}+\overrightarrow{HC}=\overrightarrow{HA}+\overrightarrow{HA'}=2\overrightarrow{HO}$ (Tứ giác $BHCA'$  là hình bình hành)\\
+			Vậy $\overrightarrow{HA}+\overrightarrow{HB}+\overrightarrow{HC}=2\overrightarrow{HO}$. 
+			 \itemch
+			\begin{eqnarray*}
+				 \overrightarrow{OA}+\overrightarrow{OB}+\overrightarrow{OC}
+				 &=&\overrightarrow{OH}+\overrightarrow{HA}+\overrightarrow{OH}+\overrightarrow{HB}+\overrightarrow{OH}+\overrightarrow{HC}\\
+				 &=&3\overrightarrow{OH}+\overrightarrow{HA}+\overrightarrow{HB}+\overrightarrow{HC}\\
+				 &=&3\overrightarrow{OH}+2\overrightarrow{HO}=\overrightarrow{OH}.
+			\end{eqnarray*}
+	\end{itemchoice}}
+\end{ex}
+
+\begin{ex}%[0H5V2-2]%[ma:b96fcd46]
+	Cho hình bình  hành $ABCD$ tâm $O$. Khi đó
+	\choiceTF 
+		{\True $\overrightarrow{BA}+\overrightarrow{AB}=\vec{0}$} 
+		{\True $\overrightarrow{OA}+\overrightarrow{AC}=\overrightarrow{OC}$} 
+		 {$\overrightarrow{OA}-\overrightarrow{OB}+\overrightarrow{DC}=\overrightarrow{CB}$}
+		{\True $\overrightarrow{OB}+\overrightarrow{OA}-\overrightarrow{CA}=\overrightarrow{DC}$} 
+	 \loigiai{
+		\begin{itemchoice}
+			\itemch Vì  $\overrightarrow{BA}+\overrightarrow{AB}=\overrightarrow{BB}=\vec{0}$.
+			\itemch Vì $\overrightarrow{OA}+\overrightarrow{AC}=\overrightarrow{OC}$ (quy tắc ba  điểm).
+			 \itemch Vì $\overrightarrow{OA}-\overrightarrow{OB}+\overrightarrow{DC}=\overrightarrow{OA}+\overrightarrow{BO}+\overrightarrow{DC}=\overrightarrow{BO}+\overrightarrow{OA}+\overrightarrow{AB}=\overrightarrow{BA}+\overrightarrow{AB}=\overrightarrow{0}$.
+			\itemch Vì  $\overrightarrow{OB}+\overrightarrow{OA}-\overrightarrow{CA}=\overrightarrow{OB}+\overrightarrow{OA}+\overrightarrow{AC}=\overrightarrow{OB}+\overrightarrow{OC}=\overrightarrow{DO}+\overrightarrow{OC}=\overrightarrow{DC}$.
+		\end{itemchoice}
+	 }
+\end{ex}
+
+\Closesolutionfile{ansbook}
+
+\phanDe{\textbf{PHẦN III. Câu trắc nghiệm trả lời ngắn.} Thí sinh trả lời từ câu 1 đến câu 6.}
+
+\setcounter{bt}{0}
+
+\Opensolutionfile{ansbt}[Ansbook/GHK1_12_2_101_TLN]
+
+\begin{bt}%[0H5H4-3]%[ma:e57a7956]
+	Cho hai vectơ $\overrightarrow{a}$ và $\overrightarrow{b}$. Biết $\left|\overrightarrow{a}\right|=2,\left|\overrightarrow{b}\right|=\sqrt{3}$ và $\left(\overrightarrow{a}, \overrightarrow{b}\right)=120^{\circ}$. Tính $\left|\overrightarrow{a}+\overrightarrow{b}\right|$ (làm tròn kết quả đến  hàng phần trăm).
+	\shortans{1,88} 
+	 \loigiai{
+		Ta có \begin{align*}
+		 \left|\overrightarrow{a}+\overrightarrow{b}\right|&=\sqrt{\left(\overrightarrow{a}+\overrightarrow{b}\right)^2}=\sqrt{\overrightarrow{a}^2+\overrightarrow{b}^2+2 \overrightarrow{a}\cdot\overrightarrow{b}}\\
+		&=\sqrt{\left|\overrightarrow{a}\right|^2+\left|\overrightarrow{b}\right|^2+2\left|\overrightarrow{a}\right|  \cdot\left|\overrightarrow{b}\right| \cdot \cos \left(\overrightarrow{a}, \overrightarrow{b}\right)}=\sqrt{7-2 \sqrt{3}}\\
+		&\approx 1{,}88. 
+\end{align*}}
+\end{bt}
+
+\begin{bt}%[0D7H3-1]%[ma:26bf51b4]
+	Gọi $S$ là tập nghiệm của phương trình $\sqrt{x^2+3x-2}=\sqrt{1+x}$.  Tổng tất cả các phần tử của $S$ bằng bao nhiêu?
+	\shortans{1} 
+	 \loigiai{
+		Bình phương hai vế của phương trình ta có 
+		\allowdisplaybreaks 
+		\begin{eqnarray*}
+			x^2+3x-2=1+x&\Leftrightarrow& x^2+2x-3=0\\ 
+			&\Leftrightarrow&\hoac{&x=1\\&x=-3.} 
+		\end{eqnarray*}
+		Lần lượt thế $x=1$ và $x=-3$ vào phương trình ban đầu  chỉ có $x=1$ thỏa mãn.\\
+		Do đó, phương trình có  tập nghiệm là $S=\{1\}$.
+	 }
+\end{bt}
+
+\begin{bt}%[0D3V1-2]%[ma:f18012cf]
+	 Cho hàm số $y=\sqrt{2x-3m+4}+\dfrac{x}{x+m-1}$ với $m$ là tham số. Tìm tổng các giá trị của $m$ để hàm số có tập xác định là $[0;+\infty)$ (kết quả dưới dạng số thập phân làm tròn đến hàng phần trăm).
+	 \shortans{1,33}
+	 \loigiai{
+		Hàm số xác định khi  và chỉ khi $\heva{&2x-3m+4\ge 0\\ &x+m-1\ne 0} \Leftrightarrow \heva{&x\ge\dfrac{3m-4}{2}\\ &x\ne 1-m.}$
+		\begin{itemize}
+			 \item \textbf{Trường hợp 1:} $1-m\ge\dfrac{3m-4}{2}\Leftrightarrow m\le\dfrac{6}{5}$, khi đó tập xác định của hàm số là $\mathscr{D}=\left[\dfrac{3m-4}{2};+\infty\right)\setminus\{ 1-m\}$.\\
+			Tập xác định này không thể bằng  $[0;+\infty)$ theo đề bài.\\
+			Do đó $m\le\dfrac{6}{5}$ không thỏa  mãn.
+			\item \textbf{Trường hợp  2:} $1-m <\dfrac{3m-4}{2}\Leftrightarrow m >\dfrac{6}{5}$, khi đó tập xác định của hàm số là $\mathscr{D}=\left[\dfrac{3m-4}{2};+\infty\right)$.\\
+			Do đó, hàm số có tập xác định là $[0;+\infty)\Leftrightarrow\dfrac{3m-4}{2}=0\Leftrightarrow m=\dfrac{4}{3}$ (thỏa  mãn).\\
+			Vậy $m=\dfrac{4}{3}\approx 1{,}33$ là giá trị  cần tìm.
+		\end{itemize}
+	} 
+\end{bt}
+
+\begin{bt}%[0D7V2-3]%[ma:a42fb323]
+	Giải bất phương trình $\left(x^2-3x+2\right)\left(-x^2+5x-6\right)\ge 0$ ta được tập nghiệm $S=[a;b]$. Tính giá trị của biểu  thức $a+3b$.
+	 \shortans{10}
+	 \loigiai{
+		 Tam thức bậc hai $f(x)=x^2-3x+2$ có $a=1> 0$ và có hai nghiệm $x_1=1;x_2=2$.\\
+		Tam thức bậc hai  $g(x)=-x^2+5x-6$ có $a=-1< 0$ và có hai nghiệm $x_1=2;x_2=3$
+		Ta  có bảng xét dấu sau
+		\begin{center}
+			\begin{tikzpicture}[>=stealth]
+					 \tkzTabInit[nocadre=false,lgt=3]{$x$/.7,$x^2-3x+2$/.7,$-x^2+5x-6$/.7,$f (x)$/.7}
+						{$-\infty$,$1$,$2$,$3$,$+\infty$} 
+					 \tkzTabLine{,+,$0$,-,$0$,+,t,+,}
+					 \tkzTabLine{,-,t,-,$0$,+,$0$,-,}
+					 \tkzTabLine{,-,$0$,+,$0$,+,$0$,-,}
+				\end{tikzpicture}
+		\end{center}
+		Suy ra $f(x)\cdot g(x)\ge 0$ khi  $x\in [1;3]$.
+		Vậy giá trị  của biểu thức $a+3b=1+3\cdot 3=10$.
+	 }
+\end{bt}
+
+\begin{bt}%[0D1V1-5]%[ma:ed38142b]
+	Mệnh đề \lq\lq$ \forall x\in\mathbb{R},\, x^2+5-m\ge 0 $\rq\rq~với $m$ là số thực cho trước. Tìm giá trị lớn nhất của $m$ để  được mệnh đề đúng.
+	\shortans{5} 
+	 \loigiai{
+		Ta có $\forall x\in\mathbb{R},\, x^2+5-m\ge 0\Leftrightarrow \forall x\in\mathbb{R},\, x^2\ge m-5  \Leftrightarrow m-5\le 0\Leftrightarrow m\le 5$.\\
+	Vậy giá trị lớn nhất của $m$  thỏa đề là: $m=5$.}
+\end{bt}
+
+\begin{bt}%[0D7C3-3]%[ma:0ff0285f]
+	Tìm số giá trị nguyên của  tham số $m$ thuộc đoạn $[0;2024]$ thoả mãn phương trình $\sqrt{2x^2 - 2x - 2m} = x-2$ có nghiệm.
+	 \shortans{2023}
+	\loigiai{ 
+		Ta  có
+		\[ 
+		\sqrt{2x^2 - 2x -  2m} = x-2 \Leftrightarrow \heva{&x-2\ge 0\\ &2x^2 - 2x - 2m = (x-2)^2}
+		 \Leftrightarrow \heva{&x\ge 2\\ &x^2+2x-4 = 2m.}
+		\] 
+		Do đó  phương trình $\sqrt{2x^2 - 2x - 2m} = x-2$ có nghiệm khi và chỉ khi phương trình $x^2+2x-4 = 2m$ có nghiệm $x_0\ge 2$.\\
+		Xét tam thức bậc hai $f(x) = x^2+2x-4$ trên $\left[2;+\infty \right)$ có $a = 1>0$ và hoành độ đỉnh  $x = -\dfrac{b}{2a} =-1 < 2$ nên ta có
+		\[ 
+		f(x) \ge f(2) =  4,\, \forall x\ge 2.
+		 \]
+		Suy  ra $2m\ge 4 \Leftrightarrow m\ge 2$.\\
+		Kết hợp với $m\in[0;2024]$ ta thấy có  $2023$ giá trị nguyên của $m$ thoả mãn.
+	 }
+\end{bt}
+
+\Closesolutionfile{ansbt}
+
+\hetDe{101}
+
+\phanDapAn{101}
+\par\noindent\textbf{PHẦN I.}\par
+\begin{flushleft}
+\input{Ans/GHK1_12_2_101_TN}
+\end{flushleft}
+\par\noindent\textbf{PHẦN II.}\par
+\begin{flushleft}
+\input{Ansbook/GHK1_12_2_101_DS}
+\end{flushleft}
+\par\noindent\textbf{PHẦN III.}\par
+\begin{flushleft}
+\input{Ansbook/GHK1_12_2_101_TLN}
+\end{flushleft}
+\end{document}

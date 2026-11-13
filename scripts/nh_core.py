@@ -261,3 +261,106 @@ def duong_dan_dang(info, id_map):
     else:
         f = f"{k[:3]}-{info['bai']}-{info['dang']}.tex"
     return os.path.join(lop, chuong, f)
+
+# ---------------------------------------------------------------- xuất Excel (không cần cài openpyxl)
+def ghi_xlsx(duong_dan, cac_sheet):
+    """cac_sheet: [(ten_sheet, rows, {"do_rong": [..], "kieu": "bang"|"van_ban"})]. Mọi ô ghi dạng chữ.
+    Bảng: dòng 1 và cột A in đậm nền xanh nhạt, mọi ô có viền, căn giữa, ô trống tô vàng. Phông Times New Roman."""
+    import zipfile
+    from xml.sax.saxutils import escape as xe
+    def ten_cot(i):
+        s = ""
+        i += 1
+        while i:
+            i, r = divmod(i - 1, 26); s = chr(65 + r) + s
+        return s
+    styles = """<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<styleSheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main">
+<numFmts count="0"/>
+<fonts count="3"><font><sz val="12"/><name val="Times New Roman"/></font><font><b/><sz val="12"/><name val="Times New Roman"/></font><font><b/><sz val="14"/><name val="Times New Roman"/></font></fonts>
+<fills count="4"><fill><patternFill patternType="none"/></fill><fill><patternFill patternType="gray125"/></fill>
+<fill><patternFill patternType="solid"><fgColor rgb="FFE8ECF9"/><bgColor indexed="64"/></patternFill></fill>
+<fill><patternFill patternType="solid"><fgColor rgb="FFFCEFD5"/><bgColor indexed="64"/></patternFill></fill></fills>
+<borders count="2"><border><left/><right/><top/><bottom/><diagonal/></border>
+<border><left style="thin"><color rgb="FF9AA3AF"/></left><right style="thin"><color rgb="FF9AA3AF"/></right><top style="thin"><color rgb="FF9AA3AF"/></top><bottom style="thin"><color rgb="FF9AA3AF"/></bottom><diagonal/></border></borders>
+<cellStyleXfs count="1"><xf numFmtId="0" fontId="0" fillId="0" borderId="0"/></cellStyleXfs>
+<cellXfs count="6">
+<xf numFmtId="49" fontId="0" fillId="0" borderId="0" xfId="0" applyNumberFormat="1"/>
+<xf numFmtId="49" fontId="1" fillId="2" borderId="1" xfId="0" applyNumberFormat="1" applyFont="1" applyFill="1" applyBorder="1" applyAlignment="1"><alignment horizontal="center" vertical="center"/></xf>
+<xf numFmtId="49" fontId="0" fillId="0" borderId="1" xfId="0" applyNumberFormat="1" applyBorder="1" applyAlignment="1"><alignment horizontal="center" vertical="center"/></xf>
+<xf numFmtId="49" fontId="0" fillId="3" borderId="1" xfId="0" applyNumberFormat="1" applyFill="1" applyBorder="1" applyAlignment="1"><alignment horizontal="center" vertical="center"/></xf>
+<xf numFmtId="49" fontId="2" fillId="0" borderId="0" xfId="0" applyNumberFormat="1" applyFont="1"/>
+<xf numFmtId="49" fontId="0" fillId="0" borderId="0" xfId="0" applyNumberFormat="1" applyAlignment="1"><alignment wrapText="1" vertical="top"/></xf>
+</cellXfs>
+<cellStyles count="1"><cellStyle name="Normal" xfId="0" builtinId="0"/></cellStyles>
+</styleSheet>"""
+    sheets_xml = []
+    for ten, rows, opt in cac_sheet:
+        bang = opt.get("kieu", "bang") == "bang"
+        cols = "".join(f'<col min="{i + 1}" max="{i + 1}" width="{w}" customWidth="1"/>' for i, w in enumerate(opt.get("do_rong", [])))
+        sd = []
+        for r, row in enumerate(rows):
+            cells = []
+            for c, v in enumerate(row):
+                v = "" if v is None else str(v)
+                if bang:
+                    st = 1 if (r == 0 or c == 0) else (3 if v == "" else 2)
+                else:
+                    st = 4 if r == 0 else 5
+                ref = f"{ten_cot(c)}{r + 1}"
+                if v == "":
+                    cells.append(f'<c r="{ref}" s="{st}"/>')
+                else:
+                    cells.append(f'<c r="{ref}" s="{st}" t="inlineStr"><is><t xml:space="preserve">{xe(v)}</t></is></c>')
+            sd.append(f'<row r="{r + 1}">{"".join(cells)}</row>')
+        pane = ('<sheetViews><sheetView workbookViewId="0"><pane xSplit="1" ySplit="1" topLeftCell="B2" activePane="bottomRight" state="frozen"/></sheetView></sheetViews>'
+                if bang else '<sheetViews><sheetView workbookViewId="0"/></sheetViews>')
+        sheets_xml.append(f'<?xml version="1.0" encoding="UTF-8" standalone="yes"?><worksheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main">{pane}'
+                          + (f"<cols>{cols}</cols>" if cols else "") + f'<sheetData>{"".join(sd)}</sheetData></worksheet>')
+    n = len(cac_sheet)
+    with zipfile.ZipFile(duong_dan, "w", zipfile.ZIP_DEFLATED) as z:
+        z.writestr("[Content_Types].xml", '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/xl/workbook.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml"/><Override PartName="/xl/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.styles+xml"/>'
+                   + "".join(f'<Override PartName="/xl/worksheets/sheet{i + 1}.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"/>' for i in range(n)) + "</Types>")
+        z.writestr("_rels/.rels", '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="xl/workbook.xml"/></Relationships>')
+        z.writestr("xl/workbook.xml", '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><workbook xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"><sheets>'
+                   + "".join(f'<sheet name="{xe(cac_sheet[i][0])}" sheetId="{i + 1}" r:id="rId{i + 1}"/>' for i in range(n)) + "</sheets></workbook>")
+        z.writestr("xl/_rels/workbook.xml.rels", '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">'
+                   + "".join(f'<Relationship Id="rId{i + 1}" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet" Target="worksheets/sheet{i + 1}.xml"/>' for i in range(n))
+                   + f'<Relationship Id="rId{n + 1}" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles" Target="styles.xml"/></Relationships>')
+        z.writestr("xl/styles.xml", styles)
+        for i, x in enumerate(sheets_xml):
+            z.writestr(f"xl/worksheets/sheet{i + 1}.xml", x)
+
+# ---------------------------------------------------------------- biên dịch PDF
+def tim_pdflatex():
+    import shutil as _sh
+    for c in (_sh.which("pdflatex"), "/Library/TeX/texbin/pdflatex", "/opt/homebrew/bin/pdflatex",
+              "/usr/local/texlive/2026/bin/universal-darwin/pdflatex", "/usr/local/texlive/2025/bin/universal-darwin/pdflatex"):
+        if c and os.path.exists(c):
+            return c
+    return None
+
+def bien_dich_thu_muc(thu_muc_de, in_ra=print):
+    """Biên dịch tex/De_*.tex (2 lần để đúng số trang) rồi chép PDF ra thư mục đề."""
+    import subprocess, shutil as _sh, time as _t
+    pdfl = tim_pdflatex()
+    if not pdfl:
+        in_ra("Không tìm thấy pdflatex (MacTeX/MiKTeX) — mở các file trong thư mục tex/ bằng TeXstudio để biên dịch.")
+        return False
+    tex = os.path.join(thu_muc_de, "tex")
+    tep = sorted(f for f in os.listdir(tex) if f.startswith("De_") and f.endswith(".tex"))
+    in_ra(f"Biên dịch {len(tep)} file PDF…")
+    ok_het = True
+    for f in tep:
+        bat_dau = _t.time()
+        for _ in range(2):
+            subprocess.run([pdfl, "-interaction=nonstopmode", f], cwd=tex, stdout=subprocess.DEVNULL,
+                           stderr=subprocess.DEVNULL, timeout=900)
+        pdf = os.path.join(tex, f[:-4] + ".pdf")
+        ok = os.path.exists(pdf) and os.path.getmtime(pdf) >= bat_dau - 1
+        if ok:
+            ten_ra = f[:-4].replace("De_", "LoiGiai_", 1).replace("_LoiGiai", "") if f.endswith("_LoiGiai.tex") else f[:-4]
+            _sh.copyfile(pdf, os.path.join(thu_muc_de, ten_ra + ".pdf"))
+        ok_het &= ok
+        in_ra(f"  {'✓' if ok else '✗ lỗi (xem tex/' + f[:-4] + '.log)'} {f[:-4]}")
+    return ok_het

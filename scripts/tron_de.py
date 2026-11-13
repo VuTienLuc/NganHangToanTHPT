@@ -10,14 +10,10 @@ Tuỳ chọn:
   --bien-dich    gọi pdflatex biên dịch luôn (cần LaTeX có gói vietnam)
   --so-ma-de 4   --ten GHK1_12A   (ghi đè giá trị trong ma trận)
 
-Kết quả trong de-da-ra/<ten>/:
-  <ten>_<mã>.tex            đề cho học sinh (không lời giải)
-  <ten>_<mã>_LoiGiai.tex    đề + lời giải + bảng đáp án
-  <ten>_TatCa_De.tex        mọi mã đề trong một file (in một lần)
-  <ten>_TatCa_LoiGiai.tex   mọi mã đề kèm lời giải
-  dap_an_ngang.csv          mỗi mã đề một dòng (mở bằng Excel, nạp app chấm)
-  dap_an.csv                mỗi câu một dòng (có mã câu gốc)
-  danh_sach_cau.csv, ma_tran_da_dung.json
+Kết quả: thư mục de-da-ra/<Tên kỳ thi> - <dd-mm-yyyy>/ gồm
+  De_101.pdf…  LoiGiai_101.pdf…   (khi có --bien-dich và máy có pdflatex)
+  DapAn.xlsx                      đáp án mọi mã đề theo mẫu Chấm Phiếu AI (sheet "Đáp án")
+  tex/                            De_101.tex, De_101_LoiGiai.tex, TatCa_De.tex, khung LaTeX, dap_an.csv
 """
 import os, sys, json, re, random, shutil, csv, argparse, subprocess, time, collections
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -229,9 +225,19 @@ if a.thu:
 
 khung = mt["khung"]
 src = os.path.join(GOC, "khung", khung)
-out = os.path.join(GOC, "de-da-ra", ten)
-if os.path.exists(out):
-    sys.exit(f"Đã có de-da-ra/{ten}. Đổi 'ten' (hoặc --ten) hay đổi tên thư mục cũ.")
+
+def ten_thu_muc(s):
+    s = unicodedata.normalize("NFC", s.replace("--", "–"))
+    s = re.sub(r'[\\/:*?"<>|\n\r\t]+', " ", s)
+    return re.sub(r"\s+", " ", s).strip(" .") or "De thi"
+import unicodedata
+ngay = time.strftime("%d-%m-%Y")
+goc_ten = ten_thu_muc(f"{mt['ten_ky_thi']} - {ngay}")
+out_goc, i = os.path.join(GOC, "de-da-ra", goc_ten), 2
+while os.path.exists(out_goc):
+    out_goc = os.path.join(GOC, "de-da-ra", f"{goc_ten} ({i})"); i += 1
+out = os.path.join(out_goc, "tex")                        # mã nguồn LaTeX + khung
+os.makedirs(out_goc)
 shutil.copytree(src, out, ignore=shutil.ignore_patterns("mau_de.tex", "*.bat"))
 mau = doc(os.path.join(src, "mau_de.tex"))
 for k, v in {"<<SO_GD>>": mt["so_gd"], "<<TRUONG>>": mt["truong"], "<<TEN_KY_THI>>": mt["ten_ky_thi"],
@@ -241,34 +247,47 @@ for k, v in {"<<SO_GD>>": mt["so_gd"], "<<TRUONG>>": mt["truong"], "<<TEN_KY_THI
 def tai_lieu(than, loi_giai):
     return mau.replace("<<CHE_DO_LOI_GIAI>>", "\\hienthiloigiai" if loi_giai else "\\anloigiai").replace("<<NOI_DUNG>>", than)
 
-tat_ca_dap_an, ds_cau_dung, gop_de, gop_lg = [], {}, [], []
+tat_ca_dap_an, ds_cau_dung, gop_de, gop_lg, cac_ma = [], {}, [], [], []
 for s in range(so_ma):
-    ma_de = str(bat_dau + s)
+    ma_de = str(bat_dau + s).zfill(3); cac_ma.append(ma_de)
     bo = chon_bo_cau()[0] if (mt.get("moi_ma_de_cau_khac_nhau") and s > 0) else bo_chung
     for v in bo.values():
         for c in v:
             ds_cau_dung[c["ma"]] = c
     than, cuoi, rows = soan_ma_de(bo, ma_de)
     tat_ca_dap_an += rows
-    ghi(os.path.join(out, f"{ten}_{ma_de}.tex"), tai_lieu(than, False))
-    ghi(os.path.join(out, f"{ten}_{ma_de}_LoiGiai.tex"), tai_lieu(than + "\n\n" + cuoi, True))
+    ghi(os.path.join(out, f"De_{ma_de}.tex"), tai_lieu(than, False))
+    ghi(os.path.join(out, f"De_{ma_de}_LoiGiai.tex"), tai_lieu(than + "\n\n" + cuoi, True))
     gop_de.append(than); gop_lg.append(than + "\n\n" + cuoi)
-ghi(os.path.join(out, f"{ten}_TatCa_De.tex"), tai_lieu("\n\n\\newpage\n".join(gop_de), False))
-ghi(os.path.join(out, f"{ten}_TatCa_LoiGiai.tex"), tai_lieu("\n\n\\newpage\n".join(gop_lg), True))
+ghi(os.path.join(out, "TatCa_De.tex"), tai_lieu("\n\n\\newpage\n".join(gop_de), False))
+ghi(os.path.join(out, "TatCa_LoiGiai.tex"), tai_lieu("\n\n\\newpage\n".join(gop_lg), True))
+
+# ---- Đáp án Excel theo mẫu Chấm Phiếu AI: sheet "Đáp án", A1 = Câu, dòng 1 = mã đề, các dòng 1…, II.1…, III.1…
+def chuan_tln(v):
+    v = (v or "").replace("$", "").replace("{,}", ",").replace(" ", "").replace("−", "-").replace(".", ",")
+    return v
+tra = {(r[0], r[1], r[2]): r[3] for r in tat_ca_dap_an}
+so = {l: max([r[2] for r in tat_ca_dap_an if r[1] == l] or [0]) for l in ("TN", "DS", "TLN")}
+bang = [["Câu"] + cac_ma]
+for i in range(1, so["TN"] + 1):
+    bang.append([str(i)] + [tra.get((m, "TN", i), "") for m in cac_ma])
+for i in range(1, so["DS"] + 1):
+    bang.append([f"II.{i}"] + [tra.get((m, "DS", i), "") for m in cac_ma])
+for i in range(1, so["TLN"] + 1):
+    bang.append([f"III.{i}"] + [chuan_tln(tra.get((m, "TLN", i), "")) for m in cac_ma])
+canh_bao = [f"Mã {m}: {r[0]} còn trống" for r in bang[1:] for m, v in zip(cac_ma, r[1:]) if not v]
+canh_bao += [f"Mã {m}: câu {r[0]} đáp số '{v}' dài hơn 4 ô của phiếu" for r in bang[1:] if r[0].startswith("III")
+             for m, v in zip(cac_ma, r[1:]) if len(v) > 4]
+hd = [[f"{mt['ten_ky_thi']} · {mt['mon'].replace('--', '–')} · {ngay}"],
+      [f"Cấu trúc: Phần I {so['TN']} câu · Phần II {so['DS']} câu · Phần III {so['TLN']} câu · {len(cac_ma)} mã đề: {', '.join(cac_ma)}"],
+      ["Nạp vào app Chấm Phiếu AI: ô Đáp án → Nhập từ file Excel → chọn file này (app đọc sheet \"Đáp án\")."],
+      ["Phần I: A/B/C/D · Phần II: 4 ký tự Đ/S theo ý a, b, c, d · Phần III: đáp số, dấu phẩy thập phân."],
+      ["Ô tô vàng ở sheet Đáp án là ô còn trống."]] + [[f"⚠ {w}"] for w in canh_bao]
+ghi_xlsx(os.path.join(out_goc, "DapAn.xlsx"), [("Đáp án", bang, {"do_rong": [8] + [10] * len(cac_ma)}),
+                                              ("Hướng dẫn", hd, {"kieu": "van_ban", "do_rong": [110]})])
 
 with open(os.path.join(out, "dap_an.csv"), "w", encoding="utf-8-sig", newline="") as fo:
     w = csv.writer(fo); w.writerow(["ma_de", "phan", "cau", "dap_an", "ma_cau", "ma_dang"]); w.writerows(tat_ca_dap_an)
-# bảng ngang: mỗi mã đề một dòng
-cot = []
-for loai, phan_so in (("TN", "I"), ("DS", "II"), ("TLN", "III")):
-    n = max([r[2] for r in tat_ca_dap_an if r[1] == loai] or [0])
-    cot += [(loai, i, f"{phan_so}.{i}") for i in range(1, n + 1)]
-with open(os.path.join(out, "dap_an_ngang.csv"), "w", encoding="utf-8-sig", newline="") as fo:
-    w = csv.writer(fo); w.writerow(["Mã đề"] + [c[2] for c in cot])
-    tra = {(r[0], r[1], r[2]): r[3] for r in tat_ca_dap_an}
-    for s in range(so_ma):
-        md = str(bat_dau + s)
-        w.writerow([md] + [tra.get((md, l, i), "") for l, i, _ in cot])
 with open(os.path.join(out, "danh_sach_cau.csv"), "w", encoding="utf-8-sig", newline="") as fo:
     w = csv.writer(fo); w.writerow(["ma_cau", "loai", "ma_dang", "muc", "ten_dang", "file"])
     for c in ds_cau_dung.values():
@@ -276,15 +295,13 @@ with open(os.path.join(out, "danh_sach_cau.csv"), "w", encoding="utf-8-sig", new
 json.dump(mt, open(os.path.join(out, "ma_tran_da_dung.json"), "w", encoding="utf-8"), ensure_ascii=False, indent=2)
 
 for ma in ds_cau_dung:
-    lich_su.setdefault(ma, []).append(ten)
+    lich_su.setdefault(ma, []).append(os.path.basename(out_goc))
 json.dump(lich_su, open(p_ls, "w", encoding="utf-8"), ensure_ascii=False)
-print(f"Đã tạo {so_ma} mã đề trong de-da-ra/{ten}/ (đề, lời giải, file gộp, đáp án). Lịch sử dùng câu đã cập nhật.")
+rel = os.path.relpath(out_goc, GOC)
+print(f"Đã tạo {so_ma} mã đề ({', '.join(cac_ma)}) trong {rel}/: DapAn.xlsx + thư mục tex/. Lịch sử dùng câu đã cập nhật.")
+for w in canh_bao:
+    print("  ⚠", w)
+print("THU_MUC:" + rel)
 
 if a.bien_dich:
-    for f in sorted(os.listdir(out)):
-        if f.endswith(".tex") and f.startswith(ten):
-            for _ in range(2):
-                subprocess.run(["pdflatex", "-interaction=nonstopmode", f], cwd=out,
-                               stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-            ok = os.path.exists(os.path.join(out, f[:-4] + ".pdf"))
-            print("  ", f[:-4] + ".pdf", "✓" if ok else "✗ (xem file .log)")
+    bien_dich_thu_muc(out_goc)

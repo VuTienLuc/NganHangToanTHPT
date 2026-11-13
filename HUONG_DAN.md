@@ -72,7 +72,7 @@ Sau khi nhập, nhớ lưu lên GitHub: `git add -A && git commit -m "Nhập câ
 python3 scripts/lap_chi_muc.py                                   # sau mỗi lần thêm/sửa câu
 python3 scripts/tao_mau_ma_tran.py GHK1_12 --pham-vi 2D1,2D2,2H2   # sinh bảng ma trận để điền
 python3 scripts/tron_de.py ma-tran/GHK1_12.csv --thu              # xem trước câu được chọn
-python3 scripts/tron_de.py ma-tran/GHK1_12.csv --so-ma-de 4       # xuất đề
+python3 scripts/tron_de.py ma-tran/GHK1_12.csv --so-ma-de 4 --bien-dich   # xuất đề + PDF
 ```
 (`scripts/tach_cau.py` chỉ chạy lại khi muốn chuyển đổi lại từ dữ liệu phần mềm — sẽ cất bản hiện tại vào `_cu/`.)
 
@@ -98,16 +98,18 @@ Tên kỳ thi, môn/lớp, số mã đề… ghi trong một file JSON đi kèm 
 - Chương trình báo khi kho thiếu câu cho một ô ma trận, và nhắc nếu đề không đúng cấu trúc 12–4–6.
 - Ma trận viết thẳng bằng JSON (không cần CSV) vẫn dùng được: xem `ma-tran/vi_du_GHK1_lop12.json`.
 
-**3. Kết quả** trong `de-da-ra/<tên>/`:
+**3. Kết quả**: mỗi lần xuất tạo một thư mục riêng **`de-da-ra/<Tên kỳ thi> - <ngày-tháng-năm>/`**
+(xuất lần nữa cùng ngày thì thêm "(2)", "(3)"…):
 
-| File | Dùng để |
+| File | Nội dung |
 |---|---|
-| `<tên>_101.tex`, `_102.tex`… | Đề phát cho học sinh: đầu đề Sở/Trường, ô Mã đề, PHẦN I–II–III, "HẾT", chân trang "Trang x/y – Mã đề" |
-| `<tên>_101_LoiGiai.tex`… | Đề + lời giải chi tiết + bảng đáp án |
-| `<tên>_TatCa_De.tex` | Mọi mã đề trong một file để in một lần |
-| `<tên>_TatCa_LoiGiai.tex` | Mọi mã đề kèm lời giải |
-| `dap_an_ngang.csv` | Mỗi mã đề một dòng (I.1…I.12, II.1…II.4 dạng ĐSĐS, III.1…III.6) — mở bằng Excel |
-| `dap_an.csv`, `danh_sach_cau.csv` | Đáp án từng câu kèm mã câu gốc; danh sách câu đã dùng |
+| `De_101.pdf` … `De_104.pdf` | Đề từng mã, in cho học sinh (đầu đề Sở/Trường, ô Mã đề, PHẦN I–III, HẾT) |
+| `LoiGiai_101.pdf` … | Đề + lời giải + bảng đáp án từng mã |
+| `DapAn.xlsx` | Đáp án mọi mã đề theo mẫu Chấm Phiếu AI: sheet **Đáp án**, ô A1 = `Câu`, dòng 1 là mã đề, các dòng `1…12`, `II.1…II.4` (dạng ĐSĐS), `III.1…III.6` (dấu phẩy thập phân); phông Times New Roman, có viền |
+| `tex/` | Toàn bộ mã nguồn LaTeX: `De_101.tex`, `De_101_LoiGiai.tex`, `TatCa_De.tex` (mọi mã một file), khung Khaibao… |
+
+PDF chỉ tự xuất khi máy có MacTeX (`pdflatex`). Không có thì mở các file trong `tex/` bằng TeXstudio, biên dịch pdfLaTeX 2 lần.
+Nạp đáp án: Chấm Phiếu AI → ô **Đáp án** → **Nhập từ file Excel** → chọn `DapAn.xlsx`.
 
 Khung đề chính thức nằm ở `khung/DeThiChinhThuc/mau_de.tex` (in đen trắng). Muốn dạng ôn tập có màu
 như phần mềm cũ thì ghi `"khung": "DeThi"` trong file JSON.

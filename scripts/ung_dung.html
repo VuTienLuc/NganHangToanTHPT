@@ -97,7 +97,7 @@ footer .gian{flex:1}
     <details class="the" open>
       <summary>Thông tin đề</summary>
       <div class="luoi">
-        <label>Tên file đề<input type="text" id="ten" value="GHK1_12"></label>
+        <label>Tên lưu ma trận<input type="text" id="ten" value="GHK1_12"></label>
         <label>Tên kỳ thi<input type="text" id="ten_ky_thi" value="ĐỀ KIỂM TRA GIỮA HỌC KỲ I"></label>
         <label>Môn – lớp<input type="text" id="mon" value="TOÁN -- Lớp 12"></label>
         <label>Thời gian<input type="text" id="thoi_gian"></label>
@@ -112,7 +112,7 @@ footer .gian{flex:1}
         <label class="hop"><input type="checkbox" id="moi_ma_de_cau_khac_nhau"> Mỗi mã đề một bộ câu khác</label>
         <label class="hop"><input type="checkbox" id="tranh_cau_da_dung" checked> Ưu tiên câu chưa dùng</label>
         <label class="hop"><input type="checkbox" id="hien_tl"> Hiện cột Tự luận</label>
-        <label class="hop" id="o-bien-dich"><input type="checkbox" id="bien_dich" checked> Biên dịch PDF sau khi xuất</label>
+        <label class="hop" id="o-bien-dich"><input type="checkbox" id="bien_dich" checked> Xuất PDF từng mã đề (cần MacTeX)</label>
       </div>
     </details>
 
@@ -280,9 +280,9 @@ async function xuat(thu){
     const r=await api("/api/xuat",{ma_tran:mt,thu,bien_dich:!thu&&$("#bien_dich").checked});
     if(thu){hopThoai("Xem trước các câu được chọn",r.nhat_ky);return}
     if(!r.ok){hopThoai("Chưa xuất được",r.nhat_ky);return}
-    const nut=[["Mở thư mục đề",()=>api("/api/mo",{duong_dan:"de-da-ra/"+r.ten}),true]];
-    hopThoai(`Đã xuất: de-da-ra/${r.ten}`,r.nhat_ky,nut);
-    if(!thu&&$("#bien_dich").checked&&DL.pdflatex) theoDoi(r.nhat_ky);
+    const nut=[["Mở thư mục đề",()=>api("/api/mo",{duong_dan:r.thu_muc}),true]];
+    hopThoai(`Đã xuất: ${r.thu_muc}`,r.nhat_ky+(r.bien_dich?"\nĐang biên dịch PDF (mỗi mã đề khoảng vài chục giây)…":""),nut);
+    if(r.bien_dich) theoDoi(r.nhat_ky);
     tai();
   }finally{b.disabled=false;b.textContent=thu?"Xem trước câu được chọn":"Xuất đề"}
 }

@@ -16,14 +16,6 @@ CAC_LOAI, CAC_MUC = ["TN", "DS", "TLN", "TL"], ["N", "H", "V", "C"]
 lan_ping = [time.time()]
 cong_viec = {"dang_chay": False, "nhat_ky": "", "xong": True}
 
-def tim_pdflatex():
-    p = shutil.which("pdflatex")
-    for c in (p, "/Library/TeX/texbin/pdflatex", "/usr/local/texlive/2025/bin/universal-darwin/pdflatex",
-              "/usr/local/texlive/2026/bin/universal-darwin/pdflatex", "/opt/homebrew/bin/pdflatex"):
-        if c and os.path.exists(c):
-            return c
-    return None
-
 def chay(args, timeout=600):
     r = subprocess.run([PY] + args, cwd=GOC, capture_output=True, text=True, timeout=timeout)
     return r.returncode, (r.stdout or "") + (r.stderr or "")
@@ -96,22 +88,16 @@ def ten_an_toan(s):
         s = f"{goc}_{i}"; i += 1
     return s
 
-def bien_dich_nen(ten, chi_gop):
-    pdfl = tim_pdflatex()
-    out = os.path.join(GOC, "de-da-ra", ten)
-    tep = sorted(f for f in os.listdir(out) if f.endswith(".tex") and f.startswith(ten)
-                 and (not chi_gop or "_TatCa_" in f))
-    cong_viec.update(dang_chay=True, xong=False, nhat_ky=f"Biên dịch {len(tep)} file trong de-da-ra/{ten}…\n")
-    for f in tep:
-        ok = True
-        for _ in range(2):
-            r = subprocess.run([pdfl, "-interaction=nonstopmode", f], cwd=out, capture_output=True, text=True,
-                               errors="replace", timeout=600)
-        pdf = os.path.join(out, f[:-4] + ".pdf")
-        ok = os.path.exists(pdf) and os.path.getmtime(pdf) > time.time() - 900
-        cong_viec["nhat_ky"] += f"  {'✓' if ok else '✗'} {f[:-4]}.pdf\n"
+def bien_dich_nen(rel):
+    cong_viec.update(dang_chay=True, xong=False, nhat_ky="")
+    def ghi_log(x):
+        cong_viec["nhat_ky"] += x + "\n"
+    try:
+        bien_dich_thu_muc(os.path.join(GOC, rel), ghi_log)
+    except Exception as e:
+        ghi_log(f"Lỗi biên dịch: {e}")
+    ghi_log("Xong.")
     cong_viec.update(dang_chay=False, xong=True)
-    cong_viec["nhat_ky"] += "Xong."
 
 class XuLy(BaseHTTPRequestHandler):
     def log_message(self, *a):
@@ -157,15 +143,19 @@ class XuLy(BaseHTTPRequestHandler):
                     p = os.path.join(GOC, "du-lieu", "_ma_tran_tam.json")
                     mt = {**mt, "ten": "_xem_truoc"}
                 else:
-                    mt = {**mt, "ten": ten_an_toan(mt.get("ten"))}
+                    mt = {**mt, "ten": ten_khong_dau(mt.get("ten") or "De", 60) or "De"}
                     p = os.path.join(GOC, "ma-tran", mt["ten"] + ".json")
                 json.dump(mt, open(p, "w", encoding="utf-8"), ensure_ascii=False, indent=2)
                 rc, log = chay([os.path.join(SCRIPTS, "tron_de.py"), p] + (["--thu"] if thu else []))
                 ok = rc == 0
-                if ok and not thu and d.get("bien_dich") and tim_pdflatex():
-                    threading.Thread(target=bien_dich_nen, args=(mt["ten"], d.get("chi_gop", True)), daemon=True).start()
-                return self.gui(200, {"ok": ok, "nhat_ky": log, "ten": mt["ten"],
-                                      "thu_muc": os.path.join(GOC, "de-da-ra", mt["ten"])})
+                m = re.search(r"^THU_MUC:(.*)$", log, re.M)
+                rel = m.group(1).strip() if m else ""
+                log = re.sub(r"^THU_MUC:.*\n?", "", log, flags=re.M)
+                dang_bd = False
+                if ok and rel and not thu and d.get("bien_dich") and tim_pdflatex():
+                    dang_bd = True
+                    threading.Thread(target=bien_dich_nen, args=(rel,), daemon=True).start()
+                return self.gui(200, {"ok": ok, "nhat_ky": log, "ten": mt["ten"], "thu_muc": rel, "bien_dich": dang_bd})
             if u.path == "/api/luu-ma-tran":
                 mt = d["ma_tran"]; ten = ten_khong_dau(mt.get("ten") or "MaTran", 60)
                 json.dump({**mt, "ten": ten}, open(os.path.join(GOC, "ma-tran", ten + ".json"), "w", encoding="utf-8"),
