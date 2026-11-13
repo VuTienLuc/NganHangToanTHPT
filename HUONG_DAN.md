@@ -57,6 +57,18 @@ Chương trình tự: tách từng câu, xếp vào đúng file dạng theo mã 
 **bỏ câu trùng** với câu đã có, gỡ lệnh rác nếu file bị mã hoá, gắn mã câu, rồi cập nhật chỉ mục.
 Câu chưa có mã dạng vào `cau-hoi/_chua_phan_loai/<tên file>.tex`; gắn mã cho chúng rồi chuyển vào đúng file dạng.
 
+**Cách 3: nhờ AI gõ lại đề thi** (đề PDF, ảnh chụp, Word chưa có LaTeX)
+1. Trong ứng dụng, tích các chương của đề ở cột trái → bấm **Prompt cho AI** → **Chép prompt**
+   (hoặc dùng file soạn sẵn theo lớp trong `prompt-ai/prompt_go_de_lop10.md`, `…lop11.md`, `…lop12.md`;
+   hay `python3 scripts/tao_prompt.py --pham-vi 2D1,2H2 --ra prompt.md`).
+2. Mở ChatGPT / Gemini / Claude, dán prompt, **đính kèm đề**, gửi.
+   Prompt yêu cầu AI: mỗi câu một khối `ex`/`bt`, gắn mã dạng lấy từ danh mục (đúng lớp – chương – bài – dạng – mức N/H/V/C),
+   trắc nghiệm đúng một `\True` và lời giải không ghi "Chọn A", Đúng/Sai đủ 4 `\itemch` (để đảo ý a, b, c được),
+   trả lời ngắn có `\shortans` dấu phẩy thập phân; câu không chắc ghi `% KIEM_TRA`, hình chưa vẽ ghi `% CAN_VE_HINH`.
+3. Chép khối mã AI trả về, lưu thành file `.tex` → **Nhập câu hỏi** → xem trước → nhập.
+   Câu AI ghi `%[?]` (không tìm được dạng) vào `cau-hoi/_chua_phan_loai/` để thầy phân loại.
+   Nên dò lại các câu có `% KIEM_TRA` / `% CAN_VE_HINH` (tìm trong thư mục `cau-hoi/`).
+
 **Quy ước để câu được nhận đúng loại:**
 - Trắc nghiệm: `\begin{ex}` + `\choice{…}{…}{…}{…}`, đúng **một** `\True`
 - Đúng/Sai: `\begin{ex}` + `\choiceTF{…}{…}{…}{…}`, ý đúng có `\True`

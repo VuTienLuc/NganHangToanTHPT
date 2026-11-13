@@ -81,6 +81,7 @@ footer .gian{flex:1}
   <span class="phu" id="tom-tat">Đang tải ngân hàng…</span>
   <span class="gian"></span>
   <select id="ds-ma-tran" title="Mở ma trận đã lưu"><option value="">Mở ma trận đã lưu…</option></select>
+  <button id="nut-prompt" title="Sinh prompt để AI gõ lại đề thi thành câu hỏi đúng định dạng kho">Prompt cho AI</button>
   <button id="nut-nhap" title="Thêm câu từ file .tex (có mã %[2D1N1-2]) vào ngân hàng">Nhập câu hỏi</button>
   <input type="file" id="tep-nhap" accept=".tex" multiple hidden>
   <button id="nut-lich-su" title="Các đề đã ra và số câu đã dùng">Lịch sử đã dùng</button>
@@ -337,6 +338,18 @@ async function moLichSu(){
   hopThoai("Lịch sử câu đã dùng",noi,nut);
 }
 $("#nut-lich-su").onclick=moLichSu;
+$("#nut-prompt").onclick=async()=>{
+  const pv=[...chuongChon].map(k=>{const [lop,mon,ch]=k.split("|");return `${+lop-10}${mon}${ch}`});
+  if(!pv.length&&!confirm("Chưa tích chương nào ở cột trái — tạo prompt kèm danh mục dạng của MỌI lớp (rất dài)?\nBấm Huỷ để tích chương trước.")) return;
+  const r=await api("/api/prompt",{pham_vi:pv});
+  const huongDan="CÁCH DÙNG: 1) Bấm “Chép prompt”. 2) Mở ChatGPT / Gemini / Claude, dán prompt, đính kèm đề (PDF/ảnh/Word), gửi. "
+   +"3) Chép khối mã LaTeX AI trả về, lưu thành file .tex (TextEdit: Định dạng → Tạo văn bản thường, hoặc dùng TeXstudio). "
+   +"4) Bấm “Nhập câu hỏi” chọn file đó → xem trước → nhập.\n"+"─".repeat(60)+"\n\n";
+  hopThoai(`Prompt cho AI — ${pv.length?"phạm vi "+pv.join(", "):"mọi lớp"} (${r.noi_dung.length.toLocaleString("vi-VN")} ký tự)`,huongDan+r.noi_dung,[
+    ["Chép prompt",async e=>{try{await navigator.clipboard.writeText(r.noi_dung);e.target.textContent="Đã chép ✓"}catch(_){alert("Không chép tự động được — thầy bôi đen nội dung rồi Cmd+C.")}},true],
+    ["Lưu file .md",()=>{const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([r.noi_dung],{type:"text/markdown"}));
+      a.download=`prompt_go_de_${pv.join("_")||"tat_ca"}.md`;a.click();}]]);
+};
 $("#nut-nhap").onclick=()=>$("#tep-nhap").click();
 $("#tep-nhap").onchange=async e=>{
   const fs=[...e.target.files]; if(!fs.length) return;

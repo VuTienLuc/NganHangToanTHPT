@@ -190,6 +190,9 @@ class XuLy(BaseHTTPRequestHandler):
                 else:
                     subprocess.Popen(["open", p] if sys.platform == "darwin" else ["xdg-open", p])
                 return self.gui(200, {"ok": True})
+            if u.path == "/api/prompt":
+                import tao_prompt
+                return self.gui(200, {"ok": True, "noi_dung": tao_prompt.tao_prompt(d.get("pham_vi") or [])})
             if u.path == "/api/nhap":
                 import nhap_cau, tempfile
                 thu_muc = tempfile.mkdtemp(prefix="nhap_")
