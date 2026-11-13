@@ -26,6 +26,8 @@ ap.add_argument("--word-de", action="store_true", help="xuất Word bố cục �
 ap.add_argument("--thu", action="store_true")
 ap.add_argument("--bien-dich", action="store_true")
 ap.add_argument("--word", action="store_true", help="xuất thêm Word theo mẫu K12Online (công thức Equation)")
+ap.add_argument("--k12-giu-thu-tu", action="store_true",
+                help="Word K12Online: 1 file giữ đúng thứ tự câu đã chọn (ma trận/file), không đảo câu và phương án")
 ap.add_argument("--word-svg", action="store_true", help="xuất Word K12Online với công thức là ảnh SVG thẳng dòng")
 ap.add_argument("--so-ma-de", type=int)
 ap.add_argument("--co-chu", type=int, help="cỡ chữ đề PDF (10/11 = tiết kiệm giấy, 12 thường) và Word")
@@ -573,6 +575,11 @@ with open(os.path.join(out, "danh_sach_cau.csv"), "w", encoding="utf-8-sig", new
         w.writerow([c["ma"], c["loai"], c["id"], c["muc_chuan"], c["ten_dang"], c["file"]])
 json.dump(mt, open(os.path.join(out, "ma_tran_da_dung.json"), "w", encoding="utf-8"), ensure_ascii=False, indent=2)
 json.dump(CAU_THEO_DE, open(os.path.join(out, "_k12_cau.json"), "w", encoding="utf-8"), ensure_ascii=False)
+# Bản K12Online giữ THỨ TỰ ĐÃ CHỌN: câu của mã đề đầu theo đúng thứ tự ma trận (hoặc thứ tự trong file) ở từng phần,
+# nội dung gốc chưa đảo phương án / ý — K12Online tự trộn khi giao bài
+CAU_GOC = [{"loai": l, "noi_dung": c["noi_dung"], "dap_an": c["dap_an"] or "", "muc": c["muc_chuan"]}
+           for l in CAC_LOAI for c in (cac_bo[0].get(l) or [])]
+json.dump({"ThuTuDaChon": CAU_GOC}, open(os.path.join(out, "_k12_cau_goc.json"), "w", encoding="utf-8"), ensure_ascii=False)
 json.dump({k: mt.get(k) for k in ("so_gd", "truong", "ten_ky_thi", "nam_hoc", "mon", "thoi_gian", "co_chu", "giao_vien")},
           open(os.path.join(out, "_thong_tin_de.json"), "w", encoding="utf-8"), ensure_ascii=False)
 
@@ -589,10 +596,15 @@ print("THU_MUC:" + rel)
 
 if a.bien_dich:
     bien_dich_thu_muc(out_goc)
-if a.word or mt.get("xuat_word_k12"):
+if a.word or a.k12_giu_thu_tu or mt.get("xuat_word_k12"):
     import k12word
     try:
-        k12word.xuat(out_goc, cong_thuc="svg" if a.word_svg or mt.get("word_cong_thuc") == "svg" else "equation")
+        ct_k12 = "svg" if a.word_svg or mt.get("word_cong_thuc") == "svg" else "equation"
+        thu_tu_k12 = "goc" if a.k12_giu_thu_tu else (mt.get("k12_thu_tu") or "ma_de")
+        if thu_tu_k12 in ("ma_de", "ca_hai"):
+            k12word.xuat(out_goc, cong_thuc=ct_k12)
+        if thu_tu_k12 in ("goc", "ca_hai"):
+            k12word.xuat(out_goc, cong_thuc=ct_k12, nguon="_k12_cau_goc.json")
     except Exception as e:
         print("  ✗ Không xuất được Word:", e)
 if a.word_de or mt.get("xuat_word_de"):

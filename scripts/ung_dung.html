@@ -153,6 +153,7 @@ footer .gian{flex:1}
         <label class="hop" id="o-bien-dich"><input type="checkbox" id="bien_dich" checked> Xuất PDF từng mã đề (cần MacTeX)</label>
         <label class="hop" title="2 file PDF: quyển Câu hỏi (bìa, mục lục, tất cả mã đề) và quyển Lời giải (bìa, mục lục, lời giải chi tiết); chân trang ghi tên giáo viên, tên kỳ thi, số trang"><input type="checkbox" id="de_cuong" checked> Gộp quyển đề cương ôn tập (PDF Câu hỏi + PDF Lời giải)</label>
         <label class="hop" id="o-word" title="Mỗi mã đề một file Word đúng mẫu nhập câu hỏi K12Online; công thức là Equation của Word hoặc ảnh SVG (chọn ở ô bên cạnh); bảng biến thiên và hình là ảnh SVG"><input type="checkbox" id="xuat_word_k12"> Xuất Word K12Online</label>
+        <label title="Theo mã đề: mỗi mã đề một file, câu và phương án đã trộn. Giữ thứ tự đã chọn: 1 file, câu xếp đúng thứ tự trong ma trận (theo bài: mệnh đề → tập hợp → …) ở từng phần, không đảo câu, không đảo phương án — K12Online tự trộn khi giao bài">Thứ tự câu Word K12Online<select id="k12_thu_tu"><option value="ma_de">Theo từng mã đề (đã trộn)</option><option value="goc">Giữ thứ tự đã chọn trong ma trận (không đảo)</option><option value="ca_hai">Cả hai</option></select></label>
         <label class="hop" title="Mỗi mã đề 2 file Word: đề (bố cục giống đề PDF: đầu đề Sở/Trường, mã đề, phần I/II/III, phương án xếp cột) và đề kèm lời giải + bảng đáp án; cỡ chữ theo ô Khổ in"><input type="checkbox" id="xuat_word_de"> Xuất Word đề thi (bố cục như PDF)</label>
         <label>Công thức trong Word<select id="word_cong_thuc"><option value="equation">Equation của Word (sửa được)</option><option value="svg">Ảnh SVG sắc nét, thẳng hàng chữ</option></select></label>
       </div>
@@ -357,10 +358,12 @@ function tuDong(){
   if(thieu.length) alert("Kho trong phạm vi đã chọn không đủ:\n"+thieu.join("\n")+"\n\nThầy tích thêm chương hoặc đổi mục tiêu.");
 }
 
+// thứ tự dạng/bài như trên bảng (theo chương trình: lớp → chương → bài → dạng) để câu xếp đúng thứ tự đã chọn
+function thuTuDang(k){const i=(DL?.dang||[]).findIndex(d=>d.k===k||d.k.startsWith(k+"-"));return i<0?1e9:i}
 function maTran(){
   const phan=[];
   for(const l of LOAI){const yc=[];
-    for(const [k,o] of Object.entries(chon)) (o[l]||[]).forEach((v,i)=>{if(v>0) yc.push({dang:k,muc:MUC[i],so:v})});
+    for(const [k,o] of Object.entries(chon).sort((a,b)=>thuTuDang(a[0])-thuTuDang(b[0]))) (o[l]||[]).forEach((v,i)=>{if(v>0) yc.push({dang:k,muc:MUC[i],so:v})});
     if(yc.length) phan.push({loai:l,yeu_cau:yc});}
   const mt={phan};
   for(const k of ["ten","ten_ky_thi","mon","thoi_gian","so_gd","truong","nam_hoc","giao_vien","khung","sap_xep"]) mt[k]=$("#"+k).value.trim();
@@ -369,6 +372,7 @@ function maTran(){
   for(const k of ["xao_phuong_an","xao_y_dung_sai","moi_ma_de_cau_khac_nhau","bu_cung_nhom","mo_rong_dang_khac"]) mt[k]=$("#"+k).checked;
   mt.cau_da_dung=$("#cau_da_dung").value;
   mt.co_chu=+$("#kho_in").value; mt.tiet_kiem=mt.co_chu<12; mt.hai_cot=mt.tiet_kiem&&$("#hai_cot").checked; mt.xuat_word_k12=$("#xuat_word_k12").checked; mt.xuat_word_de=$("#xuat_word_de").checked; mt.word_cong_thuc=$("#word_cong_thuc").value;
+  mt.k12_thu_tu=$("#k12_thu_tu").value;
   mt.xao_cau=true;
   return mt;
 }
@@ -420,7 +424,7 @@ $("#ds-ma-tran").onchange=async e=>{
   for(const k of ["so_ma_de","ma_de_bat_dau"]) if(mt[k]!=null) $("#"+k).value=mt[k];
   for(const k of ["xao_phuong_an","xao_y_dung_sai","moi_ma_de_cau_khac_nhau","bu_cung_nhom","mo_rong_dang_khac"]) if(mt[k]!=null) $("#"+k).checked=!!mt[k];
   $("#cau_da_dung").value=mt.cau_da_dung||(mt.tranh_cau_da_dung===false?"khong":"uu_tien");
-  $("#kho_in").value=String(mt.tiet_kiem?(mt.co_chu||11):12); $("#hai_cot").checked=!!mt.hai_cot; $("#xuat_word_k12").checked=!!mt.xuat_word_k12; $("#xuat_word_de").checked=!!mt.xuat_word_de; if(mt.word_cong_thuc) $("#word_cong_thuc").value=mt.word_cong_thuc;
+  $("#kho_in").value=String(mt.tiet_kiem?(mt.co_chu||11):12); $("#hai_cot").checked=!!mt.hai_cot; $("#xuat_word_k12").checked=!!mt.xuat_word_k12; if(mt.k12_thu_tu) $("#k12_thu_tu").value=mt.k12_thu_tu; $("#xuat_word_de").checked=!!mt.xuat_word_de; if(mt.word_cong_thuc) $("#word_cong_thuc").value=mt.word_cong_thuc;
   chon={}; const khongKhop=[]; const biet=new Map(DL.dang.map(d=>[d.k,d]));
   for(const d of DL.dang) if(!biet.has(khoaBai(d))) biet.set(khoaBai(d),d);
   for(const p of mt.phan||[]) for(const y of p.yeu_cau){
@@ -558,7 +562,7 @@ $("#tron-chay").onclick=async()=>{
   Object.assign(mt,{so_ma_de:+$("#tron-so").value,ma_de_bat_dau:+$("#tron-bat-dau").value,sap_xep:$("#tron-thu-tu").value,
     xao_cau:$("#tron-thu-tu").value!=="giu_nguyen",xao_phuong_an:$("#tron-xao-pa").checked,xao_y_dung_sai:$("#tron-xao-y").checked,
     co_chu:co,tiet_kiem:co<12,hai_cot:co<12&&$("#tron-hai-cot").checked,xuat_word_de:$("#tron-word").checked,
-    xuat_word_k12:$("#tron-k12").checked,word_cong_thuc:$("#tron-ct").value,de_cuong:$("#tron-de-cuong").checked,moi_ma_de_cau_khac_nhau:false});
+    xuat_word_k12:$("#tron-k12").checked,k12_thu_tu:$("#k12_thu_tu").value,word_cong_thuc:$("#tron-ct").value,de_cuong:$("#tron-de-cuong").checked,moi_ma_de_cau_khac_nhau:false});
   b.disabled=true;b.textContent="Đang trộn…";
   try{
     const r=await api("/api/tron-file",{tep:TEP_TRON,ma_tran:mt,bien_dich:$("#tron-pdf").checked});

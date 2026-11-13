@@ -599,10 +599,10 @@ def dap_so_tln(q, da):
     v = (q["tln"] or da or "").replace("$", "").replace("{,}", ",").replace("\\,", "").replace(" ", "").replace(".", ",")
     return v.replace("−", "-").replace("–", "-")
 
-def xuat(thu_muc_de, in_ra=print, cong_thuc="equation"):
+def xuat(thu_muc_de, in_ra=print, cong_thuc="equation", nguon="_k12_cau.json"):
     """cong_thuc = "equation" (Equation của Word) hoặc "svg" (ảnh SVG sắc nét, hạ đúng baseline → thẳng dòng)."""
     tex = os.path.join(thu_muc_de, "tex")
-    du_lieu = json.load(open(os.path.join(tex, "_k12_cau.json"), encoding="utf-8"))
+    du_lieu = json.load(open(os.path.join(tex, nguon), encoding="utf-8"))
     manh, cau_tach = {}, {}
     for ma_de, ds in du_lieu.items():
         for i, c in enumerate(ds):
@@ -615,7 +615,7 @@ def xuat(thu_muc_de, in_ra=print, cong_thuc="equation"):
             else:
                 q["lg"] = chuyen(p["lg"], manh)
             cau_tach[(ma_de, i)] = q
-    in_ra(f"Xuất Word K12Online cho {len(du_lieu)} mã đề…")
+    in_ra("Xuất Word K12Online giữ thứ tự đã chọn (không đảo)…" if nguon != "_k12_cau.json" else f"Xuất Word K12Online cho {len(du_lieu)} mã đề…")
     OMML.clear()
     OMML.update(omml_cong_thuc(manh, in_ra, cong_thuc))
     con_lai = {k: v for k, v in manh.items() if k not in OMML}

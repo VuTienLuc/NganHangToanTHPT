@@ -215,6 +215,14 @@ Tích **Xuất Word K12Online** trong ứng dụng, hoặc thêm `--word` khi ch
   chân chữ (Font → Advanced → Position: Lowered) nên **thẳng hàng với dòng chữ trong Word (Windows/Mac)**.
   Pages, LibreOffice, Google Docs không hiểu thông số hạ ảnh nên ở đó công thức sẽ nhô lên — hãy mở bằng Word.
 
+- **Thứ tự câu Word K12Online** (ô cạnh "Xuất Word K12Online"):
+  - *Theo từng mã đề (đã trộn)*: mỗi mã đề một file `Word_K12Online_101.docx`…
+  - *Giữ thứ tự đã chọn trong ma trận (không đảo)*: **1 file** `Word_K12Online_ThuTuDaChon.docx`, mỗi phần xếp câu đúng
+    thứ tự các dạng trên bảng ma trận (theo chương trình: bài → dạng, ví dụ câu 1 mệnh đề, câu 2 tập hợp…; trong một dạng
+    theo mức N → H → V → C), **không đảo câu, không đảo phương án/ý** — K12Online tự trộn khi giao bài.
+    Khi trộn đề từ file: giữ đúng thứ tự câu trong file. Dòng lệnh: `--k12-giu-thu-tu`.
+  - *Cả hai*.
+
 ## Biên dịch đề
 Mở file trong `de-da-ra/<tên>/` bằng TeXstudio, biên dịch **pdfLaTeX** như các đề cũ của phần mềm
 (cần gói `vietnam` — có sẵn trong MacTeX đầy đủ). Hoặc thêm `--bien-dich` khi trộn.
