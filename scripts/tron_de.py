@@ -209,11 +209,16 @@ def soan_ma_de(bo, ma_de):
 
 # ---------------------------------------------------------------- chạy
 so_ma = int(mt["so_ma_de"]); bat_dau = int(mt["ma_de_bat_dau"])
+if not any(p["yeu_cau"] for p in mt.get("phan", [])):
+    sys.exit("Ma trận chưa có số câu nào. Mở file ma trận (CSV) bằng Numbers/Excel, điền số câu vào các cột "
+             "TN_N, TN_H, DS_H, TLN_V… ở dòng dạng toán cần lấy, lưu lại dạng CSV rồi chạy lại.")
 bo_chung, thieu = chon_bo_cau()
 for x in thieu:
     print("  ⚠ thiếu câu:", x)
 dem = {l: len(v) for l, v in bo_chung.items() if v}
 print("Đã chọn: " + ", ".join(f"{LOAI_TEN[k]} {v}" for k, v in dem.items()))
+if not dem:
+    sys.exit("Không chọn được câu nào (kho không có câu khớp ma trận).")
 if CHINH_THUC and (dem.get("TN"), dem.get("DS"), dem.get("TLN")) != (12, 4, 6):
     print("  (lưu ý: cấu trúc đề tốt nghiệp 2025 là 12 TN – 4 Đúng/Sai – 6 Trả lời ngắn)")
 if a.thu:
