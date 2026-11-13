@@ -1,0 +1,46 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Lớp 11 | Quan hệ vuông góc trong không gian | Hai mặt phẳng vuông góc
+% Dạng 1H8?4-7: Toán thực tế áp dụng hai mặt phẳng vuông góc
+% Số câu: 1  (sinh tự động bởi tach_cau.py; từ nay thầy sửa trực tiếp file này)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%% TRẢ LỜI NGẮN %%%%%%%%%%%%%%%%
+
+% nguồn: Ok_TraLoiNgan_Lop11_Lan1
+\begin{ex}%[1H8H4-7]%[ma:1eb5edae]
+	Một khối gỗ có dạng hình hộp chữ nhật $ABCD.A'B'C'D'$. Biết rằng $AB=10\mathrm{\,cm}$, $BC=15\mathrm{\,cm}$ và góc hai mặt phẳng  $(BCD'A')$ và $(ABCD)$ bằng $30^\circ$.
+	Tính tổng diện tích tất cả các mặt  của khối gỗ đó (kết quả làm tròn đến hàng đơn vị của centimét vuông).
+	\shortans{589} 
+	\loigiai{ 
+	\immini{ 
+		Ta có $\heva{&BC=(BCD'A')\cap (ABCD)\\&BC\perp AB\\&BC\perp A'B}$\\$\Rightarrow \left((BCD'A'),(ABCD)\right)=(AB,A'B)=\widehat{ABA'}=30^\circ$.\\ 
+		Tam  giác $A'AB$ vuông tại $A$ có $$\tan\widehat{ABA'}=\dfrac{AA'}{AB}\Rightarrow AA'=\dfrac{10\sqrt{3}}{3}\mathrm{\,cm}.$$
+		Tổng diện tích của sáu mặt khối gỗ là $$2\left( 10\cdot 15+10\cdot \dfrac{10\sqrt{3}}{3}+15\cdot \dfrac{10\sqrt{3}}{3}\right)\approx589\mathrm{\,cm^2}.$$}{\begin{tikzpicture}[scale=0.9,line join=round,font=\footnotesize,line cap=round]
+		 \def\a{4}
+		 \def\b{2}
+		 \def\h{3}
+		\path (0:0) coordinate  (A)
+			++(0:\a) coordinate (D) 
+			 ++(-130:\b) coordinate (C)
+			 ($(A)+(C)-(D)$) coordinate (B)
+			($(A)+(90:\h)$) coordinate (A') 
+			($(B)+(90:\h)$) coordinate  (B')
+			($(C)+(90:\h)$) coordinate  (C')
+			($(D)+(90:\h)$)  coordinate (D');
+		\draw[dashed]  (B)--(A)--(D)
+			(A)--(A')--(B); 
+		\draw (C)--(C') 
+			 (D)--(D')
+			 (B)--(B')
+			 (C)--(C')
+			 (B)--(C)--(D)
+			 (A')--(B')--(C')--(D')--cycle;
+		\foreach \x/\g in  {A/180,B/180,C/0,D/0,A'/180,B'/180,C'/0,D'/0}
+		\fill[black]  (\x) circle (1pt)
+			($(\g:4mm)+(\x)$) node {$\x$}; 
+		\path ($(A)!0.5!(B)$) node  [below,rotate=53]{$10\mathrm{\,cm}$};
+		\path  ($(C)!0.5!(B)$) node [below]{$15\mathrm{\,cm}$};
+	\end{tikzpicture}
+		 }
+	 }
+\end{ex}

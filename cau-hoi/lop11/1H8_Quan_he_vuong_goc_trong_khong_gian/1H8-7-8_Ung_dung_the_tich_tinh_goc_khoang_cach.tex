@@ -1,0 +1,54 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Lớp 11 | Quan hệ vuông góc trong không gian | Hình lăng trụ đứng. Hình chóp đều. Thể tích
+% Dạng 1H8?7-8: Ứng dụng thể tích tính góc, khoảng cách,...
+% Số câu: 1  (sinh tự động bởi tach_cau.py; từ nay thầy sửa trực tiếp file này)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%% ĐÚNG/SAI %%%%%%%%%%%%%%%%
+
+% nguồn: Ok_dungsai_lop11_Lan1
+\begin{ex}%[1H8V7-8]%[ma:32fa1b3a]
+ Cho lăng trụ đều $ABC.A'B'C'$ có cạnh đáy bằng $2a$, cạnh bên bằng  $a$.
+  \choiceTF
+  {\True Góc giữa hai đường thẳng $AB$ và  $A'C'$ bằng $60^\circ$}
+  {\True Góc giữa mặt phẳng $(AB'C')$ và mặt phẳng $(A'B'C')$ bằng  $30^\circ$}
+  {Thể  tích của khối lăng trụ $ABC.A'B'C'$ bằng $\dfrac{a^2\sqrt{3}}{2}$}
+  {\True Diện tích  của tam giác $AB'C'$ bằng $2a^2$}
+ \loigiai{ 
+ \begin{center}
+  \begin{tikzpicture}[scale=0.8,font=\footnotesize,line join=round,line cap=round,>=stealth]
+    \def\a{4} \def\b{2} \def\h{4} 
+     \path
+     (0:0) coordinate (A')++(90:\h) coordinate (A) 
+     (0:\a) coordinate (B')++(90:\h) coordinate  (B)
+     (-50:\b) coordinate (C')++(90:\h) coordinate (C) 
+     ($(B')!1/2!(C')$) coordinate (M); 
+    \draw (A')--(C')--(B') 
+      (A)--(B)--(C)--(A)
+      (A)--(A')
+      (B)--(B')
+      (C)--(C');
+    \draw[dashed] (A')--(B') 
+     (A)--(M)--(A'); 
+     \pic [draw,,angle radius=6] {right angle = A--M--C'};
+    \pic [draw,,angle radius=6]  {right angle = A'--M--C'};
+    \foreach  \i/\g in {A/180,B/0,C/90,M/-70,A'/180,B'/0,C'/-90}{\filldraw[black](\i) circle (1pt)
+     ($(\i)+(\g:3mm)$) node[scale=1]{$\i$};} 
+   \end{tikzpicture}
+ \end{center}
+ \begin{itemchoice}
+   \itemch Ta có $AC\parallel A'C'$ nên $(AB,A'C')=(AB,AC)=\widehat{BAC}=60^\circ$.
+  \itemch Gọi $M$ là trung điểm của $B'C'$.\\ 
+   Ta có
+  $\heva{& B'C' \perp A'M \\& B'C' \perp AA'} \Rightarrow B'C' \perp  AM.$\\
+  Vậy góc giữa mặt phẳng $(AB'C')$ và mặt  phẳng $(A'B'C')$ chính là góc giữa hai đường thẳng $A'M$ và $AM$ bằng $\widehat{AMA'}$.\\
+  Ta lại có $\tan \widehat{AMA'}  = \dfrac{AA'}{A'M} = \dfrac{1}{\sqrt{3}}$.
+  Suy ra $\widehat{AMA'} = 30^\circ$.\\ 
+  Vậy góc  giữa mặt phẳng $(AB'C')$ và mặt phẳng $(A'B'C')$ bằng $30^\circ$.
+  \itemch Thể tích khối lăng  trụ $ABC.A'B'C'$ là
+   $V=S_{\triangle ABC}\cdot AA'=\dfrac{(2a)^2\sqrt{3}}{4}\cdot a=a^3\sqrt{3}.$
+  \itemch Ta có $AM=\dfrac{AA'}{\sin  \widehat{AMA'}}=\dfrac{a}{\sin 30^\circ}=2a$.\\
+  Diện tích  tam giác $AB'C'$ là: $S=\dfrac{1}{2}B'C'\cdot AM=\dfrac{1}{2}\cdot 2a\cdot 2a=2a^2$.
+ \end{itemchoice}
+ } 
+\end{ex}

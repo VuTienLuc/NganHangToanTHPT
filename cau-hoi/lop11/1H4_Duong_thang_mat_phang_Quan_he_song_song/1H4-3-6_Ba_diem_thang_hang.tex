@@ -1,0 +1,127 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Lớp 11 | Đường thẳng, mặt phẳng. Quan hệ song song trong | Đường thẳng và mặt phẳng song song
+% Dạng 1H4?3-6: Ba điểm thẳng hàng
+% Số câu: 2  (sinh tự động bởi tach_cau.py; từ nay thầy sửa trực tiếp file này)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%% ĐÚNG/SAI %%%%%%%%%%%%%%%%
+
+% nguồn: Ok_dungsai_lop11_Lan1
+\begin{ex}%[1H4H3-6]%[ma:f80689a5]
+ \immini {Cho tứ diện $ABCD$. Gọi $M$, $N$ lần lượt là trung điểm của  $AC$ và $BC$. Trên đoạn $BD$ lấy $P$ sao cho $BP=2PD$. Khi đó
+ \choiceTF 
+  {Gọi $I=CD \cap (MNP)$, ba điểm $I$, $N$, $P$ không thẳng  hàng}
+  {\True $MN\parallel  (ABD)$}
+  {\True Giao tuyến của hai mặt phẳng $(MNP)$ và $(ABD)$ là đường  thẳng $PQ$ song song với $AB$, với điểm $Q$ thuộc đường thẳng $AD$}
+  {Tứ giác $MNPQ$ là hình bình  hành}
+  }{ 
+  \begin{tikzpicture}[scale=1,>=stealth,font=\footnotesize,line join=round,line cap=round]
+    \coordinate (B)  at (0,0);
+    \coordinate (C)  at (1.3,-1.3);
+    \coordinate (D)  at (4,0);
+    \coordinate (A)  at (1,3.5);
+    \coordinate  (M) at ($(A)!0.5!(C)$);
+    \coordinate (N) at  ($(B)!0.5!(C)$);
+    \coordinate (P)  at ($(B)!0.66!(D)$);
+     \draw (A)--(B)--(C)--(D)--(A)--(C)
+      (M)--(N);
+    \draw[dashed]  (B)--(D)
+     (N)--(P)--(M); 
+    \foreach \p/\r in  {A/90,B/-180,C/-90,D/-50,M/180,N/180,P/90}
+     \fill (\p) circle (1pt) node[shift={(\r:3mm)}]{$\p$};
+   \end{tikzpicture}
+  } 
+  \loigiai{
+  \begin{center}
+   \begin{tikzpicture}[scale=1,>=stealth,font=\footnotesize,line join=round,line cap=round]
+     \coordinate  (B) at (0,0);
+     \coordinate (C) at (1.3,-1.3); 
+     \coordinate (D)  at (4,0);
+     \coordinate  (A) at (1,3.5);
+     \coordinate (M) at  ($(A)!0.5!(C)$);
+     \coordinate  (N) at ($(B)!0.5!(C)$);
+     \coordinate (P)  at ($(B)!0.66!(D)$);
+      \draw (A)--(B)--(C)--(D)--(A)--(C)
+      (M)--(N); 
+     \draw[dashed] (B)--(D) 
+      (P)--(M); 
+     \coordinate (I) at (intersection  of N--P and C--D);
+     \coordinate (Q) at (intersection of M--I and A--D); 
+     \draw  (D)--(I)
+      (M)--(I); 
+     \draw  [dashed] (N)--(P)--(I)
+      (Q)--(P); 
+     \foreach  \p/\r in {A/90,B/-180,C/-90,D/-50,M/180,N/180,P/-90,I/0,Q/90}
+     \fill (\p) circle  (1pt) node[shift={(\r:3mm)}]{$\p$};
+    \end{tikzpicture}
+  \end{center}
+  \begin{itemchoice}
+   \itemch Sai. Trong mặt phẳng  $(BCD)$, gọi $I=NP\cap CD$. \\
+   Khi đó $\heva{& I\in CD\\& I\in  NP\\& NP\subset (MNP)}\Rightarrow I=CD\cap(MNP)$. \\
+   Vì $I\in NP$ nên ba điểm $I$,  $N$, $P$ thẳng hàng.
+   \itemch  Đúng. Vì $M$, $N$ lần lượt là trung điểm của $AC$ và $BC$ nên $MN$ là đường trung bình của $\triangle ABC$. Do đó $MN\parallel AB$. Mà $AB\subset(ABD)$ nên $MN\parallel (ABD)$.
+   \itemch Đúng. Ta có $\heva{&P\in(MNP)\cap (ABD)\\&MN\parallel AB\\&NM\subset(MNP)\\&AB\subset (ABD)}\Rightarrow(MNP)\cap (ABD)=PQ$, (với $PQ\parallel AB\parallel  MN$).
+   \itemch Sai. Giả sử  tứ giác $MNPQ$ là hình bình hành. Khi đó $MN\parallel PQ$ và $MN=PQ$.\\
+   Vì $MN\parallel AB$ nên $\dfrac{MN}{AB}=\dfrac{1}{2}\Rightarrow MN=\dfrac{AB}{2}.\quad(1)$\\ 
+   Vì $PQ\parallel AB$ nên $\dfrac{PQ}{AB}=\dfrac{PD}{BD}=\dfrac{1}{3}\Rightarrow PQ=\dfrac{AB}{3}.\quad(2)$\\ 
+   Từ $(1)$  và $(2)$ suy ra $MN\ne PQ$.\\
+   Do  đó, tứ giác $MNPQ$ không phải là hình bình hành.\\
+   Tứ giác $MNPQ$ là hình thang vì $MN\parallel  PQ$.
+  \end{itemchoice}
+ } 
+\end{ex}
+
+
+%%%%%%%%%%%%%%%% TỰ LUẬN %%%%%%%%%%%%%%%%
+
+% nguồn: Ok_TuanLuan_Toan11_Lan2
+\begin{ex}%[1H4V3-6]%[1H4H3-4]%[ma:5bd548a9]
+	Cho hình chóp $S.ABCD$ có đáy là một hình thang với đáy lớn là cạnh $AD$. Gọi $M$, $N$, $P$ lần lượt là trung điểm của  $AB$, $CD$, $SA$.
+	\begin{enumerate}
+		\item Xác định giao điểm $Q$ của cạnh $SD$ với  $(MNP)$.
+		 \item Chứng minh $SB, SC$ cùng song song với $(MNP)$.
+		\item Chứng minh $MP$ và $NQ$ cắt nhau. Chứng minh giao điểm của $MP$ và $NQ$, giao điểm của $AB$ và $CD$ và  điểm $S$ thẳng hàng.
+	\end{enumerate}
+	\loigiai{ 
+		\begin{center}
+			\begin{tikzpicture}[line join = round,line cap = round,>=stealth,font=\footnotesize,scale=1,declare function={ad=5; ab=ad/2; gc=70; gocA=-60; sa=3.5;}]
+					\path 
+						(0,0) coordinate  (A)
+						(ad,0)  coordinate (D)
+						(gocA:ab) coordinate (B) 
+						($(B)+(ab,0)$) coordinate  (C)
+						 (gc:sa) coordinate (S)
+						($(S)!0.5!(A)$)  coordinate (P)
+						 ($(A)!0.5!(B)$) coordinate (M)
+						($(C)!0.5!(D)$)  coordinate (N)
+						($(S)!0.5!(D)$) coordinate  (Q)
+						(intersection of P--M and  N--Q) coordinate (I)
+						(intersection of A--B and C--D) coordinate (J); 
+					\draw (S)--(B)--(C)--(D)--(S)--(C) 
+						 (S)--(A)--(B)--(J)--(C)
+						(M)--(I)--(N); 
+					 \draw[dashed] (A)--(D)
+						 (M)--(N)
+						 (P)--(Q);
+					\foreach \x/\gm in {A/180,B/-110,C/-90,D/0,S/90,I/90,J/-90,M/180,N/10,Q/20,P/180} \draw[fill] (\x) circle  (1pt)
+						($(\x)+(\gm:3.5mm)$)  node{$\x$};
+				\end{tikzpicture}
+		\end{center}
+		\begin{enumerate}
+			\item  Ta có $AD\parallel MN$ nên $AD\parallel(MNP)$\\
+			 mà $AD\subset(SAD)$.\\
+			Khi đó giao tuyến của ($MNP$) và ($SAD$) là đường thẳng qua $P$, song song với $AD$, cắt $SD$ tại $Q$\\ 
+			$\Rightarrow Q$ là giao điểm của  $SD$ và ($MNP$).
+			\item Tam giác $SAB$  có $MP$ là đường trung bình nên $SB\parallel MP$ do đó $SB\parallel(MNP)$.\\
+			Theo cách dựng điểm $Q$ suy ra $Q$ là trung điểm  của $SD$.\\
+			Do đó $NQ$ là đường trung bình của tam giác $SCD$ suy ra $SC\parallel NQ$.\\ Suy ra  $SC\parallel(MNP)$.
+			\item Ta có  $MN\parallel PQ$ (vì cùng song song với $AD$).\\
+			Mặt khác ta có  $PQ=\dfrac{1}{2} AD, MN=\dfrac{AD+BC}{2} > \dfrac{AD}{2}=PQ$ nên $MNQP$ là hình thang.\\
+			Vậy $MP$ và $NQ$ có thể cắt  nhau tại $I$.\\
+			Theo cách dựng thì $I$ là một điểm  chung của $(SAB)$ và $(SCD)$.\\
+			Tương tự, giao điểm $J$ của $AB$ và $CD$ cũng là  điểm chung của $(SAB)$ và $(SCD)$.\\
+			Do đó  $I$, $S$ và $J$ cùng thuộc giao tuyến của $(SAB)$ và $(SCD)$.\\
+			Vậy $I$, $S$, $J$ thẳng  hàng.
+		\end{enumerate}
+	 }
+\end{ex}

@@ -1,0 +1,122 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Lớp 11 | Xác suất | Biến cố giao và quy tắc nhân xác suất
+% Dạng 1D9?1-4: Tính xác suất biến cố giao bằng sơ đồ hình cây
+% Số câu: 2  (sinh tự động bởi tach_cau.py; từ nay thầy sửa trực tiếp file này)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%% ĐÚNG/SAI %%%%%%%%%%%%%%%%
+
+% nguồn: Ok_dungsai_lop11_Lan1
+\begin{ex}%[1D9H1-4]%[ma:d538645e]
+ Một xạ thủ bắn lần lượt $2$ viên đạn vào một  bia. Xác suất trúng đích của viên thứ nhất và thứ hai lần lượt là $0{,}9$ và $0{,}6$. Biết rằng kết quả các lần bắn là độc lập với nhau. Khi đó, xác suất của biến cố
+ \choiceTF 
+  {\lq\lq Cả 2 lần  bắn đều trúng đích\rq\rq\, là $0{,}04$}
+  {\lq\lq Cả 2 lần bắn đều không trúng đích\rq\rq\, là $0{,}06$} 
+  {\lq\lq Lần bắn thứ nhất trúng đích,  lần bắn thứ hai không trúng đích\rq\rq\, là $0{,}54$}
+  {\lq\lq Lần bắn thứ nhất không trúng đích, lần bắn thứ hai  trúng đích\rq\rq\, là $0{,}38$}
+  \loigiai{
+  Gọi $A$ là biến cố \lq\lq Xạ thủ bắn viên  đạn trúng bia lần thứ nhất\rq\rq. Ta có $\mathrm{P}(A)=0{,}9$ và $\mathrm{P}(\overline{A})=0{,}1$.\\
+  Gọi $B$ là biến cố \lq\lq Xạ thủ bắn  viên đạn trúng bia lần thứ hai\rq\rq. Ta có $\mathrm{P}(B)=0{,}6$ và $\mathrm{P}(\overline{B})=0{,}4$.\\
+  Ta cũng có thể giải bài toán trên bằng cách sử dụng sơ đồ  hình cây như sau:
+  \begin{center}
+   \begin{tikzpicture}[font=\footnotesize,line join=round,line cap=round,>=stealth,scale=1,rotate=-90]
+      \path (0,0) node (a){Xác suất}
+      ++(2,4) node (b){$ A $ trúng bia  lần 1}
+       (a)++(2,-4) node (c){$ \overline{A} $ không trúng bia lần 1};
+     \path 
+      (b)++(2,2) node  (b1){$ B $ trúng bia lần 2}
+      (b)++(2,-2) node (b2){$ \overline{B} $ không trúng bia  lần 2};
+     \path (c)++(2,2) node (c1){$ B $ trúng bia  lần 2}
+      (c)++(2,-2) node (c2){$\overline{B} $ không  trúng bia lần 2};
+      \path
+       (b1)++(2,0) node[rectangle,draw=brown,text width=2cm,rounded
+      corners=2mm,align=center](b11){Bắn trúng lần  1 và bắn trúng lần 2};
+      \path
+      (b2)++(2,0) node[rectangle,draw=brown,text  width=2cm,rounded
+      corners=2mm,align=center](b21){Bắn trúng  lần 1 và không bắn trúng lần 2};
+     \path (c1)++(2,0) node[rectangle,draw=brown,text 
+      width=2cm,rounded 
+       corners=2mm,align=center](c11){Không bắn trúng lần 1 và bắn trúng lần 2};
+      \path (c2)++(2,0) node[rectangle,draw=brown,text
+       width=2cm,rounded
+      corners=2mm,align=center](c21){Không bắn trúng lần 1 và  không bắn trúng lần 2};
+     \draw[-stealth,teal,outer  sep=0,inner
+      sep=0](a.south)--(b.north) node[pos=0.5,right]{$0{,}9$}; 
+      \draw[-stealth,teal,outer sep=0,inner
+      sep=0](a.south)--(c.north) node[pos=0.5,left]{$0{,}1$}; 
+      \draw[-stealth,teal,outer sep=0,inner
+       sep=0](b.south)--(b1.north) node[pos=0.5,right]{$0{,}6$};
+     \draw[-stealth,teal,outer  sep=0,inner
+       sep=0](b.south)--(b2.north) node[pos=0.5,left]{$0{,}4$};
+     \draw[-stealth,teal,outer  sep=0,inner
+      sep=0](c.south)--(c1.north) node[pos=0.5,right]{$0{,}6$}; 
+     \draw[-stealth,teal,outer  sep=0,inner
+      sep=0](c.south)--(c2.north)  node[pos=0.5,left]{$0{,}4$};
+     \draw[-stealth,teal,outer  sep=0,inner
+      sep=0](b1.south)--(b11.north)  node[pos=0.5,left]{$0{,}54$};
+      \draw[-stealth,teal,outer sep=0,inner
+      sep=0](c1.south)--(c11.north)  node[pos=0.5,left]{$0{,}06$};
+     \draw[-stealth,teal,outer  sep=0,inner
+      sep=0](b2.south)--(b21.north) node[pos=0.5,left]{$0{,}36$}; 
+     \draw[-stealth,teal,outer  sep=0,inner
+      sep=0](c2.south)--(c21.north) node[pos=0.5,left]{$0{,}04$}; 
+    \end{tikzpicture}
+  \end{center}
+  Theo sơ đồ trên  thì
+  \begin{itemchoice}
+   \itemch Xác suất cả 2 lần bắn đều  trúng đích là $0{,}54$.
+   \itemch Xác suất cả  2 lần bắn đều không trúng đích là $0{,}04$.
+   \itemch Xác suất lần  bắn thứ nhất trúng đích, lần bắn thứ hai không trúng đích là $0{,}36$.
+   \itemch Xác suất lần bắn thứ nhất không trúng đích, lần bắn thứ hai trúng đích là  $0{,}06$.
+  \end{itemchoice}
+ } 
+\end{ex}
+
+% nguồn: Ok_dungsai_lop11_Lan1
+\begin{ex}%[1D9H1-4]%[ma:eec147ca]
+ Minh gieo $1$ hạt đậu và $1$ hạt ngô. Xác  suất nảy mầm của hạt đậu và hạt ngô lần lượt là $0{,}7$ và $0{,}6$. Biết rằng sự nảy mầm của hai hạt này là độc lập. Sử dụng sơ đồ hình cây, xác suất của các biến cố
+  \choiceTF
+  {\True \lq\lq  Cả $2$ hạt đều nảy mầm\rq\rq\, là $0{,}42$}
+  {\True \lq\lq Cả $2$ hạt đều không nảy  mầm\rq\rq\, là $0{,}12$}
+  {\lq\lq Hạt đậu nảy mầm, hạt ngô không  nảy mầm\rq\rq\, là $0{,}18$}
+  {\lq\lq Hạt  đậu không nảy mầm, hạt ngô nảy mầm\rq\rq\, là $0{,}28$}
+  \loigiai{
+  Ta có sơ đồ hình cây  như sau:
+  \begin{center}
+   \begin{tikzpicture}[>=stealth,line cap=round,line join=round]
+     \path 
+      (0,0) coordinate (O) 
+      (1,2) coordinate  (A)
+      (1,-2) coordinate (B) 
+       (3,2) coordinate (A1)
+      (4,3)  coordinate (A2)
+      (4,1)  coordinate (A2')
+      (3,-2)  coordinate (B1)
+      (4,-1) coordinate (B2) 
+      (4,-3) coordinate (B2') 
+       (7,4) coordinate (C) node[right]{Kết quả}
+      (7,3) coordinate (C1) node[above right]{Hạt đậu nảy mầm,}node[below right]{Hạt ngô  nảy mầm}
+      (7,1) coordinate (C2) node[above right]{Hạt đậu nảy mầm,}node[below right]{Hạt  ngô không nảy mầm}
+      (7,-1) coordinate (C3) node[above right]{Hạt đậu không  nảy mầm,}node[below right]{Hạt ngô nảy mầm}
+      (7,-3) coordinate  (C4) node[above right]{Hạt đậu không nảy mầm,}node[below right]{Hạt ngô không nảy mầm}
+       (11.5,4) coordinate (D) node[right]{Xác suất}
+      (11.5,3) coordinate (D) node[right]{$0{,}42$} 
+      (11.5,1) coordinate (D)  node[right]{$0{,}28$}
+       (11.5,-1) coordinate (D) node[right]{$0{,}18$}
+      (11.5,-3) coordinate  (D) node[right]{$0{,}12$};
+     \draw[->](O)--(A) node[above right]{Hạt đậu}node[below right]{nảy mầm}node[midway,left]{$0{,}7$}; 
+     \draw[->](A1)--(A2) node[above  right]{Hạt ngô}node[below right]{nảy mầm}node[midway,left]{$0{,}6$};
+      \draw[->](A1)--(A2') node[above right]{Hạt ngô}node[below right]{không nảy mầm}node[midway,left]{$0{,}4$};
+     \draw[->](O)--(B) node[above right]{Hạt đậu}node[right]{không}node[below  right]{nảy mầm}node[midway,left]{$0{,}3$};
+     \draw[->](B1)--(B2) node[above right]{Hạt ngô}node[below right]{nảy mầm}node[midway,left]{$0{,}6$}; 
+      \draw[->](B1)--(B2') node[above right]{Hạt ngô}node[below right]{không nảy mầm}node[midway,left]{$0{,}4$};
+    \end{tikzpicture}
+  \end{center}
+  \begin{itemchoice}
+   \itemch Xác suất cả  $2$ hạt đều nảy mầm là $0{,}42$.
+   \itemch Xác suất cả $2$ hạt đều không nảy  mầm là $0{,}12$.
+   \itemch Xác suất hạt đậu nảy mầm, hạt ngô không nảy mầm  là $0{,}28$.
+    \itemch Xác suất hạt đậu không nảy mầm, hạt ngô nảy mầm là $0{,}18$.
+  \end{itemchoice}
+  }
+\end{ex}

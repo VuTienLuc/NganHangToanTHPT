@@ -1,0 +1,280 @@
+# Báo cáo kiểm tra ngân hàng
+
+- Tổng số câu: **20,697** trong 474 file
+- Theo lớp: lớp 10: 4,053, lớp 11: 11,968, lớp 12: 4,478, chưa mã: 198
+- Theo loại: Trắc nghiệm 4 phương án: 10,594, Đúng/Sai: 3,210, Trả lời ngắn: 3,907, Tự luận: 2,986
+- Câu mới vừa được gắn mã: 0
+- Dạng trong id_map có dưới 5 câu: 133
+
+## Thiếu mã dạng %[..]: 198
+
+- `ff530425` cau-hoi/_chua_phan_loai/Lop_12_Dai_so_Chuong_3.tex
+- `aa022f0d` cau-hoi/_chua_phan_loai/Lop_12_Dai_so_Chuong_3.tex
+- `d3e0d86c` cau-hoi/_chua_phan_loai/Lop_12_Dai_so_Chuong_3.tex
+- `7e806caf` cau-hoi/_chua_phan_loai/Lop_12_Dai_so_Chuong_3.tex
+- `c6cabb06` cau-hoi/_chua_phan_loai/Lop_12_Dai_so_Chuong_3.tex
+- `f21956bc` cau-hoi/_chua_phan_loai/Lop_12_Dai_so_Chuong_3.tex
+- `35562135` cau-hoi/_chua_phan_loai/Lop_12_Dai_so_Chuong_3.tex
+- `f0a14599` cau-hoi/_chua_phan_loai/Lop_12_Dai_so_Chuong_3.tex
+- `e45ee6f7` cau-hoi/_chua_phan_loai/Lop_12_Dai_so_Chuong_3.tex
+- `a5adf192` cau-hoi/_chua_phan_loai/Lop_12_Dai_so_Chuong_3.tex
+- `d5c29042` cau-hoi/_chua_phan_loai/Lop_12_Dai_so_Chuong_3.tex
+- `4d49c486` cau-hoi/_chua_phan_loai/Lop_12_Dai_so_Chuong_3.tex
+- `113829b5` cau-hoi/_chua_phan_loai/Lop_12_Dai_so_Chuong_6.tex
+- `355ea2d3` cau-hoi/_chua_phan_loai/Lop_12_Dai_so_Chuong_6.tex
+- `8dfb6bb2` cau-hoi/_chua_phan_loai/Lop_12_Dai_so_Chuong_6.tex
+- `a827e78a` cau-hoi/_chua_phan_loai/Lop_12_Dai_so_Chuong_6.tex
+- `e015654e` cau-hoi/_chua_phan_loai/Lop_12_Dai_so_Chuong_6.tex
+- `70716384` cau-hoi/_chua_phan_loai/Lop_12_Dai_so_Chuong_6.tex
+- `cbf966e3` cau-hoi/_chua_phan_loai/Lop_12_Dai_so_Chuong_6.tex
+- `af4c0fde` cau-hoi/_chua_phan_loai/Lop_12_Dai_so_Chuong_6.tex
+- `15612625` cau-hoi/_chua_phan_loai/Lop_12_Dai_so_Chuong_6.tex
+- `a14cf143` cau-hoi/_chua_phan_loai/Lop_12_Dai_so_Chuong_6.tex
+- `ae25b014` cau-hoi/_chua_phan_loai/Lop_12_Dai_so_Chuong_6.tex
+- `fed01ae3` cau-hoi/_chua_phan_loai/Lop_12_Dai_so_Chuong_6.tex
+- `f6f5794a` cau-hoi/_chua_phan_loai/Lop_12_Dai_so_Chuong_6.tex
+- `0a472f4b` cau-hoi/_chua_phan_loai/Lop_12_Dai_so_Chuong_6.tex
+- `fa3adede` cau-hoi/_chua_phan_loai/Lop_12_Dai_so_Chuong_6.tex
+- `cf4c8293` cau-hoi/_chua_phan_loai/Lop_12_Dai_so_Chuong_6.tex
+- `9a68b0ac` cau-hoi/_chua_phan_loai/Lop_12_Dai_so_Chuong_6.tex
+- `5d64142e` cau-hoi/_chua_phan_loai/Lop_12_Dai_so_Chuong_6.tex
+- `36e9b123` cau-hoi/_chua_phan_loai/Lop_12_Dai_so_Chuong_6.tex
+- `f0178816` cau-hoi/_chua_phan_loai/Lop_12_Dai_so_Chuong_6.tex
+- `21d15458` cau-hoi/_chua_phan_loai/Lop_12_Dai_so_Chuong_6.tex
+- `0dd47779` cau-hoi/_chua_phan_loai/Lop_12_Dai_so_Chuong_6.tex
+- `38c1851f` cau-hoi/_chua_phan_loai/Lop_12_Dai_so_Chuong_6.tex
+- `352ea304` cau-hoi/_chua_phan_loai/Lop_12_Dai_so_Chuong_6.tex
+- `898fb24c` cau-hoi/_chua_phan_loai/Lop_12_Dai_so_Chuong_6.tex
+- `7a41712b` cau-hoi/_chua_phan_loai/Lop_12_Dai_so_Chuong_6.tex
+- `d970cb3c` cau-hoi/_chua_phan_loai/Lop_12_Dai_so_Chuong_6.tex
+- `87bde602` cau-hoi/_chua_phan_loai/Lop_12_Dai_so_Chuong_6.tex
+- … và 158 câu nữa (lọc trong nganhang.sqlite)
+
+## Trắc nghiệm không có đúng 1 \True: 55
+
+- `14f43bd8` cau-hoi/lop10/0D1_Menh_de_Tap_hop/0D1-1-4_Menh_de_keo_theo_menh_de_dao_menh_de_tuong_du.tex (đáp án: AD)
+- `27463cd0` cau-hoi/lop10/0D1_Menh_de_Tap_hop/0D1-2-2_Tap_hop_con_Hai_tap_hop_bang_nhau.tex (đáp án: None)
+- `2ded348d` cau-hoi/lop10/0D3_Ham_so_bac_hai_va_do_thi/0D3-2-1_Xac_dinh_ham_so_bac_hai.tex (đáp án: None)
+- `bde05429` cau-hoi/lop10/0D3_Ham_so_bac_hai_va_do_thi/0D3-2-1_Xac_dinh_ham_so_bac_hai.tex (đáp án: None)
+- `e1065dd2` cau-hoi/lop10/0D8_Dai_so_to_hop/0D8-2-3_Bai_toan_dem_so_tu_nhien.tex (đáp án: None)
+- `3a218ea6` cau-hoi/lop10/0D8_Dai_so_to_hop/0D8-2-3_Bai_toan_dem_so_tu_nhien.tex (đáp án: None)
+- `d8d2e398` cau-hoi/lop10/0D8_Dai_so_to_hop/0D8-2-3_Bai_toan_dem_so_tu_nhien.tex (đáp án: None)
+- `d4c035bb` cau-hoi/lop10/0D8_Dai_so_to_hop/0D8-2-4_Bai_toan_chon_nguoi.tex (đáp án: AB)
+- `8e4a8223` cau-hoi/lop10/0D8_Dai_so_to_hop/0D8-3-3_Tim_he_so_so_hang_trong_khai_trien_bang_tam_g.tex (đáp án: None)
+- `408a8b8a` cau-hoi/lop10/0D8_Dai_so_to_hop/0D8-3-5_Tinh_tong_nho_khai_trien_nhi_thuc_Newton.tex (đáp án: None)
+- `be58cbaa` cau-hoi/lop10/0H4_He_thuc_luong_trong_tam_giac/0H4-1-3_Bien_doi_rut_gon_bieu_thuc_luong_giac.tex (đáp án: None)
+- `e60c4e50` cau-hoi/lop10/0H4_He_thuc_luong_trong_tam_giac/0H4-1-3_Bien_doi_rut_gon_bieu_thuc_luong_giac.tex (đáp án: None)
+- `d133e6c1` cau-hoi/lop10/0H4_He_thuc_luong_trong_tam_giac/0H4-2-2_Bai_toan_co_dung_cong_thuc_dien_tich.tex (đáp án: None)
+- `8e2527b0` cau-hoi/lop10/0H4_He_thuc_luong_trong_tam_giac/0H4-3-1_Giai_tam_giac.tex (đáp án: None)
+- `20738436` cau-hoi/lop10/0H4_He_thuc_luong_trong_tam_giac/0H4-3-2_Cac_ung_dung_thuc_te.tex (đáp án: None)
+- `e8797330` cau-hoi/lop10/0H9_Phuong_phap_toa_do_trong_mat_phang/0H9-3-2_Phuong_trinh_duong_thang.tex (đáp án: None)
+- `f7ed6250` cau-hoi/lop10/0H9_Phuong_phap_toa_do_trong_mat_phang/0H9-5-1_Xac_dinh_cac_yeu_to_cua_elip.tex (đáp án: AC)
+- `b59806f8` cau-hoi/lop11/1D1_Ham_so_luong_giac_va_phuong_trinh_luong/1D1-1-4_Do_dai_cua_mot_cung_tron.tex (đáp án: None)
+- `78ca1697` cau-hoi/lop11/1D1_Ham_so_luong_giac_va_phuong_trinh_luong/1D1-4-2_Tim_tap_xac_dinh.tex (đáp án: BC)
+- `50b5520e` cau-hoi/lop11/1D2_Day_so_Cap_so_cong_Cap_so_nhan/1D2-2-2_Nhan_dien_cap_so_cong_cong_sai.tex (đáp án: None)
+- `0bf2bb14` cau-hoi/lop11/1D2_Day_so_Cap_so_cong_Cap_so_nhan/1D2-3-7_Ket_hop_cap_so_nhan_va_cap_so_cong.tex (đáp án: None)
+- `9f4f9583` cau-hoi/lop11/1D3_Gioi_han_Ham_so_lien_tuc/1D3-1-2_Phuong_phap_dat_thua_so_chung_lim_huu_han.tex (đáp án: None)
+- `7c8719dc` cau-hoi/lop11/1D5_Cac_so_dac_trung_do_xu_the_trung_tam_cho/1D5-1-2_Mau_so_lieu_ghep_nhom.tex (đáp án: None)
+- `e9a5ae92` cau-hoi/lop11/1D6_Ham_so_mu_va_ham_so_logarit/1D6-2-1_Tinh_gia_tri_bieu_thuc_chua_logarit.tex (đáp án: None)
+- `844cebe3` cau-hoi/lop11/1D6_Ham_so_mu_va_ham_so_logarit/1D6-2-1_Tinh_gia_tri_bieu_thuc_chua_logarit.tex (đáp án: None)
+- `390e0470` cau-hoi/lop11/1D6_Ham_so_mu_va_ham_so_logarit/1D6-4-2_Phuong_trinh_mu_logarit_co_ban.tex (đáp án: None)
+- `5f7da853` cau-hoi/lop11/1D6_Ham_so_mu_va_ham_so_logarit/1D6-4-3_Bat_phuong_trinh_mu_logarit_co_ban.tex (đáp án: None)
+- `6f209b0e` cau-hoi/lop11/1D6_Ham_so_mu_va_ham_so_logarit/1D6-4-3_Bat_phuong_trinh_mu_logarit_co_ban.tex (đáp án: None)
+- `436bc9a5` cau-hoi/lop11/1H4_Duong_thang_mat_phang_Quan_he_song_song/1H4-1-2_Hinh_bieu_dien_cua_mot_hinh_khong_gian.tex (đáp án: None)
+- `96413b4c` cau-hoi/lop11/1H4_Duong_thang_mat_phang_Quan_he_song_song/1H4-1-3_Tim_giao_tuyen_cua_hai_mat_phang.tex (đáp án: None)
+- `ff94d356` cau-hoi/lop11/1H4_Duong_thang_mat_phang_Quan_he_song_song/1H4-3-1_Cau_hoi_ly_thuyet.tex (đáp án: None)
+- `cbc68acd` cau-hoi/lop11/1H4_Duong_thang_mat_phang_Quan_he_song_song/1H4-3-2_Duong_thang_song_song_voi_mat_phang.tex (đáp án: None)
+- `1ef5a5f5` cau-hoi/lop11/1H8_Quan_he_vuong_goc_trong_khong_gian/1H8-2-2_Xac_dinh_hoac_chung_minh_duong_thang_va_mat_p.tex (đáp án: AD)
+- `7b8fe05c` cau-hoi/lop11/1H8_Quan_he_vuong_goc_trong_khong_gian/1H8-4-4_Dung_mat_phang_thiet_dien.tex (đáp án: None)
+- `a2d5d8f0` cau-hoi/lop11/1H8_Quan_he_vuong_goc_trong_khong_gian/1H8-6-1_Goc_giua_duong_thang_va_mat_phang.tex (đáp án: None)
+- `2f04a4cf` cau-hoi/lop11/1H8_Quan_he_vuong_goc_trong_khong_gian/1H8-6-3_Goc_giua_2_mat_phang_biet_truoc_goc.tex (đáp án: None)
+- `96e1ecf2` cau-hoi/lop11/1H8_Quan_he_vuong_goc_trong_khong_gian/1H8-6-3_Goc_giua_2_mat_phang_biet_truoc_goc.tex (đáp án: None)
+- `1bb2d21d` cau-hoi/lop11/1H8_Quan_he_vuong_goc_trong_khong_gian/1H8-7-3_The_tich_khoi_chop_tu_giac.tex (đáp án: None)
+- `f11b89d9` cau-hoi/lop11/1H8_Quan_he_vuong_goc_trong_khong_gian/1H8-7-3_The_tich_khoi_chop_tu_giac.tex (đáp án: None)
+- `ea3e84b1` cau-hoi/lop11/1H8_Quan_he_vuong_goc_trong_khong_gian/1H8-7-3_The_tich_khoi_chop_tu_giac.tex (đáp án: None)
+- … và 15 câu nữa (lọc trong nganhang.sqlite)
+
+## Thiếu lời giải: 37
+
+- `74395f7a` cau-hoi/lop10/0D0_Xac_suat/0D0-1-2_Mo_ta_khong_gian_mau_bien_co.tex
+- `14ffef94` cau-hoi/lop10/0D1_Menh_de_Tap_hop/0D1-1-2_Tinh_dung_sai_cua_menh_de.tex
+- `b8673785` cau-hoi/lop10/0H4_He_thuc_luong_trong_tam_giac/0H4-2-3_Bien_doi_rut_gon_bieu_thuc.tex
+- `2c8b388f` cau-hoi/lop10/0H9_Phuong_phap_toa_do_trong_mat_phang/0H9-3-1_Diem_vecto_he_so_goc_cua_duong_thang.tex
+- `c2a26e7a` cau-hoi/lop11/1D1_Ham_so_luong_giac_va_phuong_trinh_luong/1D1-1-1_Cau_hoi_ly_thuyet.tex
+- `f10225ed` cau-hoi/lop11/1D1_Ham_so_luong_giac_va_phuong_trinh_luong/1D1-1-3_So_do_cua_mot_goc_luong_giac.tex
+- `9d412f1a` cau-hoi/lop11/1D1_Ham_so_luong_giac_va_phuong_trinh_luong/1D1-4-1_Cau_hoi_ly_thuyet.tex
+- `19c90675` cau-hoi/lop11/1D1_Ham_so_luong_giac_va_phuong_trinh_luong/1D1-4-2_Tim_tap_xac_dinh.tex
+- `5a1f028f` cau-hoi/lop11/1D3_Gioi_han_Ham_so_lien_tuc/1D3-1-2_Phuong_phap_dat_thua_so_chung_lim_huu_han.tex
+- `25de2fda` cau-hoi/lop11/1D3_Gioi_han_Ham_so_lien_tuc/1D3-1-4_Gioi_han_vo_cuc.tex
+- `17b863db` cau-hoi/lop11/1D5_Cac_so_dac_trung_do_xu_the_trung_tam_cho/1D5-1-1_Cau_hoi_ly_thuyet.tex
+- `a43ea2ac` cau-hoi/lop11/1D5_Cac_so_dac_trung_do_xu_the_trung_tam_cho/1D5-1-1_Cau_hoi_ly_thuyet.tex
+- `fbccf455` cau-hoi/lop11/1D6_Ham_so_mu_va_ham_so_logarit/1D6-1-1_Tinh_gia_tri_cua_bieu_thuc_chua_luy_thua.tex
+- `c9ab0755` cau-hoi/lop11/1D6_Ham_so_mu_va_ham_so_logarit/1D6-2-2_Bien_doi_bieu_dien_bieu_thuc_chua_logarit.tex
+- `7dec8bb2` cau-hoi/lop11/1D6_Ham_so_mu_va_ham_so_logarit/1D6-3-3_Su_bien_thien_va_do_thi_cua_ham_so_mu_logarit.tex
+- `0368cba7` cau-hoi/lop11/1H4_Duong_thang_mat_phang_Quan_he_song_song/1H4-1-1_Cau_hoi_ly_thuyet.tex
+- `7951ed1c` cau-hoi/lop11/1H4_Duong_thang_mat_phang_Quan_he_song_song/1H4-3-1_Cau_hoi_ly_thuyet.tex
+- `0e46511e` cau-hoi/lop11/1H4_Duong_thang_mat_phang_Quan_he_song_song/1H4-4-1_Cau_hoi_ly_thuyet.tex
+- `115ad7a6` cau-hoi/lop11/1H4_Duong_thang_mat_phang_Quan_he_song_song/1H4-6-1_Cau_hoi_ly_thuyet.tex
+- `c656f05f` cau-hoi/lop11/1H4_Duong_thang_mat_phang_Quan_he_song_song/1H4-6-1_Cau_hoi_ly_thuyet.tex
+- `8cb130db` cau-hoi/lop11/1H8_Quan_he_vuong_goc_trong_khong_gian/1H8-2-1_Cau_hoi_ly_thuyet.tex
+- `62d2d38b` cau-hoi/lop11/1H8_Quan_he_vuong_goc_trong_khong_gian/1H8-3-2_Hinh_chieu_vuong_goc_cua_da_giac_tren_mat_pha.tex
+- `6e595ed0` cau-hoi/lop11/1H8_Quan_he_vuong_goc_trong_khong_gian/1H8-4-1_Cau_hoi_ly_thuyet.tex
+- `4f5af152` cau-hoi/lop11/1H8_Quan_he_vuong_goc_trong_khong_gian/1H8-6-1_Goc_giua_duong_thang_va_mat_phang.tex
+- `5150af8b` cau-hoi/lop11/1H8_Quan_he_vuong_goc_trong_khong_gian/1H8-6-1_Goc_giua_duong_thang_va_mat_phang.tex
+- `3efb8409` cau-hoi/lop11/1H8_Quan_he_vuong_goc_trong_khong_gian/1H8-6-2_Goc_nhi_dien_goc_phang_nhi_dien.tex
+- `acfe59a0` cau-hoi/lop12/2D1_Ung_dung_dao_ham_de_khao_sat_ham_so/2D1-2-4_Tim_de_ham_so_do_thi_ham_so_bac_ba_co_cuc_tri.tex
+- `2ee9f316` cau-hoi/lop12/2D1_Ung_dung_dao_ham_de_khao_sat_ham_so/2D1-5-1_Nhan_dang_do_thi.tex
+- `c6031f57` cau-hoi/lop12/2D1_Ung_dung_dao_ham_de_khao_sat_ham_so/2D1-5-5_Do_thi_cua_ham_dao_ham.tex
+- `2806087a` cau-hoi/lop12/2D1_Ung_dung_dao_ham_de_khao_sat_ham_so/2D1-5-6_Phuong_trinh_tiep_tuyen_cua_do_thi_ham_so.tex
+- `aef6a77d` cau-hoi/lop12/2D4_Nguyen_ham_tich_phan/2D4-1-3_Nguyen_ham_co_ban_ham_luong_giac.tex
+- `1f738c11` cau-hoi/lop12/2D4_Nguyen_ham_tich_phan/2D4-1-4_Nguyen_ham_co_ban_ham_mu_luy_thua.tex
+- `4348c048` cau-hoi/lop12/2D4_Nguyen_ham_tich_phan/2D4-2-2_Tich_phan_co_ban_da_thuc_phan_thuc.tex
+- `79dc5064` cau-hoi/lop12/2D6_Mot_so_yeu_to_xac_suat/2D6-2-2_Tinh_xac_suat_bang_cong_thuc_xac_suat_toan_ph.tex
+- `fd4096cb` cau-hoi/lop12/2H2_Toa_do_cua_vec_to_trong_khong_gian/2H2-2-2_Tim_toa_do_diem.tex
+- `a7c392ad` cau-hoi/lop12/2H5_Phuong_trinh_mat_phang_duong_thang_mat_c/2H5-2-8_Toan_thuc_te_ap_dung_phuong_trinh_duong_thang.tex
+- `17dad4e3` cau-hoi/lop12/2H5_Phuong_trinh_mat_phang_duong_thang_mat_c/2H5-3-3_Viet_phuong_trinh_tong_quat_mat_cau.tex
+
+## Trả lời ngắn thiếu \shortans: 6
+
+- `35cbe374` cau-hoi/lop10/0D2_BPT_va_he_BPT_bac_nhat_hai_an/0D2-1-3_Toan_thuc_te_ve_BPT_bac_nhat_hai_an.tex
+- `4d4e3097` cau-hoi/lop10/0D8_Dai_so_to_hop/0D8-2-3_Bai_toan_dem_so_tu_nhien.tex
+- `c78b507d` cau-hoi/lop11/1D6_Ham_so_mu_va_ham_so_logarit/1D6-4-4_Phuong_trinh_mu_logarit_dua_ve_cung_co_so.tex
+- `296d2a41` cau-hoi/lop11/1D6_Ham_so_mu_va_ham_so_logarit/1D6-4-6_Toan_thuc_te_ap_dung_phuong_trinh_mu_logarit.tex
+- `49f01886` cau-hoi/lop11/1D6_Ham_so_mu_va_ham_so_logarit/1D6-4-6_Toan_thuc_te_ap_dung_phuong_trinh_mu_logarit.tex
+- `d5ecc6cf` cau-hoi/lop12/2D6_Mot_so_yeu_to_xac_suat/2D6-1-2_Tinh_xac_suat_co_dieu_kien_bang_cong_thuc.tex
+
+## Dạng còn mỏng (< 5 câu)
+
+- 0D1?1-6: Áp dụng mệnh đề vào suy luận có lí — 4 câu
+- 0D3?1-6: Tính chẵn, lẻ — 0 câu
+- 0D3?2-5: Hàm số chứa dấu giá trị tuyệt đối — 2 câu
+- 0D6?2-1: Đọc và phân tích thông tin trên bảng số liệu — 4 câu
+- 0D6?2-4: Số liệu bất thường trên biểu đồ — 0 câu
+- 0D6?4-1: Câu hỏi lý thuyết — 3 câu
+- 0D6?4-3: Giá trị bất thường của mẫu số liệu — 1 câu
+- 0D7?1-5: Toán thực tế  ứng dụng dấu tam thức bậc 2 — 3 câu
+- 0D7?2-3: Bất phương trình dạng tích, thương — 3 câu
+- 0D7?2-4: Hệ bất phương trình BPT bậc 2 — 0 câu
+- 0D7?2-5: Bất phương trình chứa căn, | · | — 2 câu
+- 0D7?3-3: Phương trình căn thức có tham số — 2 câu
+- 0D8?1-6: Sơ đồ hình cây — 0 câu
+- 0D8?2-8: Hoán vị bàn tròn — 4 câu
+- 0D8?2-9: Hoán vị lặp — 0 câu
+- 0D0?2-8: Liên quan bàn tròn hoặc hóan vị lặp — 1 câu
+- 0H4?2-4: Nhận dạng tam giác — 1 câu
+- 0H5?1-2: Xét phương và hướng của các véctơ — 3 câu
+- 0H5?1-4: Hai véctơ đối nhau — 2 câu
+- 0H5?1-6: Toán thực tế  áp dụng véctơ — 0 câu
+- 0H5?2-3: Tìm điểm nhờ đẳng thức véctơ — 3 câu
+- 0H5?2-5: Cực trị hình học — 0 câu
+- 0H5?3-3: Tìm điểm nhờ đẳng thức véctơ — 2 câu
+- 0H5?3-4: Sự cùng phương của 2 véctơ và ứng dụng — 3 câu
+- 0H5?3-7: Tập hợp điểm — 3 câu
+- 0H5?3-8: Cực trị hình học — 0 câu
+- 0H5?3-9: Toán thực tế  áp dụng tích 1 số với véctơ — 2 câu
+- 0H5?4-2: Tìm góc nhờ tích vô hướng — 3 câu
+- 0H5?4-4: Điều kiện vuông góc — 4 câu
+- 0H5?4-5: Các bài toán tìm điểm và tập hợp điểm — 1 câu
+- 0H5?4-6: Cực trị và chứng minh bất đẳng thức — 1 câu
+- 0H5?4-7: Toán thực tế  áp dụng tích vô hướng — 0 câu
+- 0H9?2-3: Đẳng thức về tích vô hướng hoặc độ dài — 3 câu
+- 0H9?2-5: Các bài toán tìm điểm và tập hợp điểm — 3 câu
+- 0H9?2-6: Cực trị và chứng minh bất đẳng thức — 0 câu
+- 0H9?2-7: Toán thực tế, liên môn — 0 câu
+- 0H9?3-9: Bài toán có dùng PT chính tắc — 0 câu
+- 0H9?4-6: Bài toán dùng cho tam giác, tứ giác — 2 câu
+- 0H9?4-7: Bài toán thực tế, PP tọa độ hóa — 2 câu
+- 0H9?5-6: Bài toán điểm trên hypebol — 2 câu
+- 0H9?5-8: Phương trình chính tắc của parabol — 2 câu
+- 0H9?5-9: Bài toán điểm trên parabol — 3 câu
+- 0C1?1-1: Các khái niệm về Hệ PT bậc nhất 3 ẩn — 0 câu
+- 0C1?1-2: Giải Hệ PT bậc nhất 3 ẩn — 0 câu
+- 0C1?1-3: Toán thực tế ứng dụng Hệ PT bậc nhất 3 ẩn — 0 câu
+- 0C2?1-1: Quy nạp chứng minh các đẳng thức/công thức/chia hết — 0 câu
+- 0C2?1-2: Quy nạp chứng minh các bất đẳng thức — 0 câu
+- 1D1?3-6: Nhận dạng tam giác — 2 câu
+- 1D1?6-1: Phương trình bậc n theo một hàm số lượng giác — 3 câu
+- 1D1?6-2: Phương trình đẳng cấp bậc n đối với sinx và cosx — 2 câu
+- 1D1?6-3: Phương trình bậc nhất đối với sinx và cosx — 2 câu
+- 1D1?6-4: Phương trình đối xứng, phản đối xứng — 0 câu
+- 1D1?6-5: Phương trình lượng giác không mẫu mực — 0 câu
+- 1D1?6-6: Phương trình lượng giác có chứa ẩn ở mẫu số — 0 câu
+- 1D1?6-7: Phương trình lượng giác có chứa tham số — 0 câu
+- 1D1?6-8: Toán thực tế áp dụng phương trình lượng giác thường gặp — 2 câu
+- 1D3?2-6: PP lượng liên hợp, kết quả vô cực — 1 câu
+- 1D6?5-2: Phương pháp lôgarít hóa, mũ cho PT mũ, lôgarít — 0 câu
+- 1D6?5-3: Phương pháp hàm số, đánh giá cho PT mũ, lôgarít — 0 câu
+- 1D6?5-4: Hệ PT mũ, lôgarít — 0 câu
+- 1D6?5-5: Toán thực tế áp dụng phương trình mũ, lôgarít — 0 câu
+- 1D7?2-7: Dùng đạo hàm cho nhị thức Newton — 1 câu
+- 1D9?1-4: Tính xác suất biến cố giao bằng sơ đồ hình cây — 2 câu
+- 1D9?2-2: Xác định và đếm số phần tử biến cố hợp — 3 câu
+- 1H4?1-7: Toán thực tế áp dụng điểm, đường thẳng và mặt phẳng — 0 câu
+- 1H4?2-6: Ba điểm thẳng hàng — 4 câu
+- 1H4?2-7: Bài toán quỹ tích và điểm cố định — 0 câu
+- 1H4?2-8: Toán thực tế áp dụng hai đường thẳng song song — 0 câu
+- 1H4?3-6: Ba điểm thẳng hàng — 2 câu
+- 1H4?3-7: Bài toán quỹ tích và điểm cố định — 0 câu
+- 1H4?3-8: Toán thực tế áp dụng đường thẳng song song mặt phẳng — 0 câu
+- 1H4?4-7: Toán thực tế áp dụng hai mặt phẳng song song — 1 câu
+- 1H4?6-4: Xác định phương chiếu — 2 câu
+- 1H8?1-4: Toán thực tế áp dụng hai đường thẳng vuông góc — 0 câu
+- 1H8?2-6: Toán thực tế áp dụng đường thẳng vuông góc mặt phẳng — 1 câu
+- 1H8?3-1: Lý thuyết về phép chiếu vuông góc — 1 câu
+- 1H8?3-2: Hình chiếu vuông góc của đa giác trên mặt phẳng — 4 câu
+- 1H8?4-6: Bài toán cho trước góc giữa 𝑑và (𝑃) — 1 câu
+- 1H8?4-7: Toán thực tế áp dụng hai mặt phẳng vuông góc — 1 câu
+- 1H8?5-1: Câu hỏi lý thuyết — 0 câu
+- 1H8?5-5: Đường vuông góc chung của hai đường thẳng chéo nhau — 2 câu
+- 1H8?5-6: Toán thực tế áp dụng khoảng cách — 2 câu
+- 1H8?6-4: Khoảng cách giữa điểm, đường, biết trước góc (𝑑, (𝑃)) — 2 câu
+- 1H8?6-6: Khoảng cách giữa 2 đường chéo nhau, biết trước góc (𝑑, (𝑃)) — 2 câu
+- 1H8?6-7: Toán thực tế về góc đường thẳng, mặt phẳng, góc nhị diện — 1 câu
+- 1H8?7-6: Thể tích khối chóp cụt và các khối khác — 4 câu
+- 1H8?7-7: Tỉ số thể tích — 3 câu
+- 1H8?7-8: Ứng dụng thể tích tính góc, khoảng cách,... — 1 câu
+- 1C1?1-1: Câu hỏi lý thuyết — 0 câu
+- 1C1?1-2: Bài toán xác định một phép đặt tương ứng có là phép dời hình hay không? — 0 câu
+- 1C1?1-3: Xác định ảnh khi thực hiện phép dời hình — 2 câu
+- 1C1?2-1: Câu hỏi lý thuyết — 0 câu
+- 1C1?2-2: Tìm ảnh hoặc tạo ảnh khi thực hiện phép tịnh tiến — 0 câu
+- 1C1?2-3: Ứng dụng phép tịnh tiến — 0 câu
+- 1C1?3-1: Câu hỏi lý thuyết — 0 câu
+- 1C1?3-2: Tìm ảnh hoặc tạo ảnh khi thực hiện phép đối xứng trục — 0 câu
+- 1C1?3-3: Xác định trục đối xứng và số trục đối xứng của một hình — 0 câu
+- 1C1?3-4: Ứng dụng phép đối xứng trục — 0 câu
+- 1C1?4-1: Câu hỏi lý thuyết — 0 câu
+- 1C1?4-2: Tìm ảnh, tạo ảnh khi thực hiện phép đối xứng tâm — 0 câu
+- 1C1?4-4: Ứng dụng phép đối xứng tâm — 0 câu
+- 1C1?5-1: Câu hỏi lý thuyết — 0 câu
+- 1C1?5-2: Xác định vị trí ảnh của điểm, hình khi thực hiện phép quay cho trước — 0 câu
+- 1C1?5-3: Tìm tọa độ ảnh của điểm, phương trình của một đường thẳng khi thực — 0 câu
+- 1C1?5-4: Ứng dụng phép quay — 0 câu
+- 1C1?6-1: Câu hỏi lý thuyết — 0 câu
+- 1C1?6-2: Xác định ảnh, tạo ảnh khi thực hiện phép vị tự  — 0 câu
+- 1C1?6-3: Tìm tâm vị tự của hai đường tròn — 0 câu
+- 1C1?6-4: Ứng dụng phép vị tự  — 0 câu
+- 1C1?7-1: Câu hỏi lý thuyết — 0 câu
+- 1C1?7-2: Xác định ảnh, tạo ảnh khi thực hiện phép đồng dạng — 0 câu
+- 1C2?1-1: Câu hỏi về đỉnh, cạnh của đồ thị — 4 câu
+- 1C2?1-2: Câu hỏi về bậc của đồ thị — 2 câu
+- 1C2?2-1: Đường đi Euler — 3 câu
+- 1C2?2-2: Đường đi Harmilton — 1 câu
+- 1C2?2-3: Câu hỏi tổng hợp — 0 câu
+- 1C2?3-2: Tổng hợp — 0 câu
+- 1C3?1-1: Lý thuyết về phép chiếu và hình biểu diễn song song — 0 câu
+- 1C3?1-3: Lý thuyết về phép chiếu trục đo — 0 câu
+- 1C3?1-4: Tổng hợp — 0 câu
+- 1C3?2-1: Lý thuyết cơ bản về bản vẽ kỹ thuật — 0 câu
+- 1C3?2-2: Phương pháp biểu diễn bản vẽ kỹ thuật — 0 câu
+- 1C3?2-3: Tổng hợp — 0 câu
+- 2D1?1-4: Ứng dụng tính đơn điệu để chứng minh bất đẳng thức, giải phương trình, — 2 câu
+- 2D1?2-5: Tìm 𝑚 để hàm số, đồ thị hàm số trùng phương có cực trị thỏa mãn điều — 2 câu
+- 2D1?2-6: Tìm 𝑚 để hàm số, đồ thị hàm số các hàm số khác có cực trị thỏa mãn điều — 3 câu
+- 2D1?3-3: Sử dụng các đánh giá, bất đẳng thức cổ điển — 3 câu
+- 2D1?3-4: Ứng dụng GTNN, GTLN trong bài toán phương trình, bất phương trình — 1 câu
+- 2D1?3-5: GTLN, GTNN hàm nhiều biến — 0 câu
+- 2D1?5-2: Các phép biến đổi đồ thị — 2 câu
+- 2D3?2-1: Công thức lý thuyết — 4 câu
+- 2D4?1-5: Phương pháp đổi biến số cơ bản — 0 câu
+- 2H2?2-1: Công thức lý thuyết — 4 câu

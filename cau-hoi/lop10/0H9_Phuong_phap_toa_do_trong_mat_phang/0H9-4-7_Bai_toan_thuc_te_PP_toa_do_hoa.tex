@@ -1,0 +1,64 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Lớp 10 | Phương pháp tọa độ trong mặt phẳng (𝑂𝑥𝑦) | Đường tròn trong mặt phẳng tọa độ
+% Dạng 0H9?4-7: Bài toán thực tế, PP tọa độ hóa
+% Số câu: 2  (sinh tự động bởi tach_cau.py; từ nay thầy sửa trực tiếp file này)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%% TỰ LUẬN %%%%%%%%%%%%%%%%
+
+% nguồn: MaHoaNH_TuLuan_Lop10
+\begin{bt}%[0H9H4-7]%[ma:fd812ca3]
+	Một vật chuyển động tròn đều chịu tác động của lực hướng tâm, quỹ đạo chuyển động của vật trong mặt phẳng toạ độ $Oxy$ là đường tròn có phương trình $x^2+y^2=100$. Vật chuyển động đến điểm $M(8;6)$  thì bị bay ra ngoài. Trong những giây đầu tiên sau khi vật bay ra ngoài, vật chuyển động trên đường thẳng là tiếp tuyến của đường tròn. Biết phương trình tiếp tuyến đó có dạng $ ax + b y - c = 0$ với $a$, $b$, $c$ là các số nguyên dương và $a$, $b$ nguyên tố cùng nhau. Giá trị của $a + b + c $ bằng bao nhiêu?
+	\loigiai{ 
+		Vectơ pháp  tuyến của tiếp tuyến là $\overrightarrow{OM}=(8;6)$.\\
+		Phương  trình của tiếp tuyến là $8(x-8)+6(y-6)=0\Leftrightarrow 4x+3y-50=0$.\\
+		Suy ra $a + b + c  = 4 + 3 + 50 = 57$.
+	} 
+\end{bt}
+
+% nguồn: MaHoaNH_TuLuan_Lop10
+\begin{bt}%[0H9V4-7]%[ma:3a647451]
+	\immini[thm]{ 
+	Hình vẽ bên mô phỏng một trạm  thu phát sóng điện thoại di động đặt ở vị trí $I$ có tọa độ $(-2;1)$ trong mặt phẳng toạ độ (đơn vị trên hai trục là ki-lô-mét). Tính theo đường chim bay, xác định khoảng cách ngắn nhất để một người ở vị trí có toạ độ $(-3;4)$ di chuyển được tới vùng phủ sóng theo đơn vị ki-lô-mét (làm tròn kết quả đến hàng phần trăm). Biết rằng trạm thu phát sóng đó được thiết kế với bán kính phủ sóng $3$ (km).
+	 }{
+	\begin{tikzpicture}[line join=round,line cap=round,thick,scale= 0.6]
+			\path 
+				(0,0)  coordinate (O)
+				(-2,1) coordinate (I)++(0:3) coordinate  (t);
+			\draw[->] (-6,0)--(3,0)  node[below]{$x$};
+			 \draw[->] (0,-3)--(0,6) node[right]{$y$};
+			\draw[dashed] (-2,0) circle  (1pt) node[below]{$-2$} -- (-2,1) --(0,1) circle (1pt) node[right]{$1$};
+			\draw [blue]let \p1 = ($(I) - (t)$) in  (I) circle ({veclen (\x1,\y1)});
+			\foreach  \i/\g in {
+				 O/-135,I/150
+				}{\draw[fill=black](\i)  circle (1pt)
+				($(\i)+(\g:4mm)$) node[scale=0.8]{$\i$};} 
+		\end{tikzpicture}
+	 }
+	 \loigiai{
+	 \immini{
+		Đường tròn màu xanh mô tả ranh giới bên ngoài của vùng phủ sóng có tâm $I(-2;1)$ và bán kính phủ sóng $3$(km) nên phương  trình đường tròn đó là $(x+2)^2+(y-1)^2=9$.\\
+		Giả sử vị  trí đứng của người đó là $B(-3;4)$.\\
+		Gọi $A$ là  giao điểm thứ nhất của đường tròn tâm $I$ và $BI$.\\
+		Suy ra khoảng cách ngắn  nhất để người đó di chuyển được từ vị trí $B(-3;4)$ tới vùng phủ sóng là $BA$.\\
+		Ta  có $IB=\sqrt{(-3+2)^2+(4-1)^2}=\sqrt{10}$, suy ra $AB=IB-IA=\sqrt{10}-3\approx 0{,}16$.
+		 }{
+		\begin{tikzpicture}[line join=round,line cap=round,thick,scale= 0.8]
+				\path 
+					(0,0) coordinate  (O)
+					 (-2,1) coordinate (I)++(0:3) coordinate (t);
+				\draw (I)--(-3,4); 
+				\draw[->]  (-6,0)--(3,0) node[below]{$x$};
+				 \draw[->] (0,-3)--(0,6) node[right]{$y$};
+				\draw (-3,4)  node[below right]{$A$};
+				\draw[dashed] (-2,0) circle (1pt) node[below]{$-2$} --  (-2,1) --(0,1) circle (1pt) node[right]{$1$};
+				\draw[dashed] (-3,0) circle (1pt) node[below]{$-3$} -- (-3,4) circle (1pt) node[above right]{$B$} --(0,4) circle  (1pt) node[right]{$4$};
+				\draw [blue]let \p1 = ($(I) - (t)$) in (I) circle ({veclen (\x1,\y1)}); 
+				\foreach \i/\g in { 
+					 O/-135,I/180
+					}{\draw[fill=black](\i) circle  (1pt)
+					($(\i)+(\g:3mm)$)  node[scale=0.7]{$\i$};}
+			\end{tikzpicture}
+		 }
+	} 
+\end{bt}

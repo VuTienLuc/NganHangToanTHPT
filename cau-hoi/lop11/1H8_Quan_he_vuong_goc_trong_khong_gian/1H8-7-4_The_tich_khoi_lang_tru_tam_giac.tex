@@ -1,0 +1,4380 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Lớp 11 | Quan hệ vuông góc trong không gian | Hình lăng trụ đứng. Hình chóp đều. Thể tích
+% Dạng 1H8?7-4: Thể tích khối lăng trụ tam giác
+% Số câu: 112  (sinh tự động bởi tach_cau.py; từ nay thầy sửa trực tiếp file này)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%% TRẮC NGHIỆM 4 PHƯƠNG ÁN %%%%%%%%%%%%%%%%
+
+% nguồn: Ok_Toan11_TracNghiem_Lan2
+\begin{ex}%[1H8H7-4]%[ma:e401c3b3]
+	Cho hình lăng trụ $ ABC.A'B'C'$ có đáy $ABC$ là tam giác vuông cân tại $A$, $AC=2\sqrt2$, biết góc giữa  $AC'$ và $\left(ABC\right)$ bằng $60^\circ$ và $AC'=4$. Thể tích $V$ của khối lăng trụ
+	 $ABC.A'B'C'$ bằng
+	\choice 
+		{$V=\dfrac{8}{3}$} 
+		{$V=\dfrac{16}{3}$} 
+		 {$V=\dfrac{8\sqrt{3}}{3}$}
+		{\True  $V=8\sqrt{3}$}
+	\loigiai{ 
+	\immini{ 
+	Gọi $ H$ là hình chiếu  của $C'$ lên mặt phẳng $\left(ABC\right)$, khi đó $C'H$ là đường cao.\\
+	Suy  ra $\left( \widehat{AC',\left(ABC\right)}\right) =\widehat{C'AH}=60^\circ$.\\
+	Xét $\triangle  AC'H$ vuông tại $H$ ta có
+	 \[C'H=C'A\cdot\sin{60^\circ}=2\sqrt{3}.\]
+	Khi đó $V_{ABC.A'B'C}=S_d\cdot  C'H=\dfrac{1}{2}\cdot\left(2\sqrt 2\right)^{2}\cdot2\sqrt{3}=8\sqrt{3}$.
+	 }{
+	\begin{tikzpicture}[scale=.55,font=\footnotesize,line join=round,line cap=round,>=stealth]
+			\def\a{7} 
+			 \def\h{4.5}
+			\path  (0:0) coordinate (A)
+				++(0:\a) coordinate  (C)
+				++(-150:\a/2) coordinate (B) 
+				(barycentric cs:A=1,B=0.8,C=0.75)  coordinate (H)
+				($(H)+(90:\h)$) coordinate (A') 
+				($(A')+(C)-(A)$)  coordinate (C')
+				($(C')+(B)-(C)$)  coordinate (B');
+			 \draw[dashed] (C')--(A)--(C);
+			 \draw (C)--(C')
+				 (B)--(B')
+				 (A)--(A')
+				 (A)--(B)--(C)
+				(A')--(B')--(C')--cycle; 
+			\foreach  \x/\g in {A/180,B/-45,C/-45,A'/180,B'/-45,C'/0}
+			\fill  (\x) circle (1pt)
+				($(\g:4mm)+(\x)$) node {$\x$}; 
+			\coordinate[label=right:$H$](I) at  ($(A)!(C')!(C)$);
+			\draw[name  path=AH,dashed] (C)--(I);
+			\pic[draw,thin,angle radius=6pt] {right  angle = C--I--C'};
+			 \draw (C')--(I)--(C);
+			 \draw pic["$60^\circ$",draw,fill=yellow!50,angle radius=15mm]{angle=I--A--C'};
+		\end{tikzpicture}
+	 }
+	} 
+\end{ex}
+
+% nguồn: Ok_Toan11_TracNghiem_Lan2
+\begin{ex}%[1H8H7-4]%[ma:bc5b7467]
+	Cho hình lăng trụ đứng $ABC.A'B'C'$ có đáy là tam giác đều  cạnh $a$, đường thẳng $A'B$ tạo với mặt phẳng đáy một góc $60^{\circ}$. Thể tích khối lăng trụ đã cho bằng
+	\choice 
+		 {$\dfrac{3a^3}{2}$}
+		{$\dfrac{a^3}{4}$} 
+		{\True  $\dfrac{3a^3}{4}$}
+		{$\dfrac{3a^3}{8}$} 
+	 \loigiai{
+	 \immini{
+		 Xét $\triangle{ABC}$ đều có $S_{\triangle{ABC}}=\dfrac{a^2\sqrt{3}}{4}$.\\
+		Do $A'A\perp(ABC)$ nên suy ra  $\left(A'B, (ABC)\right)=\left(A'B,AB\right)=\widehat{A'BA}=60^{\circ}$.\\
+		 Suy ra $A'A=AB\cdot\tan{60^{\circ}}=a\sqrt{3}$.\\
+		Thể tích khối lăng trụ đã cho là  $V_{ABC.A'B'C'}=S_{\triangle{ABC}}\cdot AA'=\dfrac{a^2\sqrt{3}}{4}\cdot a\sqrt{3}=\dfrac{3a^3}{4}$.
+		 }{
+		\begin{tikzpicture}[scale=0.8,font=\footnotesize,line join=round,line cap=round,>=stealth]
+				\coordinate (A) at  (0,0);
+				\coordinate  (C) at (4,0);
+				\coordinate (B)  at (2,-2);
+				\coordinate (A') at ($(A)+(0,3)$); 
+				\coordinate  (B') at ($(B)+(0,3)$);
+				\coordinate (C')  at ($(C)+(0,3)$);
+				\draw  (A)--(B)--(C)--(C')--(B')--(A')--(C')
+					 (A)--(A')--(B)--(B');
+				 \draw[dashed] (A)--(C);
+				\foreach  \x/\g in {A/-90,B/-90,C/-90,A'/90,B'/90,C'/90}
+				\fill  (\x) circle (1pt)+(\g:3mm) node {$\x$};
+				\draw  pic["$60^\circ$",draw,angle eccentricity=1.4,angle radius=0.8cm]{angle=A'--B--A};
+			\end{tikzpicture}
+		 }
+	 }
+\end{ex}
+
+% nguồn: Ok_Toan11_TracNghiem_Lan2
+\begin{ex}%[1H8H7-4]%[ma:76156d5e]
+	 Cho lăng trụ $ABC.A'B'C'$ có đáy là tam giác đều cạnh $2a$, cạnh bên $AA'=2a$. Hình chiếu vuông góc của $A'$ lên mặt phẳng $\left(ABC\right)$ là trung điểm $BC$. Thể tích của khối lăng trụ đã cho là
+	 \choice
+		{\True $a^3\sqrt{3}$} 
+		{$2a^3\sqrt{3}$} 
+		{$3a^3\sqrt{2}$} 
+		{$2a^3\sqrt{6}$} 
+	 \loigiai{
+	\immini{Gọi $H$ là hình chiếu của $A'$ trên mặt phẳng $\left(ABC\right)$,  suy ra $H$ là trung điểm của $BC$.\\
+	Tam giác $ABC$ đều cạnh $2a$, suy  ra $AH=a\sqrt{3}$.\\
+	Đường cao hình lăng trụ là $h=A'H=\sqrt{4a^2-3a^2}=a$.\\ 
+	Vậy thể tích lăng trụ  là \[V=S_{\triangle ABC}\cdot h=\dfrac{1}{2}AH\cdot BC\cdot A'H=\dfrac{1}{2}a\sqrt{3} \cdot2a\cdot a=a^3\sqrt{3}.\]}{
+	\begin{tikzpicture}[scale=.6,font=\footnotesize,line join=round,line cap=round,>=stealth]
+			\def\a{6} 
+			 \def\h{5}
+			\path (0:0) coordinate (A) 
+				++(0:\a)  coordinate (C)
+				++(-150:\a/2) coordinate  (B)
+				($(B)!0.5!(C)$) coordinate  (H)
+				 ($(H)+(90:\h)$) coordinate (A')
+				($(A')+(C)-(A)$) coordinate  (C')
+				 ($(C')+(B)-(C)$) coordinate (B');
+			\draw[dashed]  (A')--(C)--(A)--(H)--(A');
+			 \draw (C)--(C')
+				(B)--(B') 
+				(A)--(A') 
+				 (A)--(B)--(C)
+				(A')--(B')--(C')--cycle; 
+			\foreach \x/\g in {A/180,B/-45,C/0,A'/180,B'/-45,C'/0,H/-90} 
+			\fill (\x) circle  (1pt)
+				 ($(\g:4mm)+(\x)$) node {$\x$};
+		\end{tikzpicture}
+	} 
+	} 
+\end{ex}
+
+% nguồn: Ok_Toan11_TracNghiem_Lan2
+\begin{ex}%[1H8H7-4]%[ma:34021b8d]
+	Cho hình lăng trụ tam giác đều $ABC. A'B'C'$ có $AB=4a$, góc giữa đường thẳng $A'C$ và mặt phẳng $\left(ABC\right)$ bằng $45^{\circ}$. Thể  tích khối lăng trụ $ABC. A'B'C'$ bằng
+	\choice 
+		{$\dfrac{a^3\sqrt{3}}{4}$} 
+		 {$\dfrac{a^3\sqrt{3}}{2}$}
+		{\True $16a^3\sqrt{3}$} 
+		{$\dfrac{a^3\sqrt{3}}{6}$} 
+	 \loigiai{
+	\immini{Ta có $ABC. A'B'C'$ là lăng trụ đứng và có đáy  là tam giác đều.\\
+		Lại  có
+		 $A'A\perp\left(ABC\right)\Rightarrow\widehat{\left(A'C,\left(ABC\right)\right)}=\widehat{A'CA}=45^{\circ}$.\\
+		 $\Rightarrow\triangle A'AC$ vuông cân tại $A$.\\
+		 $\Rightarrow A'A=AC=4a$.\\
+		$S_{ABC} 
+		 =\dfrac{AB^2\cdot\sqrt{3}}{4}
+		 =\dfrac{\left(4a\right)^2\cdot\sqrt{3}}{4}
+		=4a^2\sqrt{3}$.\\ 
+		$\Rightarrow  V_{ABC. A'B'C'}
+		=AA'\cdot  S_{ABC}=4a\cdot4a^2\sqrt{3}=16a^3\sqrt{3}$.}
+		{\begin{tikzpicture}[>=stealth,line join=round,line cap=round,font=\footnotesize,declare function={a=4; b=0.45*a; h=0.9*a;}]
+		\path (0:0) coordinate  (A)
+			(-35:b)  coordinate (B)
+			(a,0) coordinate  (C)
+		\foreach \x in {A,B,C}{(\x)++(90:h)  coordinate (\x1)};
+		\draw[dashed] (A)--(C)  node[midway,above]{$4a$}
+			 (A)--(C1);
+		\draw (B1)--(A1)--(C1)--cycle  (A1)--(B)
+			(A1)--(A)--(B) node[midway,below  left]{$4a$}--(B1)
+			(C1)--(C)--(B) node[midway,below right]{$4a$}; 
+		\foreach \x/\goc/\t in {A/180/C,B/-90/B,C/0/A,A1/100/C',B1/85/B',C1/80/A'} 
+		\draw[fill=black]  (\x) circle (1pt) node[shift={(\goc:9pt)},font=\scriptsize]{$\t$};
+		\draw pic["$45^{\circ}$",angle eccentricity=1.5,angle radius=0.5cm] 
+			{angle=C--A--C1}; 
+	\end{tikzpicture}
+		 }
+	 }
+\end{ex}
+
+% nguồn: Ok_Toan11_TracNghiem_Lan2
+\begin{ex}%[1H8H7-4]%[ma:69d15dec]
+	Cho khối lăng trụ đứng $ABC.A'B'C'$ có đáy $ABC$ là tam giác vuông tại $A$. Biết rằng $AC=AB=2a$, góc giữa $AC'$ và mặt phẳng $(ABC)$ bằng  $30^{\circ}$. Thể tích khối lăng trụ đã cho là
+	 \choice
+		{$\dfrac{2a^3\sqrt{3}}{2}$} 
+		 {$\dfrac{a^3\sqrt{3}}{3}$}
+		{$\dfrac{5a^3\sqrt{3}}{3}$} 
+		{\True $\dfrac{4a^3\sqrt{3}}{3}$} 
+	\loigiai{ 
+	 \immini{
+		Xét $\triangle{ABC}$ vuông  cân tại $A$ có $S_{\triangle{ABC}}=\dfrac{1}{2}\cdot AB\cdot AC=\dfrac{1}{2}\cdot 2a\cdot 2a=2a^2$.\\
+		Do $C'C\perp(ABC)$ nên suy ra $\left(C'A, (ABC)\right)=\left(C'A,AC\right)=\widehat{C'AC}=30^{\circ}$.\\ 
+		Xét $\triangle{C'AC}$ vuông tại  $C$ có $CC'=AC\cdot\tan{30^{\circ}}=\dfrac{2a\sqrt{3}}{3}$.\\
+		Thể  tích khối lăng trụ đã cho là \[V_{ABC.A'B'C'}=S_{\triangle{ABC}}\cdot CC'=2a^2\cdot\dfrac{2a\sqrt{3}}{3}=\dfrac{4a^3\sqrt{3}}{3}.\]
+		}{ 
+		\begin{tikzpicture}[scale=0.8,font=\footnotesize,line join=round,line cap=round,>=stealth]
+				\coordinate (A) at  (0,0);
+				\coordinate  (C) at (4,0);
+				\coordinate (B) at (2,-2); 
+				\coordinate  (A') at ($(A)+(0,3)$);
+				\coordinate (B') at ($(B)+(0,3)$); 
+				 \coordinate (C') at ($(C)+(0,3)$);
+				\draw  (A)--(B)--(C)--(C')--(B')--(A')--(C')
+					 (A)--(A')
+					 (B)--(B');
+				\draw[dashed] (C')--(A)--(C); 
+				\foreach \x/\g  in {A/-90,B/-90,C/-90,A'/90,B'/-45,C'/90}
+				\fill (\x) circle  (1pt)+(\g:3mm) node {$\x$};
+				\draw pic["$30^\circ$",draw,angle  eccentricity=1.4,angle radius=0.8cm]{angle=C--A--C'};
+				\draw pic[draw,angle radius=0.4cm]{right  angle=B--A--C};
+			\end{tikzpicture}
+		 }
+	} 
+\end{ex}
+
+% nguồn: Ok_Toan11_TracNghiem_Lan2
+\begin{ex}%[1H8H7-4]%[ma:0a753c18]
+	Cho hình lăng trụ đứng $ABC.A'B'C'$ có đáy $ABC$ là tam giác vuông cân tại $A$. Biết rằng $BC=a\sqrt{2}$, đường thẳng $A'B$ tạp  với mặt phẳng đáy một góc bằng $60^{\circ}$. Thể tích khối lăng trụ đã cho là
+	 \choice
+		{\True $\dfrac{a^3\sqrt{3}}{2}$} 
+		 {$\dfrac{a^3\sqrt{3}}{4}$}
+		{$\dfrac{3a^3}{2}$} 
+		 {$\dfrac{a^3}{2}$}
+	 \loigiai{
+	 \immini{
+		Xét $\triangle{ABC}$ vuông cân tại  $A$ có\\
+		$AB^2+AC^2=BC^2\Rightarrow 2AB^2=\left(a\sqrt{2}\right)^2\Rightarrow  AB=AC=a$.\\
+		Khi đó $S_{\triangle{ABC}}=\dfrac{1}{2}\cdot AB\cdot AC=\dfrac{1}{2}\cdot a\cdot  a=\dfrac{a^2}{2}$.\\
+		Do $A'A\perp(ABC)$ nên suy ra  $\left(A'B, (ABC)\right)=\left(A'B,AB\right)=\widehat{A'BA}=60^{\circ}$.\\
+		Suy ra $A'A=AB\cdot\tan{60^{\circ}}=a\sqrt{3}$.\\ 
+		Thể tích khối lăng trụ đã cho là  \[V_{ABC.A'B'C'}=S_{\triangle{ABC}}\cdot A'A=\dfrac{a^2}{2}\cdot a\sqrt{3}=\dfrac{a^3\sqrt{3}}{2}.\]
+		}{ 
+		\begin{tikzpicture}[scale=0.8,font=\footnotesize,line join=round,line cap=round,>=stealth]
+				\coordinate  (A) at (0,0);
+				 \coordinate (C) at (4,0);
+				\coordinate (B)  at (2,-2);
+				\coordinate (A') at ($(A)+(0,3)$); 
+				 \coordinate (B') at ($(B)+(0,3)$);
+				\coordinate (C') at  ($(C)+(0,3)$);
+				 \draw (A)--(B)--(C)--(C')--(B')--(A')--(C')
+					(A)--(A')--(B)--(B'); 
+				 \draw[dashed] (A)--(C);
+				\foreach \x/\g in  {A/-90,B/-90,C/-90,A'/90,B'/90,C'/90}
+				\fill (\x) circle (1pt)+(\g:3mm) node  {$\x$};
+				\draw pic["$60^\circ$",draw,angle eccentricity=1.4,angle  radius=0.8cm]{angle=A'--B--A};
+			\end{tikzpicture}
+		} 
+	} 
+\end{ex}
+
+% nguồn: Ok_Toan11_TracNghiem_Lan2
+\begin{ex}%[1H8H7-4]%[ma:9fbd4a09]
+	Cho lăng trụ tam giác $ ABC.A'B'C'$ có đáy là tam giác  đều cạnh $ a$, góc giữa cạnh bên và mặt đáy bằng $30^\circ$. Hình chiếu của $ A'$ lên $\left(ABC\right)$ là trung điểm $ I$ của $ BC$. Thể tích khối lăng trụ đã cho bằng
+	\choice 
+		{$\dfrac{a^3\sqrt{3}}{2}$} 
+		{$\dfrac{a^3\sqrt{13}}{12}$} 
+		{\True  $\dfrac{a^3\sqrt{3}}{8}$}
+		{$\dfrac{a^3\sqrt{3}}{6}$} 
+	\loigiai{ 
+	\immini{Ta có $ A'I\perp\left(ABC\right)\Rightarrow AI$ là hình  chiếu vuông góc của $AA'$ lên $\left(ABC\right)$.\\
+	 Khi đó $\left(\widehat{AA',\left(ABC\right)}\right)=\left(\widehat{AA',AI}\right)=\widehat{A'AI}=30^\circ$.\\
+	Ta có $AI=\dfrac{a\sqrt 3}{2}\Rightarrow A'I=AI\tan{30^\circ}=\dfrac{a}{2}$,  $S_{\triangle ABC}=\dfrac{a^2\sqrt 3}{4}$.\\
+	 Vậy $V_{ABC.A'B'C'}=\dfrac{a^2\sqrt 3}{4}\cdot\dfrac{a}{2}=\dfrac{a^3\sqrt 3}{8}$.}{
+	\begin{tikzpicture}[scale=.5,font=\footnotesize,line join=round,line cap=round,>=stealth]
+			\def\a{5} 
+			\def\h{5} 
+			\path (0:0) coordinate (A) 
+				 ++(0:\a) coordinate (C)
+				 ++(-150:\a/2) coordinate (B)
+				 ($(B)!0.5!(C)$) coordinate (M)
+				 ($(B)!1/2!(C)$) coordinate (I)
+				 ($(I)+(90:\h)$) coordinate (A')
+				 ($(A')+(C)-(A)$) coordinate (C')
+				 ($(C')+(B)-(C)$) coordinate (B');
+			\draw[dashed] (A)--(C) 
+				 (A')--(I)
+				 (A)--(I);
+			\draw  (C)--(C')
+				 (B)--(B')
+				(A)--(A') 
+				(A)--(B)--(C) 
+				(A')--(B')--(C')--cycle; 
+			\foreach \x/\g  in {A/180,B/-45,C/0,A'/180,B'/-45,C'/0,I/-45}
+			\fill  (\x) circle (1pt)
+				($(\g:4mm)+(\x)$) node  {$\x$};
+			 \draw pic[draw,angle radius=2mm]{right angle=A'--I--C};
+			\draw pic[draw,angle  radius=2mm]{right angle=A--I--B};
+		\end{tikzpicture}
+	} 
+	 }
+\end{ex}
+
+% nguồn: Ok_Toan11_TracNghiem_Lan2
+\begin{ex}%[1H8H7-4]%[ma:c48546b3]
+	Cho hình lăng trụ đứng $ABC.A'B'C'$, biết đáy $ ABC$ là tam giác đều cạnh $ a$. Khoảng cách từ tâm $ O$  của tam giác $ ABC$ đến mặt phẳng $\left(A'BC\right)$ bằng $\dfrac{a}{6}$. Thể tích khối lăng trụ $ABC.A'B'C'$ bằng
+	 \choice
+		 {$\dfrac{3a^3\sqrt 2}{8}$}
+		{$\dfrac{3a^3\sqrt  2}{28}$}
+		 {$\dfrac{3a^3\sqrt 2}{4}$}
+		 {\True $\dfrac{3a^3\sqrt 2}{16}$}
+	 \loigiai{
+	\immini{Diện tích đáy là $ B=S_{\triangle ABC}=\dfrac{a^2\sqrt  3}{4}$.\\
+	Chiều  cao là $ h=\mathrm{d}\left(\left(ABC\right);\left(A'B'C'\right)\right)=AA'$.\\
+	Do $\triangle  ABC$ là tam giác đều nên $O$ là trọng tâm của tam giác $ ABC$.\\
+	Gọi $I$ là trung điểm  của $BC$, $H$ là hình chiếu vuông góc của $A$ lên $ A'I$. \\
+	Ta có  $ AH\perp\left(A'BC\right)\Rightarrow d\left(A;\left(A'BC\right)\right)=AH$.\\
+	 Khi đó
+	\begin{eqnarray*}
+		&&\dfrac{\mathrm{d}\left(O;\left(A'BC\right)\right)}{\mathrm{d}\left(A;\left(A'BC\right)\right)}=\dfrac{IO}{IA}=\dfrac{1}{3}\\ 
+		&\Rightarrow& \mathrm{d}\left(O;\left(A'BC\right)\right)=\dfrac{\mathrm{d}\left(A;\left(A'BC\right)\right)}{3}=\dfrac{AH}{3}=\dfrac{a}{6}\\ 
+		&\Rightarrow&  AH=\dfrac{a}{2}.
+	\end{eqnarray*}
+	}{ 
+	\begin{tikzpicture}[scale=.5,font=\footnotesize,line join=round,line cap=round,>=stealth]
+			 \def\ac{9}
+			 \def\ab{6}
+			 \def\h{6}
+			 \def\gocA{30}
+			\coordinate[label=left:$A$] (A)  at (0,0);
+			 \coordinate[label=right:$C$] (C) at (\ac,0);
+			\coordinate[label=below left:$B$] (B)  at (-\gocA:\ab);
+			\coordinate[label=left:$A'$] (A') at ($(A)+(90:\h)$); 
+			\coordinate[label=above:$B'$] (B') at ($(B)-(A)+(A')$); 
+			\coordinate[label=right:$C'$]  (C') at ($(C)-(A)+(A')$);
+			 \coordinate[label=right:$I$] (I) at ($(B)!1/2!(C)$);
+			\coordinate[label= below right:$O$]  (O) at ($(A)!2/3!(I)$);
+			\draw  (A')--(A)--(B)--(C)--(C')--(A')--(B')--(C')
+				(B)--(B') 
+				(A')--(B); 
+			 \draw[dashed] (A)--(C)--(A')--(I)--(A);
+			 \coordinate[label=right:$H$](H) at ($(A')!(A)!(I)$);
+			\draw[name path=AH,dashed]  (A)--(H);
+			\pic[draw,thin,angle radius=6pt] {right  angle = A--H--A'};
+			\coordinate[label=right:$K$](K) at ($(H)!(O)!(I)$); 
+			\draw[name  path=AH,dashed] (O)--(K);
+			\foreach  \diem in {A,B,C,A',B',C',I,H,K} \fill (\diem) circle (1pt);
+			\pic[draw,angle  radius=6]{right angle=A--I--C};
+		\end{tikzpicture}
+	 }
+	Xét $\triangle A'AI$  vuông tại $ A$ ta có
+	\[\dfrac{1}{A{H^2}}=\dfrac{1}{A{A'^2}}+\dfrac{1}{A{I^2}}\Rightarrow\dfrac{1}{A{A'^2}}=\dfrac{1}{A{H^2}}-\dfrac{1}{A{I^2}}\Rightarrow AA'=\dfrac{a\sqrt 3}{2\sqrt 2}\Rightarrow h=\dfrac{a\sqrt  3}{2\sqrt 2}.\]
+	 Suy ra ${V_{ABC.A'B'C'}}=\dfrac{3a^3\sqrt 2}{16}$.
+	 }
+\end{ex}
+
+% nguồn: Ok_Toan11_TracNghiem_Lan2
+\begin{ex}%[1H8H7-4]%[ma:d3132ce2]
+	Cho khối lăng trụ đứng $ABC.A'B'C'$ có $AA'=2a$, $AB=3a$, $AC=4a$. Biết rằng đáy là tam giác vuông tại  $A$. Thể tích khối lăng trụ đã cho là
+	 \choice
+		 {\True $12a^3$}
+		 {$4a^3$}
+		{$24a^3$} 
+		{$8a^3$} 
+	 \loigiai{
+	 \immini{
+		Xét $\triangle{ABC}$ vuông tại $A$ có $S_{\triangle{ABC}}=\dfrac{1}{2}\cdot AB\cdot AC=\dfrac{1}{2}\cdot  3a\cdot4a=12a^2$.\\
+		Thể tích khối lăng trụ đã cho là $V_{ABC.A'B'C'}=S_{\triangle{ABC}}\cdot  A'A=6a^2\cdot2a=12a^3$.
+		 }{
+		\begin{tikzpicture}[scale=0.8,font=\footnotesize,line join=round,line cap=round,>=stealth]
+				\coordinate  (A) at (0,0);
+				\coordinate (C) at (4,0); 
+				\coordinate (B)  at (2,-2);
+				\coordinate (A')  at ($(A)+(0,3)$);
+				 \coordinate (B') at ($(B)+(0,3)$);
+				 \coordinate (C') at ($(C)+(0,3)$);
+				 \draw (A)--(B)--(C)--(C')--(B')--(A')--(C')
+					 (A)--(A')
+					 (B)--(B');
+				\draw[dashed]  (A)--(C);
+				\foreach \x/\g  in {A/-90,B/-90,C/-90,A'/90,B'/90,C'/90}
+				 \fill (\x) circle (1pt)+(\g:3mm) node {$\x$};
+			\end{tikzpicture}
+		 }
+	 }
+\end{ex}
+
+% nguồn: Ok_Toan11_TracNghiem_Lan2
+\begin{ex}%[1H8H7-4]%[ma:4f951fcc]
+	Cho lăng trụ đứng tam giác $ABC. A'B'C'$ có đáy $ABC$ là tam giác vuông  cân tại $B$ với $BA=BC=a$, biết $A'B$ tạo với mặt phẳng $\left(ABC\right)$ một góc $60^{\circ}$. Thể tích khối lăng trụ đã cho bằng
+	 \choice
+		 {$2a^3$}
+		 {$\dfrac{a^3\sqrt{3}}{6}$}
+		 {\True $\dfrac{a^3\sqrt{3}}{2}$}
+		 {$\dfrac{a^3}{2}$}
+	 \loigiai{
+	\immini{Góc giữa  đường thẳng $A'B$ và mặt phẳng $\left(ABC\right)$ là $\widehat{A'BA}=60^{\circ}$.\\
+		$\Rightarrow  A'A=AB\cdot\tan{60^{\circ}}=a\sqrt{3}$.\\
+		Ta có $S_{ABC}=\dfrac{1}{2}BA\cdot BC=\dfrac{a^2}{2}$.\\ 
+		Vậy ${V_{ABC. A'B'C'}}=S_{ABC}\cdot A'A=\dfrac{a^3\sqrt{3}}{2}$.} 
+		{\begin{tikzpicture}[>=stealth,line join=round,line cap=round,font=\footnotesize,declare function={a=4; b=0.55*a; h=0.9*a;}]
+		\path (0:0)  coordinate (A)
+			(-30:b)  coordinate (B)
+			 (a,0) coordinate (C)
+		\foreach \x in  {A,B,C}{(\x)++(90:h) coordinate (\x1)};
+		 \draw[dashed] (A)--(C)
+			 (A1)--(C);
+		\draw (B1)--(A1)--(C1)--cycle  (A1)--(B)
+			 (A1)--(A)--(B)--(B1)
+			(C1)--(C)--(B); 
+		\foreach  \x/\y/\z in {B/C/A}{
+			\path (\y) pic[draw,angle radius=6pt]{right  angle = \x--\y--\z};
+		 }
+		\draw pic["$60^{\circ}$",angle eccentricity=1.5,angle  radius=0.5cm]
+			{angle=A1--C--A}; 
+		 \foreach \x/\goc/\t in {A/180/A,B/-90/C,C/0/B,A1/100/A',B1/85/C',C1/80/B'}
+		 \draw[fill=black] (\x) circle (1pt) node[shift={(\goc:9pt)},font=\scriptsize]{$\t$};
+	\end{tikzpicture}
+		 }
+	 }
+\end{ex}
+
+% nguồn: Ok_Toan11_TracNghiem_Lan2
+\begin{ex}%[1H8H7-4]%[ma:e41984d3]
+	Cho  lăng trụ $ ABC.A'B'C'$ có đáy $ ABC$ là tam giác đều cạnh bằng $ a$, biết $ A'A=A'B=A'C=a$. Tính thể tích khối lăng trụ $ ABC.A'B'C'$
+	 \choice
+		 {$\dfrac{3a^3}{4}$}
+		{\True  $\dfrac{a^3\sqrt 2}{4}$}
+		{$\dfrac{a^3\sqrt 3}{4}$} 
+		 {$\dfrac{a^3}{4}$}
+	 \loigiai{
+	\immini{Gọi $H$ là trọng tâm tam giác $ABC$.\\ 
+	Do $\triangle  ABC$ đều có cạnh bằng $a$ và
+	 $A'A=A'B=A'C=a$ nên $ A'.ABC$ là tứ diện đều cạnh $a$.\\
+	 Suy ra $A'H\perp\left(ABC\right)$ hay $A'H$ là đường cao của khối chóp $ A'.ABC$.\\
+	Xét $\triangle A'HA$ vuông  tại $H$ có $ A'H=\sqrt{A'A^{2}-AH^{2}}=\dfrac{a\sqrt 6}{3}$.}{
+	\begin{tikzpicture}[scale=.6,font=\footnotesize,line join=round,line cap=round,>=stealth]
+			 \def\a{7}
+			\def\h{4.5} 
+			\path (0:0) coordinate  (A)
+				++(0:\a) coordinate  (C)
+				 ++(-150:\a/2) coordinate (B)
+				($(B)!0.5!(C)$) coordinate (M) 
+				($(A)!2/3!(M)$) coordinate (H) 
+				($(H)+(90:\h)$)  coordinate (A')
+				 ($(A')+(C)-(A)$) coordinate (C')
+				($(C')+(B)-(C)$) coordinate (B'); 
+			 \draw[dashed] (A)--(C)
+				(A')--(H) 
+				 (A)--(H)
+				(A)--(M) 
+				(C)--(A'); 
+			 \draw (C)--(C')
+				 (B)--(B')
+				 (A)--(A')--(B)
+				 (A)--(B)--(C)
+				(A')--(B')--(C')--cycle; 
+			\foreach \x/\g  in {A/180,B/-45,C/0,A'/180,B'/-45,C'/0,H/-45,M/0}
+			\fill (\x)  circle (1pt)
+				($(\g:4mm)+(\x)$) node  {$\x$};
+			\draw pic[draw,angle radius=2mm]{right  angle=A'--H--A};
+		\end{tikzpicture}
+	} 
+	Diện tích tam giác $  ABC$ là $S_{ABC}=\dfrac{1}{2}a\cdot a\cdot\sin 60^\circ =\dfrac{a^2\sqrt 3}{4}$.\\
+	Thể tích khối  lăng trụ $ ABC.A'B'C'$ là $V_{ABC.A'B'C'}=\dfrac{a^2\sqrt 3}{4}\cdot\dfrac{a\sqrt 6}{3}=\dfrac{a^3\sqrt 2}{4}$.
+	} 
+\end{ex}
+
+% nguồn: Ok_Toan11_TracNghiem_Lan2
+\begin{ex}%[1H8H7-4]%[ma:6477b2ac]
+	Cho hình lăng trụ đứng $ABC.A'B'C'$ có đáy là tam giác vuông cân tại $B$, $AB=a$ và $A'B=a\sqrt{3}$. Thể tích khối lăng trụ đã cho là 
+	 \choice
+		{$\dfrac{a^3\sqrt{3}}{2}$} 
+		{$\dfrac{a^3}{6}$} 
+		{$\dfrac{a^3}{2}$} 
+		{\True $\dfrac{a^3\sqrt{2}}{2}$} 
+	 \loigiai{
+	\immini{ 
+		Xét $\triangle{A'AB}$ vuông tại $A$ có $A'A=\sqrt{A'B^2-AB^2}=\sqrt{\left(a\sqrt{3}\right)^2-a^2}=a\sqrt{2}$.\\ 
+		 Ta có $S_{\triangle{ABC}}=\dfrac{1}{2}BA\cdot BC=\dfrac{1}{2}\cdot a\cdot a=\dfrac{a^2}{2}$.\\
+		Khi đó $V_{ABC.A'B'C'}=S_{\triangle{ABC}}\cdot  AA'=\dfrac{a^2}{2}\cdot a\sqrt{2}=\dfrac{a^3\sqrt{2}}{2}$.
+		 }{
+		\begin{tikzpicture}[scale=0.8,font=\footnotesize,line join=round,line cap=round,>=stealth]
+				 \coordinate (A) at (0,0);
+				\coordinate (C) at (4,0); 
+				 \coordinate (B) at (1.5,-1.5);
+				\coordinate (A') at ($(A)+(0,3)$); 
+				\coordinate (B') at ($(B)+(0,3)$); 
+				\coordinate  (C') at ($(C)+(0,3)$);
+				\draw  (A)--(B)--(C)--(C')--(B')--(A')--(C')
+					(A)--(A')--  node [left]{$a\sqrt{3}$}
+					 (B)--(B');
+				\draw[dashed] (A)--(C); 
+				 \foreach \x/\g in {A/-90,B/-90,C/-90,A'/90,B'/90,C'/90}
+				\fill (\x)  circle (1pt)+(\g:3mm) node {$\x$};
+				\draw pic[draw,angle radius=0.4cm]{right  angle=C--B--A};
+			\end{tikzpicture}
+		 }
+	 }
+\end{ex}
+
+% nguồn: Ok_Toan11_TracNghiem_Lan2
+\begin{ex}%[1H8H7-4]%[ma:e4fee394]
+	Một khối lăng trụ tam giác có đáy là tam giác đều cạnh bằng $3$, cạnh bên bằng $2\sqrt{3}$  tạo với mặt phẳng đáy một góc $30^{\circ}$. Khi đó thể tích khối lăng trụ là
+	 \choice
+		{$\dfrac{9}{4}$} 
+		{\True  $\dfrac{27}{4}$}
+		{$\dfrac{27\sqrt{3}}{4}$} 
+		{$\dfrac{9\sqrt{3}}{4}$} 
+	 \loigiai{
+	\immini{Gọi $H$ là hình chiếu của $A'$ lên  mặt đáy. \\Suy ra góc $\widehat{A'AH}=30^\circ $.\\
+	Ta có  $\sin 30^\circ=\dfrac{A'H}{A'A}\Rightarrow A'H=A'A\cdot\sin 30^\circ=2\sqrt{3} \cdot\dfrac{1}{2}=\sqrt{3}$.\\
+	Khi  đó $V_{ABC.A'B'C}=3^2\cdot\dfrac{\sqrt 3}{4}\cdot\sqrt{3}=\dfrac{27}{4}$.}{
+	\begin{tikzpicture}[scale=.5,font=\footnotesize,line join=round,line cap=round,>=stealth]
+			 \def\a{7}
+			\def\h{4.5} 
+			\path (0:0) coordinate (A) 
+				++(0:\a) coordinate (C) 
+				++(-150:\a/2) coordinate  (B)
+				($(B)!0.5!(C)$) coordinate (M) 
+				($(A)!2/3!(M)$) coordinate  (H)
+				($(H)+(90:\h)$)  coordinate (A')
+				 ($(A')+(C)-(A)$) coordinate (C')
+				($(C')+(B)-(C)$) coordinate (B'); 
+			\draw[dashed]  (A)--(C)
+				(A')--(H) 
+				(A)--(H); 
+			\draw (C)--(C') 
+				(B)--(B') 
+				(A)--(A') 
+				 (A)--(B)--(C)
+				(A')--(B')--(C')--cycle; 
+			\foreach \x/\g in {A/180,B/-45,C/0,A'/180,B'/-45,C'/0,H/-45} 
+			\fill (\x) circle (1pt) 
+				($(\g:4mm)+(\x)$) node {$\x$}; 
+			\draw  pic[draw,angle radius=2mm]{right angle=A'--H--A};
+			 \draw pic["$30^\circ$",draw,fill=yellow!50,angle radius=15mm]{angle=H--A--A'};
+		\end{tikzpicture}
+	} 
+	} 
+\end{ex}
+
+% nguồn: Ok_Toan11_TracNghiem_Lan2
+\begin{ex}%[1H8H7-4]%[ma:d4ed3dbc]
+	 \immini[thm]{
+	Cho khối lăng trụ đứng $ABC.A'B'C'$ có đáy là tam giác đều cạnh $a$ và $AA' = \sqrt{3}a$ (minh họa  như hình vẽ bên). Thể tích khối lăng trụ đã cho bằng
+	 \choice
+		{$\dfrac{a^3}{4}$} 
+		{$\dfrac{a^3}{2}$} 
+		{\True $\dfrac{3a^3}{4}$} 
+		 {$\dfrac{3a^3}{2}$}
+		 }{
+		\begin{tikzpicture}[scale=1,font=\footnotesize,line join=round,line cap=round,>=stealth]
+				\coordinate[label=left:$A$] (A)  at (0,0);
+				\coordinate[label=right:$C$]  (C) at (4,0);
+				\coordinate[label=below left:$B$] (B) at (-40:3); 
+				\coordinate[label=left:$A'$] (A') at ($(A)+(90:4)$); 
+				 \coordinate[label=below left:$B'$] (B') at ($(B)-(A)+(A')$);
+				\coordinate[label=right:$C'$] (C') at  ($(C)-(A)+(A')$);
+				\draw (A')--(A)--(B)--(C)--(C')--(A')--(B')--(C') 
+					(B)--(B'); 
+				 \draw[dashed] (A)--(C);
+				\foreach \diem in  {A,B,C,A',B',C'} \fill (\diem) circle (1pt);
+				 \draw pic[draw,angle radius=0.3cm]{right angle=C--A--A'};
+			\end{tikzpicture}
+		} 
+	 \loigiai{
+		 Đáy là tam giác đều cạnh $a$ nên có diện tích $S_{\triangle ABC} = \dfrac{a^2\sqrt{3}}{4}$.\\
+		 Lăng trụ đứng có chiều cao $h = AA' = a\sqrt{3}$.\\
+		 Thể tích khối lăng trụ là
+		$$V = S_{\triangle ABC} \cdot h = \dfrac{a^2\sqrt{3}}{4} \cdot  a\sqrt{3} = \dfrac{3a^3}{4}.$$
+	 }
+\end{ex}
+
+% nguồn: Ok_Toan11_TracNghiem_Lan2
+\begin{ex}%[1H8H7-4]%[ma:6033558b]
+	Thể tích của khối lăng trụ tam  giác đều có tất cả các cạnh bằng $a$.
+	\choice 
+		{$V = \dfrac{a^3\sqrt{3}}{12}$} 
+		{$V  = \dfrac{a^3\sqrt{3}}{2}$}
+		{\True $V = \dfrac{a^3\sqrt{3}}{4}$} 
+		{$V  = \dfrac{a^3\sqrt{3}}{6}$}
+	\loigiai{ 
+		Khối lăng trụ tam giác đều có tất cả các cạnh bằng $a$ là một  lăng trụ đứng có
+		\begin{itemize}
+			\item Chiều cao  $h = a$.
+			\item Đáy là tam giác đều cạnh $a$, có diện tích  $S = \dfrac{a^2\sqrt{3}}{4}$.
+		\end{itemize}
+		Thể tích của khối lăng trụ là 
+		$$V = S \cdot h  = \dfrac{a^2\sqrt{3}}{4} \cdot a = \dfrac{a^3\sqrt{3}}{4}.$$
+	} 
+\end{ex}
+
+% nguồn: Ok_Toan11_TracNghiem_Lan2
+\begin{ex}%[1H8H7-4]%[ma:b7dda0c5]
+	Cho hình lăng trụ $ ABC.A'B'C'$ có tất cả  các cạnh bằng $ a$, các cạnh bên tạo với đáy góc $ 60^\circ$. Tính thể tích khối lăng trụ $ ABC.A'B'C'$bằng
+	\choice 
+		 {$\dfrac{a^3\sqrt 3}{24}$}
+		{\True  $\dfrac{3a^3}{8}$}
+		 {$\dfrac{a^3\sqrt 3}{8}$}
+		 {$\dfrac{a^3}{8}$}
+	 \loigiai{
+	\immini{Kẻ $  AH'\perp\left(ABC\right)$.\\
+	$\Rightarrow\left(A'A,\left(ABC\right)\right)=\widehat{A'AH}=60^\circ.$\\ 
+	 Xét $\triangle AHA'$ vuông tại $H$ có
+	\[\sin 60^\circ=\dfrac{A'H}{AA'}\Rightarrow A'H=AA'\cdot\sin 60^\circ=\dfrac{a\sqrt 3}{2}.\] 
+	Thể tích khối lăng trụ $ABC.A'B'C'$ là \[V=S_{\triangle ABC}\cdot A'H=\dfrac{a^2\sqrt 3}{4}\cdot\dfrac{a\sqrt 3}{2}=\dfrac{3a^3}{8}.\]}{ 
+	\begin{tikzpicture}[scale=.8,font=\footnotesize,line join=round,line cap=round,>=stealth]
+			 \def\a{7}
+			 \def\h{4.5}
+			\path (0:0) coordinate  (A)
+				++(0:\a) coordinate (C) 
+				 ++(-150:\a/2) coordinate (B)
+				 ($(B)!0.5!(C)$) coordinate (M)
+				 ($(A)!2/3!(M)$) coordinate (H)
+				($(H)+(90:\h)$) coordinate (A') 
+				($(A')+(C)-(A)$) coordinate (C') 
+				($(C')+(B)-(C)$) coordinate (B'); 
+			 \draw[dashed] (A)--(C)
+				(A')--(H) 
+				 (A)--(H);
+			 \draw (C)--(C')
+				(B)--(B') 
+				 (A)--(A')
+				 (A)--(B)--(C)
+				 (A')--(B')--(C')--cycle;
+			\foreach \x/\g  in {A/180,B/-45,C/0,A'/180,B'/-45,C'/0,H/-45}
+			\fill (\x) circle (1pt) 
+				($(\g:4mm)+(\x)$)  node {$\x$};
+			\draw  pic[draw,angle radius=2mm]{right angle=A'--H--A};
+			\draw pic["$60^\circ$",draw,fill=yellow!50,angle  radius=15mm]{angle=H--A--A'};
+		\end{tikzpicture}
+	 }
+	 }
+\end{ex}
+
+% nguồn: Ok_Toan11_TracNghiem_Lan2
+\begin{ex}%[1H8H7-4]%[ma:838a690b]
+	Cho hình lăng trụ $ABC.A'B'C'$ có đáy là tam giác đều cạnh $a$, góc giữa cạnh bên và mặt phẳng đáy bằng $30^{\circ}$. Hình chiếu của $A'$ xuống $\left(ABC\right)$ là trung điểm $BC$. Tính thể tích khối  lăng trụ $ABC.A'B'C'$ bằng
+	\choice 
+		 {\True $\dfrac{a^{3}\sqrt{3}}{8}$}
+		{$\dfrac{a^{3}}{8}$} 
+		 {$\dfrac{a^{3}\sqrt{3}}{24}$}
+		 {$\dfrac{a^{3}\sqrt{3}}{4}$}
+	 \loigiai{
+	 \immini{Gọi $H$ là trung điểm $BC$ suy ra $A'H\perp\left(ABC\right)$.\\
+	 Ta có $\left(A'A,\left(ABC\right)\right)=\left(A'A,AH\right)=\widehat{A'AH}=30^{\circ}$; $AH=\dfrac{a\sqrt{3}}{2}$.\\
+	Khi đó $A'H=AH\cdot\tan{30^\circ}=\dfrac{a}{2}$ và  $S_{ABC}=\dfrac{a^2\sqrt 3}{4}$.\\
+	Vậy $ V=A'H\cdot  S_{ABC}=\dfrac{a^3\sqrt 3}{8}$.}{
+	\begin{tikzpicture}[scale=.5,font=\footnotesize,line join=round,line cap=round,>=stealth]
+			 \def\a{7}
+			 \def\h{4.5}
+			\path  (0:0) coordinate (A)
+				 ++(0:\a) coordinate (C)
+				++(-150:\a/2) coordinate (B) 
+				($(B)!0.5!(C)$)  coordinate (I)
+				 ($(A)!2/5!(C)$) coordinate (H)
+				($(H)+(90:\h)$) coordinate (A') 
+				($(A')+(C)-(A)$) coordinate (C') 
+				($(C')+(B)-(C)$) coordinate (B'); 
+			 \draw[dashed] (A)--(C)
+				(A')--(I)--(A); 
+			\draw  (C)--(C')
+				 (B)--(B')
+				 (A)--(A')
+				 (A)--(B)--(C)
+				(A')--(B')--(C')--cycle; 
+			 \draw (I) node [below right] {$H$};
+			\foreach \x/\g in {A/180,B/-45,C/0,A'/180,B'/-45,C'/0} 
+			\fill  (\x) circle (1pt)
+				 ($(\g:4mm)+(\x)$) node {$\x$};
+		\end{tikzpicture}
+	} 
+	 }
+\end{ex}
+
+% nguồn: Ok_Toan11_TracNghiem_Lan2
+\begin{ex}%[1H8H7-4]%[ma:9c8ccfdb]
+	Cho hình lăng trụ $ABC.A'B'C'$ có đáy là tam  giác đều cạnh $a$. Hình chiếu vuông góc của điểm $A'$ lên mặt phẳng $(ABC)$ trùng với trọng tâm của tam giác $ABC$. Biết khoảng cách giữa hai đường thẳng $AA'$ và $BC$ bằng $\dfrac{a\sqrt{3}}{4}$. Tính thể tích $V$ của khối lăng trụ $ABC.A'B'C'$.
+	\choice 
+		 {$V=\dfrac{a^3\sqrt{3}}{6}$}
+		{$V=\dfrac{a^3\sqrt{3}}{3}$} 
+		{$V=\dfrac{a^3\sqrt{3}}{24}$} 
+		 {\True $V=\dfrac{a^3\sqrt{3}}{12}$}
+	 \loigiai{
+	\immini{Gọi $M$ là trung điểm của $BC$. Vẽ  $MH\perp AA'$ $\left(H\in BC\right)$.\\
+	Ta  có $AM\perp BC$, $A'G\perp BC$.\\
+	$\Rightarrow BC\perp\left(A'AG\right)$ $\Rightarrow BC\perp MH\Rightarrow  d\left(AA',BC\right)=MH$.\\
+	Khi đó $AH=\sqrt{A{M^2}-M{H^2}}$  $=\sqrt{\dfrac{3a^2}{4}-\dfrac{3a^2}{16}}$ $=\dfrac{3a}{4}$.\\
+	Ta có $\dfrac{MH}{AH}=\dfrac{A'G}{AG}=\tan\widehat{GAH}$.\\ 
+	 $\Rightarrow A'G=\dfrac{MH\cdot AG}{AH}$ $=\dfrac{\dfrac{a\sqrt 3}{4}\cdot\dfrac{a\sqrt 3}{3}}{\dfrac{3a}{4}}$ $=\dfrac{a}{3}$.\\
+	Vậy $V=S_{ABC}\cdot A'G$ $=\dfrac{a^2\sqrt 3}{4}\cdot\dfrac{a}{3}$  $=\dfrac{a^3\sqrt 3}{12}$.}{
+	\begin{tikzpicture}[scale=.6,font=\footnotesize,line join=round,line cap=round,>=stealth]
+			\def\a{7} 
+			\def\h{4.5} 
+			\path (0:0) coordinate  (A)
+				++(0:\a) coordinate (C) 
+				++(-150:\a/2) coordinate (B) 
+				 ($(B)!0.5!(C)$) coordinate (M)
+				 ($(A)!2/3!(M)$) coordinate (G)
+				($(G)+(90:\h)$)  coordinate (A')
+				($(A')+(C)-(A)$) coordinate  (C')
+				($(C')+(B)-(C)$) coordinate  (B');
+			\draw[dashed]  (A)--(C)
+				 (A')--(G)
+				(A')--(M)--(A); 
+			\draw (C)--(C') 
+				(B)--(B') 
+				 (A)--(A')
+				(A)--(B)--(C) 
+				 (A')--(B')--(C')--cycle;
+			\coordinate[label=above  left:$H$](H) at ($(A')!(M)!(A)$);
+			\draw[name path=AH,dashed]  (M)--(H);
+			\pic[draw,thin,angle  radius=6pt] {right angle = M--H--A'};
+			 \foreach \x/\g in {A/180,B/-45,C/0,A'/180,B'/-45,C'/0,G/-45,M/-45}
+			\fill (\x)  circle (1pt)
+				($(\g:4mm)+(\x)$) node {$\x$}; 
+			\draw pic[draw,angle radius=2mm]{right angle=A'--G--A}; 
+		\end{tikzpicture}
+	} 
+	} 
+\end{ex}
+
+% nguồn: Ok_Toan11_TracNghiem_Lan2
+\begin{ex}%[1H8H7-4]%[ma:505e3663]
+	Cho lăng trụ $ABC.A'B'C'$ có đáy $ABC$ là tam giác đều cạnh $a$, độ dài cạnh bên bằng $\dfrac{2a}{3}$, hình chiếu của đỉnh $A'$ trên mặt phẳng $\left(ABC\right)$ trùng với trọng tâm của tam giác $ABC$. Thể tích khối lăng trụ  $ABC.A'B'C'$ bằng
+	 \choice
+		 {$\dfrac{a^3\sqrt{3}}{36}$}
+		{$\dfrac{a^3\sqrt{3}}{6}$} 
+		{\True $\dfrac{a^3\sqrt{3}}{12}$} 
+		{$\dfrac{a^3\sqrt{3}}{24}$} 
+	\loigiai{ 
+	 \immini{Gọi $ G$ là trọng tâm của tam giác $ ABC$.\\
+	Ta có 
+	$  AG=\dfrac{2}{3}AI=\dfrac{a\sqrt{3}}{3}$; \\
+	$A'G^2=A'A^2-AG^2=\left(\dfrac{2a}{3}\right)^2-\left(\dfrac{a\sqrt{3}}{3}\right)^2=\dfrac{a^2}{9}\\ 
+	\Rightarrow  A'G=\dfrac{a}{3}$.\\
+	Khi đó  $V=Bh=\dfrac{a^2\sqrt{3}}{4}\cdot\dfrac{a}{3}=\dfrac{a^3\sqrt{3}}{12}$.}{
+	\begin{tikzpicture}[scale=.6,font=\footnotesize,line join=round,line cap=round,>=stealth]
+			\def\a{7} 
+			 \def\h{4.5}
+			\path (0:0) coordinate  (A)
+				++(0:\a) coordinate (C) 
+				++(-150:\a/2) coordinate (B) 
+				($(B)!0.5!(C)$)  coordinate (I)
+				($(A)!2/3!(I)$) coordinate  (G)
+				($(G)+(90:\h)$) coordinate  (A')
+				($(A')+(C)-(A)$) coordinate (C') 
+				($(C')+(B)-(C)$) coordinate  (B');
+			 \draw[dashed] (A)--(C)
+				 (A')--(G)
+				(A')--(I)--(A); 
+			\draw (C)--(C') 
+				 (B)--(B')
+				(A)--(A') 
+				 (A)--(B)--(C)
+				(A')--(B')--(C')--cycle; 
+			 \foreach \x/\g in {A/180,B/-45,C/0,A'/180,B'/-45,C'/0,G/-45,I/-45}
+			\fill (\x)  circle (1pt)
+				($(\g:4mm)+(\x)$) node  {$\x$};
+			\draw pic[draw,angle  radius=2mm]{right angle=A'--G--A};
+		\end{tikzpicture}
+	} 
+	 }
+\end{ex}
+
+% nguồn: Ok_Toan11_TracNghiem_Lan2
+\begin{ex}%[1H8H7-4]%[ma:772cbb16]
+	Cho  lăng trụ tam giác $ ABC.A'B'C'$ có đáy là tam giác đều cạnh $ a$. Độ dài cạnh bên bằng $4a$. Mặt phẳng $\left(BCC'B'\right)$ vuông góc với đáy và $\widehat{B'BC}=30^\circ $. Thể tích khối chóp $ A.CC'B'$ là
+	\choice 
+		{$\dfrac{a^3\sqrt  3}{2}$}
+		{$\dfrac{a^3\sqrt 3}{12}$} 
+		{$\dfrac{a^3\sqrt 3}{18}$} 
+		{\True  $\dfrac{a^3\sqrt 3}{6}$}
+	\loigiai{ 
+	\immini{Ta có $\left(BCC'B'\right)\perp\left(ABC\right)$ (giả thiết).\\ 
+	Hạ $B'H\,\perp\,BC\,\Rightarrow\,B'H\,\perp\,\left(ABC\right)$ và $\widehat{B'BH}=\widehat{B'BC}=30^\circ $.\\ 
+	Suy ra chiều cao của lăng trụ $  ABC.A'B'C'$ là \[h=B'H=BB'\cdot\sin 30^\circ=2a.\]
+	Diện  tích đáy là $S_{\text{đáy}}=\dfrac{a^2\sqrt{3}}{4}$.\\
+	Thể tích của khối lăng trụ  là $V_{LT}=S_{\text{đáy}}\cdot h=\dfrac{a^2\sqrt{3}}{4}\cdot2a=\dfrac{a^2\sqrt{3}}{2}$.\\
+	Thể tích khối chóp $ A.CC'B'$ là $ V=\dfrac{1}{3}{V_{LT}}=\dfrac{a^3\sqrt  3}{6}.$}{
+	\begin{tikzpicture}[scale=.8,font=\footnotesize,line join=round,line cap=round,>=stealth]
+			 \def\a{5}
+			\def\h{5} 
+			\path (0:0) coordinate  (A)
+				++(0:\a)  coordinate (C)
+				++(-150:\a/2) coordinate  (B)
+				($(B)!0.5!(C)$) coordinate  (M)
+				($(B)!1/2!(C)$) coordinate (H) 
+				($(H)+(90:\h)$) coordinate  (B')
+				($(B')+(A)-(B)$)  coordinate (A')
+				 ($(A')+(C)-(A)$) coordinate (C');
+			\draw[dashed]  (A)--(C);
+			 \draw (A)--(B)--(C)
+				 (B)--(B')
+				 (C)--(C')
+				 (A)--(A')
+				 (B')--(H)
+				(A')--(B')--(C')--(A'); 
+			\foreach  \x/\g in {A/180,B/-45,C/0,A'/180,B'/-45,C'/0,H/-45}
+			 \fill (\x) circle (1pt)
+				($(\g:4mm)+(\x)$) node  {$\x$};
+			\draw pic[draw,angle radius=2mm]{right  angle=B'--H--B};
+		\end{tikzpicture}
+	} 
+	} 
+\end{ex}
+
+% nguồn: Ok_Toan11_TracNghiem_Lan2
+\begin{ex}%[1H8H7-4]%[ma:fc17b05f]
+	Cho hình lăng trụ tam giác đều $ABC.A'B'C'$ có $AB=2a$, $A'A=a\sqrt{3}$.  Thể tích khối lăng trụ đã cho là
+	 \choice
+		 {\True $3a^3$}
+		{$\dfrac{a^3}{4}$} 
+		 {$\dfrac{3a^3}{4}$}
+		{$a^3$} 
+	 \loigiai{
+	 \immini{
+		 Ta có $S_{\triangle{ABC}}=\dfrac{(2a)^2\sqrt{3}}{4}=a^2\sqrt{3}$.\\
+		Thể tích khối lăng trụ  đã cho là \[V_{ABC.A'B'C'}=S_{\triangle{ABC}}\cdot A'A=a^2\sqrt{3}\cdot a\sqrt{3}=3a^3.\]
+		}{ 
+		\begin{tikzpicture}[scale=0.8,font=\footnotesize,line join=round,line cap=round,>=stealth]
+				\coordinate  (A) at (0,0);
+				\coordinate (C)  at (4,0);
+				\coordinate (B)  at (1.5,-1.5);
+				 \coordinate (A') at ($(A)+(0,3)$);
+				\coordinate (B') at ($(B)+(0,3)$); 
+				\coordinate  (C') at ($(C)+(0,3)$);
+				\draw (A)-- node [below left]{$2a$} 
+					 (B)--(C)--(C')--(B')--(A')--(C')
+					 (A)--node [left]{$a\sqrt{3}$}
+					(A') 
+					 (B)--(B');
+				\draw[dashed] (A)--node [above right]{$2a$} 
+					 (C);
+				\foreach \x/\g in  {A/-90,B/-90,C/-90,A'/90,B'/90,C'/90}
+				\fill (\x) circle (1pt)+(\g:3mm) node {$\x$}; 
+			\end{tikzpicture}
+		 }
+	 }
+\end{ex}
+
+% nguồn: Ok_Toan11_TracNghiem_Lan2
+\begin{ex}%[1H8H7-4]%[ma:4617703d]
+	Cho lăng trụ $ABC.A_1B_1C_1$ có diện tích mặt bên $\left(AB{B_1}{A_1}\right)$ bằng $ 4$,  khoảng cách giữa cạnh $ C{C_1}$ đến mặt phẳng $\left(AB{B_1}{A_1}\right)$ bằng $6$. Thể tích khối lăng trụ $ABC.A_1B_1C_1$ bằng
+	\choice 
+		 {\True $12$}
+		 {$18$}
+		 {$24$}
+		{$9$} 
+	 \loigiai{
+	\immini{Ta có $V_{C.ABB_1A_1}=\dfrac{1}{3}\mathrm{d}\left(C{\rm{,}}\left(AB{B_1}{A_1}\right)\right)\cdot  S_{AB{B_1}{A_1}}=\dfrac{1}{3}\cdot4\cdot6=8$.\\
+	 Lại có
+	\begin{eqnarray*}
+		 V_{C.AB{B_1}{A_1}}&=&V_{ABC.A_1B_1C_1}-V_{C.C_1B_1A_1}\\
+		 &=&V_{ABC.A_1B_1C_1}-\dfrac{1}{3}{V_{ABC.A_1B_1C_1}}\\
+		&=&\dfrac{2}{3}{V_{ABC.A_1B_1C_1}}. 
+	\end{eqnarray*}
+	Suy ra ${V_{ABC.A_1B_1C_1}}=\dfrac{3}{2}\cdot V_{C.AB{B_1}{A_1}}=\dfrac{3}{2}\cdot8=12$.}{ 
+	\begin{tikzpicture}[font=\footnotesize,line join=round,line cap=round,>=stealth]
+			 \def\a{4.5}
+			\def\h{4} 
+			\path (0:0) coordinate  (A_1)
+				++(0:\a)  coordinate (C_1)
+				++(-145:\a/2)  coordinate (B_1)
+				($(B_1)!0.5!(A_1)$)  coordinate (H)
+				 ($(H)+(90:\h)$) coordinate (A)
+				($(A)+(C_1)-(A_1)$) coordinate  (C)
+				($(C)+(B_1)-(C_1)$) coordinate (B); 
+			 \draw[dashed] (A_1)--(C_1)
+				 (C)--(A_1);
+			\draw (C_1)--(C) 
+				(B_1)--(B) 
+				 (A)--(A_1)--(B_1)--(C_1)
+				(C)--(B_1) 
+				(A)--(B)--(C)--cycle; 
+			\foreach \x/\g in {A_1/180,B_1/-45,C_1/0,A/180,B/-45,C/0} 
+			\fill (\x) circle  (1pt)
+				 ($(\g:4mm)+(\x)$) node {$\x$};
+		\end{tikzpicture}
+	 }
+	} 
+\end{ex}
+
+% nguồn: Ok_Toan11_TracNghiem_Lan2
+\begin{ex}%[1H8H7-4]%[ma:8faf6485]
+	Cho khối lăng trụ đứng $ ABC.A'B'C'$ có đáy $ ABC$ là tam giác cân với $ AB=AC=a$, $\widehat{BAC}=120^\circ $, mặt phẳng $ (A'BC')$ tạo với đáy  một góc $ 60^\circ $. Thể tích của khối lăng trụ đã cho bằng
+	 \choice
+		{$ V=\dfrac{3a^{3}}{8}$} 
+		 {$ V=\dfrac{9a^{3}}{8}$}
+		{$\dfrac{\sqrt{3}a^{3}}{8}$} 
+		{\True $  V=\dfrac{3\sqrt{3}a^{3}}{8}$}
+	 \loigiai{
+	\immini{Hạ $B'I\perp A'C'{\kern 1pt}$.\\ 
+	Khi đó, ta có  $\left(\widehat{\left(A'BC'\right),\left(ABC\right)}\right)=\widehat{B'IB}=60^{\circ}$.\\
+	Vì $\widehat{B'A'C'}=120^\circ $ $\Rightarrow\widehat{B'A'I}=60^\circ  $.\\
+	Do đó $\sin 60^\circ=\dfrac{B'I}{B'A}$ $\Rightarrow  B'I=\dfrac{a\sqrt 3}{2}$.\\
+	 $\tan\widehat{B'IB}=\dfrac{BB'}{B'I}$ $\Leftrightarrow\tan 60^\circ=\dfrac{BB'}{B'I}$ $\Rightarrow BB'=\dfrac{a\sqrt 3}{2}\cdot\sqrt 3=\dfrac{3a}{2}$.\\
+	Mặt khác $S_{\triangle ABC}=\dfrac{1}{2}\cdot AI\cdot BC=\dfrac{1}{2}\cdot\dfrac{a}{2}\cdot  a\sqrt 3 =\dfrac{a^2\sqrt 3}{4}$.\\
+	Vậy thể tích khối chóp là $  V=B\cdot h=\dfrac{a^2\sqrt 3}{4}\cdot\dfrac{3a}{2}=\dfrac{3\sqrt{3}a^{3}}{8}$.}{
+	\begin{tikzpicture}[declare function={a=5; b=0.55*a; h=0.9*a;}]
+			\path (0:0) coordinate (A) 
+				(-33:b) coordinate  (B)
+				(a,0)  coordinate (C)
+			 \foreach \x in {A,B,C}{(\x)++(90:h) coordinate (\x1)}
+				 ($(B)!(A)!(C)$) coordinate (I);
+			\draw[dashed] (A)--(C) 
+				(A)--(B) 
+				(A1)--(B) 
+				 (A1)--(C);
+			\draw (A)--(I)--(C)--(C1) 
+				(A)--(A1)--(I) 
+				 (A1)--(B1)--(C1)--cycle (B)--(B1);
+			\foreach \x/\y/\z in  {C/I/A}{
+				\path (\y)  pic[draw,angle radius=5pt]{right angle = \x--\y--\z};
+			} 
+			 \foreach \x/\goc/\t in {A/180/B',B/-90/A',C/0/C',A1/100/B,B1/85/A,C1/80/C,I/-90/I}
+			\draw[fill=white]  (\x) circle (1pt) node[shift={(\goc:9pt)},font=\scriptsize]{$\t$};
+		\end{tikzpicture}
+	} 
+	 }
+\end{ex}
+
+% nguồn: Ok_Toan11_TracNghiem_Lan2
+\begin{ex}%[1H8H7-4]%[ma:5c158d63]
+	Cho hình lăng trụ $ABCD.A'B'C'D'$ có đáy $ABCD$ là hình thoi cạnh $ a$, $\widehat{ABC}=60^\circ $. Chân đường cao hạ từ $B'$ trùng với tâm $O$ của đáy $ABCD$; góc giữa mặt phẳng $\left(BB'C'C\right)$ với đáy bằng $60^\circ $. Thể tích lăng trụ  bằng
+	\choice 
+		{\True  $\dfrac{3a^3\sqrt{3}}{8}$}
+		{$\dfrac{2a^3\sqrt{3}}{9}$} 
+		 {$\dfrac{3a^3\sqrt{2}}{8}$}
+		 {$\dfrac{3a^3}{4}$}
+	\loigiai{ 
+	\immini{Do $ABCD$  là hình thoi nên $ AB=BC$.\\
+	Lại có $\widehat{ABC}=60^\circ  $ nên $\triangle ABC$ là tam giác đều.\\
+	Ta có $ OH\perp  BC$.\\
+	 Góc giữa mặt phẳng $\left(BB'C'C\right)$ với đáy khi đó là $\widehat{B'HO}=60^\circ$.\\
+	 Khi đó $\dfrac{1}{O{H^2}}=\dfrac{1}{O{B^2}}+\dfrac{1}{O{C^2}}=\dfrac{1}{\dfrac{3a^2}{4}}+\dfrac{1}{\dfrac{a^2}{4}}=\dfrac{4}{3a^2}+\dfrac{4}{a^2}=\dfrac{16}{3a^2}$.\\
+	 Suy ra $OH=\dfrac{a\sqrt 3}{4}$.\\
+	Theo giả thiết, $ B'O$ là đường  cao lăng trụ $ ABCD.A'B'C'D'$.\\
+	Khi đó  $B'O=OH\cdot\tan\widehat{B'HO}=\dfrac{a\sqrt 3}{4}\cdot\tan 60^\circ=\dfrac{3a}{4}$.\\
+	Suy ra $V_{ABCD.A'B'C'D'}=S_{\text{đáy}}\cdot h=\dfrac{a^2\sqrt 3}{2}\cdot\dfrac{3a}{4}=\dfrac{3a^3\sqrt  3}{8}$.}{
+	\begin{tikzpicture}[scale=.65,font=\footnotesize,line join=round,line cap=round,>=stealth]
+			\def\bc{4} 
+			 \def\ba{2}
+			\def\h{4} 
+			\def\gocB{35} 
+			\coordinate[label=below left:$A$] (B)  at (0,0);
+			\coordinate[label=above left:$B$] (A) at  (\gocB:\ba);
+			\coordinate[label=below:$D$] (C) at  (\bc,0);
+			\coordinate[label=right:$C$] (D)  at ($(C)-(B)+(A)$);
+			\coordinate[label=below:$O$] (O) at  ($(A)!1/2!(C)$);
+			\coordinate[label=above  left:$H$] (H) at ($(A)!2/3!(D)$);
+			\coordinate[label=above left:$B'$] (A') at ($(H)+(90:\h)$); 
+			 \coordinate[label=left:$A'$] (B') at ($(B)-(A)+(A')$);
+			\coordinate[label=below right:$D'$] (C')  at ($(C)-(A)+(A')$);
+			\coordinate[label=right:$C'$]  (D') at ($(D)-(A)+(A')$);
+			 \draw (B')--(B)--(C)--(D)--(D')--(A')--(B')--(C')--(D')
+				(C)--(C'); 
+			\draw[dashed]  (A)--(A')
+				 (A)--(B)
+				 (C)--(A)--(D)
+				(O)--(D) 
+				 (B)--(A')--(O)
+				 (A')--(H)--(O);
+			\newcommand{\gocv}[4][black]{\draw[#1] ($(#3)!5pt!(#2)$)--($(#3)!2!($($(#3)!5pt!(#2)$)!.5!($(#3)!5pt!(#4)$)$)$)--($(#3)!5pt!(#4)$);} 
+			\foreach \diem in {A,B,C,D,A',B',C',D',H} \fill  (\diem) circle (1pt);
+		\end{tikzpicture}
+	} 
+	} 
+\end{ex}
+
+% nguồn: Ok_Toan11_TracNghiem_Lan2
+\begin{ex}%[1H8H7-4]%[ma:2d75854c]
+	Cho hình lăng trụ $ABC.A'B'C'$ có đáy là  tam giác đều cạnh bằng $a$, hình chiếu vuông góc của $A'$ lên mặt phẳng $\left(ABC\right)$ trùng với trọng tâm $G$ của tam giác $ABC$. Biết khoảng cách giữa $BC$ và $AA'$ bằng $\dfrac{a\sqrt{3}}{4}$. Thể tích khối chóp $B'.ABC$ bằng
+	\choice 
+		 {\True $\dfrac{a^3\sqrt{3}}{36}$}
+		 {$\dfrac{a^3\sqrt{3}}{9}$}
+		{$\dfrac{a^3\sqrt{3}}{18}$} 
+		 {$\dfrac{a^3\sqrt{3}}{12}$}
+	\loigiai{ 
+	\immini{Gọi $M$ là trung điểm của  $BC$, $MH\perp AA'$ tại $H$.\\
+	Ta  có $BC\perp\left(AA'M\right)\Rightarrow BC\perp HM$.\\ Do đó $HM=\mathrm{d}\left(AA',BC\right)$.\\
+	Ta có $AM=\dfrac{a\sqrt 3}{2}$, $AG=\dfrac{a\sqrt 3}{3}\\ \Rightarrow\sin{\widehat{HAM}}=\dfrac{HM}{AM}=\dfrac{1}{2}\Rightarrow\widehat{HAM}=30^\circ$.\\ 
+	Lại có $A'G=AG\cdot\tan{30^\circ}=\dfrac{a}{3}$,  $S_{ABC}=\dfrac{1}{2}AM\cdot BC=\dfrac{a^2\sqrt 3}{4}$.\\
+	Suy ra  $V_{B'.ABC}=\dfrac{1}{3}A'G\cdot S_{ABC}=\dfrac{a^3\sqrt 3}{36}$.}{
+	\begin{tikzpicture}[scale=.55,font=\footnotesize,line join=round,line cap=round,>=stealth]
+			\def\a{7} 
+			 \def\h{4.5}
+			 \path (0:0) coordinate (A)
+				++(0:\a) coordinate (C) 
+				 ++(-150:\a/2) coordinate (B)
+				($(B)!0.5!(C)$)  coordinate (M)
+				 ($(A)!2/3!(M)$) coordinate (G)
+				 ($(G)+(90:\h)$) coordinate (A')
+				($(A')+(C)-(A)$) coordinate  (C')
+				 ($(C')+(B)-(C)$) coordinate (B');
+			\draw[dashed]  (A)--(C)
+				(A')--(G) 
+				 (A')--(M)--(A);
+			\draw  (C)--(C')
+				 (B)--(B')
+				 (A)--(A')
+				(A)--(B)--(C) 
+				 (A')--(B')--(C')--cycle;
+			\coordinate[label=above left:$H$](H) at ($(A')!(M)!(A)$); 
+			\draw[name path=AH,dashed] (M)--(H); 
+			\pic[draw,thin,angle radius=6pt]  {right angle = M--H--A'};
+			 \foreach \x/\g in {A/180,B/-45,C/0,A'/180,B'/-45,C'/0,G/-45,M/-45}
+			\fill (\x) circle (1pt) 
+				($(\g:4mm)+(\x)$) node  {$\x$};
+			 \draw pic[draw,angle radius=2mm]{right angle=A'--G--A};
+		\end{tikzpicture}
+	 }
+	 }
+\end{ex}
+
+% nguồn: Ok_Toan11_TracNghiem_Lan2
+\begin{ex}%[1H8H7-4]%[ma:36fb48c6]
+	Cho lăng trụ tam giác $ABC.A'B'C'$ có đáy $ABC$ là tam giác đều cạnh $a$. Hình chiếu của điểm $A'$ trên mặt phẳng $\left(ABC\right)$ trùng với trọng tâm $G$ của tam giác $ABC$.  Biết tam giác $A'BB'$ có diện tích bằng $\dfrac{2a^2\sqrt 3}{3}$. Tính thể tích khối lăng trụ $ABC.A'B'C'$.
+	\choice 
+		{$\dfrac{6a^3\sqrt{2}}{7}$} 
+		{\True $\dfrac{3a^3\sqrt{7}}{8}$} 
+		 {$\dfrac{3a^3\sqrt{5}}{8}$}
+		 {$\dfrac{3a^3\sqrt{3}}{8}$}
+	\loigiai{ 
+	\immini{Ta  có $\heva{&AB\perp CM\\&AB\perp A'M}\Rightarrow AB\perp\left(A'CM\right)\Rightarrow AB\perp A'M$.\\
+	Do đó $S_{\triangle A'AB}=\dfrac{1}{2}A'M\cdot AB=\dfrac{2a^2\sqrt 3}{3}\Rightarrow  A'M=\dfrac{4a\sqrt 3}{3}$.\\
+	Lại có $\triangle ABC$ đều cạnh bằng $ a$ nên  $ GM=\dfrac{1}{3}CM=\dfrac{a\sqrt 3}{6}$.\\
+	Xét $\triangle A'GM$ vuông  tại $ G$ ta có $ A'G=\sqrt{A'{M^2}-G{M^2}}=\dfrac{a\sqrt{21}}{2}$.\\
+	Vậy $V_{ABC.A'B'C'}=A'G\cdot S_{ABC}=\dfrac{a\sqrt{21}}{2}\cdot\dfrac{a^2\sqrt{3}}{4}=\dfrac{3a^3\sqrt{7}}{8}$.}{ 
+	\begin{tikzpicture}[scale=.5,font=\footnotesize,line join=round,line cap=round,>=stealth]
+			\def\a{7} 
+			 \def\h{4.5}
+			\path (0:0) coordinate  (A)
+				 ++(0:\a) coordinate (C)
+				 ++(-150:\a/2) coordinate (B)
+				($(B)!0.5!(A)$)  coordinate (M)
+				($(C)!2/3!(M)$) coordinate (G) 
+				($(G)+(90:\h)$)  coordinate (A')
+				 ($(A')+(C)-(A)$) coordinate (C')
+				($(C')+(B)-(C)$) coordinate (B'); 
+			 \draw[dashed] (A)--(C)
+				(A')--(G) 
+				(A')--(M)--(C); 
+			\draw (C)--(C') 
+				(B)--(B') 
+				 (A)--(A')
+				(A)--(B)--(C) 
+				(A')--(B')--(C')--cycle; 
+			\foreach \x/\g  in {A/180,B/-45,C/0,A'/180,B'/-45,C'/0,G/-45,M/-135}
+			\fill (\x) circle  (1pt)
+				($(\g:4mm)+(\x)$) node {$\x$}; 
+			\draw pic[draw,angle radius=2mm]{right angle=A'--G--C}; 
+		\end{tikzpicture}
+	} 
+	} 
+\end{ex}
+
+% nguồn: Ok_Toan11_TracNghiem_Lan2
+\begin{ex}%[1H8H7-4]%[ma:1c1c1d57]
+	Cho hình lăng trụ đều $ ABC.A'B'C'$ có cạnh đáy bằng $ a$. Đường thẳng $ AB'$ tạo với mặt phẳng $\left(BCC'B'{\kern 1pt}\right)$ một góc  $ 30^\circ $. Thể tích khối lăng trụ $ ABC.A'B'C'$ được tính theo $a$ bằng
+	 \choice
+		{$\dfrac{3a^{3}}{4}$} 
+		{$\dfrac{a^{3}}{4}$} 
+		 {$\dfrac{a^{3}\sqrt{6}}{12}$}
+		 {\True $\dfrac{a^{3}\sqrt{6}}{4}$}
+	 \loigiai{
+	 \immini{Gọi $M$ là trung điểm của cạnh
+	$BC$.\\ 
+	Do $ABC.A'B'C'$ là hình lăng  trụ tam giác đều nên ta có
+	\[AM\perp\left(BCC'B'{\kern 1pt}\right)\Rightarrow  \left(AB',\left(BCC'B'\right)\right)=\widehat{AB'M}=30^\circ.\]
+	Xét  $\triangle AB'M$ vuông tại $M$ ta có
+	\[\tan 30^\circ=\dfrac{AM}{AB'}\Rightarrow AB'=\dfrac{AM}{\tan  30^\circ}\Rightarrow AB'=\dfrac{3a}{2}.\]
+	Xét $\triangle B'BM$ vuông tại $B$ ta có \[BB'=\sqrt{B'{M^2}-B{M^2}}=\sqrt{\dfrac{9a^2}{4}-\dfrac{a^2}{4}}=a\sqrt{2}.\] 
+	}{ 
+	\begin{tikzpicture}[declare function={a=5; b=0.55*a; h=0.9*a;}]
+			\path (0:0) coordinate (A) 
+				(-34:b)  coordinate (B)
+				(a,0)  coordinate (C)
+			\foreach \x in {A,B,C}{(\x)++(90:h) coordinate  (\x1)}
+				($(B)!0.5!(C)$)  coordinate (M);
+			\draw[dashed]  (A)--(C)
+				(A1)--(C) 
+				 (A1)--(M)
+				 (A)--(M);
+			\draw  (B1)--(A1)--(C1)--cycle
+				 (A1)--(A)--(B)--(B1)
+				(C1)--(C)--(B) 
+				(A1)--(B) 
+				(B1)--(M); 
+			\foreach \x/\y/\z  in {C/M/A}{
+				\path (\y) pic[draw,angle  radius=5pt]{right angle = \x--\y--\z};
+			 }
+			\foreach  \x/\goc/\t in {A/180/A,B/-90/B,C/0/C,A1/100/A',B1/85/B',C1/80/C',M/0/M}
+			\draw[fill=white] (\x)  circle (1pt) node[shift={(\goc:9pt)},font=\scriptsize]{$\t$};
+		\end{tikzpicture}
+	} 
+	Thể tích khối  lăng trụ $ABC.A'B'C'$ là $V_{ABC.A'B'C'}=\dfrac{1}{2}AB\cdot AC\cdot\sin 60^\circ \cdot BB'=\dfrac{a^3\sqrt 6}{4}$.
+	} 
+\end{ex}
+
+% nguồn: Ok_Toan11_TracNghiem_Lan2
+\begin{ex}%[1H8H7-4]%[ma:c5a94d2b]
+	Cho lăng trụ $ ABCD.A'B'C'D'$ có đáy $ ACBD$ là hình thoi cạnh $ a$, biết $  A'.ABC$ là hình chóp đều và $ A'D$ hợp với mặt đáy một góc $ 45^\circ $. Thể tích khối lăng trụ $ ABCD.A'B'C'D'$ là
+	\choice 
+		 {\True $a^3$}
+		 {$\dfrac{a^3\sqrt{6}}{12}$}
+		 {$a^3\sqrt{3}$}
+		 {$\dfrac{a^3\sqrt{6}}{3}$}
+	\loigiai{ 
+	\immini{Ta có  $\widehat{\left(A'D,\left(ABCD\right)\right)}=\widehat{A'DG}=45^\circ $.\\
+	Do $\triangle ABC$ đều cạnh $a$ nên $BG=\dfrac{a\sqrt{3}}{3}$, $  DB=a\sqrt{3}$, $DG=2BG=\dfrac{2a\sqrt{3}}{3}$.\\
+	Lại có $\triangle A'DG$  vuông cân tại $ G$ nên $ A'G=DG=\dfrac{2a\sqrt{3}}{3}$.\\
+	Do đó $V_{ABCD.A'B'C'D'}=S_{ABCD}\cdot AG=\dfrac{1}{2}a\cdot a\sqrt{3}  \cdot\dfrac{2a\sqrt{3}}{3}=a^3$.}{
+	\begin{tikzpicture}[scale=.6,font=\footnotesize,line join=round,line cap=round,>=stealth]
+			\def\bc{4} 
+			 \def\ba{2}
+			\def\h{4} 
+			 \def\gocB{35}
+			\coordinate[label=below left:$B$] (B)  at (0,0);
+			\coordinate[label=above left:$A$]  (A) at (\gocB:\ba);
+			\coordinate[label=below:$C$]  (C) at (\bc,0);
+			\coordinate[label=right:$D$] (D)  at ($(C)-(B)+(A)$);
+			\coordinate[label=below:$O$]  (O) at ($(A)!1/2!(C)$);
+			\coordinate[label=above left:$G$] (G) at  ($(O)!2/3!(B)$);
+			\coordinate[label=above left:$A'$] (A') at ($(G)+(90:\h)$); 
+			 \coordinate[label=left:$B'$] (B') at ($(B)-(A)+(A')$);
+			\coordinate[label=above:$C'$] (C') at ($(C)-(A)+(A')$); 
+			\coordinate[label=right:$D'$]  (D') at ($(D)-(A)+(A')$);
+			\draw  (B')--(B)--(C)--(D)--(D')--(A')--(B')--(C')--(D')
+				(C)--(C'); 
+			\draw[dashed] (A)--(A')--(D) 
+				(A)--(B)--(D) 
+				 (C)--(A)--(D)
+				(O)--(D) 
+				 (B)--(A')--(O)
+				(A')--(G); 
+			\foreach \diem in {A,B,C,D,A',B',C',D',G,O}  \fill (\diem) circle (1pt);
+		\end{tikzpicture}
+	} 
+	 }
+\end{ex}
+
+% nguồn: Ok_Toan11_TracNghiem_Lan2
+\begin{ex}%[1H8H7-4]%[ma:ad9ab349]
+	Cho khối lăng trụ tam giác đều $ ABC.A'B'C'$ có cạnh đáy là $a$ và khoảng cách từ $A$ đến mặt phẳng $\left(A'BC\right)$ bằng $\dfrac{a}{2}$. Thể  tích của khối lăng trụ bằng
+	\choice 
+		 {$\dfrac{3\sqrt{2}a^{3}}{12}$}
+		{$\dfrac{\sqrt{2}a^{3}}{16}$} 
+		{\True $\dfrac{3a^{3}\sqrt{2}}{16}$} 
+		 {$\dfrac{3a^{3}\sqrt{2}}{48}$}
+	 \loigiai{
+	\immini{Gọi $I$  là trung điểm của $BC$ và $ H$ là hình chiếu vuông góc của $ A$ trên $ A'I$.\\
+	Khi đó 
+	$ \mathrm{d}\left(A,\left(A'BC\right)\right)=AH=\dfrac{a}{2}$.\\ 
+	Xét $\triangle AA'I$  vuông tại $A$ với đường cao $AH$, ta có
+	\begin{eqnarray*}
+		 &&\dfrac{1}{AH^{2}}=\dfrac{1}{AA'^{2}}+\dfrac{1}{AI^{2}}\\
+		&\Rightarrow&\dfrac{1}{AA'^{2}} 
+		=\dfrac{1}{AH^{2}}-\dfrac{1}{AI^{2}} 
+		=\dfrac{1}{\left(\dfrac{a}{2}\right)^2}-\dfrac{1}{\left(\dfrac{a\sqrt  3}{2}\right)^2}
+		 =\dfrac{4}{a^2}-\dfrac{4}{3a^2}
+		 =\dfrac{8}{3a^2}\\
+		&\Rightarrow&AA'=\dfrac{a\sqrt 6}{4}. 
+	\end{eqnarray*}
+	Thể  tích của khối lăng trụ là $ V=S_{\triangle ABC}\cdot AA'=\dfrac{a^2\sqrt 3}{4}\cdot\dfrac{a\sqrt 6}{4}=\dfrac{3a^3\sqrt 2}{16}$.}{
+	\begin{tikzpicture}[declare function={a=4; b=.8*a; h=0.9*a;}]
+			\path (0:0) coordinate  (A)
+				(-24:b) coordinate (B) 
+				(a,0)  coordinate (C)
+			 \foreach \x in {A,B,C}{(\x)++(90:h) coordinate (\x1)}
+				($(B)!0.5!(C)$) coordinate  (I)
+				($(A1)!(A)!(I)$) coordinate  (H);
+			\draw[dashed]  (A)--(C)
+				(A1)--(I) 
+				(A)--(H) 
+				(A1)--(C) 
+				 (A)--(I);
+			\draw  (B1)--(A1)--(C1)--cycle
+				 (A1)--(A)--(B)--(B1)
+				 (C1)--(C)--(B)
+				(A1)--(B); 
+			\foreach \x/\y/\z in {A1/H/A,C/I/A,I/A/A1}{ 
+				\path (\y) pic[draw,angle radius=5pt]{right angle =  \x--\y--\z};
+			} 
+			\foreach \x/\goc/\t  in {A/180/A,B/-90/B,C/0/C,A1/100/A',B1/85/B',C1/80/C',I/0/I,H/0/H}
+			\draw[fill=white] (\x) circle (1pt)  node[shift={(\goc:9pt)},font=\scriptsize]{$\t$};
+		\end{tikzpicture}
+	} 
+	 }
+\end{ex}
+
+% nguồn: Ok_Toan11_TracNghiem_Lan2
+\begin{ex}%[1H8H7-4]%[ma:e5fac39c]
+	Cho hình lăng trụ $ ABC.A'B'C'$ có đáy là tam giác đều cạnh $a$. Hình chiếu vuông góc của điểm $ A'$ lên mặt phẳng $\left(ABC\right)$ trùng với trọng tâm tam giác $  ABC$. Biết khoảng cách giữa hai đường $AA'$ và $BC$ bằng $\dfrac{a\sqrt{3}}{4}$. Thể tích $V$ của khối lăng trụ $ABC.A'B'C'$ là
+	 \choice
+		{$  V=\dfrac{a^3\sqrt{3}}{6}$}
+		 {$ V=\dfrac{a^3\sqrt{3}}{24}$}
+		 {\True $ V=\dfrac{a^3\sqrt{3}}{12}$}
+		{$  V=\dfrac{a^3\sqrt{3}}{3}$}
+	\loigiai{ 
+	\immini{Gọi $  G$ là trọng tâm tam giác $ ABC$.\\
+	Vì $ A'G\perp\left(ABC\right)$ và tam giác $  ABC$ đều nên $ A'ABC$ là hình chóp đều.\\
+	Kẻ $EF\perp AA'$ và $  BC\perp\left(AA'E\right)$ nên $ d\left(AA',BC\right)=EF=\dfrac{a\sqrt 3}{4}$.\\
+	Đặt $ A'G=h$.\\ 
+	Ta có $ A'A=\sqrt{h^2+\left(\dfrac{a\sqrt 3}{3}\right)^2}$.}{ 
+	\begin{tikzpicture}[scale=.5,font=\footnotesize,line join=round,line cap=round,>=stealth]
+			\def\a{7} 
+			 \def\h{4.5}
+			\path  (0:0) coordinate (A)
+				++(0:\a) coordinate  (C)
+				++(-150:\a/2) coordinate  (B)
+				($(B)!0.5!(C)$)  coordinate (E)
+				($(A)!2/3!(E)$)  coordinate (G)
+				($(G)+(90:\h)$) coordinate  (A')
+				($(A')+(C)-(A)$) coordinate (C') 
+				($(C')+(B)-(C)$) coordinate (B'); 
+			\draw[dashed]  (A)--(C)
+				 (A')--(G)
+				(A')--(E)--(A); 
+			\draw  (C)--(C')
+				 (B)--(B')
+				(A)--(A') 
+				 (A)--(B)--(C)
+				(A')--(B')--(C')--cycle; 
+			\coordinate[label=above left:$F$](F) at ($(A')!(E)!(A)$); 
+			\draw[name  path=AH,dashed] (E)--(F);
+			\pic[draw,thin,angle radius=6pt] {right  angle = E--F--A'};
+			\foreach  \x/\g in {A/180,B/-45,C/0,A'/180,B'/-45,C'/0,G/-45,E/-45}
+			\fill (\x)  circle (1pt)
+				 ($(\g:4mm)+(\x)$) node {$\x$};
+			\draw pic[draw,angle radius=2mm]{right angle=A'--G--A}; 
+		\end{tikzpicture}
+	 }
+	\noindent Vì $\triangle A'AG\backsim \triangle EAF$ nên ta có 
+	\begin{eqnarray*}
+		\dfrac{A'A}{EA}=\dfrac{AG}{FA}=\dfrac{A'G}{FE} \Rightarrow A'G\cdot  EA=A'A\cdot FE\Rightarrow h\cdot\dfrac{a\sqrt 3}{2}=\sqrt{h^2+\left(\dfrac{a\sqrt 3}{3}\right)^2}\cdot\dfrac{a\sqrt 3}{4}\Rightarrow h=\dfrac{a}{3}.
+	\end{eqnarray*}
+	Thể tích  $V$ của khối lăng trụ $ABC.A'B'C'$ là $V=AG\cdot S_{ABC}=\dfrac{a}{3}\cdot\dfrac{a^2\sqrt{3}}{4}=\dfrac{a^3\sqrt{3}}{12}$.
+	 }
+\end{ex}
+
+% nguồn: Ok_Toan11_TracNghiem_Lan2
+\begin{ex}%[1H8H7-4]%[ma:b60d67e9]
+	Một khối lăng trụ tam giác có đáy là tam giác đều cạnh $3$, cạnh bên bằng $2\sqrt 3 $ và tạo với mặt phẳng đáy một góc $60^\circ $. Thể  tích khối lăng trụ đã cho là
+	 \choice
+		 {$\dfrac{27}{4}$}
+		 {$\dfrac{9\sqrt{3}}{4}$}
+		 {\True $\dfrac{27\sqrt{3}}{4}$}
+		{$\dfrac{9}{4}$} 
+	 \loigiai{
+	\immini{Gọi $H$ là hình chiếu vuông góc của  $C'$ xuống mặt phẳng $\left(ABC\right)$.\\
+	Khi đó  góc hợp bởi $CC'$ và mặt phẳng $\left(ABC\right)$ là $\widehat{C'CH}$.\\
+	Ta  có $\widehat{C'CH}=60^\circ \Rightarrow C'H=C'C\cdot\sin 60^\circ=2\sqrt{3}\cdot\dfrac{\sqrt{3}}{2}=3$.\\
+	Lại có $\triangle ABC$ đều cạnh bằng $3$ nên $S_{ABC}=\dfrac{\sqrt  3}{4}\cdot{3^2}=\dfrac{9\sqrt 3}{4}$.\\
+	 Do đó $V_{ABC.A'B'C'}=S_{ABC}\cdot C'H=\dfrac{9\sqrt{3}}{4}\cdot3=\dfrac{27\sqrt{3}}{4}$.}{
+	\begin{tikzpicture}[scale=.6,font=\footnotesize,line join=round,line cap=round,>=stealth]
+			 \def\a{7}
+			 \def\h{4.5}
+			\path (0:0)  coordinate (A)
+				 ++(0:\a) coordinate (C)
+				++(-150:\a/2)  coordinate (B)
+				($(B)!0.5!(C)$) coordinate  (M)
+				 ($(A)!2/3!(M)$) coordinate (H)
+				($(H)+(90:\h)$) coordinate (C') 
+				($(C')+(A)-(C)$) coordinate  (A')
+				($(C')+(B)-(C)$)  coordinate (B');
+			\draw[dashed] (A)--(C) 
+				(C')--(H)--(C); 
+			\draw (C)--(C') 
+				(B)--(B') 
+				 (A)--(A')
+				(A)--(B)--(C) 
+				 (A')--(B')--(C')--cycle;
+			\foreach  \x/\g in {A/180,B/-45,C/0,A'/180,B'/-135,C'/0,H/-45}
+			\fill (\x) circle  (1pt)
+				 ($(\g:4mm)+(\x)$) node {$\x$};
+		\end{tikzpicture}
+	} 
+	} 
+\end{ex}
+
+% nguồn: Ok_Toan11_TracNghiem_Lan2
+\begin{ex}%[1H8H7-4]%[ma:dba804f7]
+	Cho hình lăng trụ $ABC.A'B'C'$ có đáy $ ABC$ là tam giác đều cạnh $a$, $AA'=\dfrac{3a}{2}$. Biết  rằng hình chiếu vuông góc của
+	 $A'$ lên $\left(ABC\right)$ là trung điểm $BC$. Thể tích của khối lăng trụ $ABC.A'B'C'$là
+	\choice 
+		{$\dfrac{a^3\sqrt 2}{8}$} 
+		{\True  $\dfrac{3a^3\sqrt 2}{8}$}
+		{$\dfrac{a^3\sqrt 6}{2}$} 
+		{$\dfrac{2a^3}{3}$} 
+	\loigiai{ 
+	\immini{Gọi $ H$ là trung điểm $ BC$,  vì tam giác $ ABC$ đều nên ta có $AH=\dfrac{a\sqrt 3}{2}\Rightarrow{S_{\triangle ABC}}=\dfrac{a^2\cdot\sqrt 3}{4}$.\\
+	Ta có  $ A'H\perp\left(ABC\right)\Rightarrow A'H\perp AH$.\\
+	Trong $\triangle  A'AH$ vuông tại $H$ có
+	 \[A'H=\sqrt{A'A^2-AH^2}=\sqrt{\dfrac{9a^2}{4}-\dfrac{3a^2}{4}}=\dfrac{a\sqrt{3}}{\sqrt{2}}.\]
+	Suy ra  $V_{ABC.A'B'C'}=Bh=\dfrac{a^2\sqrt{3}}{4}\cdot\dfrac{a\sqrt{3}}{\sqrt 2}=\dfrac{3a^3\sqrt{2}}{8}$.}{
+	\begin{tikzpicture}[scale=.6,font=\footnotesize,line join=round,line cap=round,>=stealth]
+			 \def\a{6}
+			 \def\h{5}
+			\path (0:0) coordinate  (A)
+				 ++(0:\a) coordinate (C)
+				 ++(-150:\a/2) coordinate (B)
+				($(B)!0.5!(C)$) coordinate (H) 
+				($(H)+(90:\h)$) coordinate (A') 
+				($(A')+(C)-(A)$) coordinate (C') 
+				 ($(C')+(B)-(C)$) coordinate (B');
+			\draw[dashed] (A')--(C)--(A)--(H)--(A'); 
+			\draw  (C)--(C')
+				(B)--(B') 
+				(A)--(A') 
+				 (A)--(B)--(C)
+				(A')--(B')--(C')--cycle; 
+			\foreach \x/\g in  {A/180,B/-45,C/0,A'/180,B'/-45,C'/0,H/-90}
+			\fill  (\x) circle (1pt)
+				($(\g:4mm)+(\x)$) node  {$\x$};
+			\draw pic[draw,angle radius=2mm]{right  angle=A'--H--C};
+		\end{tikzpicture}
+	} 
+	} 
+\end{ex}
+
+% nguồn: Ok_Toan11_TracNghiem_Lan2
+\begin{ex}%[1H8H7-4]%[ma:579867fe]
+	\immini[thm]{ 
+	Cho khối lăng trụ đứng  $ABC.A'B'C'$ có đáy là tam giác đều cạnh $a$ và $AA'=2a$ (minh họa như hình vẽ bên).
+	 Thể tích của khối lăng trụ đã cho bằng
+	\choice 
+		{\True  $\dfrac{\sqrt{3}a^3}{2}$}
+		 {$\dfrac{\sqrt{3}a^3}{6}$}
+		{$\sqrt{3}a^3$} 
+		{$\dfrac{\sqrt{3}a^3}{3}$} 
+		}{ 
+		\begin{tikzpicture}[scale=1,font=\footnotesize,line join=round,line cap=round,>=stealth]
+				\coordinate[label=left:$A$]  (A) at (0,0);
+				\coordinate[label=right:$C$] (C) at (4,0); 
+				\coordinate[label=below  left:$B$] (B) at (-40:3);
+				\coordinate[label=left:$A'$] (A') at  ($(A)+(90:4)$);
+				\coordinate[label=below left:$B'$] (B') at ($(B)-(A)+(A')$); 
+				\coordinate[label=right:$C'$] (C') at ($(C)-(A)+(A')$); 
+				\draw  (A')--(A)--(B)--(C)--(C')--(A')--(B')--(C')
+					(B)--(B'); 
+				\draw[dashed]  (A)--(C);
+				\foreach \diem in {A,B,C,A',B',C'}  \fill (\diem) circle (1pt);
+				\draw  pic[draw,angle radius=0.3cm]{right angle=C--A--A'};
+			\end{tikzpicture}
+		 }
+	\loigiai{ 
+		Đáy $ABC$ là tam giác đều cạnh $a$ nên  có diện tích $S_{\triangle ABC} = \dfrac{a^2\sqrt{3}}{4}$.\\
+		Khối  lăng trụ là lăng trụ đứng nên chiều cao chính là cạnh bên $h = AA' = 2a$.\\
+		Thể tích khối  lăng trụ là
+		$$V = S_{\triangle  ABC} \cdot h = \dfrac{a^2\sqrt{3}}{4} \cdot 2a = \dfrac{\sqrt{3}a^3}{2}.$$
+	} 
+\end{ex}
+
+% nguồn: Ok_Toan11_TracNghiem_Lan2
+\begin{ex}%[1H8H7-4]%[ma:79bd028a]
+	Chi hình lăng trụ đứng $ABC.A'B'C'$ có đáy là tam giác vuông tại  $A$, biết $AB=a$, $AC=2a$ và $A'B=3a$. Thể tích của khối lăng trụ đã cho là
+	\choice 
+		{$\dfrac{2a^3\sqrt{2}}{3}$} 
+		{$\dfrac{a^3\sqrt{5}}{3}$} 
+		{$a^3\sqrt{5}$} 
+		{\True $2a^3\sqrt{2}$} 
+	 \loigiai{
+	 \immini{
+		Xét $\triangle{ABC}$ có \[S_{\triangle{ABC}}=\dfrac{1}{2}AB\cdot AC=\dfrac{1}{2}\cdot  a\cdot2a=a^2.\]
+		 Xét $\triangle{ABA'}$ vuông tại $A$ có $AA'=\sqrt{A'B^2-AB^2}=\sqrt{(3a)^2-a^2}=2a\sqrt{2}$.\\
+		Khi đó  \[V_{ABC.A'B'C'}=S_{\triangle{ABC}}\cdot AA'=a^2\cdot2a\sqrt{2}=2a^3\sqrt{2}.\]
+		}{ 
+		\begin{tikzpicture}[scale=0.8,font=\footnotesize,line join=round,line cap=round,>=stealth]
+				\coordinate[label=above left:$A$] (A)  at (0,0);
+				\coordinate[label=above right:$C$] (C)  at (3,0);
+				\coordinate[label=  left:$B$] (B) at (1.25,-1.5);
+				\coordinate[label= left:$A'$] (A') at ($(A)+(0,3)$); 
+				\coordinate[label=  left:$B'$] (B') at ($(B)+(0,3)$);
+				 \coordinate[label= right:$C'$] (C') at ($(C)+(0,3)$);
+				 \draw (A)--(B)--(C)--(C')--(B')--(A')--(C')
+					(A)--(A')--(B)--(B'); 
+				\draw[dashed]  (A)--(C);
+				\begin{scope}
+					\clip  (A)--(B)--(C);
+					\draw  (B) circle (.4);
+				\end{scope}
+				 \foreach \diem in {A,B,C,A',B',C'} \fill (\diem) circle (1pt);
+				\draw pic[draw,angle radius=0.4cm]{right  angle=A'--A--C};
+			\end{tikzpicture}
+		} 
+	 }
+\end{ex}
+
+% nguồn: Ok_Toan11_TracNghiem_Lan2
+\begin{ex}%[1H8H7-4]%[ma:4c363f3b]
+	Cho lăng trụ tam giác $ ABC.A'B'C'$ có đáy $ ABC$ là tam giác đều cạnh $ a$, hình chiếu của $ A'$ xuống $\left(ABC\right)$ là tâm $ O$ đường  tròn ngoại tiếp tam giác $ ABC$. Biết $AA'$ hợp với đáy $\left(ABC\right)$ một góc $60^\circ$. Thể tích khối lăng trụ đã cho là
+	 \choice
+		{\True $\dfrac{a^3\sqrt  3}{4}$}
+		 {$\dfrac{3a^3\sqrt 3}{4}$}
+		 {$\dfrac{a^3\sqrt 3}{12}$}
+		 {$\dfrac{a^3\sqrt 3}{36}$}
+	 \loigiai{
+	\immini{Gọi $  M$ là trung điểm cạnh $ BC$.\\ Khi đó $AM=\dfrac{a\sqrt 3}{2}$ và
+	$AO=\dfrac{2}{3}AM=\dfrac{a\sqrt  3}{3}$.\\
+	Do $ A'O\perp\left(ABC\right)$ tại điểm $ O$  nên $ AO$ là hình chiếu vuông góc của $AA'$ xuống $\left(ABC\right)$.\\
+	Suy ra góc giữa đường thẳng $AA'$ và $\left(ABC\right)$ là góc  $\widehat{A'AO}$, suy ra $\widehat{A'AO}=60^\circ$.}{
+	\begin{tikzpicture}[scale=.6,font=\footnotesize,line join=round,line cap=round,>=stealth]
+			\def\a{7} 
+			\def\h{4.5} 
+			\path (0:0) coordinate (A) 
+				++(0:\a) coordinate  (C)
+				++(-150:\a/2) coordinate  (B)
+				($(B)!0.5!(C)$) coordinate  (M)
+				($(A)!2/3!(M)$) coordinate (O) 
+				 ($(O)+(90:\h)$) coordinate (A')
+				($(A')+(C)-(A)$) coordinate (C') 
+				($(C')+(B)-(C)$) coordinate  (B');
+			\draw[dashed]  (A)--(C)
+				 (A')--(O)
+				 (A)--(M);
+			\draw (C)--(C') 
+				(B)--(B') 
+				 (A)--(A')
+				(A)--(B)--(C) 
+				 (A')--(B')--(C')--cycle;
+			 \foreach \x/\g in {A/180,B/-45,C/0,A'/180,B'/-45,C'/0,O/-45,M/0}
+			\fill  (\x) circle (1pt)
+				($(\g:4mm)+(\x)$) node  {$\x$};
+			\draw  pic[draw,angle radius=2mm]{right angle=A'--O--A};
+			\draw pic["$60^\circ$",draw,fill=yellow!50,angle  radius=15mm]{angle=O--A--A'};
+		\end{tikzpicture}
+	} 
+	\noindent Xét $\triangle A'AO$ vuông  tại $ O$ có $ A'O=AO\cdot\tan 60=\dfrac{a\sqrt 3}{3}\cdot\sqrt 3=a$.\\
+	Vậy thể tích khối lăng trụ là $ V=A'O\cdot{S_{\triangle ABC}}=a\cdot\dfrac{a^2\sqrt 3}{4}=\dfrac{a^3\sqrt  3}{4}$.
+	} 
+\end{ex}
+
+% nguồn: Ok_Toan11_TracNghiem_Lan2
+\begin{ex}%[1H8H7-4]%[ma:c754e1a4]
+	 Cho lăng trụ đứng $ABC.A'B'C'$ có đáy là tam giác vuông cân tại $B$, $AC=a\sqrt 2 $, biết góc giữa $\left(A'BC\right)$ và đáy bằng $60^\circ$. Tính thể tích $V$ của khối lăng trụ.
+	\choice 
+		{\True $ V=\dfrac{a^3\sqrt  3}{2}$}
+		 {$ V=\dfrac{a^3\sqrt 3}{3}$}
+		{$  V=\dfrac{a^3\sqrt 3}{6}$}
+		{$ V=\dfrac{a^3\sqrt  6}{6}$}
+	\loigiai{ 
+	\immini{Xét $\triangle ABC$ vuông cân tại  $ B$, có $ AC=a\sqrt 2\Rightarrow AB=BC=a$.\\
+	Khi đó  $S_{\triangle ABC}=\dfrac{1}{2}BA\cdot BC=\dfrac{a^2}{2}$.\\
+	Góc giữa $\left(A'BC\right)$  và mặt phẳng đáy là góc $\widehat{A'BA}=60^\circ$.\\
+	Ta  có $ A'A=AB\cdot\tan{60^\circ}=a\sqrt {3} $.\\
+	Khi đó $V_{ABC.A'B'C'}=S_{\triangle  ABC}\cdot A'A=\dfrac{a^2}{2}\cdot a\sqrt {3}=\dfrac{a^3\sqrt {3}}{2}$.}{
+	\begin{tikzpicture}[declare function={a=5; b=0.55*a; h=0.9*a;}]
+			\path (0:0)  coordinate (A)
+				(-30:b) coordinate (B) 
+				(a,0) coordinate  (C)
+			 \foreach \x in {A,B,C}{(\x)++(90:h) coordinate (\x1)};
+			\draw[dashed]  (A)--(C)
+				(A1)--(C); 
+			\draw  (B1)--(A1)--(C1)--cycle
+				(A1)--(A)--(B)--(B1) 
+				 (C1)--(C)--(B)
+				(A1)--(B); 
+			\foreach \x/\y/\z  in {C/B/A}{
+				\path (\y) pic[draw,angle radius=5pt]{right angle = \x--\y--\z}; 
+			 }
+			\foreach  \x/\goc/\t in {A/180/A,B/-90/B,C/0/C,A1/100/A',B1/85/B',C1/80/C'}
+			\draw[fill=white] (\x) circle  (1pt) node[shift={(\goc:9pt)},font=\scriptsize]{$\t$};
+		\end{tikzpicture}
+	 }
+	} 
+\end{ex}
+
+% nguồn: Ok_Toan11_TracNghiem_Lan2
+\begin{ex}%[1H8H7-4]%[ma:9e381736]
+	Cho hình lăng trụ tam giác đều $ ABC.A'B'C'$ có góc giữa hai mặt phẳng $\left(A'BC\right)$ và $\left(ABC\right)$ bằng $ 60^\circ $, cạnh $ AB=a$. Tính thể  tích $ V$ của khối lăng trụ $ ABC.A'B'C'$.
+	 \choice
+		 {$V=\dfrac{\sqrt{3}}{4}{a^3}$}
+		{$V=\dfrac{3}{4}{a^3}$} 
+		{\True  $V=\dfrac{3\sqrt{3}}{8}{a^3}$}
+		{$V=\sqrt{3}a^3$} 
+	\loigiai{ 
+	\immini{Gọi $M$ là trung điểm  của $BC$ suy ra $ AM\perp BC\,\,(1)$.\\
+	Ta có $\heva{&BC\perp AM\\&BC\perp  AA'}\Rightarrow BC\perp A'M\,\,(2)$.\\
+	Mặt khác $\left(ABC\right)\cap\left(A'BC\right)=BC\,\,(3)$.\\ 
+	Từ $(1)$, $(2)$, $(3)$ suy ra $\left(\widehat{\left(ABC\right);\,\left(A'BC\right)}\right)=\widehat{A'MA}=60^\circ  $.\\
+	Vì $\triangle{ABC}$ đều  nên $S_{\triangle ABC}=\dfrac{a^2\sqrt 3}{4}$ và $ AM=\dfrac{a\sqrt 3}{2}$.\\
+	 Ta có $AA'=AM\cdot\tan 60^\circ=\dfrac{3a}{2}$.\\
+	Vậy $V_{ABC.A'B'C'}=AA'\cdot S_{\triangle  ABC}=\dfrac{3a}{2}\cdot\dfrac{a^2\sqrt 3}{4}=\dfrac{3a^3\sqrt 3}{8}$.}
+	{\begin{tikzpicture}[declare function={a=5; b=0.55*a; h=0.9*a;}]
+		\path (0:0)  coordinate (A)
+			(-34:b) coordinate (B) 
+			 (a,0) coordinate (C)
+		\foreach \x in {A,B,C}{(\x)++(90:h) coordinate  (\x1)}
+			($(B)!0.5!(C)$) coordinate (M); 
+		 \draw[dashed] (A)--(C)
+			 (A)--(M)
+			(A1)--(C) 
+			 (A1)--(M);
+		\draw  (B1)--(A1)--(C1)--cycle
+			 (A1)--(A)--(B)--(B1)
+			 (C1)--(C)--(B)
+			 (A1)--(B);
+		\foreach \x/\goc/\t in {A/180/A,B/-90/B,C/0/C,A1/100/A',B1/85/B',C1/80/C',M/0/M} 
+		 \draw[fill=white] (\x) circle (1pt) node[shift={(\goc:9pt)},font=\scriptsize]{$\t$};
+	\end{tikzpicture}
+	 }
+	 }
+\end{ex}
+
+% nguồn: Ok_Toan11_TracNghiem_Lan2
+\begin{ex}%[1H8H7-4]%[ma:b3b46083]
+	Cho hình lăng trụ $ABC.A'B'C'$ có đáy $ ABC$ là tam giác vuông cân tại $ B$ và $ AC=2a$. Hình chiếu vuông góc của $A'$ trên mặt phẳng $\left(ABC\right)$ là trung điểm $H$ của cạnh $AB$ và $AA'=a\sqrt{2}$. Thể tích $V$ của khối lăng trụ đã  cho bằng
+	\choice 
+		 {$V=\dfrac{a^3\sqrt{6}}{6}$}
+		 {\True $V=\dfrac{a^3\sqrt{6}}{2}$}
+		{$  V=2a^2\sqrt{2}$}
+		{$  V=a^3\sqrt{3}$}
+	 \loigiai{
+	\immini{Tam giác $ ABC$ vuông cân tại $ B$ cạnh $ AC=2a$ nên suy ra $ AB=a\sqrt 2 $.\\ 
+	Khi đó 
+	$S_{ABC}=\dfrac{1}{2}A{B^2}=\dfrac{1}{2}{\left(a\sqrt  2\right)^2}=a^2$.\\
+	Do $H$ là hình chiếu vuông  góc của $A'$ trên mặt phẳng $\left(ABC\right)$ nên $ A'H$ là chiều cao của khối lăng trụ.\\
+	Thể tích của  khối lăng trụ là $ V=A'H\cdot S_{\triangle ABC}$.\\
+	Lại có $ H$ là  trung điểm của cạnh $ AB$ nên suy ra
+	\[AH=\dfrac{a\sqrt{2}}{2}\Rightarrow  A'H=\sqrt{A{A'^2}-A{H^2}}=\sqrt{2a^2-\dfrac{2a^2}{4}}=\dfrac{a\sqrt 6}{2}.\]
+	Khi  đó $V=A'H\cdot S_{ABC}=\dfrac{a\sqrt 6}{2}\cdot a^2=\dfrac{a^3\sqrt 6}{2}$.}{
+	\begin{tikzpicture}[scale=.6,font=\footnotesize,line join=round,line cap=round,>=stealth]
+			 \def\a{6}
+			\def\h{5} 
+			\path (0:0) coordinate (A) 
+				 ++(0:\a) coordinate (C)
+				++(-150:\a/2) coordinate  (B)
+				($(B)!0.5!(A)$) coordinate  (H)
+				($(H)+(90:\h)$)  coordinate (A')
+				($(A')+(C)-(A)$)  coordinate (C')
+				 ($(C')+(B)-(C)$) coordinate (B');
+			 \draw[dashed] (A)--(C)
+				(A')--(C)--(H); 
+			 \draw (C)--(C')
+				(B)--(B') 
+				(A)--(A')--(H) 
+				 (A)--(B)--(C)
+				 (A')--(B')--(C')--cycle;
+			\foreach \x/\g in {A/180,B/-45,C/0,A'/180,B'/-45,C'/0,H/-90} 
+			\fill  (\x) circle (1pt)
+				($(\g:4mm)+(\x)$) node {$\x$}; 
+		\end{tikzpicture}
+	} 
+	 }
+\end{ex}
+
+% nguồn: Ok_Toan11_TracNghiem_Lan2
+\begin{ex}%[1H8H7-4]%[ma:f32f00a0]
+	Cho lăng trụ đứng  $ABC.A'B'C'$ có đáy $ABC$ là tam giác vuông cân tại $A$. Biết rằng $BC=a$, mặt bên $AA'B'B$ là hình vuông. Thể tích khối lăng trụ đã cho là
+	 \choice
+		{\True  $\dfrac{a^3\sqrt{2}}{8}$}
+		 {$\dfrac{a^3\sqrt{2}}{4}$}
+		 {$\dfrac{a^3}{4}$}
+		 {$\dfrac{a^3}{12}$}
+	 \loigiai{
+	\immini{ 
+		Xét $\triangle{ABC}$ vuông cân tại  $A$ có $AB=\dfrac{BC\sqrt{2}}{2}=\dfrac{a\sqrt{2}}{2}$.\\
+		Khi đó $S_{\triangle{ABC}}=\dfrac{1}{2}\cdot  AB\cdot AC=\dfrac{1}{2}\left(\dfrac{a\sqrt{2}}{2}\right)^2=\dfrac{a^2}{4}$.\\
+		Do $AA'B'B$ là  hình vuông nên suy ra $A'A=AB=\dfrac{a\sqrt{2}}{2}$.\\
+		Thể tích của khối  lăng trụ đã cho là \[V_{ABC.A'B'C'}=S_{\triangle{ABC}}\cdot A'A=\dfrac{a^2}{4}\cdot\dfrac{a\sqrt{2}}{2}=\dfrac{a^3\sqrt{2}}{8}.\]
+		 }{
+		\begin{tikzpicture}[scale=0.8,font=\footnotesize,line join=round,line cap=round,>=stealth]
+				\coordinate (A) at  (0,0);
+				 \coordinate (C) at (4,0);
+				\coordinate  (B) at (1.5,-1.5);
+				\coordinate (A')  at ($(A)+(0,3)$);
+				\coordinate  (B') at ($(B)+(0,3)$);
+				\coordinate  (C') at ($(C)+(0,3)$);
+				\draw  (A)--(B)--(C)--(C')--(B')--(A')--(C')
+					(A)--(A') 
+					(B)--(B'); 
+				 \draw[dashed] (A)--(C);
+				\foreach  \x/\g in {A/-90,B/-90,C/-90,A'/90,B'/90,C'/90}
+				\fill (\x) circle  (1pt)+(\g:3mm) node {$\x$};
+				\draw  pic[draw,angle radius=0.4cm]{right angle=B--A--C};
+			\end{tikzpicture}
+		} 
+	} 
+\end{ex}
+
+% nguồn: Ok_Toan11_TracNghiem_Lan2
+\begin{ex}%[1H8H7-4]%[ma:2e958bb6]
+	Cho khối lăng trụ tam  giác đều có tất cả các cạnh bằng $a$. Thể tích khối lăng trụ đã cho là
+	\choice 
+		 {$\dfrac{a^3\sqrt{6}}{4}$}
+		{$\dfrac{a^3\sqrt{2}}{4}$} 
+		{\True $\dfrac{a^3\sqrt{3}}{4}$} 
+		{$\dfrac{a^3\sqrt{3}}{12}$} 
+	 \loigiai{
+	\immini{ 
+		 Ta có $S_{\triangle{ABC}}=\dfrac{a^2\sqrt{3}}{4}$.\\
+		Thể tích  khối lăng trụ đã cho là \[V_{ABC.A'B'C'}=S_{\triangle{ABC}}\cdot A'A=\dfrac{a^2\sqrt{3}}{4}\cdot a=\dfrac{a^3\sqrt{3}}{4}.\]
+		 }{
+		\begin{tikzpicture}[scale=0.8,font=\footnotesize,line join=round,line cap=round,>=stealth]
+				\coordinate (A) at (0,0); 
+				\coordinate (C) at  (4,0);
+				\coordinate (B)  at (1.5,-1.5);
+				\coordinate (A') at ($(A)+(0,3)$); 
+				\coordinate (B') at  ($(B)+(0,3)$);
+				 \coordinate (C') at ($(C)+(0,3)$);
+				\draw (A)-- node  [below left]{$a$}
+					(B)--node  [below right]{$a$}
+					(C)--node [right]{$a$} 
+					 (C')--(B')--(A')--(C')
+					(A)--(A') 
+					(B)--(B'); 
+				\draw[dashed] (A)--node [above  right]{$a$}
+					 (C);
+				\foreach \x/\g  in {A/-90,B/-90,C/-90,A'/90,B'/90,C'/90}
+				\fill (\x) circle (1pt)+(\g:3mm) node {$\x$}; 
+			\end{tikzpicture}
+		 }
+	 }
+\end{ex}
+
+% nguồn: Ok_Toan11_TracNghiem_Lan2
+\begin{ex}%[1H8H7-4]%[ma:a5a8a195]
+	Cho hình hộp $ ABCD.A'B'C'D'$ có các cạnh bằng $ 2a$. Biết $\widehat{BAD}=60^\circ$, $\widehat{A'AB}=\widehat{A'AD}=120^\circ$. Thể tích $ V$ của khối  hộp $ ABCD.A'B'C'D'$ là
+	\choice 
+		{\True  $4\sqrt{2}a^{3}$}
+		 {$2\sqrt{2}a^{3}$}
+		{$8a^{3}$} 
+		 {$\sqrt{2}a^{3}$}
+	\loigiai{ 
+	\immini{Từ giả thiết ta có các tam giác $\triangle ABD$, $\triangle A'AD$ và $\triangle A'AB$ là các  tam giác đều.\\
+	Suy ra $A'A=A'B=A'D$ nên hình chiếu $H$ của $A'$ trên mặt  phẳng $\left(ABCD\right)$ là tâm đường tròn ngoại tiếp tam giác đều $ABD$.\\
+	Suy ra $AH=\dfrac{2}{3}\cdot2a\cdot\dfrac{\sqrt 3}{2}=\dfrac{2\sqrt 3}{3}a \Rightarrow A'H=\sqrt{A'{A^2}-A{H^2}}=\dfrac{2\sqrt 6}{3}a$.\\ 
+	Thể tích của khối  hộp $ABCD.A'B'C'D'$ là
+	\[V=A'H\cdot S_{ABCD}=\dfrac{2\sqrt{6}}{3}a\cdot2\cdot\dfrac{4a^2\cdot\sqrt{3}}{4}=4\sqrt{2}a^{3}.\]}{ 
+	\begin{tikzpicture}[scale=.7,font=\footnotesize,line join=round,line cap=round,>=stealth]
+			 \def\bc{4}
+			\def\ba{2} 
+			\def\h{4} 
+			 \def\gocB{35}
+			\coordinate[label=below left:$B$]  (B) at (0,0);
+			\coordinate[label=above  left:$A$] (A) at (\gocB:\ba);
+			\coordinate[label=below:$C$] (C)  at (\bc,0);
+			\coordinate[label=right:$D$] (D) at  ($(C)-(B)+(A)$);
+			\coordinate[label=below:$H$] (H) at  ($(A)!1/3!(C)$);
+			 \coordinate[label=above left:$A'$] (A') at ($(H)+(90:\h)$);
+			 \coordinate[label=left:$B'$] (B') at ($(B)-(A)+(A')$);
+			\coordinate[label=below right:$C'$] (C') at ($(C)-(A)+(A')$); 
+			\coordinate[label=right:$D'$]  (D') at ($(D)-(A)+(A')$);
+			\draw (B')--(B)--(C)--(D)--(D')--(A')--(B')--(C')--(D') 
+				 (C)--(C');
+			\draw[dashed]  (A)--(A')
+				(A)--(B) 
+				(C)--(A)--(D) 
+				(H)--(D) 
+				 (B)--(A')--(H);
+			\newcommand{\gocv}[4][black]{\draw[#1]  ($(#3)!5pt!(#2)$)--($(#3)!2!($($(#3)!5pt!(#2)$)!.5!($(#3)!5pt!(#4)$)$)$)--($(#3)!5pt!(#4)$);}
+			\foreach  \diem in {A,B,C,D,A',B',C',D',H} \fill (\diem) circle (1pt);
+		\end{tikzpicture}
+	} 
+	 }
+\end{ex}
+
+% nguồn: Ok_Toan11_TracNghiem_Lan2
+\begin{ex}%[1H8H7-4]%[ma:31f6605d]
+	Cho hình lăng trụ $ ABC.A'B'C'$ có  đáy là tam giác vuông cân đỉnh $A$, $AB=a$, $AA'=2a$, hình chiếu vuông góc của $A'$ lên mặt phẳng $\left(ABC\right)$ là trung điểm $H$ của cạnh $BC$. Thể tích của khối lăng trụ $ ABC.A'B'C'$ bằng
+	 \choice
+		 {$\dfrac{a^3\sqrt{14}}{2}$}
+		{\True  $\dfrac{a^3\sqrt{14}}{4}$}
+		 {$\dfrac{a^3\sqrt{7}}{4}$}
+		 {$\dfrac{a^3\sqrt{3}}{2}$}
+	\loigiai{ 
+	\immini{Tam giác $ ABC$ vuông cân  tại $ A$.\\$\Rightarrow BC=a\sqrt{2}$; $AH=\dfrac{1}{2}BC=\dfrac{a\sqrt{2}}{2}$.\\
+	Ta có $ A'H\perp\left(ABC\right)\Rightarrow  A'H\perp AH$.\\
+	Trong tam giác $  AA'H$ vuông tại $ H$ ta có
+	\[A'H=\sqrt{AA'^2-AH^2}=\sqrt{4a^2-\dfrac{2a^2}{4}}=a\dfrac{\sqrt{14}}{2}.\] 
+	 Vậy $V_{ABC.A'B'C'}=A'H\cdot S_{ABC}=a\dfrac{\sqrt{14}}{2}\cdot\dfrac{1}{2}\cdot a\cdot a=\dfrac{a^3\sqrt{14}}{4}$.}{
+	\begin{tikzpicture}[scale=.6,font=\footnotesize,line join=round,line cap=round,>=stealth]
+			 \def\a{6}
+			\def\h{5} 
+			\path (0:0) coordinate  (A)
+				 ++(0:\a) coordinate (C)
+				++(-150:\a/2) coordinate  (B)
+				($(B)!0.5!(C)$)  coordinate (H)
+				 ($(H)+(90:\h)$) coordinate (A')
+				 ($(A')+(C)-(A)$) coordinate (C')
+				($(C')+(B)-(C)$) coordinate (B'); 
+			 \draw[dashed] (A')--(C)--(A)--(H)--(A');
+			\draw (C)--(C') 
+				 (B)--(B')
+				(A)--(A') 
+				(A)--(B)--(C) 
+				(A')--(B')--(C')--cycle; 
+			 \foreach \x/\g in {A/180,B/-45,C/0,A'/180,B'/-45,C'/0,H/-90}
+			 \fill (\x) circle (1pt)
+				($(\g:4mm)+(\x)$) node  {$\x$};
+			\draw pic[draw,angle  radius=2mm]{right angle=A'--H--C};
+		\end{tikzpicture}
+	} 
+	 }
+\end{ex}
+
+% nguồn: Ok_Toan11_TracNghiem_Lan2
+\begin{ex}%[1H8H7-4]%[ma:268d59e3]
+	Cho khối lăng trụ có diện tích đáy là $a^2\sqrt{3}$, khoảng cách giữa hai đáy của lăng trụ bằng $a\sqrt{6}$. Thể tích $V$ của khối  lăng trụ là
+	\choice 
+		{\True  $V=3a^3\sqrt{2}$}
+		{$V=a^3\sqrt{2}$} 
+		 {$V=\dfrac{a^3\sqrt{2}}{3}$}
+		 {$V=\dfrac{3a^3\sqrt{2}}{4}$}
+	\loigiai{ 
+		Thể tích của khối lăng  trụ là $V=S_{\text{đáy}}\cdot h=a^2\sqrt{3}\cdot a\sqrt{6}=3a^3\sqrt{2}$.
+	 }
+\end{ex}
+
+% nguồn: Ok_Toan11_TracNghiem_Lan2
+\begin{ex}%[1H8H7-4]%[ma:505bd6db]
+	 Cho khối lăng trụ đứng $ABC.A'B'C'$ có $B'C=3a$, đáy $ABC$ là tam giác vuông cân tại $B$ và $AC=a\sqrt{2}$. Thể tích của khối lăng trụ đã cho là
+	\choice 
+		 {$V=2a^3$}
+		{\True $V=\sqrt{2}a^3$} 
+		{$V=\dfrac{a^3\sqrt{2}}{3}$} 
+		{$V=\dfrac{a^3}{6\sqrt{2}}$} 
+	 \loigiai{
+	\immini{ 
+		Xét $\triangle{ABC}$ vuông cân tại $B$ có $AC=a\sqrt{2}\Rightarrow  BC=BA=\dfrac{AC}{\sqrt{2}}=a$.\\
+		Xét $\triangle{B'BC}$  vuông tại $B$ có \[BB'=\sqrt{\left(B'C^2\right)^2-BC^2}=\sqrt{9a^2-a^2}=2a\sqrt{2}.\]
+		Khi đó  \[V_{ABC.A'B'C'}=S_{\triangle ABC}\cdot BB'=\dfrac{1}{2}\cdot BA\cdot BC\cdot BB'=\dfrac{1}{2}\cdot a\cdot a\cdot2a\sqrt{2}=a^3\sqrt{2}.\]
+		}{ 
+		\begin{tikzpicture}[scale=0.8,font=\footnotesize,line join=round,line cap=round,>=stealth]
+				\coordinate[label=above left:$A$] (A) at  (0,0);
+				\coordinate[label=above right:$C$] (C) at  (3,0);
+				\coordinate[label= left:$B$] (B) at  (1.25,-1.5);
+				\coordinate[label= left:$A'$] (A')  at ($(A)+(0,3)$);
+				 \coordinate[label= left:$B'$] (B') at ($(B)+(0,3)$);
+				\coordinate[label= right:$C'$] (C') at ($(C)+(0,3)$); 
+				\draw  (A)--(B)--(C)--(C')--(B')--(A')--(C')
+					 (A)--(A')
+					 (B)--(B')--(C);
+				\draw[dashed]  (A)--(C);
+				\begin{scope}
+					\clip  (A)--(B)--(C);
+					 \draw (B) circle (.4);
+				\end{scope}
+				\foreach \diem  in {A,B,C,A',B',C'} \fill (\diem) circle (1pt);
+				\draw pic[draw,angle radius=0.4cm]{right angle=A'--A--C}; 
+			\end{tikzpicture}
+		 }
+	 }
+\end{ex}
+
+% nguồn: Ok_Toan11_TracNghiem_Lan2
+\begin{ex}%[1H8H7-4]%[ma:02f6f391]
+	Cho hình lăng trụ $ ABC.A'B'C'$ có đáy $ ABC$ là tam giác đều cạnh $ a$, $ AA'=\dfrac{3a}{2}$. Biết rằng hình chiếu vuông góc của điểm $ A'$ lên mặt phẳng $\left(ABC\right)$ là trung điểm của cạnh $  BC$. Tính thể tích $ V$ của khối lăng trụ đã cho theo $a$.
+	 \choice
+		{$  V=a^3\sqrt{\dfrac{3}{2}}$}
+		{$ V=\dfrac{2a^3}{3}$} 
+		 {\True $ V=\dfrac{3a^3}{4\sqrt{2}}$}
+		 {$ V=a^3$}
+	 \loigiai{
+	\immini{Gọi $ M$ là trung điểm của  $ BC$.\\
+	Theo bài ra $ ABC$ là tam giác  đều cạnh $ a$ nên $ AM=\dfrac{a\sqrt 3}{2}$; $S_{ABC}=\dfrac{a^2\sqrt 3}{4}$.\\
+	Hình chiếu vuông góc của điểm $ A'$ lên mặt phẳng $\left(ABC\right)$ là trung điểm $ M$ của cạnh $ BC$ nên ta có $ A'M\perp\left(ABC\right)$;  $ A'M\perp BC$.}{
+	\begin{tikzpicture}[scale=.6,font=\footnotesize,line join=round,line cap=round,>=stealth]
+			 \def\a{6}
+			 \def\h{5}
+			 \path (0:0) coordinate (A)
+				++(0:\a) coordinate (C) 
+				++(-150:\a/2) coordinate  (B)
+				 ($(B)!0.5!(C)$) coordinate (M)
+				($(A)+(90:\h)$)  coordinate (A')
+				($(A')+(C)-(A)$) coordinate (C') 
+				($(C')+(B)-(C)$)  coordinate (B');
+			\draw[dashed]  (A')--(C)--(A)--(M)--(A');
+			\draw (C)--(C') 
+				 (B)--(B')
+				(A)--(A') 
+				 (A)--(B)--(C)
+				(A')--(B')--(C')--cycle; 
+			\foreach \x/\g  in {A/180,B/-45,C/0,A'/180,B'/-45,C'/0,M/-90}
+			\fill (\x) circle  (1pt)
+				($(\g:4mm)+(\x)$) node {$\x$}; 
+			\draw  pic[draw,angle radius=2mm]{right angle=A'--M--B};
+		\end{tikzpicture}
+	} 
+	\noindent Xét $\triangle A'MA$ vuông tại $ M$ có $A'M=\sqrt{A{A'^2}-A{M^2}}=\sqrt{\left(\dfrac{3a}{2}\right)^2-\left(\dfrac{a\sqrt  3}{2}\right)^2}=\dfrac{a\sqrt 6}{2}$.\\
+	Thể tích của khối lăng trụ $ ABC.A'B'C'$ là $V_{ABC.A'B'C'}=A'M\cdot S_{ABC}=\dfrac{a\sqrt{6}}{2}\cdot\dfrac{a^2\sqrt{3}}{4}=\dfrac{3a^3}{4\sqrt{2}}$. 
+	 }
+\end{ex}
+
+% nguồn: Ok_Toan11_TracNghiem_Lan2
+\begin{ex}%[1H8H7-4]%[ma:d1268cfc]
+	Cho khối lăng trụ đứng $ABC.A'B'C'$ có đáy $ABC$ là tam giác vuông cân tại $A$, $AB=2a$. Góc giữa đường thẳng $BC'$  và mặt phẳng $(ACC'A')$ bằng $30^{\circ}$. Thể tích của khối lăng trụ đã cho bằng
+	\choice 
+		{$3a^3$} 
+		 {$a^3$}
+		{$12\sqrt{2}a^3$} 
+		 {\True $4\sqrt{2}a^3$}
+	\loigiai{ 
+		\begin{center}
+			\begin{tikzpicture}
+					\def\a{4} 
+					\def\h{4} 
+					\path  (0:0) coordinate (B)
+						 ++(0:\a) coordinate (C)
+						++(-150:3*\a/4) coordinate (A) 
+						 ($(A)+(90:\h)$) coordinate (A')
+						 ($(B)+(90:\h)$) coordinate (B')
+						 ($(C)+(90:\h)$) coordinate (C');
+					\draw[dashed] (B)--(C) 
+						(B)--(C'); 
+					 \draw (C)--(C')
+						(B)--(B') 
+						 (A)--(A')
+						(B)--(A)--(C) 
+						 (A)--(C')
+						 (A')--(B')--(C')--cycle;
+					 \draw pic[,draw,angle eccentricity=1.2,angle radius=0.7cm]{angle=B--C'--A};
+					\draw[dashed] pic[draw,angle radius=0.3cm]{right  angle=B--A--C};
+					 \draw pic[draw,angle radius=0.3cm]{right angle=B--A--A'};
+					 \foreach \x/\g in {A/180,B/180,C/0,A'/180,B'/180,C'/0}
+					\fill[ball color=red] (\x) circle (1pt) 
+						 ($(\g:4mm)+(\x)$) node {$\x$};
+				\end{tikzpicture}
+		\end{center}
+		 Ta có $\heva{&AB\perp AC\\&AB\perp AA'}\Rightarrow AB\perp(ACC'A')\Rightarrow AB\perp AC'$.\\
+		Vậy góc giữa đường  thẳng $BC'$ và mặt phẳng $(ACC'A')$ là góc $\widehat{BC'A}$.\\
+		Trong tam giác  vuông $BC'A$ ta có $\widehat{BC'A}=30^{\circ}; AB=2a\Rightarrow AC'=AB\cdot\cot\widehat{BC'A}=2a\cdot\sqrt{3}$.\\
+		Trong tam giác vuông  $ACC'$ ta có $CC'=\sqrt{AC'^2-AC^2}=2\sqrt{2}a$.\\
+		Vậy thể tích khối lăng trụ đã cho là\\ 
+	$V=CC'\cdot\dfrac{1}{2}AB^2=2\sqrt{2}a\cdot\dfrac{1}{2}\cdot 4a^2=4\sqrt{2}a^3$.} 
+\end{ex}
+
+% nguồn: Ok_Toan11_TracNghiem_Lan2
+\begin{ex}%[1H8H7-4]%[ma:f4886efb]
+	\immini[thm]{Cho khối lăng trụ đứng $ABC.A'B'C'$ có đáy là tam giác đều cạnh $2a$ và $AA' = 3a$ (minh họa như hình vẽ bên). Thể tích của khối lăng trụ  đã cho bằng
+	 \choice
+		{$6\sqrt{3}a^3$} 
+		 {\True $3\sqrt{3}a^3$}
+		 {$2\sqrt{3}a^3$}
+		{$\sqrt{3}a^3$} 
+		 }{
+		\begin{tikzpicture}[scale=1,font=\footnotesize,line join=round,line cap=round,>=stealth]
+				\coordinate[label=left:$A$]  (A) at (0,0);
+				\coordinate[label=right:$C$] (C)  at (4,0);
+				\coordinate[label=below left:$B$]  (B) at (-40:3);
+				 \coordinate[label=left:$A'$] (A') at ($(A)+(90:4)$);
+				\coordinate[label=below left:$B'$] (B') at  ($(B)-(A)+(A')$);
+				\coordinate[label=right:$C'$] (C')  at ($(C)-(A)+(A')$);
+				\draw (A')--(A)--(B)--(C)--(C')--(A')--(B')--(C') 
+					 (B)--(B');
+				\draw[dashed]  (A)--(C);
+				\foreach \diem in {A,B,C,A',B',C'}  \fill (\diem) circle (1pt);
+				\draw pic[draw,angle radius=0.3cm]{right  angle=C--A--A'};
+			\end{tikzpicture}
+		} 
+	\loigiai{ 
+		Đáy là tam  giác đều cạnh $2a$ nên có diện tích là
+		$$S  = \dfrac{(2a)^2\cdot\sqrt{3}}{4} = \dfrac{4a^2\sqrt{3}}{4} = a^2\sqrt{3}.$$\\
+		Lăng trụ đứng có chiều cao  $h = AA' = 3a$.\\
+		Thể tích khối lăng  trụ là
+		$$V  = S \cdot h = a^2\sqrt{3} \cdot 3a = 3\sqrt{3}a^3.$$
+	 }
+\end{ex}
+
+% nguồn: Ok_Toan11_TracNghiem_Lan2
+\begin{ex}%[1H8H7-4]%[ma:f2771538]
+	Cho hình lăng trụ đứng $ABC.A'B'C'$ có $B'B=a$. Biết rằng mặt đáy $ABC$ là  tam giác vuông cân tại $B$, $AC=a\sqrt{2}$. Thể tích khối lăng trụ đã cho là
+	 \choice
+		{$\dfrac{a^3}{3}$} 
+		{$\dfrac{a^3}{6}$} 
+		{$a^3$} 
+		{\True  $\dfrac{a^3}{2}$}
+	\loigiai{ 
+	 \immini{
+		Xét $\triangle{ABC}$ vuông cân  tại $B$ có\\ $AC^2=AB^2+BC^2=2AB^2\Rightarrow AB=BC=\sqrt{\dfrac{AC^2}{2}}=\sqrt{\dfrac{\left(a\sqrt{2}\right)^2}{2}}=a$.\\
+		Khi  đó $S_{\triangle{ABC}}=\dfrac{1}{2}\cdot AB\cdot BC=\dfrac{1}{2}\cdot a\cdot a=\dfrac{a^2}{2}$.\\
+		Thể tích  khối lăng trụ đã cho là \[V_{ABC.A'B'C'}=S_{\triangle{ABC}}\cdot A'A=\dfrac{a^2}{2}\cdot a=\dfrac{a^3}{2}.\]
+		}{ 
+		\begin{tikzpicture}[scale=0.8,font=\footnotesize,line join=round,line cap=round,>=stealth]
+				\coordinate (A) at (0,0); 
+				\coordinate  (C) at (4,0);
+				\coordinate (B) at  (1.5,-1.5);
+				\coordinate (A')  at ($(A)+(0,3)$);
+				\coordinate (B') at  ($(B)+(0,3)$);
+				\coordinate (C') at  ($(C)+(0,3)$);
+				 \draw (A)--(B)--(C)--(C')--(B')--(A')--(C')
+					(A)--node  [above left]{$a$}
+					(A') 
+					(B)--(B'); 
+				\draw[dashed]  (A)--node [above right]{$a\sqrt{2}$}
+					(C); 
+				\foreach \x/\g  in {A/-90,B/-90,C/-90,A'/90,B'/90,C'/90}
+				\fill (\x)  circle (1pt)+(\g:3mm) node {$\x$};
+				\draw pic[draw,angle radius=0.3cm]{right  angle=C--B--A};
+			\end{tikzpicture}
+		} 
+	} 
+\end{ex}
+
+% nguồn: Ok_Toan11_TracNghiem_Lan2
+\begin{ex}%[1H8H7-4]%[ma:629f4e9c]
+	Thể tích khối lăng trụ tam giác đều có tất  cả các cạnh bằng $3$ là
+	\choice 
+		{\True $\dfrac{27\sqrt{3}}{4}$} 
+		{$\dfrac{3\sqrt{3}}{2}$} 
+		{$\dfrac{9\sqrt{3}}{4}$} 
+		 {$\dfrac{27\sqrt{3}}{2}$}
+	\loigiai{ 
+	 \immini{
+		Ta  có $S_{\triangle{ABC}}=\dfrac{a^2\sqrt{3}}{4}=\dfrac{9\sqrt{3}}{4}$.\\
+		Khi đó $V_{ABC.A"B'C'}=S_{\triangle{ABC}}\cdot  AA'=\dfrac{9\sqrt{3}}{4}\cdot3=\dfrac{27\sqrt{3}}{4}$.
+		 }{
+		\begin{tikzpicture}[scale=0.8,font=\footnotesize,line join=round,line cap=round,>=stealth]
+				\coordinate[label=above left:$A$]  (A) at (0,0);
+				\coordinate[label=above right:$C$]  (C) at (3,0);
+				\coordinate[label= left:$B$]  (B) at (1.25,-1.5);
+				\coordinate[label= left:$A'$]  (A') at ($(A)+(0,3)$);
+				 \coordinate[label= left:$B'$] (B') at ($(B)+(0,3)$);
+				\coordinate[label=  right:$C'$] (C') at ($(C)+(0,3)$);
+				\draw (A)-- node [left]{$3$} 
+					(B)--  node [right]{$3$}
+					 (C)--(C')--(B')--(A')--(C')
+					(A)--  node [left]{$3$}
+					(A') 
+					(B)--(B'); 
+				 \draw[dashed] (A)-- node [above right]{$3$}
+					 (C);
+				\begin{scope}
+					\clip (A)--(B)--(C); 
+					\draw (B) circle (.4); 
+				\end{scope}
+				\foreach \diem in {A,B,C,A',B',C'} \fill (\diem) circle  (1pt);
+				\draw pic[draw,angle radius=0.4cm]{right  angle=A'--A--C};
+			\end{tikzpicture}
+		 }
+	} 
+\end{ex}
+
+% nguồn: Ok_Toan11_TracNghiem_Lan2
+\begin{ex}%[1H8H7-4]%[ma:e1c76395]
+	Cho hình lăng trụ $ABC.A'B'C'$ có đáy là tam giác đều cạnh bằng $2$. Hình chiếu vuống góc của $A'$ lên mặt phẳng $\left(ABC\right)$ trùng với trung điểm $H$ của cạnh $BC$. Góc tạo bởi cạnh bên $A'A$ với đáy bằng $45^\circ$ (hình  vẽ bên). Thể tích $V$ của khối lăng trụ $ABC.A'B'C'$ bằng
+	\choice 
+		{$V=\dfrac{\sqrt 6}{24}$} 
+		 {$V=1$}
+		{$V=\dfrac{\sqrt  6}{8}$}
+		{\True  $V=3$}
+	\loigiai{ 
+	 \immini{Diện tích $\triangle{ABC}$ bằng $S_{ABC}=\dfrac{4\sqrt 3}{4}=\sqrt 3 $.\\
+	 Xét $\triangle{ABC}$ có $AH=\dfrac{2\sqrt 3}{2}=\sqrt 3$.\\
+	Khi đó $\tan{45^\circ}=\dfrac{A'H}{AH}\Rightarrow A'H=AH=\sqrt  3$.\\
+	Vậy thể tích khối lăng trụ $ABC.A'B'C'$ bằng  \[V_{ABC.A'B'C'}=S_{ABC}\cdot A'H=\sqrt {3}\cdot\sqrt {3}=3.\]}{
+	\begin{tikzpicture}[scale=.8,font=\footnotesize,line join=round,line cap=round,>=stealth]
+			\def\a{5} 
+			 \def\h{5}
+			\path (0:0)  coordinate (A)
+				++(0:\a) coordinate (C) 
+				++(-150:\a/2) coordinate (B) 
+				 ($(B)!0.5!(C)$) coordinate (M)
+				 ($(B)!1/2!(C)$) coordinate (H)
+				 ($(H)+(90:\h)$) coordinate (A')
+				($(A')+(C)-(A)$)  coordinate (C')
+				 ($(C')+(B)-(C)$) coordinate (B');
+			\draw[dashed] (A)--(C) 
+				(A')--(H) 
+				(A)--(H); 
+			 \draw (C)--(C')
+				 (B)--(B')
+				 (A)--(A')
+				 (A)--(B)--(C)
+				(A')--(B')--(C')--cycle; 
+			 \foreach \x/\g in {A/180,B/-45,C/0,A'/180,B'/-45,C'/0,H/-45}
+			\fill (\x)  circle (1pt)
+				 ($(\g:4mm)+(\x)$) node {$\x$};
+			\draw pic[draw,angle radius=2mm]{right angle=A'--H--C}; 
+			\draw pic[draw,angle radius=2mm]{right  angle=A--H--B};
+		\end{tikzpicture}
+	 }
+	} 
+\end{ex}
+
+% nguồn: Ok_Toan11_TracNghiem_Lan2
+\begin{ex}%[1H8H7-4]%[ma:095d1d29]
+	Cho hình lăng trụ tam giác đều $ABC. A'B'C'$ có $AB=a$, góc giữa đường thẳng $A'C$ và mặt phẳng $\left(ABC\right)$ bằng  $45^{\circ}$. Thể tích khối lăng trụ $ABC. A'B'C'$ bằng
+	\choice 
+		{\True  $\dfrac{a^3\sqrt{3}}{4}$}
+		 {$\dfrac{a^3\sqrt{3}}{2}$}
+		{$\dfrac{a^3\sqrt{3}}{12}$} 
+		{$\dfrac{a^3\sqrt{3}}{6}$} 
+	\loigiai{ 
+	\immini{Ta  có $\widehat{\left(A'C,\left(ABC\right)\right)}=\widehat{A'CA}=45^{\circ}$.\\
+		Xét tam giác $A'AC$  vuông tại $A$ ta có $\tan\widehat{A'CA}=\dfrac{AA'}{AC}\Rightarrow AA'=a$.\\
+		Thể  tích khối lăng trụ $ABC. A'B'C'$ là $V=AA'\cdot S_{ABC}=a\cdot\dfrac{a^2\sqrt{3}}{4}=\dfrac{a^3\sqrt{3}}{4}$.}
+		{\begin{tikzpicture}[>=stealth,line join=round,line cap=round,font=\footnotesize,declare function={a=4; b=0.55*a; h=0.9*a;}]
+		\path (0:0)  coordinate (A)
+			(-30:b) coordinate  (B)
+			(a,0) coordinate (C) 
+		\foreach \x in  {A,B,C}{(\x)++(90:h) coordinate (\x1)};
+		 \draw[dashed] (A)--(C)
+			 (A1)--(C);
+		\draw  (B1)--(A1)--(C1)--cycle (A1)--(B)
+			(A1)--(A)--(B) node[midway,below  left]{$a$}--(B1)
+			 (C1)--(C)--(B);
+		\draw pic["$45^{\circ}$",angle eccentricity=1.5,angle  radius=0.5cm]
+			 {angle=A1--C--A};
+		\foreach \x/\goc/\t in {A/180/A,B/-90/B,C/0/C,A1/100/A',B1/85/B',C1/80/C'} 
+		 \draw[fill=black] (\x) circle (1pt) node[shift={(\goc:9pt)},font=\scriptsize]{$\t$};
+	\end{tikzpicture}
+	}} 
+\end{ex}
+
+% nguồn: Ok_Toan11_TracNghiem_Lan2
+\begin{ex}%[1H8H7-4]%[ma:6c351ee8]
+	Cho khối lăng trụ $ABC.A'B'C'$, tam giác $A'BC$ có diện tích bằng $1$ và  khoảng cách từ $ A$ đến mặt phẳng $\left(A'BC\right)$ bằng $2$. Thể tích khối lăng trụ đã cho bằng
+	\choice 
+		{$6$} 
+		{$3$} 
+		{\True $2$} 
+		 {$1$}
+	\loigiai{ 
+	\immini{Gọi $H$ là hình chiếu vuông góc của $A'$ trên mặt phẳng $\left(ABC\right)$ suy ra $A'H$ là chiều cao của  lăng trụ.\\
+	Xét khối chóp $A.A'BC$ có diện tích đáy $B=S_{A'BC}=1$,  chiều cao $h=\mathrm{d}\left(A,\left(A'BC\right)\right)=2$.\\
+	Khi đó thể tích của khối chóp $A.A'BC$ là\\ $V_{A.A'BC}=\dfrac{1}{3}Bh=\dfrac{1}{3}\cdot1\cdot2=\dfrac{2}{3}$. 
+	 }{
+	\begin{tikzpicture}[scale=.6,font=\footnotesize,line join=round,line cap=round,>=stealth]
+			 \def\a{7}
+			 \def\h{4.5}
+			\path (0:0)  coordinate (A)
+				 ++(0:\a) coordinate (C)
+				 ++(-150:\a/2) coordinate (B)
+				($(B)!0.5!(C)$) coordinate  (M)
+				($(A)!2/3!(M)$)  coordinate (H)
+				($(H)+(90:\h)$) coordinate  (A')
+				 ($(A')+(C)-(A)$) coordinate (C')
+				($(C')+(B)-(C)$) coordinate (B'); 
+			\draw[dashed] (A)--(C) 
+				(A')--(H) 
+				 (A)--(H);
+			\draw  (C)--(C')
+				(B)--(B') 
+				 (A)--(A')
+				 (A)--(B)--(C)
+				 (A')--(B')--(C')--cycle;
+			\foreach \x/\g  in {A/180,B/-45,C/0,A'/180,B'/-45,C'/0,H/-45}
+			\fill (\x) circle  (1pt)
+				($(\g:4mm)+(\x)$) node {$\x$}; 
+			\draw pic[draw,angle  radius=2mm]{right angle=A'--H--A};
+		\end{tikzpicture}
+	 }
+	\noindent Mặt khác  $\heva{&V_{A.A'BC}=V_{A'.ABC}=\dfrac{1}{3}{S_{ABC}}\cdot A'H=\dfrac{2}{3}\\
+	 &V_{ABC.A'B'C'}=S_{ABC}\cdot A'H}
+	\Rightarrow{V_{ABC.A'B'C'}}=3V_{A.A'BC}=3\cdot\dfrac{2}{3}=2$. 
+	} 
+\end{ex}
+
+% nguồn: Ok_TracNghiemLop11_Lan1
+\begin{ex}%[1H8H7-4]%[ma:9360a411]
+	Cho cái nêm hình lăng trụ đứng như hình  vẽ.
+	\begin{center}
+		\begin{tikzpicture}[scale=0.6,font=\footnotesize,line join=round,line cap=round,>=stealth]
+				 \path
+					(0,0) coordinate  (A)
+					++(-150:4)  coordinate (B)
+					++(0:7) coordinate (C) 
+					($(A)+(C)-(B)$) coordinate (D) 
+					($(A)!1/2!(C)$) coordinate (O); 
+				\foreach \i in  {A,B}{
+					\coordinate (\i') at  ($(\i)+(0,2)$);
+				} 
+				 \fill[cyan!30] (B)--(A)--(D)--(C)--cycle (A)--(A')--(D)--cycle;
+				\draw (B)--(C)--(D)--(A')--(B')--(B) 
+					(B')--(C); 
+				 \draw[dashed](B)--(A)--(A')
+					 (A)--(D);
+				\draw  pic[draw,angle radius=2mm]{right angle=C--B--B'};
+				\path (B)--(B') node[left,midway]{$7$ cm}; 
+				 \path (B)--(C) node[above,midway]{$24$ cm};
+				\path (C)--(D)  node[below right,midway]{$22$ cm};
+			\end{tikzpicture}
+	\end{center}
+	Thể tích của  cái nêm bằng
+	 \choice
+		 {$3696\,cm^3$}
+		{\True  $1848\,cm^3$}
+		{$3669\,cm^3$} 
+		 {$1884\,cm^3$}
+	\loigiai{ 
+		Diện tích đáy lăng trụ  là $S=\dfrac{1}{2}\cdot 7\cdot 24=84\,cm^2$.\\
+	Thể tích của khối lăng trụ là  $V=S\cdot h=84\cdot 22=1848\,cm^3$.}
+\end{ex}
+
+% nguồn: Ok_Toan11_TracNghiem_Lan2
+\begin{ex}%[1H8V7-4]%[ma:9ca921bd]
+	Cho khối lăng trụ đứng $ABC.A'B'C'$ có đáy $ABC$ là tam giác vuông cân tại $A$, cạnh bên $AA'=2a$, góc giữa  hai mặt phẳng $(A'BC)$ và $(ABC)$ bằng $30^{\circ}$. Thể tích của khối lăng trụ đã cho bằng
+	\choice 
+		{\True $24a^3$} 
+		{$\dfrac{8}{3}a^3$} 
+		{$8a^3$} 
+		{$\dfrac{8}{9}a^3$} 
+	 \loigiai{
+		\begin{center}
+			\begin{tikzpicture}
+					 \def\a{4.5}
+					 \def\h{4}
+					\path (0:0) coordinate (A) 
+						++(0:\a) coordinate  (C)
+						++(-150:3*\a/4) coordinate  (B)
+						($(A)+(90:\h)$)  coordinate (A')
+						 ($(B)+(90:\h)$) coordinate (B')
+						($(C)+(90:\h)$) coordinate (C') 
+						($(B)!0.5!(C)$) coordinate  (H);
+					 \draw[dashed] (A)--(C)
+						(H)--(A')--(C) 
+						(H)--(A); 
+					 \draw (C)--(C')
+						(B)--(B') 
+						 (A)--(A')--(B)
+						(A)--(B)--(C) 
+						(A')--(B')--(C')--cycle; 
+					 \foreach \x/\g in {A/180,B/-45,C/0,A'/180,B'/-45,C'/0,H/-45}
+					\fill[ball color=red] (\x) circle (1pt) 
+						($(\g:4mm)+(\x)$) node {$\x$}; 
+					\draw pic[,draw,angle  eccentricity=1.2,angle radius=0.5cm]{angle=A'--H--A};
+					 \draw pic[draw,angle radius=0.3cm]{right angle=B--A--C};
+					\draw pic[draw,angle radius=0.3cm]{right angle=A--H--B}; 
+					\draw pic[draw,angle  radius=0.3cm]{right angle=C--H--A'};
+				\end{tikzpicture}
+		\end{center}
+		Kẻ $AH\perp  BC$, ta có $AA'\perp(ABC)$ nên $AA'\perp BC$.\\
+		$AH\perp BC$ và $AA'\perp  BC$ suy ra $BC\perp(AA'H)\Rightarrow A'H\perp BC$.\\
+		Suy ra góc  giữa $(A'BC)$ và $(ABC)$ là $\widehat{A'HA}\Rightarrow\widehat{A'HA}=30^{\circ}$.\\
+		$\triangle A'AH$ vuông tại  $A$ có.\\
+		$\tan\widehat{A'HA}=\dfrac{AA'}{AH}\Rightarrow\tan 30^{\circ}=\dfrac{2a}{AH}\Leftrightarrow AH=\dfrac{2a}{\tan 30^{\circ}}=2a\sqrt{3}$.\\ 
+		$\triangle ABC$ vuông cân  tại $A$ nên $BC=2AH=4a\sqrt{3}$ \\
+		$ \Rightarrow  S_{ABC}=\dfrac{1}{2}AH\cdot BC=\dfrac{1}{2}2a\sqrt{3}\cdot 4a\sqrt{3}=12a^2 $.\\
+	Vậy thể  tích của khối lăng trụ đứng $ABC.A'B'C'$ là.}
+\end{ex}
+
+% nguồn: Ok_Toan11_TracNghiem_Lan2
+\begin{ex}%[1H8V7-4]%[ma:6581a5c2]
+	Cho khối lăng trụ đều $ABC. A'B'C'$ có cạnh đáy bằng $a$. Khoảng cách từ điểm $A'$ đến mặt phẳng$\left(AB'C'\right)$ bằng $\dfrac{2a\sqrt{3}}{\sqrt{19}}$. Thể tích của khối lăng trụ đã cho là 
+	\choice 
+		{$\dfrac{a^3\sqrt{3}}{4}$} 
+		{$\dfrac{a^3\sqrt{3}}{6}$} 
+		 {\True $\dfrac{a^3\sqrt{3}}{2}$}
+		{$\dfrac{3a^3}{2}$} 
+	 \loigiai{
+	\immini{Gọi $M$ là trung điểm  của $B'C'$.\\
+		Ta  có $\heva{&AA'\perp B'C'\\&A'M\perp B'C'}
+		\Rightarrow B'C'\perp\left(AA'M\right) 
+		\Rightarrow\left(AB'C'\right)\perp\left(AA'M\right)$  theo giao tuyến $AM$.\\
+		Kẻ $A'H\perp AM$ trong mặt phẳng  $\left(AA'M\right)$, suy ra
+		 $ A'H\perp\left(AB'C'\right)$.\\
+		Vậy khoảng cách  từ $A'$ đến mặt phẳng $\left(AB'C'\right)$ là $A'H=\dfrac{2a\sqrt{3}}{\sqrt{19}}$.\\
+		Ta có 
+		\begin{eqnarray*}
+			&&\dfrac{1}{A'H^2}=\dfrac{1}{A'A^2}+\dfrac{1}{A'M^2}\\ 
+			&\Rightarrow&\dfrac{1}{A'A^2}=\dfrac{1}{A'{H^2}}-\dfrac{1}{A'{M^2}}=\dfrac{1}{4a^2}\\ 
+			&\Rightarrow&  A'A=2a.
+		\end{eqnarray*}
+		Vậy thể tích khối lăng trụ là $V=S_{A'B'C'}\cdot AA'=2a\cdot\dfrac{a^2\sqrt{3}}{4}=\dfrac{a^3\sqrt{3}}{2}$.}{\begin{tikzpicture}[>=stealth,line join=round,line cap=round,font=\footnotesize,declare function={a=4; b=0.4*a; h=0.9*a;}]
+		 \path (0:0) coordinate (A)
+			(-35:b)  coordinate (B)
+			(a,0) coordinate (C) 
+		\foreach \x in  {A,B,C}{(\x)++(90:h) coordinate (\x1)}
+			 ($(B)!.5!(C)$) coordinate (M)
+			 ($(A1)!(A)!(M)$) coordinate (H);
+		\foreach \x/\y/\z  in {M/H/A}{
+			\path (\y)  pic[draw,angle radius=5pt]{right angle = \x--\y--\z};
+		 }
+		\draw[dashed]  (A)--(C)
+			(A)--(M) 
+			 (A1)--(M)
+			(A1)--(C) 
+			(A)--(H); 
+		\draw (B1)--(A1)--(C1)--cycle (A1)--(B) 
+			 (A1)--(A)--(B)--(B1)
+			(C1)--(C)--(B); 
+		\foreach  \x/\goc/\t in {A/180/A',B/-90/B',C/0/C',A1/100/A,B1/85/B,C1/80/C,M/-30/M,H/0/H}
+		\draw[fill=black] (\x) circle  (1pt) node[shift={(\goc:9pt)},font=\scriptsize]{$\t$};
+	\end{tikzpicture}
+		} 
+	 }
+\end{ex}
+
+% nguồn: Ok_Toan11_TracNghiem_Lan2
+\begin{ex}%[1H8V7-4]%[ma:96c082d9]
+	Cho lăng trụ tam giác $ABC.A'B'C'$ có độ dài cạnh bên bằng $8a$ và khoảng  cách từ điểm $A$ đến các đường thẳng $ BB'$, $CC'$ lần lượt bằng $ 2a$ và $ 4a$. Biết góc giữa hai mặt phẳng $(ABB'A')$ và $(ACC'A')$bằng $60^\circ$. Tính thể tích khối lăng trụ
+	 $ABC.A'B'C'$
+	 \choice
+		 {$\dfrac{16}{3}\sqrt{3}a^3$}
+		{$8\sqrt{3}a^3$} 
+		{$24\sqrt{3}a^3$} 
+		 {\True $16\sqrt{3}a^3$}
+	\loigiai{ 
+	\immini{Gọi $H$, $K$ lần lượt là hình chiếu vuông góc của $ A$ trên  $ BB'$, $CC'$.\\
+	Ta có $HA\perp BB'$, $KA\perp CC'\Rightarrow A'A\perp\left(AHK\right)$.\\ Do  đó $\widehat{AHK}=60^\circ $.
+	Khi  đó
+	\begin{eqnarray*}
+		&&HK^2=AK^2+AH^2-2AK\cdot AH\cdot\cos  60^\circ=12a^2\\
+		 &\Rightarrow& AK^2=HK^2+AH^2.
+	\end{eqnarray*}
+	Suy ra tam giác $AHK$  vuông tại $H$.\\
+	Gọi $H'$, $K'$ lần lượt là hình chiếu vuông góc của  $A'$ trên $ BB'$, $CC'$.\\
+	Ta có $V_{A.BCKH}=V_{A.B'C'K'H'}$\\ 
+	 Khi đó $V_{ABC.A'B'C'}=V_{AHK.A'H'K'}=AA'\cdot S_{AHK}=16\sqrt{3}a^3$.}{
+	\begin{tikzpicture}[scale=.6,font=\footnotesize,line join=round,line cap=round,>=stealth]
+			 \def\a{7}
+			 \def\h{5}
+			\path (0:0) coordinate  (A)
+				++(0:\a)  coordinate (C)
+				 ++(-150:\a/2) coordinate (B)
+				($(B)!0.5!(C)$)  coordinate (M)
+				($(B)!1/2!(C)$) coordinate (H) 
+				($(H)+(90:\h)$)  coordinate (B')
+				($(B')+(A)-(B)$) coordinate  (A')
+				($(A')+(C)-(A)$)  coordinate (C');
+			\draw[dashed] (A)--(C); 
+			\draw (A)--(B)--(C) 
+				(B)--(B') 
+				 (C)--(C')
+				 (A)--(A')
+				(A')--(B')--(C')--(A'); 
+			\coordinate[label=right:$H$](I) at  ($(B)!1/5!(B')$);
+			 \draw[name path=AH] (A)--(I);
+			\pic[draw,thin,angle radius=6pt]  {right angle = A--I--B'};
+			\coordinate[label=right:$K$](K) at ($(C)!1/3!(C')$); 
+			\draw[name  path=AH,dashed] (A)--(K);
+			\pic[draw,thin,angle radius=6pt] {right  angle = A--K--C'};
+			\coordinate[label=right:$H'$](H') at ($(B)!6/5!(B')$); 
+			 \draw[name path=AH] (A')--(H')--(B');
+			\pic[draw,thin,angle radius=6pt] {right angle = B'--H'--A'}; 
+			\coordinate[label=right:$K'$](K') at ($(C)!4/3!(C')$); 
+			\draw[name  path=AH] (A')--(K')--(C')
+				 (H')--(K')
+				(I)--(K); 
+			 \pic[draw,thin,angle radius=6pt] {right angle = C'--K'--A'};
+			\foreach \x/\g  in {A/180,B/-45,C/0,A'/180,B'/-45,C'/0,I/0,K/0}
+			\fill (\x)  circle (1pt)
+				($(\g:4mm)+(\x)$) node  {$\x$};
+			\draw pic["$60^\circ$",draw,fill=yellow!50,angle  radius=15mm]{angle=I--A--K};
+		\end{tikzpicture}
+	 }
+	 }
+\end{ex}
+
+% nguồn: Ok_Toan11_TracNghiem_Lan2
+\begin{ex}%[1H8V7-4]%[ma:9fb1192f]
+	Cho hình lăng trụ $ ABC.A'B'C'$ có đáy $ABC$ là tam giác vuông tại $ A$, $ AB=a$, $ AC=a\sqrt 3 $. Hình chiếu vuông góc của đỉnh $ A'$ lên $\left(ABC\right)$ trùng với tâm của đường tròn ngoại tiếp của tam giác $ ABC$. Trên cạnh $ AC$ lấy điểm $ M$ sao cho $ CM=2MA$. Biết khoảng cách giữa hai đường thẳng $ A'M$ và  $ BC$ bằng $\dfrac{a}{2}$. Thể tích $ V$ của khối lăng trụ đã cho bằng
+	 \choice
+		 {\True $ V=\dfrac{a^3\sqrt{3}}{2}$}
+		{$  V=a^3$}
+		{$  V=\dfrac{3a^3}{2}$}
+		{$  V=\dfrac{2a^3\sqrt{3}}{3}$}
+	\loigiai{ 
+	\immini{Kẻ $  MN\parallel BC$, $ N\in AB$. \\$ HK\perp MN$, $ HI\perp A'K$.\\
+	 Khi đó
+	\begin{eqnarray*}
+		\mathrm{d}\left(A'M;BC\right)&=&\mathrm{d}\left(BC;\left(A'MN\right)\right)\\&=&\mathrm{d}\left(H;\left(A'MN\right)\right)\\&=&HI\\ 
+		 \Rightarrow HI&=&\dfrac{a}{2}.
+	\end{eqnarray*}
+	Kẻ $ AT\,\parallel\,HK$, $ AT\cap MN=P\Rightarrow HK=PT=\dfrac{2}{3}AT$. 
+	}{ 
+	\begin{tikzpicture}[scale=.6,font=\footnotesize,line join=round,line cap=round,>=stealth]
+			 \def\a{8}
+			\def\h{5} 
+			 \path (0:0) coordinate (A)
+				++(0:\a) coordinate  (C)
+				++(-150:\a/2) coordinate  (B)
+				($(A)!1/3!(C)$)  coordinate (M)
+				 ($(A)!1/3!(B)$) coordinate (N)
+				 ($(B)!1/2!(C)$) coordinate (H)
+				($(M)!1/2!(N)$) coordinate  (K)
+				 ($(A)!2/3!(H)$) coordinate (G)
+				 ($(G)+(90:\h)$) coordinate (A')
+				($(A')+(C)-(A)$) coordinate (C') 
+				 ($(C')+(B)-(C)$) coordinate (B')
+				($(A')!2/3!(K)$) coordinate (I); 
+			 \draw[dashed] (A)--(C)
+				(A')--(M)--(N) 
+				 (H)--(K)--(A')
+				(H)--(I); 
+			 \draw (C)--(C')
+				(B)--(B') 
+				 (A)--(A')--(N)
+				(A)--(B)--(C) 
+				 (A')--(B')--(C')--cycle;
+			\pic[draw,thin,angle  radius=6pt] {right angle = H--K--M};
+			\pic[draw,thin,angle radius=6pt]  {right angle = H--I--K};
+			\foreach \x/\g  in {A/180,B/-45,C/0,A'/180,B'/-45,C'/0,M/45,N/-135,H/0,K/-90,I/45}
+			\fill (\x) circle  (1pt)
+				($(\g:4mm)+(\x)$) node {$\x$}; 
+		\end{tikzpicture}
+	} 
+	\noindent Xét $\triangle  ABC$ vuông tại $ A$ có $\dfrac{1}{A{T^2}}=\dfrac{1}{A{B^2}}+\dfrac{1}{A{C^2}}=\dfrac{4}{3a^2}\Rightarrow HK=\dfrac{2}{3}AT=\dfrac{a}{\sqrt 3}$.\\
+	Xét $\triangle A'HK$ vuông tại $  H$ có $\dfrac{1}{A'{H^2}}=\dfrac{1}{H{I^2}}-\dfrac{1}{H{K^2}}=\dfrac{4}{a^2}-\dfrac{3}{a^2}=\dfrac{1}{a^2}\Rightarrow A'H=a$.\\
+	Vậy thể tích khối  lăng trụ đã cho là $ V=A'H\cdot S_{ABC}=a\cdot\dfrac{1}{2}\cdot a\cdot a\sqrt 3=\dfrac{a^3\sqrt 3}{2}$.
+	 }
+\end{ex}
+
+% nguồn: Ok_Toan11_TracNghiem_Lan2
+\begin{ex}%[1H8V7-4]%[ma:70db5e8c]
+	Cho lăng trụ đứng $ABC. A'B'C'$ có đáy $ABC$ là tam giác vuông tại $A$ và $AB=a$, $AC=a\sqrt{3}$, mặt phẳng $\left(A'BC\right)$ tạo với đáy  một góc $30^{\circ}$. Thể tích của khối lăng trụ $ABC. A'B'C'$ bằng
+	 \choice
+		 {$\dfrac{a^3\sqrt{3}}{12}$}
+		 {$\dfrac{a^3\sqrt{3}}{3}$}
+		 {$\dfrac{3\sqrt{3}\,a^3}{4}$}
+		 {\True $\dfrac{\sqrt{3}\,a^3}{4}$}
+	 \loigiai{
+	\immini{ 
+		Trong mặt phẳng $\left(ABC\right)$,  dựng $AH\perp BC$ với $H$ nằm trên cạnh $BC$.\\
+		Theo định lý ba đường  vuông góc, ta có $A'H\perp BC$.\\
+		Vậy  $\widehat{((A'BC),(ABC))}=\widehat{A'HA}=30^{\circ}$.\\
+		Xét  tam giác $ABC$ ta có \[\dfrac{1}{AH^2}=\dfrac{1}{AB^2}+\dfrac{1}{AC^2}
+		 =\dfrac{1}{a^2}+\dfrac{1}{3a^2}
+		 \Rightarrow AH=\dfrac{a\sqrt{3}}{2}.\]
+		 Diện tích của tam giác $ABC$ là $S_{ABC}=\dfrac{AB\cdot AC}{2}=\dfrac{a^2\sqrt{3}}{2}$.\\
+		Xét tam giác $A'HA$ vuông tại $A$,  ta có $A'A=AH\cdot\tan 30^{\circ}=\dfrac{a}{2}$.\\
+		Thể tích khối lăng trụ  $ABC. A'B'C'$ bằng \[V_{ABC. A'B'C'}=S_{ABC}\cdot AA'=\dfrac{a^2\sqrt{3}}{2}\cdot\dfrac{a}{2}
+		=\dfrac{a^3\sqrt{3}}{4}.\]}{\begin{tikzpicture}[>=stealth,line join=round,line cap=round,font=\footnotesize,declare function={a=4; b=0.55*a; h=0.9*a;}]
+		\path (0:0)  coordinate (A)
+			(-30:b) coordinate  (B)
+			 (a,0) coordinate (C)
+		\foreach \x  in {A,B,C}{(\x)++(90:h) coordinate (\x1)}
+			($(B)!1/3!(C)$)  coordinate (H);
+		 \draw[dashed] (A)--(C)
+			 (A)--(H)
+			(A1)--(H) 
+			(A1)--(C); 
+		\draw  (B1)--(A1)--(C1)--cycle (A1)--(B)
+			 (A1)--(A)--(B)--(B1)
+			 (C1)--(C)--(B);
+		\foreach \x/\goc/\t  in {A/180/A,B/-90/B,C/0/C,A1/100/A',B1/85/B',C1/80/C',H/0/H}
+		\draw[fill=black] (\x) circle (1pt)  node[shift={(\goc:9pt)},font=\scriptsize]{$\t$};
+	\end{tikzpicture}
+		} 
+	 }
+\end{ex}
+
+% nguồn: Ok_Toan11_TracNghiem_Lan2
+\begin{ex}%[1H8V7-4]%[ma:8ac07d28]
+	Cho khối lăng trụ đứng $ABC.A'B'C'$ có đáy  $ABC$ là tam giác cân với $AB=AC=a$, $\widehat{BAC}=120^\circ$. Mặt phẳng $(AB'C')$ tạo với đáy một góc $60^\circ$. Tính thể tích $V$ của khối lăng trụ đã cho.
+	\choice 
+		{\True $V = \dfrac{3a^3}{8}$} 
+		{$V =  \dfrac{9a^3}{8}$}
+		{$V = \dfrac{a^3}{8}$} 
+		 {$V = \dfrac{3a^3}{4}$}
+	 \loigiai{
+		\begin{center}
+			\begin{tikzpicture}[scale=1,font=\footnotesize,line join=round,line cap=round,>=stealth]
+					\coordinate[label=left:$A'$] (A')  at (0,0);
+					 \coordinate[label=right:$C'$] (C') at (4,0);
+					\coordinate[label=below left:$B'$] (B')  at (-40:3);
+					\coordinate[label=left:$A$] (A) at  ($(A')+(90:4)$);
+					\coordinate[label=below  left:$B$] (B) at ($(B')-(A')+(A)$);
+					\coordinate[label=right:$C$] (C) at ($(C')-(A')+(A)$); 
+					\coordinate[label=right:$M$] (M)  at ($(B')!0.5!(C')$);
+					\draw (A)--(A')--(B')--(C')--(C)--(A)--(B)--(C) 
+						 (B')--(B);
+					\draw[dashed] (A')--(C') 
+						(A')--(M)--(A); 
+					\foreach \diem  in {A',B',C',A,B,C,M} \fill (\diem) circle (1pt);
+					\draw pic[draw,angle radius=0.3cm]{right  angle=M--A'--A};
+					 \draw pic[draw,angle radius=0.3cm]{right angle=A'--M--B'};
+					\draw pic["$60^{\circ}$",draw,angle  eccentricity=1.4,angle radius=0.5cm]{angle=A--M--A'};
+					 \draw pic["$120^{\circ}$",draw,angle eccentricity=1.5,angle radius=0.7cm]{angle=B--A--C};
+					\path  (A')--(B') node[midway,sloped,scale=0.8]{$|$};
+					 \path (A')--(C') node[midway,sloped,scale=0.8]{$|$};
+				\end{tikzpicture}
+		\end{center}
+		Diện tích tam  giác đáy $ABC$ là
+		$$S_{\triangle ABC} = \dfrac{1}{2}AB \cdot AC \cdot \sin\widehat{BAC} =  \dfrac{1}{2}a \cdot a \cdot \sin120^\circ = \dfrac{a^2\sqrt{3}}{4}.$$
+		Gọi $M$ là trung điểm của $B'C'$. Vì $\triangle A'B'C'$  cân tại $A'$ nên $A'M \perp B'C'$.\\
+		 Mặt khác $\triangle AB'C'$ cũng cân tại $A$ nên $AM \perp B'C'$.\\
+		Giao tuyến của $(AB'C')$ và $(A'B'C')$ là  $B'C'$.\\
+		Do đó góc giữa hai  mặt phẳng $(AB'C')$ và $(A'B'C')$ là góc $\widehat{AMA'} = 60^\circ$.\\
+		Theo định lý cosin,  ta có
+		\allowdisplaybreaks 
+		\begin{eqnarray*}
+			B'C'^2 &=& A'B'^2 + A'C'^2 - 2A'B'  \cdot A'C'\cdot \cos120^\circ\\
+			&=&  a^2+a^2-2a^2\cdot \left(-\dfrac{1}{2}\right)\\
+			&=&  3a^2.
+		\end{eqnarray*}
+		Suy ra $B'C'  = a\sqrt{3}$.\\
+		Khi đó,  ta có
+		$$A'M = \dfrac{2\cdot  S_{ABC}}{B'C'} = \dfrac{2\cdot \dfrac{a^2\sqrt{3}}{4}}{a\sqrt{3}} = \dfrac{a}{2}.$$
+		Xét tam giác $AA'M$ vuông tại $A'$,  ta có
+		$$AA' = A'M \cdot \tan\widehat{AMA'}  = \dfrac{a}{2} \cdot \tan60^\circ = \dfrac{a\sqrt{3}}{2}.$$
+		 Thể tích khối lăng trụ là
+		$$V = S_{\triangle ABC} \cdot  AA' = \dfrac{a^2\sqrt{3}}{4} \cdot \dfrac{a\sqrt{3}}{2} = \dfrac{3a^3}{8}.$$
+	 }
+\end{ex}
+
+% nguồn: Ok_Toan11_TracNghiem_Lan2
+\begin{ex}%[1H8V7-4]%[ma:264256aa]
+	Cho lăng trụ $ABC.A'B'C'$ có đáy $ABC$ là tam giác vuông tại $B$,  đường cao $BH$.\\ Biết $A'H\perp\left(ABC\right)$ và $AB=1$, $AC=2$, $AA'=\sqrt 2 $. Thể tích của khối lăng trụ đã cho bằng
+	 \choice
+		 {$\dfrac{\sqrt{21}}{12}$}
+		 {$\dfrac{\sqrt 7}{4}$}
+		{\True  $\dfrac{\sqrt{21}}{4}$}
+		 {$\dfrac{3\sqrt 7}{4}$}
+	\loigiai{ 
+	\immini{Tam  giác $ABC$ vuông tại $B$ có $AB=1$; $AC=2$. \\
+	 Do đó $\mathrm{d}\left(A;(P)\right)=\dfrac{\sqrt 6}{2}$; $\mathrm{d}\left(A;(Q)\right)=\sqrt 6$.\\
+	 $\Rightarrow \mathrm{d}\left(A;(Q)\right)=\mathrm{d}\left(A;(P)\right)+\mathrm{d}\left((Q);(P)\right)$.\\
+	Độ dài của đường cao $BH$ là \[BH=\dfrac{AB\cdot  BC}{AC}=\dfrac{\sqrt{3}}{2}.\]
+	 Suy ra $AH=\dfrac{\sqrt{3}}{2}:\sqrt{3}=\dfrac{1}{2}$.
+	 }{
+	\begin{tikzpicture}[scale=.7,font=\footnotesize,line join=round,line cap=round,>=stealth]
+			 \def\a{7}
+			\def\h{4.5} 
+			\path  (0:0) coordinate (A)
+				++(0:\a) coordinate  (C)
+				++(-150:\a/2) coordinate (B) 
+				($(B)!0.5!(C)$) coordinate (M) 
+				($(A)!2/5!(C)$)  coordinate (H)
+				($(H)+(90:\h)$)  coordinate (A')
+				($(A')+(C)-(A)$) coordinate (C') 
+				($(C')+(B)-(C)$)  coordinate (B');
+			 \draw[dashed] (A)--(C)
+				(A')--(H) 
+				 (A)--(H)--(B);
+			\draw (C)--(C') 
+				 (B)--(B')
+				 (A)--(A')
+				(A)--(B)--(C) 
+				(A')--(B')--(C')--cycle; 
+			\foreach \x/\g  in {A/180,B/-45,C/0,A'/180,B'/-45,C'/0,H/45}
+			\fill (\x)  circle (1pt)
+				($(\g:4mm)+(\x)$) node  {$\x$};
+			\draw  pic[draw,angle radius=2mm]{right angle=A'--H--A};
+		\end{tikzpicture}
+	 }
+	\noindent Khi đó, độ dài đường cao  $A'H$ của hình lăng trụ bằng $A'H=\sqrt{AA{'^2}-A{H^2}}=\sqrt{2-\dfrac{1}{4}}=\dfrac{\sqrt 7}{2}$.\\
+	Thể tích của khối lăng trụ đã cho bằng $V=\dfrac{1}{2}AB\cdot BC\cdot A'H=\dfrac{1}{2}\cdot 1\cdot\sqrt{3}\cdot\dfrac{\sqrt  7}{2}=\dfrac{\sqrt{21}}{4}$.
+	} 
+\end{ex}
+
+% nguồn: Ok_Toan11_TracNghiem_Lan2
+\begin{ex}%[1H8V7-4]%[ma:c2ebcc17]
+	Cho lăng trụ $ABCD.A'B'C'D'$ có đáy $ABCD$ là hình thoi  cạnh $a$, tâm $O$ và $\widehat{ABC}=120^\circ $. Góc giữa cạnh bên $AA'$ và mặt đáy bằng $60^\circ $. Đỉnh $A'$ cách đều các điểm $A$, $ B$, $ D$. Tính theo thể tích $ V$ được của khối lăng trụ đã cho.
+	 \choice
+		{$  V=\dfrac{3a^3}{2}$}
+		{$ V=\dfrac{a^3\sqrt{3}}{6}$} 
+		 {\True $ V=\dfrac{a^3\sqrt{3}}{2}$}
+		{$ V=a^3\sqrt{3}$} 
+	 \loigiai{
+	\immini{Ta có tam giác $ ABD$ cân tại $ A$ và $\widehat{BAD}=60^\circ $ nên $  ABD$ là tam giác đều.\\
+	Gọi $ H$ là trọng tâm của  tam giác $ ABD$.\\
+	Vì $ A'$ cách đều $ A$, $ B$, $ D$ nên  $ A'H$ là trục đường tròn ngoại tiếp tam giác $ ABD$.\\
+	Do đó $  A'H\perp\left(ABD\right)$.\\
+	 Suy ra góc giữa $ A'A$ và đáy $\left(ABCD\right)$ là góc $\widehat{A'AH}=60^\circ $.\\
+	 Ta có $ AH=\dfrac{2}{3}AO=\dfrac{a\sqrt 3}{2}$.\\
+	 Do đó $ A'H=AH\cdot\tan 60^\circ=\dfrac{3a}{2}$.\\
+	Ngoài ra  $S_{ABCD}=2S_{ABD}=2\cdot\dfrac{a^2\sqrt 3}{4}=\dfrac{a^2\sqrt 3}{2}$.}{
+	\begin{tikzpicture}[scale=.8,font=\footnotesize,line join=round,line cap=round,>=stealth]
+			 \def\bc{5}
+			 \def\ba{3}
+			 \def\h{4}
+			\def\gocB{35} 
+			\coordinate[label=below  left:$B$] (B) at (0,0);
+			 \coordinate[label=above left:$A$] (A) at (\gocB:\ba);
+			\coordinate[label=below:$C$]  (C) at (\bc,0);
+			 \coordinate[label=right:$D$] (D) at ($(C)-(B)+(A)$);
+			\coordinate[label=below:$O$] (O)  at ($(A)!1/2!(C)$);
+			\coordinate[label=left:$H$] (H) at  ($(A)!2/3!(O)$);
+			\coordinate[label=above left:$A'$] (A') at ($(H)+(90:\h)$); 
+			 \coordinate[label=left:$B'$] (B') at ($(B)-(A)+(A')$);
+			\coordinate[label=below right:$C'$] (C') at ($(C)-(A)+(A')$); 
+			 \coordinate[label=right:$D'$] (D') at ($(D)-(A)+(A')$);
+			\draw  (B')--(B)--(C)--(D)--(D')--(A')--(B')--(C')--(D')
+				(C)--(C'); 
+			 \draw[dashed] (A)--(A')
+				 (A)--(B)--(D)
+				(C)--(A)--(D) 
+				(O)--(D) 
+				 (B)--(A')--(O)
+				(A')--(H); 
+			\newcommand{\gocv}[4][black]{\draw[#1] ($(#3)!5pt!(#2)$)--($(#3)!2!($($(#3)!5pt!(#2)$)!.5!($(#3)!5pt!(#4)$)$)$)--($(#3)!5pt!(#4)$);} 
+			\gocv{A'}{H}{A} 
+			\foreach \diem in {A,B,C,D,A',B',C',D',H} \fill  (\diem) circle (1pt);
+		\end{tikzpicture}
+	 }\noindent
+	Thể  tích khối lăng trụ $ABCD.A'B'C'D'$ là $ V=S_{ABCD}\cdot A'H=\dfrac{a^2\sqrt 3}{2}\cdot\dfrac{3a}{2}=\dfrac{3a^3\sqrt 3}{8}$.
+	} 
+\end{ex}
+
+% nguồn: Ok_Toan11_TracNghiem_Lan2
+\begin{ex}%[1H8V7-4]%[ma:28c13b76]
+	Cho  lăng trụ tam giác đều $ABC. A'B'C'$ có diện tích đáy bằng $\dfrac{a^2\sqrt{3}}{4}$. Mặt phẳng $\left(A'BC\right)$ hợp với mặt phẳng đáy một góc $60^{\circ}$. Tính thể tích khối lăng trụ $ABC. A'B'C'$.
+	 \choice
+		{\True $\dfrac{3a^3\sqrt{3}}{8}$} 
+		 {$\dfrac{a^3\sqrt{3}}{8}$}
+		 {$\dfrac{5a^3\sqrt{3}}{12}$}
+		 {$\dfrac{3a^3\sqrt{2}}{8}$}
+	 \loigiai{
+	\immini{Vì đáy $ABC$ là tam giác đều có diện tích bằng  $\dfrac{a^2\sqrt{3}}{4}$ nên suy ra cạnh đáy bằng $a$.\\
+		Gọi $M$ là trung điểm $BC$, ta  có $\heva{&BC\perp AM\\
+		 &BC\perp AA'}\Rightarrow BC\perp A'M$.\\
+		Từ  đó ta có $\widehat{((A'BC),(ABC))}=\widehat{\left(A'M,AM\right)}=\widehat{A'MA}=60^{\circ}$.\\
+		Xét $\triangle A'AM$  ta có $AA'=AM\cdot\tan{60^{\circ}}=\dfrac{3a}{2}$.\\
+		Thể tích lăng trụ $ABC. A'B'C'$ là  $V_{ABC. A'B'C'}=AA'\cdot S_{ABC}=\dfrac{3a^3\sqrt{3}}{8}$.}
+		{\begin{tikzpicture}[>=stealth,line join=round,line cap=round,font=\footnotesize,declare function={a=4; b=0.55*a; h=0.9*a;}]
+		\path (0:0) coordinate (A) 
+			(-30:b)  coordinate (B)
+			 (a,0) coordinate (C)
+		\foreach \x in {A,B,C}{(\x)++(90:h) coordinate (\x1)} 
+			($(B)!.5!(C)$) coordinate (M); 
+		\draw[dashed]  (A)--(C)
+			(A)--(M) 
+			 (A1)--(M)
+			(A1)--(C); 
+		\draw  (B1)--(A1)--(C1)--cycle (A1)--(B)
+			(A1)--(A)--(B)--(B1) 
+			(C1)--(C)--(B); 
+		\foreach  \x/\y/\z in {B/M/A}{
+			 \path (\y) pic[draw,angle radius=5pt]{right angle = \x--\y--\z};
+		 }
+		\foreach \x/\goc/\t  in {A/180/A,B/-90/B,C/0/C,A1/100/A',B1/85/B',C1/80/C',M/0/M}
+		\draw[fill=black] (\x) circle  (1pt) node[shift={(\goc:9pt)},font=\scriptsize]{$\t$};
+		\draw pic["$60^{\circ}$",angle  eccentricity=1.5,angle radius=0.5cm]
+			{angle=A1--M--A}; 
+	\end{tikzpicture}
+	}} 
+\end{ex}
+
+% nguồn: Ok_Toan11_TracNghiem_Lan2
+\begin{ex}%[1H8V7-4]%[ma:67008852]
+	Cho khối lăng trụ đứng $ABC.A'B'C'$ có đáy $ABC$ là tam giác vuông cân tại $A$, cạnh bên $AA'=2a$, góc giữa hai mặt phẳng $(A'BC)$ và $(ABC)$ bằng $60^{\circ}$. Thể tích của khối lăng trụ  đã cho bằng
+	 \choice
+		{$\dfrac{8}{9}a^3$} 
+		{$8a^3$} 
+		{\True $\dfrac{8}{3}a^3$} 
+		{$24a^3$} 
+	\loigiai{ 
+		\begin{center}
+			\begin{tikzpicture}
+					 \def\a{4.5}
+					\def\h{4} 
+					\path (0:0) coordinate (A) 
+						++(0:\a) coordinate  (C)
+						 ++(-150:3*\a/4) coordinate (B)
+						($(A)+(90:\h)$) coordinate (A') 
+						($(B)+(90:\h)$) coordinate (B') 
+						($(C)+(90:\h)$) coordinate  (C')
+						($(B)!0.5!(C)$) coordinate  (I);
+					 \draw[dashed] (A)--(C)
+						 (I)--(A')--(C)
+						(I)--(A); 
+					\draw  (C)--(C')
+						(B)--(B') 
+						(A)--(A')--(B) 
+						(A)--(B)--(C) 
+						 (A')--(B')--(C')--cycle;
+					\foreach \x/\g in  {A/180,B/-45,C/0,A'/180,B'/-45,C'/0,I/-45}
+					\fill[ball  color=red] (\x) circle (1pt)
+						($(\g:4mm)+(\x)$)  node {$\x$};
+					\draw pic[,draw,angle  eccentricity=1.2,angle radius=0.5cm]{angle=A'--I--A};
+					\draw pic[draw,angle radius=0.3cm]{right angle=B--A--C}; 
+					 \draw pic[draw,angle radius=0.3cm]{right angle=A--I--B};
+					 \draw pic[draw,angle radius=0.3cm]{right angle=C--I--A'};
+				\end{tikzpicture}
+		\end{center}
+		Gọi $I$ là trung điểm của  $BC$.\\
+		Ta có $ABC$ là tam giác vuông cân  tại $A$ nên $AI\perp BC$.\\
+		Ta có $ABC.A'B'C'$ là khối lăng trụ  đứng nên $AA'\perp BC$.\\
+		VÌ vậy $BC\perp(AA'I)\Rightarrow  BC\perp A'I$.\\
+		Do đó, góc giữa hai mặt phẳng $(A'BC)$ và $(ABC)$ bằng góc giữa $A'I$ và $AI$, mà tam giác $AA'I$  vuông tại $A$ nên ta có $\widehat{AIA'}$ là góc nhọn. Suy ra góc giữa hai mặt phẳng $(A'BC)$ và $(ABC)$ bằng $\widehat{AIA'}=60^{\circ}$.\\
+		Trong  tam giác vuông $AA'I$, ta có $AI=\dfrac{AA'}{\tan 60^{\circ}}=\dfrac{2a}{\sqrt{3}}$.\\
+		$ABC$ là tam giác vuông cân  tại $A$ nên $BC=2AI=\dfrac{4a}{\sqrt{3}}$, $AB=AC=\dfrac{BC}{\sqrt{2}}=\dfrac{2a\sqrt{6}}{3}$.\\
+		 Vậy thể tích khối lăng trụ đã cho là $V=AA'\cdot S_{\triangle ABC}=AA'\cdot\dfrac{1}{2}AB\cdot AC=\dfrac{1}{2}\cdot 2 a\cdot\left(\dfrac{2 a\sqrt{6}}{3}\right)^2=\dfrac{8a^3}{3}$.
+	} 
+\end{ex}
+
+% nguồn: Ok_Toan11_TracNghiem_Lan2
+\begin{ex}%[1H8V7-4]%[ma:54fcbdaf]
+	Cho hình lăng trụ $ ABC.A'B'C'$ có $ AA'=2a$, tam giác $ABC$ vuông tại $ C$ và $\widehat{BAC}=60^\circ $,  góc giữa cạnh bên $ BB'$ và mặt đáy $\left(ABC\right)$ bằng $ 60^\circ $. Hình chiếu vuông góc của $ B'$ lên mặt phẳng $\left(ABC\right)$ trùng với trọng tâm của tam giác $ ABC$. Thể tích của khối tứ diện $ A'.ABC$ theo $ a$ bằng
+	\choice 
+		{$\dfrac{9a^3}{208}$} 
+		{$\dfrac{3a^3}{26}$} 
+		{\True  $\dfrac{9a^3}{26}$}
+		 {$\dfrac{27a^3}{208}$}
+	 \loigiai{
+	 \immini{Ta có
+	$B'G=BB'\sin 60^\circ=2a\cdot\dfrac{\sqrt 3}{2}=a\sqrt  3$.\\
+	$BG=BB'\cos 60^\circ=2a\cdot\dfrac{1}{2}=a\Rightarrow  BI=\dfrac{3}{2}BG=\dfrac{3a}{2}$.\\
+	Đặt $ AC=2x\,\,\left(x  > 0\right)\Rightarrow CI=x$; $BC=AC\cdot\tan 60^\circ=2x\sqrt 3$.\\
+	 Khi đó
+	$x^2+\left(2x\sqrt 3\right)^2=\left(\dfrac{3a}{2}\right)^2\Leftrightarrow  x=\dfrac{3a\sqrt{13}}{26}$.\\
+	$\Rightarrow{S_{\triangle ABC}}=\dfrac{1}{2}AC\cdot BC=\dfrac{1}{2}\cdot2\cdot\dfrac{3a\sqrt{13}}{26}\cdot2\cdot\dfrac{3a\sqrt{13}}{26}\cdot\sqrt  3=\dfrac{9a^2\sqrt 3}{26}$.\\
+	Vậy  $V_{A'.ABC}=\dfrac{1}{3}\cdot\dfrac{9a^2\sqrt 3}{26}\cdot a\sqrt 3=\dfrac{9a^3}{26}$.}{
+	\begin{tikzpicture}[scale=.6,font=\footnotesize,line join=round,line cap=round,>=stealth]
+			\def\a{7} 
+			\def\h{4} 
+			\path (0:0) coordinate (A) 
+				++(0:\a) coordinate  (C)
+				++(-150:\a/2)  coordinate (B)
+				 ($(A)!0.5!(C)$) coordinate (I)
+				($(B)!2/3!(I)$)  coordinate (G)
+				 ($(G)+(90:\h)$) coordinate (B')
+				($(B')+(A)-(B)$)  coordinate (A')
+				($(A')+(C)-(A)$)  coordinate (C');
+			\draw[dashed]  (A)--(C)
+				 (I)--(B);
+			\draw  (A)--(B)--(C)
+				(B)--(B') 
+				 (C)--(C')
+				(A)--(A') 
+				(A')--(B')--(C')--(A'); 
+			 \foreach \x/\g in {A/180,B/-45,C/0,A'/180,B'/-45,C'/0,G/-180,I/90}
+			 \fill (\x) circle (1pt)
+				($(\g:4mm)+(\x)$)  node {$\x$};
+		\end{tikzpicture}
+	} 
+	} 
+\end{ex}
+
+% nguồn: Ok_Toan11_TracNghiem_Lan2
+\begin{ex}%[1H8V7-4]%[ma:84ba9859]
+	Cho khối lăng trụ đứng $ABC.A'B'C'$ có $BB' = a$,  đáy $ABC$ là tam giác vuông cân tại $B$ và $AC = a\sqrt{2}$. Tính thể tích $V$ của khối lăng trụ đã cho.
+	\choice 
+		 {$V = \dfrac{a^3}{3}$}
+		 {\True $V = \dfrac{a^3}{2}$}
+		{$V =  a^3$}
+		 {$V = \dfrac{a^3}{6}$}
+	 \loigiai{
+		\begin{center}
+			\begin{tikzpicture}[scale=1,font=\footnotesize,line join=round,line cap=round,>=stealth]
+					\coordinate[label=left:$A$] (A) at  (0,0);
+					\coordinate[label=right:$C$]  (C) at (4,0);
+					\coordinate[label=below left:$B$] (B) at (-40:3); 
+					\coordinate[label=left:$A'$]  (A') at ($(A)+(90:4)$);
+					\coordinate[label=below left:$B'$] (B')  at ($(B)-(A)+(A')$);
+					 \coordinate[label=right:$C'$] (C') at ($(C)-(A)+(A')$);
+					\draw (A')--(A)--(B)--(C)--(C')--(A')--(B')--(C') 
+						(B)--(B'); 
+					\draw[dashed] (A)--(C); 
+					\foreach \diem  in {A,B,C,A',B',C'} \fill (\diem) circle (1pt);
+					\draw pic[draw,angle  radius=0.4cm]{right angle=C--B--A};
+					 \path (A)--(B) node[midway,sloped,scale=0.8]{$|$};
+					\path (C)--(B) node[midway,sloped,scale=0.8]{$|$}; 
+				\end{tikzpicture}
+		\end{center}
+		Vì lăng trụ là lăng trụ đứng nên chiều cao $h = BB'  = a$.\\
+		Đáy $ABC$ là tam giác vuông cân  tại $B$. Áp dụng định lý Pitago, ta được
+		\allowdisplaybreaks 
+		\begin{eqnarray*}
+			&&AB^2 +  BC^2 = AC^2\\
+			&\Rightarrow& 2AB^2  = \left(a\sqrt{2}\right)^2 = 2a^2\\
+			&\Rightarrow&  AB = a.
+		\end{eqnarray*}
+		Do đó, $AB  = BC = a$.\\
+		Diện  tích đáy là
+		 $$S_{\triangle ABC} = \dfrac{1}{2}\cdot AB \cdot BC = \dfrac{1}{2}\cdot a \cdot a = \dfrac{a^2}{2}.$$
+		Thể tích khối lăng trụ  là
+		$$V = S_{\triangle ABC} \cdot h =  \dfrac{a^2}{2} \cdot a = \dfrac{a^3}{2}.$$
+	} 
+\end{ex}
+
+% nguồn: Ok_Toan11_TracNghiem_Lan2
+\begin{ex}%[1H8V7-4]%[ma:51a1296c]
+	Cho lăng trụ $ABC.A'B'C'$ có đáy là tam giác đều cạnh $a$, hình chiếu vuông góc của điểm lên mặt phẳng $\left(ABC\right)$ trùng với trọng tâm tam giác $ABC$. Biết khoảng cách giữa hai đường thẳng  và $BC$ bằng $\dfrac{a\sqrt 3}{4}$. Tính theo $a$ thể tích của khối lăng trụ đã cho.
+	 \choice
+		{$\dfrac{a^3\sqrt{3}}{3}$} 
+		{$\dfrac{a^3\sqrt{3}}{24}$} 
+		 {$\dfrac{a^3\sqrt{3}}{6}$}
+		{\True  $\dfrac{a^3\sqrt{3}}{12}$}
+	\loigiai{ 
+	 \immini{Ta có $\heva{&BC\perp AM\\&BC\perp A'G}\Rightarrow BC\perp AA'$.\\
+	Kẻ $MH\perp AA'$ tại $H$, suy ra $MH$ là đoạn vuông góc chung giữa  hai đường thẳng $AA'$ và $BC$.\\
+	 Xét $\triangle MHA$ vuông tại $H$ có $AH=\sqrt{AM^2-MH^2}=\dfrac{3}{4}a$.
+	}{ 
+	\begin{tikzpicture}[scale=.6,font=\footnotesize,line join=round,line cap=round,>=stealth]
+			 \def\a{7}
+			 \def\h{4.5}
+			\path  (0:0) coordinate (A)
+				 ++(0:\a) coordinate (C)
+				++(-150:\a/2)  coordinate (B)
+				($(B)!0.5!(C)$)  coordinate (M)
+				($(A)!2/3!(M)$) coordinate  (G)
+				($(G)+(90:\h)$) coordinate  (A')
+				($(A')+(C)-(A)$) coordinate  (C')
+				($(C')+(B)-(C)$)  coordinate (B');
+			 \draw[dashed] (A)--(C)
+				 (A')--(G)
+				 (A')--(M)--(A);
+			 \draw (C)--(C')
+				 (B)--(B')
+				(A)--(A') 
+				(A)--(B)--(C) 
+				 (A')--(B')--(C')--cycle;
+			\coordinate[label=above left:$H$](H) at ($(A')!(M)!(A)$); 
+			\draw[name path=AH,dashed] (M)--(H); 
+			\pic[draw,thin,angle radius=6pt] {right  angle = M--H--A'};
+			\foreach  \x/\g in {A/180,B/-45,C/0,A'/180,B'/-45,C'/0,G/-45,M/-45}
+			\fill (\x) circle (1pt) 
+				 ($(\g:4mm)+(\x)$) node {$\x$};
+			\draw pic[draw,angle radius=2mm]{right angle=A'--G--A}; 
+		\end{tikzpicture}
+	 }
+	\noindent Ta có $\triangle  A'GA\backsim\triangle MHA$ nên $\dfrac{A'G}{MH}=\dfrac{GA}{HA}\Rightarrow A'G=\dfrac{MH\cdot GA}{HA}=\dfrac{a}{3}$.\\
+	 Thể tích của khối lăng trụ đã cho là $V=S_{ABC}\cdot A'G=\dfrac{a^3\sqrt 3}{12}$.
+	 }
+\end{ex}
+
+% nguồn: Ok_Toan11_TracNghiem_Lan2
+\begin{ex}%[1H8V7-4]%[ma:bb1b1024]
+	Cho khối lăng trụ đứng $ABC.A'B'C'$ có đáy  $ABC$ là tam giác vuông cân tại $A$, $AB=a$. Góc giữa đường thẳng $BC'$ và mặt phẳng $(ACC'A')$ bằng $30^{\circ}$. Thể tích của khối lăng trụ đã cho bằng
+	 \choice
+		 {$\dfrac{1}{8}a^3$}
+		{$\dfrac{3}{8}a^3$} 
+		{$\dfrac{3\sqrt{2}}{2}a^3$} 
+		{\True $\dfrac{\sqrt{2}}{2}a^3$} 
+	\loigiai{ 
+		\begin{center}
+			\begin{tikzpicture}
+					\def\a{4} 
+					\def\h{4} 
+					\path (0:0) coordinate  (A')
+						 ++(0:\a) coordinate (B')
+						++(-150:3*\a/4)  coordinate (C')
+						($(A')+(90:\h)$) coordinate  (A)
+						($(B')+(90:\h)$)  coordinate (B)
+						($(C')+(90:\h)$)  coordinate (C);
+					 \draw[dashed] (A')--(B');
+					\draw  (C)--(C')
+						(B)--(B') 
+						 (A)--(A')
+						 (A')--(C')--(B')
+						 (C')--(A)
+						(C')--(B) 
+						 (A)--(B)--(C)--cycle;
+					\foreach \x/\g  in {A/180,B/-45,C/-30,A'/180,B'/-45,C'/-45}
+					\fill[ball color=red] (\x) circle (1pt) 
+						($(\g:4mm)+(\x)$) node  {$\x$};
+					 \draw[dashed] pic[,draw,angle eccentricity=1.2,angle radius=0.7cm]{angle=B--C'--A};
+					\draw  pic[draw,angle radius=0.3cm]{right angle=B--A--C};
+				\end{tikzpicture}
+		\end{center}
+		 Diện tích đáy $S_{ABC}=\dfrac{1}{2}AB\cdot AC=\dfrac{a^2}{2}$.\\
+		Ta có $\heva{&AB\perp AC\\&AB\perp AA'}\Rightarrow AB\perp(ACC'A')\Rightarrow\widehat{\left(BC',(ACC'A')\right)}=\widehat{BC'A}=30^{\circ.}$ \\ 
+		Khi đó  $AC'=AB\cdot\cot 30^{\circ}=a\sqrt{3}\Rightarrow AA'=\sqrt{AC'^2-A'C'^2}=\sqrt{(a\sqrt{3})^2-a^2}=a\sqrt{2}$.\\
+	Vậy, thể tích khối  lăng trụ đã cho là $V=S_{ABC}\cdot AA'=\dfrac{a^2}{2}\cdot a\sqrt{2}=\dfrac{\sqrt{2}}{2}\cdot a^3$.}
+\end{ex}
+
+% nguồn: Ok_Toan11_TracNghiem_Lan2
+\begin{ex}%[1H8V7-4]%[ma:a2a2e903]
+	Cho hình lăng trụ đứng $ABC. A'B'C'$ có đáy $ABC$ là tam giác  vuông tại $A$, $\widehat{ACB}=30^{\circ}$, biết góc giữa $B'C$ và mặt phẳng $\left(ACC'A'\right)$ bằng $\alpha$ thỏa mãn $\sin\alpha=\dfrac{1}{2\sqrt{5}}$. Khoảng cách giữa hai đường thẳng $A'B$ và $CC'$ bằng $a\sqrt{3}$. Tính thể tích $V$ của khối lăng trụ $ABC. A'B'C'$.
+	 \choice
+		 {$V=a^3\sqrt{6}$}
+		{$V=\dfrac{3a^3\sqrt{6}}{2}$} 
+		 {$V=a^3\sqrt{3}$}
+		 {\True $V=2a^3\sqrt{3}$}
+	\loigiai{ 
+	\immini{Ta có  $CC'\parallel AA'\Rightarrow CC'\parallel\left(AA'B'B\right)$.\\
+		Mà $A'B\subset\left(AA'B'B\right)$  nên ta có\\ $\mathrm{d}\left(CC';A'B\right)=\mathrm{d}\left(CC';\left(AA'B'B\right)\right)=C'A'=a\sqrt{3}$.\\
+		Lại có  $AC=A'C'=a\sqrt{3}$; $AB=A'B'=a$.\\
+		Diện tích  đáy là $S_{ABC}=\dfrac{a^2\sqrt{3}}{2}$.\\
+		Dễ thấy $A'B'\perp\left(ACC'A'\right)$.\\ 
+		 Góc giữa $B'C$ và mặt phẳng $\left(ACC'A'\right)$ là $\widehat{B'CA'}=\alpha$.\\
+		Xét $\triangle B'CA'$ vuông tại  $A'$ ta có $\sin\alpha=\dfrac{A'B'}{B'C}=\dfrac{1}{2\sqrt{5}}\Leftrightarrow B'C=2a\sqrt{5}$.\\
+		$CC'=\sqrt{B'C^{2}-B'C'^{2}}=\sqrt{20a^{2}-4a^{2}}=4a$.\\ 
+		Thể tích lăng trụ là $V=S_{ABC}\cdot CC'=\dfrac{a^2\sqrt{3}}{2}\cdot4a=2a^3\sqrt{3}$.}{\begin{tikzpicture}[>=stealth,line join=round,line cap=round,font=\footnotesize,declare function={a=4; b=0.55*a; h=0.9*a;}]
+		 \path (0:0) coordinate (A)
+			(-40:b) coordinate  (B)
+			(a,0)  coordinate (C)
+		 \foreach \x in {A,B,C}{(\x)++(90:h) coordinate (\x1)};
+		\draw[dashed] (A)--(C) 
+			 (A)--(C1);
+		\draw  (B1)--(A1)--(C1)--cycle (A)--(B1)
+			 (A1)--(A)--(B)--(B1)
+			(C1)--(C)--(B) 
+			 (B)--(C1);
+		\foreach \x/\goc/\t in  {A/180/A',B/-90/B',C/0/C',A1/100/A,B1/85/B,C1/80/C}
+		\draw[fill=black]  (\x) circle (1pt) node[shift={(\goc:9pt)},font=\scriptsize]{$\t$};
+	\end{tikzpicture}
+		} 
+	 }
+\end{ex}
+
+% nguồn: Ok_Toan11_TracNghiem_Lan2
+\begin{ex}%[1H8V7-4]%[ma:f1a71ca1]
+	Cho khối lăng trụ tam giác đều $ABC.A'B'C'$ có cạnh bên bằng $2a$, góc giữa hai mặt phẳng $\left(A'BC\right)$  và $\left(ABC\right)$ bằng $60^\circ $. Thể tích của khối lăng trụ đã cho bằng
+	 \choice
+		{$\dfrac{8\sqrt{3}}{3}a^3$} 
+		 {\True $\dfrac{8\sqrt{3}}{9}a^3$}
+		{$\dfrac{8\sqrt{3}}{27}a^3$} 
+		{$8\sqrt{3}a^3$} 
+	\loigiai{ 
+	\immini{Gọi $M$ là trung điểm của $BC\Rightarrow \heva{&BC\perp AM \\&BC\perp A'A}\Rightarrow  BC\perp A'M$.\\
+		Ta có $\heva{&BC\perp AM \\&BC\perp A'M  \\&\left(A'BC\right)\cap \left(ABC\right)=BC}\Rightarrow \left(\left(A'BC\right),\left(ABC\right)\right)=\widehat{A'MA}=60^\circ $.\\
+		Đặt $AB=x\left(x>0\right)\Rightarrow AM=\dfrac{x\sqrt{3}}{2}$.\\ 
+		Xét tam giác $A'AM$ vuông tại  $A\Rightarrow \tan \widehat{A'MA}=\dfrac{A'A}{AM}$.
+		}{	\begin{tikzpicture}[declare function={r=3; gocB=-40;}]
+		\path  (0,0) coordinate (A)
+			(90:r) coordinate  (A')
+			(0:r) coordinate (C) 
+			(gocB:0.4*r)  coordinate (B)
+			($(A')+(C)-(A)$) coordinate (C') 
+			($(A')+(B)-(A)$) coordinate  (B')
+			($(B)!0.5!(C)$)  coordinate (M);
+		\path pic["\scriptsize$60^\circ$",angle eccentricity=2,draw,fill=cyan,angle radius=7pt]{angle=  A'--M--A};
+		\foreach  \x/\y/\z in {A/M/B,A'/M/C,A'/A/M}{
+			\path pic[draw,angle  radius=5pt]{right angle= \x--\y--\z};
+		 }
+		 \draw (A')--(A)--(B)--(C)--(C')--(A')--(B')--(C')
+			(A')--(B)--(B'); 
+		 \draw[dashed] (A)--(C)--(A')--(M)--(A);
+		\foreach \t/\g in  {A/180,B/-90,C/0,A'/90,B'/70,C'/0,M/-40}{
+			\fill[ball color=red]  (\t) circle (1pt) node[shift={(\g:7pt)},font=\footnotesize]{$ \t $};
+		} 
+	\end{tikzpicture}
+		 }\noindent
+		Suy  ra $AM\cdot \tan 60^\circ =A'A\Leftrightarrow \dfrac{3x}{2}=2a\Leftrightarrow x=\dfrac{4a}{3}\Rightarrow {S_{ABC}}=\left(\dfrac{4a}{3}\right)^2\cdot \dfrac{\sqrt{3}}{4}=\dfrac{4a^2\sqrt{3}}{9}$.\\
+		Vậy thể tích khối lăng trụ đã cho là $V_{ABC.A'B'C}=AA'\cdot S_{ABC}=2a\cdot \dfrac{4a^2\sqrt{3}}{9}=\dfrac{8a^3\sqrt{3}}{9}$. 
+	 }
+\end{ex}
+
+% nguồn: Ok_Toan11_TracNghiem_Lan2
+\begin{ex}%[1H8V7-4]%[ma:ef4986d3]
+	Cho lăng trụ đều $ABC. A'B'C'$. Biết rằng góc giữa $\left(A'BC\right)$ và $\left(ABC\right)$ là  $30^{\circ}$, tam giác $A'BC$ có diện tích bằng $8$. Tính thể tích khối lăng trụ $ABC. A'B'C'$.
+	 \choice
+		{\True $8\sqrt{3}$} 
+		 {$8$}
+		 {$3\sqrt{3}$}
+		{$8\sqrt{2}$} 
+	\loigiai{ 
+	\immini{Đặt $AB=x$, ($x>0$), gọi $M$ là trung điểm  $BC$.\\
+		Ta có $\heva{&\left(A'BC\right)\cap\left(ABC\right)=BC\\ 
+		 & AM\perp BC\\
+		 &A'M\perp BC}
+		 \Rightarrow\widehat{((A'BC),(ABC))}=\widehat{A'MA}=30^{\circ}$.\\
+		 Xét $\triangle A'AM$, ta có $A'M=\dfrac{AM}{\cos30^{\circ}}=\dfrac{x\sqrt{3}}{2}\cdot\dfrac{2}{\sqrt{3}}=x$.\\
+		$S_{A'BC}=8\Leftrightarrow\dfrac{1}{2}{A}'M\cdot BC=8\Leftrightarrow{x^2}=16\Rightarrow x=4$.\\ 
+		Suy ra $A'A=AM\cdot\tan 30^{\circ}=\dfrac{4\sqrt{3}}{2}\cdot\dfrac{1}{\sqrt{3}}=2$; $S_{ABC}=\dfrac{16\sqrt{3}}{4}=4\sqrt{3}$.\\ 
+		Vậy $V_{ABC.  A'B'C'}=A'A\cdot S_{ABC}=2\cdot4\sqrt{3}=8\sqrt{3}$.}
+		{\begin{tikzpicture}[>=stealth,line join=round,line cap=round,font=\footnotesize,declare function={a=4; b=0.55*a; h=0.9*a;}]
+		\path  (0:0) coordinate (A)
+			(-30:b)  coordinate (B)
+			 (a,0) coordinate (C)
+		\foreach  \x in {A,B,C}{(\x)++(90:h) coordinate (\x1)}
+			($(B)!.5!(C)$) coordinate (M); 
+		\draw[dashed] (A)--(C) 
+			 (A)--(M)
+			 (A1)--(M)
+			(A1)--(C); 
+		\draw (B1)--(A1)--(C1)--cycle (A1)--(B) 
+			(A1)--(A)--(B) node[midway,below  left]{$x$}--(B1)
+			(C1)--(C)--(B); 
+		\foreach \x/\y/\z  in {B/M/A}{
+			\path (\y) pic[draw,angle radius=5pt]{right angle =  \x--\y--\z};
+		 }
+		\foreach \x/\goc/\t in  {A/180/A,B/-90/B,C/0/C,A1/100/A',B1/85/B',C1/80/C',M/0/M}
+		\draw[fill=black] (\x) circle (1pt)  node[shift={(\goc:9pt)},font=\scriptsize]{$\t$};
+		\draw pic["$30^{\circ}$",angle  eccentricity=1.5,angle radius=0.5cm]
+			{angle=A1--M--A}; 
+	\end{tikzpicture}
+	 }}
+\end{ex}
+
+% nguồn: Ok_Toan11_TracNghiem_Lan2
+\begin{ex}%[1H8V7-4]%[ma:fe3a499a]
+	Cho hình lăng trụ tam giác đều $ABC.A'B'C'$ có cạnh bên bằng $4a$, góc giữa  hai mặt phẳng $\left(A'BC\right)$ và $\left(ABC\right)$ bằng $60^\circ $. Thể tích khối lăng trụ đã cho bằng
+	\choice 
+		{\True  $\dfrac{64\sqrt{3}}{9}a^3$}
+		{$\dfrac{64\sqrt{3}}{27}a^3$} 
+		 {$\dfrac{64\sqrt{3}}{3}a^3$}
+		 {$64\sqrt{3}a^3$}
+	 \loigiai{
+	\immini{Gọi $x\left(x>0\right)$ là  độ dài cạnh tam giác đều $ABC$.\\
+		 Và $I$ là trung điểm của $BC$.\\
+		Suy ra $BC\perp AI$ và $BC\perp  A'I$.\\
+		Suy ra góc giữa hai mặt phẳng $\left(A'BC\right)$ và $\left(ABC\right)$ là góc $\widehat{AIA'}=60^\circ $.\\ 
+		Xét $\triangle A'AI$ vuông tại  $A$ có\\
+		$AI=AA'\cdot \cot 60^\circ  \Leftrightarrow \dfrac{x\sqrt{3}}{2}=4a\cdot \dfrac{\sqrt{3}}{3}\Leftrightarrow x=\dfrac{8a}{3}$.\\
+		Vậy thể tích khối  lăng trụ là
+		\begin{center}
+			$V=S_{\triangle ABC}\cdot  AA'=\left(\dfrac{8a}{3}\right)^2\cdot \dfrac{\sqrt{3}}{4}\cdot 4a=\dfrac{64\sqrt{3}}{9}a^3$.
+		\end{center}
+		}{	\begin{tikzpicture}[declare function={r=3; gocB=-20;}]
+		\path (0,0)  coordinate (A)
+			 (90:r) coordinate (A')
+			 (0:r) coordinate (C)
+			(gocB:0.7*r) coordinate  (B)
+			 ($(A')+(C)-(A)$) coordinate (C')
+			($(A')+(B)-(A)$) coordinate (B') 
+			($(B)!0.5!(C)$) coordinate (I); 
+		 \path pic["\scriptsize$60^\circ$",angle eccentricity=2,draw,fill=cyan,angle radius=7pt]{angle= A'--I--A};
+		 \foreach \x/\y/\z in {A/I/B,A'/I/C,A'/A/I}{
+			\path pic[draw,angle radius=5pt]{right  angle= \x--\y--\z};
+		 }
+		\draw (A')--(A)--(B)--(C)--(C')--(A')--(B')--(C') 
+			(A')--(B)--(B'); 
+		 \draw[dashed] (A)--(C)--(A')--(I)--(A);
+		\foreach  \t/\g in {A/180,B/-90,C/0,A'/90,B'/70,C'/0,I/-40}{
+			\fill[ball color=red] (\t) circle (1pt) node[shift={(\g:7pt)},font=\footnotesize]{$ \t  $};
+		} 
+	\end{tikzpicture}
+		} 
+	} 
+\end{ex}
+
+% nguồn: Ok_Toan11_TracNghiem_Lan2
+\begin{ex}%[1H8V7-4]%[ma:d76592ea]
+	Cho lăng trụ tam giác đều $ABC.  A'B'C'$ có cạnh đáy bằng $a$ và $AB'$ vuông góc với $BC'$. Tính thể tích $V$ của khối lăng trụ đã cho.
+	 \choice
+		 {$V=\dfrac{a^3\sqrt{6}}{4}$}
+		{\True $V=\dfrac{a^3\sqrt{6}}{8}$} 
+		{$V=a^3\sqrt{6}$} 
+		{$V=\dfrac{7a^3}{8}$} 
+	\loigiai{ 
+	 \immini{Đặt $\overrightarrow{x}=\overrightarrow{BA}$, $\overrightarrow{y}=\overrightarrow{BC}$, $\overrightarrow{z}=\overrightarrow{BB'}$, theo giả thiết $AB'\perp BC'$ nên ta có
+		\begin{eqnarray*}
+			\overrightarrow{AB'}\cdot\overrightarrow{BC'}=0 
+			 &\Leftrightarrow&\left(\overrightarrow{z}-\overrightarrow{x}\right)\left(\overrightarrow{y}+\overrightarrow{z}\right)=0\\
+			 &\Leftrightarrow&\overrightarrow{z}\cdot\overrightarrow{y}+\left|\overrightarrow{z}\right|^2-\overrightarrow{x}\cdot\overrightarrow{y}-\overrightarrow{x}\cdot\overrightarrow{z}=0\\
+			&\Leftrightarrow&{\left|\overrightarrow{z}\right|^2}=\overrightarrow{x}\cdot\overrightarrow{y}\\ 
+			&\Leftrightarrow&{\left|\overrightarrow{z}\right|^2}=\left|\overrightarrow{x}\right|\cdot\left|\overrightarrow{y}\right|\cdot\cos  60^{\circ}=\dfrac{a^2}{2}\\
+			&\Rightarrow&\left|\overrightarrow{z}\right|=\dfrac{a\sqrt{2}}{2}. 
+		\end{eqnarray*}
+		Vậy $V_{ABC. A'B'C'}=S_{ABC}\cdot BB'=\dfrac{1}{2}AB\cdot AC\cdot\sin 60^{\circ}\cdot  BB'=\dfrac{\sqrt{6}{a^3}}{8}$.}{
+		\begin{tikzpicture}[>=stealth,line join=round,line cap=round,font=\footnotesize,declare function={a=4; b=0.4*a; h=0.9*a;}]
+				\path (0:0) coordinate  (A)
+					(-30:b) coordinate  (B)
+					(a,0) coordinate (C) 
+				\foreach  \x in {A,B,C}{(\x)++(90:h) coordinate (\x1)};
+				\draw[dashed] (A)--(C) 
+					 (A)--(C1);
+				\draw  (B1)--(A1)--(C1)--cycle (A1)--(B)
+					(A1)--(A)--(B)--(B1) 
+					(C1)--(C)--(B); 
+				 \foreach \x/\goc/\t in {A/180/B',B/-90/C',C/0/A',A1/100/B,B1/85/C,C1/80/A}
+				\draw[fill=black]  (\x) circle (1pt) node[shift={(\goc:9pt)},font=\scriptsize]{$\t$};
+			\end{tikzpicture}
+		 }
+	} 
+\end{ex}
+
+% nguồn: Ok_Toan11_TracNghiem_Lan2
+\begin{ex}%[1H8V7-4]%[ma:63970fe0]
+	Cho hình lăng trụ  đứng $ABC. A'B'C'$ có đáy $ABC$ là tam giác đều cạnh bằng $a$ và $\left(A'BC\right)$ hợp với mặt đáy $ABC$ một góc $30^{\circ}$. Tính thể tích $V$ của khối lăng trụ $ABC. A'B'C'$.
+	 \choice
+		{\True $V=\dfrac{a^3\sqrt{3}}{8}$} 
+		 {$V=\dfrac{a^3\sqrt{3}}{12}$}
+		 {$V=\dfrac{a^3\sqrt{3}}{24}$}
+		{$V=\dfrac{3a^3}{8}$} 
+	 \loigiai{
+	\immini{Gọi $H$ là hình chiếu vuông  góc của $A$ trên $BC$.\\
+		Suy ra  $AH\perp BC$, $A'H\perp BC$.\\
+		Mà $\left(ABC\right)\cap\left(A'BC\right)=BC$  nên
+		suy ra góc  giữa $\left(A'BC\right)$ và $\left(ABC\right)$ bằng góc $\widehat{\left(AH,A'H\right)}
+		 =\widehat{AHA'}=30^{\circ}$.\\
+		Ta  có $\triangle ABC$ là tam giác đều cạnh bằng $a$ nên ta có $AH=\dfrac{a\sqrt{3}}{2}$,\\ $A'A=AH\cdot\tan 30^{\circ}=\dfrac{a}{2}$.\\
+		Thể tích khối lăng trụ $ABC. A'B'C'$ là $V=S_{ABC}\cdot A'A=\dfrac{a^2\sqrt{3}}{4}\cdot\dfrac{a}{2}=\dfrac{a^3\sqrt{3}}{8}$.}{\begin{tikzpicture}[>=stealth,line join=round,line cap=round,font=\footnotesize,declare function={a=4; b=0.55*a; h=0.9*a;}]
+		\path (0:0)  coordinate (A)
+			(-30:b) coordinate  (B)
+			 (a,0) coordinate (C)
+		 \foreach \x in {A,B,C}{(\x)++(90:h) coordinate (\x1)}
+			($(B)!.5!(C)$) coordinate  (H);
+		\draw[dashed] (A)--(C) 
+			 (A)--(H)
+			 (A1)--(H)
+			(A1)--(C); 
+		 \draw (B1)--(A1)--(C1)--cycle (A1)--(B)
+			 (A1)--(A)--(B)--(B1)
+			(C1)--(C)--(B); 
+		\foreach  \x/\y/\z in {B/H/A}{
+			\path  (\y) pic[draw,angle radius=5pt]{right angle = \x--\y--\z};
+		} 
+		\foreach \x/\goc/\t in {A/180/A,B/-90/B,C/0/C,A1/100/A',B1/85/B',C1/80/C',H/0/H} 
+		\draw[fill=black] (\x) circle (1pt) node[shift={(\goc:9pt)},font=\scriptsize]{$\t$}; 
+		\draw  pic["$30^{\circ}$",angle eccentricity=1.5,angle radius=0.5cm]
+			{angle=A1--H--A}; 
+	\end{tikzpicture}
+		 }
+	} 
+\end{ex}
+
+% nguồn: Ok_Toan11_TracNghiem_Lan2
+\begin{ex}%[1H8V7-4]%[ma:94ab34fb]
+	Cho khối lăng trụ tam giác đều $ABC.A'B'C'$ có cạnh bên bằng $4a$, góc giữa hai mặt phẳng $\left(A'BC\right)$ và $\left(ABC\right)$ bằng $30^\circ$. Thể  tích của khối lăng trụ đã cho bằng
+	 \choice
+		{\True  $64\sqrt{3}a^3$}
+		 {$\dfrac{64\sqrt{3}}{3}a^3$}
+		{$\dfrac{64\sqrt{3}}{27}a^3$} 
+		 {$\dfrac{64\sqrt{3}}{9}a^3$}
+	\loigiai{ 
+	 \immini{Gọi $M$ là trung điểm của $BC$.\\
+		Khi đó $\left(\left(A'BC\right);\left(ABC\right)\right)=\widehat{A'MA}=30^\circ$.\\ 
+		Trong tam giác vuông $A'MA$ có\\ 
+		$\tan \widehat{A'MA}=\dfrac{A'A}{AM}\Leftrightarrow  AM=\dfrac{4a}{\tan{30^\circ}}\Leftrightarrow AM=4\sqrt{3}a$.\\
+		Vì $\triangle  ABC$ đều nên $AM=\dfrac{AB\sqrt{3}}{2}\Leftrightarrow AB=8a$.\\
+		Vậy thể tích khối lăng trụ $V=S_{\triangle ABC}\cdot A'A=\dfrac{\left(8a\right)^2\sqrt{3}}{4}\cdot 4a=64\sqrt{3}a^3$. 
+		}{	\begin{tikzpicture}[declare function={r=3; gocB=-40;}]
+		\path (0,0)  coordinate (A)
+			(90:r) coordinate  (A')
+			(0:r)  coordinate (C)
+			 (gocB:0.4*r) coordinate (B)
+			($(A')+(C)-(A)$)  coordinate (C')
+			($(A')+(B)-(A)$)  coordinate (B')
+			 ($(B)!0.5!(C)$) coordinate (M);
+		\path  pic["\scriptsize$30^\circ$",angle eccentricity=2,draw,fill=cyan,angle radius=7pt]{angle= A'--M--A};
+		\foreach \x/\y/\z  in {A/M/B,A'/M/C,A'/A/M}{
+			\path  pic[draw,angle radius=5pt]{right angle= \x--\y--\z};
+		 }
+		\draw  (A')--(A)--(B)--(C)--(C')--(A')--(B')--(C')
+			(A')--(B)--(B'); 
+		\draw[dashed]  (A)--(C)--(A')--(M)--(A);
+		\foreach \t/\g in {A/180,B/-90,C/0,A'/90,B'/70,C'/0,M/-40}{ 
+			\fill[ball color=red] (\t) circle (1pt) node[shift={(\g:7pt)},font=\footnotesize]{$  \t $};
+		 }
+	\end{tikzpicture}
+		} 
+	} 
+\end{ex}
+
+% nguồn: Ok_Toan11_TracNghiem_Lan2
+\begin{ex}%[1H8V7-4]%[ma:d6db6815]
+	Cho khối  lăng trụ tam giác đều $ABC. A'B'C'$ có $A'B=a\sqrt{6}$, đường thẳng $A'B$ vuông góc với đường thẳng $B'C$. Tính thể tích khối lăng trụ đã cho theo $a$.
+	 \choice
+		 {\True $\dfrac{a^3\sqrt{6}}{3}$}
+		 {$a^3\sqrt{6}$}
+		 {$\dfrac{3a^3}{4}$}
+		{$\dfrac{9a^3}{4}$} 
+	\loigiai{ 
+	\immini{Dựng hình hộp  $ABCD. ABCD$, khi đó tứ giác $ABCD$ là hình thoi.\\
+		Đặt $AB=x\Rightarrow AD=x$.\\ 
+		Tam giác $ABD$ có góc  $\widehat{BAD}=120^{\circ}$, áp dụng định lý côsinta có\\
+		$BD^2=AB^2+AD^2-2AB\cdot AD\cdot\cos BAD=x^2+x^2-2x\cdot  x\cdot\cos 120^{\circ}=3x^2$.\\
+		Ta có $A'B=a\sqrt{6}\Rightarrow A'D=a\sqrt{6}$.\\ 
+		Ta có $A'D\parallel B'C\Rightarrow  A'B\perp A'D\Rightarrow\triangle A'BD$ vuông tại $A'$.\\
+		 $\Rightarrow BD^2=A'B^2+A'D^2\Leftrightarrow 3x^2=12a^2\Leftrightarrow x^2=4a^2\Rightarrow x=2a$.}{
+		\begin{tikzpicture}[>=stealth,line join=round,line cap=round,font=\footnotesize,declare function={r=2.5;},font=\scriptsize]
+				\path  (0:0) coordinate (A)
+					(0:r) coordinate  (B)
+					++(37:{0.65*r})  coordinate (C)
+					 ++(180:r) coordinate (D)
+				 \foreach \x in {A,B,C,D}{(\x)++(90:r) coordinate (\x_1)};
+				\draw[dashed]  (D_1)--(D)--(A)
+					 (D)--(C)
+					(D)--(C_1) 
+					(D)--(B) 
+					 (D)--(A_1);
+				\draw (A)--(B)--(C) 
+					 (A)--(A_1)
+					 (B)--(B_1)
+					(C)--(C_1) 
+					(A_1)--(B_1)--(C_1)--(D_1)--cycle  (A)--(B_1)
+					 (D_1)--(B_1)
+					 (A_1)--(C_1);
+				\foreach  \x/\goc/\t in {A/255/B',B/-75/C',C/10/D',D/-90/A',A_1/135/B,B_1/90/C,
+					C_1/45/D,D_1/90/A}{ 
+					\draw[fill=black] (\x)  circle (1pt) node[shift={(\goc:9pt)}]{$\t$};
+				 }
+			\end{tikzpicture}
+		 }
+		\noindent Chiều cao hình trụ là $AA'^2=A'B^2-AB^2=6a^2-4a^2=2a^2\Rightarrow A{A}'=a\sqrt{2}$.\\ 
+		Thể tích khối lăng trụ đã cho là 
+		$V_{ABC.  A'B'C'}=\dfrac{1}{3}AA'\cdot S_{ABC}=\dfrac{1}{3}a\sqrt{2}\cdot\dfrac{1}{2}\cdot2a\cdot2a\cdot\dfrac{\sqrt{3}}{2}=\dfrac{\sqrt{6}{a^3}}{3}$.
+	} 
+\end{ex}
+
+% nguồn: Ok_Toan11_TracNghiem_Lan2
+\begin{ex}%[1H8V7-4]%[ma:9ae65b40]
+	Cho hình lăng  trụ đều $ABC. A'B'C'$. Biết khoảng cách từ điểm $C$ đến mặt phẳng $\left(ABC'\right)$ bằng $a$, góc giữa hai mặt phẳng $\left(ABC'\right)$ và $\left(BCC'B'\right)$ bằng $\alpha$ với $\cos\alpha=\dfrac{1}{2\sqrt{3}}$. Tính thể tích khối lăng trụ $ABC. A'B'C'$.
+	\choice 
+		{$V=\dfrac{3a^3\sqrt{2}}{4}$} 
+		 {\True $V=\dfrac{3a^3\sqrt{2}}{2}$}
+		 {$V=\dfrac{a^3\sqrt{2}}{2}$}
+		 {$V=\dfrac{3a^3\sqrt{2}}{8}$}
+	 \loigiai{
+	\immini{Gọi $M$, $N$ lần  lượt là trung điểm của $AB$ và $BC$.\\
+		Do $\heva{&AB\perp CC'\\&AB\perp  CM}\Rightarrow AB\perp\left(MCC'\right)\Rightarrow\left(ABC'\right)\perp\left(MCC'\right)$.\\
+		Kẻ $CK$ vuông góc với $CM$ tại  $K$ thì ta được $CK\perp\left(ABC'\right)$.\\
+		 Do đó $CK=\mathrm{d}\left(C;\left(ABC'\right)\right)=a$.\\
+		Đặt $BC=x$, $CC'=y$, ($x>0$,  $y>0$), ta được $CM=\dfrac{x\sqrt{3}}{2}$.
+		\[\dfrac{1}{CM^2}+\dfrac{1}{CC'^2} 
+		=\dfrac{1}{CK^2} 
+		 \Leftrightarrow\dfrac{4}{3x^2}+\dfrac{1}{y^2}=\dfrac{1}{a^2}.\,\,(1)\]
+		Kẻ $CE\perp BC'$ tại  $E$, ta được \[\widehat{KEC}=\alpha, \,EC=\dfrac{KC}{\sin\alpha}=\dfrac{a}{\sqrt{1-\dfrac{1}{12}}}=a\sqrt{\dfrac{12}{11}}.\]
+		}{\begin{tikzpicture}[>=stealth,line join=round,line cap=round,font=\footnotesize,declare function={a=5; b=0.55*a; h=0.9*a;}]
+		\path (0:0) coordinate (A) 
+			 (-45:b) coordinate (B)
+			(a,0)  coordinate (C)
+		\foreach \x in {A,B,C}{(\x)++(90:h) coordinate  (\x1)}
+			 ($(A)!.5!(B)$) coordinate (M)
+			($(C1)!(C)!(M)$) coordinate  (K)
+			($(B)!3/5!(C1)$) coordinate  (E);
+		\draw  pic["$\alpha$",angle eccentricity=1.5,angle radius=0.3cm]
+			{angle=K--E--C}; 
+		\draw[dashed] (A)--(C) 
+			 (A)--(M)
+			 (C1)--(A)
+			 (C1)--(M)
+			 (C1)--(B)
+			 (C)--(M)
+			(C)--(K)  node[midway,below]{$a$}--(E)--cycle;
+		\draw  (B1)--(A1)--(C1)--cycle
+			(A1)--(A)--(B)--(B1) 
+			 (C1)--(C)--(B) node[midway,below right]{$x$};
+		\foreach  \x/\y/\z in {K/E/C1,C1/E/C,C/K/M}{
+			\path (\y) pic[draw,angle radius=5pt]{right angle = \x--\y--\z}; 
+		 }
+		\foreach  \x/\goc/\t in {A/180/A,B/-90/B,C/0/C,A1/100/A',B1/85/B',C1/80/C',M/180/M,K/90/K,E/90/E}
+		 \draw[fill=black] (\x) circle (1pt) node[shift={(\goc:9pt)},font=\scriptsize]{$\t$};
+	\end{tikzpicture}
+		} 
+		\noindent Lại có  $\dfrac{1}{x^2}+\dfrac{1}{y^2}=\dfrac{1}{C{E^2}}=\dfrac{11}{12a^2}.\,\,(2)$\\
+		Giải $(1)$ và $(2)$ ta được $x=2a$, $y=\dfrac{a\sqrt{6}}{2}$.\\ 
+		Thể tích khối lăng trụ  $ABC. A'B'C'$ là
+		 $V=y\cdot\dfrac{x^2\sqrt{3}}{4}=\dfrac{a\sqrt{6}}{2}\cdot\dfrac{4a^2\sqrt{3}}{4}=\dfrac{3\sqrt{2}{a^3}}{2}$.
+	 }
+\end{ex}
+
+% nguồn: Ok_Toan11_TracNghiem_Lan2
+\begin{ex}%[1H8C7-4]%[ma:2ecb8da3]
+	Cho khối lăng trụ $ABC.A'B'C'$, khoảng cách từ $C$ đến đường thẳng $BB'$ bằng $2$, khoảng cách từ $A$ đến các đường thẳng $BB'$ và $CC'$ lần lượt bằng $1$ và $\sqrt{3}$, hình chiếu vuông góc của  $A$ lên mặt phẳng $(A'B'C')$ là trung điểm $M$ của $B'C'$ và $A'M = \dfrac{2\sqrt{3}}{3}$. Thể tích của khối lăng trụ đã cho bằng
+	 \choice
+		{\True $2$} 
+		 {$1$}
+		 {$\sqrt{3}$}
+		 {$\dfrac{2\sqrt{3}}{3}$}
+	\loigiai{ 
+		\begin{center}
+			\begin{tikzpicture}[scale=1,font=\footnotesize,line join=round,line cap=round,>=stealth]
+					\coordinate[label=below:$B'$]  (B') at (0,0);
+					\coordinate[label=below left:$A'$] (A') at (-160:4); 
+					\coordinate[label=above:$B$] (B)  at ($(B')+(60:5)$);
+					 \coordinate[label=left:$A$] (A) at ($(A')-(B')+(B)$);
+					 \coordinate[label=right:$C'$] (C') at ($(B')+(-35:3)$);
+					 \coordinate[label=right:$C$] (C) at ($(C')-(B')+(B)$);
+					\coordinate[label=right:$K$]  (K) at ($(C')!(A)!(C)$);
+					\coordinate[label=right:$I$] (I)  at ($(B')!0.55!(B)$);
+					\coordinate[label=above right:$F$]  (F) at ($(B)!0.5!(C)$);
+					 \coordinate[label=below:$M$] (M) at ($(B')!0.5!(C')$);
+					 \coordinate[label=right:$E$] (E) at ($(I)!0.5!(K)$);
+					\draw (A')--(C')--(C)--(B)--(A)--(C) 
+						(A')--(A) 
+						 (C')--(A)--(K);
+					\draw[dashed] (B)--(B')--(C') 
+						 (A')--(B')
+						(A')--(M)--(F) 
+						(A)--(I)--(K) 
+						(M)--(A)--(E) 
+						 (A)--(B');
+					\foreach \diem in {B',A',C',B,A,C,K,I,F,M,E} 
+					\fill (\diem)  circle (1pt);
+				\end{tikzpicture}
+		\end{center}
+		 Kẻ $AI \perp BB'$, $AK \perp CC'$.\\
+		Khoảng cách từ $A$ đến $BB'$ và  $CC'$ lần lượt là $1$; $\sqrt{3}$.\\
+		Khi  đó ta được $AI = 1$, $AK = \sqrt{3}$.\\
+		Gọi $F$ là trung điểm của $BC$. Ta có $A'M  = \dfrac{2\sqrt{3}}{3}$.\\
+		Suy ra $AF = \dfrac{2\sqrt{3}}{3}$.\\ 
+		Ta có $\heva{ 
+		&AI \perp BB' \\ 
+		&BB' \perp  AK
+		 }
+		\Rightarrow BB' \perp (AIK).$\\ 
+		Suy ra $ BB' \perp IK$.\\ 
+		 Vì $CC' \parallel BB'$ nên $\mathrm{d}(C, BB') = \mathrm{d}(K, BB') = IK = 2$.\\
+		Suy  ra $\triangle AIK$ vuông tại $A$.\\
+		Gọi $E$ là trung điểm của $IK$. Suy ra  $EF \parallel BB'$.\\
+		Khi đó, ta có $EF \perp (AIK) \Rightarrow EF  \perp AE$.\\
+		Ta lại có $AM \perp (ABC)$. Do đó  góc giữa hai mặt phẳng $(ABC)$ và $(AIK)$ là góc giữa $EF$ và $AM$ bằng góc $\widehat{AME} = \widehat{FAE}$.\\
+		 Ta có
+		$$\cos \widehat{FAE} = \dfrac{AE}{AF} =  \dfrac{1}{\dfrac{2\sqrt{3}}{3}} = \dfrac{\sqrt{3}}{2} \Rightarrow \widehat{FAE} = 30^\circ.$$
+		Hình chiếu  vuông góc của tam giác $ABC$ lên mặt phẳng $(AIK)$ là $\triangle AIK$ nên ta có
+		$$S_{\triangle AIK} = S_{\triangle ABC}\cdot\cos \widehat{EAF}\Rightarrow S_{\triangle ABC} = \dfrac{S_{\triangle AIK}}{\cos \widehat{EAF}} = \dfrac{\dfrac{1}{2}\cdot 1\cdot  \sqrt{3}}{\cos 30^{\circ}} = 1.$$
+		Xét  $\triangle AMF$ vuông tại $A$ có
+		$$\tan \widehat{AMF} = \dfrac{AF}{AM} \Rightarrow AM = \dfrac{AF}{\tan 30^{\circ}} =  \dfrac{\dfrac{2\sqrt{3}}{3}}{\dfrac{\sqrt{3}}{3}} = 2.$$
+		Vậy $V_{ABC.A'B'C'} =  AM\cdot S_{\triangle ABC} = 1\cdot 2=2$.
+	} 
+\end{ex}
+
+
+%%%%%%%%%%%%%%%% ĐÚNG/SAI %%%%%%%%%%%%%%%%
+
+% nguồn: Ok_dungsai_lop11_Lan1
+\begin{ex}%[1H8N7-4]%[1H8V5-3]%[ma:04df1c41]
+  Cho hình lăng trụ tam giác đều $ABC.A'B'C'$ có tất cả các cạnh bằng $a$.
+  \choiceTF
+  {\True Thể  tích của khối lăng trụ đã cho là $V=\dfrac{a^3\sqrt{3}}{4}$}
+  {Thể tích của khối chóp $A'.ABC$  là $V_1=\dfrac{a^3\sqrt{3}}{12}$}
+  {\True Khoảng cách từ điểm $A$ đến mặt phẳng  $(BCC'B')$ là $d=\dfrac{a\sqrt{3}}{4}$}
+  {\True Khoảng cách từ điểm $A$ đến mặt  phẳng $(A'BC)$ là $d=\dfrac{a\sqrt{21}}{7}$}
+ \loigiai{ 
+  \begin{center}
+   \begin{tikzpicture}[scale=1,font=\footnotesize,line join=round,line cap=round,>=stealth]
+     \path 
+      (0,0) coordinate  (A)
+      (1.5,-1.5) coordinate  (B)
+       (4,0) coordinate (C)
+       ($(A)+(0,3.5)$) coordinate (A')
+      ($(A')+(B)-(A)$) coordinate (B') 
+      ($(A')+(C)-(A)$) coordinate (C') 
+      ($(C)!0.5!(B)$)  coordinate (M)
+      ($(A')!0.7!(M)$) coordinate  (H);
+     \draw (A)--(B)--(C)--(C')--(B')--(A')--cycle (A')--(C') 
+       (B)--(B');
+      \draw[dashed] (A')--(M)--(A)--(C)
+       (A)--(H);
+     \foreach  \p/\q in {A/180,B/-90,C/0,A'/180,B'/75,C'/0,M/-20,H/50}
+     \fill[black] (\p) circle  (1.0pt) node[shift={(\q:3mm)}]{$\p$};
+    \end{tikzpicture}
+  \end{center}
+  \begin{itemchoice}
+   \itemch  \textbf{Đúng}.
+   Khối lăng trụ có diện tích đáy là $S_{\triangle ABC}=\dfrac{a^2\sqrt{3}}{4}$, chiều cao $h=a$ nên thể tích bằng  $V=\dfrac{a^3\sqrt{3}}{4}$.
+   \itemch \textbf{Đúng}. 
+   Khối chóp $A'.ABC$ có diện tích đáy là $S_{\triangle  ABC}=\dfrac{a^2\sqrt{3}}{4}$, chiều cao $h=a$ nên thể tích là
+   $V_1=\dfrac{1}{3}\cdot\dfrac{a^2\sqrt{3}}{4}\cdot  a=\dfrac{a^3\sqrt{3}}{12}$.
+   \itemch \textbf{Sai}. 
+   Gọi $M$ là trung điểm của $BC$, ta có $AM\perp BC$.\\ 
+   Vì $ABC.A'B'C'$ là lăng trụ tam giác đều nên $AM\perp  BB'$.\\
+   Suy ra $AM\perp(BCC'B')\Rightarrow\mathrm{d}\left(A;(BCC'B')\right)=AM=\dfrac{a\sqrt{3}}{2}$. 
+   \itemch \textbf{Đúng}. 
+   Ta có $BC\perp  AM$, $BC\perp AA'\Rightarrow BC\perp(AA'M)$.\\
+   Kẻ  $AH\perp A'M\Rightarrow AH\perp(A'BC)$.\\
+   Suy ra  $\mathrm{d}\left(A;(A'BC)\right)=AH$.\\
+   Tam giác $AA'M$ vuông tại $A$ có  $$\dfrac{1}{AH^2}=\dfrac{1}{AM^2}+\dfrac{1}{AA'^2}=\dfrac{4}{3a^2}+\dfrac{1}{a^2}=\dfrac{7}{3a^2}\Leftrightarrow AH=\dfrac{a\sqrt{21}}{7}.$$
+ \end{itemchoice}}
+\end{ex}
+
+% nguồn: Ok_dungsai_lop11_Lan2
+\begin{ex}%[1H8H7-4]%[ma:18847171]
+	\immini{Cho hình chóp đều $ S.ABCD$ có đáy cạnh a và chiều cao $ SO=2a$. Gọi $ M,N,P$, $ Q$ lần lượt  là trung điểm của $ SA,SB,SC,SD$. Khi đó
+	\choiceTF 
+		 {Thể tích khối chóp đều $ S.ABCD$ là $ 2a^3$}
+		{\True Khoảng cách giữa hai mặt phẳng $\left(MNPQ\right)$ và $\left(ABCD\right)$ bằng  $ a$}
+		{Diện tích đa giác $ MNPQ$ là  $\dfrac{a^2}{2}$}
+		{\True Thể tích khối chóp cụt đều $ ABCD.MNPQ$ là $\dfrac{7a^3}{12}$}}{	\begin{tikzpicture}[scale=0.9,font=\footnotesize,line join=round,line cap=round,>=stealth]
+		\def \c{5} \def \b{4} 
+		\def \d{3}  \def \goc{45}
+		\def  \h{4.5}
+		 \path
+			(0,0) coordinate (A) 
+			(\b,0) coordinate (B) 
+			(\goc:\d) coordinate  (D)
+			($(B)+(D)-(A)$)  coordinate (C)
+			($(A)!.5!(C)$) coordinate  (O)
+			($(O)+(0,\h)$)  coordinate (S)
+			($(S)!.5!(A)$) coordinate  (M)
+			($(S)!.5!(B)$) coordinate (N) 
+			 ($(S)!.5!(C)$) coordinate (P)
+			($(S)!.5!(D)$) coordinate  (Q);
+		\draw  [dashed] (O)--(S)--(D)--(C)--(A)--(D)--(B)
+			 (P)--(Q)--(M)--(P)
+			 (Q)--(N);
+		 \draw (M)--(N)--(P)
+			 (S)--(A)--(B)--(S)--(C)--(B);
+		\draw ($(O)!3mm!(B)$)--($(O)!3mm!(B)+(O)!3mm!(S)-(O)$) --($(O)!3mm!(S)$) 
+			($(O)!3mm!(A)$)--($(O)!3mm!(A)+(O)!3mm!(S)-(O)$)  --($(O)!3mm!(S)$);
+		\foreach \x/\y in {A/180,B/0,C/0,D/180,S/90,O/-100,M/180,N/0,P/45,Q/45} 
+		\draw[fill] (\x) circle  (1pt) +(\y:.3) node {$\x$};
+	\end{tikzpicture}
+		 }
+	\loigiai{ 
+	\begin{itemchoice}
+		\itemch Ta có  $V_{SABCD}=\dfrac{1}{3}SO.S_{ABCD}=\dfrac{2}{3}{a^3}$.
+		\itemch Khoảng cách giữa hai mặt phẳng  $\left(MNPQ\right)$ và $\left(ABCD\right)$ là $ OO'=\dfrac{1}{2}SO=a$.
+		\itemch Ta có  $S_{ABCD}=a^2\Rightarrow{S_{MNPQ}}=\left(\dfrac{1}{2}a\right)^2=\dfrac{1}{4}{a^2}$.
+		\itemch Ta  có\\
+		 $ V=\dfrac{1}{3}\left(S_{ABCD}+S_{MNPQ}+\sqrt{S_{ABCD}\cdot{S_{MNPQ}}}\right)\cdot O{O^\prime}=\dfrac{1}{3}\left(a^2+\dfrac{1}{4}{a^2}+\sqrt{a^2\cdot\dfrac{1}{4}{a^2}}\right)\cdot a=\dfrac{7}{12}{a^3}$.
+	\end{itemchoice}
+	} 
+\end{ex}
+
+% nguồn: Ok_dungsai_lop11_Lan2
+\begin{ex}%[1H8H7-4]%[ma:22659d89]
+	\immini{Cho hình chóp $ S.ABC$ có đáy là tam giác $ ABC$ vuông tại $  B$ có $ AB=1$, $\widehat{ACB}=30^\circ$. Biết $ SA$ vuông góc với mặt đáy và $ SA=2$. Gọi $ H$ là hình chiếu của $ A$ trên $ SB$. Khi đó
+	\choiceTF 
+		{\True $  \mathrm{d}(A,SB)=AH$}
+		{$  \mathrm{d}(B,(SAC))=\dfrac{\sqrt{3}}{3}$}
+		{\True $ BC=\sqrt{3}$} 
+		{Thể tích khối chóp $ S.ABC$ bằng $\dfrac{\sqrt{3}}{6}$}}{	\begin{tikzpicture}[line join=round,line cap=round]
+		\coordinate (A)  at (-2,0);
+		\coordinate (B)  at (0,-2);
+		\coordinate (C) at (4,0); 
+		\coordinate (S)  at ($(A)+(0,3)$);
+		 \draw (S)--(A)
+			(S)--(B) 
+			 (S)--(C)
+			(B)--(C) 
+			(A)--(B); 
+		\draw[dashed,thin](A)--(C); 
+		\pic[draw,thin,angle radius=2mm] {right angle = S--A--B}  pic[draw,thin,angle radius=2mm] {right angle = S--A--C};
+		\coordinate (I) at ($(A)!(B)!(C)$); 
+		\draw[name path=BI,dashed]  (B)--(I);
+		\pic[draw,thin,angle radius=3mm] {right  angle = B--I--A};
+		\pic[draw,thin,angle  radius=3mm] {right angle = A--B--C};
+		\coordinate (H)  at ($(S)!(A)!(B)$);
+		\draw[name  path=AH,dashed] (A)--(H);
+		\pic[draw,thin,angle radius=3mm] {right angle = A--H--S}; 
+		\foreach \i/\g in {S/90,A/180,B/-90,C/0,I/45,H/45}{\draw[fill=white](\i) circle  (1pt)
+			($(\i)+(\g:3mm)$) node[scale=1]{$\i$};} 
+	\end{tikzpicture}
+		 }
+	 \loigiai{
+	\begin{itemchoice}
+		\itemch  Vì $ AH\perp SB$ nên $ \mathrm{d}(A,SB)=AH$.
+		 \itemch Tam giác $ SAB$ vuông tại $ A$, đường cao $ AH$ nên $\dfrac{1}{AH^2}=\dfrac{1}{SA^2}+\dfrac{1}{AB^2}$.\\
+		Suy ra $ AH=\dfrac{SA\cdot AB}{\sqrt{SA^2+AB^2}}=\dfrac{2\cdot 1}{\sqrt{2^2+1^2}}=\dfrac{2\sqrt{5}}{5}$.\\ 
+		Trong mặt phẳng $(ABC)$, kẻ  $BI\perp AC$ tại $I$.\\
+		Mặt khác $BI\perp  SA$ (do $SA\perp (ABC)$, $BI\subset (ABC)$).\\
+		Vì vậy $ BI\perp (SAC)$ hay $  \mathrm{d}(B,(SAC))=BI$.\\
+		Tam giác $ ABI$ vuông tại $ I$ có $\sin\widehat{BAC}=\dfrac{BI}{AB}\Rightarrow  BI=AB\cdot\sin{60^\circ}=\dfrac{\sqrt 3}{2}$.\\
+		Vậy $  \mathrm{d}(B,(SAC))=BI=\dfrac{\sqrt 3}{2}$.
+		\itemch Tam giác $  ABC$ vuông tại $ B$ có $\tan\widehat{ACB}=\dfrac{AB}{BC}\Rightarrow BC=\dfrac{AB}{\tan{30^\circ}}=\sqrt 3 $.
+		\itemch Diện tích đáy hình chóp là $ S=S_{\triangle ABC}=\dfrac{1}{2}BA\cdot BC=\dfrac{\sqrt  3}{2}$.\\
+		Chiều cao  hình chóp $ h=SA=2$.\\
+		Thể tích khối chóp $ S.ABC$ là $V_{S.ABC}=\dfrac{1}{3}Sh=\dfrac{1}{3}\cdot\dfrac{\sqrt  3}{2}\cdot 2=\dfrac{\sqrt 3}{3}$.
+	\end{itemchoice}
+	} 
+\end{ex}
+
+% nguồn: Ok_dungsai_lop11_Lan2
+\begin{ex}%[1H8H7-4]%[ma:5810c467]
+	Cho hình lăng trụ tam giác đều $ABC.A'B'C'$ có cạnh đáy  bằng $2a$,
+	khoảng cách từ điểm $A'$ đến mặt phẳng  $(AB'C')$ bằng $\dfrac{a\sqrt{3}}{2}$.
+	\choiceTF 
+		{\True Trong mặt phẳng $(A'B'C')$, kẻ $A'H \perp B'C'$ tại $H$. Khi đó $B'C' \perp (AA'H)$} 
+		{\True $d\big((ABC),(A'B'C')\big)  = a$}
+		 {Diện tích đáy của lăng trụ là $a^2\sqrt{5}$}
+		{\True Thể tích khối lăng trụ là  $a^3\sqrt{3}$}
+	\loigiai{ 
+		\begin{center}
+			\begin{tikzpicture}[scale=1,line join=round,line cap=round,>=stealth]
+					\def  \h{5}
+					 \path
+						(0:0)  coordinate (A')
+						(180:6) coordinate (C') 
+						(-150:4) coordinate  (B')
+						($(B')!0.5!(C')$)  coordinate (H);
+					 \foreach \x in {A,B,C}{
+						 \path ($(\x')+(90:\h)$) coordinate (\x);
+						\draw  (\x)--(\x');
+					 }
+					 \path ($(A)!(A')!(H)$) coordinate (K);
+					 \draw (A)--(B)--(C)--cycle (A')--(B')--(C')
+						 (A)--(B');
+					 \draw[dashed] (A')--(K)
+						 (A')--(H)--(A)--(C')--(A');
+					\foreach \d/\g  in {A/45,B/90,C/135,A'/0,B'/-90,C'/180,H/-150,K/120}
+					\path[draw,fill=black] (\d) circle (1pt) + (\g:9pt)  node {$\d$};
+					\foreach \a/\b/\c in {A'/H/B',A'/K/A}{\draw pic[draw,angle radius=2mm] {right angle = \a--\b--\c};} 
+				\end{tikzpicture}
+		\end{center}
+		\begin{itemchoice}
+			\itemch Ta có $\heva{& B'C'  \perp A'H,\\&
+			B'C' \perp AA' \ (\text{do } AA'  \perp (A'B'C'))} \Rightarrow B'C' \perp (AA'H)$.
+			\itemch Trong mặt phẳng $(AA'H)$, kẻ  $A'K \perp AH$ tại $K$. \hfill (1)\\
+			 Mà $B'C' \perp (AA'H)$ nên $A'K \perp B'C'$. \hfill (2)\\
+			Từ (1)  và (2) suy ra $A'K \perp (AB'C')$, hay $d\big(A', (AB'C')\big) = A'K = \dfrac{a\sqrt{3}}{2}$.\\
+			Xét tam giác $A'B'C'$ đều cạnh  $2a$, có đường cao $A'H = \dfrac{2a \cdot \sqrt{3}}{2} = a\sqrt{3}$.\\
+			Xét tam giác $AA'H$ vuông tại $A'H$  có đường cao $A'K$, nên
+			 \[
+			\frac{1}{A'K^2} = \frac{1}{A'H^2} + \frac{1}{AA'^2} 
+			\Rightarrow  \frac{1}{3a^2/4} = \frac{1}{3a^2} + \frac{1}{A'A^2}
+			 \Rightarrow A'A = a.
+			 \]
+			Hai mặt đáy lăng trụ song song với  nhau và có khoảng cách là
+			 \[
+			d\big((ABC),(A'B'C')\big) = AA'  = a.
+			 \]
+			\itemch Vì $\triangle A'B'C'$ là tam giác đều, cạnh $2a$ nên diện tích đáy của lăng trụ là 
+			\[ 
+			S_{\triangle A'B'C'} = \frac{(2a)^2 \sqrt{3}}{4} = a^2 \sqrt{3}. 
+			 \]
+			\itemch Thể tích khối lăng trụ là 
+			 \[
+			V = A'A \cdot S_{\triangle A'B'C'} = a \cdot  a^2\sqrt{3} = a^3\sqrt{3}.
+			 \]
+		\end{itemchoice}
+	} 
+\end{ex}
+
+% nguồn: Ok_dungsai_lop11_Lan2
+\begin{ex}%[1H8H7-4]%[ma:87c219b9]
+	\immini{Cho hình chóp $ S.ABC$ có mặt bên $ (SAB)$ vuông góc  với mặt đáy và tam giác $ SAB$ đều cạnh $ 2a$. Biết tam giác $ ABC$ vuông tại $ C$ và cạnh $ AC=a\sqrt 3 $. Khi đó
+	\choiceTF 
+		{\True $ SH\perp (ABC)$} 
+		{\True $ \mathrm{d}(S,(ABC))=a\sqrt  3 $}
+		{$  \mathrm{d}(C,(SAB))=\dfrac{a\sqrt 3}{3}$}
+		{Thể tích của khối chóp $ S.ABC$ bằng $\dfrac{a^3}{6}$}}{	\begin{tikzpicture}[line join=round,line cap=round]
+		\coordinate (S)  at (0,4);
+		\coordinate (B)  at (-2,0);
+		\coordinate (A) at  (2,-1);
+		\coordinate (C) at (3,0); 
+		\coordinate  (H) at ($(S)-(0,4.5)$);
+		\coordinate (K)  at ($(A)!1/3!(B)$);
+		\draw (S)--(A) 
+			(S)--node[left]{$2a$} 
+			 (B)
+			(S)--(C) 
+			(A)--(B) 
+			(S)--(H) 
+			 (A)--node[right]{$a\sqrt{3}$}
+			 (C);
+		\draw[dashed,thin]  (B)--(C)
+			(C)--(K); 
+		\pic[draw,thin,angle radius=3mm] {right angle  = C--K--B};
+		\foreach  \i/\g in {S/90,A/-90,B/180,C/0,H/-90,K/-90}{\draw[fill=white](\i) circle (1pt)
+			($(\i)+(\g:3mm)$) node[scale=1]{$\i$};} 
+	\end{tikzpicture}
+		 }
+	\loigiai{ 
+	\begin{itemchoice}
+		\itemch Gọi $H$ là trung điểm $ AB$, mà tam giác $ SAB$ đều nên $ SH\perp  AB$.\\
+		 Ngoài ra $ (SAB)\perp (ABC)$ nên $ SH\perp (ABC)$.
+		\itemch Ta có $ \mathrm{d}(S,(ABC))=SH=\dfrac{2a\cdot\sqrt 3}{2}=a\sqrt 3$ (do tam giác $SAB$ đều cạnh  $2a$).
+		\itemch Kẻ đường cao $CK$  của tam giác $ABC$.\\
+		Ta có  $\heva{&CK\perp AB\\&CK\perp SH}\Rightarrow CK\perp (SAB)\Rightarrow \mathrm{d}(C,(SAB))=CK$.\\
+		Xét tam giác $ ABC$ vuông tại  $ C$ có\\
+		 $ BC=\sqrt{A{B^2}-A{C^2}}=\sqrt{4a^2-3a^2}=a$; $CK=\dfrac{CA\cdot CB}{AB}=\dfrac{a\sqrt{3}\cdot a}{2a}=\dfrac{a\sqrt{3}}{2}$.\\
+		Vậy $  \mathrm{d}(C,(SAB))=CK=\dfrac{a\sqrt{3}}{2}$.
+		\itemch Diện  tích đáy hình chóp là $S_{\triangle ABC}=\dfrac{1}{2}AC\cdot BC=\dfrac{1}{2}a\sqrt 3\cdot a=\dfrac{a^2\sqrt 3}{2}$.\\
+		Thể tích khối chóp là $V_{S\cdot ABC}=\dfrac{1}{3}SH\cdot{S_{\triangle ABC}}=\dfrac{1}{3}\cdot  a\sqrt 3\cdot\dfrac{a^2\sqrt 3}{2}=\dfrac{a^3}{2}$.
+	\end{itemchoice}
+	 }
+\end{ex}
+
+% nguồn: Ok_dungsai_lop11_Lan2
+\begin{ex}%[1H8H7-4]%[ma:43d9d650]
+	\immini{Cho hình hộp $ ABCD.A'B'C'D'$ có đáy là hình thoi  cạnh $ 3a$, $\widehat{ABC}=60^\circ$, $ AA'=2a$. Đỉnh $ A'$ cách đều ba đỉnh $ A,B,C$. Gọi $ G$ là trọng tâm của tam giác $ ABC$. Khi đó
+	 \choiceTF
+		{Diện tích hình thoi $ ABCD$ bằng $ 9a^2\sqrt 3 $} 
+		{Độ dài đường cao của hình hộp $ ABCD.A'B'C'D'$ bằng  $ a\sqrt 3 $}
+		{\True Thể tích  của khối hộp $ ABCD.A'B'C'D'$ bằng $\dfrac{9a^3\sqrt 3}{2}$}
+		{\True Thể tích của khối chóp $ AGC'C$ bằng $\dfrac{a^3\sqrt 3}{4}$}}{\begin{tikzpicture}[declare function={a=5; b=0.45*a; h=0.65*a;}]
+		\path (0:0) coordinate (A) 
+			(220:b) coordinate  (B)
+			($(B)+(a,0)$) coordinate  (C)
+			(a,0)  coordinate (D)
+		\foreach \x in {A,B,C,D}{(\x)++(90:h) coordinate  (\x1)}
+			($(A1)!0.5!(D1)$) coordinate  (M)
+			 ($(B1)!2/3!(M)$) coordinate (G);
+		 \draw[dashed] (A1)--(A)--(B)
+			 (A)--(D)
+			(B)--(G) 
+			 (B)--(D1);
+		\draw  (B1)--(A1)--(D1)--(C1)
+			 (D1)--(D)--(C)
+			(B)--(C)--(C1)--(B1)--cycle  (B1)--(M);
+		\foreach \x/\goc/\t  in {A/45/B',B/-90/A',C/-90/D',D/0/C',A1/90/B,B1/90/A,C1/0/D,D1/90/C,M/90/M,G/90/G}
+		 \draw[fill=white] (\x) circle (1pt) node[shift={(\goc:7pt)},font=\scriptsize]{$\t$};
+	\end{tikzpicture}
+		 }
+	 \loigiai{
+	\begin{itemchoice}
+		 \itemch Ta có $S_{ABCD}=2S_{ABC}=2.\dfrac{\left(3a\right)^2\sqrt 3}{4}=\dfrac{9a^2\sqrt 3}{2}$.
+		\itemch Do $ A'B=A'C=A'A$ nên hình chiếu của $ A'$ lên mặt phẳng $\left(ABC\right)$ là tâm đường tròn ngoại tiếp  tam giác $ ABC$.\\
+		Do tam giác $ ABC$ có $ AB=BC$ và $\widehat{ABC}=60^\circ$ nên $ ABC$ là tam giác đều, suy ra  trọng tâm $ G$ cũng là tâm đường tròn ngoại tiếp.\\
+		 Suy ra $ A'G\perp\left(ABCD\right)$.\\
+		Vì $ ABC$ là tam  giác đều cạnh $ 3a$, suy ra $ AG=a\sqrt 3 $.\\
+		Tam giác $  A'GA$ vuông tại $ G$ và $ AA'=2a$ nên $ A'G=a$.
+		\itemch Thể tích khối lăng trụ là $ V=A'G\cdot  S_{ABCD}=\dfrac{9a^3\sqrt 3}{2}$.
+		\itemch Ta có $S_{AGC}=\dfrac{2}{3}{S_{AMC}}=\dfrac{2}{3}\cdot\dfrac{1}{2}\cdot  S_{ABC}=\dfrac{1}{3}\cdot\dfrac{9a^2\sqrt 3}{4}=\dfrac{3a^2\sqrt 3}{4}$.\\
+		Vậy $V_{AGC'C}=V_{C'AGC}=V_{A'AGC}=\dfrac{1}{3}A'G\cdot  S_{AGC}=\dfrac{a^3\sqrt 3}{4}$.
+	\end{itemchoice}
+	 }
+\end{ex}
+
+% nguồn: Ok_dungsai_lop11_Lan2
+\begin{ex}%[1H8H7-4]%[ma:4b8192bc]
+	\immini{Cho hình chóp $ S.ABC$ có đáy là  tam giác vuông cân tại $ B$, $ AB=BC=a$. Cạnh bên $ SA$ vuông góc với mặt phẳng đáy $\left(ABC\right)$ và $ SA=a$. Gọi $ I$ là trung điểm của $ AC$ và $ H$ là hình chiếu vuông góc của $ I$ lên $ SC$.
+	\choiceTF 
+		{\True Độ dài đường cao  của khối chóp $ S.ABC$ bằng $ a$}
+		{Thể tích khối chóp  $ S.ABC$ là $\dfrac{a^3}{3}$}
+		{\True Thể  tích khối chóp $ S.ABI$ là $\dfrac{a^3}{12}$}
+		{Thể tích khối chóp $ I.BHC$ là $\dfrac{a^3\sqrt 2}{36}$}}{\begin{tikzpicture}[line join=round,line cap=round]
+		\coordinate (A)  at (-2,0);
+		\coordinate (B)  at (0,-2);
+		\coordinate (C)  at (4,0);
+		 \coordinate (S) at ($(A)+(0,3)$);
+		 \draw (S)--(A)
+			(S)--(B) 
+			(S)--(C) 
+			 (B)--(C)
+			(A)--(B); 
+		 \draw[dashed,thin](A)--(C);
+		\pic[draw,thin,angle radius=2mm] {right angle = S--A--B} pic[draw,thin,angle radius=2mm] {right angle  = S--A--C};
+		\coordinate (I) at  ($(A)!(B)!(C)$);
+		\draw[name path=BI,dashed] (B)--(I); 
+		\pic[draw,thin,angle radius=3mm]  {right angle = B--I--A};
+		\pic[draw,thin,angle radius=3mm] {right  angle = A--B--C};
+		\coordinate  (H) at ($(S)!(I)!(C)$);
+		 \draw[name path=IH,dashed] (I)--(H);
+		\pic[draw,thin,angle radius=3mm] {right angle  = I--H--C};
+		\draw  (B)--(H);
+		 \foreach \i/\g in {S/90,A/180,B/-90,C/0,I/145,H/90}{\draw[fill=white](\i) circle (1pt)
+			($(\i)+(\g:3mm)$)  node[scale=1]{$\i$};}
+	\end{tikzpicture}
+		} 
+	\loigiai{ 
+	\begin{itemchoice}
+		\itemch Đường cao của khối chóp $ S.ABC$  là $ SA=a$.
+		\itemch Ta có $V_{S.ABC}=\dfrac{1}{3}SA\cdot S_{ABC}=\dfrac{1}{3}\cdot a\cdot S_{ABC}=\dfrac{1}{3}\cdot  a\cdot\dfrac{1}{2}\cdot AB\cdot BC=\dfrac{1}{6}{a^3}$.
+		\itemch Ta có $V_{S.ABI}=\dfrac{1}{3}SA\cdot S_{ABI}=\dfrac{1}{3}\cdot  a\cdot\dfrac{1}{2}{S_{ABC}}=\dfrac{1}{3}\cdot a\cdot\dfrac{1}{2}\cdot\dfrac{1}{2}\cdot AB\cdot BC=\dfrac{1}{12}{a^3}$.
+		\itemch Xét tam giác vuông $  SAC$ có $ SA=a; AC=a\sqrt 2 $$\Rightarrow SC=a\sqrt 3 $.\\
+		Vì $\heva{&BI\perp AC\\&BI\perp SA}\Rightarrow BI\perp\left(SAC\right)\Rightarrow BI\perp SC$ mà $ IH\perp SC\Rightarrow SC\perp\left(BIH\right)\Rightarrow SC\perp  BH$.\\
+		Xét tam giác vuông $SBC$ có  $ CH\cdot CS=CB^2\Leftrightarrow\dfrac{CH}{CS}=\left(\dfrac{CB}{CS}\right)^2=\dfrac{1}{3}$.\\
+		 Vì $ SH\cap\left(ABC\right)=\left\{ C\right\}\Rightarrow\dfrac{d\left(H;\left(ABC\right)\right)}{d\left(S;\left(ABC\right)\right)}=\dfrac{CH}{CS}=\dfrac{1}{3}$$\Rightarrow d\left(H;\left(ABC\right)\right)=\dfrac{a}{3}$.\\
+		Vậy $V_{I.BHC}=V_{H.BIC}=\dfrac{1}{3}d\left(H;\left(ABC\right)\right)\cdot  S_{BIC}$$=\dfrac{1}{3}\cdot\dfrac{a}{3}\cdot\dfrac{1}{2}{S_{ABC}}=\dfrac{1}{3}\cdot\dfrac{a}{3}\cdot\dfrac{1}{2}\cdot\dfrac{1}{2}\cdot AB\cdot BC=\dfrac{1}{36}{a^3}$.
+	\end{itemchoice}
+	 }
+\end{ex}
+
+% nguồn: Ok_dungsai_lop11_Lan2
+\begin{ex}%[1H8H7-4]%[ma:7da47269]
+	\immini{Cho hình lăng trụ tam giác đều $ ABC.A'B'C'$ có cạnh đáy bằng  $ 2a$, cạnh bên bằng $ a$. Gọi $ H$ là trung điểm cạnh $ B'C'$. Khi đó
+	 \choiceTF
+		{\True  $ B'C'\perp (AA'H)$}
+		{\True Góc giữa  cạnh bên và mặt đáy bằng $ 90^\circ $}
+		{\True Thể tích khối  lăng trụ là $a^3\sqrt 3 $}
+		{$ M$ là một điểm nằm trên cạnh $ AA'$. Thể tích khối chóp $ M.BB'C'C$ là $\dfrac{a^3\sqrt 3}{3}$}}{	\begin{tikzpicture}[scale=.8,font=\footnotesize,line join=round,line cap=round,>=stealth]
+		 \def\ac{8}
+		\def\ab{6} 
+		 \def\h{5}
+		\def\gocA{25} 
+		\coordinate[label=left:$A'$]  (A) at (0,0);
+		\coordinate[label=right:$C'$] (C) at  (\ac,0);
+		\coordinate[label=below left:$B'$] (B) at  (-\gocA:\ab);
+		\coordinate[label=left:$A$] (A') at ($(A)+(90:\h)$); 
+		 \coordinate[label=above:$B$] (B') at ($(B)-(A)+(A')$);
+		\coordinate[label=right:$C$]  (C') at ($(C)-(A)+(A')$);
+		\coordinate[label=right:$H$]  (I) at ($(B)!1/2!(C)$);
+		\draw (A')--(A)--(B)--(C)--(C')--(A')--(B')--(C') 
+			 (B)--(B')
+			 (A')--(B);
+		 \draw[dashed] (A)--(C)--(A')--(I)--(A);
+		\coordinate[label=right:$K$](H)  at ($(A')!(A)!(I)$);
+		 \draw[name path=AH,dashed] (A)--(H);
+		 \pic[draw,thin,angle radius=3mm] {right angle = A--H--A'};
+		\foreach \diem in {A,B,C,A',B',C',I,H} \fill (\diem)  circle (1pt);
+		\pic[draw,angle radius=6]{right angle=A--I--C}; 
+	\end{tikzpicture}
+		 }
+	 \loigiai{
+	\begin{itemchoice}
+		\itemch Trong mặt phẳng $\left(A^\prime{B^\prime}{C^\prime}\right)$, có $A^\prime H\bot{B^\prime}{C^\prime}$ vì  $ H$ là trung điểm cạnh $ B'C'$ của tam giác đều $ A'B'C'$.\\
+		Ta có  $\heva{&B'C'\perp A'H\\&B'C'\perp AA'\left(\rm{do}\,AA'\perp\left(A'B'C'\right)\right)}\Rightarrow B'C'\perp\left(AA'H\right)$.
+		\itemch Vì $ AA'\perp\left(A'B'C'\right)\Rightarrow\left(AA';\left(A'B'C'\right)\right)=90^\circ  $.
+		\itemch Diện tích đáy  của lăng trụ (đáy là tam giác đều) là $S_{\triangle A'B'C'}=\dfrac{(2a)^2\sqrt 3}{4}=a^2\sqrt 3 $.\\
+		 Thể tích khối lăng trụ là $V_{LT}=AA'\cdot{S_{\triangle A'B'C'}}=a\cdot{a^2}\sqrt 3=a^3\sqrt 3 $.
+		\itemch Ta có $V_{AA'B'C'}=\dfrac{1}{3}AA'\cdot{S_{\triangle A'B'C'}}=\dfrac{1}{3}\cdot a\cdot{a^2}\sqrt 3=\dfrac{a^3\sqrt  3}{3}$.\\
+		Suy ra $V_{M.BB'C'C}=V_{A.BB'C'C}=V_{LT}-V_{AA'B'C'}=\dfrac{2a^3\sqrt  3}{3}$.
+	\end{itemchoice}
+	} 
+\end{ex}
+
+% nguồn: Ok_dungsai_lop11_Lan2
+\begin{ex}%[1H8H7-4]%[ma:2b75fc48]
+	\immini{Cho hình chóp $ S.ABCD$ có đáy $ ABCD$ là hình thang vuông tại $A$ và $ B$, $ AB=BC=\dfrac{1}{2}AD=a$, gọi $H$ là trung điểm cạnh $AB$. Tam giác $ SAB$ đều và nằm trong mặt phẳng vuông góc  với đáy. Khi đó
+	 \choiceTF
+		{\True $ SH\perp\left(ABCD\right)$} 
+		{\True Thể  tích $V_{S.ABCD}=\dfrac{a^3\sqrt 3}{4}$}
+		{Thể tích  $V_{S.ACD}=\dfrac{a^3\sqrt 2}{6}$}
+		{Khoảng cách từ điểm $ C$ đến mặt phẳng $\left(SAD\right)$ bằng $ a$}}{	\begin{tikzpicture}[scale=2,font=\footnotesize,line join=round,line cap=round,>=stealth]
+		 \def \r{2.5}
+		 \path
+			 (0,0) coordinate (A)
+			(0:\r) coordinate (D) 
+			(220:0.5*\r)  coordinate (B)
+			 ($(B)+(D)$) coordinate (C')
+			($(B)!0.5!(C')$) coordinate (C) 
+			($(A)!0.5!(B)$) coordinate  (H)
+			($(A)!0.5!(D)$) coordinate (E) 
+			 (90:0.8*\r) coordinate (S);
+		\draw (S)--(B)--(C)--(D)--(S)--(B) 
+			(S)--(C); 
+		 \draw[dashed] (D)--(A)--(B)
+			 (A)--(S)--(H)
+			 (A)--(C)--(E);
+		\foreach \x/\g in {S/160,A/160,B/180,C/-80,D/0,H/160,E/45}\fill[black] (\x) circle (1pt)+(\g:.3)  node{$\x$};
+	\end{tikzpicture}
+		 }
+	 \loigiai{
+	\begin{itemchoice}
+		\itemch Do tam giác $ SAB$ đều có cạnh $ a$ và $ H$ là trung  điểm của $ AB$, ta có $ SH=\dfrac{a\sqrt 3}{2}$,\\
+		 Vì $\heva{&\left(SAB\right)\perp\left(ABCD\right)\\
+		&SH\perp  AB}\Rightarrow SH\perp\left(ABCD\right)$.
+		\itemch Ta có $V_{S.ABCD}=\dfrac{1}{3}SH\cdot S_{\triangle ABCD}=\dfrac{1}{3}\cdot\dfrac{a\sqrt 3}{2}\cdot\dfrac{3}{2}{a^2}=\dfrac{a^3\sqrt 3}{4}$. 
+		\itemch Gọi $ E$ là trung  điểm $ AD$, ta có $ CE=AB=a,\,\,CE\perp AD$ $\Rightarrow{S_{\triangle ACD}}=\dfrac{1}{2}AD\cdot CE=\dfrac{1}{2}\cdot 2a\cdot a=a^2$.\\
+		Thể tích  khối chóp $ S.ACD$ là $ V=\dfrac{1}{3}SH\cdot S_{\triangle ACD}=\dfrac{1}{3}\cdot\dfrac{a\sqrt 3}{2}\cdot a^2=\dfrac{a^3\sqrt 3}{6}$.
+		 \itemch Vì $\heva{&SA\perp AD\\&SH\perp AD}\Rightarrow AD\perp\left(SAH\right)\Rightarrow AD\perp SA$.\\
+		Suy ra $S_{\triangle  SAD}=\dfrac{1}{2}\cdot SA\cdot AD=a^2$.\\
+		Vậy $  \mathrm{d}\left(C;\left(SAD\right)\right)=\dfrac{3V_{SACD}}{S_{ACD}}=\dfrac{a\sqrt 3}{2}$.
+	\end{itemchoice}
+	 }
+\end{ex}
+
+% nguồn: Ok_dungsai_lop11_Lan2
+\begin{ex}%[1H8H7-4]%[ma:bc3c69ec]
+	\immini{Cho hình lăng  trụ tam giác đều $ ABC\cdot{A^\prime}{B^\prime}{C^\prime}$ có cạnh đáy bằng $ 2a$, khoảng cách từ điểm $A^\prime$ đến mặt phẳng $\left(A{B^\prime}{C^\prime}\right)$ bằng $\dfrac{a\sqrt 3}{2}$.
+	\choiceTF 
+		{\True Trong mặt phẳng  $\left(A^\prime{B^\prime}{C^\prime}\right)$, kẻ $A^\prime H\bot{B^\prime}{C^\prime}$ tại $ H$. Khi đó $ B'C'\perp (AA'H)$}
+		{\True  $ d\left((ABC),\left(A^\prime{B^\prime}{C^\prime}\right)\right)=a{\rm}$}
+		{ Diện tích đáy của lăng trụ là $a^2\sqrt 5  $}
+		{\True Thể tích khối lăng trụ là $a^3\sqrt 3 $}}{	\begin{tikzpicture}[scale=.6,font=\footnotesize,line join=round,line cap=round,>=stealth]
+		\def\ac{8} 
+		 \def\ab{6}
+		 \def\h{5}
+		\def\gocA{25} 
+		\coordinate[label=left:$A'$] (A) at  (0,0);
+		 \coordinate[label=right:$C'$] (C) at (\ac,0);
+		\coordinate[label=below left:$B'$]  (B) at (-\gocA:\ab);
+		\coordinate[label=left:$A$] (A') at  ($(A)+(90:\h)$);
+		\coordinate[label=above:$B$] (B') at ($(B)-(A)+(A')$); 
+		\coordinate[label=right:$C$]  (C') at ($(C)-(A)+(A')$);
+		\coordinate[label=right:$H$] (I) at ($(B)!1/2!(C)$); 
+		 \draw (A')--(A)--(B)--(C)--(C')--(A')--(B')--(C')
+			(B)--(B') 
+			(A')--(B); 
+		\draw[dashed]  (A)--(C)--(A')--(I)--(A);
+		\coordinate[label=right:$K$](H) at ($(A')!(A)!(I)$); 
+		\draw[name path=AH,dashed] (A)--(H); 
+		\pic[draw,thin,angle radius=3mm] {right  angle = A--H--A'};
+		 \foreach \diem in {A,B,C,A',B',C',I,H} \fill (\diem) circle (1pt);
+		 \pic[draw,angle radius=6]{right angle=A--I--C};
+	\end{tikzpicture}
+		 }
+	\loigiai{ 
+	\begin{itemchoice}
+		\itemch Trong mặt phẳng $\left(A^\prime{B^\prime}{C^\prime}\right)$, kẻ $A^\prime H\bot{B^\prime}{C^\prime}$ tại $  H$.\\
+		Trong mặt phẳng $\left(A{A^\prime}H\right)$, kẻ $A^\prime K\perp AH$  tại $ K$. (1)\\
+		 Ta có $\heva{&B'C'\perp A'H\\
+		&B'C'\perp AA'\,(\rm{do}\,AA'\perp  (A'B'C'))}
+		\Rightarrow B'C'\perp (AA'H)$. 
+		\itemch Do $B'C'\perp (AA'H)\Rightarrow A'K\perp B'C'(2)$.\\ 
+		\itemch Từ (1) và  (2) suy ra $A^\prime K\perp\left(A{B^\prime}{C^\prime}\right)$ hay $ \mathrm{d}\left(A^\prime,\left(A{B^\prime}{C^\prime}\right)\right)=A^\prime K=\dfrac{a\sqrt 3}{2}$.\\
+		Tam giác $A^\prime{B^\prime}{C^\prime}$ đều có đường cao $A^\prime H=\dfrac{2a\cdot\sqrt 3}{2}=a\sqrt  3 $.\\
+		Tam giác $ A{A^\prime}H$ vuông tại $A^\prime$ có đường cao $A^\prime  K$ nên\\
+		$\dfrac{1}{A^\prime{K^2}}=\dfrac{1}{A^\prime{H^2}}+\dfrac{1}{A^\prime{A^2}}\Rightarrow\dfrac{1}{\dfrac{3a^2}{4}}=\dfrac{1}{3a^2}+\dfrac{1}{A^\prime{A^2}}\Rightarrow{A^\prime}A=a{\rm}$\\ 
+		Hai mặt đáy lăng trụ song song với  nhau và có khoảng cách là $ \mathrm{d}\left((ABC),\left(A^\prime{B^\prime}{C^\prime}\right)\right)=A{A^\prime}=a{\rm}$\\
+		Diện tích đáy của lăng trụ (đáy là tam giác đều) là $S_{\triangle{A^\prime}{B^\prime}{C^\prime}}=\dfrac{(2a)^2\sqrt  3}{4}=a^2\sqrt 3 $.\\
+		\itemch Thể tích khối lăng trụ  là $ V=A{A^\prime}\cdot{S_{\triangle{A^\prime}{B^\prime}{C^\prime}}}=a\cdot{a^2}\sqrt 3=a^3\sqrt 3 $ (đơn vị thể tích).
+	\end{itemchoice}
+	 }
+\end{ex}
+
+% nguồn: Ok_dungsai_lop11_Lan2
+\begin{ex}%[1H8H7-4]%[ma:952b4c23]
+	\immini{Cho khối chóp tam giác đều $ S.ABC$ có cạnh đáy bằng $ a$, góc giữa mặt bên và mặt đáy bằng $ 45^\circ $. Gọi $ I,J,K$ lần lượt là trung điểm ba cạnh $ BC$, $AC$, $AB$  và $O$ là trọng tâm tam giác $ ABC$. Khi đó
+	\choiceTF 
+		{\True Đường cao của khối chóp  $ S.ABC$ là $ SO$}
+		 {Độ dài cạnh bên của khối chóp là $\dfrac{a\sqrt 3}{2}$}
+		{Thể tích $ V$  của khối chóp $ S.ABC$ là $\dfrac{a^3}{8}$}
+		{\True Thể tích $ V$ của khối chóp $ S.IJK$ là $\dfrac{a^3}{96}$}}{\begin{tikzpicture}[line join=round,line cap=round]
+		\coordinate  (A) at (-2,0);
+		\coordinate (B) at  (-1,-2);
+		 \coordinate (C) at (3,0);
+		 \coordinate (M) at ($(A)!0.5!(B)$);
+		\coordinate (O)  at ($(C)!2/3!(M)$);
+		\coordinate (S)  at ($(O)+(0,4)$);
+		\coordinate (I)  at ($(C)!0.5!(B)$);
+		\coordinate  (J) at ($(C)!0.5!(A)$);
+		 \coordinate (K) at ($(A)!0.5!(B)$);
+		\pic[draw,thin,angle radius=1.5mm]  {right angle = A--O--S} pic[draw,thin,angle radius=1.5mm] {right angle = S--O--C};
+		 \draw (S)--(A)
+			(S)--(B) 
+			 (S)--(C)
+			(B)--(C) 
+			(A)--(B) 
+			 (I)--(S)--(K);
+		\draw[dashed,thin](A)--(C) 
+			(A)--(O)--(B) 
+			 (C)--(O)--(S)
+			(A)--(I) 
+			(S)--(J); 
+		 \foreach \i/\g in {S/90,A/180,B/-90,C/0,O/-70,I/-45,J/45,K/180}{\draw[fill=white](\i) circle (1pt)
+			($(\i)+(\g:3mm)$)  node[scale=1]{$\i$};}
+	\end{tikzpicture}
+		} 
+	 \loigiai{
+	\begin{itemchoice}
+		\itemch Theo tính chất chóp tam giác đều, $ O$ là hình chiếu vuông góc của  $ S$ lên mặt phẳng $\left(ABC\right)$.\\
+		 Đường cao của khối chóp là $ SO$.
+		\itemch  Ta có $\left(\left(SBC\right),\left(ABC\right)\right)=\widehat{SIO}=45^\circ$. Khi đó
+		$ SO=OI\cdot\tan 45^\circ=\dfrac{a\sqrt 3}{6}\cdot1=\dfrac{a\sqrt  3}{6}$.\\
+		 Suy ra $ SA=\sqrt{S{O^2}+A{O^2}}=\sqrt{\left(\dfrac{a\sqrt 3}{6}\right)^2+\left(\dfrac{a\sqrt 3}{3}\right)^2}=\dfrac{a\sqrt{15}}{6}$.
+		\itemch Ta  có $V_{S.ABC}=\dfrac{1}{3}SO\cdot S_{\triangle{ABC}}=\dfrac{1}{3}\cdot\dfrac{a\sqrt{3}}{6}\cdot\dfrac{a^2\sqrt{3}}{4}=\dfrac{a^3}{24}$.
+		\itemch Vi $S_{\triangle{IJK}}=\dfrac{1}{4}\cdot S_{\triangle{ABC}}=\dfrac{a^2\sqrt{3}}{16}$ nên  $V_{S.IJK}=\dfrac{1}{3}\cdot\dfrac{a\sqrt{3}}{6}\cdot\dfrac{a^2\sqrt{3}}{16}=\dfrac{a^3}{96}$.
+	\end{itemchoice}
+	 }
+\end{ex}
+
+% nguồn: Ok_dungsai_lop11_Lan2
+\begin{ex}%[1H8V7-4]%[ma:c824c68a]
+	\immini{Cho hình chóp $ S.ABCD$ có đáy $ ABCD$ là hình chữ nhật với $ AB=a\sqrt 2 $, $ AC=a\sqrt 3 $. Cạnh bên $ SA=2a$ và vuông góc  với mặt đáy $ (ABCD)$.
+	 \choiceTF
+		{\True $ AD\parallel  (SBC)$}
+		{Khoảng cách từ $ D$ đến mặt phẳng $  (SBC)$ bằng $\dfrac{a\sqrt{3}}{3}$}
+		{\True Khoảng cách giữa hai  đường thẳng $ SD$, $AB$ bằng $\dfrac{2a\sqrt{5}}{5}$}
+		{Thể  tích khối chóp $ S.ABCD$ bằng $\dfrac{\sqrt{2}a^3}{3}$}
+		}{	\begin{tikzpicture}[scale=1,font=\footnotesize,line join=round,line cap=round,>=stealth]
+		\path (0,0)  coordinate (B)
+			(3,0) coordinate (C) 
+			(4.5,1)  coordinate (D)
+			 ($(B)+(D)-(C)$) coordinate (A)
+			(0,2.5) coordinate  (h)
+			($(A)+(h)$)  coordinate (S);
+		\draw (S)--(B)--(C)--(D)--cycle  (S)--(C);
+		 \draw[dashed] (S)--(A)--(B)
+			 (A)--(D);
+		\coordinate (H) at  ($(S)!(A)!(B)$);
+		\draw[name  path=AH,dashed] (A)--(H);
+		\pic[draw,thin,angle radius=3mm] {right angle  = A--H--S};
+		\coordinate (K)  at ($(S)!(A)!(D)$);
+		 \draw[name path=AH,dashed] (A)--(K);
+		\pic[draw,thin,angle radius=3mm] {right angle  = A--K--S};
+		\foreach  \p/\g in {A/45,B/240,C/-60,D/0,S/90,H/180,K/45} \fill[black] (\p) circle (1pt)+(\g:0.3) node{$\p$};
+	\end{tikzpicture}
+		 }
+	\loigiai{ 
+	\begin{itemchoice}
+		\itemch Ta có $AD\parallel BC$, mà $BC\subset(ABC)$ nên suy ra  $AD\parallel(SBC)$.
+		\itemch Do $AD\parallel(SBC)\Rightarrow  \mathrm{d}(D,(SBC))=\mathrm{d}(A,(SBC))$.\\
+		Trong mặt phẳng $ (SAB)$,  kẻ $ AH\perp SB$ tại $ H$. (1)\\
+		Ta có $\heva{&BC\perp AB\\&BC\perp  SA}\Rightarrow BC\perp (SAB)\Rightarrow AH\perp BC$. (2)\\
+		Từ (1) và (2) suy ra  $ AH\perp (SBC)$ hay $ \mathrm{d}(A,(SBC))=AH$.\\
+		Tam giác $ SAB$ vuông tại $ A$ có đường cao $ AH$  nên
+		\[\dfrac{1}{AH^2}=\dfrac{1}{SA^2}+\dfrac{1}{AB^2}\Rightarrow AH=\dfrac{SA\cdot  AB}{\sqrt{SA^2+AB^2}}=\dfrac{2a\cdot a\sqrt{2}}{\sqrt{4a^2+2a^2}}=\dfrac{2a\sqrt{3}}{3}.\]
+		Vậy $ \mathrm{d}(D,(SBC))=d(A,(SBC))=AH=\dfrac{2a\sqrt 3}{3}$. 
+		\itemch Trong mặt phẳng $ (SAD)$, kẻ $ AK\perp SD$  tại $ K$. (3)\\
+		Ta có $\heva{&AB\perp SA\\&AB\perp  AD}
+		\Rightarrow AB\perp (SAD)\Rightarrow AB\perp  AK$.(4)\\
+		Từ (3) và (4) suy ra $ AK$ là đường vuông góc  chung của hai đường thẳng chéo nhau $ AB,SD$.\\
+		Xét $\triangle ACD$ vuông tại $ D$  có $ AD=\sqrt{A{C^2}-C{D^2}}=\sqrt{3a^2-2a^2}=a$.\\
+		Xét $\triangle SAD$ vuông tại $ A$ có $ AK$ là đường cao  nên
+		\[\dfrac{1}{A{K^2}}=\dfrac{1}{S{A^2}}+\dfrac{1}{A{D^2}}\Rightarrow AK=\dfrac{SA\cdot AD}{\sqrt{S{A^2}+A{D^2}}}=\dfrac{2a\cdot a}{\sqrt{4a^2+a^2}}=\dfrac{2a\sqrt  5}{5}.\]
+		Vậy $  \mathrm{d}(AB,SD)=AK=\dfrac{2a\sqrt 5}{5}$.
+		\itemch Diện tích đáy hình chóp  là $S_{ABCD}=a\cdot a\sqrt 2=a^2\sqrt 2 $.\\
+		Thể tích  khối chóp cần tìm là
+		\[V_{S.ABCD}=\dfrac{1}{3}SA\cdot{S_{ABCD}}=\dfrac{1}{3}\cdot 2a\cdot{a^2}\sqrt 2=\dfrac{2\sqrt  2a^3}{3}.\]
+	\end{itemchoice}
+	 }
+\end{ex}
+
+
+%%%%%%%%%%%%%%%% TRẢ LỜI NGẮN %%%%%%%%%%%%%%%%
+
+% nguồn: Ok_TraLoiNgan_Lop11_Lan1
+\begin{ex}%[1H8C7-4]%[ma:cb666127]
+	Cho khối lăng trụ $ABC.A'B'C'$ có đáy $ABC$ là tam giác vuông cân tại $B$ và $AC=2a$. Hình chiếu vuông góc của $A'$ trên mặt phẳng $(ABC)$ là trung điểm $H$ của cạnh $AB$ và $AA'=a\sqrt{2}$. Biết thể tích khối  lăng trụ đã cho bằng $V$, khi đó $\dfrac{V}{\sqrt{6}a^3}$ bằng
+	\shortans{0,5} 
+	\loigiai{ 
+	\immini{ 
+		$ABC$ là  tam giác vuông cân tại $B$ suy ra $AB=BC=\dfrac{2a}{\sqrt{2}}=a\sqrt{2}$.\\
+		Diện tích  đáy: $B=S_{ABC}=\dfrac{1}{2}\cdot AB \cdot BC=a^2$\\
+		Chiều cao lăng  trụ $h=A'H=\sqrt{AA'^2-AH^2}=\dfrac{a\sqrt{6}}{2}$\\
+		Vậy  thể tích của khối lăng trụ $V=B\cdot h=a^2 \cdot \dfrac{a\sqrt{6}}{2}=\dfrac{a^3\sqrt{6}}{2}$.\\
+		Suy  ra $\dfrac{V}{\sqrt{6}a^3}=0{,}5$.
+		 }{
+		\begin{tikzpicture}[scale=1,>=stealth,font=\footnotesize,line join=round,line cap=round]
+				\coordinate (A) at (0,0); 
+				 \coordinate (B) at (1.2,-1.5);
+				 \coordinate (C) at (3.5,0);
+				 \coordinate (H) at ($(A)!1/2!(B)$);
+				\coordinate  (A') at ($(H)+(0,4)$);
+				 \coordinate (B') at ($(A')+(B)-(A)$);
+				\coordinate (C') at ($(A')+(C)-(A)$); 
+				\draw (A)--(B)--(C)--(C')--(B')--(A')--cycle; 
+				\draw (B)--(B') 
+					 (A')--(C')
+					(A')--(H); 
+				\draw[dashed] (A)--(C); 
+				 \foreach \p/\r in {A/180,A'/180,B/-90,C/0,B'/-30,C'/0,H/-135}
+				\fill (\p) circle  (1pt) node[shift={(\r:3mm)}]{$\p$};
+				\foreach \p/\r/\t  in{A'/H/A,A/B/C}
+				\draw  pic[draw=black,angle eccentricity=0.75,angle radius=0.2cm]{right angle=\p--\r--\t};
+				\node  at ($(A)!0.5!(A')$)[left]{$a\sqrt{2}$};
+				\node at  ($(A)!0.6!(C)$)[above]{$2a$};
+			\end{tikzpicture}
+		} 
+	} 
+\end{ex}
+
+
+%%%%%%%%%%%%%%%% TỰ LUẬN %%%%%%%%%%%%%%%%
+
+% nguồn: Ok_TuanLuan_Toan11_Lan2
+\begin{ex}%[1H8N7-4]%[ma:ac4c6adf]
+	Cho khối lăng trụ đứng $ABC.A'B'C'$ có đáy  $ABC$ là tam giác vuông cân tại $A$, $AB=4a$ và $AA'=a\sqrt{3}$. Thể tích khối lăng trụ $ABC.A'B'C'$ bằng
+	 \loigiai{
+	\immini 
+		{ 
+		Thể tích khối lăng trụ đã  cho là $V=S_{\triangle ABC}\cdot AA'=\dfrac{1}{2} AB^2\cdot AA'=8a^3\sqrt{3}$.
+		 }
+		 {
+		\begin{tikzpicture}[scale=0.7,font=\footnotesize,line join=round,line cap=round,>=stealth]
+				\def\ac{4} 
+				 \def\ab{2}
+				\def\h{4} 
+				 \def\gocA{50}
+				\coordinate[label=left:$A$]  (A) at (0,0);
+				 \coordinate[label=right:$C$] (C) at (\ac,0);
+				\coordinate[label=below  left:$B$] (B) at (-\gocA:\ab);
+				\coordinate[label=left:$A'$]  (A') at ($(A)+(90:\h)$);
+				\coordinate[label=below left:$B'$] (B') at  ($(B)-(A)+(A')$);
+				\coordinate[label=right:$C'$] (C') at  ($(C)-(A)+(A')$);
+				\draw (A')--(A)--(B)--(C)--(C')--(A')--(B')--(C') 
+					 (B)--(B');
+				\draw[dashed] (A)--(C); 
+				\foreach \diem  in {A,B,C,A',B',C'} \fill (\diem) circle (1pt);
+			\end{tikzpicture}
+		} 
+	} 
+\end{ex}
+
+% nguồn: Ok_TuanLuan_Toan11_Lan2
+\begin{ex}%[1H8N7-4]%[ma:3e934966]
+	Cho khối lăng trụ tứ giác đều có cạnh đáy bằng $a$, chiều cao bằng $2a$. Thể tích khối lăng trụ đã cho bằng 
+	 \loigiai{
+		Ta có  $V=B\cdot h=a^2\cdot 2a=2a^3$.
+	} 
+\end{ex}
+
+% nguồn: Ok_TuanLuan_Toan11_Lan2
+\begin{ex}%[1H8N7-4]%[ma:cc611233]
+	Cho khối lăng trụ đứng $ABC.A'B'C'$ có đáy $ABC$ là tam giác vuông  tại $B$, cạnh $AB=a$, $BC=2a$, $AA'=a$. Thể tích khối lăng trụ đã cho là
+	\loigiai{ 
+		 Ta có $\triangle ABC$ vuông tại $B$ nên $S_{\triangle ABC}=\dfrac{1}{2} AB\cdot BC=\dfrac{1}{2} a\cdot 2a=a^2$.\\
+		Vậy thể tích  khối lăng trụ đã cho là $V_{ABC.A'B'C'}=S_{\triangle ABC} \cdot AA'=a^2\cdot a=a^3$.
+	} 
+\end{ex}
+
+% nguồn: Ok_TuanLuan_Toan11_Lan2
+\begin{ex}%[1H8H7-4]%[ma:b215c098]
+	Cho lăng trụ đứng $ABC.A'B'C'$ có đáy $ABC$ là tam giác đều  cạnh $a\sqrt{3}$. Gọi $M$ là trung điểm của $BC$, $A'M=a\sqrt{3}$. Thể tích khối lăng trụ $ABC.A'B'C'$ bằng
+	 \loigiai{
+	 \immini{
+		Do tam giác $ABC$ đều cạnh $\sqrt{3}a$ và $M$ là trung điểm của $BC$ nên ta  có $AM=\dfrac{\sqrt{3}}{2}\cdot \sqrt{3}=\dfrac{3a}{2}$.\\
+		Xét tam giác $AA'M$ vuông  tại $A$, ta có $$AA'=\sqrt{A'M^2-AM^2}=\sqrt{3a^2-\dfrac{9a^2}{4}}=\dfrac{a\sqrt{3}}{2}.$$
+		 Từ đó ta có
+		$$V_{ABC.A'B'C'}=S_{ABC}\cdot AA'=\dfrac{3a^2\sqrt{3}}{4}\cdot  \dfrac{a\sqrt{3}}{2}=\dfrac{9a^3}{8}.$$
+		}{ 
+		\begin{tikzpicture}[line cap=round,line join=round,font=\footnotesize,>=stealth,scale=.8]
+				 \tikzset{label style/.style={font=\footnotesize}}
+				 \def\h{2.5}
+				\path (0,0)  coordinate (A)
+					(3,0) coordinate  (B)
+					(2,-0.7) coordinate  (C)
+					($(B)!0.5!(C)$) coordinate  (M);
+				\foreach \x in {A,B,C}{\path  ($(\x)+(0,\h)$) coordinate (\x');
+					 \draw (\x)--(\x');
+				 }
+				\draw (A)--(C)--(B) 
+					 (A')--(B')--(C')--cycle;
+				\draw[dashed]  (B)--(A)--(M)--(A');
+				\foreach\x/\y in {A/180,B/0,C/-90,A'/135,B'/45,C'/90,M/-45} \draw[fill] (\x) circle (1pt)+(\y:0.3)  node{$\x$};
+			\end{tikzpicture}
+		} 
+	} 
+\end{ex}
+
+% nguồn: Ok_TuanLuan_Toan11_Lan2
+\begin{ex}%[1H8H7-4]%[ma:b6c27e0d]
+	Cho hình lăng trụ tam giác đều $ABC.A'B'C'$ có $AB=a$, góc giữa đường thẳng $A'C$  và mặt phẳng $(ABC)$ bằng $45^\circ$. Thể tích khối lăng trụ $ABC.A'B'C'$ bằng
+	\loigiai{ 
+	 \immini
+		{ 
+		 Ta có ${\left(A'C,(ABC)\right)}=\widehat{A'CA}=45^{\circ}$ nên $\triangle AA'C$ vuông cân tại $A$ suy ra $AA'=AC=a$.\\
+		Vậy thể tích khối lăng trụ $ABC.A'B'C'$ là $V=Sh=\dfrac{a^2 \sqrt{3}}{4}\cdot  a=\dfrac{a^3\sqrt{3}}{4}$.
+		 }
+		{ 
+		\begin{tikzpicture}[scale=0.7,font=\footnotesize,line join=round,line cap=round,>=stealth]
+				\def\ac{4} 
+				 \def\ab{2}
+				 \def\h{4}
+				 \def\gocA{50}
+				\coordinate[label=left:$A$] (A)  at (0,0);
+				\coordinate[label=right:$C$]  (C) at (\ac,0);
+				\coordinate[label=below left:$B$] (B) at  (-\gocA:\ab);
+				\coordinate[label=left:$A'$]  (A') at ($(A)+(90:\h)$);
+				\coordinate[label=below left:$B'$]  (B') at ($(B)-(A)+(A')$);
+				\coordinate[label=right:$C'$]  (C') at ($(C)-(A)+(A')$);
+				 \draw (A')--(A)--(B)--(C)--(C')--(A')--(B')--(C')
+					 (B)--(B');
+				 \draw[dashed] (A)--(C)--(A');
+				\foreach \diem in  {A,B,C,A',B',C'} \fill (\diem) circle (1pt);
+			\end{tikzpicture}
+		 }
+	 }
+\end{ex}
+
+% nguồn: Ok_TuanLuan_Toan11_Lan2
+\begin{ex}%[1H8H7-4]%[ma:bccddaab]
+	Cho khối lăng trụ đứng $ABC.A'B'C'$ có đáy $ABC$ là tam giác vuông cân tại $B$. Biết $C'A=a\sqrt{2}$ và $\widehat{AC'C}=45^{\circ}$.  Thể tích của khối lăng trụ đã cho bằng.
+	\loigiai{ 
+		\begin{center}
+			\begin{tikzpicture}[scale=0.7,font=\footnotesize,line join=round,line cap=round,>=stealth]
+					 \def\ac{4}
+					\def\ab{2} 
+					 \def\h{4}
+					\def\gocA{50} 
+					 \coordinate[label=left:$A$] (A) at (0,0);
+					\coordinate[label=right:$C$] (C) at (\ac,0); 
+					\coordinate[label=below  left:$B$] (B) at (-\gocA:\ab);
+					\coordinate[label=left:$A'$] (A') at  ($(A)+(90:\h)$);
+					\coordinate[label=below left:$B'$] (B') at ($(B)-(A)+(A')$); 
+					\coordinate[label=right:$C'$] (C') at ($(C)-(A)+(A')$); 
+					\draw (A')--(A)--(B)--(C)--(C')--(A')--(B')--(C') 
+						 (B)--(B');
+					\draw[dashed]  (C')--(A)--(C);
+					\foreach  \diem in {A,B,C,A',B',C'} \fill (\diem) circle (1pt);
+				\end{tikzpicture}
+		\end{center}
+		Trong $\triangle ACC'$ có $AC=AC'\cdot\sin\widehat{AC'C}=a\sqrt{2} \cdot\dfrac{\sqrt{2}}{2}=a$; $CC'=AC'\cdot\cos\widehat{AC'C}=a\sqrt{2}  \cdot\dfrac{\sqrt{2}}{2}=a$.\\
+		 Trong $\triangle BAC$ có $AC^2=BA^2+BC^2 \Leftrightarrow AC^2=2BA^2 \Rightarrow BA=\dfrac{AC}{\sqrt{2}}=\dfrac{a\sqrt{2}}{2}$.\\
+		Thể tích của khối lăng trụ là $V_{ABC.A'B'C'}=CC'\cdot S_{\triangle  ABC}=CC'\cdot\dfrac{1}{2}\cdot BA^2=a\cdot\dfrac{1}{2}\cdot\dfrac{a^2}{2}=\dfrac{a^3}{4}$.
+	 }
+\end{ex}
+
+% nguồn: Ok_TuanLuan_Toan11_Lan2
+\begin{ex}%[1H8H7-4]%[ma:28ce557d]
+	Cho khối hộp đứng $ABCD.A_1B_1C_1D_1$ có đáy $ABCD$ là hình thoi cạnh $a$, $\widehat{ABC}=120^\circ$,  đường thẳng $AC_1$ tạo với mặt phẳng $(ABCD)$ một góc $60^\circ$. Tính thể tích khối hộp đã cho.
+	\loigiai{\begin{center}
+		\begin{tikzpicture}[line join=round,line cap=round,>=stealth,font=\footnotesize,scale=1]
+				\def\a{3} 
+				\def\b{1.8} 
+				\def\h{2.8} 
+				\path (0:0) coordinate  (A)
+					++(0:\a) coordinate  (D)
+					++(-130:\b) coordinate  (C)
+					 ($(A)+(C)-(D)$) coordinate (B)
+					($(A)+(90:\h)$) coordinate (A_1) 
+					 ($(B)+(90:\h)$) coordinate (B_1)
+					($(C)+(90:\h)$) coordinate (C_1) 
+					($(D)+(90:\h)$) coordinate  (D_1);
+				\draw[dashed]  (B)--(A)--(D)
+					 (A)--(A_1)
+					 (A)--(C_1)
+					(C)--(A) 
+					 (B)--(D);
+				 \draw (C)--(C_1)
+					 (D)--(D_1)
+					 (B)--(B_1)
+					 (B)--(C)--(D)
+					(A_1)--(B_1)--(C_1)--(D_1)--cycle; 
+				\foreach  \x/\g in {A/180,B/180,C/0,D/0,A_1/180,B_1/180,C_1/0,D_1/0}
+				\fill (\x) circle  (1pt)
+					 ($(\g:4mm)+(\x)$) node {$\x$};
+			\end{tikzpicture}
+	\end{center}
+	Xét $\triangle ABC$  có
+	\begin{align*}
+		&AC^2=AB^2+AC^2  - 2 \cdot AB \cdot AC \cdot \widehat{ABC}
+		=a^2+a^2 -2 \cdot a \cdot a \cdot \cos  120^\circ
+		 =3a^2\\
+		 &\Rightarrow AC= a\sqrt{3}.
+	\end{align*}
+	Ta có $\heva{&\text{$AC_1 \cap (ABCD)=A$}\\&\text{$C_1C \perp (ABCD)$ tại $C$}}$ nên $AC$ là hình chiếu vuông góc của $AC_1$ lên $(ABCD)$.  \\
+	Do đó $\left(AC_1,(ABCD)\right)=(AC_1,AC)=\widehat{C_1AC}=60^\circ$ (theo giả  thiết).\\
+	Ta có $\tan \widehat{C_1AC} =\dfrac{CC_1}{AC} \Rightarrow  CC_1= \tan \widehat{C_1AC} \cdot AC = \tan 60^\circ \cdot a \sqrt{3} =3a$.\\
+	Vậy thể tích khối lăng trụ là  $$V=AA_1 \cdot S_{ABCD}=AA_1 \cdot AB \cdot BC \cdot \sin 120^\circ = 3a \cdot a \cdot a \cdot \dfrac{\sqrt{3}}{2}=\dfrac{3a^3 \sqrt{3}}{2}.$$
+ }
+\end{ex}
+
+% nguồn: Ok_TuanLuan_Toan11_Lan2
+\begin{ex}%[1H8H7-4]%[ma:a1327a8b]
+	Cho hình lăng trụ tam giác  đều $ABC.A'B'C'$ có $AB=4a$, góc giữa đường thẳng $A'C$ và mặt phẳng $(ABC)$ bằng $45^\circ$. Thể tích khối lăng trụ $ABC.A'B'C'$ bằng
+	\loigiai{ 
+	 \immini
+		{ 
+		Vì $ABC.A'B'C'$ là lăng trụ tam giác đều $\Rightarrow ABC.A'B'C'$ là lăng trụ đứng và đáy là tam giác đều.\\ 
+		Ta  có $
+		A'A \perp(ABC)  \Rightarrow\left(A'C,(ABC)\right)=\widehat{A'CA}=45^\circ\Rightarrow \triangle A'AC$ vuông cân tại $A\Rightarrow A'A=AC=4a$.\\
+		Ta có $ 
+		S_{\triangle ABC}=\dfrac{(AB)^2\sqrt{3}}{4}=\dfrac{(4a)^2\sqrt{3}}{4}=4a^2\sqrt{3}\\ \Rightarrow V_{ABC.A'B'C'}=AA'\cdot  S_{\triangle ABC}=4a\cdot 4a^2\sqrt{3}=16a^3\sqrt{3}$.
+		} 
+		 {
+		\begin{tikzpicture}[scale=0.7,font=\footnotesize,line join=round,line cap=round,>=stealth]
+				\def\ac{4} 
+				 \def\ab{2}
+				 \def\h{4}
+				 \def\gocA{50}
+				\coordinate[label=left:$A$] (A) at (0,0); 
+				\coordinate[label=right:$C$] (C) at  (\ac,0);
+				\coordinate[label=below left:$B$]  (B) at (-\gocA:\ab);
+				\coordinate[label=left:$A'$] (A') at  ($(A)+(90:\h)$);
+				\coordinate[label=below left:$B'$] (B') at  ($(B)-(A)+(A')$);
+				\coordinate[label=right:$C'$]  (C') at ($(C)-(A)+(A')$);
+				\draw  (A')--(A)--(B)--(C)--(C')--(A')--(B')--(C')
+					 (B)--(B');
+				 \draw[dashed] (A)--(C)--(A');
+				\foreach \diem in {A,B,C,A',B',C'} \fill (\diem)  circle (1pt);
+			\end{tikzpicture}
+		} 
+	 }
+\end{ex}
+
+% nguồn: Ok_TuanLuan_Toan11_Lan2
+\begin{ex}%[1H8H7-4]%[ma:69d6687c]
+	Thể tích khối lăng trụ đứng $ABC.A'B'C'$  có đáy là tam giác đều cạnh $a$, độ dài cạnh bên $AA'=a\sqrt{3}$ bằng
+	\loigiai{\begin{center}
+		\begin{tikzpicture}[font=\footnotesize,line join=round,line cap=round,>=stealth,scale=0.7]
+				 \path
+					(0,0) coordinate (B) 
+					 (-1.3,-1.6) coordinate (A)
+					(2.5,-1.6) coordinate  (C)
+					($(B)+(0,3)$) coordinate  (B')
+					 ($(A)+(0,3)$) coordinate (A')
+					($(C)+(0,3)$) coordinate (C'); 
+				\draw (A')--(B')--(C')--cycle (A)--(C) 
+					 (A)--(A')
+					(C')--(C); 
+				 \draw[dashed] (A)--(B)--(C)
+					 (B')--(B);
+				\foreach\p/\q in  {A/180,B/30,C/0,A'/180,B'/60,C'/0}
+				\fill (\p) circle (1pt) node[{shift=(\q:0.25)}]{$\p$}; 
+				\draw  pic[draw,angle radius=0.2cm] {right angle=A'--A--C};
+				\draw  pic[draw,angle radius=0.2cm] {right angle=A'--A--B};
+			\end{tikzpicture}
+	\end{center}
+	Do lăng trụ đều $ABC.A'B'C'$ có cạnh đáy bằng $a$, độ dài cạnh bên  $AA'=a\sqrt{3}$ nên
+	\begin{itemize}
+		 \item $S_{\triangle ABC}=\dfrac{a^2\sqrt{3}}{4}$.
+		\item $h=AA'=a\sqrt{3}$ 
+	\end{itemize}
+	Suy ra $V_{ABC.A'B'C'}=S\cdot  h=\dfrac{3a^3}{4}$.
+ }
+\end{ex}
+
+% nguồn: Ok_TuanLuan_Toan11_Lan2
+\begin{ex}%[1H8H7-4]%[ma:6cf127a9]
+	Cho khối lăng trụ tam giác đều $ABC.A'B'C'$, biết $AB=a$, $AB'=a\sqrt{7}$. Thể tích $V$ của khối  lăng trụ là
+	 \loigiai{
+	\begin{center}
+		\begin{tikzpicture}[scale=0.7,font=\footnotesize,line join=round,line cap=round,>=stealth]
+				 \def\ac{4}
+				\def\ab{2} 
+				 \def\h{4}
+				 \def\gocA{50}
+				\coordinate[label=left:$A$]  (A) at (0,0);
+				\coordinate[label=right:$C$] (C)  at (\ac,0);
+				\coordinate[label=below left:$B$] (B) at (-\gocA:\ab); 
+				\coordinate[label=left:$A'$] (A') at  ($(A)+(90:\h)$);
+				\coordinate[label=below left:$B'$] (B') at ($(B)-(A)+(A')$); 
+				\coordinate[label=right:$C'$] (C')  at ($(C)-(A)+(A')$);
+				\draw (A')--(A)--(B)--(C)--(C')--(A')--(B')--(C') 
+					(B)--(B'); 
+				 \draw[dashed] (A)--(C);
+				\draw  (A)--(B');
+				 \foreach \diem in {A,B,C,A',B',C'} \fill (\diem) circle (1pt);
+			\end{tikzpicture}
+	\end{center}
+	Ta  có $AA'=\sqrt{\left(AB'\right)^2-\left(A'B'\right)^2}=\sqrt{(a\sqrt{7})^2-a^2}=a\sqrt{6}$.\\
+	Diện tích đáy $ABC$ là $S_{ABC}=\dfrac{a^2\sqrt{3}}{4}$.\\ 
+	Thể  tích khối lăng trụ là $V_{ABC.A'B'C'}=AA'\cdot S_{ABC}=a\sqrt{6} \cdot\dfrac{a^2\sqrt{3}}{4}=\dfrac{3a^3\sqrt{2}}{4}$.
+	} 
+\end{ex}
+
+% nguồn: Ok_TuanLuan_Toan11_Lan2
+\begin{ex}%[1H8H7-4]%[ma:ae5e6d33]
+	Cho lăng trụ tam  giác đều có độ dài tất cả các cạnh bằng $3a$. Thể tích khối lăng trụ đã cho bằng
+	\loigiai{ 
+		Diện tích đáy của  hình lăng trụ là $B=(3a)^2\cdot \dfrac{\sqrt{3}}{4}=\dfrac{9a^2\sqrt{3}}{4}$.\\
+		Chiều cao của hình lăng trụ  là $h=3a$.\\
+		Thể tích khối lăng  trụ là $V=B\cdot h=\dfrac{9a^2\sqrt{3}}{4} \cdot 3a=\dfrac{27a^3\sqrt{3}}{4}$.
+	 }
+\end{ex}
+
+% nguồn: Ok_TuanLuan_Toan11_Lan2
+\begin{ex}%[1H8H7-4]%[ma:428f8396]
+	Cho lăng trụ tam giác đều $ABC.A'B'C'$ có cạnh đáy bằng $2a$. Đường thẳng $A'B$ tạo với đáy một góc $60^\circ$. Tính thể  tích của khối lăng trụ đó.
+	\loigiai{ 
+	\immini 
+		 {
+		Đáy tam giác đều  nên $S_{ABC}=\dfrac{(2a)^2\cdot\sqrt{3}}{4}=a^2\sqrt{3}$.\\
+		Ta có  $\heva{
+		 & A'B\cap(ABC)=\{B\}\\
+		&  AA'\perp(ABC)} \Rightarrow\left(A'B,(ABC)\right)=\widehat{A'BA}$.\\
+		Khi đó $\tan  60^{\circ}=\dfrac{AA'}{AB} \Rightarrow AA'=AB\cdot \tan 60^\circ=2a\sqrt{3}$.\\
+		Vậy $V_{ABC.A'B'C'}=S_{ABC}\cdot  AA'=a^2\sqrt{3}\cdot 2a \sqrt{3}=6a^3$.
+		} 
+		 {
+		\begin{tikzpicture}[>=stealth,line join=round,line cap=round,font=\footnotesize,scale=0.5]
+				 \path (0,0) coordinate (A)
+					(2,-1.4)  coordinate (B)
+					(5,0) coordinate (C) 
+					($(A)+(0,5)$)  coordinate (A')
+					 ($(B)+(0,5)$) coordinate (B')
+					($(C)+(0,5)$)  coordinate (C');
+				\draw (B')--(B)--(A')--(A)--(B)--(C)--(C')--(A')--(B')--(C')--(A'); 
+				\draw[dashed]  (A)--(C);
+				\foreach \p /  \r in {A/135,B/-90,A'/135,B'/90,C/45,C'/45}
+				\fill (\p) circle  (1pt) node[shift={(\r:3mm)}]{$\p$};
+			\end{tikzpicture}
+		 }
+	 }
+\end{ex}
+
+% nguồn: Ok_TuanLuan_Toan11_Lan2
+\begin{ex}%[1H8H7-4]%[ma:2369e8b4]
+	Cho khối lăng trụ đứng $ABC.A'B'C'=a$, đáy $ABC$ là tam giác vuông cân tại $B$ và $BA=BC=a$. Tính  thể tích $V$ của khối lăng trụ đã cho.
+	\loigiai{ 
+	 \immini
+		{ 
+		Ta  có $
+		V_{ABC.A'B'C'}=S_{\triangle ABC}\cdot BB'=\dfrac{1}{2} BA\cdot BC\cdot BB'=\dfrac{1}{2} a \cdot  a \cdot a=\dfrac{a^3}{2}.$
+		} 
+		{ 
+		\begin{tikzpicture}[scale=0.7,font=\footnotesize,line join=round,line cap=round,>=stealth]
+				 \def\ac{4}
+				\def\ab{2} 
+				 \def\h{4}
+				\def\gocA{50} 
+				\coordinate[label=left:$A$]  (A) at (0,0);
+				 \coordinate[label=right:$C$] (C) at (\ac,0);
+				\coordinate[label=below left:$B$] (B) at  (-\gocA:\ab);
+				 \coordinate[label=left:$A'$] (A') at ($(A)+(90:\h)$);
+				\coordinate[label=below left:$B'$] (B')  at ($(B)-(A)+(A')$);
+				\coordinate[label=right:$C'$] (C')  at ($(C)-(A)+(A')$);
+				 \draw (A')--(A)--(B)--(C)--(C')--(A')--(B')--(C')
+					(B)--(B'); 
+				 \draw[dashed] (A)--(C);
+				\foreach  \diem in {A,B,C,A',B',C'} \fill (\diem) circle (1pt);
+			\end{tikzpicture}
+		} 
+	} 
+\end{ex}
+
+% nguồn: Ok_TuanLuan_Toan11_Lan2
+\begin{ex}%[1H8H7-4]%[ma:ad987e81]
+	 Lăng trụ đứng $ABC.A'B'C'$ có đáy $ABC$ là tam giác vuông tại $A$, $BC=2a$, $AB=a$. Mặt bên $BB'C'C$ là hình vuông. Khi đó thể tích lăng trụ là
+	\loigiai{ 
+		 Áp dụng định lý Pitago ta có $AC=\sqrt{BC^2-AB^2}=a\sqrt{3}$.\\
+		Ta  có
+		$S_{ABC}=\dfrac{1}{2}AB\cdot AC=\dfrac{1}{2}a\cdot a\sqrt{3}=\dfrac{a^2  \sqrt{3}}{2}$.\\
+		Vì $BB'C'C$ là hình vuông  nên $BB'=BC=2a$.\\
+		Vậy thể tích lăng trụ là  $V=S_{ABC}\cdot BB'=\dfrac{a^2\sqrt{3}}{2}\cdot 2a=a^3\sqrt{3}$.
+	 }
+\end{ex}
+
+% nguồn: Ok_TuanLuan_Toan11_Lan2
+\begin{ex}%[1H8V7-4]%[ma:9a9b8c2d]
+	Cho lăng trụ tam giác đều $ABC.A'B'C'$ có cạnh đáy bằng $a$. Góc tạo bởi đường thẳng $AB'$ và  mặt phẳng $(AA'C)$ bằng $30^\circ$. Thể tích khối lăng trụ bằng
+	 \loigiai{
+	\immini{ 
+		Gọi $I$ là  trung điểm của cạnh $AC$. Khi đó, $BI\perp AC$.\\
+		Lại  có, $\heva{&(AA'C'C)\perp(ABC)\ \text{(tính chất hình lăng trụ đều)} \\& (AA'C'C)\cap(ABC)=AC\\& BI\subset (ABC).}$\\
+		nên $BI \perp (ACC'A') \Rightarrow BI \perp(AA'C)$.\\ 
+		Do đó, góc tạo  bởi đường thẳng $A'B$ và mặt phẳng $(AA'C)$ chính là góc $\widehat{BA'I}=30^{\circ}$.
+		 }{
+		\begin{tikzpicture}[scale=.8,font=\footnotesize,line join=round,line cap=round,>=stealth]
+				\def\ac{4} 
+				 \def\ab{2}
+				 \def\h{4}
+				 \def\gocA{50}
+				 \coordinate[label=left:$A$] (A) at (0,0);
+				\coordinate[label=right:$C$] (C) at (\ac,0); 
+				\coordinate[label=below left:$B$] (B) at (-\gocA:\ab); 
+				 \coordinate[label=left:$A'$] (A') at ($(A)+(90:\h)$);
+				\coordinate[label=below  right:$B'$] (B') at ($(B)-(A)+(A')$);
+				\coordinate[label=right:$C'$] (C') at  ($(C)-(A)+(A')$);
+				\coordinate[label=above right:$I$] (D) at ($(C)!.5!(A)$); 
+				\draw (A')--(A)--(B)--(C)--(C')--(A')--(B')--(C') 
+					(A')--(B)--(B'); 
+				\draw[dashed] (A)--(C) 
+					(B)--(D)--(A'); 
+				\foreach \diem  in {A,B,C,A',B',C',D} \fill (\diem) circle (1pt);
+			\end{tikzpicture}
+		} 
+		 \noindent
+		Xét tam giác $A'BI$ vuông tại $I$, ta có $\sin\widehat{BA'I}=\dfrac{BI}{A'B} \Rightarrow A'B=\dfrac{BI}{\sin\widehat{BA'I}}=\dfrac{\dfrac{a \sqrt{3}}{2}}{\sin  30^\circ}=a\sqrt{3}$.\\
+		Suy ra 
+		$AA'=\sqrt{A'B^2-AB^2}=a\sqrt{2}$.\\ 
+		Ta có  $V_{ABC.A'B'C'}=S_{\triangle ABC}\cdot AA'=\dfrac{a^2\sqrt{3}}{4}\cdot a\sqrt{2}=\dfrac{a^3\sqrt{6}}{4}$.
+	} 
+\end{ex}
+
+% nguồn: Ok_TuanLuan_Toan11_Lan2
+\begin{ex}%[1H8V7-4]%[ma:84519722]
+	Cho khối lăng trụ đều $ABC.A'B'C'$ có cạnh đáy bằng $2a$. Khoảng cách từ điểm $A'$ đến  mặt phẳng $\left(AB'C'\right)$ bằng $a$. Thể tích khối lăng trụ đã cho là
+	\loigiai{ 
+	\immini{ Gọi $M$ là trung điểm của $B'C'$ và $I$ là hình chiếu của  $A'$ lên $AM$.\\
+		Khi đó  ta có
+		$\heva{&B'C'\perp{A}'M\\&B'C'\perp{A}'A}\Rightarrow{B}'C'\perp\left(A'MA\right)\Rightarrow{B}'C'\perp A'I$  \\
+		Mà $AM\perp  A'I$.\\
+		Từ và suy  ra $A'I\perp\left(AB'C'\right)\Rightarrow \mathrm{d}\left(A',\left(AB'C'\right)\right)=A'I=a$.\\
+		Xét tam giác  vuông $AA'M$ có $\dfrac{1}{A'I^2}=\dfrac{1}{AA'^2}+\dfrac{1}{A'M^2}\Rightarrow AA'=\dfrac{a\sqrt{6}}{2}$.\\
+		Suy  ra thể tích khối lăng trụ đã cho là
+		\begin{center}
+			$V=AA'\cdot S_{\triangle ABC}=\dfrac{a\sqrt{6}}{2}\cdot\dfrac{4a^2\sqrt{3}}{4}=$ $\dfrac{3\sqrt{2}{a^3}}{2}$. 
+		\end{center}
+		}{		\begin{tikzpicture}[scale=1.2,font=\footnotesize,line join=round,line cap=round,>=stealth]
+		\path (0,0) coordinate (A) 
+			(3,0) coordinate (C) 
+			(0.5,-1) coordinate (B) 
+			(0,3)  coordinate (h);
+		 \foreach \p in {A,B,C}{\draw (\p)--(\p)--+(h) coordinate (\p');}
+		\coordinate (M) at ($(B')!0.5!(C')$); 
+		\coordinate  (I) at ($(A)!(A')!(M)$);
+		\draw (A')--(B')--(C')--cycle  (A)--(B)--(C)
+			 (A)--(B')
+			(A')--(M); 
+		\draw [dashed]  (A)--(C)
+			 (A)--(M)
+			(A')--(I) 
+			(A)--(C'); 
+		\draw pic[draw,angle radius=0.2cm]{right angle=M--I--A'}; 
+		\path (A)--(B) node [below,sloped,pos=0.5] {$2a$}; 
+		\foreach  \p /\g in {A/180,B/-90,C/0,A'/180,B'/180,C'/0,M/90,I/0}
+		\fill  (\p) circle (1pt)+(\g:0.25) node{$\p $};
+	\end{tikzpicture}
+		 }
+	} 
+\end{ex}
+
+% nguồn: Ok_TuanLuan_Toan11_Lan2
+\begin{ex}%[1H8V7-4]%[ma:f40db19d]
+	Cho khối lăng trụ tam giác đều $ABC.A'B'C'$ có $AB=a$, góc giữa đường thẳng $A'B$ và mặt phẳng  $\left(BC{C}'B'\right)$ bằng $30^{\circ}$. Thể tích khối lăng trụ đã cho bằng
+	\loigiai{ 
+	\immini{  Gọi $I$ là trung điểm của $B'C'\Rightarrow{A}'I\perp{B}'C'$.\\
+		Khi đó $\heva{&A'I\perp  B'C'\\&A'I\perp BB'}\Rightarrow{A}'I\perp\left(B{B}'C'C\right)$\\
+		Suy ra $\widehat{\left(A'B,\left(B{B}'C'C\right)\right)}=\widehat{\left(A'B,BI\right)}=\widehat{A'BI}=30^{\circ}$.  \\
+		Đặt $h=B{B}'$.  \\
+		Ta có  $\tan 30^{\circ}=\dfrac{A'I}{BI}\Leftrightarrow\dfrac{1}{\sqrt{3}}=\dfrac{a\sqrt{3}}{2.\sqrt{h^2+\dfrac{a^2}{4}}}\Leftrightarrow h=a\sqrt{2}$. \\
+		Suy ra thể tích khối lăng trụ đã  cho là $V=\dfrac{a^2\sqrt{3}}{4}\cdot a\sqrt{2}=\dfrac{a^3\sqrt{6}}{4}$.
+		}{\begin{tikzpicture}[scale=1,font=\footnotesize,line join=round,line cap=round,>=stealth]
+		\path (0,0) coordinate  (A)
+			(3,0) coordinate (C) 
+			(1,-1) coordinate  (B)
+			(0,3) coordinate  (h);
+		\foreach \p in {A,B,C}{\draw (\p)--(\p)--+(h)  coordinate (\p');}
+		\coordinate (I) at  ($(B')!0.5!(C')$);
+		\draw (A')--(B')--(C')--cycle (A)--(B)--(C) 
+			 (A')--(I)--(B)--cycle;
+		 \draw [dashed] (A)--(C);
+		\foreach \p /\g in  {A/180,B/-90,C/0,A'/180,B'/-30,C'/0,I/90}
+		\fill (\p) circle (1pt)+(\g:0.25) node{$\p  $};
+	\end{tikzpicture}
+		} 
+	} 
+\end{ex}
+
+% nguồn: Ok_TuanLuan_Toan11_Lan2
+\begin{ex}%[1H8V7-4]%[ma:d0ae368b]
+	 Cho lăng trụ đứng $ABC.A'B'C'$ có đáy là tam giác đều cạnh bằng $2$. Mặt phẳng $(AB'C')$ tạo với mặt đáy bằng $45^\circ$. Thể tích lăng trụ $ABC.A'B'C'$ bằng
+	\loigiai{ 
+		\begin{center}
+			\begin{tikzpicture}[scale=0.65,font=\footnotesize,line join=round,line cap=round,>=stealth,declare function={goc=-55; a=5; b=0.45*a; h=5;}]
+					 \path
+						(0,0)  coordinate (A')
+						(a,0)  coordinate (C')
+						 (goc:b) coordinate (B')
+						 (0,h) coordinate (A)
+						(a,h)  coordinate (C)
+						($(B')+(0,h)$) coordinate (B); 
+					\draw  (A')--(B')--(C')--(C)--(A)--(B)--(B')
+						 (A')--(A)
+						(B)--(C) 
+						 (B')--(A);
+					\path ($(B')!0.5!(C')$) coordinate (M); 
+					 \foreach \x/\y in {B'/M,C'/M}{
+						\path (\x)--(\y)  node[midway,sloped]{\tikz{\draw (270:1.5pt)--(90:1.5pt);}};}
+					\draw[dashed] (A')--(C') 
+						(A)--(M)--(A') 
+						 (A)--(C');
+					 \foreach \x/\goc in {A/180,B/-30,C/0,A'/-180,B'/-30,C'/0,M/-45}
+					\draw[fill] (\x)  node[shift={(\goc:7pt)},font=\scriptsize]{$\x$} circle (1pt);
+				\end{tikzpicture}
+		\end{center}
+	} 
+	Gọi $M$ là trung điểm của $B'C'$, vì tam giác $A'B'C'$ đều nên $A'M \perp B'C'$, mặt khác lăng trụ $ABC.A'B'C'$ là lăng trụ đứng nên $AA'  \perp B'C'$. Do đó $(AA'M)\perp B'C'$.\\
+	 Vậy $\left((AB'C'),(A'B'C'\right)=\widehat{AMA'}=45^\circ$.\\
+	Tam giác $AA'M$ vuông  tại $A'$ và có $\widehat{AMA'}=45^\circ$ nên vuông cân tại $A'$ do đó $AA'=A'M=\dfrac{2\sqrt{3}}{2}=\sqrt{3}$; $S_{A'B'C'}=\dfrac{2^2\cdot \sqrt{3}}{4}=\sqrt{3}$.\\
+	Suy ra $V_{ABC.A'B'C'}=AA'\cdot S_{A'B'C'}=\sqrt{3}\cdot  \sqrt{3}=3$.
+\end{ex}
+
+% nguồn: Ok_TuanLuan_Toan11_Lan2
+\begin{ex}%[1H8V7-4]%[ma:1200cc90]
+	Cho lăng trụ đứng $ABC.A'B'C'$ có đáy $ABC$ là tam giác vuông cân tại  $B$ và $AC=2a$, biết rằng $(A'BC)$ hợp với đáy $(ABC)$ một góc $45^\circ$. Thể tích lăng trụ là
+	 \loigiai{
+		\begin{center}
+			\begin{tikzpicture}[line join=round,line cap=round,>=stealth,scale=0.8,font=\footnotesize]
+					\tikzset{label style/.style={font=\footnotesize}} 
+					\coordinate  (A) at (0,0);
+					\coordinate (B)  at (2.5,-1.5);
+					\coordinate (C) at  (4,0);
+					\coordinate  (A') at ($(A)+(0,4)$);
+					\coordinate (B') at  ($(A')+(B)-(A)$);
+					\coordinate (C') at  ($(A')+(C)-(A)$);
+					\draw (A)--(B)--(C)--(C')--(A')--(B')--(C') 
+						(A)--(A')--(B)--(B'); 
+					 \draw [dashed] (A)--(C)--(A');
+					\foreach  \d/\g in {A/180,B/-90,C/0,A'/180,B'/90,C'/0}{
+						\draw[fill](\d) circle (1pt)  +(\g:.35) node{$\d$};}
+					\foreach \x/\y/\z in  {A/B/C}\pic[draw,angle radius=1.8mm]{right angle=\x--\y--\z};
+					\draw 
+						pic[draw]{angle  = A'--B--A};
+					\node at  ($(B)+(132:1.2)$){$45^\circ$};
+				\end{tikzpicture}
+		\end{center}
+		Do tam giác  $ABC$ vuông cân tại $B$, độ dài cạnh huyền $AC=2a$ nên ta có $BA=BC=a\sqrt{2}$.\\
+		Góc tạo bởi mặt phẳng $(A'BC)$ và đáy $(ABC)$ là góc $\widehat{A'B  A}=45^{\circ}$ do đó $AA'=AB=a\sqrt{2}$.\\
+		Vậy thể  tích lăng trụ là $V=B\cdot h=\dfrac{a\sqrt{2}\cdot a\sqrt{2}}{2}\cdot a\sqrt{2}=a^3\sqrt{2}$.
+	 }
+\end{ex}
+
+% nguồn: Ok_TuanLuan_Toan11_Lan2
+\begin{ex}%[1H8C7-4]%[ma:ac192e28]
+	Cho lăng trụ đứng $ABC.A'B'C'$. Biết rằng góc giữa hai mặt phẳng $\left(A'BC\right)$ và $ (ABC)$ là $ 30^\circ$, tam giác $A'BC$ đều và có diện tích bằng $\sqrt{3}$. Thể tích khối lăng trụ $ ABC.A'B'C'$ bằng 
+	\loigiai{ 
+	\immini{ Đặt  $ BC=x\Rightarrow{S_{\triangle{A}'BC}}=x^2\cdot\dfrac{\sqrt{3}}{4}=\sqrt{3}\Leftrightarrow x=2$.\\
+		Gọi $ M$ là trung điểm của $ BC$ suy  ra $ BC\perp A'M$.\\
+		Khi đó  ta có
+		 $\heva{& BC\perp A'M\\& BC\perp AA'}\Rightarrow BC\perp AM$.\\
+		Vậy $\widehat{\left(\left(A'BC\right);\,\left(ABC\right)\right)} 
+		=\widehat{\left(A'M;\,AM\right)}=\widehat{A'MA}=30^{\circ}$\\ 
+		Suy ra  $AA'=A'M\cdot\sin 30^\circ=\sqrt{3}\cdot\dfrac{1}{2}=\dfrac{\sqrt{3}}{2}$\\
+		Áp dụng công thức $S'=S\cdot \cos\varphi\Rightarrow{S_{\triangle ABC}}=S_{\triangle A'BC}\cdot\cos{30^\circ}=\dfrac{3}{2}$. 
+		}{		\begin{tikzpicture}[scale=1,font=\footnotesize,line join=round,line cap=round,>=stealth]
+		 \path (0,0) coordinate (A)
+			(3,0) coordinate  (C)
+			(1,-1)  coordinate (B)
+			 (0,3) coordinate (h);
+		\foreach \p in {A,B,C}{\draw (\p)--(\p)--+(h) coordinate  (\p');}
+		\coordinate (M)  at ($(B)!0.5!(C)$);
+		\coordinate  (N) at ($(B)!0.5!(A)$);
+		 \draw (A')--(B')--(C')--cycle (A)--(B)--(C);
+		\draw  [dashed] (A)--(C)
+			 (A)--(M)
+			(A')--(M); 
+		\coordinate (G) at  (intersection of A--M and C--N);
+		 \draw pic["$30^\circ$",draw,angle eccentricity=1.8,angle radius=0.4cm]{angle=A'--M--A};
+		\draw  pic[draw,angle radius=0.25cm]{right angle=A--M--B};
+		\draw pic[draw,angle radius=0.25cm]{right angle=C--M--A'}; 
+		 \draw pic[draw,angle radius=0.25cm]{right angle=C--A--A'};
+		\path  (M)--(B) node[midway,sloped,scale=0.5]{$|$};
+		\path (M)--(C)  node[midway,sloped,scale=0.5]{$|$};
+		\foreach  \p /\g in {A/180,B/-90,C/0,A'/180,B'/-30,C'/0,M/-30}
+		\fill (\p)  circle (1pt)+(\g:0.25) node{$\p $};
+	\end{tikzpicture}
+		 }\noindent
+		Suy ra thể tích của lăng trụ là $V_{ABC.A'B'C'}=AA'\cdot S_{\triangle ABC}=\dfrac{\sqrt{3}}{2}\cdot\dfrac{3}{2}=\dfrac{3\sqrt{3}}{4}$. 
+	} 
+\end{ex}
+
+% nguồn: Ok_TuanLuan_Toan11_Lan2
+\begin{ex}%[1H8C7-4]%[ma:8d56a1de]
+	Cho hình lăng trụ  đều $ ABC.A'B'C'$, đáy là tam giác đều cạnh $a$ góc giữa hai mặt phẳng $\left(A'BC\right)$ và $\left(ABC\right)$ bằng $60^{^\circ}$. Thể tích của khối lăng trụ $ABC.A'B'C'$ bằng
+	 \loigiai{
+		\begin{center}
+			\begin{tikzpicture}[scale=1,font=\footnotesize,line join=round,line cap=round,>=stealth]
+					\path (0,0) coordinate (A) 
+						(3,0) coordinate  (C)
+						(1,-1) coordinate (B) 
+						(0,3) coordinate (h); 
+					\foreach \p in {A,B,C}{\draw  (\p)--(\p)--+(h) coordinate (\p');}
+					\coordinate  (M) at ($(B)!0.5!(C)$);
+					\coordinate (N)  at ($(B)!0.5!(A)$);
+					\draw (A')--(B')--(C')--cycle (A)--(B)--(C); 
+					\draw  [dashed] (A)--(C)
+						 (A)--(M)
+						(A')--(M); 
+					\coordinate  (G) at (intersection of A--M and C--N);
+					 \draw pic["$60^\circ$",draw,angle eccentricity=1.8,angle radius=0.4cm]{angle=A'--M--A};
+					\foreach \p  /\g in {A/180,B/-90,C/0,A'/180,B'/-30,C'/0,M/-30}
+					\fill (\p) circle (1pt)+(\g:0.25) node{$\p  $};
+				\end{tikzpicture}
+		\end{center}
+		Gọi $M$ là  trung điểm của $BC$, ta có $AM\perp BC$.\\
+		Mặt khác $ABC.A'B'C'$ là lăng trụ đều nên  $A{A}'\perp BC$.\\
+		 Suy ra $A'M\perp BC$, góc giữa hai hai mặt phẳng $\left(A'BC\right)$ và $\left(ABC\right)$ là $\widehat{A'MA}=60^\circ$.\\
+		Tam giác  $ABC$ đều cạnh $a$, ta có $AM=\dfrac{a\sqrt{3}}{2}$; $S_{ABC}=\dfrac{a^2\sqrt{3}}{4}$.\\
+		Tam giác $A'AM$  vuông tại $A$, ta có $A{A}'=AM\cdot \tan 60^\circ=\dfrac{a\sqrt{3}}{2}\cdot \sqrt{3}=\dfrac{3a}{2}$.\\
+	Thể tích khối lăng  trụ $ABC.A'B'C'$ là $V=S_{\triangle ABC}\cdot AA'=\dfrac{a^2\sqrt{3}}{4}\cdot\dfrac{3a}{2}=\dfrac{3\sqrt{3}{a^3}}{8}$.}
+\end{ex}
+
+% nguồn: Ok_TuanLuan_Toan11_Lan2
+\begin{ex}%[1H8C7-4]%[ma:9d110c16]
+	Cho lăng trụ tam giác đều $ ABC.A'B'C'$ có cạnh bên bằng $2a$. Đáy $ ABC$ nội tiếp đường tròn bán kính $R=a$.  Tính thể tích khối lăng trụ đã cho.
+	 \loigiai{
+		\begin{center}
+			\begin{tikzpicture}[scale=1,font=\footnotesize,line join=round,line cap=round,>=stealth]
+					\path (0,0)  coordinate (A)
+						(3,0) coordinate  (C)
+						(1,-1) coordinate (B) 
+						(0,3) coordinate  (h);
+					\foreach  \p in {A,B,C}{\draw (\p)--(\p)--+(h) coordinate (\p');}
+					\coordinate (M) at ($(B)!0.5!(C)$); 
+					\coordinate (N)  at ($(B)!0.5!(A)$);
+					\draw  (A')--(B')--(C')--cycle (A)--(B)--(C);
+					\draw  [dashed] (A)--(C)
+						 (A)--(M)
+						 (C)--(N);
+					\coordinate (I) at (intersection of A--M and C--N); 
+					 \foreach \p /\g in {A/180,B/-90,C/0,A'/180,B'/-30,C'/0,M/-30,N/180,I/-90}
+					\fill (\p) circle (1pt)+(\g:0.25)  node{$\p $};
+				\end{tikzpicture}
+		\end{center}
+		Gọi $M$ là trung điểm $BC$, $N$  là trung điểm của $AB$ và $I=AM\cap CN$.\\
+		Đặt  $AB=x$.\\
+		Đáy  $ABC$ là tam giác đều và nội tiếp đường tròn bán kính $R=a$ nên $ AI=a$.\\
+		Suy ra 
+		$AM=\dfrac{3}{2}AI=\dfrac{3}{2}a$.\\ 
+		Khi đó 
+		\begin{eqnarray*}
+			AM^2&=&AB^2-\left(\dfrac{BC}{2}\right)^2\\ 
+			&=&x^2-\dfrac{x^2}{4}\\ 
+			 &=&\dfrac{3x^2}{4}.
+		\end{eqnarray*}
+		 Suy ra
+		\begin{eqnarray*}
+			&&\left(\dfrac{3}{2}a\right)^2=\dfrac{3x^2}{4}\\ 
+			&\Leftrightarrow& x^2=3a^2\\ 
+			&\Rightarrow&  x=a\sqrt{3}.
+		\end{eqnarray*}
+	Vậy $V_{ABC.A'B'C'}=S_{ABC}\cdot AA'=\dfrac{1}{2}AM\cdot  BC\cdot AA'=\dfrac{1}{2}\cdot \dfrac{3}{2}a\cdot\sqrt{3}a\cdot2a=\dfrac{3\sqrt{3}}{2}{a^3}$.}
+\end{ex}

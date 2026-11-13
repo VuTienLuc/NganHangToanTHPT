@@ -1,0 +1,530 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Lớp 11 | Hàm số mũ và hàm số lôgarít | Phép tính lôgarít
+% Dạng 1D6?2-5: Toán thực tế áp dụng phép tính lôgarít
+% Số câu: 34  (sinh tự động bởi tach_cau.py; từ nay thầy sửa trực tiếp file này)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%% TRẮC NGHIỆM 4 PHƯƠNG ÁN %%%%%%%%%%%%%%%%
+
+% nguồn: Ok_Toan11_TracNghiem_Lan2
+\begin{ex}%[1D6H2-5]%[ma:10731779]
+	Biết rằng vi khuẩn E.coli là vi khuẩn gây tiêu chảy đường ruột, gây đau bụng dữ dội, ngoài ra  cứ sau $20$ phút thì số lượng vi khuẩn tăng gấp đôi, nghĩa là số lượng tính theo công thức $S=S_0\cdot2^n$, $S_0$ là số lượng ban đầu, $n$ là số lần nhân đôi. Ban đầu chỉ có $40$ con vi khuẩn nói trên trong đường ruột, hỏi sau bao lâu số lượng vi khuẩn là $671\,088\,640$ con?
+	 \choice
+		 {$20$ giờ}
+		{\True $8$ giờ} 
+		{$12$ giờ} 
+		{$6$ giờ} 
+	 \loigiai{
+	Ta có $$671\,088\,640=40\cdot2^n \Leftrightarrow  2^n=\dfrac{671\,088\,640}{40}=16\,777\,216 \Leftrightarrow n=\log_{2}{16\,777\,216}=24.$$
+	Để  số lượng vi khuẩn là $671\,088\,640$ con thì vi khuẩn đã có $24$ lần nhân đôi. \\
+	 Do đó thời gian mà vi khuẩn đã thực hiện $24$ lần nhân đôi đó là $20\cdot24=480 \ \text{(phút)}\approx8 \ \text{(giờ)}$. \\
+	Vậy sau $8$ giờ số lượng  vi khuẩn là $671\,088\,640$ con.
+	} 
+\end{ex}
+
+% nguồn: Ok_Toan11_TracNghiem_Lan2
+\begin{ex}%[1D6H2-5]%[ma:b891225a]
+	Vào cuối năm $2\,022$, báo Rossiyskaya Gazeta dẫn lời Bộ trưởng Tài nguyên Nga cảnh báo nước này sẽ cạn kiệt dầu mỏ sau $28$ năm nữa nếu sản lượng khai thác hằng năm vẫn giữ như năm $2\,022$. Bắt đầu từ năm $2\,023$, nếu nước Nga mỗi năm giảm sản lượng khai thác $2\%$ so với năm trước thì sau bao nhiêu năm nữa nước này cạn  kiệt dầu mỏ \textit{(chọn phương án có kết quả gần nhất với tính toán của bạn)}?
+	 \choice
+		 {$52$}
+		{$32$} 
+		{$44$} 
+		{\True $40$} 
+	\loigiai{ 
+	Gọi $S$ (tỷ tấn) là sản lượng dầu mỏ còn lại của Nga trên thực tế tính từ cuối năm  $2\,022$. \\
+	Gọi $x$ (tỷ tấn) là sản lượng khai khác hằng năm như năm  $2\,022$. \\
+	Theo đề bài, ta  có $S=28x$ (tỷ tấn). \\
+	Gọi $n$ là số năm khai thác còn lại  với sản lượng khai thác thay đổi hằng năm tính từ $2\,023$. \\
+	 Lượng khai thác mỗi năm tính từ năm $2\,023$ là $$x\cdot\dfrac{\left(1-0{,}02\right)^n-1}{\left(1-0{,}02\right)-1}=\dfrac{0{,}98^n-1}{-0{,}-2}.$$
+	Đến khi khai  thác hết, ta có $\dfrac{0{,}98^n-1}{0{,}02}x=28x \Leftrightarrow n=\log_{0{,}98}\left(1-0{,}02\cdot28\right)\approx40{,}64$.
+	 }
+\end{ex}
+
+% nguồn: Ok_TracNghiemLop11_Lan1
+\begin{ex}%[1D6H2-5]%[ma:34bcc3c8]
+	Mức cường độ âm $L$ đo bằng decibel (viết tắt là $dB$, đọc là đề-xi-ben) của âm thanh có cường độ $I$ (đo bằng oát trên mét vuông, kí hiệu là $W/\mathrm{~m}^2$) được định nghĩa $L=10\log \dfrac{I}{I_0}$, trong đó $I_0=10^{-12} W/\mathrm{~m}^2$ là cường độ âm thanh nhỏ nhất mà tai người có thể phát hiện được (gọi là ngưỡng nghe). Xác định mức cường độ âm của âm thanh  giao thông thành phố đông đúc có cường độ $I=10^{-3} W/\mathrm{~m}^2$?
+	\choice 
+		{\True $90$} 
+		 {$130$}
+		{$110$} 
+		{$150$} 
+	\loigiai{ 
+		Ta có $L=10\log \dfrac{I}{I_0}=10\log \dfrac{10^{-3}}{10^{-12}}=10\log 10^9=90  dB$.\\
+		 Vậy mức cường độ âm của âm thanh $I=10^{-3} W/\mathrm{~m}^2$ bằng 90 $dB$.
+	} 
+\end{ex}
+
+% nguồn: Ok_TracNghiemLop11_Lan1
+\begin{ex}%[1D6H2-5]%[ma:a71517aa]
+	Độ lớn $M$ của một trận động đất theo thang Richter được tính theo công thức $M=\log \dfrac{A}{A_0}$, trong đó $A$ là biên độ lớn nhất ghi được bởi máy đo địa chất, $A_0=1$ (đơn vị là micro mét, kí hiệu là $\mu m$) là biên độ tiêu chuẩn được sử dụng để hiệu chỉnh độ lệch gây ra bởi khoảng cách của máy đo địa chấn so với tâm chấn. Năm 2011 tại Nhật Bản đã xảy ra một trận động  đất độ lớn $8{,}9$ độ Richter. Dự đoán tương lại nước Nhật Bản vào năm 2025 sẽ hứng chịu một trận động đất có biên độ lớn nhất gấp đôi năm 2011, hỏi độ lớn trận động đất là bao nhiêu?
+	 \choice
+		{$17{,}8$} 
+		 {$10{,}9$}
+		{\True  $9{,}2$}
+		{$8{,}6$} 
+	 \loigiai{
+		Năm 2011,  độ lớn là $M=\log\dfrac{A}{A_0}=8{,}9$.\\
+		Năm 2025, độ lớn là  $M'=\log\dfrac{2A}{A_0}=\log 2+\log\dfrac{A}{A_0}=\log 2+8{,}9\approx 9{,}2$.\\
+		Vậy độ lớn trận động đất  được dự báo vào năm 2025 là $9{,}2$ độ Richter.
+	} 
+\end{ex}
+
+% nguồn: Ok_TracNghiemLop11_Lan1
+\begin{ex}%[1D6H2-5]%[ma:14a32e78]
+	Biết độ $\mathrm{pH}$ của một dung dịch được tính theo công thức $\mathrm{pH}=-\log x$, trong đó $x$ là nồng độ ion $\mathrm{H}^{+}$ tính bằng $\mathrm{mol}/ \mathrm{L}$. Cho một dung dịch $A$ có nồng độ $\mathrm{pH}$ bằng $3{,}2$; dung dịch $B$ có nồng độ  $\mathrm{pH}$ bằng $6{,}4$. Dung dịch $A$ có độ acid gấp bao nhiêu lần dung dịch $B$ (nghĩa là có nồng độ $\mathrm{H}^{+}$gấp bao nhiêu lần)? Làm tròn kết quả đến hàng phần trăm.
+	 \choice
+		{$1{,}58$} 
+		{$6{,}31$} 
+		{$2000$} 
+		{\True $1584{,}89$} 
+	 \loigiai{
+		Ta có $\mathrm{pH}=-\log  x\Leftrightarrow x=10^{-\mathrm{pH}}$.\\
+		Nồng độ ion $\mathrm{H}^{+}$  của dung dịch $A$ là $a=10^{- 3{,}2}$.\\
+		Nồng  độ ion $\mathrm{H}^{+}$ của dung dịch $B$ là $b=10^{- 6{,}4}$.\\
+		Khi đó $\dfrac{a}{b}=10^{3{,}2}\approx  1584{,}89$.\\
+	} 
+\end{ex}
+
+% nguồn: Ok_Toan11_TracNghiem_Lan2
+\begin{ex}%[1D6C2-5]%[ma:0f25c0d0]
+	 Nước chanh có độ pH bằng $2{,}4$, giấm có độ pH bằng $3$. Nước chanh có độ acid gấp bao nhiêu lần giấm (nghĩa là có nồng độ $H^+$ gấp bao nhiêu lần)? (Kết quả làm tròn đến hàng phần trăm).
+	 \choice
+		 { $3{,}9$ }
+		{ \True $3{,}98$  }
+		{  $4{,}3$ }
+		{ $4{,}5$ } 
+	 \loigiai{
+		Gọi  $x$, $y$ lần lượt là nồng độ $H^+$ trong nước chanh và giấm.\\
+		 Theo giả thiết ta có
+		 $
+		2{,}4 = -\log x$ và  $3 = -\log y$.\\
+		Suy ra $x = 10^{-2{,}4}$ và $y  = 10^{-3}$.\\
+		 Do đó
+		$$ 
+		\dfrac{x}{y} = 10^{-2{,}4 + 3} =  10^{0{,}6} \approx 3{,}98.
+		 $$
+		Vậy nước chanh có độ acid gấp $3{,}98$  lần giấm.
+	} 
+\end{ex}
+
+% nguồn: Ok_Toan11_TracNghiem_Lan2
+\begin{ex}%[1D6C2-5]%[ma:c83104b0]
+	Trên một chiếc đài Radio FM có vạch chia để người dùng dò sóng. Vạch  ngoài cùng bên trái và bên phải tương ứng với $88$ MHz và $108$ MHz, hai vạch cách nhau $10$ cm. Giả sử vị trí cách vạch ngoài bên trái một khoảng $d$ cm có tần số bằng $k\cdot a^d$ MHz, với $k$ và $a$ là hằng số. Tìm vị trí tốt nhất để bắt sóng $VOV_1$ với tần số $102{,}7\text{ MHz}$ (Kết quả làm tròn đến hàng phần trăm).
+	 \choice
+		{ Cách vạch ngoài  cùng bên phải $7{,}35$ cm }
+		{ Cách vạch ngoài cùng bên phải  $2{,}46$ cm }
+		{ \True Cách vạch ngoài cùng bên trái $7{,}54$  cm }
+		 { Cách vạch ngoài cùng bên trái $8{,}23$ cm }
+	\loigiai{ 
+		 Ta có
+		 $$
+		d=0  \Rightarrow k\cdot a^0 = 88 \Rightarrow k = 88.
+		$$ 
+		Ta cũng  có
+		$$ 
+		d = 10 \Rightarrow 88\cdot a^{10} = 108 
+		\Rightarrow a^{10} =  \dfrac{108}{88}
+		\Rightarrow a  = \sqrt[10]{\dfrac{108}{88}}.
+		$$ 
+		Gọi $d_1$ là vị trí có tần số $102{,}7$ MHz.\\ 
+		Khi đó, ta  có
+		 $$
+		88 \cdot a^{d_1}  = 102{,}7
+		 \Leftrightarrow
+		a^{d_1} =  \dfrac{102{,}7}{88}
+		\Leftrightarrow 
+		d_1 = \log_{\sqrt[10]{\dfrac{108}{88}}} \left(\dfrac{102{,}7}{88}\right)\approx  7{,}54.
+		$$ 
+		Vậy vị trí tốt nhất để bắt  sóng VOV1 là cách vạch ngoài cùng bên trái $7{,}54$ cm.
+	} 
+\end{ex}
+
+
+%%%%%%%%%%%%%%%% ĐÚNG/SAI %%%%%%%%%%%%%%%%
+
+% nguồn: Ok_dungsai_lop11_Lan1
+\begin{ex}%[1D6H2-5]%[ma:67d59ac7]
+ Lạm phát là sự tăng mức giá chung một cách liên tục của hàng hoá và dịch vụ theo thời gian, tức là sự mất giá trị của một loại tiền tệ nào đó. Chẳng hạn, nếu lạm phát là $5\%$ mỗi năm thì sức mua của $1$ triệu đồng sau một năm chỉ còn  là $950$
+ nghìn đồng (vì đã giảm mất $5\%$ của 1 triệu đồng, tức là $50\,000$ đồng). Nói chung, nếu tỉ lệ lạm phát trung bình là $r\%$ mỗi năm thì tổng số tiền $P$ ban đầu, sau $n$ năm số tiền đó chỉ còn giá trị là $A=P\left(1-\dfrac{r}{100}\right)^n$. Các mệnh  đề sau đúng hay sai?
+  \choiceTF
+  {\True Nếu tỉ lệ lạm phát là $7\%$ một năm thì sức mua của $100$ triệu đồng sau hai  năm sẽ còn lại $86\,490\,000$ đồng}
+  {Nếu tỉ lệ lạm phát là $7\%$  một năm thì sức mua của $100$ triệu đồng sau hai năm sẽ còn lại $96\,490\,000$ đồng}
+  {Nếu sức mua của $100$  triệu đồng sau ba năm chỉ còn lại $80$ triệu đồng thì tỉ lệ lạm phát trung bình của ba năm đó là $9{,}17\%$ (làm tròn kết quả đến hàng phần trăm)}
+  {Nếu tỉ lệ lạm phát trung bình là $6\%$ một  năm thì sau $15$ năm sức mua của số tiền ban đầu chỉ còn lại một nửa}
+  \loigiai{
+ \begin{itemchoice}
+  \itemch Đúng.  Với tỉ lệ lạm phát là $7\%$ một năm thì sức mua của $100$ triệu đồng sau hai năm là
+  $$A=100 \cdot 10^6 \cdot \left(1-\dfrac{7}{100}\right)^2=86 \,490  \,000 \; \text{đồng}.$$
+  \itemch Sai. Với tỉ lệ lạm phát là $7\%$ một năm thì sức mua của $100$ triệu  đồng sau hai năm là
+  $$A=100 \cdot 10^6 \cdot \left(1-\dfrac{7}{100}\right)^2=86 \,490\, 000  \; \text{đồng}.$$
+  \itemch Sai. Nếu sức mua của $100$ triệu đồng  sau ba năm chỉ còn lại $80$ triệu đồng thì tỉ lệ lạm phát trung bình của ba năm $r\%$ thỏa mãn
+  \begin{align*}
+   A=80  \cdot 10^6 &\Leftrightarrow 100 \cdot 10^6 \cdot \left(1-\dfrac{r}{100}\right)^3=80 \cdot 10^6\\
+   &\Leftrightarrow \left(1-\dfrac{r}{100}\right)^3=\dfrac{4}{5}\\ &\Leftrightarrow 1-\dfrac{r}{100}=\sqrt[3]{\dfrac{4}{5}}\\ 
+   &\Leftrightarrow r=100\left(1-\sqrt[3]{\dfrac{4}{5}}\right) \approx 7{,}17. 
+  \end{align*}
+  Vậy tỉ lệ  lạm phát trung bình cần tìm (làm tròn đến hàng phần trăm) là $7{,}17\%$.
+  \itemch Sai. Giả sử số tiền ban đầu là $X$. Nếu tỉ lệ lạm phát trung bình là $6\%$ một năm thì sau $15$ năm sức mua của số  tiền ban đầu là
+  $$A=X \cdot \left(1-\dfrac{6}{100}\right)^{15} \approx 0{,}4X.$$ 
+   Vậy sau $15$ năm, sức mua số tiền ban đầu bằng $0{,}4$ lần giá trị ban đầu của nó.
+ \end{itemchoice}
+  }
+\end{ex}
+
+% nguồn: Ok_dungsai_lop11_Lan1
+\begin{ex}%[1D6H2-5]%[ma:3c27f632]
+ Công thức $\log x=11{,}8+1{,}5M$ cho biết mối liên hệ giữa năng lượng $x$ tạo ra (tính theo erg,  $1$ erg tương đương $10^{-7}$ jun) với độ lớn $M$ theo thang Richter của một trận động đất.
+ \choiceTF 
+  {Trận động đất có độ lớn $2$  độ Richter tạo ra năng lượng khoảng $6{,}3\cdot 10^{34}$ erg}
+  {\True Trận động đất có độ lớn $3$ độ  Richter tạo ra năng lượng khoảng $2\cdot 10^9$ jun}
+  {Trận động đất có độ lớn $5$ độ Richter tạo ra năng lượng gấp $100$  lần so với trận động đất có độ lớn $3$ độ Richter}
+  {\True Người ta ước lượng rằng  một trận động đất có độ lớn khoảng từ $4$ đến $6$ độ Richter. Năng lượng do trận động đất đó tạo ra nằm trong khoảng $10^{17{,}8} \le x\le 10^{20{,}8}$ erg}
+ \loigiai{ 
+  \begin{itemchoice}
+    \itemch \textbf{Sai}.\\
+   Ta  có $\log x=11{,}8+1{,}5M$.\\
+   Với $M=2$ ta được $\log x=14{,}8\Leftrightarrow  x\approx 6{,}3\cdot 10^{14}$ erg.
+   \itemch \textbf{Đúng}.\\ 
+   Với $M=3$ ta  được $\log x=16{,}3\Leftrightarrow x\approx 2\cdot 10^{16}$ erg $=2\cdot 10^9$ jun.
+   \itemch  \textbf{Sai}.\\
+   Gọi $x_1$, $x_2$ (erg) lần lượt là năng lượng tạo ra của hai trận động đất có độ lớn lần lượt  là $M_1=5$, $M_2=3$ (độ Richter).\\
+    Ta có
+   $\heva{&\log  x_1=11{,}8+1{,}5M_1\\& \log x_2=11{,}8+1{,}5M_2.}$\\
+    $\Rightarrow \log x_1-\log x_2=1{,}5\left(M_1-M_2 \right)\Rightarrow \log\dfrac{x_1}{x_2}=3\Rightarrow \dfrac{x_1}{x_2}=10^3=1000$.
+   \itemch \textbf{Đúng}.\\ 
+   Ta được 
+   \begin{align*}
+    &11{,}8+1{,}5\cdot 4\le \log  x\le 11{,}8+1{,}5\cdot 6\\
+    \Rightarrow& 17{,}8\le \log x\le 20{,}8\\ 
+    \Rightarrow& 10^{17{,}8} \le x\le  10^{20{,}8}\,(\text{erg}).
+   \end{align*}
+  \end{itemchoice}
+ } 
+\end{ex}
+
+
+%%%%%%%%%%%%%%%% TRẢ LỜI NGẮN %%%%%%%%%%%%%%%%
+
+% nguồn: Ok_TraLoiNgan_Lop11_Lan1
+\begin{ex}%[1D6H2-5]%[ma:edc050af]
+	Cường độ một trận động đất $M$ (độ Richter) được cho  bởi công thức $M=\log A-\log A_0$, với $A$ là biên độ rung chấn tối đa và $A_0$ là một biên độ chuẩn (hằng số). Đầu thế ki $20$, một trận động đất ở San Francisco có cường độ $8$ độ Richter. Trong cùng năm đó, một trận động đất khác ở Nam Mỹ có biên độ rung chấn mạnh hơn gấp $4$ lần. Hỏi cường độ của trận động đất ở Nam Mỹ là bao nhiêu (kết quả đuợc làm tròn đến hàng phần chục)?
+	 \shortans{8,6}
+	 \loigiai{
+		Gọi $M_1, M_2$ lần lượt là cường độ của trận động  đất ở San Francisco và ở Nam Mỹ.\\
+		Trận động đất ở  San Francisco có cường độ là $8$ độ Richter nên
+		$$M_1=\log A-\log A_0 \Leftrightarrow  8=\log A-\log A_0.$$
+		Trận động đất ở Nam Mỹ có biên độ là $4A$, khi  đó cường độ của trận động đất ở Nam Mỹ là
+		 $M_2=\log(4A)-\log(A_0)=\log4+(\log A-\log A_0)=\log 4+8\approx 8{,}6$ độ Richter.
+	 }
+\end{ex}
+
+% nguồn: Ok_TraLoiNgan_Lop11_Lan1
+\begin{ex}%[1D6H2-5]%[ma:5dc088bf]
+	Dung dịch $A$ có nồng độ $H^+$ là $0{,}00001$ mol/L và dung dịch $B$ có nồng độ $H^+$ là $0{,}00000001$ mol/L. Tìm tổng độ $pH$ của  hai dung dịch trên.
+	 \shortans{13}
+	 \loigiai{Độ $pH$ của dung dịch $A$ là $pH_A=-\log \left[H^+\right]_A=-\log 0,00001=5$.\\
+	Độ $pH$ của dung dịch $B$ là $pH_B=-\log \left[H^+\right]_B=-\log  0,00000001=8$.\\
+	Khi  đó tổng độ $pH$ của hai dung dịch đã cho bằng $13$.
+	 }
+\end{ex}
+
+% nguồn: Ok_TraLoiNgan_Lop11_Lan1
+\begin{ex}%[1D6H2-5]%[ma:f3faacad]
+	Trong nông nghiệp bèo hoa dâu được dùng làm phân bón, nó rất tốt cho cây trồng. Mới đây, các nhà khoa học Việt Nam đã phát hiện ra bèo hoa dâu có thể dùng để chiết xuất ra chất có tác dụng kích thích hệ miễn dịch và hỗ trợ điều trị bệnh ung thư. Bèo hoa dâu được thả nuôi trên mặt nước. Một  người đã thả một lượng bèo hoa dâu chiếm $4 \%$ diện tích mặt hồ. Biết rằng cứ sau đúng một tuần bèo phát triển thành ba lần số lượng đã có và giả sử tốc độ phát triển của bèo ở mọi thời điểm như nhau. Hỏi sau ít nhất bao nhiêu ngày bèo sẽ vừa phủ kín mặt hồ?
+	\shortans{21} 
+	\loigiai{Số lượng bèo ban  đầu chiếm $0{,}04$ diện tích mặt hồ.\\
+	Sau 1 tuần số lượng bèo là $0{,}04 \times 3$ diện tích mặt hồ.\\ 
+	Sau  2 tuần số lượng bèo là $0{,}04 \times 3^2$ diện tích mặt hồ.\\
+	Sau $n$ tuần số lượng bèo là $0{,}04  \times 3^n$ diện tích mặt hồ.\\
+	Để bèo phủ kín mặt hồ thì $0{,}04 \times 3^n=1 \Rightarrow 3^n=25 \Rightarrow n=\log _3 25$ (tuần).\\ 
+	Số ngày tương ứng  là $7 n=7 \log _3 25 \approx 20{,}51$ (ngày).\\
+	Vậy sau ít nhất $21$  ngày thì bèo hoa dâu sẽ phủ kín mặt hồ.
+	} 
+\end{ex}
+
+% nguồn: Ok_TraLoiNgan_Lop11_Lan1
+\begin{ex}%[1D6H2-5]%[ma:31bafd9c]
+	Ông An gửi $200$ triệu đồng vào ngân hàng theo hình thức lãi kép theo kì hạn năm, với lãi suất là $6{,}5 \%$ một năm và lãi suất không đổi trong thời gian gửi. Sau $6$ năm, số tiền lãi (làm tròn đến hàng triệu) của ông là bao nhiêu? 
+	\shortans{92} 
+	 \loigiai{
+		Đặt số tiền gốc của ông An là $A=200$  triệu.\\
+		Hết năm thứ $6$  số tiền cả gốc và lãi ông An nhận được là $\mathrm{A}_6=200(1+6{,}5 \%)^6$.\\
+		Vậy sau $6$ năm số tiền lãi ông An nhận được là $\mathrm{A}_6-A  \approx 92$ triệu.
+	 }
+\end{ex}
+
+% nguồn: Ok_TraLoiNgan_Lop11_Lan2
+\begin{ex}%[1D6V2-5]%[ma:262e542f]
+	Một người lần đầu gửi vào ngân hàng 100 triệu đồng với kì hạn 3 tháng, lãi suất 2 \% một quý. Biết rằng nếu không rút tiền ra khỏi ngân hàng thì cứ sau mỗi quý số tiền lãi sẽ được nhập vào gốc để tính lãi cho quý tiếp theo. Sau đúng 6 tháng, người đó gửi thêm 100 triệu đồng với kỳ  hạn và lãi suất như trước đó. Tổng số tiền người đó nhận được 1 năm sau khi gửi tiền là (đơn vị triệu đồng) (kết quả làm tròn đến hàng triệu)
+	 \shortans{212}
+	\loigiai{ 
+		Số tiền nhận  về sau 1 năm của 100 triệu gửi trước là $100(1+2\%)^4$ triệu.\\
+		Số  tiền nhận về sau 6 tháng của 100 triệu gửi sau là $100(1+2\%)^2$ triệu.\\
+		Vậy tổng số tiền là $100(1+2\%)^4+100(1+2\%)^2=212{,}283216 \left(\approx  212{,}283\right)$ triệu.
+	} 
+\end{ex}
+
+
+%%%%%%%%%%%%%%%% TỰ LUẬN %%%%%%%%%%%%%%%%
+
+% nguồn: Ok_TuanLuan_Toan11_Lan2
+\begin{ex}%[1D6H2-5]%[ma:d36546ae]
+	Trong nuôi trồng thuỷ sản, độ ${pH}$ của môi trường nước sẽ ảnh hưởng đến sức khoẻ và sự phát triển của thuỷ sản. Độ ${pH}$ thích hợp cho nước trong đầm nuôi tôm sú là từ $7{,}2$ đến $8{,}8$ và tốt nhất là trong khoảng từ $7{,}8$ đến $8{,}5$. Phân tích nồng độ $\left[H^+\right]$trong một đầm nuôi tôm sú, ta thu được $\left[H^+\right]=8\cdot 10^{-8}$. Hỏi độ $pH$  của đầm đó có thích hợp cho tôm sú phát triển không?\\
+	\textit{(Nguồn https:nongnghiep.farmvina.com)} 
+	\loigiai{ 
+		Ta có $pH=-\log[H^+]=-\log8\cdot  10^{-8}\approx 7{,}1$.\\
+	 Suy ra độ $pH$ của đầm đó không thích hợp để tôm sú phát triển. }
+\end{ex}
+
+% nguồn: Ok_TuanLuan_Toan11_Lan2
+\begin{ex}%[1D6H2-5]%[ma:faa3bf6d]
+	\begin{enumerate}
+		\item Nước cất có nồng độ $H^+$là $10^{-7}$ (mol/L). Tính độ  $pH$ của nước cất.
+		\item Một dung  dịch có nồng độ $H^+$ gấp $20$ lần nồng độ $ H^+$ của nước cất. Tính độ $pH$ của dung dịch đó
+	\end{enumerate}
+	 \loigiai{
+		\begin{enumerate}
+			\item Độ  $pH$ của nước cất là $pH=-\log\left[H^+\right]=-\log\left[10^{-7}\right]=7$.
+			\item Nồng độ  $H^+$của dung dịch đó là $20\cdot 10^{-7}$ (mol/L).\\
+			Độ $pH$ của dung dịch đó là  $pH=-\log\left[H^+\right]=-\log\left[20\cdot 10^{-7}\right]\approx 5{,}7$.
+	\end{enumerate}	}
+\end{ex}
+
+% nguồn: Ok_TuanLuan_Toan11_Lan2
+\begin{ex}%[1D6H2-5]%[ma:a123f925]
+	Một vi khuẩn có khối lượng khoảng $5\cdot10^{-13}$ gam và cứ $20$ phút vi khuẩn đó tự nhân đôi một lần. Giả sử các vi khuẩn được nuôi trong các điều kiện sinh trưởng tối ưu và mỗi con vi khuẩn đều tồn tại trong ít nhất $60$ giờ. Hỏi sau bao nhiêu giờ khối lượng do tế bào vi khuẩn này sinh ra sẽ đạt tới khối lượng của Trái Đất (lấy khối lượng của Trái Đất là $6\cdot 10^{27}$ gam) (\textit{làm tròn  kết quả đến hàng đơn vị})?\\
+	\textit{(Nguồn: Câu hỏi và Câu tập vi sinh học,  NXB ĐHSP, 2008)}
+	 \loigiai{
+		Số lượng tế bào đạt tới khối lượng của Trái Đất là  $N=\dfrac{6\cdot 10^{27}}{5\cdot 10^{-13}}=1{,}2\cdot 10^{40}$.\\
+		Số lần phân chia $N=N_o\cdot 2^n$, suy ra $n=\dfrac{\log N-\lg N_o}{\lg  2}=133$.\\
+		Thời gian cần thiết là $\dfrac{133}{3}=44{,}3$  (giờ).
+	} 
+\end{ex}
+
+% nguồn: Ok_TuanLuan_Toan11_Lan2
+\begin{ex}%[1D6H2-5]%[ma:146e1f4a]
+	Trong nuôi  trồng thuỷ sản, độ pH của môi trường nước sẽ ảnh hưởng đến sức khoẻ và sự phát triển của thuỷ sản. Độ pH thích hợp cho nước trong đầm nuôi tôm sú là từ $7{,}2$ đến $8{,}8$ và tốt nhất trong khoảng từ $7{,}8$ đến $8{,}5$. Phân tích nồng độ $[H^{+}]$ trong một đầm nuôi tôm sú thu được $[H^{+}]=8\cdot 10^{-8}$. Hỏi độ pH của đầm đó có thích hợp cho nuôi tôm sú phát triển không?
+	 \loigiai{
+		Độ pH của đầm là $-\log [H^{+}]=-\log \left(8\cdot 10^{-8}\right)\approx  7{,}1$.\\
+		Ta thấy $7{,}1<7{,}2$ nên  độ pH của đầm chưa thích hợp để cho tôm sú phát triển.
+	} 
+\end{ex}
+
+% nguồn: Ok_TuanLuan_Toan11_Lan1
+\begin{bt}%[1D6V2-5]%[ma:70d5648e]
+	Cường độ một trận động đất $M$ được cho bởi công thức $M=\log A-\log A_0$, với $A$ là biên độ rung chấn tối đa và $A_0$ là một biên độ  chuẩn (hằng số). Đầu thế kỷ $20$, một trận động đất ở San Francisco có cường độ $8,3$ độ Richter. Trong cùng năm đó, trận động đất khác ở gần đó đo được $7{,}1$ độ Richter. Hỏi trận động đất ở San Francisco có biên độ gấp bao nhiêu trận động đất này?
+	\loigiai{Xét trận động đất ở San  Francisco, ta có \[8{,}3=\log A-\log A_0\Leftrightarrow 8{,}3=\log\dfrac{A}{A_0}\Leftrightarrow \dfrac{A}{A_0}=10^{8{,}3}\Leftrightarrow A=A_0\cdot 10^{8{,}3}.\]
+		Xét trận động đất khác gần đó, ta  có \[7{,}1=\log A-\log A_0\Leftrightarrow 7{,}1=\log\dfrac{A}{A_0}\Leftrightarrow \dfrac{A}{A_0}=10^{7{,}1}\Leftrightarrow A=A_0\cdot 10^{7{,}1}.\]
+		Từ đó ta  tính tỉ lệ $\dfrac{A_0\cdot 10^{8{,}3}}{A_0\cdot 10^{7{,}1}}=10^{1{,}2}\approx 15{,}8$.\\
+	Vậy trận động đất ở San Francisco có biên độ gấp gần  $15{,}8$ lần so với trận động đất khác gần đó.}
+\end{bt}
+
+% nguồn: Ok_TuanLuan_Toan11_Lan1
+\begin{bt}%[1D6V2-5]%[ma:d06b1249]
+	Khi gửi vào ngân hàng số tiền $P$, theo thể thức lãi kép với lãi suất mỗi kỳ hạn là $r$ thì số tiền $P_n$ (cả số tiền  gốc lẫn số tiền lãi) nhận được sau $n$ kỳ hạn là $P_n=P_0(1+r)^n$. Theo thể thức này, nếu đến kỳ hạn người gửi không rút lãi ra thì số tiền lãi được tính vào số tiền gốc của kỳ kế tiếp. Một người gửi tiền tiết kiệm $490$ triệu đồng vào ngân hàng kỳ hạn $3$ tháng với lãi suất $3,4\%$ một năm theo thể thức lãi kép. Hỏi sau tối thiểu bao nhiêu quý gửi tiền vào ngân hàng, người đó có số tiền lãi lớn hơn số tiền gốc ban đầu gửi ngân hàng, giả định trong khoảng thời gian này lãi suất không thay đổi, người đó không rút tiền ra?
+	\loigiai{ 
+		Với lãi suất $3,4\%$ một năm suy ra lãi  suất $3,4\%:4=0{,}85\%$ một quý.\\
+		Vì số tiền lãi lớn hơn số tiền gốc ban  đầu gửi ngân hàng nên ta có $$P_0(1+r)^n-P_0>P_0\Leftrightarrow (1+r)^n>2\Leftrightarrow (1+0{,}85\%)^n>2\Rightarrow n>81{,}89.$$
+		 Vậy sau tối thiếu $82$ quý thì người đó có số tiền lãi lớn hơn số tiền gốc ban đầu gửi ngân hàng.
+	 }
+\end{bt}
+
+% nguồn: Ok_TuanLuan_Toan11_Lan1
+\begin{bt}%[1D6V2-5]%[ma:b422e7c7]
+	Người ta phân tích nồng độ $H^{+}$ của hai loại dung dịch $A$ và $B$ thì biết rằng dung dịch $A$ có nồng $H^{+}$ lớn  hơn nồng độ $H^{+}$ của dung dịch $B$. Hỏi độ $pH$ của dung dịch nào lớn hơn?
+	\loigiai{Độ $pH$ của dung dịch $A$ là $pH_{A}=-\log \left[H^{+} \right]_A=\log \left(\left[H^{+}  \right]_A\right)^{-1}=\log \dfrac{1}{\left[H^{+} \right]_A}$.\\
+		Độ $pH$ của dung dịch $B$ là $pH_{B}=-\log \left[H^{+} \right]_B=\log  \left(\left[H^{+} \right]_B\right)^{-1}=\log \dfrac{1}{\left[H^{+} \right]_B}$.\\
+		Xét hàm số $y=\log x$ có cơ số $10 > 1$  nên hàm số đồng biến trên $(0;+\infty)$.\\
+		Mặt khác $\left[H^{+} \right]_A> \left[H^{+} \right]_B> 0\Rightarrow 0  < \dfrac{1}{\left[H^{+} \right]_A} < \dfrac{1}{\left[H^{+} \right]_B}$.\\
+		Vì vậy $\log \dfrac{1}{\left[H^{+}  \right]_A} < \log \dfrac{1}{\left[H^{+} \right]_B}$.\\
+	Vậy độ $pH$ của dung dịch $B$ lớn hơn độ  $pH$ của dung dịch $A$.}
+\end{bt}
+
+% nguồn: Ok_TuanLuan_Toan11_Lan1
+\begin{bt}%[1D6V2-5]%[ma:363ae4a6]
+	Cường độ một trận động đất $M$ (độ Richter) được cho bởi công thức $M=\log A-\log A_0$, với $A$ là biên độ rung chấn tối đa và $A_0$ là một biên độ chuẩn (hằng số). Đầu thế kỉ $20$ , một trận động đất ở San Francisco có cường độ $8$ độ Richter. Trong cùng năm đó, một trận động đất khác  ở Nam Mỹ có biên độ rung chấn mạnh hơn gấp $4$ lần. Hỏi cường độ của trận động đất ở Nam Mỹ là bao nhiêu (kết quả được làm tròn đến hàng phần chục)?
+	 \loigiai{ \\
+		Gọi $M_1, M_2$ lần lượt là cường độ của trận động đất ở San Francisco và ở Nam Mỹ. Trận động  đất ở San Francisco có cường độ là $8$ độ Richter nên$M_1=\log A-\log A_0 \Leftrightarrow 8=\log A-\log A_0 $.\\ Trận động đất ở Nam Mỹ có biên độ là $4 A$, khi đó cường độ của trận động đất ở Nam Mỹ là\\
+		$M_2=\log  (4A)-\log A_0=\log 4+\left( \log A-\log A_0 \right)=\log 4+8\approx 8{,}602$. (độ Richter)
+	 }
+\end{bt}
+
+% nguồn: Ok_TuanLuan_Toan11_Lan1
+\begin{bt}%[1D6V2-5]%[ma:4400e535]
+	Người ta sử dụng công thức $S=A\cdot \mathrm{e}^{n\cdot r}$ để dự báo dân số của một quốc gia, trong đó $A$ là số dân của năm lấy làm mốc tính, $S$ là số dân sau $n$ năm và $r$ là tỉ lệ gia tăng dân số hàng năm. Biết rằng năm $2001$, dân số của Việt Nam là $78\,685\,800$ người. Giả sử tỉ lệ tăng dân số hàng năm không đổi là $1,2\%$, hỏi dân số nước ta đạt $110$ triệu người vào năm nào? 
+	\loigiai{Theo công thức tăng trưởng  mũ $S=A\cdot\mathrm{e}^{n\cdot r}$.\\
+		$\Rightarrow 110\,000\,000=78\,685\,800\cdot\mathrm{e}^{1,2\%\cdot n}\Leftrightarrow n=\dfrac{1}{1,2\%}\ln\dfrac{110\,000\,000}{78\,685\,800}\approx27,91$.\\ 
+		Suy ra sau $28$ năm thì dân số Việt Nam đạt  $110$ triệu người.\\
+	Vậy dân số Việt Nam đạt được $110$  triệu người vào năm $2029$.}
+\end{bt}
+
+% nguồn: Ok_TuanLuan_Toan11_Lan1
+\begin{bt}%[1D6V2-5]%[ma:34b102ac]
+	Gia đình bác An gửi tiết kiệm $500$ triệu đồng vào ngân hàng với lãi suất $6{,}5\%$/năm. Biết rằng tiền lãi của kì trước được cộng  vào gốc tính lãi kì sau (lãi kép).
+	\begin{enumerate}
+		\item Hỏi sau ba năm, gia đình bác nhận được số tiền cả vốn lẫn lãi là bao nhiêu? Nếu tính theo thể thức lãi kép liên tục thì số  tiền cả vốn lẫn lãi của gia đình bác An thu được là bao nhiêu (sau ba năm)?
+		\item Vẫn với $500$ triệu đồng, gia đình bác An gửi tiết kiệm với lãi kép $6{,}5\%$/năm theo kì hạn $6$ tháng. Hỏi để nhận  được cả gốc và lãi là $1$ tỉ đồng thì gia đình bác An cần gửi bao nhiêu năm?
+	\end{enumerate}
+	\loigiai{ 
+		\begin{enumerate}
+			\item Ta  có
+			\begin{itemize}
+				\item $A_0=500$ triệu  đồng là số tiền gốc ban đầu.
+				\item $r=6{,}5\%=0{,}065$/năm là lãi suất một kì. 
+				\item $n=3$ (năm) là  số kì hạn gửi.
+				\item $A_n$ là số tiền cả vốn và lãi nhận  được sau $n$ kì gửi.
+			\end{itemize}
+			Vậy  sau $3$ năm, gia đình bác An nhận được số tiền cả gốc và lãi là \[A_3=A_0\cdot\left(1+r\right)^3=500\cdot\left(1+0{,}065\right)^3\approx 603{,}975\,(\text{triệu đồng}).\]
+			Với thể thức lãi kép liên tục thì số tiền gia đình bác An  thu được sau $3$ năm là
+			\[A_3=A_0\cdot  \mathrm{e}^{tr}=500\cdot\mathrm{e}^{3\cdot 0{,}065}\approx 607{,}655\,(\text{triệu đồng}).\]
+			\item Ta có 
+			\begin{itemize}
+				\item $A_0=500$ triệu đồng là  số tiền gốc ban đầu.
+				\item  $r=6{,}5\%=0{,}065$/năm là lãi suất một kì.
+				\item $n$ là số năm cần gửi. 
+				\item $A_n=1\,000$  triệu đồng là số tiền cả vốn và lãi nhận được sau $n$ năm gửi.
+			\end{itemize}
+			Do kì hạn là $6$ tháng, tức là mỗi năm là 2 kì tính lãi nên số kì gửi là $N=2n$, lãi suất mỗi kì gửi  là $\dfrac{r}{2}$.\\
+			Khi đó\begin{eqnarray*}
+			 &&A_n=A_0\left(1+\dfrac{r}{2}\right)^{2n}\\
+			&\Leftrightarrow&  1\,000=500\cdot\left(1+\dfrac{0{,}065}{2}\right)^{2n}\\
+			 &\Leftrightarrow&1{,}0325^{2n}=2\\
+			 &\Leftrightarrow&n\approx 10{,}83\,(\text{năm}).
+		\end{eqnarray*}
+		Vậy gia đình bác An cần gửi ít nhất $11$  năm để nhận được số tiền như dự định.
+	\end{enumerate}
+ }
+\end{bt}
+
+% nguồn: Ok_TuanLuan_Toan11_Lan1
+\begin{bt}%[1D6V2-5]%[ma:ff09d1d6]
+	Biết rằng khi độ cao tăng lên thì  áp xuất không khí sẽ giảm và công thức tính áp suất dựa trên độ cao là $a=15\,500\cdot\left(5-\log p\right)$, trong đó $a$ là độ cao so với mực nước biển (tính bằng mét) và $p$ là áp suất không khí (tính bằng pascal). Tính áp suất không khí ở đỉnh Everest có độ cao $8\,850$ m so với mực nước biển.
+	\loigiai{ Theo công thức $a=15\,500\cdot\left(5-\log  p\right)$.\\
+		$\Rightarrow 8\,850=15\,500\cdot\left(15-\log  p\right)=\dfrac{177}{310}\Leftrightarrow\log p=\dfrac{1\,373}{310}\Leftrightarrow p\approx26\,855,4$.\\
+	Vậy áp suất không khí ở đỉnh Everest gần bằng $26\,855,4$  pascal.}
+\end{bt}
+
+% nguồn: Ok_TuanLuan_Toan11_Lan2
+\begin{ex}%[1D6V2-5]%[ma:6faaa405]
+	Cường độ một trận động đất $M$ được cho bởi công thức $M=\log A-\log A_0$, với $A$ là biên độ rung chấn tối đa và $A_0$ là một  biên độ chuẩn (hằng số). Đầu thế kỷ $20$, một trận động đất ở San Francisco có cường độ $8,3$ độ Richter. Trong cùng năm đó, trận động đất khác ở gần đó đo được $7{,}1$ độ Richter. Hỏi trận động đất ở San Francisco có biên độ gấp bao nhiêu trận động đất này?
+	\loigiai{Xét trận động đất  ở San Francisco, ta có \[8{,}3=\log A-\log A_0\Leftrightarrow 8{,}3=\log\dfrac{A}{A_0}\Leftrightarrow \dfrac{A}{A_0}=10^{8{,}3}\Leftrightarrow A=A_0\cdot 10^{8{,}3}.\]
+		Xét trận động đất khác gần đó, ta có \[7{,}1=\log A-\log A_0\Leftrightarrow  7{,}1=\log\dfrac{A}{A_0}\Leftrightarrow \dfrac{A}{A_0}=10^{7{,}1}\Leftrightarrow A=A_0\cdot 10^{7{,}1}.\]
+		Từ đó ta tính tỉ lệ $\dfrac{A_0\cdot  10^{8{,}3}}{A_0\cdot 10^{7{,}1}}=10^{1{,}2}\approx 15{,}8$.\\
+	Vậy trận động đất ở San Francisco có biên độ gấp gần $15{,}8$ lần so  với trận động đất khác gần đó.}
+\end{ex}
+
+% nguồn: Ok_TuanLuan_Toan11_Lan2
+\begin{ex}%[1D6V2-5]%[ma:5a8d06b1]
+	Khi gửi vào ngân hàng số tiền  $P$, theo thể thức lãi kép với lãi suất mỗi kỳ hạn là $r$ thì số tiền $P_n$ (cả số tiền gốc lẫn số tiền lãi) nhận được sau $n$ kỳ hạn là $P_n=P_0(1+r)^n$. Theo thể thức này, nếu đến kỳ hạn người gửi không rút lãi ra thì số tiền lãi được tính vào số tiền gốc của kỳ kế tiếp. Một người gửi tiền tiết kiệm $490$ triệu đồng vào ngân hàng kỳ hạn $3$ tháng với lãi suất $3,4\%$ một năm theo thể thức lãi kép. Hỏi sau tối thiểu bao nhiêu quý gửi tiền vào ngân hàng, người đó có số tiền lãi lớn hơn số tiền gốc ban đầu gửi ngân hàng, giả định trong khoảng thời gian này lãi suất không thay đổi, người đó không rút tiền ra?
+	\loigiai{ 
+		Với lãi suất $3,4\%$ một năm  suy ra lãi suất $3,4\%:4=0{,}85\%$ một quý.\\
+		Vì số tiền lãi lớn hơn số tiền gốc ban đầu gửi ngân hàng nên ta có $$P_0(1+r)^n-P_0>P_0\Leftrightarrow (1+r)^n>2\Leftrightarrow (1+0{,}85\%)^n>2\Rightarrow n>81{,}89.$$ 
+		Vậy sau tối thiếu $82$ quý thì người đó có số tiền  lãi lớn hơn số tiền gốc ban đầu gửi ngân hàng.
+	} 
+\end{ex}
+
+% nguồn: Ok_TuanLuan_Toan11_Lan2
+\begin{ex}%[1D6V2-5]%[ma:d1c0a365]
+	Người ta phân tích nồng độ $H^{+}$ của hai loại  dung dịch $A$ và $B$ thì biết rằng dung dịch $A$ có nồng $H^{+}$ lớn hơn nồng độ $H^{+}$ của dung dịch $B$. Hỏi độ $pH$ của dung dịch nào lớn hơn?
+	\loigiai{Độ $pH$ của dung dịch $A$ là $pH_{A}=-\log  \left[H^{+} \right]_A=\log \left(\left[H^{+} \right]_A\right)^{-1}=\log \dfrac{1}{\left[H^{+} \right]_A}$.\\
+		Độ $pH$ của dung dịch $B$ là $pH_{B}=-\log \left[H^{+} \right]_B=\log \left(\left[H^{+} \right]_B\right)^{-1}=\log  \dfrac{1}{\left[H^{+} \right]_B}$.\\
+		Xét hàm số $y=\log x$ có cơ số $10 > 1$ nên  hàm số đồng biến trên $(0;+\infty)$.\\
+		Mặt  khác $\left[H^{+} \right]_A> \left[H^{+} \right]_B> 0\Rightarrow 0 < \dfrac{1}{\left[H^{+} \right]_A} < \dfrac{1}{\left[H^{+} \right]_B}$.\\
+		Vì vậy $\log \dfrac{1}{\left[H^{+} \right]_A}  < \log \dfrac{1}{\left[H^{+} \right]_B}$.\\
+	Vậy độ $pH$ của dung  dịch $B$ lớn hơn độ $pH$ của dung dịch $A$.}
+\end{ex}
+
+% nguồn: Ok_TuanLuan_Toan11_Lan2
+\begin{ex}%[1D6V2-5]%[ma:7251f00b]
+	Cường độ một trận động đất $M$ (độ Richter) được cho bởi công thức $M=\log A-\log A_0$, với $A$ là biên độ rung chấn tối đa và $A_0$ là một biên độ chuẩn (hằng số). Đầu thế kỉ $20$ , một trận động đất ở San Francisco có cường độ $8$ độ Richter. Trong cùng năm đó, một trận động đất khác ở Nam Mỹ có biên  độ rung chấn mạnh hơn gấp $4$ lần. Hỏi cường độ của trận động đất ở Nam Mỹ là bao nhiêu (kết quả được làm tròn đến hàng phần chục)?
+	\loigiai{  \\
+		Gọi $M_1, M_2$ lần lượt là cường độ của trận động đất ở San Francisco và ở Nam Mỹ. Trận động đất ở  San Francisco có cường độ là $8$ độ Richter nên$M_1=\log A-\log A_0 \Leftrightarrow 8=\log A-\log A_0 $.\\ Trận động đất ở Nam Mỹ có biên độ là $4 A$, khi đó cường độ của trận động đất ở Nam Mỹ là\\
+		$M_2=\log (4A)-\log A_0=\log 4+\left( \log A-\log A_0 \right)=\log 4+8\approx 8{,}602$. (độ Richter) 
+	 }
+\end{ex}
+
+% nguồn: Ok_TuanLuan_Toan11_Lan2
+\begin{ex}%[1D6V2-5]%[ma:c52e649c]
+	Người ta sử dụng công thức $S=A\cdot \mathrm{e}^{n\cdot r}$ để dự báo dân số của một quốc gia, trong đó $A$ là số dân của năm lấy làm mốc tính, $S$ là số dân sau $n$ năm và $r$ là tỉ lệ  gia tăng dân số hàng năm. Biết rằng năm $2001$, dân số của Việt Nam là $78\,685\,800$ người. Giả sử tỉ lệ tăng dân số hàng năm không đổi là $1,2\%$, hỏi dân số nước ta đạt $110$ triệu người vào năm nào?
+	 \loigiai{Theo công thức tăng trưởng mũ $S=A\cdot\mathrm{e}^{n\cdot r}$.\\
+		$\Rightarrow 110\,000\,000=78\,685\,800\cdot\mathrm{e}^{1,2\%\cdot  n}\Leftrightarrow n=\dfrac{1}{1,2\%}\ln\dfrac{110\,000\,000}{78\,685\,800}\approx27,91$.\\
+		Suy ra sau $28$ năm thì dân số Việt Nam đạt $110$ triệu người.\\ 
+	Vậy dân số Việt Nam đạt được $110$ triệu người  vào năm $2029$.}
+\end{ex}
+
+% nguồn: Ok_TuanLuan_Toan11_Lan2
+\begin{ex}%[1D6V2-5]%[ma:547c8fe7]
+	Gia đình bác An gửi tiết kiệm $500$ triệu đồng vào ngân hàng với lãi suất $6{,}5\%$/năm.  Biết rằng tiền lãi của kì trước được cộng vào gốc tính lãi kì sau (lãi kép).
+	\begin{enumerate}
+		\item Hỏi sau ba năm, gia đình bác nhận được số tiền cả vốn lẫn lãi là bao nhiêu? Nếu tính theo thể thức lãi kép liên tục thì số tiền cả vốn  lẫn lãi của gia đình bác An thu được là bao nhiêu (sau ba năm)?
+		\item Vẫn với $500$  triệu đồng, gia đình bác An gửi tiết kiệm với lãi kép $6{,}5\%$/năm theo kì hạn $6$ tháng. Hỏi để nhận được cả gốc và lãi là $1$ tỉ đồng thì gia đình bác An cần gửi bao nhiêu năm?
+	\end{enumerate}
+	 \loigiai{
+		\begin{enumerate}
+			\item  Ta có
+			\begin{itemize}
+				\item $A_0=500$ triệu đồng là số tiền gốc ban đầu. 
+				\item $r=6{,}5\%=0{,}065$/năm là lãi suất một  kì.
+				\item $n=3$  (năm) là số kì hạn gửi.
+				\item $A_n$ là số tiền cả vốn và lãi nhận được  sau $n$ kì gửi.
+			\end{itemize}
+			Vậy sau $3$ năm, gia đình bác An nhận được  số tiền cả gốc và lãi là \[A_3=A_0\cdot\left(1+r\right)^3=500\cdot\left(1+0{,}065\right)^3\approx 603{,}975\,(\text{triệu đồng}).\]
+			Với  thể thức lãi kép liên tục thì số tiền gia đình bác An thu được sau $3$ năm là
+			\[A_3=A_0\cdot \mathrm{e}^{tr}=500\cdot\mathrm{e}^{3\cdot 0{,}065}\approx  607{,}655\,(\text{triệu đồng}).\]
+			\item  Ta có
+			\begin{itemize}
+				\item  $A_0=500$ triệu đồng là số tiền gốc ban đầu.
+				 \item $r=6{,}5\%=0{,}065$/năm là lãi suất một kì.
+				\item  $n$ là số năm cần gửi.
+				\item $A_n=1\,000$ triệu đồng là số tiền cả  vốn và lãi nhận được sau $n$ năm gửi.
+			\end{itemize}
+			Do kì hạn là $6$ tháng,  tức là mỗi năm là 2 kì tính lãi nên số kì gửi là $N=2n$, lãi suất mỗi kì gửi là $\dfrac{r}{2}$.\\
+			Khi đó\begin{eqnarray*}
+			&&A_n=A_0\left(1+\dfrac{r}{2}\right)^{2n}\\ 
+			&\Leftrightarrow& 1\,000=500\cdot\left(1+\dfrac{0{,}065}{2}\right)^{2n}\\ 
+			&\Leftrightarrow&1{,}0325^{2n}=2\\ 
+			&\Leftrightarrow&n\approx  10{,}83\,(\text{năm}).
+		\end{eqnarray*}
+		Vậy gia  đình bác An cần gửi ít nhất $11$ năm để nhận được số tiền như dự định.
+	\end{enumerate}
+} 
+\end{ex}
+
+% nguồn: Ok_TuanLuan_Toan11_Lan2
+\begin{ex}%[1D6V2-5]%[ma:c7881cb2]
+	Biết rằng khi độ cao tăng lên thì áp xuất không khí sẽ giảm và công thức tính áp suất dựa trên độ cao là $a=15\,500\cdot\left(5-\log p\right)$, trong đó $a$ là độ cao so với mực nước biển (tính bằng mét) và $p$ là áp  suất không khí (tính bằng pascal). Tính áp suất không khí ở đỉnh Everest có độ cao $8\,850$ m so với mực nước biển.
+	\loigiai{ Theo công thức $a=15\,500\cdot\left(5-\log  p\right)$.\\
+		$\Rightarrow 8\,850=15\,500\cdot\left(15-\log  p\right)=\dfrac{177}{310}\Leftrightarrow\log p=\dfrac{1\,373}{310}\Leftrightarrow p\approx26\,855,4$.\\
+	Vậy áp suất không khí ở  đỉnh Everest gần bằng $26\,855,4$ pascal.}
+\end{ex}
+
+% nguồn: Ok_TuanLuan_Toan11_Lan2
+\begin{ex}%[1D6V2-5]%[ma:0c08042c]
+	Mức cường độ âm $L$ đo bằng decibel ($dB)$ của âm thanh có cường độ $I$ (đo bằng oát trên mét vuông, kí hiệu  là W/m $^2$) được định nghĩa như sau $L(I)=10\cdot {log}\dfrac{I}{I_0}$ trong đó $I_0=10^{-12}$ {W}/m$^2$ là cường độ âm thanh nhỏ nhất mà tai người có thể phát hiện được (gọi là ngưỡng nghe). Xác định mức cường độ âm của mỗi âm sau
+	\begin{enumerate}
+		\item Cuộc trò chuyện bình thường có cường độ  $l=10^{-7}$ W/m$^2$.
+		\item Giao thông thành  phố đông đúc có cường độ ${I}=10^{-3}$ W/m$^2$.
+	\end{enumerate}
+	 \loigiai{
+		\begin{enumerate}
+			\item Áp dụng công thức  $L(I)=10\cdot \log \dfrac{I}{I_0}$.\\
+			$L(10^{-7})=10\cdot \log \dfrac{10^{-7}}{10^{-12}}=10\cdot \log 10^5=10\cdot 5=50$  dB.
+			\item Thay  các giá trị ta có $L(10^{-3})=10\cdot \log \dfrac{10^{-3}}{10^{-12}}=10\cdot \log 10^9=10\cdot 9=90$ dB.
+	\end{enumerate}	}
+\end{ex}
+
+% nguồn: Ok_TuanLuan_Toan11_Lan2
+\begin{ex}%[1D6V2-5]%[ma:899895e1]
+	Biết rằng khi độ cao tăng lên, áp suất không khí sẽ giảm và công thức tính áp suất dựa trên độ cao là $a=15\,500\cdot(5-\log p)$ trong đó $a$ là độ cao so với mực nước biển (tính bằng mét) và $p$ là áp suất không khí (tính bằng pascal). Tính áp suất không khí  ở đỉnh Everest có độ cao $8\,850$ m so với mực nước biển
+	 \loigiai{
+		Để tính áp suất không khí ở độ cao $8\, 850$ m, ta thay $a=8\,850$ vào công thức và giải  phương trình để tìm giá trị của $p$. Ta có
+		 \allowdisplaybreaks
+		\begin{eqnarray*}
+			a=15\,500\cdot (5-\log p) &\Leftrightarrow& 8\,850=15\,500\cdot  (5-\log p)\\
+			 &\Leftrightarrow& 5-\log p=\dfrac{8\, 850}{15\, 500}\\
+			&\Leftrightarrow& \log p=5-\dfrac{8\, 850}{15\,  500}\\
+			&\Leftrightarrow&  \log p=4{,}429.
+		\end{eqnarray*}
+		Suy ra $p=10^{4{,}429}\approx  26\,853$ Pa.\\
+	Vậy áp suất không khí ở độ cao $8\,  850$ m so với mực nước biển là khoảng $26\,853$ Pa.}
+\end{ex}

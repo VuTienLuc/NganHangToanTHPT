@@ -1,0 +1,601 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Lớp 10 | Bất phương trình bậc 2 một ẩn | Phương trình quy về phương trình bậc hai
+% Dạng 0D7?3-6: Toán hình, toán thực tế  ứng dụng phương trình quy về bậc 2
+% Số câu: 17  (sinh tự động bởi tach_cau.py; từ nay thầy sửa trực tiếp file này)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%% TRẮC NGHIỆM 4 PHƯƠNG ÁN %%%%%%%%%%%%%%%%
+
+% nguồn: MaHoaNH_TracNghiem_Lop10
+\begin{ex}%[0D7C3-6]%[ma:bd482827]
+	Tam giác $ABC$ vuông tại $A$, có cạnh $AC$ ngắn hơn cạnh $BC$ là $9$ cm. Biết chu vi của tam giác bằng $70$ cm, độ dài  đoạn $AC$ là
+	 \choice
+		{$21$  cm}
+		{\True $20$  cm}
+		{$29$  cm}
+		{$28$ cm} 
+	\loigiai{ 
+	\immini{Gọi  độ dài cạnh $AC$ là $x$ cm.\\
+		Cạnh $AC$ ngắn hơn cạnh $BC$ là $9$ cm nên độ dài cạnh $BC$ là  $(x+9)$ cm.\\
+		Ta có  $AC^2+AB^2=BC^2$ hay
+		 \[
+		 AB=\sqrt{BC^2-AC^2}=\sqrt{(x+9)^2-x^2}=\sqrt{18x+81}.
+		\] 
+		Chu vi tam giác  $ABC$ bằng $70$ cm nên
+		 \allowdisplaybreaks
+		\begin{eqnarray*}
+			AB+BC+CA=70 &\Rightarrow&\sqrt{18x+81}+(x+9)+x=70  \\
+			&\Rightarrow&\sqrt{18x+81}=61-2x\\ 
+			&\Rightarrow&  18x+81=61^2-2\cdot 61 \cdot 2x+4x^2\\
+			&\Rightarrow& 4x^2-262x+3640=0\\ 
+			 &\Rightarrow&\hoac{&x=20\\ &x=\dfrac{91}{2}.}
+		\end{eqnarray*}
+		Thay lần lượt các giá trị trên vào phương trình đã cho,  ta thấy $x=20$ thỏa mãn.\\
+		Vậy $AC=20$  cm.
+		}{\begin{tikzpicture}[scale=0.7,font=\footnotesize,line join=round,line cap=round,>=stealth]
+		\coordinate [label=below left:$A$] (A) at  (0,0);
+		\coordinate [label=above:$C$](C)  at (0,3);
+		\coordinate [label=below: $B$] (B) at (2,0); 
+		\draw  (A)--(C)--(B)--(A);
+		\foreach \diem in {A,B,C}  \fill (\diem) circle (1.5pt);
+		\draw pic[draw,angle radius=2mm]  {right angle = C--A--B};
+	\end{tikzpicture}
+		 }
+	 }
+\end{ex}
+
+
+%%%%%%%%%%%%%%%% TRẢ LỜI NGẮN %%%%%%%%%%%%%%%%
+
+% nguồn: MaHoaNH_TraLoiNgan_Lop10
+\begin{bt}%[0D7V3-6]%[ma:e727e9ee]
+	Một công ty du lịch báo giá tiền tham quan của một nhóm khách du lịch như sau $50$ khách đầu tiên có  giá là $300\,000$ đồng một người. Nếu có trên $50$ người thì cứ thêm một người thì giá vé sẽ giảm $5\,000$ đồng/ người cho toàn bộ hành khách. Gọi $x$ là số lượng khách vượt quá $50$ người của nhóm. Biết chi phí thực sự của chuyến du lịch là $15\,080\,000$ đồng. Hãy xác định số nguyên lớn nhất của $x$ để công ty không bị lỗ.
+	\shortans {8} 
+	 \loigiai{
+		 Tổng số khách là $50+x$.\\
+		Tổng số tiền mà mỗi khách phải trả là $300-5x$ (đơn vị tính là  nghìn đồng).\\
+		 Tổng tiền thu là $(50+x)(300-5x)=-5x^2+50x+15000$.\\
+		Để công ty  không bị lỗ thì phải có
+		$$-5x^2+50x+15\,000 \ge 15\,080 \Leftrightarrow x^2-10x+16 \le 0 \Leftrightarrow 2 \le x \le 8.$$ 
+		Vậy số nguyên lớn nhất để chuyến  đi không bị lỗ là $x=8$.
+	 }
+\end{bt}
+
+% nguồn: MaHoaNH_TraLoiNgan_Lop10
+\begin{bt}%[0D7V3-6]%[ma:7c439640]
+	Cho hòn đảo $D$ cách bờ $4$ km ($CD=4$ km). Ngôi làng $B$ cách $C$ một khoảng $7$ km. Nhà nước muốn xây dựng một trạm y tế trên đất liền, sao cho có thể phục vụ được cho dân cư ở cả đảo $D$ và làng $B$. Biết trung bình vận tốc di chuyển tàu cứu thương là $100$ km/h, xe cứu thương là $80$ km/h. Vậy nên đặt trạm y tế cách làng $B$ bao nhiêu km để thời gian cứu thương cho  hai địa điểm là như nhau?
+	\begin{center}
+		\begin{tikzpicture}[line join=round,line cap=round,>=stealth,scale=0.75,font=\footnotesize]
+				\foreach \x/\y/\n in {0/0/C,6/0/B,4/0/A}  \coordinate (\n) at (\x,\y);
+				\coordinate (D) at ($(C)+(0,3)$); 
+				\draw (A)--(D)--(C)--(B); 
+				 \foreach \t/\g in {A/40,B/0,C/180,D/90}{
+					\fill (\t) circle (1pt) node[shift={(\g:8pt)}]{$ \t  $};
+				 }
+				\draw[|<->|] ($(C)-(0,0.3)$)--($(B)-(0,0.3)$)  node[midway,below]{$7$ km};
+				\draw  (C)--(D) node[left,midway]{$4$ km};
+			\end{tikzpicture}
+	\end{center}
+	 \shortans{4}
+	 \loigiai{
+		Đặt $AB=x$  $(0<x\le 7)$.\\
+		$\triangle ACD$  vuông tại $C$ có $AD=\sqrt{CD^2+AC^2}=\sqrt{16+(7-x)^2}=\sqrt{x^2-14x+65}$.\\
+		Thời  gian di chuyển của tàu cứu thương là $\dfrac{\sqrt{x^2-14x+65}}{100}$.\\
+		Thời gian di chuyển của xe cứu thương là $\dfrac{x}{80}$.\\ 
+		Ta có phương trình \[\dfrac{\sqrt{x^2-14x+65}}{100}=\dfrac{x}{80}\Rightarrow  16(x^2-14x+65)=25x^2\Leftrightarrow \hoac{&x=4\,\,\text{(nhận)}\\&x=-\dfrac{260}{9}\,\,\text{(loại)}.}
+		 \]
+		Vậy nên đặt trạm y tế cách làng $B$  $4$ km để thời gian cứu thương cho hai địa điểm là như nhau.
+	 }
+\end{bt}
+
+% nguồn: MaHoaNH_TraLoiNgan_Lop10
+\begin{bt}%[0D7V3-6]%[ma:511a5c1b]
+	Cho tam giác $ABC$ vuông tại  $A$, cạnh $AB$ ngắn hơn cạnh $AC$ là $2$. Biết chu vi của tam giác $ABC$ bằng $24$. Tính diện tích của tam giác $ABC$.\shortans{24}
+	 \loigiai{
+		Đặt $AB=x$, vì  cạnh $AB$ ngắn hơn cạnh $AC$ là $2$ nên độ dài cạnh $AC=AB+x=2+x$.\\
+		Chu vi của tam  giác $ABC$ bằng $24$ nên
+	\immini{			\begin{eqnarray*}
+		 & & AB+BC+CA=24\\
+		&\Leftrightarrow & x+\sqrt{2x^2+4x+4}+2+x=24  \\
+		&\Leftrightarrow& \sqrt{2x^2+4x+4}=22-2x \qquad \qquad  \qquad (*)\\
+		&\Rightarrow  & 2x^2+4x+4=484-88x+4x^2\\
+		&\Rightarrow&  2x^2-92x+480=0\\
+		&\Rightarrow  & x=40\ \text{hoặc}\ x=6.
+	\end{eqnarray*}}
+	{\begin{tikzpicture}[line join = round,line cap = round,>=stealth,font=\footnotesize,scale=0.9]
+		\coordinate [label=left:$A$]  (A) at (0,0);
+		\coordinate [label=above:$B$](B) at  (0,2);
+		 \coordinate [label=below:$C$] (C) at (4,0);
+		\draw (A)--(B)--(C)--(A); 
+		\draw pic[draw,angle radius=2mm]  {right angle = B--A--C};
+		\foreach  \diem in {A,B,C} \fill (\diem) circle (1.5pt);
+	\end{tikzpicture}
+	 }
+	Thay lần lượt $x=40$, $x=6$ vào phương trình $(*)$, ta thấy chỉ có  $x=6$ thỏa mãn. \\
+	Do đó phương trình  $(*)$ có nghiệm $x=6$.\\
+	Khi đó độ dài ba cạnh của tam  giác $ABC$ là $AB=6$, $AC=8$, $BC=10$.
+	\\ 
+	Vậy diện tích tam giác $ABC$ là $S_{\triangle ABC}=\dfrac{1}{2}\cdot AB\cdot AC =  24$ (đ.v.d.t).
+} 
+\end{bt}
+
+% nguồn: MaHoaNH_TraLoiNgan_Lop10
+\begin{bt}%[0D7V3-6]%[ma:4bf8a111]
+	Người ta muốn thiết kế một vườn hoa hình chữ nhật nội tiếp trong một miếng đất hình tròn có đường kính bằng $50$\,m.  Tính diện tích vườn hoa hình chữ nhật (đơn vị: m$^2$), biết tổng quãng đường đi xung quanh vườn hoa đó là $140$\,m.
+	 \shortans
+	{  $1200$}
+	\loigiai{ 
+	\immini{ 
+		Gọi chiều rộng  hình chữ nhật là $x=AB$\,(m).\\
+		Suy ra, chiều dài  hình chữ nhật là
+		$BC=\sqrt{AC^2-AB^2}=\sqrt{2500-x^2}$\,(m).\\ 
+		Ta có $2\left(x+\sqrt{2500-x^2}\right)=140\Leftrightarrow \sqrt{2500-x^2}=70-x$.\\ 
+		Bình phương hai  vế phương trình ta được:
+		 \allowdisplaybreaks
+		\begin{eqnarray*}
+			&&2500-x^2=(70-x)^2 
+			 \Leftrightarrow 2500-x^2=4900-140x+x^2
+			 \\
+			&\Leftrightarrow& 2x^2-140x+2400=0 
+			 \Leftrightarrow \hoac{&x=40\\&x=30.}
+		\end{eqnarray*}
+		} 
+		 {
+		\begin{tikzpicture}[declare function={r=1.5;},font=\footnotesize,line join=round,line cap=round,>=stealth]
+				\path (0:0)  coordinate (O)
+					 (30:r) coordinate (A)
+					(-30:r) coordinate  (B)
+					($(O)!-1!(A)$) coordinate (C) 
+					($(O)!-1!(B)$)  coordinate (D);
+				\draw (A)--(B)--(C)--(D)--cycle (A)--(C) 
+					(O)  circle (r);
+				 \foreach \t/\g in {A/0,B/0,C/180,D/180}{
+					\draw[fill=black] (\t) circle (1pt)  node[shift={(\g:7pt)},font=\scriptsize]{$ \t $};
+				 }
+			\end{tikzpicture}
+		 }
+		\noindent 
+		Thử lại, ta thấy $x=40$ và $x=30$ đều thỏa phương  trình.\\
+		Vậy phương trình có hai nghiệm là  $\hoac{&x=40\\&x=30.}$\\
+		Nếu $x=AB=30\Rightarrow BC=40$.\\ 
+		 Nếu $x=AB=40\Rightarrow BC=30$ (loại vì $BC>AB$).\\
+		Vậy diện  tích vườn hoa là $40\cdot 30=1\,200\,\mathrm{m}^2$.
+	} 
+\end{bt}
+
+% nguồn: MaHoaNH_TraLoiNgan_Lop10
+\begin{bt}%[0D7C3-6]%[ma:04871ad0]
+	Ba thành phố $A$, $T$, $B$ cùng với các con đường nối các thành phố tạo thành một tam giác vuông tại $T$, khảng cách $AB$ là $100$ km. Tại cùng một thời điểm, ô tô thứ nhất đi từ $A$ tới $T$ với vận tốc $55$ km/h và ô tô thứ hai đi từ $B$ tới $T$ với vận tốc $45$ km/h. Tại thời điểm xe thứ nhất cách $T$ $14$ km thì xe thứ hai cách $T$ $6$ km, hỏi lúc này hai  xe đã di chuyển bao nhiêu giờ?
+	 \shortans{1,2}
+	\loigiai{ 
+	\immini 
+		{ 
+		 Gọi thời gian hai xe chạy là $t$ (giờ, $t>0$). \\
+		Khi  đó $AT = 55t + 14$ km và $BT = 45t + 8$ km.\\
+		Do tam giác $ABT$ vuông tại $T$ và $AB  = 100$ km nên
+		\begin{eqnarray*}
+			& &AB^2 = AT^2 + BT^2\Leftrightarrow (55t+14)^2 +  (45t+6)^2 = 100^2 \\
+			&\Leftrightarrow &5050t^2 + 2080t - 9768 = 0 \Leftrightarrow  \heva{&t = \dfrac{6}{5}\\ & t = - \dfrac{814}{505}.}
+		\end{eqnarray*}
+		Do $t>0$ nên $t =  \dfrac{6}{5} = 1{,}2$.
+		 }
+		 {
+		\begin{tikzpicture}[line join=round,line cap = round,>=stealth,scale=.8,font=\footnotesize,transform shape]
+				 \foreach \x/\y/\z/\g in
+					 {
+					0/0/A/-135,4/0/T/45,4/-3/B/-90 
+				} 
+				\draw[fill=black] (\x,\y) circle (1pt) coordinate  (\z)
+					 ($(\z)+(\g:3.5mm)$) node{$\z$};
+				 \draw (A)--(T)--(B)--(A);
+			\end{tikzpicture}
+		} 
+	} 
+\end{bt}
+
+% nguồn: MaHoaNH_TraLoiNgan_Lop10
+\begin{bt}%[0D7C3-6]%[ma:1d2b8cc4]
+	Tam giác $ABC$ vuông tại $A$ có điểm $D$ nằm giữa $A$ và $B$. Biết $BC = 8$, $BD = 3$ và $CD = 6$, tính diện tích tam giác $ABC$ (làm tròn đến  chữ số thập phân thứ nhất sau dấu phẩy).
+	\shortans{15,7} 
+	\loigiai{ 
+	 \immini
+		{ 
+		Đặt $AD = x$ ($x > 0$). Khi đó theo định lý Py-ta-go  ta có
+		\begin{itemize}
+			\item $AC^2 = CD^2  - AD^2 = 6^2 - x^2 = 36 - x^2$.
+			 \item $AC^2 = BC^2 - AB^2 = 8^2 - (x+3)^2 = 55 - 6x - x^2$.
+		\end{itemize}
+		Do đó  $36 - x^2 = 55 - 6x - x^2 \Leftrightarrow x = \dfrac{19}{6}$, suy ra
+		 \[
+		S_{ABC} = \dfrac{1}{2}AB\cdot AC = \dfrac{1}{2}(x+3)\sqrt{36-x^2}  \approx 15{,}7.
+		\] 
+		} 
+		 {
+		\begin{tikzpicture}[line join=round,line cap = round,>=stealth,scale=.8,font=\footnotesize,transform shape]
+				\foreach  \x/\y/\z/\g in
+					{ 
+					0/0/A/-135,3/0/D/-90,5/0/B/-45,0/4/C/135 
+				} 
+				\draw[fill=black] (\x,\y) circle  (1pt) coordinate (\z)
+					($(\z)+(\g:3.5mm)$) node{$\z$}; 
+				\draw  (D)--(C)--(B)--(A)--(C);
+			\end{tikzpicture}
+		} 
+	} 
+\end{bt}
+
+% nguồn: MaHoaNH_TraLoiNgan_Lop10
+\begin{bt}%[0D7C3-6]%[ma:cba9b140]
+	\immini 
+	 {
+	Một chú thỏ ngày nào cũng ra bờ suối ở vị trí $A$ cách cửa hang của mình ở vị trí $B$ là $370$ m để uống nước, sau đó chú thỏ sẽ đến vị trí $C$ cách $A$ $120$ m để ăn cỏ rồi trở về hang. Tuy nhiên, hôm nay sau khi uống nước ở bờ suối, chú thỏ không đến vị trí $C$ như mọi ngày mà chạy đến vị trí $D$ nằm  giữa $C$ và $B$ để tìm cà rốt rồi mới trở về hang (xem hình dưới). Biết rằng, tam giác $ABC$ vuông tại $C$, tổng thời gian chú thỏ chạy từ $A$ đến $D$ rồi về hang hết $30$ giây (không kể thời gian tìm cà rốt), tốc độ của chú thỏ trên các đoạn $AD$ và $DB$ lần lượt là $13$ m/s và $15$ m/s. Tính độ dài đoạn $CD$.
+	} 
+	{ 
+	\begin{tikzpicture}[line join=round,line cap = round,>=stealth,scale=.8,font=\footnotesize,transform shape]
+			\foreach \x/\y/\z/\g in 
+				{ 
+				0/0/C/-135,3/0/D/-90,5/0/B/-45,0/4/A/135 
+			 }
+			\draw[fill=black] (\x,\y)  circle (1pt) coordinate (\z)
+				($(\z)+(\g:3.5mm)$)  node{$\z$};
+			\draw  (D)--(A)--(B)--(C)--(A);
+		\end{tikzpicture}
+	} 
+	 \shortans{50}
+	 \loigiai{
+		Gọi thời gian  chú thỏ chạy trên đoạn $AD$ là $x$ giây ($0<x<30$). Khi đó $AD = 13x$ m.\\
+		Thời gian chú thỏ chạy trên đoạn $BD$ là $30-x$ giây nên  $BD = 15(30-x)$ m.\\
+		Theo định lý Py-ta-go ta có $BC = \sqrt{AB^2 - AC^2} = 350$.  \\
+		Suy ra $CD = BC  - BD = 350 - 15(30-x) = 15x - 100$ m.\\
+		Áp dụng định lý Pythagore cho tam giác  $ACD$ ta có
+		\[ 
+		 AD^2 = AC^2 + CD^2 \Leftrightarrow (13x)^2 = 120^2 + (15x-100)^2
+		\Leftrightarrow 56x^2 - 3000x +  24400 = 0 \Leftrightarrow \hoac{&x=10\\ &x = \dfrac{307}{5}.}
+		 \]
+		 Mà $ 0 < x < 30$ nên $x = 10$, suy ra $CD = 50$.
+	} 
+\end{bt}
+
+% nguồn: MaHoaNH_TraLoiNgan_Lop10
+\begin{bt}%[0D7C3-6]%[ma:83493e8d]
+	 \immini{
+	Một đài quan sát $O$ cách ba vị trí $A$, $B$, $C$ như hình vẽ dưới đây thoả mãn $OB = x$ km, $OC = x+1$ km và $OA = 2$ km. Tìm $x$ biết khoảng cách từ vị trí $A$ đến vị trí $C$ gấp đôi khoảng cách từ vị trí $A$ đến vị trí $B$ và khoảng cách từ $O$ đến $B$ ngắn hơn khoảng cách  từ $O$ đến $A$.
+	 }{
+	\begin{tikzpicture}[line join = round,line cap = round,scale=.8]
+			\coordinate[label = left:$B$] (B)  at (0,0);
+			 \coordinate[label = right:$C$] (C) at ($(B)+(6,0)$);
+			\coordinate[label = above:$A$] (A)  at ($(B)+(0,4)$);
+			\coordinate[label = below:$O$] (O)  at ($(B)+(2,0)$);
+			\draw[fill  = gray!50] ($(B)!5pt!(C)$)--($(B)!5pt!(C)+(B)!5pt!(A)-(B)$)--($(B)!5pt!(A)$)--(B)--cycle;
+			\draw (B)--(C)--(A)--cycle  (A)--(O);
+			\foreach \x in {B,C,A,O} \fill[black] (\x) circle (1pt); 
+			\draw pic[draw,black,angle radius=3mm] {angle  = C--O--A}
+				($($(O)!18mm!(C)$)!.6!($(O)!13mm!(A)$)$) node[rotate=0]{$120^\circ$}; 
+		\end{tikzpicture}
+	 }
+	\shortans{1} 
+	 \loigiai{
+		Áp dụng định lý cosintrong  tam giác $AOC$ ta được
+		 \[
+		AC^2=AO^2+OC^2-2\cdot AO\cdot OC \cdot\cos\widehat{AOC}=4+(x+1)^2-4(x+1)\cdot\cos120^\circ=x^2+4x+7. 
+		\] 
+		Suy ra  $AC=\sqrt{x^2+4x+7}$.\\
+		Áp dụng định lý  cosintrong tam giác $AOB$ ta được
+		\[ 
+		AB^2=AO^2+OB^2-2\cdot AO\cdot  OB\cos\widehat{AOB}=4+x^2-4x\cos60^\circ=x^2-2x+4.
+		\] 
+		Suy ra  $AB=\sqrt{x^2-2x+4}$.\\
+		Theo giả  thiết ta có $AC=2BO \Leftrightarrow 2\sqrt{x^2-2x+4}=\sqrt{x^2+4x+7}.\quad (*)$\\
+		Giải  phương trình $2\sqrt{x^2-2x+4}=\sqrt{x^2+4x+7}.\quad(*)$\\
+		Bình phương hai vế của phương trình $(*)$ ta được  phương trình $4(x^2-2x+4)=x^2+4x+7$. \\
+		Ta có $$4(x^2-2x+4)=x^2+4x+7 \Leftrightarrow 3x^2-12x+9=0  \Leftrightarrow
+		 \hoac{& x=1\\&x=3.}$$
+		Thay hai giá trị $x=1$ và $x=3$ vào phương trình $(*)$ ta thấy cả hai giá trị đều thõa  mãn, nhưng $OB<OA$ nên $x=1$.
+	 }
+\end{bt}
+
+% nguồn: MaHoaNH_TraLoiNgan_Lop10
+\begin{bt}%[0D7C3-6]%[ma:a9a80641]
+	Cho lục giác $ABCDEF$ có $AB \perp EF$; $BC \perp DE$; $AF \parallel CD$; $AF=CD$; $AB=4$; $BE=26$; $EF=16$; $AF=10$. Gọi $H$ là  giao điểm của $AB$ và $EF$; $K$ là giao điểm của $BC$ và $ED$, khi đó tứ giác $HBKE$ là hình chữ nhật, đặt $x=AH$; $x>0$. Hãy tính độ dài $x$.
+	\begin{center}
+		\begin{tikzpicture}[line cap=round,line join=round,font=\footnotesize,>=stealth,scale=0.3]
+				 \path
+					(0,0) coordinate (B) 
+					 ($(B)+(90:4)$) coordinate (A)
+					 ($(A)+(90:6)$) coordinate (H)
+					($(H)+(0:8)$) coordinate  (F)
+					($(F)+(0:16)$) coordinate  (E)
+					($(B)+(0:16)$)  coordinate (C)
+					($(C)+(0:8)$) coordinate (K) 
+					($(K)+(90:6)$) coordinate  (D);
+				\draw (B)--(A)--(H)  node [midway,left] {$x$}--(E)--(K)--cycle (A)--(F)
+					 (C)--(D);
+				\foreach \x/\g in {A/-180,B/-135,C/-90,K/-45,D/0,E/45,F/90,H/135}{ 
+					\fill (\x)  circle (4pt) node[shift=(\g:3mm)] {$\x$};}
+			\end{tikzpicture}
+	\end{center}
+	\shortans{6} 
+	 \loigiai{
+		\begin{center}
+			\begin{tikzpicture}[line cap=round,line join=round,font=\footnotesize,>=stealth,scale=0.3]
+					 \path
+						(0,0) coordinate (B) 
+						($(B)+(90:4)$) coordinate (A) 
+						($(A)+(90:6)$)  coordinate (H)
+						($(H)+(0:8)$)  coordinate (F)
+						($(F)+(0:16)$) coordinate (E) 
+						($(B)+(0:16)$)  coordinate (C)
+						 ($(C)+(0:8)$) coordinate (K)
+						($(K)+(90:6)$) coordinate  (D);
+					\draw (B)--(A) node [midway,left] {$4$}--(H) node [midway,left]  {$x$}--(F)--(E) node [midway,above] {$16$}--(K)--cycle (A)--(F) node[midway,above left] {$10$}
+						 (C)--(D)
+						(B)--(E)  node[midway,above left] {$26$};
+					 \foreach \x/\g in {A/-180,B/-135,C/-90,K/-45,D/0,E/45,F/90,H/135}{
+						 \fill (\x) circle (4pt) node[shift=(\g:3mm)] {$\x$};}
+				\end{tikzpicture}
+		\end{center}
+		Xét tam giác $A H F$  vuông tại $H$ có $H F=\sqrt{100-x^2}$ (áp dụng định lí Pytago).\\
+		Xét tam giác $B H E$ vuông tại $H$ có  $H B^2+H E^2=B E^2$
+		\begin{align*}
+			& \Rightarrow(x+4)^2+\left(\sqrt{100-x^2}+16\right)^2=26^2 \Leftrightarrow 4  \sqrt{100-x^2}=38-x \\
+			& \Leftrightarrow\heva{& 38 - x \geq 0 \\ &16(100 - x ^2) = (38 -  x)^2} \Leftrightarrow \heva{& 17 x^2-76 x-156=0 \\ &x \leq 38} \Leftrightarrow x=6.
+		\end{align*}
+	Vậy $A H=x=6$.} 
+\end{bt}
+
+% nguồn: MaHoaNH_TraLoiNgan_Lop10
+\begin{bt}%[0D7C3-6]%[ma:5ad70568]
+	\immini{ 
+	Một ngọn hải đăng được đặt tại vị trí $A$ cách bờ biển một khoảng $AB = 5$ km. Trên bờ biển có một cái  kho ở vị trí $C$ cách $B$ một khoảng $7$ km. Người canh hải đăng có thể chèo thuyền từ $A$ đến địa điểm $M$ trên bờ biển với vận tốc $4$ km/h, rồi đi bộ đến $C$ với vận tốc $6$ km/h. Người canh hải đăng tìm được cách đặt vị trí của $M$ để thời gian đến kho là $\dfrac{5\sqrt{5}+14}{12}$ (h). Khi đó vị trí điểm $M$ cách $B$ một khoảng bằng bao nhiêu km? (làm tròn đến hàng phần trăm).
+	}{ 
+	\begin{tikzpicture}[scale=.7,font=\footnotesize,line join=round,line cap=round,>=stealth]
+			\path 
+				(0,4) coordinate (A) 
+				(0,0)  coordinate (B)
+				(7,0)  coordinate (C)
+				(3,0) coordinate (M); 
+			\draw (A)--(B)--(C)--(A)--(M); 
+			\draw[<->]  (-.5,0)--(-.5,4) node[midway,left]{$5$ km};
+			\draw[<->] (0,-.7)--(7,-.7)  node[midway,below]{$7$ km};
+			 \foreach \x/\g in{A/90,B/-120,C/0,M/60}
+			 \fill[black](\x) circle (1pt)
+				($(\x)+(\g:4mm)$)  node{$\x$};
+			\draw pic[draw,angle radius=2mm] {right angle  = A--B--C};
+		\end{tikzpicture}
+	 }
+	 \shortans{4,47}
+	\loigiai{ 
+	\immini{ 
+	Đặt $BM=x$ (km), với $0\le x\le 7$. Suy ra $CM =  7-x$ (km). \\
+	 Suy ra $AM=\sqrt{25+x^2}$ (km).\\
+	Thời gian chèo  thuyền trên đoạn đường biển $AM$ là
+	$$t_1 = \dfrac{\sqrt{25  + x^2}}{4}\;(\text{h})$$
+	Thời gian  đi bộ trên đoạn đường $CM$ là
+	$$t_2 = \dfrac{7-x}{6}\;(\text{h})$$ 
+	 }{
+	\begin{tikzpicture}[scale=.8,font=\footnotesize,line join=round,line cap=round,>=stealth]
+			 \path
+				(0,4) coordinate  (A)
+				(0,0) coordinate (B) 
+				 (7,0) coordinate (C)
+				 (3,0) coordinate (M);
+			 \draw (A)--(B)--(C)--(A)--(M);
+			\draw[<->] (-.5,0)--(-.5,4) node[midway,left]{$5$  km};
+			\draw[<->] (0,-.7)--(3,-.7)  node[midway,below]{$x$ km};
+			\draw[<->]  (3,-1)--(7,-1) node[midway,below]{$7-x$ km};
+			 \foreach \x/\g in{A/90,B/-120,C/0,M/60}
+			 \fill[black](\x) circle (1pt)
+				($(\x)+(\g:4mm)$) node{$\x$}; 
+			\draw pic[draw,angle radius=2mm] {right angle  = A--B--C};
+		\end{tikzpicture}
+	 }
+	\noindent Vì  tổng thời gian đi từ $A$ đến $C$ hết $\dfrac{5\sqrt{5}+14}{12}$ (h) nên ta có phương trình
+	\begin{eqnarray*}
+		&&\dfrac{\sqrt{25+x^2}}{4}+\dfrac{7-x}{6}=  \dfrac{5\sqrt{5}+14}{12} \\
+		&\Leftrightarrow &2x+5\sqrt{5}=3\sqrt{x^2+25}\\ &\Leftrightarrow &5x^2-20\sqrt{5}x+100=0\\ &\Leftrightarrow &x=2\sqrt{5}. 
+	\end{eqnarray*}
+	Vậy vị trí điểm $M$ cách $B$ một khoảng  bằng $2\sqrt{5}\approx 4{,}47$ km.
+	} 
+\end{bt}
+
+
+%%%%%%%%%%%%%%%% TỰ LUẬN %%%%%%%%%%%%%%%%
+
+% nguồn: MaHoaNH_TuLuan_Lop10
+\begin{bt}%[0D7V3-6]%[ma:2d04c3af]
+	Có hai con tàu $A$, $B$ xuất phát từ hai bến, chuyển động theo đường thẳng ngoài  biển. Trên màn hình ra-đa của trạm điều khiển (xem như mặt phẳng tọa độ $Oxy$ với đơn vị trên các trục tính bằng ki-lô-mét), tại thời điểm $t$ (giờ) vị trí của tàu $A$ có tọa độ được xác định bởi công thức $\heva{&x=3-33t \\&y=-4+25t}$, vị trí tàu $B$ có tọa độ là $(4-30t; 3-40t)$. Nếu tàu $A$ đứng yên ở vị trí ban đầu, tàu $B$ chạy thì khoảng cách ngắn nhất giữa hai tàu bằng bao nhiêu ki-lô-mét?
+	 \loigiai{
+		Khi tàu $A$ đứng yên $(t=0)$, vị trí ban đầu của nó có  tọa độ $P(3;-4)$, vị trí tàu $B$ ứng với thời gian $t$ là $Q(4-30t; 3-40t)$. Khi đó,
+		$$PQ=\sqrt{(1-30t)^2+(7-40t)^2}=\sqrt{2\,500t^2-620t+50}.$$ 
+		Đoạn $PQ$  ngắn nhất ứng với $t=-\dfrac{b}{2a}=\dfrac{620}{2\cdot2\,500}=\dfrac{31}{250}=0{,}124$ (giờ).\\
+		 Khi đó $PQ_{\min}=\sqrt{2\,500\cdot(0{,}124)^2-620\cdot(0{,}124)+50}=\dfrac{17}{5}=3{,}4$ km.\\
+		Vậy nếu tàu $A$ đứng yên ở vị trí ban đầu, tàu $B$ chạy thì  khoảng cách ngắn nhất giữa hai tàu bằng $3{,}4$ km.
+	 }
+\end{bt}
+
+% nguồn: MaHoaNH_TuLuan_Lop10
+\begin{bt}%[0D7V3-6]%[ma:0dbe7e07]
+	Lúc $8$ giờ sáng, hai ô tô cùng xuất phát tại vị trí $A$ và vị trí $B$ cách nhau $100$ km chạy về thành phố $T$. Vận tốc của hai ô tô chạy từ vị trí $A$ và vị trí $B$ lần lượt là $55$ km/h và $45$ km/h. Biết rằng tại thời điểm ô tô đi từ vị trí $A$ đến địa điểm $D$ cách thành phố $T$ $14$ km thì  ô tô đi từ vị trí $B$ đến địa điểm $C$ cách thành phố $T$ là $6$ km. Hỏi thời điểm đó là mấy giờ? (Đơn vị tính $24$ h).
+	\begin{center}
+		\begin{tikzpicture}
+				 \def\r{5}
+				\path (0:0) coordinate  (A)
+					++(0:\r)  coordinate (T)
+					++(-90:0.7*\r) coordinate  (B)
+					 (A)++(0:0.5*\r) coordinate (D)
+					(T)++(-90:0.2*\r) coordinate (C); 
+				 \draw (A)--(D)
+					(D)--(T) node [midway,above] {$14$ km} 
+					(T)--(C)  node [midway,right] {$6$ km}
+					(C)--(B) 
+					pic[draw,angle radius=2mm]{right  angle=A--T--B}
+					(B)--(A) node [midway,below  left] {$100$ km};
+				\foreach  \x/ \goc in {A/135,B/-45,T/45,D/90,C/0}
+				\fill (\x) circle  (1pt)
+					($(\x)+(\goc:3mm)$)  node {$\x$};
+			\end{tikzpicture}
+	\end{center}
+	\loigiai{ 
+		Gọi $x$ (giờ) là thời gian ô tô đi từ vị trí $A$ đến địa điểm $D$ $(x  > 0)$.\\
+		Vì hai ô tô xuất phát cùng một lúc nên thời gian ô tô đi từ vị trí $B$ đến  địa điểm $C$ cũng là $x$ giờ. Do đó, quảng đường $AD$ và $BC$ lần lượt là $55x$ km và $45x$ km.\\
+		Suy ra khoảng cách từ  vị trí $A$ và vị trí $B$ đến thành phố $T$ lần lượt là $55x+14$ km và $45x+6$ km.
+		Vì khoảng cách giữa hai vị trí $A$ và $B$ là $100$  km nên ta có phương trình
+		 \[\sqrt{(55x+14)^2+(45x+6)^2}=100\Leftrightarrow 5\,050x^2+2\,080x+232=10\,000.\]
+		Giải phương trình này và kết hợp với điều kiện $x  > 0$, ta nhận $x=\dfrac{6}{5}$.\\
+		Đổi $\dfrac{6}{5}$ giờ $=1$ giờ $12$  phút.\\
+		Vậy thời điểm ô tô đi từ vị trí  $A$ đến địa điểm $D$ là $8$ giờ $+$ $1$ giờ $12$ phút $=$ $9$ giờ $12$ phút.
+	} 
+\end{bt}
+
+% nguồn: MaHoaNH_TuLuan_Lop10
+\begin{bt}%[0D7V3-6]%[ma:b5503141]
+	Hằng  ngày bạn Hùng đều đón bạn Minh đi học tại một vị trí trên lề đường thẳng đến trường. Minh đứng tại vị trí $A$ cách lề đường một khoảng $50$ (m) để chờ Hùng. Khi nhìn thấy Hùng đạp xe đến địa điểm $B$, cách mình một đoạn $200$ (m) thì Minh bắt đầu đi bộ ra lề đường đến điểm $C$ để bắt kịp xe. Vận tốc đi bộ Minh là $5$ (km/h), vận tốc xe đạp của Hùng là $15$ (km/h). Vị trí $C$ trên lề đường cách điểm $B$ bao nhiêu mét để hai bạn gặp nhau mà không bạn nào phải chờ người kia.
+	\begin{center}
+		\begin{tikzpicture}[line cap=round,line join=round,font=\footnotesize,>=stealth,scale=1]
+				\tikzset{label style/.style={font=\footnotesize}} 
+				\path (0,0)  coordinate (H)
+					(0,-2) coordinate  (A)
+					(-7.746,0) coordinate  (B)
+					(-1.849,0) coordinate (C); 
+				\draw (A)--(H)  node[midway,right]{$50$ m}--(B)--(A) node[midway,sloped,below]{$200$ m}--(C) node[above,pos=0.3,sloped]{\tikz \draw[<-,thick] (0,0)--(1,0);};
+				\foreach\x/\y in {A/-45,B/-90,C/90,H/90} \draw[fill=black]  (\x) circle (1pt)+(\y:0.3) node{$\x$};
+				 \draw (B) node[above]{Hùng}
+					($(B)+(1,0)$) node[above]{\tikz \draw[->,thick]  (0,0)--(1,0);}
+					(A)  node[below left]{Minh};
+				\draw  pic[draw,angle radius=2mm]{right angle=A--H--B};
+			\end{tikzpicture}
+	\end{center}
+	\loigiai{ 
+		Tam  giác vuông $AHB$ có $BH=\sqrt{(0{,}2)^2-(0{,}05)^2}=\dfrac{\sqrt{15}}{20}$ (km).\\
+		 Gọi $BC=x$ (km) $x>0$.\\
+		Suy  ra $CH=\dfrac{\sqrt{15}}{20}-x$, $x\le\dfrac{\sqrt{15}}{20}$.\\
+		Ta cần xác định vị trí điểm $C$ để Minh và Hùng gặp nhau mà không  bạn nào phải chờ người kia.\\
+		Nghĩa là: ta cần tìm $x$ để thời gian  hai bạn di chuyển đến $C$ là bằng nhau.
+		Thời gian Hùng đi từ $B$  đến $C$ là $t_2=\dfrac{S_{BC}}{15}=\dfrac{x}{15}$ (h).\\
+		Quảng đường $AC$ Minh đã đi là $AC=\sqrt{CH^2+AH^2}=\sqrt{\left(\dfrac{\sqrt{15}}{20}-x\right)^2+(0{,}05)^2}$.\\ 
+		Thời gian Minh đã đi từ  $A$ đến $C$ là $t_1=\dfrac{S_{AC}}{5}=\dfrac{\sqrt{\left(\dfrac{\sqrt{15}}{20}-x\right)^2+(0{,}05)^2}}{5}$ (h).\\
+		Theo yêu cầu bài toán ta có $\dfrac{\sqrt{\left(\dfrac{\sqrt{15}}{20}-x\right)^2+(0{,}05)^2}}{5}=\dfrac{x}{15}$.\\ 
+		Bình phương hai vế  ta được
+		\begin{align*}
+			\dfrac{\left(\dfrac{\sqrt{15}}{20}-x\right)^2+(0{,}05)^2}{25}=\dfrac{x^2}{225} 
+			&\Leftrightarrow  9\left(\dfrac{3}{80}-\dfrac{\sqrt{15}}{10}x+x^2\right)+\dfrac{9}{400}=x^2\\
+			&\Leftrightarrow 8x^2-\dfrac{9\sqrt{15}}{10}x+\dfrac{9}{25}=0\Leftrightarrow \hoac{&x\approx  0{,}3\\&x\approx0{,}1.}
+		\end{align*}
+		Vì $0<x\le\dfrac{\sqrt{15}}{20}\approx  0{,}19$ nên $x\approx 0{,}168$, thỏa mãn.\\
+		Vậy hai bạn Minh và Hùng di chuyển đến vị trí $C$ cách điểm $B$  một đoạn $x\approx 0{,}168$ (km) $=168$ (m).
+	} 
+\end{bt}
+
+% nguồn: MaHoaNH_TuLuan_Lop10
+\begin{bt}%[0D7V3-6]%[ma:5eacd623]
+	Hằng ngày bạn Hùng đều đón bạn Minh đi học tại một vị trí trên lề đường thẳng đến trường. Minh đứng tại vị trí $A$ cách lề đường một khoảng $50$ m  để chờ Hùng. Khi nhìn thấy Hùng đạp xe đến địa điểm $B$, cách mình một đoạn $200$ m thì Minh bắt đầu đi bộ ra lề đường để bắt kịp xe. Vận tốc đi bộ của Minh là $5$ km/h, vận tốc xe đạp của Hùng là $15$ km/h. Hãy xác định vị trí $C$ trên lề đường để hai bạn gặp nhau mà không bạn nào phải chờ người kia. (làm tròn kết quả đến hàng phần muời)
+	\begin{center}
+		\begin{tikzpicture}[thick,scale=1.5]
+				\path (0,0)  coordinate (B) node[above]{Hùng}
+					(6,0) coordinate  (C)++(-35:2.5) coordinate (A) node[below left]{Minh}
+					 ($(B)!(A)!(C)$) coordinate (H);
+				\draw  (B)--(A)--(H)
+					 (A)--(C)
+					($(B)!-.1!(H)$)--($(H)!-.1!(B)$); 
+				 \foreach \x/\g in {A/0,B/-90,C/90,H/90}
+				\fill[black]  (\x) circle (1pt)
+					 ($(\g:3mm)+(\x)$) node {$\x$};
+				\path (A)--(B) node[pos=.45,below left]{$200$  m}
+					(A)--(H) node[pos=.5,right]{$50$ m}; 
+				 \draw pic[draw,angle radius=2mm]{right angle=B--H--A};
+				 \draw[-stealth] (B)++(30:.5)--++(0:1);
+				 \draw[-stealth] (A)++(120:.3)--++(145:.6);
+			\end{tikzpicture}
+	\end{center}
+	 \loigiai{
+		Vận tốc của bạn Minh:  $v_{1}=5$ km/h,
+		 vận tốc của bạn Hùng: $v_{2}=15$ km/h. \\
+		Áp  dụng định lý Pythagore vào tam giác vuông $AHB$, ta có
+		\allowdisplaybreaks 
+		\begin{eqnarray*}
+			 BH=\sqrt{(0{,}2)^{2}-(0{,}05)^{2}}=\dfrac{\sqrt{15}}{20} \text{ km}.
+		\end{eqnarray*}
+		Gọi $B C=x$ (km),  $x>0$.\\
+		Suy ra $C  H=\dfrac{\sqrt{15}}{20}-x$, $x \leq \dfrac{\sqrt{15}}{20}$. \\
+		Ta cần xác định vị trí điểm $C$ để Minh và Hùng gặp nhau mà không bạn nào phải chờ người kia nghĩa  là ta cần tìm $x$ để thời gian hai bạn di chuyển đến $C$ là bằng nhau. \\
+		Thời gian Hùng đi từ $B$ đến $C$  là $t_{2}=\dfrac{S_{B C}}{v_{2}}=\dfrac{x}{15}$ (h). \\
+		Quãng đường $A C$ Minh đã đi  là $A C=\sqrt{C H^{2}+A H^{2}}=\sqrt{\left(\dfrac{\sqrt{15}}{20}-x\right)^{2}+(0{,}05)^{2}}$ \\
+		Thời gian Minh đã đi từ $A$ đến $C$ là $t_{1}=\dfrac{S_{A C}}{v_{1}}=\dfrac{\sqrt{\left(\dfrac{\sqrt{15}}{20}-x\right)^{2}+(0{,}05)^{2}}}{5}$ (h).  \\
+		Theo yêu cầu bài  toán $\dfrac{\sqrt{\left(\dfrac{\sqrt{15}}{20}-x\right)^{2}+(0{,}05)^{2}}}{5}=\dfrac{x}{15}$. \\
+		Bình phương 2 vế: 
+		 \allowdisplaybreaks
+		\begin{eqnarray*}
+			&&\dfrac{\left(\dfrac{\sqrt{15}}{20}-x\right)^2+(0{,}05)^2}{25}=\dfrac{x^2}{225}\\ 
+			&\Leftrightarrow& 9\left(\dfrac{3}{80}-\dfrac{\sqrt{15}}{10} x+x^2\right)+\dfrac{9}{400}=x^2 \\ 
+			 &\Leftrightarrow& 8x^2-\dfrac{9\sqrt{15}}{10} x+\dfrac{9}{25}=0\\
+			&\Leftrightarrow& 
+			\hoac{&x \approx 0{,}3\\ 
+			&x \approx 0{,}1.} 
+		\end{eqnarray*}
+		Vì $0<x \leq \dfrac{\sqrt{15}}{20} \approx 0{,}19$ nên $x  \approx 0{,}1$ thỏa mãn. \\
+		Vậy hai bạn  Minh và Hùng di chuyển đến vị trí $C$ cách $B$ một đoạn $x \approx 0{,}1$ km $=100$ m.
+	 }
+\end{bt}
+
+% nguồn: MaHoaNH_TuLuan_Lop10
+\begin{bt}%[0D7C3-6]%[ma:80e95993]
+	\immini 
+	 {
+	Ba thành phố $A$, $B$, $C$ nằm tại ba vị trí lập thành một tam giác vuông tại $B$. Khoảng cách $AB$ là $6$ km, khoảng cách $BC$ là $15$ km. Để nối gần hai  thành phố $C$ và $A$, trên đường đi từ $C$ đến $B$ người ta xây xựng một bến tàu tại $M$ cho mọi người có thể đi tàu theo đường sông tới $A$. Bác An di chuyển theo tuyến đường mới, đi bộ từ $C$ đến $M$ với vận tốc $10$ km/h và đi tàu từ $M$ tới $A$ với vận tốc $30$ km/h thì hết $1$ giờ $16$ phút tới được $A$. Tính tổng quãng đường bác An đi từ $A$ tới $C$ theo đơn vị ki-lô-mét.
+	} 
+	{ 
+	\begin{tikzpicture}[line join=round,line cap = round,>=stealth,scale=.8,font=\footnotesize,transform shape]
+			 \foreach \x/\y/\z/\g in
+				 {
+				0/0/B/-135,3/0/M/-90,5/0/C/-45,0/2/A/90 
+			 }
+			 \draw[fill=black] (\x,\y) circle (1pt) coordinate (\z)
+				 ($(\z)+(\g:3.5mm)$) node{$\z$};
+			\draw (M)--(A)--(B)--(C); 
+		\end{tikzpicture}
+	} 
+	\loigiai{ 
+		Đổi $1$ giờ $6$  phút $=$ $\dfrac{31}{30}$ giờ.\\
+		Gọi thời gian đi quãng đường $CM$ của bác An là $x$ (giờ, $0 < x  < \dfrac{31}{30}$) thì $CM = 10x$ hay $BM = 15 -10x$.\\
+		Thời gian đi quãng đường $MA$ của bác An là $\dfrac{31}{30} - x$ nên $AM = 30\left( \dfrac{31}{30} -  x \right) = 31 - 30x$.\\
+		Theo định lý Pythagore ta  có $AM^2 = AB^2 + BM^2$ hay
+		 \[
+		(31 - 30x)^2 = 6^2 +  (15-10x)^2 \Leftrightarrow 800x^2 - 1\,560x + 700 = 0 \Leftrightarrow \hoac{&x = 0{,}7 & &\text{ (thoả mãn)}\\ &x=1{,}25 & & \text{ (loại)}.}
+		\] 
+		Do đó tổng quãng đường bác An đi được là $CM +  AM = 31 - 20x = 17$ km.
+	} 
+\end{bt}
+
+% nguồn: MaHoaNH_TuLuan_Lop10
+\begin{bt}%[0D7C3-6]%[ma:eda4a6ee]
+	Cho tam giác $ABC$ vuông tại $A$ có $BC=6$ cm. Điểm $D$ nằm trên tia $AB$ sao cho $DB=3$ cm, $DC=8$ cm (xem hình vẽ). Đặt $AC=x$. Tính diện tích tam  giác $BCD$.
+	\begin{center}
+		\begin{tikzpicture}
+				 \def\r{5}
+				\path  (0:0) coordinate (A)
+					++(0:\r)  coordinate (C)
+					(A)++(-90:0.9*\r)  coordinate (D)
+					(A)++(-90:0.45*\r)  coordinate (B);
+				\draw (A)--(C) node [midway,above]  {$x$}
+					(C)--(D)  node [midway,below right] {$8$ cm}
+					(D)--(B) node [midway,left]  {$3$ cm}
+					(B)--(A) 
+					pic[draw,angle radius=2mm]{right angle=D--A--C} 
+					(B)--(C) node [midway,above left] {$6$ cm}; 
+				\foreach \x/ \goc  in {A/135,D/-135,C/45,B/180}
+				\fill  (\x) circle (1pt)
+					($(\x)+(\goc:3mm)$) node  {$\x$};
+			\end{tikzpicture}
+	\end{center}
+	 \loigiai{
+		Áp dụng định lí Py-ta-go cho tam giác $ABC$  vuông tại $A$, ta được $AC^2+AB^2=BC^2$.\\
+		 Suy ra $AB=\sqrt{BC^2-AC^2}=\sqrt{6^2-x^2}=\sqrt{36-x^2}$ (cm).\\
+		Áp dụng định lí Py-ta-go cho tam  giác $ACD$ vuông tại $A$, ta được $AC^2+AD^2=CD^2$.\\
+		Suy ra $AD=\sqrt{CD^2-AC^2}=\sqrt{8^2-x^2}=\sqrt{64-x^2}$  (cm).\\
+		 Mà $AB+BD=AD$ nên $\sqrt{36-x^2}+3=\sqrt{64-x^2}$.
+		Bình phương hai  vế của phương trình, ta được
+		$$36-x^2+6\sqrt{36-x^2}+9=64-x^2\Rightarrow  \sqrt{36-x^2}=\dfrac{19}{6} \Rightarrow x^2=\dfrac{935}{36} \Rightarrow x =\dfrac{\sqrt{935}}{6}\approx 5{,}1.$$
+		Thử lại, ta  thấy $x=\dfrac{\sqrt{935}}{6}$ thỏa mãn phương trình ban đầu.\\
+		Vậy diện tích của tam giác $BCD$ là  $\dfrac{1}{2} \cdot 5{,}1\cdot 3\approx7{,}65$ (cm$^2$).
+	 }
+\end{bt}

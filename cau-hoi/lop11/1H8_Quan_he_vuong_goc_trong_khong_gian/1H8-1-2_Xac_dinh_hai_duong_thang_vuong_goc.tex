@@ -1,0 +1,726 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Lớp 11 | Quan hệ vuông góc trong không gian | Hai đường thẳng vuông góc
+% Dạng 1H8?1-2: Xác định hai đường thẳng vuông góc
+% Số câu: 17  (sinh tự động bởi tach_cau.py; từ nay thầy sửa trực tiếp file này)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%% TRẮC NGHIỆM 4 PHƯƠNG ÁN %%%%%%%%%%%%%%%%
+
+% nguồn: Ok_TracNghiemLop11_Lan1
+\begin{ex}%[1H8N1-2]%[ma:0d7d2bdf]
+	\immini{Cho hình chóp $S.ABCD$ có đáy $ABCD$ là hình thoi tâm $O$ và $SA=SC$, $SB=SD$. Trong các mệnh đề sau mệnh  đề nào \textbf{sai}?
+	 \choice
+		 {$BD \perp SA$}
+		{$AC \perp  SD$}
+		{$BD \perp  AC$}
+		{\True$AC  \perp SA$}}{
+		\begin{tikzpicture}[scale=1,font=\footnotesize,line join=round,line cap=round,>=stealth]
+				 \def\bc{4}
+				\def\ba{2} 
+				\def\h{4} 
+				\def\gocB{35} 
+				\coordinate[label=below  left:$B$] (B) at (0,0);
+				 \coordinate[label=above left:$A$] (A) at (\gocB:\ba);
+				\coordinate[label=below:$C$] (C) at  (\bc,0);
+				 \coordinate[label=above right:$D$] (D) at ($(C)-(B)+(A)$);
+				\coordinate  [label=above:$S$](S) at (60:5);
+				 \coordinate [label=below:$O$](O) at ($(A)!0.5!(C)$);
+				 \draw (S)--(D)--(C)--(B)--cycle (S)--(C);
+				\draw[dashed] (A)--(D)--(B)--cycle  (A)--(C)
+					(O)--(S)--(A); 
+				 \coordinate (O) at (intersection of A--C and B--D);
+				\foreach  \i in {S,A,B,C,D,O} \fill[black] (\i) circle (1pt);
+			\end{tikzpicture}
+		} 
+	 \loigiai{
+		Vì $SA$=$SC$ nên tam giác $SAC$ cân tại $S$ có $SO$ vừa  là trung tuyến vừa là đường cao, do đó $SO \perp AC$.\\
+		Vậy tam giác $SAO$  vuông tại $O$, suy ra $AC\perp SA$ là mệnh đề sai.
+	} 
+\end{ex}
+
+% nguồn: Ok_Toan11_TracNghiem_Lan2
+\begin{ex}%[1H8H1-2]%[ma:db85208c]
+	Cho hình lập phương $ABCD.A'B'C'D'$. Đường thẳng nào sau đây vuông góc với đường thẳng $BC'$? 
+	 \choice
+		{\True  $A'D$}
+		{$AC$} 
+		{$BB'$} 
+		 {$AD'$}
+	 \loigiai{
+	 \immini{
+		 Ta có $\heva{&A'D\parallel B'C\\ & B'C\perp BC'}\Rightarrow A'D\perp BC'$.
+		}{ 
+		\begin{tikzpicture}[line join=round,line cap=round]
+				\coordinate (A') at  (0,0);
+				\coordinate  (B') at (3.5,0);
+				\coordinate (D')  at (2.5,1.5);
+				\coordinate (C') at ($(B')+(D')-(A')$); 
+				\coordinate  (A) at ($(A')+(0,3)$);
+				\coordinate (B)  at ($(B')+(A)-(A')$);
+				 \coordinate (D) at ($(D')+(A)-(A')$);
+				\coordinate (C)  at ($(C')+(A)-(A')$);
+				\draw  (A)--(D)--(C)--(B)--(A)--(A')--(B')--(C')--(C)
+					(B')--(B); 
+				 \draw[dashed,thin] (D)--(D')--(A')
+					 (D')--(C');
+				\foreach \i/\g in {A'/-90,B'/-90,C'/0,D'/-90,A/180,B/120,C/0,D/90}{\draw[fill=white](\i) circle (1pt) 
+					 ($(\i)+(\g:3mm)$) node[scale=1]{$\i$};}
+			\end{tikzpicture}
+		} 
+	 }
+\end{ex}
+
+% nguồn: Ok_Toan11_TracNghiem_Lan2
+\begin{ex}%[1H8H1-2]%[ma:3537b58b]
+	Cho hình chóp $S.ABCD$ có đáy là hình thoi tâm $O$ và  $SA=SC$, $SB=SD$. Trong các mệnh đề sau mệnh đề nào \textbf{sai}?
+	 \choice
+		 {$AC\perp SD$}
+		{$BD\perp  AC$}
+		{$BD\perp SA$} 
+		{\True  $AC\perp SA$}
+	\loigiai{ 
+	\immini{ 
+		Ta có tam giác  $SAC$ cân tại $S$ và $SO$ là đường trung tuyến cũng đồng thời là đường cao.
+		Do  đó $SO\perp AC$.\\
+		Trong tam giác vuông $SOA$ thì $AC$ và $SA$ không thể vuông tại $A$. 
+		}{ 
+		\begin{tikzpicture}[line join=round,line cap=round]
+				\coordinate  (A) at (0,0);
+				 \coordinate (B) at (-2,-1.5);
+				\coordinate (D) at  (4,0);
+				\coordinate (C) at ($(B)+(D)-(A)$); 
+				\coordinate (O) at ($(A)!0.5!(C)$); 
+				\coordinate  (S) at ($(O)+(0,4)$);
+				\draw (S)--(B)--(C)--(D)--(S) 
+					(S)--(C); 
+				 \draw[dashed,thin](S)--(A)--(C)
+					(B)--(D)--(A)--(B) 
+					(S)--(O); 
+				\pic[draw,thin,angle radius=2mm] {right  angle = S--O--D} pic[draw,thin,angle radius=2mm] {right angle = S--O--A};
+				\foreach \i/\g in {S/90,A/180,B/-90,C/-90,D/0,O/-90}{\draw[fill=white](\i) circle  (1pt)
+					 ($(\i)+(\g:3mm)$) node[scale=1]{$\i$};}
+			\end{tikzpicture}
+		 }
+	 }
+\end{ex}
+
+% nguồn: Ok_Toan11_TracNghiem_Lan2
+\begin{ex}%[1H8H1-2]%[ma:5758bdc4]
+	Trong hình hộp $ABCD.A'B'C'D'$ có tất cả các cạnh đều bằng nhau.  Trong các mệnh đề sau, mệnh đề nào \textbf{sai}?
+	\choice 
+		{\True $BB'\perp BD$} 
+		 {$A'C'\perp BD$}
+		{$A'B\perp  DC'$}
+		{$BC'\perp A'D$} 
+	\loigiai{ 
+	 \immini{
+		Vì hình hộp $ABCD.A'B'C'D'$ có tất cả các cạnh đều bằng nhau nên các tứ giác  $ABCD$, $A'B'BA$, $B'C'CB$ đều là hình thoi.\\
+		 Ta có
+		\begin{itemize}
+			\item  $\heva{&AC\perp BD\\& AC\parallel A'C'}\Rightarrow A'C'\perp BD$.
+			\item $\heva{&A'B\perp AB'\\& AB' \parallel  DC'}\Rightarrow A'B\perp DC'$.
+			\item  $\heva{&BC'\perp B'C\\&B'C\parallel A'D}\Rightarrow BC'\perp A'D$.
+		\end{itemize}
+		 }{
+		\begin{tikzpicture}[line join=round,line cap=round]
+				 \coordinate (A') at (0,0);
+				 \coordinate (B') at (4.5,0);
+				 \coordinate (D') at (2,2);
+				 \coordinate (C') at ($(B')+(D')-(A')$);
+				\coordinate  (A) at ($(A')+(1,3.5)$);
+				\coordinate (B)  at ($(B')+(A)-(A')$);
+				\coordinate (D) at  ($(D')+(A)-(A')$);
+				\coordinate (C)  at ($(C')+(A)-(A')$);
+				\draw  (A)--(D)--(C)--(B)--(A)--(A')--(B')--(C')--(C)--(A)
+					(B')--(B); 
+				\draw[dashed,thin] (D)--(D')--(A') 
+					 (D')--(C');
+				\foreach \i/\g  in {A'/-90,B'/-90,C'/0,D'/-90,A/180,B/120,C/0,D/90}{\draw[fill=white](\i) circle (1pt)
+					 ($(\i)+(\g:3mm)$) node[scale=1]{$\i$};}
+			\end{tikzpicture}
+		 }
+	} 
+\end{ex}
+
+% nguồn: Ok_TracNghiemLop11_Lan1
+\begin{ex}%[1H8H1-2]%[ma:a1612e2a]
+	\immini{Cho hình lập phương  $ABC D. A' B' C' D'$. Đường thẳng nào sau đây vuông góc với đường thẳng $BC'$?
+	 \choice
+		{$BB'$} 
+		{$AD'$} 
+		 {$AC$}
+		{\True $A'  D$}
+		}{ 
+		\begin{tikzpicture}[scale=0.7,font=\footnotesize,line join=round,line cap=round,>=stealth]
+				\path (0,0) coordinate (A)++(0:3) coordinate (D) 
+					($(A)+(-120:2)$)  coordinate (B)
+					($(B)+(D)-(A)$)  coordinate (C)
+					($(A)+(90:2)$) coordinate  (A')
+					($(B)+(90:2)$) coordinate  (B')
+					 ($(C)+(90:2)$) coordinate (C')
+					($(D)+(90:2)$) coordinate (D'); 
+				 \draw (D')--(D)
+					 (C')--(C)
+					(B')--(B) 
+					 (D)--(C)--(B)
+					 (A')--(B')--(C')--(D')--(A')
+					 (B)--(C');
+				\draw[dashed]  (A')--(A)
+					(B)--(A)--(D); 
+				\foreach \x/\g in {A/-60,D/0,C/-90,B/-150,B'/180,A'/100,C'/110,D'/60} \fill (\x)  circle (1.2pt)+(\g:.3) node[scale=0.8] {$\x$};
+			\end{tikzpicture}
+		} 
+	 \loigiai{
+		Vì $ABCD.A'B'C'D'$ là hình lập phương nên $AB$ và $C'D'$ song song và  bằng nhau.\\
+		Suy ra $ABC'D'$ là hình bình hành. Do đó $BC' \parallel AD'$.  \hfill (1)\\
+		Mặt khác, $ADD'A'$ là hình vuông nên $AD' \perp  A'D$. \hfill (2)\\
+		Từ $(1)$ và $(2)$ suy ra  $A'D \perp BC'$.
+	 }
+\end{ex}
+
+% nguồn: Ok_TracNghiemLop11_Lan1
+\begin{ex}%[1H8H1-2]%[ma:34375994]
+	\immini{ Cho  hình chóp $S.ABCD$ có đáy là hình thoi tâm $O$ và $SA=SC$, $SB=SD$. Trong các mệnh đề sau mệnh đề nào sai?
+	\choice 
+		{\True $AC \perp  SA$}
+		{$BD \perp SA$} 
+		{$AC \perp SD$} 
+		 {$BD \perp AC$}}{
+		\begin{tikzpicture}[scale=1,>=stealth,font=\footnotesize,line join=round,line cap=round]
+				\def\a{4} 
+				\def\h{4} 
+				 \path (0:0) coordinate (A)
+					++(0:\a)  coordinate (D)
+					++(-130:\a/2)  coordinate (C)
+					 ($(A)+(C)-(D)$) coordinate (B)
+					(intersection of  A--C and B--D) coordinate (O)
+					($(O)+(90:\h)$) coordinate  (S);
+				\draw[dashed]  (B)--(A)--(D)
+					 (A)--(S)
+					 (A)--(C)
+					 (B)--(D)
+					 (S)--(O);
+				 \draw[thick] (B)--(C)--(D)
+					(B)--(S) 
+					 (C)--(S)
+					 (D)--(S);
+				\foreach  \x/\g in {A/135,B/-135,C/-45,D/45,S/90,O/-90}
+				\fill[black] (\x) circle  (1pt)
+					($(\g:3mm)+(\x)$) node {$\x$}; 
+			\end{tikzpicture}
+		 }
+	\loigiai{ 
+		Ta có $ABCD$ là hình  thoi $\Rightarrow AC \perp BD$.\\
+		$SA=SC\Rightarrow \triangle SAC$ cân tại $S\Rightarrow SO\perp AC$.\\ 
+		Mà $AC\perp  BD$ ($ABCD$ là hình thoi).\\
+		$\Rightarrow AC\perp  \left(SBD\right) \supset SD \Rightarrow AC \perp SD$.\\
+		$SB=SD\Rightarrow\triangle SBD$  cân tại $S \Rightarrow SO\perp BD$.\\
+		Mà $AC\perp BD$ ($ABCD$ là hình thoi).\\ 
+	 $\Rightarrow BD\perp \left(SAC\right)\supset SA\Rightarrow BD\perp SA$.}
+\end{ex}
+
+% nguồn: Ok_TracNghiemLop11_Lan1
+\begin{ex}%[1H8V1-2]%[ma:6a2b6029]
+	Cho hình lập phương $ABCD.A'B'C'D'$. Trong số $5$ đường thẳng $AC'$, $AB'$, $BD$, $C'D$, $BC'$ có bao nhiêu đường thẳng vuông góc với $A'C$? 
+	 \choice
+		{$1$} 
+		 {$2$}
+		{$3$} 
+		{\True $4$} 
+	\loigiai{ 
+	\immini{ 
+		Ta có $A'C \perp (BDC')$ vì $A'$ và $C$ cách  đều ba đỉnh $B,D,C'$.\\
+		Như vậy đường nào song song hoặc nằm trong mặt phẳng $(BDC')$ đều  vuông góc với $A'C$.\\
+		Có 4 đường thỏa là $AB'$, $BD$, $C'D$,  $BC'$.
+		}{ 
+		\begin{tikzpicture}[scale=0.6,font=\footnotesize,line join=round,line cap=round,>=stealth]
+				 \coordinate (a) at (1,2);
+				\coordinate (b) at (0,0); 
+				\coordinate (c) at  (5,0);
+				 \coordinate (d) at (6,2);
+				 \coordinate (a1) at ($(a)+(0,5)$);
+				\coordinate  (b1) at ($(b)+(0,5)$);
+				 \coordinate (c1) at ($(c)+(0,5)$);
+				\coordinate (d1) at ($(d)+(0,5)$); 
+				\coordinate (m) at ($(c)!0.5!(d)$); 
+				 \draw[dashed] (b) -- (a) -- (d)
+					(a) -- (a1); 
+				\draw (b) -- (c) -- (d) -- (d1) --  (c1) -- (b1) -- (a1) -- (d1)
+					 (b) -- (b1)
+					(c)  -- (c1);
+				\draw (a) node[below]{$A$}; 
+				\draw  (b) node[below]{$B$};
+				\draw  (c) node[below]{$C$};
+				\draw (d) node[right]{$D$}; 
+				\draw (a1) node[above]{$A'$}; 
+				 \draw (b1) node[below left]{$B'$};
+				 \draw (c1) node[below right]{$C'$};
+				 \draw (d1) node[right]{$D'$};
+				 \draw (m) node[right]{$M$};
+				\draw[dashed] (a)--  (c1)
+					(a) -- (b1) 
+					(b)  -- (d)
+					(a1) --(c); 
+				\draw (c1) -- (d) 
+					(b)--(c1); 
+			\end{tikzpicture}
+		 }
+	} 
+\end{ex}
+
+% nguồn: Ok_TracNghiemLop11_Lan1
+\begin{ex}%[1H8B1-2]%[ma:81f7a1e1]
+	Cho hình lăng trụ đều $ABC.A'B'C'$ có cạnh đáy bằng $1$, cạnh bên bằng $2$. Gọi $C_1$ là trung điểm của $CC'$. Tính côsin của góc giữa  hai đường thẳng $BC_1$ và $A'B'$.
+	 \choice
+		{$\dfrac{\sqrt{2}}{6}$} 
+		{\True  $\dfrac{\sqrt{2}}{4}$}
+		 {$\dfrac{\sqrt{2}}{3}$}
+		{$\dfrac{\sqrt{2}}{8}$} 
+	\loigiai{ 
+	\immini{ 
+		Ta có  $A'B'\parallel AB \Rightarrow (BC_1, AB')=(BC_1, AB)=\widehat{ABC_1}$.
+		Tam giác $ABC_1$ có $AB=1; AC_1=BC_1=\sqrt{2}$ và 
+		\begin{align*}
+			 \cos B=\dfrac{AB^2+BC_1^2-AC_1^2}{2AB \cdot BC_1} \Leftrightarrow \cos B=\dfrac{\sqrt{2}}{4}.
+		\end{align*}
+		Vậy $\cos B=\dfrac{\sqrt{2}}{4}$. 
+		 }
+		 {
+		\begin{tikzpicture}[scale=.8,line join=round,line cap=round,>=stealth,line width=.8pt]
+				 \def\h{5}
+				 \coordinate (A) at (0,0);
+				\coordinate (B) at  (2,-2);
+				 \coordinate (C) at (6,0);
+				 \coordinate (A') at (0,\h);
+				\coordinate  (B') at ($(B)+(0,\h)$);
+				\coordinate (C') at ($(C)+(0,\h)$); 
+				\coordinate (C1) at ($(C)!0.5!(C')$); 
+				\draw (A')--(A)--(B)--(C)--(C')--(A')--(B')--(B) 
+					(B')--(C') 
+					 (B)--(C1);
+				\draw[dashed](A)--(C1) 
+					(A)--(C); 
+				\foreach \x/\g in {A/180,B/-90,C/-90,A'/90,B'/-30,C'/90}\fill[black](\x) circle  (1pt)
+					($(\x)+(\g:3mm)$) node{$\x$}; 
+				 \draw (C1) node[right]{$C_1$};
+				\draw pic[draw,angle  radius=.5cm,fill=blue,opacity=0.3] {angle = C1--B--A};
+			\end{tikzpicture}
+		} 
+	} 
+\end{ex}
+
+
+%%%%%%%%%%%%%%%% ĐÚNG/SAI %%%%%%%%%%%%%%%%
+
+% nguồn: Ok_dungsai_lop11_Lan1
+\begin{ex}%[1H8H1-2]%[ma:7268a73b]
+ Trong hình hộp $ABCD.A'B'C'D'$ có  tất cả các cạnh đều bằng nhau. Khi đó
+ \choiceTF 
+  {$ABCD$ là hình chữ  nhật}
+  {\True $A'C'\perp BD$} 
+  {\True $A'B\perp DC'$} 
+  {\True  $BC'\perp A'D$}
+  \loigiai{
+ \immini{ 
+  \begin{enumerate}
+   \item Do hình hộp $ABCD.A'B'C'D'$ có tất cả các cạnh đều bằng nhau nên $6$ mặt của hình hộp đều là  hình thoi.
+    \item Ta có $AC\parallel A'C'$ nên
+    \[(A'C',BD)=(AC,BD)=90^\circ.\]
+   \item  Ta có $A'B\parallel CD'$ nên
+   \[(A'B,DC')=(CD',DC')=90^\circ.\] 
+   \item Ta có $A'D\parallel B'C$ nên 
+   \[(BC',A'D)=(BC',BC')=90^\circ.\] 
+  \end{enumerate}
+  }{ 
+  \begin{tikzpicture}[scale=0.7,font=\footnotesize,line join=round,line cap=round,>=stealth]
+    \coordinate (A) at (0,0); 
+     \coordinate (B) at (-2,-1);
+    \coordinate (D)  at (4,0);
+    \coordinate  (A') at (-0.5,3);
+    \coordinate  (C) at ($(B)+(D)-(A)$);
+    \coordinate  (B') at ($(B)+(A')-(A)$);
+    \coordinate (C') at ($(C)+(A')-(A)$); 
+    \coordinate (D') at  ($(D)+(A')-(A)$);
+     \draw[dashed] (A)--(B)
+     (A)--(D) 
+      (A)--(A');
+    \draw  (B)--(C)--(D)--(D')--(A')--(B')--(C')--(D')
+     (B)--(B') 
+      (C)--(C');
+    \draw[fill=black] (A) node[above  left] {$A$} circle (1.2pt);
+    \draw[fill=black] (B)  node[below left] {$B$} circle (1.2pt);
+    \draw[fill=black] (C) node[below  right] {$C$} circle (1.2pt);
+    \draw[fill=black]  (D) node[right] {$D$} circle (1.2pt);
+    \draw[fill=black] (A') node[above left]  {$A'$} circle (1.2pt);
+     \draw[fill=black] (B') node[left] {$B'$} circle (1.2pt);
+     \draw[fill=black] (C') node[above] {$C'$} circle (1.2pt);
+     \draw[fill=black] (D') node[above right] {$D'$} circle (1.2pt);
+   \end{tikzpicture}
+  } 
+  }
+\end{ex}
+
+% nguồn: Ok_dungsai_lop11_Lan1
+\begin{ex}%[1H8V1-2]%[ma:00edb91b]
+ Cho tứ diện $ABCD$  có $AB=AC$, $DB=DC$. Xét tính Đ/S các khẳng định sau:
+ \choiceTF 
+   {$AB\perp (ABC)$}
+   {$AC\perp BD$}
+   {$CD\perp (ABD)$}
+  {\True  $BC\perp AD$}
+  \loigiai{
+ \immini{Gọi $M$ là trung điểm  $BC$.\\
+  Vì $AB=AC$, $DB=DC$  nên $BC\perp AM$, $BC\perp DM$. Suy ra $BC\perp(ADM)$.\\
+   Mà $AD\subset(ADM)$ nên $BC\perp AD$.
+   }{
+  \begin{tikzpicture}[line cap=round,line join=round,>=stealth,scale=.8]
+     \path
+      (0,0) coordinate (A)
+      (4,-2) coordinate (B)
+      (6,0) coordinate (C)
+     ($(B)!.5!(C)$)  coordinate (M)
+     ($(A)!.67!(M)$) coordinate  (H)
+      ($(H)+(0,5)$) coordinate (D);
+    \draw[dashed](M)--(A)--(C); 
+     \draw (D)--(A)--(B)--(C)--cycle (B)--(D)--(M);
+    \foreach \p/\n  in {D/above,A/left,B/below,C/right,M/right}
+    \fill (\p) circle  (1pt) node[\n]{$\p$};
+    \path pic[angle radius=2mm,draw=black,angle eccentricity=1.5] {right angle = D--M--B}; 
+     \path pic[angle radius=2mm,draw=black,angle eccentricity=1.5] {right angle = B--M--A};
+    \path  (D)--(B) node[pos=0.5,sloped,black]{$||$}
+      (C)--(D) node[pos=0.5,sloped,black]{$||$};
+    \path (A)--(C) node[pos=0.5,sloped,black]{$|$} 
+     (A)--(B) node[pos=0.5,sloped,black]{$|$}; 
+   \end{tikzpicture}
+   }
+  \begin{itemchoice}
+   \itemch  Sai vì $AB\subset(ABC)$.
+   \itemch Sai vì $AC$ không vuông góc $BD$. 
+   \itemch Sai vì $CD$  không vuông góc $(ABD)$.
+   \itemch  Đúng vì $BC\perp(ADM)$ nên $BC\perp AD$.
+  \end{itemchoice}
+ } 
+\end{ex}
+
+% nguồn: Ok_dungsai_lop11_Lan1
+\begin{ex}%[1H8V1-2]%[ma:79208b83]
+ Cho hình hộp $ABCD.A'B'C'D'$ có tất cả các cạnh bằng nhau. Xét  tính đúng sai của các khẳng định sau:
+  \choiceTF
+  {  $ABCD$ là hình chữ nhật}
+  {\True  $A'C'\perp BD$}
+  {\True $A'B\perp  DC'$}
+  {\True $BC'\perp A'D$} 
+ \loigiai{ 
+  \begin{center}
+   \begin{tikzpicture}[scale=0.6,font=\footnotesize,line join=round,line cap=round,>=stealth]
+     \coordinate (a)  at (2,2);
+     \coordinate (b) at (0,0); 
+      \coordinate (c) at (5,0);
+      \coordinate (d) at (7,2);
+     \coordinate (a1) at ($(a)+(1,5)$); 
+      \coordinate (b1) at ($(b)+(1,5)$);
+     \coordinate (c1) at ($(c)+(1,5)$); 
+      \coordinate (d1) at ($(d)+(1,5)$);
+     \draw[dashed] (b) -- (a) -- (d) 
+      (a) -- (a1); 
+      \draw (b) -- (c) -- (d) -- (d1) -- (c1) -- (b1) -- (a1) -- (d1)
+      (b) -- (b1) 
+      (c)  -- (c1);
+     \draw (a)  node[below]{$A$};
+      \draw (b) node[below]{$B$};
+     \draw (c)  node[below]{$C$};
+     \draw (d) node[right]{$D$}; 
+     \draw (a1) node[above]{$A'$}; 
+     \draw (b1) node[below  left]{$B'$};
+      \draw (c1) node[below right]{$C'$};
+     \draw (d1)  node[right]{$D'$};
+      \draw (a1)--(c1)
+       (d)--(c1);
+     \draw[dashed] (b)--(d) 
+      (a1)--(b); 
+    \end{tikzpicture}
+  \end{center}
+  Vì hình hộp $ABCD.A'B'C'D'$ có tất cả các cạnh đều bằng nhau nên các tứ giác $ABCD$, $A'B'BA$, $B'C'CB$ đều là hình  thoi.
+  \begin{itemchoice}
+    \itemch Sai vì $ABCD$ là hình bình hành.
+    \itemch Sai. Vì $AC\perp BD$ mà $AC \parallel A'C'$ nên $A'C'\perp BD$.
+   \itemch Đúng. Vì $A'B\perp AB'$ mà $AB' \parallel DC'$ nên $A'B\perp  DC'$.
+   \itemch Đúng.  Vì $BC'\perp B'C$ mà $B'C \parallel A'D$ nên $BC'\perp A'D$.
+ \end{itemchoice}}
+\end{ex}
+
+% nguồn: Ok_dungsai_lop11_Lan1
+\begin{ex}%[1H8V1-2]%[ma:249c4f09]
+ Cho tứ diện $ABCD$ có $AB=AC=AD=1$, $\widehat{BAC}=\widehat{BAD}=60^{\circ}$ và $\widehat{CAD}=90^{\circ}$. Gọi $I$, $J$ lần lượt là trung điểm $AB$  và $CD$. Xét tính đúng sai của các khẳng định sau:
+ \choiceTF 
+  {\True  $CD=\sqrt{2}$}
+  {Tam giác $BCD$ vuông cân  tại $C$}
+   {\True $IJ\perp AB$}
+  {\True $IJ\perp  CD$}
+  \loigiai{
+  \begin{center}
+   \begin{tikzpicture}[scale=0.8,font=\footnotesize,line join=round,line cap=round,>=stealth]
+     \coordinate  (a) at (3,4);
+      \coordinate (b) at (0,0);
+     \coordinate  (c) at (2,-2);
+     \coordinate (d) at (5,0); 
+     \coordinate (i) at  ($(a)!0.5!(b)$);
+      \coordinate (j) at ($(c)!0.5!(d)$);
+     \draw[dashed]  (b) -- (d);
+     \draw (a) -- (b) -- (c) -- (d) -- (a)  -- (c);
+     \draw (a) node[above]{$A$}; 
+     \draw  (b) node[left]{$B$};
+     \draw  (c) node[below]{$C$};
+     \draw (d)  node[right]{$D$};
+     \draw (i)  node[left]{$I$};
+      \draw (j) node[below]{$J$};
+      \draw[dashed] (i)-- (j)
+      (i)--(d); 
+     \draw (i) -- (c); 
+    \end{tikzpicture}
+  \end{center}
+  Các tam giác $ABC$ và $ABD$ cân tại $A$ và có góc $60^{\circ}$ nên hai tam giác $ABC$ và $ABD$ là tam giác đều cạnh bằng  $1$.
+  \begin{itemchoice}
+   \itemch Đúng. Vì tam giác $ACD$ vuông cân  tại $A$ nên $CD=\sqrt{1^2+1^2}=\sqrt{2}$.
+   \itemch Sai.\\ 
+    Tam giác $BCD$ có $BC^2=1,BD^2=1,CD^2=2$.\\
+   Suy ra $BC^2+BD^2=CD^2$. \\ 
+   Vậy tam giác $BCD$ vuông cân tại  $B$.
+    \itemch Đúng.\\
+   Ta có $AJ=BJ=\dfrac{\sqrt{2}}{2}$ nên tam giác $JAB$  cân tại $J$.\\
+   Mặt  khác $I$ là trung điểm $AB$ nên $IJ \perp AB$.
+   \itemch Đúng.\\ 
+   Tam giác $ABC$ và $A B D$ đều  cạnh 1 nên $CI=DI=\dfrac{\sqrt{3}}{2}$.
+   Vì vậy tam  giác $I C D$ cân tại $I$, mà $J$ là trung điểm $CD$ nên $IJ \perp CD$.
+ \end{itemchoice}}
+\end{ex}
+
+
+%%%%%%%%%%%%%%%% TRẢ LỜI NGẮN %%%%%%%%%%%%%%%%
+
+% nguồn: Ok_TraLoiNgan_Lop11_Lan2
+\begin{ex}%[1H8H1-2]%[ma:13198d93]
+	Cho hình chóp $O.ABC$ có $OA$, $OB$, $OC$ đôi một vuông góc với nhau và $OA=OB=OC=2a$. Gọi  $M$ là trung điểm của $BC$. Tính góc giữa hai đường thẳng $OM$ và $AB$. (đơn vị độ)
+	 \shortans{60}
+	\loigiai{ 
+		\begin{center}
+			\begin{tikzpicture}[scale=0.8,>=stealth,font=\footnotesize,line join=round,line cap=round]
+					\coordinate (O) at (0,0); 
+					\coordinate (B)  at (-2,-2);
+					\coordinate (C) at (4,0); 
+					 \coordinate (A) at ($(O)+(0,4)$);
+					\coordinate  (M) at ($(B)!.5!(C)$);
+					\coordinate (N)  at ($(A)!.5!(C)$);
+					 \draw (A)--(B)
+						 (A)--(C)
+						 (B)--(C)
+						 (M)--(N);
+					\draw[dashed](A)--(O)--(C) 
+						 (O)--(B)
+						 (M)--(O)--(N);
+					\pic[draw,angle  radius=2mm] {right angle = C--O--A};
+					\foreach \i/\g in {A/90,O/180,B/-90,C/0,M/-45,N/45}{\fill  (\i) circle (1.0pt)
+						 ($(\i)+(\g:3mm)$) node[scale=1]{$\i$};}
+					\draw pic[draw,angle radius=3mm] {angle =  N--M--O};
+				\end{tikzpicture}
+		\end{center}
+		Gọi $N$ là trung điểm của $AC$. Khi đó góc giữa $OM$ và $AB$ bằng góc giữa  $OM$ và $MN$.\\
+		 Ta có
+		\begin{itemize}
+			\item $AB=BC=CA$. 
+			\item $OM=\dfrac{1}{2}BC$ (trung tuyến  trong tam giác vuông ứng với cạnh huyền).
+			\item $ON=\dfrac{1}{2}AC$ (trung tuyến trong tam giác vuông ứng với  cạnh huyền).
+			\item $MN=\dfrac{1}{2}AB$  (đường trung bình của tam giác).
+		\end{itemize}
+		Suy ra $OM=MN=ON$ hay tam  giác $OMN$ đều.\\
+		 Do đó $(OM,AB)=(OM,MN)=\widehat{OMN}=60^\circ$.
+	} 
+\end{ex}
+
+% nguồn: Ok_TraLoiNgan_Lop11_Lan2
+\begin{ex}%[1H8H1-2]%[ma:acd46b84]
+	 Cho hình lập phương $ABCD.A'B'C'D'$. Góc giữa hai đường thẳng $B'D'$ và $A'B$ là (đơn vị độ)
+	\shortans{60} 
+	\loigiai{ 
+	\immini{ 
+		Do $ABCD.A'B'C'D'$ là  hình lập phương nên các tam giác $A'BD$, $CB'D'$ là các tam giác đều, suy ra $\widehat{DA'C'}=60^\circ$.\\
+		Mặt khác $BD\parallel B'D'$ nên $\left(B'D',A'B\right)=\left(BD,A'B\right)=60^\circ$. 
+		 }{
+		\begin{tikzpicture}[line cap=round,line join=round,>=stealth,>=latex,font=\footnotesize,scale=.75]
+				 \def\h{4}
+				\path 
+					(0,0) coordinate (A') 
+					(4,0) coordinate (D') 
+					(-2,-1) coordinate (B') 
+					($(B')+(D')-(A')$) coordinate (C') 
+					($(A')+(90:\h)$)  coordinate (A)
+					($(B')+(90:\h)$) coordinate  (B)
+					($(C')+(90:\h)$) coordinate (C) 
+					($(D')+(90:\h)$)  coordinate (D);
+				\draw (A)--(B)--(C)--(D)--cycle  (B)--(B')--(C')--(C)
+					 (C')--(D')--(D)
+					(B)--(D); 
+				\draw[dashed]  (A)--(A')
+					(B')--(A')--(D') 
+					 (B)--(A') --(D)
+					(B')--(D'); 
+				\foreach \x/\g in {A/90,B/180,C/-45,D/0,A'/-90,B'/180,C'/-45,D'/0} 
+				\fill (\x)  circle (1pt)
+					 ($(\g:3mm)+(\x)$) node {$\x$};
+				\draw pic[draw,angle radius=3mm] {angle = A'--B--D}; 
+			\end{tikzpicture}
+		 }
+	 }
+\end{ex}
+
+% nguồn: Ok_TraLoiNgan_Lop11_Lan1
+\begin{ex}%[1H8V1-2]%[ma:f94226af]
+	Cho  tứ diện $ABCD$ có $AC=1 \mathrm{dm}$ , $BD=3 \mathrm{dm}$. Gọi $M$, $N$ lần lượt là trung điểm của $AD$ và $BC$. Biết $AC$ vuông góc với $BD$. Tính độ dài $MN$ theo đơn vị $\mathrm{dm}$ và làm tròn kết quả đến hàng phần trăm.
+	 \shortans{1,58}
+	 \loigiai{
+	\immini{ 
+		 Gọi $P$ là trung điểm đoạn $AB$, ta có $NP$ là đường trung bình của $\triangle ABC$.\\
+		$\Rightarrow NP = \dfrac{1}{2} AC = \dfrac{1}{2}$, $NP \parallel  AC$.\\
+		Tương  tự, $MP$ là đường trung bình của $\triangle ABD$.\\
+		$MP=\dfrac{1}{2}BD=\dfrac{3}{2}$ và $MP \parallel BD$.\\ 
+		Khi đó $(AC,BD)=(PN,PM)=\widehat{MPN}=90^\circ$  hay $\triangle MNP$ vuông tại $P$.\\
+		$\Rightarrow MN= \sqrt{PN^2+PM^2}=\dfrac{\sqrt{10}}{2}  \approx 1{,}58$.}
+		{\begin{tikzpicture}[scale=1,font=\footnotesize,line join=round,line cap=round,>=stealth]
+		 \def\a{3.5} \def\b{1.8} \def\h{3}
+		\path 
+			(0:0) coordinate  (B)
+			(0:\a) coordinate  (D)
+			(-60:\b) coordinate (C) 
+			($(B)+(70:\h)$)  coordinate (A)
+			 ($(A)!1/2!(D)$) coordinate (M)
+			 ($(B)!1/2!(C)$) coordinate (N)
+			 ($(A)!1/2!(B)$) coordinate (P);
+		\draw  (A)--(B)--(C)--(D)--(A)--(B)
+			 (A)--(C)
+			(N)--(P); 
+		\draw[dashed]  (B)--(D)
+			(N)--(M)--(P); 
+		\foreach  \x/\g in {A/90,B/180,C/-90,D/0,M/0,N/180,P/180}
+		\fill[black] (\x) circle (1pt) 
+			 ($(\x)+(\g:3mm)$) node{$\x$};
+	\end{tikzpicture}
+		 }
+	 }
+\end{ex}
+
+
+%%%%%%%%%%%%%%%% TỰ LUẬN %%%%%%%%%%%%%%%%
+
+% nguồn: Ok_TuanLuan_Toan11_Lan1
+\begin{bt}%[1H8H1-2]%[1H8V6-1]%[ma:b44a1305]
+	Cho hình chóp $S. ABCD$ có  đáy là hình thoi cạnh $a$, $\widehat{ABC}=60^{\circ}$, \break$SA\perp(ABCD)$ và $SA=a \sqrt{2}$.
+	\begin{enumerate}
+		\item Chứng minh rằng  $SC\perp BD$.
+		\item Tính góc giữa đường thẳng $SC$ và mặt phẳng $(SAD)$. 
+	\end{enumerate}
+	\loigiai{ 
+		\begin{enumerate}
+			\item Chứng minh rằng $SC\perp  BD$.
+		\immini{ 
+			\begin{itemize}
+				\item Tứ giác $ABCD$ là  hình thoi suy ra $BD\perp AC$.\tagEX{1}
+				\item $SA\perp (ABCD)\Rightarrow BD\perp SA$.\tagEX{2} 
+				\item $SA$,  $AC\subset (SAC)$.\tagEX{3}
+			\end{itemize}
+			Từ (1), (2) và  (3) suy ra $BD\perp(SAC)\Rightarrow BD\perp SC$.
+			} 
+			{\begin{tikzpicture}
+		 \def\a{3}
+		\path (0:0) coordinate (A) 
+			++(0:\a) coordinate (D) 
+			 ++(-138:.6*\a) coordinate (C)
+			($(A)+(C)-(D)$) coordinate (B) 
+			($(A)+(90:\a)$)  coordinate (S)
+			($(A)!.5!(D)$) coordinate (M) 
+			(intersection of A--C and  B--D) coordinate (O);
+		 \draw[dashed] (B)--(A)--(D)
+			 (A)--(S)--(M)--(C)
+			(A)--(C) 
+			(B)--(D); 
+		\draw[thick] (B)--  (C)--(D)
+			(B)--(S) 
+			 (C)--(S)
+			(D)--(S); 
+		 \foreach \x/\g in {A/135,B/-135,C/-45,D/45,S/90,M/45}
+		\fill[black]  (\x) circle (1.5pt)
+			($(\g:3mm)+(\x)$) node  {$\x$};
+		\draw pic[draw,angle radius=3mm]{right angle=D--A--S} 
+			pic[draw,angle  radius=5mm]{right angle=C--S--M};
+	\end{tikzpicture}
+			 }
+			 \item Gọi $M$ là trung điểm $AD$.\\
+			Tam giác $ADC$ có $AD=DC=a$ và $\widehat{ADC}=60^\circ$  nên $\triangle ADC$ đều $\Rightarrow CM\perp AD$.\\
+			Mà $CM\perp SA$  nên $CM\perp (SAD)$.\\
+			Suy ra $SM$ là  hình chiếu của $SC$ lên mặt phẳng $(SAD)\Rightarrow \widehat{SC,(SAD)}=\widehat{CSM}$.\\
+			$\triangle SCM$ vuông  tại $M$ có
+			\begin{itemize}
+				\item $CM=\dfrac{a\sqrt{3}}{2}$  (đường cao tam giác đều);
+				\item $SC=\sqrt{SA^2+AC^2}=a\sqrt{3}$ (Py-ta-go trong $\triangle  SAC$).
+				\item $\sin\widehat{CSM}=\dfrac{MC}{SC}=\dfrac{1}{2}$ suy ra  $\widehat{CSM=30^\circ}$.
+				Vậy $\widehat{SC,(SAD)}=\widehat{MSC}=30^\circ$. 
+			\end{itemize}
+		\end{enumerate}
+	 }
+\end{bt}
+
+% nguồn: Ok_TuanLuan_Toan11_Lan2
+\begin{ex}%[1H8H1-2]%[1H8V6-1]%[ma:4921e782]
+	Cho hình chóp $S. ABCD$ có đáy là hình thoi cạnh $a$, $\widehat{ABC}=60^{\circ}$, \break$SA\perp(ABCD)$ và $SA=a \sqrt{2}$. 
+	\begin{enumerate}
+		\item Chứng minh rằng $SC\perp  BD$.
+		\item Tính góc giữa đường  thẳng $SC$ và mặt phẳng $(SAD)$.
+	\end{enumerate}
+	 \loigiai{
+		\begin{enumerate}
+			\item Chứng  minh rằng $SC\perp BD$.
+		\immini{ 
+			\begin{itemize}
+				\item Tứ giác $ABCD$ là hình thoi suy ra $BD\perp AC$.\tagEX{1} 
+				\item $SA\perp (ABCD)\Rightarrow  BD\perp SA$.\tagEX{2}
+				\item $SA$,  $AC\subset (SAC)$.\tagEX{3}
+			\end{itemize}
+			Từ (1), (2) và (3) suy ra $BD\perp(SAC)\Rightarrow BD\perp SC$. 
+			 }
+			{\begin{tikzpicture}
+		\def\a{3} 
+		\path  (0:0) coordinate (A)
+			++(0:\a) coordinate (D) 
+			++(-138:.6*\a) coordinate (C) 
+			($(A)+(C)-(D)$) coordinate (B) 
+			($(A)+(90:\a)$) coordinate (S) 
+			($(A)!.5!(D)$)  coordinate (M)
+			(intersection of A--C  and B--D) coordinate (O);
+		 \draw[dashed] (B)--(A)--(D)
+			 (A)--(S)--(M)--(C)
+			(A)--(C) 
+			(B)--(D); 
+		\draw[thick] (B)--  (C)--(D)
+			 (B)--(S)
+			(C)--(S) 
+			 (D)--(S);
+		\foreach \x/\g in  {A/135,B/-135,C/-45,D/45,S/90,M/45}
+		\fill[black]  (\x) circle (1.5pt)
+			 ($(\g:3mm)+(\x)$) node {$\x$};
+		\draw pic[draw,angle radius=3mm]{right  angle=D--A--S}
+			pic[draw,angle radius=5mm]{right  angle=C--S--M};
+	\end{tikzpicture}
+			 }
+			\item Gọi $M$ là trung  điểm $AD$.\\
+			Tam  giác $ADC$ có $AD=DC=a$ và $\widehat{ADC}=60^\circ$ nên $\triangle ADC$ đều $\Rightarrow CM\perp AD$.\\
+			Mà $CM\perp  SA$ nên $CM\perp (SAD)$.\\
+			Suy ra $SM$ là hình  chiếu của $SC$ lên mặt phẳng $(SAD)\Rightarrow \widehat{SC,(SAD)}=\widehat{CSM}$.\\
+			$\triangle SCM$ vuông tại $M$  có
+			\begin{itemize}
+				\item $CM=\dfrac{a\sqrt{3}}{2}$ (đường cao tam giác đều); 
+				 \item $SC=\sqrt{SA^2+AC^2}=a\sqrt{3}$ (Py-ta-go trong $\triangle SAC$).
+				\item $\sin\widehat{CSM}=\dfrac{MC}{SC}=\dfrac{1}{2}$  suy ra $\widehat{CSM=30^\circ}$.
+				Vậy $\widehat{SC,(SAD)}=\widehat{MSC}=30^\circ$. 
+			\end{itemize}
+		\end{enumerate}
+	} 
+\end{ex}

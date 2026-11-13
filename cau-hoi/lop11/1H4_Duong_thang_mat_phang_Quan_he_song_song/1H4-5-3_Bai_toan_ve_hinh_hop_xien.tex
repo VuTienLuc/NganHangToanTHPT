@@ -1,0 +1,733 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Lớp 11 | Đường thẳng, mặt phẳng. Quan hệ song song trong | Hình lăng trụ và hình hộp (xiên)
+% Dạng 1H4?5-3: Bài toán về hình hộp (xiên)
+% Số câu: 14  (sinh tự động bởi tach_cau.py; từ nay thầy sửa trực tiếp file này)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%% TRẮC NGHIỆM 4 PHƯƠNG ÁN %%%%%%%%%%%%%%%%
+
+% nguồn: Ok_TracNghiemLop11_Lan1
+\begin{ex}%[1H4N5-3]%[ma:dd9e4977]
+	Cho hình hộp $ABCD.A'B'C'D'$. Trong các khẳng định  sau, khẳng định nào \textbf{sai}?
+	\choice 
+		{$(ABCD)  \parallel (A'B'C'D')$}
+		{$(AA'D')\parallel  (BCC')$}
+		{\True $(BDD')\parallel  (ACC')$}
+		 {$(ABB')\parallel (CDC')$}
+	 \loigiai{
+		\begin{center}
+			\begin{tikzpicture}[scale=1,font=\footnotesize,line join=round,line cap=round,>=stealth]
+					\def\bc{4} 
+					\def\ba{2} 
+					 \def\h{4}
+					 \def\gocB{35}
+					\coordinate[label=below left:$B$] (B) at (0,0); 
+					\coordinate[label=above left:$A$] (A) at  (\gocB:\ba);
+					\coordinate[label=below:$C$] (C) at  (\bc,0);
+					\coordinate[label=right:$D$] (D) at  ($(C)-(B)+(A)$);
+					\coordinate (H) at ($(B)!0.4!(D)$); 
+					\coordinate[label=above left:$A'$] (A')  at ($(H)+(90:\h)$);
+					\coordinate[label=left:$B'$] (B') at ($(B)-(A)+(A')$); 
+					\coordinate[label=below right:$C'$] (C')  at ($(C)-(A)+(A')$);
+					 \coordinate[label=right:$D'$] (D') at ($(D)-(A)+(A')$);
+					 \draw (B')--(B)--(C)--(D)--(D')--(A')--(B')--(C')--(D')
+						(C)--(C') 
+						 (A')--(C')
+						 (B')--(D');
+					\draw[dashed]  (C)--(A)--(D)--(B)
+						 (A')--(A)--(B)
+						 (A)--(C)
+						(B)--(D); 
+					\foreach \diem  in {A,B,C,D,A',B',C',D'} \fill (\diem) circle (1pt);
+				\end{tikzpicture}
+		\end{center}
+		Khẳng định ``$(BDD')\parallel (ACC')$'' sai vì hai mặt  phẳng này có điểm chung là $O$ với $O=AC\cap BD$.
+	 }
+\end{ex}
+
+% nguồn: Ok_TracNghiemLop11_Lan1
+\begin{ex}%[1H4N5-3]%[ma:897f716b]
+	Nếu thiết diện của  một hình hộp và một mặt phẳng là một đa giác thì đa giác đó có nhiều nhất mấy cạnh?
+	 \choice
+		{$4$ cạnh} 
+		{$5$ cạnh} 
+		 {\True $6$ cạnh}
+		 {$7$ cạnh}
+	 \loigiai{
+		Vì hình hộp là hình lăng trụ có đáy là tứ giác và có $6$ mặt nên thiết diện của hình hộp  và mặt phẳng bất kì là một đa giác có nhiều nhất $6$ cạnh.
+	 }
+\end{ex}
+
+% nguồn: Ok_TracNghiemLop11_Lan1
+\begin{ex}%[1H4N5-3]%[ma:f73b3db3]
+	Cho hình hộp $ABCD.A'B'C'D'$. Mặt phẳng  $(ABA')$ song song với
+	 \choice
+		 {$(AA'C')$}
+		 {\True $(CC'D')$}
+		{$(ADD')$} 
+		 {$(BB'A')$}
+	\loigiai{ 
+	 \immini
+		{ 
+		Mặt  phẳng $(ABA')$ song song với mặt phẳng $(CC'D')$.
+		 }
+		 {
+		\begin{tikzpicture}[line join=round,line cap=round,scale=0.8]
+				 \path
+					(0,0)  coordinate (A)
+					(3,0) coordinate  (B)
+					(4,2) coordinate (C) 
+					(1,2) coordinate (D) 
+					(0.5,3) coordinate  (A')
+					(3.5,3) coordinate  (B')
+					 (4.5,5) coordinate (C')
+					(1.5,5) coordinate  (D');
+				\draw  (A)--(B)--(C)
+					 (A')--(B')--(C')--(D')--cycle (A)--(A')
+					 (B)--(B')
+					 (C)--(C');
+				\draw[dashed]  (A)--(D)--(C)
+					(D)--(D'); 
+				\foreach \i/\g in {A/-135,B/-45,C/0,D/180,A'/180,B'/0,C'/0,D'/135}{\draw[fill](\i) circle  (1pt)
+					($(\i)+(\g:3mm)$) node[scale=1]{$\i$};} 
+			\end{tikzpicture}
+		} 
+	} 
+\end{ex}
+
+% nguồn: Ok_TracNghiemLop11_Lan1
+\begin{ex}%[1H4N5-3]%[ma:8267d1d2]
+	Cho  hình hộp $ABCD.A'B'C'D'$. Gọi $O$, $O'$ lần lượt là tâm của hai đáy $ABCD$ và $A'B'C'D'$. Mệnh đề nào sau đây \textbf{sai}?
+	 \choice
+		{\True $(BA'D')\parallel(ADC')$} 
+		{$(ABB')\parallel(CDD')$} 
+		{$(B'AC)\parallel(DA'C')$} 
+		{$(ABO')\parallel(OC'D')$} 
+	 \loigiai{
+		\begin{center}
+			\begin{tikzpicture}[scale=1,font=\footnotesize,line join=round,line cap=round,>=stealth]
+					 \def\bc{4}
+					 \def\ba{2}
+					\def\h{4} 
+					\def\gocB{35} 
+					\coordinate[label=below left:$B$]  (B) at (0,0);
+					\coordinate[label=above left:$A$] (A) at  (\gocB:\ba);
+					\coordinate[label=below:$C$] (C) at  (\bc,0);
+					\coordinate[label=right:$D$] (D)  at ($(C)-(B)+(A)$);
+					\coordinate (H) at ($(B)!0.4!(D)$); 
+					\coordinate[label=above left:$A'$]  (A') at ($(H)+(90:\h)$);
+					\coordinate[label=left:$B'$] (B') at ($(B)-(A)+(A')$); 
+					\coordinate[label=below right:$C'$] (C') at ($(C)-(A)+(A')$); 
+					\coordinate[label=right:$D'$]  (D') at ($(D)-(A)+(A')$);
+					\coordinate[label=below:$O$]  (O) at ($(A)!0.5!(C)$);
+					\coordinate[label=above:$O'$] (O')  at ($(A')!0.5!(C')$);
+					\draw (B')--(B)--(C)--(D)--(D')--(A')--(B')--(C')--(D') 
+						(C)--(C') 
+						 (A')--(C')
+						(B')--(D'); 
+					\draw[dashed]  (C)--(A)--(D)--(B)
+						 (A')--(A)--(B)
+						 (A)--(C)
+						(B)--(D); 
+					\foreach \diem in {A,B,C,D,A',B',C',D',O,O'} \fill (\diem)  circle (1pt);
+				\end{tikzpicture}
+		\end{center}
+	 Ta thấy $AB'\cap A'B$, mà $(BA'D')\equiv (CBA'D')$ và $(ADC')\equiv (ADC'B')$ nên hai mặt này cắt nhau.}
+\end{ex}
+
+% nguồn: Ok_TracNghiemLop11_Lan1
+\begin{ex}%[1H4H5-3]%[ma:42dc5282]
+	Cho hình hộp $ABCD.A'B'C'D'$. Mặt phẳng $(AB'D')$ song song  với mặt phẳng nào sau đây?
+	\choice 
+		{$(BA'C')$} 
+		{\True $(C'BD)$} 
+		{$(BDA')$} 
+		 {$(ACD')$}
+	\loigiai{ 
+		\begin{center}
+			\begin{tikzpicture}[scale=1,font=\footnotesize,line join=round,line cap=round,>=stealth]
+					\def\bc{4} 
+					\def\ba{2} 
+					\def\h{4} 
+					 \def\gocB{45}
+					\coordinate[label=below  left:$B$] (B) at (0,0);
+					\coordinate[label=above  left:$A$] (A) at (\gocB:\ba);
+					\coordinate[label=below:$C$] (C) at  (\bc,0);
+					\coordinate[label=right:$D$] (D)  at ($(C)-(B)+(A)$);
+					 \coordinate (H) at ($(B)!0.4!(D)$);
+					\coordinate[label=above left:$A'$] (A') at ($(H)+(90:\h)$); 
+					\coordinate[label=left:$B'$]  (B') at ($(B)-(A)+(A')$);
+					\coordinate[label=below right:$C'$]  (C') at ($(C)-(A)+(A')$);
+					\coordinate[label=right:$D'$] (D') at  ($(D)-(A)+(A')$);
+					 \draw (B')--(B)--(C)--(D)--(D')--(A')--(B')--(C')--(D')
+						 (C)--(C');
+					\draw[dashed]  (C)--(A)--(D)--(B)
+						 (A')--(A)--(B)
+						(B')--(A)--(D'); 
+					\foreach \diem  in {A,B,C,D,A',B',C',D'} \fill (\diem) circle (1pt);
+				\end{tikzpicture}
+		\end{center}
+	Ta có $\heva{&B'D'\parallel BD\\& AD'\parallel  C'B}\Rightarrow (AB'D')\parallel(C'BD)$.}
+\end{ex}
+
+% nguồn: Ok_TracNghiemLop11_Lan1
+\begin{ex}%[1H4B5-3]%[ma:0013dcd1]
+	Cho hình chóp $S.ABC$ có đáy là tam giác  vuông cân tại $B$, $AB=a$. Biết $SA=2a$ và $SA$ vuông góc với mặt phẳng $(ABC)$. Khoảng cách từ điểm $A$ đến mặt phẳng $(SBC)$ bằng
+	\choice 
+		 {$a$}
+		{$2a$} 
+		{\True $\dfrac{2a  \sqrt{5}}{5}$}
+		{$\dfrac{a  \sqrt{5}}{2}$}
+	 \loigiai{
+		\begin{center}
+			\begin{tikzpicture}[scale=1,font=\footnotesize,line join=round,line cap=round,>=stealth]
+					 \def\b{4.5}
+					\def\c{2} 
+					\def\gA{-40} 
+					 \def\h{3.5}
+					\path (0,0) coordinate (A) 
+						(0:\b) coordinate  (C)
+						(\gA:\c)  coordinate (B)
+						(A)+(90:\h) coordinate  (S)
+						($(S)!(A)!(B)$) coordinate  (H);
+					\foreach \i in  {A,B,C}{\draw (S)--(\i);}
+					\draw  (H)--(A)--(B)--(C);
+					\draw[dashed]  (A)--(C);
+					\pic[draw,angle radius=2mm] {right  angle = C--A--S};
+					\pic[draw,angle radius=2mm] {right  angle = B--A--S};
+					\pic[draw,angle  radius=2mm] {right angle = A--H--B};
+					\pic[draw,angle radius=2mm] {right  angle = C--B--A};
+					\foreach \i/\g in {S/90,A/-135,B/-90,C/-45,H/45}{\draw[fill](\i) circle  (1pt)
+						($(\i)+(\g:3mm)$)  node[scale=1]{$\i$};}
+				\end{tikzpicture}
+		\end{center}
+		Trong mặt phẳng $(SAB)$, kẻ  $AH\perp SB$.\\
+		Ta có $\heva{&BC\perp AB\\&BC\perp  SA}$ suy ra $BC\perp(SAB)$.\\
+		Mà $AH\subset(SAB)$  nên $BC\perp AH$.\\
+		 Từ $(1)$ và $(2)$ suy ra $AH\perp(SBC)$ hay $\mathrm{d}(A, (SBC))=AH$.\\
+		Xét $\triangle  SAB$ vuông tại $A$ có
+		$$\dfrac{1}{AH^2}=\dfrac{1}{AS^2}+\dfrac{1}{AB^2}=\dfrac{1}{4a^2}+\dfrac{1}{a^2}=\dfrac{5}{4a^2} \Rightarrow AH=\dfrac{2a \sqrt{5}}{5}.$$ 
+		Vậy $\mathrm{d}(A, (SBC))=AH=\dfrac{2a  \sqrt{5}}{5}$.
+	 }
+\end{ex}
+
+
+%%%%%%%%%%%%%%%% ĐÚNG/SAI %%%%%%%%%%%%%%%%
+
+% nguồn: Ok_dungsai_lop11_Lan1
+\begin{ex}%[1H4V5-3]%[ma:aaacd89f]
+ Cho hình hộp $ABCD.A'B'C'D'$. Gọi $G_1$, $G_2$ là trọng tâm của các tam giác $A'BD$, $B'D'C$. Xét tính đúng sai của các mệnh đề sau. 
+  \choiceTF
+   {\True $A'D'CB$ là hình bình hành}
+  {\True $\left(A'BD\right)\parallel\left(B'D'C\right)$} 
+  {\True  $G_1, G_2$ cùng thuộc $A C'$}
+  {$G_1G_2=\dfrac{2}{3}AC'$} 
+ \loigiai{ 
+  \begin{center}
+   \begin{tikzpicture}[scale=1,font=\footnotesize,line join=round,line cap=round,>=stealth]
+     \path (-0.8,3.5) coordinate  (h)
+      (0,0) coordinate (B)++(4,0) coordinate (A)++(0.6,1.5)  coordinate (D)
+       ($(B)+(D)-(A)$) coordinate (C);
+     \foreach  \p in {A,B,C,D}\path ($(\p)+(h)$) coordinate (\p');
+      \path (barycentric cs:A'=1,B=1,D=1) coordinate (G_1)
+      (barycentric cs:B'=1,D'=1,C=1) coordinate  (G_2)
+       (barycentric cs:B=1,D=1) coordinate (E)
+      (barycentric  cs:B'=1,D'=1) coordinate (E')
+       (barycentric cs:B=1,D'=1) coordinate (O);
+     \draw  (C')--(B')--(B)--(A)--(D)--(D')--cycle (B')--(A')--(D')--(B')
+       (A)--(A')--(D)
+      (B)--(A'); 
+     \draw[dashed] (B)--(C)--(D)--(B) 
+       (B')--(C)--(C')--(A)
+      (D')--(C)--(E') 
+       (A')--(C')
+       (A)--(C)--(A')--(E);
+     \foreach \p/\g in {C/180,B/240,A/-60,D/0,C'/90,B'/180,A'/0,D'/45,G_1/0,G_2/0,E/-90,E'/90,O/-90}  \fill[black] (\p) circle (1pt)+(\g:0.3) node{$\p$};
+    \end{tikzpicture}
+  \end{center}
+  \begin{itemchoice}
+   \itemch Đúng. Ta có $A'D'\parallel AD\parallel BC$ và $A'D'=AD=BC$ nên $A'D'CB$ là  hình bình hành.
+   \itemch  Đúng. Ta có $A'D'BC$ là hình bình hành nên $A'B\parallel CD'\Rightarrow A'B\parallel (B'D'C)$.\\
+   Dễ thấy $BDD'B'$ là hình bình  hành nên $BD\parallel B'D'\Rightarrow BD\parallel (B'D'C)$.\\
+   Suy ra $(A'BD)\parallel  (B'D'C)$.
+   \itemch Đúng. Gọi $E$, $E'$, $O$ lần lượt là tâm của hình bình hành $ABCD$, $A'B'C'D'$ và hình  hộp $ABCD.A'B'C'D'$.\\
+   Ta có $G_1$ là trọng tâm của tam giác $A'BD$ nên $\dfrac{A'G_1}{A'E}=\dfrac{2}{3}$. Suy ra $G_1$ cũng  là trọng tâm của tam giác $A'CA$. Do đó, $G_1\in AO$.\\
+   Tương  tự, $G_2\in C'O$.\\
+   Vậy  $G_1$, $G_2$ cùng thuộc $AC'$.
+   \itemch Sai. Ta  có $G_1O=\dfrac{1}{3}AO=\dfrac{1}{6}AC'$.\\
+   Tương  tự, $G_2O=\dfrac{1}{6}AC'$.\\
+   Vậy  $G_1G_2=G_1O+G_2O=\dfrac{1}{3}AC'$.
+  \end{itemchoice}
+ } 
+\end{ex}
+
+% nguồn: Ok_dungsai_lop11_Lan2
+\begin{ex}%[1H4V5-3]%[ma:cdf95ab4]
+	 Cho hình hộp $ABCD.A'B'C'D'$ có các cạnh $AA'$, $BB'$, $CC'$, $DD'$ song song với nhau. Khi đó:
+	 \choiceTF
+		{\True $(BDA')\parallel (B'D'C')$} 
+		{\True  Đường chéo $AC'$ đi qua trọng tâm $G_1$, $G_2$ của tam giác $BDA'$ và $B'D'C$}
+		 {$AG_1=2G_1G_2$}
+		{\True Mặt phẳng  $\left(A'B'G_2\right)$ cắt hình hộp $ABCD.A'B'C'D'$ tạo thành một tứ giác là hình bình hành}
+	 \loigiai{
+		\begin{center}
+			\begin{tikzpicture}[line cap=round,line join=round,font=\scriptsize,blue]
+					\def\a{5}  \def\b{2.5} \def\h{4.25}
+					\path (0:0)  coordinate (A)
+						++(0:\a)  coordinate (D)
+						++(-130:\b)  coordinate (C)
+						 ($(A)+(C)-(D)$) coordinate (B)
+						($(A)+(100:\h)$) coordinate (A') 
+						($(B)+(100:\h)$) coordinate  (B')
+						($(C)+(100:\h)$) coordinate  (C')
+						($(D)+(100:\h)$) coordinate  (D')
+						(barycentric cs:A=1,C=1)  coordinate (O)
+						(barycentric  cs:A'=1,C'=1) coordinate (O')
+						(barycentric cs:A=1,B=1) coordinate  (H)
+						(barycentric cs:C=1,C'=1) coordinate  (M)
+						(barycentric cs:D=1,D'=1) coordinate (N) 
+						(barycentric cs:M=1,N=1) coordinate  (P)
+						(barycentric cs:B=1,D=1,A'=1)  coordinate (G_1)
+						 (barycentric cs:B'=1,D'=1,C=1) coordinate (G_2);
+					\draw[dashed,thin,teal]  (B)--(A)--(D)
+						 (C)--(A)--(A')--(O)
+						(B)--(D)--(A')--cycle  (N)--(A')
+						 (P)--(B')
+						 (O)--(A')
+						(O')--(C) 
+						 (A)--(C')
+						(A')--(G_2); 
+					 \draw[] (C)--(C')
+						 (D)--(D')
+						(B)--(B') 
+						 (C)--(C')
+						 (B)--(C)--(D)
+						(A')--(B')--(C')--(D')--cycle  (B')--(M)--(N)
+						(C)--(D')--(B')--cycle; 
+					 \foreach \x/\y in {A/180,B/210,C/-30,D/-30,A'/90,B'/210,C'/90,D'/90,O/-90,O'/90,H/150,M/0,N/0,P/-30,G_1/180,G_2/-90}
+					\fill[black] (\x) circle  (1pt)
+						 ($(\y:3mm)+(\x)$) node {$\x$};
+				\end{tikzpicture}
+		\end{center}
+		\begin{itemchoice}
+			 \itemch Đúng.\\
+			 Chứng minh $(BDA')\parallel (B'D'C)$.\\
+			Ta có $BA'D'C$ là  hình bình hành nên $BA'\parallel D'C$.\\
+			Ta có $BB'D'D$ là hình bình hành nên $B'D'\parallel  BD$.\\
+			Ta có $\heva{&BA'\parallel D'C\\ &BD\parallel B'D'\\ &BA',BD\subset (BA'D);\, BA'\cap BD=B\\&B'D',\,D'C\subset (B'D'C);B'D'\cap D'C=D'}$\\ 
+			$\Rightarrow (BDA')\parallel  (B'D'C)$.
+			\itemch  Đúng.\\
+			Chứng minh đường chéo $AC'$ qua trọng tâm $G_1$,  $G_2$ của tam giác $BDA'$ và $B'D'C$.\\
+			 Trong $(ABCD)$, gọi $O=AC\cap BD$.\\
+			$\Rightarrow  \heva{
+			&O\in AC;\, AC\subset  (ACC'A') \\
+			&O\in  BD;\, BD\subset (BDA') } $
+			$\Rightarrow O\in (ACC'A')\cap (BDA')$.\\ 
+			Mà $A'\in  (ACC'A')\cap (BDA')$ nên $A'O=(ACC'A')\cap (BDA')$\\
+			Trong  $(ACC'A')$, gọi $E=A'O\cap AC'$.\\
+			Ta có $\dfrac{A'E}{EO}=\dfrac{A'C'}{AO}=2$  (Thales)\\
+			Suy ra $E$ trùng với trọng  tâm $G_1$ của tam giác $BDA'$.\quad (1)\\
+			Trong $(A'B'C'D')$, gọi  $O'=A'C'\cap B'D'$.\\
+			$\Rightarrow  \heva{
+			 &O'\in A'C';A'C'\subset (ACC'A') \\
+			&O'\in  B'D;B'D'\subset (B'D'C) } $
+			 $\Rightarrow O'\in (ACC'A')\cap (B'D'C)$.\\
+			Mà $C\in  (ACC'A'\cap (B'D'C)$ nên $CO=(ACC'A')\cap (B'D'C)$.\\
+			 Trong $(ACC'A')$, gọi $F=CO\cap AC'$.\\
+			 Ta có $\dfrac{CF}{FO'}=\dfrac{AC}{C'O'}=2$ (Thales)\\
+			Suy ra  $F$ trùng với trọng tâm $G_2$ của tam giác $B'D'C$.\quad (2)\\
+			Từ (1) và (2) suy ra $AC'$ qua trọng tâm $G_1, G_2$ của tam giác  $BDA'$ và $B'D'C$.
+			\itemch  Sai.\\
+			Chứng minh $G_1,  G_2$ chia đoạn $AC'$ thành ba phần bằng nhau.\\
+			Trong  $(AA'C'C)$, gọi $I=A'C\cap AC'$.\\
+			 \centerline{
+			\begin{tikzpicture}[font=\scriptsize]
+					 \def\a{4}
+					\path 
+						(0:0)  coordinate (A)
+						(0:\a) coordinate (C) 
+						++(60:\a/2) coordinate (C') 
+						($(A)+(C')-(C)$)  coordinate (A')
+						(barycentric cs:A=1,C'=1) coordinate (I) 
+						 (barycentric cs:A=1,C=1) coordinate (O)
+						(barycentric  cs:A'=1,C'=1) coordinate (O')
+						 (barycentric cs:A=2,C'=1) coordinate (G_1)
+						(barycentric cs:A=1,C'=2) coordinate  (G_2);
+					\draw[] (A)--(C)--(C')--(A')--cycle (A)--(C') 
+						 (C)--(A')
+						(A')--(O) 
+						 (C)--(O');
+					\foreach \x/\y  in {A/180,C/0,C'/0,A'/180,I/-90,O/-90,O'/90,G_1/-30,G_2/-30}
+					 \fill[black] (\x) circle (1pt)
+						($(\y:3mm)+(\x)$) node {$\x$}; 
+				\end{tikzpicture}
+			 }\\
+			Ta có $G_1$  là trọng tâm của tam giác $A'AC$ nên $AG_1=\dfrac{2}{3}AI =\dfrac{2}{3}\cdot \dfrac{1}{2}AC'=\dfrac{1}{3}AC'$.\\
+			Ta có $G_2$ là trọng tâm của tam giác  $A'CC'$ nên $AG_2 =\dfrac{2}{3}C'I =\dfrac{2}{3}\cdot \dfrac{1}{2}AC' =\dfrac{1}{3}AC'$.\\
+			Ta có $G_1G_2  =AC'-AG_1-C'G_2 =AC'-\dfrac{1}{3}AC'-\dfrac{1}{3}AC' =\dfrac{1}{3}AC'$.\\
+			Từ đó ta  có $AG_1=G_1G_2 =G_2C'\, (=\dfrac{1}{3}AC')$.\\
+			Suy ra $G_1, G_2$ chia đoạn  $AC'$ thành ba phần bằng nhau.
+			\itemch Đúng.\\ 
+			Xác định thiết diện cắt bởi mặt phẳng $(A'B'G_2)$. Thiết diện là hình gì?\\ 
+			Xét tam giác $B'D'C$, gọi $P=B'G_2\cap CD'$.\\ 
+			Suy ra  $P$ là trung điểm của $CD'$.
+			Trong $(A'B'G_2)$, vẽ $Px\parallel  A'B'$.\\
+			Trong $(CC'D'D), Px$  cắt $CC', DD'$ lần lượt tại $M$ và $N$.\\
+			Suy ra $MN\parallel CD$  và $MN=CD$.\\
+			Ta có  $\heva{
+			&(A'B'G_2)\cap  (A'B'C'D')=A'B'\\
+			&(A'B'G_2)\cap  (B'C'CB)=B'M\\
+			 &(A'B'G_2)\cap (CC'D'D)=MN\\
+			&(A'B'G_2)\cap (AA'D'D)=NA'} $\\ 
+			$\Rightarrow $ thiết diện  của $(A'B'G_2)$ và hình hộp $ABCD.A'B'C'D'$ là tứ giác $A'B'MN$.\\
+			Ta  có $\heva{
+			&MN\parallel  A'B'\\
+			&MN=A'B'\,(=CD)} $ thiết diện  $A'B'MN$ là hình bình hành.
+		\end{itemchoice}
+	} 
+\end{ex}
+
+% nguồn: Ok_dungsai_lop11_Lan2
+\begin{ex}%[1H4V5-3]%[ma:81dda7a3]
+	Cho hình hộp $ABCD.A'B'C'D'$.  Gọi $G_1$, $G_2$ là trọng tâm của các tam giác $A'BD$, $B'D'C$. Khi đó:
+	\choiceTF 
+		{\True $A'D'CB$ là hình bình  hành}
+		{\True $(A'BD)\parallel (B'D'C)$} 
+		{\True $G_1, G_2$ cùng  thuộc $AC'$}
+		 {$G_1G_2=\dfrac{2}{3}AC'$}
+	 \loigiai{
+		\begin{center}
+			\begin{tikzpicture}[font=\scriptsize]
+					\def\a{6} \def\b{2}  \def\h{3.5}
+					\path (0:0)  coordinate (A')
+						(0:\a)  coordinate (B')
+						++(-130:\b) coordinate (C') 
+						($(A')+(C')-(B')$) coordinate  (D')
+						($(A')+(90:\h)$)  coordinate (A)
+						($(B')+(90:\h)$) coordinate (B) 
+						 ($(C')+(90:\h)$) coordinate (C)
+						($(D')+(90:\h)$)  coordinate (D);
+					 \draw[dashed,thin] (D')--(A')--(B')--cycle (A)--(A')
+						(D)--(A')--(B); 
+					\draw[]  (A)--(B)--(C)--(D)--cycle (D)--(D')--(C')--(B')--(B)
+						 (C)--(C')
+						(D)--(B) 
+						 (B')--(C)--(D');
+					\foreach \x/\y in  {A/90,B/90,C/0,D/180,A'/180,B'/0,C'/-90,D'/-90}
+					\fill[black] (\x) circle (1pt) 
+						($(\y:3mm)+(\x)$) node  {$\x$};
+				\end{tikzpicture}
+		\end{center}
+		\begin{itemchoice}
+			\itemch Đúng. 
+			\itemch Đúng.\\ 
+			Vì $ABCD.A'B'C'D'$ là hình hộp nên 
+			$\heva{&A'D'\parallel BC\\ &A'D'=BC}$ 
+			$\Rightarrow A'D'CB$  là hình bình hành.\\
+			Suy ra $A'B\parallel CD'\Rightarrow  A'B\parallel (B'D'C)$.\quad (1)\\
+			 Tương tự, ta có:
+			 $\heva{&A'B'\parallel CD\\&A'B'=CD}$
+			$\Rightarrow A'B'CD$ là hình  bình hành.\\
+			Suy ra $A'D\parallel B'C\Rightarrow A'D\parallel  (B'D'C)$.\quad (2)\\
+			Từ (1) và (2)  suy ra $(A'BD)\parallel (B'D'C)$.
+			 \itemch Đúng.\\
+			Gọi $O$, $O'$, $I$ theo thứ tự  là tâm của các hình bình hành $ABCD$, $A'B'C'D'$, $ACC'A'$.\\
+			Vì $G_1$ là trọng tâm tam giác $AB'D$ nên $\dfrac{A'G_1}{A'O}=\dfrac{2}{3}$ $\Rightarrow G_1$ là trọng tâm tam giác $A'AC$, suy ra  $G_1=AI\cap A'O$.\quad (3)\\
+			Tương  tự, $G_2$ là trọng tâm tam giác $B'D'C$ nên $\dfrac{CG_2}{CO'}=\dfrac{2}{3}$.\\
+			$\Rightarrow G_2$ là trọng  tâm tam giác $A'C'C$, suy ra $G_2=C'I\cap CO'$. \quad (4)\\
+			Từ (3) và (4) suy ra $G_1, G_2$ cùng thuộc $AC'$. 
+			 \itemch Sai.\\
+			\centerline{ 
+			\begin{tikzpicture}[font=\scriptsize]
+					 \def\a{6} \def\b{2.75} \def\h{3.5}
+					 \path
+						(0:0)  coordinate (A')
+						(0:\a) coordinate  (B')
+						++(-130:\b) coordinate (C') 
+						($(A')+(C')-(B')$) coordinate  (D')
+						 ($(A')+(90:\h)$) coordinate (A)
+						($(B')+(90:\h)$) coordinate  (B)
+						($(C')+(90:\h)$)  coordinate (C)
+						 ($(D')+(90:\h)$) coordinate (D)
+						(intersection  of A'--C' and B'--D') coordinate (O')
+						 (intersection of A--C and B--D) coordinate (O)
+						($(A)!1/2!(C')$)  coordinate (I)
+						($(A)!1/3!(C')$) coordinate (G_1) 
+						 ($(A)!2/3!(C')$) coordinate (G_2);
+					 \draw[dashed,thin] (D')--(A')--(B')--cycle (A)--(A')
+						 (D)--(A')--(B)
+						(A')--(C') 
+						(A')--(O) 
+						 (O')--(C)
+						(A)--(C') 
+						(A')--(C); 
+					\draw[] (A)--(B)--(C)--(D)--cycle  (D)--(D')--(C')--(B')--(B)
+						 (C)--(C')
+						(D)--(B) 
+						 (B')--(C)--(D')
+						(A)--(C); 
+					\foreach \x/\y in {A/90,B/90,C/0,D/180,A'/180,B'/0,C'/-90,D'/-90,O'/-90,O/90,I/-90,G_1/180,G_2/0} 
+					 \fill[black] (\x) circle (1pt)
+						 ($(\y:3mm)+(\x)$) node {$\x$};
+				\end{tikzpicture}
+			} 
+			Chứng minh  $AG_1=G_1G_2=G_2C'=\dfrac{1}{3}AC'$\\
+			Ta có $\dfrac{AG_1}{AI}=\dfrac{2}{3} \Rightarrow \dfrac{AG_1}{AC'}=\dfrac{1}{3}; \dfrac{C'G_2}{C'I} =\dfrac{2}{3} \Rightarrow \dfrac{C'G_2}{AC'} =\dfrac{1}{3}$.\\ 
+			Do  vậy $AG_1= G_1G_2=G_2C'=\dfrac{1}{3}AC'$.\\
+			Vậy $G_1, G_2$ cùng thuộc $AC'$, đồng thời chia $AC'$ thành  ba phần bằng nhau.
+		\end{itemchoice}
+	 }
+\end{ex}
+
+
+%%%%%%%%%%%%%%%% TRẢ LỜI NGẮN %%%%%%%%%%%%%%%%
+
+% nguồn: Ok_TraLoiNgan_Lop11_Lan1
+\begin{ex}%[1H4V5-3]%[ma:9d7a211e]
+	Cho hình hộp $ABCD\cdot A'B'C'D'$. Gọi $G$ và $G'$ lần lượt là trọng tâm của hai tam giác $B'D'A$ và $BDC'$. Khi đó: $GG'=kA'C$.  Tìm $k$.
+	\shortans{0,33} (làm tròn đến hàng  phần trăm).
+	 \loigiai{
+		\begin{center}
+			\begin{tikzpicture}[line join = round,line cap = round,font=\footnotesize,>=stealth,scale=1]
+					 \coordinate (A') at (3,5);
+					\coordinate (B') at (1,3); 
+					\coordinate  (C') at (5,3);
+					\coordinate  (D') at (7,5);
+					\coordinate (A) at (2,2); 
+					\coordinate  (B) at (0,0);
+					\coordinate (C) at  (4,0);
+					\coordinate (D)  at (6,2);
+					\coordinate (O') at  ($(A')!0.5!(C')$);
+					\coordinate  (O) at ($(A)!0.5!(C)$);
+					\coordinate (G) at  ($(C)!1/3!(A')$);
+					\coordinate  (G') at ($(A')!1/3!(C)$);
+					\draw (A')--(B')--(C')--(D')--(A') 
+						 (B)--(B')
+						(C')--(C)--(B) 
+						 (C)--(D)--(D')
+						(A')--(C') 
+						 (B')--(D')
+						 (B)--(C')--(D);
+					\draw[dashed,thin](A)--(B) 
+						 (A')--(A)--(D)
+						(A)--(C) 
+						 (B)--(D)
+						(B')--(A)--(D') 
+						 (A')--(C);
+					\foreach  \i/\g in {A'/90,B'/90,C'/90,D'/90,A/180,B/-90,C/-90,D/0,O'/-90,O/-90,G/-180,G'/-180}{\draw[fill=black](\i) circle (1pt)
+						($(\i)+(\g:3mm)$) node[scale=1]{$\i$};} 
+				\end{tikzpicture}
+		\end{center}
+		Gọi $O$, $O'$ và $Q$ lần lượt là tâm các hình bình  hành $ABCD$, $A'B'C'D'$ và $AA'C'C$.\\
+		Vì $G$ là trọng tâm tam  giác $AB'D'\Rightarrow A'Q$ đi qua $G$.\\
+		Vì $G'$ là trọng tâm tam giác  $BDC'\Rightarrow CQ$ đi qua $G'$.\\
+		Do đó $A' C$  qua $G$ và $G'$.\\
+		Lại có $\dfrac{A' G}{A' Q}=\dfrac{2}{3}\Rightarrow\dfrac{A' G}{A' C}=\dfrac{1}{3}\Rightarrow A'G=\dfrac{1}{3}A'C$; $\dfrac{C{G'}}{CQ}=\dfrac{2}{3}\Rightarrow\dfrac{C{G'}}{A'  C}=\dfrac{1}{3}\Rightarrow C{G'}=\dfrac{1}{3}A'C$.\\
+		Do đó $A'  G=G{G'}=G' C=\dfrac{1}{3}A'C$.\\
+		 Vậy $k=\dfrac{1}{3}\approx 0{,}33$.
+	} 
+\end{ex}
+
+% nguồn: Ok_TraLoiNgan_Lop11_Lan1
+\begin{ex}%[1H4V5-3]%[ma:ba89ff17]
+	Cho hình hộp $ABCD.A'B'C'D'$. Trên các cạnh $AA'$, $BB'$, $CC'$ lần lượt lấy ba điểm $M$, $N$, $P$ sao cho $\dfrac{A'M}{AA'} = \dfrac{1}{3}$;$\dfrac{B'N}{BB'} = \dfrac{2}{3}$; $\dfrac{C'P}{CC'} =  \dfrac{1}{2}$. Biết mặt phẳng $(MNP)$ cắt $DD'$ tại $Q$. Tính tỉ số $\dfrac{DD'}{D'Q}$.
+	 \shortans{6}
+	\loigiai{ 
+	\immini{ 
+		Gọi $O$, $O'$ lần lượt là tâm của hình bình  hành $ABCD$ và $A'B'C'D'$, $I = OO' \cap MP$ và cạnh bên $AA'=BB'=CC'=DD'=a$. Ta có
+		\begin{eqnarray*}
+			& &C'P+A'M = B'N+D'Q =  2O'I\\
+			&\Leftrightarrow &  \dfrac{C'P}{CC'}+\dfrac{A'M}{AA'}=\dfrac{B'N}{BB'}+\dfrac{D'Q}{DD'}\\
+			 &\Rightarrow & \dfrac{D'Q}{DD'}=\dfrac{1}{2}+\dfrac{1}{3}-\dfrac{2}{3}=\dfrac{1}{6}
+		\end{eqnarray*}
+		 Vậy $\dfrac{DD'}{D'Q} = 6$.}{
+		\begin{tikzpicture}[line join=round,line cap=round,>=stealth,scale=0.7,font=\footnotesize]
+				\tikzset{every node/.style={outer  sep=-0.5mm}}
+				\foreach \x/\y/\n  in {0/0/A,4/0/D,-2/-1.5/B,2/-1.5/C} \coordinate (\n) at (\x,\y);
+				 \coordinate (O) at ($(A)!0.5!(C)$);
+				 \coordinate (A') at ($(A)+(0,5)$);
+				\coordinate (B')  at ($(B)+(0,5)$);
+				 \coordinate (C') at ($(C)+(0,5)$);
+				\coordinate  (D') at ($(D)+(0,5)$);
+				\coordinate (O') at ($(O)+(0,5)$); 
+				\coordinate (M) at  ($(A)!2/3!(A')$);
+				\coordinate (N) at  ($(B)!1/3!(B')$);
+				\coordinate (P) at ($(C)!0.5!(C')$); 
+				\coordinate (Q)  at ($(D)!5/6!(D')$);
+				\draw  (C')--(B')--(B)--(C)--(C')--(D')--(D)--(C)
+					 (D')--(A')--(B')
+					 (A')--(C')
+					 (B')--(D')
+					 (Q)--(P)--(N);
+				\draw[dashed] (D)--(A)--(B)--(D) 
+					 (A)--(A')
+					 (A)--(C)
+					(O)--(O') 
+					(Q)--(M)--(N)--(Q) 
+					 (M)--(P);
+				\foreach  \t/\g in {A/170,B/180,C/0,A'/90,C'/0,B'/130,D/0,D'/0,O/-90,O'/80,M/180,N/180,P/0,Q/0}{
+					\draw[fill=black]  (\t) circle (1pt) node[shift={(\g:10pt)}]{$ \t $};}
+			\end{tikzpicture}
+		 }
+	} 
+\end{ex}
+
+% nguồn: Ok_TraLoiNgan_Lop11_Lan2
+\begin{ex}%[1H4V5-3]%[ma:b0d7d70a]
+	Cho hình lập phương $ABCD.A'B'C'D'$ có cạnh bằng $2$. Gọi $M$, $N$ lần lượt là trung điểm của $BC$ và $CD$. Diện tích thiết diện của hình lập phương khi cắt bởi mặt phẳng $(A'MN)$ bằng $\dfrac{a\sqrt{b}}{c}$ với $a$, $b$, $c$ là các số nguyên dương.  Khi đó $T=a+b+c$ bằng bao nhiêu?
+	\shortans{30} 
+	 \loigiai{
+	\immini 
+		 {Ta có $MN\cap AD=I$, $MN\cap AB=J$, $A'I\cap DD'=P$,\\
+		 $A'J\cap BB'=Q$.\\
+		Suy ra thiết diện  là ngũ giác $A'PNMQ$.\\
+		 $\triangle DNI=\triangle CMN=\triangle BMJ\Rightarrow JB=ID=BM=DN=1 \Rightarrow PD=BQ=\dfrac{1}{3}AA'=\dfrac{2}{3}$.\\
+		Ta có $QJ=QM=\dfrac{\sqrt{13}}{3}$,  $JM=\sqrt{2}\Rightarrow S_{\triangle Q
+		JM}=\dfrac{\sqrt{17}}{6}$ (Áp dụng  công thức Heron).\\
+		Tương tự  $PN=PI=\dfrac{\sqrt{13}}{3}$, $NI=\sqrt{2}\Rightarrow S_{\triangle PNI}=\dfrac{\sqrt{17}}{6}$.
+		} 
+		 {
+		\begin{tikzpicture}[>=stealth,line join=round,line cap=round,font=\scriptsize,scale=0.7]
+				 \def\a{3.5}
+				\path (0:0) coordinate (A) 
+					++(0:\a)  coordinate (D)
+					++(-130:\a/2) coordinate  (C)
+					 ($(A)+(C)-(D)$) coordinate (B)
+					($(A)+(90:\a)$) coordinate (A') 
+					 ($(B)+(90:\a)$) coordinate (B')
+					($(C)+(90:\a)$)  coordinate (C')
+					 ($(D)+(90:\a)$) coordinate (D')
+					($(C)!0.5!(B)$) coordinate (M) 
+					($(C)!0.5!(D)$)  coordinate (N)
+					($(A)!1.5!(B)$)  coordinate (J)
+					 ($(A)!1.5!(D)$) coordinate (I)
+					($(B)!1/3!(B')$)  coordinate (Q)
+					($(D)!1/3!(D')$) coordinate (P); 
+				 \draw[dashed] (A)--(B)--(M)--(N)--(D)--(A)
+					(D)--(I) 
+					 (B)--(J)
+					 (A')--(Q)--(B)
+					(A')--(P)--(D) 
+					 (A')--(M)
+					 (A')--(N)
+					(A)--(A'); 
+				\draw  (C)--(C')
+					(M)--(Q)--(J)--(M)--(C)--(N)--(P)--(I)--(N) 
+					 (B')--(Q)
+					 (P)--(D')
+					(A')--(B')--(C')--(D')--cycle; 
+				\foreach \x/\g in  {A/180,B/-40,C/270,D/60,A'/180,B'/180,C'/0,D'/0,M/270,N/270,P/0,Q/180,I/0,J/270}
+				 \fill[black] (\x) circle (1pt)
+					($(\g:4mm)+(\x)$) node {$\x$}; 
+			\end{tikzpicture}
+		 }
+		\noindent Mặt khác $A'I=A'J=\sqrt{13}$, $JI=\sqrt{18}\Rightarrow S_{\triangle  A'JH}=\dfrac{3\sqrt{17}}{2}$.\\
+		Từ đó suy ra $S_{A'PNMQ}=S_{\triangle A'JI}-S_{\triangle  QIM}-S_{\triangle PNI}=\dfrac{3\sqrt{17}}{2}-\dfrac{\sqrt{17}}{6}-\dfrac{\sqrt{17}}{6}=\dfrac{7\sqrt{17}}{6}$.\\
+		Vậy $a=7$; $b=17$; $c=6 \Rightarrow  T=a+b+c=7+17+6=30$.
+	 }
+\end{ex}
+
+
+%%%%%%%%%%%%%%%% TỰ LUẬN %%%%%%%%%%%%%%%%
+
+% nguồn: Ok_TuanLuan_Toan11_Lan2
+\begin{ex}%[1H4V5-3]%[ma:b2341b2c]
+	Cho hình hộp $ABCD.A'B'C'D'$. Trên ba cạnh $AB$, $DD'$,  $C'B'$ lần lượt lấy ba điểm $M$, $N$, $P$ không trùng với các đỉnh sao cho $\dfrac{AM}{AB}=\dfrac{D'N}{D'D}=\dfrac{B'P}{B'C'}$. Tìm thiết diện của hình hộp khi cắt bởi mặt phẳng $(MNP)$.
+	\loigiai{ 
+		\begin{center}
+			\begin{tikzpicture}[scale=1.5,font=\footnotesize,line join=round,line cap=round,>=stealth]
+					 \def\a{3}
+					 \def\b{1.5}
+					\def\g{40} 
+					 \def\h{2}
+					\path 
+						(0:0)  coordinate (A)--++(\g:\b) coordinate (B)--++(0:\a) coordinate (C)--++(\g-180:\b) coordinate (D)
+					\foreach \x in  {A,B,C,D}{
+						($(\x)+(70:\h)$)  coordinate (\x')};
+					\draw ($(A)!.7!(B)$) coordinate  (M);
+					\draw ($(D')!.7!(D)$) coordinate  (N);
+					\draw ($(B')!.7!(C')$) coordinate (P); 
+					\draw  ($(A)!.7!(D)$) coordinate (K);
+					 \draw ($(D')!.7!(C')$) coordinate (F);
+					\draw ($(B')!.7!(B)$) coordinate  (E);
+					\foreach \x/\g in {A/180,B/35,C/0,D/-30,A'/180,B'/150,C'/0,D'/90,M/10,N/1,P/90,K/-90,F/-70,E/170} 
+					 \fill(\x) circle (1pt)
+						 ($(\x)+(\g:2mm)$) node{$\x$};
+					\draw[dashed] (A)--(B')--(B)--(A) 
+						(B)--(C) 
+						 (K)--(M)--(E)--(P);
+					\draw (P)--(F)--(N)--(K) 
+						(D')--(A)--(D)--(D')--(A')--cycle 
+						 (A)--(A')--(B')--(C')--(D')--(B')
+						(D)--(C)--(C'); 
+				\end{tikzpicture}
+		\end{center}
+		Ta chứng minh được $(MNP) \parallel  (AB'D')$.\\
+		Ta  có $\dfrac{AM}{AB}=\dfrac{D'N}{DD'}=\dfrac{B'P}{B'C'} \Rightarrow \dfrac{AM}{D'N}=\dfrac{MB}{ND}=\dfrac{BA}{DD'}$ và $\dfrac{AM}{B'P}=\dfrac{MB}{PC'}=\dfrac{BA}{C'B'}$.\\
+		Theo định lí Ta-lét đảo thì $MN$ song song với $(\alpha)$ với $(\alpha)$ song song với $AD'$, $BD$ và $MP$ song song với $(\beta)$  với $(\beta)$ song song với $AB'$, $BC$.\\
+		Vì $BD \parallel B'D'$, $BC' \parallel AD'$ nên hai mặt phẳng $(\alpha)$ và $(\beta)$ đều  song song với $(AB'D')$ do đó $MN$ và $MP$ đều song song với $(AB'D')$. Vậy $(MNP) \parallel (AB'D')$.\\
+		Từ $M$ vẽ $ME$ song song với $AB'$, từ $P$ vẽ $PF$ song song với $B'D'$.  Từ $N$ vẽ $NK \parallel AD'$ cắt $AD$ tại $K$.\\
+		Thiết diện  là lục giác $MEPFNK$.\\
+	 }
+\end{ex}
+
+% nguồn: Ok_TuanLuan_Toan11_Lan2
+\begin{ex}%[1H4V5-3]%[ma:a93813a3]
+	Cho hình hộp $ABCD.A'B'C'D'$ có tất cả các mặt đều là hình vuông cạnh $a$. Các điểm $M$, $N$ lần lượt trên $AD'$, $BD$ sao cho $AM=DN=x$  ($0<x<a \sqrt{2}$).
+	\begin{enumerate}
+		\item Chứng minh khi $x$ biến thiên, đường thẳng $M N$ luôn song song với một  mặt phẳng cố định.
+		\item Chứng minh khi $x=\dfrac{a\sqrt{2}}{3}$ thì  $MN \parallel A'C$.
+	\end{enumerate}
+	\loigiai{ 
+		\begin{center}
+			\begin{tikzpicture}[scale=1.5,font=\footnotesize,line join=round,line cap=round,>=stealth]
+					\def\a{3} 
+					 \def\b{1.5}
+					\def\g{35} 
+					 \def\h{3}
+					 \path
+						(0:0) coordinate (A)--++(\g:\b) coordinate (B)--++(0:\a) coordinate  (C)--++(\g-180:\b) coordinate (D)
+					\foreach \x in  {A,B,C,D}{
+						($(\x)+(90:\h)$)  coordinate (\x')};
+					 \draw ($(A)!.5!(D)$) coordinate (I);
+					\draw ($(A)!.5!(C)$) coordinate  (O);
+					 \path[name path=bd] (B)--(D);
+					\path[name path=ci]  (C)--(I);
+					\path[name  intersections={of=bd
+						and ci}] 
+						 (intersection-1) coordinate (N);
+					 \path[name path=aai] (A')--(I);
+					\path[name path=add] (A)--(D'); 
+					 \path[name intersections={of=aai
+						 and add}]
+						(intersection-1) coordinate (M); 
+					\foreach \x/\g in  {A/180,B/50,C/0,D/-30,A'/180,B'/150,C'/0,D'/130,I/-90,O/90,N/-90,M/180}
+					\fill(\x) circle (1pt) 
+						($(\x)+(\g:2mm)$)  node{$\x$};
+					 \draw[dashed] (B')--(B)--(A)
+						(B)--(C)--(A) 
+						(B)--(A')--(C) 
+						(D)--(B) 
+						 (C)--(I);
+					\draw  (C)--(D')--(A)
+						 (A')--(I)
+						(A)--(D)--(D')--(A')--cycle 
+						(A')--(B')--(C')--(D') 
+						(D)--(C)--(C'); 
+				\end{tikzpicture}
+		\end{center}
+		\begin{enumerate}
+			\item Gọi $(P)$ là mặt phẳng qua $A D$ và song song với $\left(A'D'CB\right)$. Gọi $(Q)$  là mặt phẳng qua $M$ và song song với $\left(A'D'CB\right)$. Giả sử $(Q)$ cắt $BD$ tại điểm $N'$.\\
+			Theo định lí Thales  ta có $\dfrac{AM}{AD'}=\dfrac{DN'}{DB}$.\tagEX{1}
+			\noindent Vì các  mặt của hình hộp là hình vuông cạnh $a$ nên $AD'=DB=a \sqrt{2}$.\\
+			Từ (1) ta có $AM=DN'$, mà $DN=AM \Rightarrow DN'=DN  \Rightarrow N' \equiv N \Rightarrow MN \subset(Q)$.\\
+			Mà $\heva{& (Q)\parallel  \left(A'D'CB\right)\\& MN \subset(Q)} \Rightarrow MN \parallel \left(A'D'CB\right)$.\\
+			Vậy $MN$ luôn song song với mặt phẳng cố định $\left(A'D'CB\right)$. 
+			\item Gọi $\{O\}=AC \cap BD$.  \\
+			 Ta có
+			$DN=x=\dfrac{a \sqrt{2}}{3}$, $DO=\dfrac{a\sqrt{2}}{2} \Rightarrow DN=\dfrac{2}{3} DO$ suy ra $N$ là trọng tâm  của tam giác $ACD$.\\
+			Tương tự $M$ là  trọng tâm của tam giác $A'AD$.\\
+			Gọi $I$ là trung điểm của  $AD$ ta có $\dfrac{IN}{IC}=\dfrac{1}{3}$, $\dfrac{IM}{IA'}=\dfrac{1}{3} \Rightarrow \dfrac{IN}{IC}=\dfrac{IM}{IA'} \Rightarrow MN\parallel A'C$.
+		\end{enumerate}
+	} 
+\end{ex}

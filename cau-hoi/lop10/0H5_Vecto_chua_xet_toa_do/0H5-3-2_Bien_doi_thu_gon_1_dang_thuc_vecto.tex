@@ -1,0 +1,525 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Lớp 10 | Véctơ (chưa xét tọa độ) | Tích của một số với véctơ
+% Dạng 0H5?3-2: Biến đổi, thu gọn 1 đẳng thức véctơ
+% Số câu: 15  (sinh tự động bởi tach_cau.py; từ nay thầy sửa trực tiếp file này)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%% TRẮC NGHIỆM 4 PHƯƠNG ÁN %%%%%%%%%%%%%%%%
+
+% nguồn: MaHoaNH_TracNghiem_Lop10
+\begin{ex}%[0H5H3-2]%[ma:2f838a99]
+	 \immini[thm]{
+	Cho hình bình hành $ABCD$ có $M$ là giao điểm của hai đường chéo. Mệnh đề nào sau đây \textbf{sai}? 
+	\choice 
+		{$\overrightarrow{AB}+\overrightarrow{BC}=\overrightarrow{AC}$} 
+		{$\overrightarrow{AB}+\overrightarrow{AD}=\overrightarrow{AC}$} 
+		{$\overrightarrow{BA}+\overrightarrow{BC}=2  \overrightarrow{BM}$}
+		{\True $\overrightarrow{MA}+\overrightarrow{MB}=\overrightarrow{MC}+\overrightarrow{MD}$} 
+		 }{
+		\begin{tikzpicture}[scale=1,font=\footnotesize,line join=round,line cap=round,>=stealth]
+				\path (0,0) coordinate (A)++(0:3) coordinate  (B)
+					($(B)+(60:2)$) coordinate (C) 
+					($(A)+(C)-(B)$) coordinate  (D)
+					($(A)!1/2!(C)$) coordinate  (M);
+				 \draw (A)--(B)--(C)--(D)--(A)--(C)
+					(B)--(D); 
+				\foreach \x/\g in {A/-150,B/-30,C/30,M/-90,D/100}  \fill (\x) circle (1.2pt)+(\g:.3) node {$\x$};
+			\end{tikzpicture}
+		} 
+	\loigiai{ 
+		$\overrightarrow{MA}+\overrightarrow{MB}=\overrightarrow{MC}+\overrightarrow{MD}$ sai vì $\overrightarrow{MA}+\overrightarrow{MB}, \overrightarrow{MC}+\overrightarrow{MD}$ đối  nhau.
+	 }
+\end{ex}
+
+% nguồn: MaHoaNH_TracNghiem_Lop10
+\begin{ex}%[0H5H3-2]%[ma:5e9fabd9]
+	 \immini[thm]{
+	Cho hình bình  hành $ABCD$ tâm $O$. Khẳng định nào sau đây đúng?
+	\choice 
+		{$\overrightarrow{AB}+\overrightarrow{AD}=3\overrightarrow{AO}$} 
+		 {\True $2\overrightarrow{AB}+3\overrightarrow{AC}+2\overrightarrow{AD}=5\overrightarrow{AC}$}
+		 {$\overrightarrow{AB}+\overrightarrow{AD}=2\overrightarrow{AC}$}
+		 {$\overrightarrow{AB}+\overrightarrow{AC}+\overrightarrow{AD}=2\overrightarrow{AO}$}
+		}{ 
+		\begin{tikzpicture}[scale=1,font=\footnotesize,line join=round,line cap=round,>=stealth]
+				 \path (0,0) coordinate (A)++(0:3) coordinate (B)
+					($(B)+(60:2)$)  coordinate (C)
+					($(A)+(C)-(B)$) coordinate  (D)
+					($(A)!1/2!(C)$)  coordinate (O);
+				 \draw (A)--(B)--(C)--(D)--(A)--(C)
+					(B)--(D); 
+				\foreach \x/\g in {A/-150,B/-30,C/30,O/-90,D/100} \fill (\x) circle  (1.2pt)+(\g:.3) node {$\x$};
+			\end{tikzpicture}
+		} 
+	\loigiai{ 
+		Theo quy tắc hình  bình hành $\overrightarrow{AB}+\overrightarrow{AD}=\overrightarrow{AC}$ nên
+		\[2\overrightarrow{AB}+3\overrightarrow{AC}+2\overrightarrow{AD}=2\left(\overrightarrow{AB}+\overrightarrow{AD}\right)+3\overrightarrow{AC}=2\overrightarrow{AC}+3\overrightarrow{AC}=5\overrightarrow{AC}. 
+		\] 
+	} 
+\end{ex}
+
+% nguồn: MaHoaNH_TracNghiem_Lop10
+\begin{ex}%[0H5H3-2]%[ma:24921d18]
+	 \immini[thm]{
+	Cho tam giác $ABC$ có trọng tâm $G$ và trung tuyến $AM$. Khẳng định nào sau đây \textbf{sai}? 
+	\choice 
+		{$\overrightarrow{GA}+\overrightarrow{GB}+\overrightarrow{GC}=\overrightarrow{0}$} 
+		{$\overrightarrow{GA}+2\overrightarrow{GM}=\overrightarrow{0}$} 
+		{\True $\overrightarrow{AM}=-2\overrightarrow{MG}$} 
+		{$\overrightarrow{OA}+\overrightarrow{OB}+\overrightarrow{OC}=3\overrightarrow{OG}$,  với mọi điểm $O$}
+		 }{
+		\begin{tikzpicture}[line join=round,line cap=round,thick,scale= 0.7]
+				\coordinate (A) at  (0,3);
+				\coordinate (B) at  (-2,0);
+				 \coordinate (C) at (3,0);
+				\coordinate  (M) at ($(B)!1/2!(C)$);
+				\coordinate (G) at ($(A)!2/3!(M)$); 
+				 \draw (A)--(B)--(C)--cycle;
+				\draw (A)--(M); 
+				\foreach \i/\g in {A/90,B/-90,C/-90,M/-90,G/0}{\draw[fill=white](\i)  circle (1pt)
+					($(\i)+(\g:3mm)$)  node[scale=0.7]{$\i$};}
+			\end{tikzpicture}
+		 }
+	\loigiai{ 
+		 Ta có $\overrightarrow{AM}=-3\overrightarrow{MG}$.
+	 }
+\end{ex}
+
+% nguồn: MaHoaNH_TracNghiem_Lop10
+\begin{ex}%[0H5H3-2]%[ma:dfde2881]
+	 \immini[thm]{
+	Cho tam giác $ABC$. Gọi  $M$, $N$, $P$ lần lượt là trung điểm của $BC$, $CA$, $AB$. Khẳng định nào sau đây \textbf{sai}?
+	\choice 
+		 {$\overrightarrow{MN}+\overrightarrow{NP}+\overrightarrow{PM}=\overrightarrow{0}$}
+		 {$\overrightarrow{PB}+\overrightarrow{MC}=\overrightarrow{PM}$}
+		{\True  $\overrightarrow{AB}+\overrightarrow{BC}+\overrightarrow{AC}=\overrightarrow{0}$}
+		{$\overrightarrow{AP}+\overrightarrow{BM}+\overrightarrow{CN}=\overrightarrow{0}$} 
+		 }{
+		\begin{tikzpicture}[scale=1,font=\footnotesize,line join=round,line cap=round,>=stealth]
+				 \path (0,0) coordinate (B)++(0:3) coordinate (C)
+					($(B)+(60:2)$) coordinate  (A)
+					($(B)!1/2!(C)$)  coordinate (M)
+					($(A)!1/2!(C)$) coordinate  (N)
+					($(B)!1/2!(A)$) coordinate (P); 
+				\draw (A)--(B)--(C)--(A) 
+					(A)--(M) 
+					(B)--(N) 
+					 (C)--(P);
+				\foreach \x/\g in {A/90,B/-150,C/0,M/-90,N/60,P/150}  \fill (\x) circle (1.2pt)+(\g:.3) node {$\x$};
+			\end{tikzpicture}
+		 }
+	\loigiai{ 
+		 Ta có $\overrightarrow{AB}+\overrightarrow{BC}+\overrightarrow{AC}=2\overrightarrow{AC}\ne \overrightarrow{0}$.
+	} 
+\end{ex}
+
+% nguồn: MaHoaNH_TracNghiem_Lop10
+\begin{ex}%[0H5H3-2]%[ma:33ff5604]
+	\immini[thm]{Cho hình chữ nhật $ABCD$. Gọi $I$, $K$ lần lượt là  trung điểm của $BC$ và $CD$. Khẳng định nào sau đây đúng?
+	\choice 
+		 {$\overrightarrow{AI}+\overrightarrow{AK}=2\overrightarrow{AC}$}
+		{$\overrightarrow{AI}+\overrightarrow{AK}=\overrightarrow{AB}+\overrightarrow{AD}$} 
+		 {$\overrightarrow{AI}+\overrightarrow{AK}=\overrightarrow{IK}$}
+		{\True  $\overrightarrow{AI}+\overrightarrow{AK}=\dfrac{3}{2} \overrightarrow{AC}$}
+		 }{
+		\begin{tikzpicture}[line join=round,line cap=round,thick,scale= 0.7]
+				 \coordinate (A) at (0,0);
+				\coordinate  (B) at ($(A)+(90:2)$);
+				\coordinate (D) at ($(A)+(0:3)$); 
+				\coordinate  (C) at ($(B)+(D)-(A)$);
+				\coordinate  (I) at ($(B)!1/2!(C)$);
+				\coordinate (K)  at ($(C)!1/2!(D)$);
+				\draw  (A)--(B)--(C)--(D)--cycle;
+				\draw (A)--(I) 
+					 (A)--(K);
+				\foreach \i/\g in  {A/-120,B/120,C/60,D/-30,I/90,K/0}{\draw[fill=white](\i) circle (1pt)
+					 ($(\i)+(\g:3mm)$) node[scale=0.7]{$\i$};}
+			\end{tikzpicture}
+		 }
+	\loigiai{ 
+		Ta có 
+		\[\overrightarrow{AI}+\overrightarrow{AK}=\dfrac{1}{2} \left(\overrightarrow{AB}+\overrightarrow{AC}\right)+\dfrac{1}{2}  \left(\overrightarrow{AD}+\overrightarrow{AC}\right)=\overrightarrow{AC}+\dfrac{1}{2} \left(\overrightarrow{AB}+\overrightarrow{AD}\right)=\dfrac{3}{2} \overrightarrow{AC}.
+		\] 
+	 }
+\end{ex}
+
+% nguồn: MaHoaNH_TracNghiem_Lop10
+\begin{ex}%[0H5V3-2]%[ma:64383517]
+	Cho tam giác $ABC$ đều tâm $O$; $M$ là điểm bất kì trong tam giác. Hình chiếu của $M$ xuống ba cạnh lần lượt  là $D$, $E$, $F$. Hệ thức nào sau đây là đúng?
+	 \choice
+		{$\overrightarrow{MD}+\overrightarrow{ME}+\overrightarrow{MF}=\dfrac{1}{2}  \overrightarrow{MO}$}
+		{$\overrightarrow{MD}+\overrightarrow{ME}+\overrightarrow{MF}=\dfrac{2}{3}  \overrightarrow{MO}$}
+		{$\overrightarrow{MD}+\overrightarrow{ME}+\overrightarrow{MF}=\dfrac{3}{4}  \overrightarrow{MO}$}
+		 {\True $\overrightarrow{MD}+\overrightarrow{ME}+\overrightarrow{MF}=\dfrac{3}{2} \overrightarrow{MO}$}
+	 \loigiai{
+		\begin{center}
+			\begin{tikzpicture}[scale=0.8,>=stealth,line join=round,line cap=round,font=\footnotesize]
+					 \def\a{6}
+					 \path (0:0) coordinate (B)
+						++(0:\a) coordinate  (C)
+						([turn]120:\a)  coordinate (A)
+						++(-100:\a/2)  coordinate (M)
+						($(B)!(M)!(C)$) coordinate (D) 
+						($(A)!(M)!(C)$)  coordinate (E)
+						($(A)!(M)!(B)$)  coordinate (F)
+						($(M)+(C)-(B)$)  coordinate (X)
+						($(M)+(A)-(B)$) coordinate  (Y)
+						 ($(M)+(A)-(C)$) coordinate (Z)
+						(intersection of Y--M and A--C) coordinate (A_1) 
+						(intersection of Y--M  and B--C) coordinate (B_1)
+						(intersection of Z--M and A--B) coordinate (A_2) 
+						(intersection of  Z--M and B--C) coordinate (C_1)
+						(intersection of X--M and  A--B) coordinate (B_2)
+						(intersection of X--M and A--C)  coordinate (C_2);
+					 \draw (A)--(B)--(C)--cycle (B_1)--(A_1)
+						 (A_2)--(C_1)
+						 (B_2)--(C_2);
+					\draw[dashed,thick]  (M)--(D)
+						(M)--(E) 
+						 (M)--(F);
+					 \draw pic[draw,angle radius=2mm]{right angle=C--D--M};
+					\draw pic[draw,angle radius=2mm]{right angle=M--F--A}; 
+					\draw pic[draw,angle radius=2mm]{right  angle=A--E--M};
+					 \foreach \x/ \goc in {A/135,B/-135,C/-45,D/-90,E/0,F/160,A_1/0,B_1/-90,C_1/-90,A_2/160,B_2/160,C_2/0}
+					\fill (\x) circle (1.5pt) 
+						($(\x)+(\goc:3mm)$) node  {$\x$};
+					\foreach \x/ \goc in {M/-30} \fill (\x)  circle (1.5pt)
+						($(\x)+(\goc:4mm)$) node {$\x$}; 
+				\end{tikzpicture}
+		\end{center}
+		Qua $M$ kẻ các  đường thẳng $A_1 B_1 \parallel AB,A_2 C_1 \parallel AC,B_2 C_2 \parallel BC$.\\
+		Suy ra  $\Delta MB_1 C_1, \Delta MA_1 C_2, \Delta MA_2 B_2$ là các tam giác đều.\\
+		Ta có $\overrightarrow{MD}=\dfrac{1}{2}  \left(\overrightarrow{MB_1}+\overrightarrow{MC_1}\right),\overrightarrow{ME}=\dfrac{1}{2} \left(\overrightarrow{MA_1}+\overrightarrow{MC_2}\right),\overrightarrow{MF}=\dfrac{1}{2} \left(\overrightarrow{MB_2}+\overrightarrow{MA_2}\right)$.
+		Suy ra 
+		$$\begin{aligned}
+		\overrightarrow{MD}+\overrightarrow{ME}+\overrightarrow{MF} &=\dfrac{1}{2}  \left(\overrightarrow{MA_1}+\overrightarrow{MA_2}\right)+\dfrac{1}{2} \left(\overrightarrow{MB_1}+\overrightarrow{MB_2}\right)+\dfrac{1}{2} \left(\overrightarrow{MC_1}+\overrightarrow{MC_2}\right)\\
+		&=\dfrac{1}{2}  \left(\overrightarrow{MA}+\overrightarrow{MB}+\overrightarrow{MC}\right)=\dfrac{3}{2} \overrightarrow{MO}.
+	\end{aligned}$$
+ }
+\end{ex}
+
+
+%%%%%%%%%%%%%%%% ĐÚNG/SAI %%%%%%%%%%%%%%%%
+
+% nguồn: MaHoaNH_DungSai_Lop10
+\begin{ex}%[0H5N3-2]%[ma:59dddeb4]
+	Cho hình vuông  $ABCD$ có tâm $O$. Xét tính đúng sai của các mệnh đề sau
+	\choiceTF 
+		{\True $\overrightarrow{OA}+\overrightarrow{OC}=\vec{0}$} 
+		{$\overrightarrow{AD}=\overrightarrow{CB}$} 
+		{\True  $\overrightarrow{AD}+\overrightarrow{AB}=\overrightarrow{AC}$}
+		 {$\overrightarrow{BD}=\dfrac{1}{2}\overrightarrow{BO}$}
+	 \loigiai{
+		\begin{itemchoice}
+			\itemch Do $O$ là trung điểm $AC$ nên $\overrightarrow{OA}+\overrightarrow{OC}=\vec{0}$. 
+			 \itemch $\overrightarrow{AD}=-\overrightarrow{CB}$.
+			\itemch Theo  quy tắc hình bình hành, ta có $\overrightarrow{AD}+\overrightarrow{AB}=\overrightarrow{AC}$.
+			\itemch $\overrightarrow{BD}=2\overrightarrow{BO}$. 
+		\end{itemchoice}
+	} 
+\end{ex}
+
+% nguồn: MaHoaNH_DungSai_Lop10
+\begin{ex}%[0H5N3-2]%[ma:eabe01c9]
+	Cho hình bình hành  $ABCD$ và các điểm $M$, $N$, $P$ thỏa mãn $\overrightarrow{AM}=\dfrac{1}{2}\overrightarrow{AB}$, $\overrightarrow{AN}=\dfrac{1}{6}\overrightarrow{AC}$, $\overrightarrow{AP}=\dfrac{1}{4}\overrightarrow{AD}$. Khi đó
+	 \choiceTF
+		{\True  $\overrightarrow{AN}=\dfrac{1}{6}(\overrightarrow{AB}+\overrightarrow{AD})$}
+		 {$\overrightarrow{MN}=\dfrac{1}{3}\overrightarrow{AB}+\dfrac{1}{6}\overrightarrow{AD}$}
+		 {$\overrightarrow{MP}=\dfrac{1}{3}\overrightarrow{AD}-\dfrac{1}{2}\overrightarrow{AB}$}
+		{\True Ba điểm $M$,  $N$, $P$ thẳng hàng}
+	\loigiai{ 
+	\immini{ 
+		\begin{itemchoice}
+			\itemch Ta có $\overrightarrow{AN}=\dfrac{1}{6}\overrightarrow{AC}=\dfrac{1}{6}\left(\overrightarrow{AB}+\overrightarrow{AD}\right)$.\\ 
+			Vậy mệnh  đề đã cho đúng.
+			\itemch Ta có  $\overrightarrow{MN}=\overrightarrow{AN}-\overrightarrow{AM}=\dfrac{1}{6}(\overrightarrow{AB}+\overrightarrow{AD})-\dfrac{1}{2}\overrightarrow{AB}$\\
+			 $=-\dfrac{1}{3}\overrightarrow{AB}+\dfrac{1}{6}\overrightarrow{AD}$.\\
+			Vậy  mệnh đề đã cho sai.
+			\itemch  Ta có $\overrightarrow{MP}=\overrightarrow{AP}-\overrightarrow{AM}=\dfrac{1}{4}\overrightarrow{AD}-\dfrac{1}{2}\overrightarrow{AB}$.\\
+			Vậy mệnh đề đã  cho sai.
+			\itemch  Ta có $\overrightarrow{MN}=\dfrac{1}{6}(\overrightarrow{AD}-2\overrightarrow{AB})=\dfrac{2}{3}\overrightarrow{MP}$.\\
+			Suy  ra $\overrightarrow{MN},\overrightarrow{MP}$ cùng phương.\\
+			Suy ra ba điểm $M,N,P$ thẳng hàng.\\ 
+			Vậy mệnh đề  đã cho đúng.
+		\end{itemchoice}
+		 }
+		{\begin{tikzpicture}[scale=0.8,font=\footnotesize,line join=round,line cap=round,>=stealth]
+		\path  (0,0) coordinate (A)
+			(4,0)  coordinate (B)
+			(3,-3) coordinate (C) 
+			(-1,-3) coordinate  (D)
+			($(A)!1/2!(B)$) coordinate (M) 
+			($(A)!1/4!(D)$) coordinate  (P)
+			 ($(A)!1/6!(C)$) coordinate (N);
+		\draw (A)--(B)--(C)--(D)--cycle (A)--(C) 
+			 (M)--(P);
+		\foreach  \x/\g in {A/90,B/90,C/-90,D/-90,M/90,N/-90,P/170} \fill (\x) circle (1.2pt)+(\g:.3) node {$\x$};
+	\end{tikzpicture}}
+	} 
+\end{ex}
+
+% nguồn: MaHoaNH_DungSai_Lop10
+\begin{ex}%[0H5H3-2]%[ma:b59df824]
+	Cho hình vuông $ABCD$ có tâm $O$. Xét tính đúng sai của các mệnh  đề sau
+	\choiceTF 
+		{\True  $\overrightarrow{CO}-\overrightarrow{OB}=\overrightarrow{BA}$}
+		 {\True $\overrightarrow{AB}-\overrightarrow{BC}=\overrightarrow{DB}$}
+		 {\True $\overrightarrow{DA}-\overrightarrow{DB}=\overrightarrow{OD}-\overrightarrow{OC}$}
+		 {\True $\overrightarrow{DA}-\overrightarrow{DB}+\overrightarrow{DC}=\vec{0}$}
+	 \loigiai{
+		\begin{itemchoice}
+			\itemch  Theo quy tắc hình bình hành, ta có $\overrightarrow{CO}-\overrightarrow{OB}=\overrightarrow{CO}+\overrightarrow{BO}=\overrightarrow{BA}$.
+			 \itemch $\overrightarrow{DC}+\overrightarrow{CB}=\overrightarrow{DB}$.
+			\itemch  $\overrightarrow{DA}-\overrightarrow{DB}=\overrightarrow{OD}-\overrightarrow{OC} \Leftrightarrow \overrightarrow{BA}=\overrightarrow{CD}$.
+			 \itemch $\overrightarrow{DA}-\overrightarrow{DB}+\overrightarrow{DC}=\overrightarrow{BA}+\overrightarrow{DC}=\vec{0}$.
+		\end{itemchoice}
+	 }
+\end{ex}
+
+% nguồn: MaHoaNH_DungSai_Lop10
+\begin{ex}%[0H5H3-2]%[ma:d108b8a6]
+	Cho  hình thang cân $ABCD$ có $AB\parallel CD$, $AB=2AD=2CD$, $E$ là trung điểm cạnh $AB$. Khi đó
+	\choiceTF 
+		 {\True $\overrightarrow{AB}=2\overrightarrow{DC}$}
+		{\True  $\overrightarrow{CA}+\overrightarrow{CB}=2\overrightarrow{CE}$}
+		 {\True $\overrightarrow{AD}=\overrightarrow{EC}$}
+		 {$\overrightarrow{DE}=-\overrightarrow{CB}$}
+	 \loigiai{
+	 \immini{
+		\begin{itemchoice}
+			\itemch Ta có $\overrightarrow{AB}, \overrightarrow{DC}$ cùng hướng và $AB = 2DC$  nên $\overrightarrow{AB}=2 \overrightarrow{DC}$.
+			\itemch $E$ là  trung điểm $AB$ nên $\overrightarrow{CA}+\overrightarrow{CB}=2\overrightarrow{CE}$.
+			\itemch Ta có  $AE=CD=\dfrac{1}{2}AB,AE\parallel CD$ nên $AECD$ là hình bình hành. Do đó $\overrightarrow{AD}=\overrightarrow{EC}$.
+			\itemch Hoàn toàn  tương tự, ta chứng minh được $BCDE$ là hình bình hành. Suy ra $\overrightarrow{DE}=\overrightarrow{CB}$.
+		\end{itemchoice}
+		 }{
+		\begin{tikzpicture}[scale=0.8,font=\footnotesize,line join=round,line cap=round,>=stealth]
+				\path  (0,0) coordinate (A)
+					(6,0) coordinate  (B)
+					 ($(A)!1/2!(B)$) coordinate (E)
+					($(B)!1!-60:(E)$) coordinate (C) 
+					 ($(A)!1!60:(E)$) coordinate (D);
+				\draw  (A)--(B)--(C)--(D)--cycle (A)--(C)--(E)--(D)
+					 (B)--(D);
+				\foreach \x/\g in {A/-90,B/-90,C/90,D/90,E/-90} \fill  (\x) circle (1.2pt)+(\g:.3) node {$\x$};
+			\end{tikzpicture}
+		 }
+	} 
+\end{ex}
+
+% nguồn: MaHoaNH_DungSai_Lop10
+\begin{ex}%[0H5H3-2]%[ma:1bb71acb]
+	Cho hình bình hành $ABCD$. Gọi $I$, $J$ lần lượt là trung điểm  $BC$ và $CD$. Khi đó
+	 \choiceTF
+		 {\True $\vv{AC}=\vv{AB}+\vv{AD}$}
+		{$\vv{IJ}=\vv{AI}+\vv{AJ}$} 
+		 {$\vv{AI}=\vv{AB}+\dfrac{3}{2}\vv{AD}$}
+		{$\vv{AJ}=\dfrac{1}{2}\vv{AB}+\dfrac{1}{2}\vv{AD}$} 
+	 \loigiai{
+		\begin{center}
+			\begin{tikzpicture}[scale=1,line join=round,font=\footnotesize,line cap=round,thick]
+					\coordinate (A) at  (1,3);
+					\coordinate (B) at (6,3); 
+					\coordinate (D) at  (0,0);
+					\coordinate (C)  at ($(B)+(D)-(A)$);
+					\path ($(B)!0.5!(C)$)  coordinate (I);
+					\path ($(C)!0.5!(D)$) coordinate  (J);
+					\draw (A)--(B)--(C)--(D)--cycle (A)--(I); 
+					\foreach \i/\g  in {A/90,B/90,C/-90,D/-90,I/0,J/-90}{\draw[fill=black](\i) circle (1pt)
+						 ($(\i)+(\g:3mm)$) node[scale=1]{$\i$};}
+				\end{tikzpicture}
+		\end{center}
+		\begin{itemchoice}
+			\itemch {\bf  Đúng.}\\
+			Ta có $\vv{AB}+\vv{AD}=\vv{AC}$ (quy tắc hình bình  hành).
+			\itemch {\bf  Sai.}\\
+			Ta có $\vv{AJ}-\vv{AI}=\vv{IJ}$ (quy  tắc ba điểm).
+			\itemch {\bf Sai.}\\ 
+			Ta có $\vv{AI}=\vv{AB}+\vv{BI}=\vv{AB}+\dfrac{1}{2}\vv{BC}=\vv{AB}+\dfrac{1}{2}\vv{AD}$. 
+			 \itemch {\bf Sai.}\\
+			Ta có  $\vv{AJ}=\dfrac{1}{2}(\vv{AD}+\vv{AC})=\dfrac{1}{2}(\vv{AD}+\vv{AD}+\vv{AB})=\vv{AD}+\dfrac{1}{2}\vv{AB}$.
+		\end{itemchoice}
+	 }
+\end{ex}
+
+% nguồn: MaHoaNH_DungSai_Lop10
+\begin{ex}%[0H5H3-2]%[ma:e67f243b]
+	Cho tam giác $ABC$ có $G$ là trọng tâm. Gọi $M,N$ lần lượt là trung điểm của $AB,BC$. Lấy hai  điểm $I,J$ sao cho: $2\overrightarrow{IA}+3\overrightarrow{IC}=\overrightarrow{0}$ và $2\overrightarrow{JA}+5\overrightarrow{JB}+3\overrightarrow{JC}=\overrightarrow{0}$. Các mệnh đề sau đúng hay sai?
+	 \choiceTF
+		{\True $M$, $N$, $J$ thẳng hàng} 
+		 {$\overrightarrow{JM}=\dfrac{3}{2}\overrightarrow{JN}$}
+		{\True  $J$ là trung điểm của $BI$}
+		{\True  Gọi $E$ là điểm thuộc $AB$ sao cho $\overrightarrow{AE}=\dfrac{5}{7}\overrightarrow{AB}$ thì $C$, $E$, $J$ thẳng hàng}
+	 \loigiai{
+		\begin{center}
+			\begin{tikzpicture}[scale=1.2,font=\footnotesize,line join=round,line cap=round,>=stealth]
+					 \path (0,0) coordinate (A)
+						(-1,-3) coordinate  (B)
+						 ($(B)+(4,0)$) coordinate (C)
+						($(A)!1/2!(B)$) coordinate  (M)
+						 ($(B)!1/2!(C)$) coordinate (N)
+						($(A)!2/3!(N)$)  coordinate (G)
+						($(A)!5/7!(B)$) coordinate (E) 
+						($(A)!3/5!(C)$) coordinate  (I)
+						(intersection of  B--I and C--E) coordinate (J);
+					\draw (A)--(B)--(C)--cycle  (B)--(I)
+						(C)--(M) 
+						 (C)--(E)
+						(A)--(N); 
+					\foreach \x/\g in {A/90,B/-90,C/-90,I/20,N/-90,M/135,E/160,J/-90,G/50} \fill (\x) circle  (1.2pt)+(\g:.3) node[scale=0.8] {$\x$};
+				\end{tikzpicture}
+		\end{center}
+		\begin{itemchoice}
+			\itemch Ta  có \allowdisplaybreaks
+			\begin{eqnarray*}
+				2\overrightarrow{JA}+5\overrightarrow{JB}+3\overrightarrow{JC}&=&2(\overrightarrow{JA}+\overrightarrow{JB})+3(\overrightarrow{JB}+\overrightarrow{JC})\\&=&4\overrightarrow{JM}+6\overrightarrow{JN}=\overrightarrow{0}\\\Rightarrow  \overrightarrow{JM}&=&-\dfrac{3}{2}\overrightarrow{JN}.
+			\end{eqnarray*} Do đó $J$, $M$, $N$ thẳng hàng.\\
+			Điểm $J$ thuộc đoạn  $MN$ và thỏa mãn $JM=\dfrac{3}{2}JN$.
+			 \itemch Ta có
+			\allowdisplaybreaks 
+			\begin{eqnarray*}
+				&& \overrightarrow{JM}=-\dfrac{3}{2}\overrightarrow{JN}\Leftrightarrow  \overrightarrow{JM}=-\dfrac{3}{2}(\overrightarrow{JM}+\overrightarrow{MN})\\
+				&\Leftrightarrow  & \dfrac{5}{2}\overrightarrow{JM}=-\dfrac{3}{2}\overrightarrow{MN}\Leftrightarrow \overrightarrow{JM}=-\dfrac{3}{5}\overrightarrow{MN}
+			\end{eqnarray*}
+			\itemch Ta có 
+			\begin{eqnarray*}
+				&&2\overrightarrow{IA}+3\overrightarrow{IC}=\overrightarrow{0}\Leftrightarrow 2\overrightarrow{IC}+2\overrightarrow{CA}+3\overrightarrow{IC}=\overrightarrow{0}\Leftrightarrow \overrightarrow{CI}=\dfrac{2}{5}\overrightarrow{CA}. 
+			\end{eqnarray*}
+			Khi  đó:
+			\begin{eqnarray*}
+				 \overrightarrow{JB}&=&\overrightarrow{JM}+\overrightarrow{MB}=-\dfrac{3}{5}\overrightarrow{MN}+\dfrac{1}{2}\overrightarrow{AB}=-\dfrac{3}{10}\overrightarrow{AC}+\dfrac{1}{2}\overrightarrow{AB}\quad(1) \\
+				\overrightarrow{BI}&=&\overrightarrow{BC}+\overrightarrow{CI}=\overrightarrow{BC}+\dfrac{2}{5}\overrightarrow{CA}=\overrightarrow{AC}-\overrightarrow{AB}-\dfrac{2}{5}\overrightarrow{AC}\\ 
+				&=&\dfrac{3}{5}\overrightarrow{AC}-\overrightarrow{AB}=-2\left(-\dfrac{3}{10}\overrightarrow{AC}+\dfrac{1}{2}\overrightarrow{AB}\right)=-2\overrightarrow{JB}\text{ (do (1)).} 
+			\end{eqnarray*}
+			 Vậy $J$ là trung điểm của $BI$.
+			\itemch \begin{eqnarray*}
+			\overrightarrow{CJ}&=&\overrightarrow{CN}+\overrightarrow{NJ}\\ 
+			 &=&-\dfrac{1}{2}\overrightarrow{BC}+\dfrac{1}{2}\overrightarrow{CI}\\
+			 &=&-\dfrac{1}{2}\overrightarrow{BC}+\dfrac{1}{2}\cdot\dfrac{2}{5}\overrightarrow{CA}\\
+			&=&-\dfrac{1}{2}(\overrightarrow{AC}-\overrightarrow{AB})-\dfrac{1}{5}\overrightarrow{AC}\\ 
+			 &=&-\dfrac{7}{10}\overrightarrow{AC}+\dfrac{1}{2}\overrightarrow{AB}.
+		\end{eqnarray*}
+		Mặt khác  $\overrightarrow{CE}=\overrightarrow{CA}+\overrightarrow{AE}=-\overrightarrow{AC}+\dfrac{5}{7}\overrightarrow{AB}$.\\
+		Để $C$,  $E$, $J$ thẳng hàng thì
+		$$\begin{aligned}
+		\exists m\in\; \mathbb{R},\overrightarrow{CE}=m\cdot\overrightarrow{CJ}&\Leftrightarrow  -\overrightarrow{AC}+\dfrac{5}{7}\overrightarrow{AB}=-\dfrac{7m}{10}\overrightarrow{AC}+\dfrac{m}{2}\overrightarrow{AB}\\
+		&\Leftrightarrow  \heva{&-1=-\dfrac{7m}{10}\\&
+		\dfrac{5}{7}=\dfrac{m}{2}}\Rightarrow \heva{m&=\dfrac{10}{7}\\m&=\dfrac{10}{7}}\Rightarrow  m=\dfrac{10}{7}.
+	\end{aligned}
+	 $$
+\end{itemchoice}}
+\end{ex}
+
+% nguồn: MaHoaNH_DungSai_Lop10
+\begin{ex}%[0H5V3-2]%[ma:5a5ae7f1]
+	Cho tam giác $ABC$ có $M$ là trung điểm $BC$. Gọi $G$ là trọng tâm, $H$ là trực tâm, $O$ là tâm đường tròn ngoại tiếp tam giác $ABC,AA^\prime$ là đường kính của $(O)$. Các mệnh đề sau đúng  hay sai?
+	 \choiceTF
+		{\True  $\overrightarrow{BH}=\overrightarrow{A'C}$}
+		{\True  $\overrightarrow{AH}=2\overrightarrow{OM}$}
+		{$\overrightarrow{HA}+\overrightarrow{HB}+\overrightarrow{HC}=3\overrightarrow{HO}$} 
+		 {$\overrightarrow{OA}+\overrightarrow{OB}+\overrightarrow{OC}=3\overrightarrow{OH}$}
+	\loigiai{ 
+		\begin{center}
+			\begin{tikzpicture}[scale=1,font=\footnotesize,line join=round,line cap=round,>=stealth]
+					\path (0,0) coordinate (A) 
+						(-1,-3) coordinate (B) 
+						($(B)+(4,0)$) coordinate  (C)
+						($(B)!1/2!(C)$)  coordinate (M)
+						 ($(A)!2/3!(M)$) coordinate (G)
+						($(B)!(A)!(C)$) coordinate (a') 
+						($(A)!(C)!(B)$) coordinate (c') 
+						($(A)!(B)!(C)$) coordinate  (b')
+						(intersection of A--a' and B--b')  coordinate (H)
+						 ($(H)!2!(M)$) coordinate (A')
+						($(A)!1/2!(A')$) coordinate (O); 
+					\draw (O)  let \p1=($(O)-(A)$) in circle ({veclen (\x1,\y1)});
+					 \draw (A)--(B)--(C)--cycle (H)--(A')--(A)--(M)
+						(A)--(a') 
+						 (B)--(b')
+						(C)--(c') 
+						 (B)--(A')--(C);
+					\foreach \x/\g in {A/90,B/-150,C/-45,M/-90,G/165,H/125,A'/-80,O/45}  \fill (\x) circle (1.2pt)+(\g:.35) node {$\x$};
+					\draw[fill]  (M) circle (1pt)
+						($(A)!1/3!(M)$)  circle (1pt);
+				\end{tikzpicture}
+		\end{center}
+		\begin{itemchoice}
+			\itemch  Do tứ giác $BHCA^\prime$ có $BH\parallel A^\prime C(\perp AC)$ và $CH\parallel BA^\prime(\perp AB)$ nên $BHCA^\prime$ là hình bình hành
+			$ 
+			\Rightarrow  \overrightarrow{BH}=\overrightarrow{A^\prime C}.$
+			\itemch Lại có $M$ là trung điểm của đường  chéo $BC$ nên $M$ là trung điểm của $HA^\prime$ hay $H,M,A^\prime$ thẳng hàng.\\
+			Do $OM$ là đường trung bình của $\triangle AHA^\prime$  nên $AH=2OM$, mà $\overrightarrow{AH}$ và $\overrightarrow{OM}$ cùng hướng
+			$\Rightarrow  \overrightarrow{AH}=2\overrightarrow{OM}.$
+			\itemch $\overrightarrow{HA}+\overrightarrow{HB}+\overrightarrow{HC}=\overrightarrow{HA}+\overrightarrow{HA'}=2\overrightarrow{HO}$ (Tứ giác $BHCA'$  là hình bình hành)\\
+			Vậy $\overrightarrow{HA}+\overrightarrow{HB}+\overrightarrow{HC}=2\overrightarrow{HO}$. 
+			 \itemch
+			\begin{eqnarray*}
+				 \overrightarrow{OA}+\overrightarrow{OB}+\overrightarrow{OC}
+				 &=&\overrightarrow{OH}+\overrightarrow{HA}+\overrightarrow{OH}+\overrightarrow{HB}+\overrightarrow{OH}+\overrightarrow{HC}\\
+				 &=&3\overrightarrow{OH}+\overrightarrow{HA}+\overrightarrow{HB}+\overrightarrow{HC}\\
+				 &=&3\overrightarrow{OH}+2\overrightarrow{HO}=\overrightarrow{OH}.
+			\end{eqnarray*}
+	\end{itemchoice}}
+\end{ex}
+
+
+%%%%%%%%%%%%%%%% TỰ LUẬN %%%%%%%%%%%%%%%%
+
+% nguồn: MaHoaNH_TuLuan_Lop10
+\begin{bt}%[0H5H3-2]%[ma:30cfbd87]
+	Cho hình bình hành  $ABCD$ có tâm $O$, $M$ là một điểm bất kỳ. Chứng minh rằng$$\overrightarrow{MA}+\overrightarrow{MB}+\overrightarrow{MC}+\overrightarrow{MD}=4\overrightarrow{MO}.$$
+	\loigiai{\begin{center}
+		\begin{tikzpicture}[scale=.7,>=stealth]
+				\coordinate [label=left:$A$](A) at (3,3); 
+				\coordinate [label=below:$B$](B)  at (0,0);
+				\coordinate  [label=below:$C$](C) at (8,0);
+				 \coordinate[label=above:$D$] (D) at ($(C)-(B)+(A)$);
+				\coordinate [label=below:$O$](O)  at ($(A)!.5 ! (C)$);
+				\coordinate [label=above left:$M$](M)  at (2,6);
+				\foreach \diem in {A,B,C,D,O,M}\fill  (\diem) circle (1.5pt);
+				\draw[smooth](A)--(B)--(C)--(D)--(A)--(C); 
+				\draw[->](M)--(A); 
+				 \draw[->](M)--(B);
+				\draw[->](M)--(C); 
+				 \draw[->](M)--(D);
+				\draw[->](M)--(O); 
+			\end{tikzpicture}
+	\end{center}
+	 Ta có
+	\allowdisplaybreaks 
+	\begin{eqnarray*}
+		&&\overrightarrow{MA}+\overrightarrow{MB}+\overrightarrow{MC}+\overrightarrow{MD}\\ 
+		&=&\overrightarrow{MO}+\overrightarrow{OA}+\overrightarrow{MO}+\overrightarrow{OB}+\overrightarrow{MO}+\overrightarrow{OC}+\overrightarrow{MO}+\overrightarrow{OD}\\ 
+		&=&4\overrightarrow{MO}+(\overrightarrow{OA}+\overrightarrow{OC})+(\overrightarrow{OB}+\overrightarrow{OD})\\ 
+		&=&4\overrightarrow{MO}. 
+	\end{eqnarray*}
+} 
+\end{bt}
+
+% nguồn: MaHoaNH_TuLuan_Lop10
+\begin{bt}%[0H5V3-2]%[ma:48f9d600]
+	Cho tứ giác $ABCD$. Gọi $I$, $J$ lần lượt là trung  điểm $AB$ và $CD$, $K$ là trung điểm $IJ$, $M$ là điểm bất kì. Chứng minh rằng
+	 $\overrightarrow{MA}+\overrightarrow{MB}+\overrightarrow{MC}+\overrightarrow{MD}=4\overrightarrow{MK}$.
+	\loigiai{\begin{center}
+		\begin{tikzpicture}[scale=.7,>=stealth]
+				\coordinate [label=left:$A$](A) at (0,0); 
+				 \coordinate [label=below:$B$](B) at (7,-1);
+				\coordinate [label=above:$C$](C) at  (6,5);
+				 \coordinate[label=above left:$D$] (D) at (1,3);
+				\coordinate[label=below:$I$] (I) at ($(A)!.5  ! (B)$);
+				\coordinate[label=above:$J$] (J)  at ($(C)!.5 ! (D)$);
+				\coordinate[label=below:$K$] (K) at ($(I)!.5 !  (J)$);
+				\coordinate[label=above:$M$]  (M) at (2,6);
+				\foreach  \diem in {A,B,C,D,I,J,K,M}\fill (\diem) circle (1.5pt);
+				 \draw[smooth](A)--(B)--(C)--(D)--(A)
+					(I)--(A)--(J); 
+				 \draw[->](M)--(A);
+				\draw[->](M)--(B); 
+				\draw[->](M)--(C); 
+				 \draw[->](M)--(D);
+				\draw[->](M)--(K); 
+			\end{tikzpicture}
+	\end{center}
+	Ta có $\overrightarrow{MA}+\overrightarrow{MB}+\overrightarrow{MC}+\overrightarrow{MD}=2\overrightarrow{MI}+2\overrightarrow{MJ}=2(\overrightarrow{MI}+\overrightarrow{MJ})=4\overrightarrow{MK}.$ 
+ }
+\end{bt}

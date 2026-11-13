@@ -1,0 +1,310 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Lớp 12 | Một số yếu tố xác suất | Xác suất có điều kiện
+% Dạng 2D6?1-4: Bài toán tổng hợp
+% Số câu: 15  (sinh tự động bởi tach_cau.py; từ nay thầy sửa trực tiếp file này)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%% ĐÚNG/SAI %%%%%%%%%%%%%%%%
+
+% nguồn: Lop_12_Dai_so_Chuong_6
+\begin{ex}%[2D6H1-4]%[ma:d0577e46]
+	Khi kiểm tra sức  khỏe tổng quát của bệnh nhân ở một bệnh viện, người ta được kết quả như sau
+	\begin{itemize}
+		\item Có $40\%$ bệnh  nhân bị đau dạ dày.
+		\item  Có $30\%$ bênh nhân thường xuyên bị stress.
+		\item Trong số các bệnh nhân thường xuyên bị stress  có $80\%$ bệnh nhân bị đau dạ dày.
+	\end{itemize}
+	Chọn  ngẫu nhiên một bệnh nhân.
+	 \choiceTF
+		{\True Xác suất chọn được bệnh nhân bị đau dạ  dày, biết bệnh nhân đó thường xuyên stress là $0{,}8$}
+		{Xác  suất chọn được bệnh nhân thường xuyên bị stress, biết bệnh nhân đó không bị đau dạ dày là $0{,} 6$}
+		{\True Xác suất chọn được bệnh nhân vừa thường xuyên bị stress vừa bị đau dạ dày  là $0{,} 24$}
+		{Xác suất chọn được bệnh nhân thường xuyên bị stress  là $0{,}7$}
+	\loigiai{ 
+		Biến cố $A$ \lq\lq Bệnh nhân thường xuyên bị  stress\rq\rq.\\
+		Gọi biến cố $B$ \lq\lq Bệnh nhân  bị đau dạ dày\rq\rq\\
+		Ta có  $\mathrm{P}(B)=0{,}4\Leftrightarrow 0{,}3\cdot0{,}8+0{,}7\cdot\mathrm{P}(B|\overline{A})=0{,}4\Leftrightarrow \mathrm{P}(B|\overline{A})=\dfrac{8}{35}$.\\
+		Ta có  sơ đồ hình cây
+		\begin{center}
+			\begin{tikzpicture}[>=stealth,line cap=round,line join=round]
+					\draw [->] (0,0)--(3,2) node  [right] {$A$};
+					\draw [->]  (0,0)--(3,-2) node [right] {$\overline{A}$};
+					\draw[->] (3.5,2)--(6.5,3) node [right]  {$B$};
+					 \draw[->] (3.5,2)--(6.5,1) node [right] {$\overline{B}$};
+					\draw[->] (3.5,-2)--(6.5,-1) node  [right] {$B$};
+					\draw[->] (3.5,-2)--(6.5,-3) node  [right] {$\overline{B}$};
+					\path 
+						(0,0)--(3,2) node [pos=.5,above] {$0{,}3$} 
+						(0,-.2)--(3,-2.2) node  [pos=.5,below] {$0{,}7$}
+						(3.5,2)--(6.5,3)  node [pos=.5,above] {$0{,}8$}
+						(3.5,2)--(6.5,1)  node [pos=.5,below] {$0{,}2$}
+						(3.5,-2)--(6.5,-1) node [pos=.5,above] {$\dfrac{8}{35}$} 
+						(3.5,-2)--(6.5,-3)  node [pos=.5,below] {$\dfrac{27}{35}$};
+				\end{tikzpicture}
+		\end{center}
+		\begin{itemchoice}
+			\itemch Ta  có $\mathrm{P}(B|A)=0{,}8$.
+			\itemch Ta có $\mathrm{P}(A|\overline{B})=\dfrac{\mathrm{P}(A)\mathrm{P}(\overline{B}|A)}{\mathrm{P}(\overline{B})}=\dfrac{0{,}3\cdot0{,}2}{0{,}3\cdot0{,}2+0{,}7\cdot\dfrac{27}{35}}=0{,}1$. 
+			\itemch  Ta có $\mathrm{P}(AB)=\mathrm{P}(B|A)\mathrm{P}(B)=0{,}8\cdot0{,}3=0{,}24$.
+			\itemch Ta có  $\mathrm{P}(A)=0{,}3$.
+		\end{itemchoice}
+	} 
+\end{ex}
+
+% nguồn: Lop_12_Dai_so_Chuong_6
+\begin{ex}%[2D6V1-4]%[ma:6d3051b2]
+	Một hộp đựng $10$ quả cầu đỏ và $8$ quả cầu xanh cùng kích thước và khối lượng. Hùng lấy một quả không hoàn lại. Sau đó Lâm lấy ngẫu nhiên một quả cầu. Gọi $A$ là biến cố “Hùng lấy được quả cầu đỏ”, $B$  là biến cố “Lâm lấy được một quả cầu đỏ”.
+	\choiceTF 
+		{\True $\mathrm{P}\left(A\right)$ bằng  $\dfrac{5}{9}$}
+		{\True $\mathrm{P}\left(B\mid A\right)$ bằng $\dfrac{9}{17}$} 
+		{$\mathrm{P}\left(AB\right)$ bằng $\dfrac{4}{17}$} 
+		{\True $\mathrm{P}\left(B\mid\overline{A}\right)$  bằng $\dfrac{10}{17}$}
+	 \loigiai{
+		\begin{itemchoice}
+			\itemch 
+			 $n\left(\Omega\right)=18$.\\
+			Số cách Hùng chọn được một quả cầu  đỏ là $n\left(A\right)=\mathrm{C}_{10}^{1}=10$.\\
+			 Xác suất Hùng chọn được một quả cầu đỏ là $\mathrm{P}\left(A\right)=\dfrac{n\left(A\right)}{n\left(\Omega\right)}=\dfrac{10}{18}=\dfrac{5}{9}$.
+			 \itemch
+			Sau khi Hùng lấy một quả cầu đỏ trong  hộp còn lại $17$ quả cầu trong đó có $9$ quả cầu đỏ.\\ Do đó, xác suất Lâm lấy được quả cầu đỏ trong $17$ quả cầu còn lại là xác suất cần tìm.\\
+			 Vậy $\mathrm{P}\left(B\mid A\right)=\dfrac{\mathrm{C}_{9}^{1}}{\mathrm{C}_{17}^{1}}=\dfrac{9}{17}$.
+			\itemch 
+			Ta có $\mathrm{P}\left(B\mid  A\right)=\dfrac{\mathrm{P}\left(AB\right)}{\mathrm{P}\left(A\right)}\Rightarrow \mathrm{P}\left(AB\right)=\mathrm{P}\left(A\right)\cdot \mathrm{P}\left(B\mid A\right)\Rightarrow \mathrm{P}\left(AB\right)=\dfrac{5}{9}\cdot\dfrac{9}{17}=\dfrac{5}{17}$.
+			 \itemch
+			$\overline{A}$ là biến cố “Hùng lấy một quả màu xanh”.\\ 
+			Sau khi Hùng lấy một quả cầu  xanh trong hộp còn lại $17$ quả cầu trong đó có $10$ quả cầu đỏ.\\
+			 Do đó, xác suất Lâm lấy được quả cầu đỏ trong $17$ quả cầu còn lại là xác suất cần tìm.\\
+			 Vậy $\mathrm{P}\left( B\mid\overline{A}\right)=\dfrac{\mathrm{C}_{10}^{1}}{\mathrm{C}_{17}^{1}}=\dfrac{10}{17}$.
+		\end{itemchoice}
+	} 
+\end{ex}
+
+% nguồn: Lop_12_Dai_so_Chuong_6
+\begin{ex}%[2D6V1-4]%[ma:66e808cf]
+	Lớp $12$A có $30$ học sinh, trong đó có $17$ bạn nữ, còn lại là nam. Có $3$ bạn tên Hiền, trong đó có $1$ bạn nữ và $2$ bạn  nam. Thầy giáo gọi ngẫu nhiên $1$ bạn lên bảng.
+	\choiceTF 
+		{\True Xác  suất để bạn lên bảng có tên Hiền là $\dfrac{1}{10}$}
+		{Xác suất để bạn lên bảng có tên Hiền, nhưng với điều kiện bạn đó nữ là $\dfrac{3}{17}$} 
+		{\True Xác suất để bạn lên bảng có tên Hiền, nhưng với điều kiện bạn đó nam  là $\dfrac{2}{13}$}
+		{Nếu thầy giáo gọi $1$ bạn có tên là Hiền lên bảng thì xác xuất để bạn  đó là bạn nữ là $\dfrac{3}{17}$}
+	\loigiai{\begin{itemchoice}
+		 \itemch \textbf{Đúng}.\\
+		Xác suất để  bạn lên bảng có tên Hiền là $\dfrac{3}{30}=\dfrac{1}{10}$.
+		 \itemch \textbf{Sai}.\\
+		Xác suất để bạn lên bảng  có tên Hiền, nhưng với điều kiện bạn đó nữ là $\dfrac{1}{17}$.
+		\itemch \textbf{Đúng}.\\ 
+		Xác suất để bạn lên bảng có tên  Hiền, nhưng với điều kiện bạn đó nam là $\dfrac{2}{13}$.
+		\itemch  \textbf{Sai}.\\
+		Nếu thầy giáo gọi 1 bạn có tên là Hiền lên bảng thì xác xuất để bạn đó là bạn nữ  là $\dfrac{1}{3}$.
+\end{itemchoice}}
+\end{ex}
+
+
+%%%%%%%%%%%%%%%% TRẢ LỜI NGẮN %%%%%%%%%%%%%%%%
+
+% nguồn: Lop_12_Dai_so_Chuong_6
+\begin{bt}%[2D6V1-4]%[ma:ea49fddc]
+	Một nhóm học sinh thi Học sinh giỏi cấp trường, trong đó có $10$ học sinh lớp $12$C. Kết quả có $6$ học sinh của lớp  $12$C đạt giải. Chọn ngẫu nhiên $1$ học sinh trong nhóm học sinh trên. Tính xác suất chọn được học sinh đạt giải, biết rằng học sinh đó thuộc lớp $12$C.
+	 \shortans{0,6}
+	\loigiai{ 
+		Xét các biến cố $A$: \lq\lq Chọn được học  sinh đạt giải\rq\rq, $B$: \lq\lq Chọn được học sinh đó thuộc lớp $12$C\rq\rq.\\
+		 Khi đó, xác suất cần tìm là xác suất của $A$ với điều kiện $B$.\\
+		Ta có $n(A)=10$, $n(A \cap  B)=6$.\\
+		Suy ra $\mathrm{P}(A\mid  B)=\dfrac{n(A\cap B)}{n(B)}=\dfrac{6}{10}=0{,}6$.
+	 }
+\end{bt}
+
+% nguồn: Lop_12_Dai_so_Chuong_6
+\begin{bt}%[2D6V1-4]%[ma:3dea5f41]
+	Gieo một con xúc xắc cân đối và đồng chất hai lần. Tính xác suất để lần đầu gieo được mặt $1$ chấm, biết rằng tổng số chấm trong hai lần gieo không vượt quá  $3$ (làm tròn kết quả đến hàng phần trăm).
+	 \shortans{0,67}
+	\loigiai{ 
+		Không gian mẫu $\Omega=\{(i;j): 1\le i,  j\le 6\} \Rightarrow n(\Omega)=36$.\\
+		Trong đó cặp số $(i;j)$ thể hiện việc lần đầu gieo xuất hiện mặt  $i$ chấm, lần sau gieo xuất hiện mặt $j$ chấm.\\
+		Gọi $A$ là biến cố \lq\lq  Lần đầu gieo được mặt $1$ chấm\rq\rq.\\
+		$B$  là biến cố \lq\lq Tổng số chấm trong hai lần gieo không vượt quá $3$\rq\rq.\\
+		Ta có thể liệt kê, cụ thể: 
+		 $$
+		\begin{aligned}
+			& A=\{(1; 1),(1;2),(1;3),(1;4),(1;5),(1;6)\}  \\
+			& B=\{(1;1),(1;2),(2;1)\}  \\
+			& A  \cap B=\{(1;1),(1;2)\}
+		\end{aligned}
+		$$ 
+		Suy ra $\mathrm{P}(B)=\dfrac{3}{36}=\dfrac{1}{12}$;  $\mathrm{P}(A\cap B)=\dfrac{2}{36}=\dfrac{1}{18}$.\\
+		Vậy xác suất để lần đầu gieo được mặt $1$ chấm, biết rằng tổng số chấm trong hai lần gieo không vượt quá $3$ là  $\mathrm{P}(A\mid B)=\dfrac{\mathrm{P}(A\cap B)}{\mathrm{P}(B)}=\dfrac{1}{18}: \dfrac{1}{12}=\dfrac{2}{3} \approx 0{,}67$.
+	} 
+\end{bt}
+
+% nguồn: Lop_12_Dai_so_Chuong_6
+\begin{bt}%[2D6V1-4]%[ma:7726c3cd]
+	Một trường trung học phổ  thông có $500$ học sinh, trong đó có $201$ học sinh nam và $299$ học sinh nữ. Tổng kết học kỳ I, có $160$ học sinh đạt danh hiệu học sinh giỏi, trong đó có $72$ học sinh nam và $88$ học sinh nữ. Chọn ra ngẫu nhiên một học sinh trong số $500$ học sinh đó. Tính xác suất để học sinh được chọn có danh hiệu học sinh giỏi biết học sinh đó là nam (làm tròn kết quả đến hàng phần trăm).
+	 \shortans{0,35}
+	 \loigiai{
+		Xét hai biến cố sau:\\ 
+		$A$: \lq\lq Học sinh được chọn ra đạt điểm  giỏi\rq\rq;\\
+		 $B$: \lq\lq Học sinh được chọn ra là học sinh nam\rq\rq.\\
+		Khi đó, xác suất để học sinh được chọn ra đạt danh hiệu học sinh giỏi biết học sinh đó là nam, chính là xác suất của  $A$ với điều kiện $B$.\\
+		Ta  có
+		 $\mathrm{P}(A\cap B)=\dfrac{72}{500}=0{,}14$.\\
+		Do có $201$ học sinh nam  nên $\mathrm{P}(B)=\dfrac{201}{500}=0{,}4$.\\ Vì thế, ta có
+		 $$\mathrm{P}\left(A \mid B\right)=\dfrac{\mathrm{P}(A\cap B)}{\mathrm{P}(B)}=\dfrac{0{,}14}{0{,}4} \approx 0{,}35.$$
+	 }
+\end{bt}
+
+% nguồn: Lop_12_Dai_so_Chuong_6
+\begin{bt}%[2D6V1-4]%[ma:8e249d7c]
+	Có hai hộp viên bi (I) và hộp viên bi (II). Hộp (I) có $4$ viên bi đỏ và $5$  viên bi vàng. Hộp (II) có $6$ viên bi đỏ và $4$ viên bi vàng. Chọn ngẫu nhiên một hộp và từ đó lấy ngẫu nhiên một viên bi. Tính xác suất để lấy được viên bi đỏ. (làm tròn kết quả đến hàng phần trăm).
+	\shortans{0,52} 
+	 \loigiai{
+		Gọi $A$  là biến cố chọn được hộp (I).\\
+		 Gọi $B$ là biến cố chọn được hộp (II).\\
+		Gọi $H$ là  biến cố chọn được viên bi đỏ từ được hộp (I) hoặc hộp (II).\\
+		Ta có $\mathrm{P}(A)=\dfrac{1}{2}$,  $\mathrm{P}(B)=\dfrac{1}{2}$.\\
+		Xác suất  để chọn viên bi đỏ từ hộp (I) là $\mathrm{P}(H\mid A)=\dfrac{4}{9}$.\\
+		Xác  suất để chọn bi đỏ từ hộp (II) là $\mathrm{P}(H\mid B)=\dfrac{6}{10}$.\\
+		Xác suất để lấy được viên bi đỏ  là
+		\begin{eqnarray*}
+			\mathrm{P}((H\cap  A)\cup(H\cap B))&=&\mathrm{P}(H\cap A)+\mathrm{P}(H\cap B)\\
+			&=&\mathrm{P}(A)\cdot\mathrm{P}(H\mid A)+\mathrm{P}(B)\cdot \mathrm{P}(H\mid  B)\\
+			&=&\dfrac{1}{2}\cdot \dfrac{4}{9}+\dfrac{1}{2}\cdot \dfrac{6}{10}=\dfrac{47}{90} \approx  0{,}522.
+		\end{eqnarray*}
+	 }
+\end{bt}
+
+% nguồn: Lop_12_Dai_so_Chuong_6
+\begin{bt}%[2D6V1-4]%[ma:076a8dfc]
+	Một hộp chứa $5$ viên bi màu xanh được đánh số lần lượt từ $1$ đến $5$ và $6$ viên bi màu trắng được đánh số lần lượt từ $1$ đến $6$. Các viên bi có cùng kích thước và  khối lượng. Bạn An lấy ra ngẫu nhiên đồng thời hai viên bi từ hộp. Biết rằng hai viên bi lấy ra cùng màu, tính xác suất của biến cố tích các số ghi trên hai viên bi chia hết cho $5$.
+	 \shortans{0,36}
+	 \loigiai{
+		Gọi $A$ là biến cố \lq\lq Hai viên bi lấy ra cùng màu xanh\rq\rq; $B$ là biến cố \lq\lq Hai viên bi lấy ra cùng màu trắng\rq\rq; $C$ là biến cố \lq\lq Tích các số ghi  trên hai viên bi chia hết cho $5$\rq\rq. Ta cần tính $\mathrm{P}(C\mid A\cup B)$.\\
+		Ta có\begin{itemize}
+		 \item $\mathrm{P}(A)=\dfrac{\mathrm{C}_5^2}{\mathrm{C}_{11}^2}=\dfrac{2}{11}$ và $\mathrm{P}(B)=\dfrac{\mathrm{C}_6^2}{\mathrm{C}_{11}^2}=\dfrac{3}{11}$;
+		\item $\mathrm{P}(C \mid A)=1-\mathrm{P}(\overline{C} \mid A)=1-\dfrac{\mathrm{C}_4^2}{\mathrm{C}_5^2}=\dfrac{2}{5}$; 
+		\item$\mathrm{P}(C  \mid B)=1-\mathrm{P}(\overline{C} \mid B)=1-\dfrac{\mathrm{C}_5^2}{\mathrm{C}_6^2}=\dfrac{1}{3}$.
+	\end{itemize}
+	Do đó $\mathrm{P}(C \mid A  \cup B)=\dfrac{\mathrm{P}(CA)+\mathrm{P}(CB)}{\mathrm{P}(A)+\mathrm{P}(B)}=\dfrac{\mathrm{P}(C \mid A) \mathrm{P}(A)+\mathrm{P}(C\mid B) \mathrm{P}(B)}{\mathrm{P}(A)+\mathrm{P}(B)}=0{,}36$.
+} 
+\end{bt}
+
+% nguồn: Lop_12_Dai_so_Chuong_6
+\begin{bt}%[2D6V1-4]%[ma:f3dcb0df]
+	Có hai chiếc hộp, hộp $I$ có $6$ quả bóng màu đỏ và $4$ quả bóng màu vàng, hộp $II$ có $7$ quả bóng màu đỏ và $3$ quả bóng màu vàng, các quả bóng có cùng kích thước và khối lượng. Lấy ngẫu nhiên một quả bóng từ hộp $I$ bỏ vào hộp $II$. Sau đó, lấy ra ngẫu nhiên một quả  bóng từ hộp $II$. Tính xác suất để quả bóng được lấy ra từ hộp $II$ là quả bóng được chuyển từ hộp $I$ sang, biết rằng quả bóng đó có màu đỏ (làm tròn kết quả đến hàng phần trăm).
+	 \shortans{0,08}
+	\loigiai{Công việc được hoàn thành bởi $2$ hành động liên tiếp, lấy  $1$ quả ở hộp $I$ bỏ vào hộp $II$, sau đó lấy $1$ quả ở hộp $II$. Nên $n(\Omega) =110$.\\
+		Gọi  $A$: \lq\lq Lấy quả màu đỏ ở hộp $II$\rq\rq.\\
+		 Ta có $n(A) = 6\cdot 8 + 4\cdot 7 = 76 \Rightarrow \mathrm{P}(A) = \dfrac{76}{110}$.\\
+		$B$: \lq\lq Lấy $1$  quả ở hộp $II$ được quả ở hộp $I$ chuyển sang\rq\rq.\\
+		Ta có $n(A \cap B)  = 6 \Rightarrow \mathrm{P}(A \cap B) = \dfrac{6}{110}$.\\
+	Vậy $$\mathrm{P}(B\mid A) = \dfrac{\mathrm{P}(A \cap B) }{\mathrm{P}(A) } = \dfrac{\dfrac{6}{110}}{\dfrac{76}{110}} = \dfrac{6}{76}  \approx 0{,}08.$$}
+\end{bt}
+
+% nguồn: Lop_12_Dai_so_Chuong_6
+\begin{bt}%[2D6V1-4]%[ma:7051612a]
+	Một kì thi Toán có hai bài: một bài theo hình thức trắc nghiệm và một bài theo hình thức tự luận. Một lớp có $30$ học sinh tham dự kì thi đó. Kết quả là: $25$ học sinh đạt bài thi trắc nghiệm; $26$ học sinh đạt bài thi tự luận; $3$ học sinh không đạt cả hai bài. Chọn ngẫu nhiên một học sinh. Tính xác suất để học sinh đó đạt bài thi tự luận, biết rằng  học sinh đó đạt bài thi trắc nghiệm
+	\shortans{0,96} 
+	 \loigiai{
+		Ta gọi các  biến cố:
+		\begin{itemize}
+			\item $A$: \lq\lq Học sinh đó đạt bài thi tự luận\rq\rq, suy ra  $n(A)=26$.
+			\item $B$: \lq\lq Học sinh đó đạt bài thi trắc nghiệm\rq\rq, suy ra  $n(B)=25$.
+		\end{itemize}
+		 Khi đó
+		\begin{itemize}
+			\item $AB$: \lq\lq Học sinh đó đạt cả hai bài thi tự luận và trắc nghiệm\rq\rq. 
+			\item $A\cup B$: \lq\lq Học sinh đó đạt ít nhất một trong hai bài thi (hoặc tự luận hoặc trắc nghiệm)\rq\rq, suy ra $n(A  \cup B)=30-3=27$.
+		\end{itemize}
+		Ta có  $n(AB)=n(A)+n(B)-n(A \cup B)=25+26-27=24$.\\
+		 Khi đó xác suất để học sinh đó đạt bài thi tự luận, biết rằng học sinh đó đạt bài thi trắc nghiệm là
+		 \[
+		\mathrm{P}(A  \mid B)=\dfrac{\mathrm{P}(AB)}{\mathrm{P}(B)}=\dfrac{n(AB)}{n(B)}=\dfrac{24}{25}=0{,}96.
+		 \]
+	 }
+\end{bt}
+
+% nguồn: Lop_12_Dai_so_Chuong_6
+\begin{bt}%[2D6V1-4]%[ma:1d2f93b5]
+	Trong một ngày bất kì, xác  suất để bạn Nam ăn bữa trưa (được chuẩn bị sẵn) là $0{,}5$ và em gái của bạn Nam ăn bữa trưa là $0{,}6$. Biết rằng xác suất em gái Nam ăn bữa trưa khi Nam ăn bữa trưa là $0{,}9$. Tính xác suất để ít nhất một trong hai người ăn bữa trưa. (Kết quả tính biểu diễn dưới dạng phần trăm).
+	\shortans{65} 
+	\loigiai{ 
+		Gọi $A$ là biến cố Nam ăn bữa trưa, $B$  là biến cố em gái Nam ăn bữa trưa.\\
+		Khi  đó:
+		$A \cap  B$ là biến cố cả hai người đều ăn bữa trưa,
+		$A \cup B$ là biến cố có ít nhất một trong hai người ăn bữa  trưa.\\
+		Mặt  khác
+		$\mathrm{P}(B\mid A)$ là xác suất em gái  Nam ăn bữa trưa khi Nam ăn bữa trưa.\\
+		Ta có $\mathrm{P}(A)=0{,}5$, $\mathrm{P}(B)=0{,}6$  và $\mathrm{P}(B \mid A)=0{,}9$.\\
+		Lúc  này ta có $\mathrm{P}(B\cap A)=\mathrm{P}(B\mid A)\cdot \mathrm{P}(A)=0{,}9\times 0{,}5=0{,}45$.\\
+		Suy ra $\mathrm{P}(A\cup B)=\mathrm{P}(A)+\mathrm{P}(B)-\mathrm{P}(A \cap B)=0{,}65=65\%$.\\ 
+		Vậy xác suất để ít một trong  hai người ăn bữa trưa là $65 \%$.
+	 }
+\end{bt}
+
+% nguồn: Lop_12_Dai_so_Chuong_6
+\begin{bt}%[2D6V1-4]%[ma:226d9a4b]
+	Một lô sản phẩm có $15$  sản phẩm, trong đó có $7$ sản phẩm chất lượng thấp. Lấy liên tiếp $2$ sản phẩm trong lô sản phẩm trên, trong đó sản phẩm lấy ra ở lần thứ nhất không bỏ lại vào lô sản phẩm. Tính xác suất để cả hai sản phẩm lấy được đều có chất lượng thấp.
+	 \shortans{0,2}
+	\loigiai{ 
+		Xét các biến  cố:\\
+		$A$: \lq\lq Lần thứ nhất lấy ra được  sản phẩm có chất lượng thấp\rq\rq.\\
+		 $B$: \lq\lq Lần thứ hai lấy ra được sản phẩm có chất lượng thấp\rq\rq.\\
+		$C$: \lq\lq Cả hai lần đều lấy ra được sản phẩm  có chất lượng thấp\rq\rq.\\
+		Khi đó, xác suất cần tìm  là xác suất có điều kiện $\mathrm{P}(B \mid A)$ và $\mathrm{P}(C)=\mathrm{P}(B \cap A)$.\\
+		 Ta có $\mathrm{P}(A)=\dfrac{7}{15}$; $\mathrm{P}(B\mid A)=\dfrac{6}{14}=\dfrac{3}{7}$.\\
+		Suy ra $\mathrm{P}(C)=\mathrm{P}(B\cap  A)=\mathrm{P}(A)\cdot \mathrm{P}(B\mid A)=\dfrac{7}{15}\cdot \dfrac{3}{7}=0{,}2$.
+	} 
+\end{bt}
+
+% nguồn: Lop_12_Dai_so_Chuong_6
+\begin{bt}%[2D6V1-4]%[ma:85a149f0]
+	Một kho hàng do hai nhà máy sản xuất. Biết tỉ lệ sản phẩm đóng góp của nhà máy một bằng $\dfrac{1}{3}$ sản phẩm đóng góp của nhà máy hai và tỉ lệ  phế phẩm do nhà máy một, nhà máy hai sản xuất lần lượt là $0{,}1\%$ và $0{,}2\%$. Chọn ngẫu nhiên một sản phẩm. Biết sản phẩm chọn được là phế phẩm. Xác suất để sản phẩm đó do nhà máy hai sản xuất là $\dfrac{a}{b}$ $\left(a,b\in\mathbb{N}^*, \dfrac{a}{b}\ \text{ tối giản}\right)$. Tính $a-2b$.
+	\shortans{-8} 
+	 \loigiai{
+		Gọi biến cố $A$ \lq\lq  Sản phầm chọn được do nhà máy I sản xuất\rq\rq;
+		 Biến cố $B$ \lq\lq Sản phẩm chọn được là phế phẩm\rq\rq.\\
+		Khi đó $\mathrm{P}(A)=\dfrac{1}{4}$, $\mathrm{P}(\overline{A})=\dfrac{3}{4}$.\\ 
+		Ta lại có  $\mathrm{P}(B|A)=0{,}1\%$, $\mathrm{P}(B|\overline{A})=0{,}2\%$.\\
+		Ta  cần tính $\mathrm{P}(\overline{A}|B)$.\\
+		 Theo công thức Bayes
+		\begin{center}
+			$\mathrm{P}(\overline{A}|B)=\dfrac{\mathrm{P}(\overline{A})\cdot\mathrm{P}(B|\overline{A})}{\mathrm{P}(B)}=\dfrac{\dfrac{3}{4}\cdot  0{,}2\%}{\dfrac{1}{4}\cdot0{,}1\%+\dfrac{3}{4}\cdot0{,}2\%}=\dfrac{6}{7}$.
+		\end{center}
+		 Suy ra $a=6$, $b=7$.
+		Vậy  $a-2b=6-2\cdot7=-8$.
+	 }
+\end{bt}
+
+% nguồn: Lop_12_Dai_so_Chuong_6
+\begin{bt}%[2D6V1-4]%[ma:438dded7]
+	Một gia đình có $2$ đứa con. Biết rằng có ít nhất $1$ đứa trẻ là con gái. Tính xác suất để cả $2$ đứa trẻ đều là con gái (làm tròn kết quả đến  hàng phần trăm).
+	\shortans{0,33} 
+	\loigiai{ 
+		Vì gia đình có $2$ đứa con nên sẽ có  thể có $4$ khả năng xảy ra: (trai;trai), (trai;gái), (gái;trai), (gái; gái).\\
+		Gọi $A$ là  biến cố \lq\lq Cả 2 đứa con đều là con gái\rq\rq.\\
+		Gọi $B$ là biến  cố \lq\lq Có ít nhất 1 đứa con là con gái\rq\rq.\\
+		Ta  có $\mathrm{P}(A)=\dfrac{1}{4}$, $\mathrm{P}(B)=\dfrac{3}{4}$.\\
+		Khi biến cố $A$ xảy ra thì đương nhiên sẽ xảy ra biến cố $B$ nên  ta có $\mathrm{P}(A \cap B)=\mathrm{P}(A)=\dfrac{1}{4}$.\\
+		Vậy xác suất để cả $2$ đứa trẻ  đều là con gái khi biết ít nhất 1 đứa trẻ là con gái:
+		 $$
+		\mathrm{P}(A\mid  B)=\dfrac{\mathrm{P}(A\cap B)}{\mathrm{P}(B)}=\dfrac{1}{4}:\dfrac{3}{4}=\dfrac{1}{3} \approx 0{,}33.$$
+	} 
+\end{bt}
+
+% nguồn: Lop_12_Dai_so_Chuong_6
+\begin{bt}%[2D6C1-4]%[ma:7edd80b1]
+	Có hai chiếc hộp, hộp $I$ có $5$ quả bóng màu trắng và  $7$ quả bóng màu đỏ, hộp $II$ có $10$ quả bóng màu trắng và $15$ quả bóng màu đỏ, các quả bóng có cùng kích thước và khối lượng. Lấy ngẫu nhiên hai quả bóng từ hộp $I$ bỏ vào hộp $II$. Sau đó, lấy ra ngẫu nhiên một quả bóng từ hộp $II$. Xác suất để quả bóng được lấy ra từ hộp $II$ là quả bóng được chuyển từ hộp $I$ sang, biết rằng quả bóng đó có màu trắng là $\dfrac{a}{b}$ (là phân số tối giản). Tính $a+b$.
+	\shortans{14} 
+	\loigiai{Gọi $A$ là biến cố: \lq\lq Quả bóng lấy ra từ hộp thứ $II$ có màu  trắng\rq\rq.\\
+		 Gọi $B$ là biến cố: \lq\lq Quả bóng lấy ra từ hộp thứ $II$ là quả từ hộp $I$\rq\rq.\\
+		Ta cần tính $\mathrm{P}(B\mid A)$. Ta có $$\mathrm{P}(B\mid  A) = \dfrac{\mathrm{P}(AB) }{\mathrm{P}(A) } = \dfrac{n(A \cap B) }{n(A) }.$$
+		\begin{itemize}
+			\item \textbf{Trường hợp 1:} Hai quả bóng lấy  từ hộp $I$ chuyển sang hộp $II$ đều màu trắng. Khi đó hộp $II$ có $12$ quả bóng trắng, $15$ quả bóng đỏ.\\
+			Vậy  trường hợp này có số cách lấy là $\mathrm{C}_2^2\cdot 12 = 120$.
+			\item \textbf{Trường hợp 2:} Hai quả bóng lấy từ hộp $I$  chuyển sang hộp $II$ có quả trắng, một quả đỏ. Khi đó hộp $II$ có $11$ quả bóng trắng, $16$ quả bóng đỏ.\\
+			Vậy trường hợp này có số cách lấy là  $\mathrm{C}_2^1\cdot \mathrm{C}_2^1\cdot 11 = 385$.
+			\item \textbf{Trường hợp 3:} Hai  quả bóng lấy từ hộp $I$ chuyển sang hộp $II$ đều màu đỏ. Khi đó hộp $II$ có $10$ quả bóng trắng, $17$ quả bóng đỏ.\\
+			Vậy trường hợp này có số cách lấy là  $\mathrm{C}_2^0\cdot 10 = 210$.
+		\end{itemize}Từ đó suy ra $n(A) = 120 + 385 + 210 = 715$.\\
+		Ta có $n(A \cap  B) = \mathrm{C}_2^2\cdot 2 + \mathrm{C}_2^1\cdot \mathrm{C}_2^1\cdot 1 = 55$.\\
+	Vậy  $$\mathrm{P}(B\mid A) = \dfrac{n(A \cap B) }{n(A) } = \dfrac{55}{715} = \dfrac{1}{13} \Rightarrow a+b=14.$$}
+\end{bt}

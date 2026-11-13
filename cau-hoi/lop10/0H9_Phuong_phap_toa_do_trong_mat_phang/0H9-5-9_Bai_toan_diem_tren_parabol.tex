@@ -1,0 +1,125 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Lớp 10 | Phương pháp tọa độ trong mặt phẳng (𝑂𝑥𝑦) | Ba đường conic trong mặt phẳng tọa độ
+% Dạng 0H9?5-9: Bài toán điểm trên parabol
+% Số câu: 3  (sinh tự động bởi tach_cau.py; từ nay thầy sửa trực tiếp file này)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%% ĐÚNG/SAI %%%%%%%%%%%%%%%%
+
+% nguồn: MaHoaNH_DungSai_Lop10
+\begin{ex}%[0H9H5-9]%[ma:25a2e924]
+	Cho parabol $(P)$  có phương trình $y^2=12x$. Khi đó
+	\choiceTF 
+		{\True $P$  có tiêu điểm $F(3;0)$, đường chuẩn $x=-3$}
+		{Một điểm nằm trên $(P)$ có  hoành độ $x=2$. Khoảng cách từ điểm đó đến tiêu điểm bằng $4$}
+		{\True Độ dài dây  cung vuông góc với trục đối xứng tại tiêu điểm bằng $12$}
+		{Qua $I(2;0)$ vẽ một đường thẳng thay đổi cắt $(P)$ tại hai điểm $A$ và $B$. Khi đó tích số khoảng cách từ $A$ và $B$ tới trục $Ox$ bằng $12$} 
+	\loigiai{ 
+		\begin{center}
+			\begin{tikzpicture}[scale=0.6,font=\footnotesize,line join=round,line cap=round,>=stealth]
+					\def\xmin{-3}\def\xmax{5}\def\ymin{-4}\def\ymax{4}\pgfmathsetmacro\p{2} 
+					\draw[->] (\xmin-0.2,0)--(\xmax+0.2,0)  node[below] {\footnotesize $x$};
+					 \draw[->] (0,\ymin-0.2)--(0,\ymax+0.2) node[right] {$y$};
+					\clip (\xmin,\ymin) rectangle  (\xmax,\ymax);
+					 \path
+						 (0,0) coordinate (O)
+						(-\p,0) coordinate  (H) node[above left]{$\frac{-p}{2}$}
+						(\p,0) coordinate (F)  node[above right]{$\frac{p}{2}$}
+						(1,2) coordinate (M) 
+						(-\p,2) coordinate (N); 
+					 \draw
+						(N)--(M)--(F) 
+						(-\p,\ymin)--(-\p,\ymax); 
+					 \draw[smooth,variable=\x,blue] plot ({0.25*\x*\x},{\x});
+					\fill (M) node[right]{$M$} circle (1pt); 
+					\foreach  \x/\g in {H/-130,F/-90,O/-120}
+					\fill  (\x) circle (1pt) ($(\x)+(\g:5mm)$) node{$\x$};
+				\end{tikzpicture}
+		\end{center}
+		\begin{itemchoice}
+			\itemch \textbf{Đúng}.\\ $(P)$ có phương trình $y^2=12x$ nên $p=6\Rightarrow \dfrac{p}{2}=3$.\\ 
+			Vậy $P$ có tiêu điểm $F(3;0)$, đường chuẩn  $x=-3$.
+			\itemch \textbf{Sai}.\\ Gọi $M$ là điểm trên $(P)$  có hoành độ $x=2\Rightarrow MF=x_M+\dfrac{p}{2}=2+3=5$.
+			\itemch \textbf{Đúng}.\\ Đường thẳng đi qua $F(3;0)$ và vuông góc với trục đối xứng có phương trình $x=3\ (d)$.\\ Tọa độ giao điểm của $(P)$  và $(d)$ là nghiệm của hệ $\heva{&x=3\\& y^2=12}\Leftrightarrow \heva{&x=3\\& y=\pm 6.}$\\
+			Vậy $(d)$ cắt $(P)$ tại hai điểm $M(3;-6)$ và  $N(3;6)$.\\
+			Ta có $MN=\sqrt{(3-3)^2+(6+6)^2}=12$. 
+			\itemch \textbf{Sai}.\\ Phương trình đường thẳng đi qua $I(2;0)$ có  dạng (với $A^2+B^2>0$) $$(d) \colon A(x-2)+B(y-0)=0\Leftrightarrow Ax+By-2A=0.$$
+			Tọa độ giao điểm của $(P)$ và $(d)$ là nghiệm của hệ $$\heva{& Ax+By-2A=0\\&y^2=12}\Leftrightarrow \heva{&  x=\dfrac{y^2}{12}\\& A\dfrac{y^2}{12}+By -2A=0}\Leftrightarrow \heva{&x=\dfrac{y^2}{12}\\ & Ay^2+12By-24A=0.\ (*)}$$
+			Phương trình  $(*)$ có $\Delta =36B^2+24A^2>0, \ \forall A^2+B^2\ne 0$ nên phương trình $(*)$ luôn có hai nghiệm phân biệt.\\
+			Gọi $y_A$ và $y_B$ là nghiệm của phương trình  $(*)$ thì $$\mathrm{d}(A;Ox)\cdot \mathrm{d}(B;Ox)=|y_A\cdot y_B|=24\text{ (không đổi)}.$$
+		\end{itemchoice}
+	 }
+\end{ex}
+
+
+%%%%%%%%%%%%%%%% TRẢ LỜI NGẮN %%%%%%%%%%%%%%%%
+
+% nguồn: MaHoaNH_TraLoiNgan_Lop10
+\begin{bt}%[0H9V5-9]%[ma:23d48145]
+	Cho parabol $(P)\colon y^2=16x$ và đường thẳng $(d)\colon x=a$ ($a>0$). Tìm $a$ để $(d)$ cắt $(P)$ tại hai  điểm phân biệt $A$ và $B$ sao cho $\widehat{AOB}=120^\circ$.
+	\shortans{5,33} 
+	\loigiai{ 
+		\begin{center}
+			\begin{tikzpicture}[scale=0.8,font=\footnotesize,line join=round,line cap=round,>=stealth]
+					\def\xmin{-1}\def\xmax{3.4}\def\ymin{-3}\def\ymax{3}\pgfmathsetmacro\p{2} 
+					 \draw[->] (\xmin-0.2,0)--(\xmax+0.2,0) node[below] {\footnotesize $x$};
+					\draw[->] (0,\ymin-0.2)--(0,\ymax+0.2) node[right] {$y$}; 
+					\clip (\xmin,\ymin) rectangle  (\xmax,\ymax);
+					 \path
+						(0,0) coordinate  (O)
+						 (1,2) coordinate (A)
+						(1,-2)  coordinate (B);
+					\draw 
+						 (A)--(O)--(B)
+						(1,\ymin)--(1,\ymax); 
+					\draw[smooth,variable=\x,blue]  plot ({0.25*\x*\x},{\x});
+					\foreach \x/\g in  {A/-30,B/30,O/-120}
+					\fill (\x) circle (1pt) 
+						($(\x)+(\g:5mm)$)  node{$\x$};
+				\end{tikzpicture}
+		\end{center}
+		Tọa độ giao điểm của $(d)$ và $(P)$ là  $\heva{&x=a\\&y^2=16x}\Leftrightarrow\heva{&x=a\\&y^2=16a}\Leftrightarrow \heva{&x=a\\&y=\pm 4\sqrt{a}.}$\\
+		Vậy giao điểm  của của $(d)$ và $(P)$ là $A\left(a;-4\sqrt{a}\right)$, $B\left(a;4\sqrt{a}\right)$.\\
+		Ta có  $\widehat{AOB}=120^\circ\Leftrightarrow \left(\overrightarrow{OA},\overrightarrow{OB}\right)=120^\circ\Leftrightarrow \cos\left(\overrightarrow{OA},\overrightarrow{OB}\right)=-\dfrac{1}{2}$.\\
+		Hay $\dfrac{a^2-16a}{\sqrt{a^2+16a}\cdot \sqrt{a^2+16a}}=-\dfrac{1}{2}\Leftrightarrow -2(a^2-16a)=a^2+16a\Leftrightarrow  a=\dfrac{16}{3}>0$.\\
+		Vậy  $a\approx 5{,}33$.
+	} 
+\end{bt}
+
+% nguồn: MaHoaNH_TraLoiNgan_Lop10
+\begin{bt}%[0H9V5-9]%[ma:d93c1930]
+	Cho phương trình chính tắc của elip $(E)\colon \dfrac{x^2}{a^2}+\dfrac{y^2}{b^2}=1$ ($a>b>0$). Biết $(E)$ đi qua điểm  $M(2\sqrt{2};2)$ và $M$ nhìn hai tiêu điểm của elip dưới một góc vuông. Khi đó $T=a^2+2b^2$ bằng bao nhiêu?
+	 \shortans{40}
+	 \loigiai{
+		\begin{center}
+			\begin{tikzpicture}[scale=1,font=\footnotesize,line join=round,line cap=round,>=stealth]
+					\def\xmin{-3}\def\xmax{3} 
+					\def\ymin{-2}\def\ymax{2} 
+					\pgfmathsetmacro\c{2} 
+					\draw[->] (\xmin-0.2,0)--(\xmax+0.2,0) node[below]  {\footnotesize $x$};
+					\draw[->] (0,\ymin-0.2)--(0,\ymax+0.2) node[right]  {$y$};
+					 \draw (0,0) node [below left] {$O$};
+					\clip (\xmin,\ymin) rectangle  (\xmax,\ymax);
+					\path 
+						(-\c,0) coordinate (F_1) 
+						 (\c,0) coordinate (F_2)
+						(1.43,1.1)  coordinate (M);
+					\draw [blue] 
+						(0,0) ellipse (2.43cm and 1.4cm); 
+					 \draw
+						 (F_1)--(M)--(F_2)--cycle;
+					 \fill (M) node[above]{$M$} circle (1pt);
+					 \foreach \x/\g in {F_1/-90,F_2/-90}
+					 \fill (\x) circle (1pt)
+						($(\x)+(\g:3mm)$)  node{$\x$};
+					\draw pic[draw,angle  radius=2mm]{right angle=F_1--M--F_2};
+				\end{tikzpicture}
+		\end{center}
+		Phương trình  chính tắc của elip $(E)\colon \dfrac{x^2}{a^2}+\dfrac{y^2}{b^2}=1$ ($a>b>0$). \\
+		Gọi hai tiêu điểm của $(E)$ là $F_1(-c;0)$, $F_2(c;0)$. Khi  đó, $\heva{&\overrightarrow{MF_1}=\left(-c-2\sqrt{3};-2\right)\\&\overrightarrow{MF_2}=\left(c-2\sqrt{3};-2\right).}$\\
+		 Ta có $MF_1\perp MF_2\Leftrightarrow \overrightarrow{MF_1}\cdot \overrightarrow{MF_2}=0\Leftrightarrow \left(-c-2\sqrt{3}\right)\left(c-2\sqrt{3}\right)+4=0\Leftrightarrow c^2=16$.\\
+		Suy ra $a^2-b^2=16\Rightarrow a^2=16+b^2$.\\ 
+		Lại có $(E)$ đi qua $M\left(2\sqrt{3};3\right)$ nên $$\dfrac{12}{a^2}+\dfrac{4}{b^2}=1\Leftrightarrow \dfrac{12}{b^2+16}+\dfrac{4}{b^2}=1\Leftrightarrow 12b^2+4b^2+64=b^4+16b^2\Leftrightarrow  b^4=64\Leftrightarrow b^2=8.$$
+		Vậy $\heva{&a^2=24\\&b^2=8}$  và $T=a^2+2b^2=40$.
+	} 
+\end{bt}

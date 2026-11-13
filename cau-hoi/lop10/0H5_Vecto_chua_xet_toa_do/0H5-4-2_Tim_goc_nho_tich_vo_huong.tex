@@ -1,0 +1,111 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Lớp 10 | Véctơ (chưa xét tọa độ) | Tích vô hướng (chưa xét tọa độ)
+% Dạng 0H5?4-2: Tìm góc nhờ tích vô hướng
+% Số câu: 3  (sinh tự động bởi tach_cau.py; từ nay thầy sửa trực tiếp file này)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%% TRẮC NGHIỆM 4 PHƯƠNG ÁN %%%%%%%%%%%%%%%%
+
+% nguồn: MaHoaNH_TracNghiem_Lop10
+\begin{ex}%[0H5H4-2]%[ma:8894f0f3]
+	Cho tam giác $ABC$, tính $\left( \overrightarrow{AB},\,\overrightarrow{BC}  \right)+\left( \overrightarrow{BC},\,\overrightarrow{CA} \right)+\left( \overrightarrow{CA},\,\overrightarrow{AB} \right)$.
+	\choice 
+		{$90^\circ $} 
+		 {$180^\circ $}
+		 {$270^\circ $}
+		{\True $360^\circ  $}
+	 \loigiai{
+	\immini{ 
+		Dựng điểm $D$ sao  cho $\overrightarrow{AB}=\overrightarrow{BD}$. \\
+		Khi đó, $\left(  \overrightarrow{AB},\,\overrightarrow{BC} \right)=\left( \overrightarrow{BD},\,\overrightarrow{BC} \right)=\widehat{DBC}=180^\circ -\widehat{ABC}$.\\
+		Tương tự, $\left( \overrightarrow{BC},\,\overrightarrow{CA} \right)=180^\circ  -\widehat{BCA}$ và $\left( \overrightarrow{CA},\,\overrightarrow{AB} \right)=180^\circ -\widehat{CAB}$.\\
+		Vậy \begin{eqnarray*}
+		& &\left(  \overrightarrow{AB},\,\overrightarrow{BC} \right)+\left( \overrightarrow{BC},\,\overrightarrow{CA} \right)+\left( \overrightarrow{CA},\,\overrightarrow{AB} \right)\\
+		& &=540^\circ -\left( \widehat{ABC}+\widehat{BCA}+\widehat{CAB}  \right)\\
+		& &=540^\circ -180^\circ  =360^\circ.
+	\end{eqnarray*}}
+	{\begin{tikzpicture}[font=\footnotesize,line join=round,line cap=round,>=stealth]
+		 \def\a{2};
+		\coordinate (A) at  (0,0);
+		\coordinate (B) at ($(A)+(\a,0)$); 
+		\coordinate (C) at  ($(A)+(60:\a)$);
+		\coordinate (D) at  (2*\a,0);
+		\draw (C)--(A)--(B)--(C)--cycle (D)--(B); 
+		\foreach \x/\y in  {A/-90,B/-90,C/90,D/-90}
+		\draw[fill] (\x) circle  (1pt) + (\y:0.55cm) node{$\x$};
+	\end{tikzpicture}
+	 }
+} 
+\end{ex}
+
+% nguồn: MaHoaNH_TracNghiem_Lop10
+\begin{ex}%[0H5H4-2]%[ma:9a13c9c9]
+	Cho tam giác $ABC$ đều,  tâm $O$, gọi $M$ là trung điểm của $BC$. Góc $\left( \overrightarrow{OM}\,,\overrightarrow{AB} \right)$ bằng
+	 \choice
+		{$150^\circ  $}
+		 {\True $30^\circ $}
+		{$120^\circ  $}
+		{$60^\circ  $}
+	\loigiai{ 
+	\immini{ 
+		Gọi $N$ là  trung điểm của $AO$ $\Rightarrow $ $AN=OM$ (tính chất trọng tâm của tâm của tam giác).\\
+		Mà  $\overrightarrow{AN}$ và $\overrightarrow{OM}$ là hai vectơ cùng hướng nên $\overrightarrow{AN}=\overrightarrow{OM}$.\\
+		Khi đó, $\left( \overrightarrow{OM}, \overrightarrow{AB} \right)$ = $\left(\overrightarrow{AN},  \overrightarrow{AB} \right)$ = $\widehat{NAB}$ = $\widehat{MAB}$ = $30^\circ$.}{
+		\begin{tikzpicture}[line join = round,line cap = round,scale=1]
+				\def  \a{3};
+				\coordinate  (B) at (0,0);
+				\coordinate (C)  at ($(B)+(\a,0)$);
+				\coordinate[shift=(60:\a  cm)] (A) at (B);
+				\coordinate (M) at ($(C)!0.5!(B)$); 
+				\coordinate (O)  at ($(A)!2/3!(M)$);
+				\coordinate (N)  at ($(A)!1/2!(O)$);
+				\draw pic[draw,angle eccentricity=1.4,pic text=$  $,angle radius=0.35cm]{angle=B--A--M};
+				 \draw (C)--(A)--(B)--(C)--cycle (B)--(O)
+					 (A)--(M);
+				\draw[->,arrows={-latex}]  (A)--(B);
+				 \draw[->,arrows={-latex}] (A)--(M);
+				\foreach \x/\y in {A/90,B/180,C/0,M/-90,O/0,N/0} 
+				\draw[fill=black]  (\x) circle (0.7pt) + (\y:0.25cm) node{$\x$};
+			\end{tikzpicture}
+		 }
+	} 
+\end{ex}
+
+% nguồn: MaHoaNH_TracNghiem_Lop10
+\begin{ex}%[0H5H4-2]%[ma:347717a0]
+	 Cho tam giác $ABC$ với $\widehat{A}=60^\circ $. Tính tổng $\left( \overrightarrow{AB},\,\overrightarrow{BC} \right)+\left( \overrightarrow{BC},\,\overrightarrow{CA} \right)$.
+	 \choice
+		 {$120^\circ $}
+		{$360^\circ $} 
+		{$270^\circ $} 
+		{\True $240^\circ $} 
+	\loigiai{ 
+	 \immini{
+		 Vẽ các vectơ $\overrightarrow{BD}=\overrightarrow{AB}$, $\overrightarrow{CE}=\overrightarrow{BC}$.\\
+		Ta có 
+		\begin{eqnarray*}
+			\left( \overrightarrow{AB},\,\overrightarrow{BC} \right)+\left(  \overrightarrow{BC},\,\overrightarrow{CA} \right)
+			&=&\left( \overrightarrow{BD},\,\overrightarrow{BC}  \right)+\left( \overrightarrow{CE},\,\overrightarrow{CA} \right) \\
+			 &=&\widehat{CBD}+\widehat{ACE}\\
+			&=&180^\circ -\widehat{ABC}+180^\circ -\widehat{ACB}\\ &=&360^\circ -\left( \widehat{ABC}+\widehat{ACB} \right)\\  &=&360^\circ -\left( 180^\circ -\widehat{A\,} \right)\\
+			 &=&360^\circ -120^\circ =240^\circ.
+		\end{eqnarray*}}{
+		\begin{tikzpicture}[line join = round,line cap = round,scale=1]
+				 \def \a{2};
+				\coordinate  (A) at (0,0);
+				\coordinate (C)  at ($(A)+(\a,0)$);
+				\coordinate[shift=(60:\a  cm)] (B) at (A);
+				\coordinate  (E) at ($(C)+(C)-(B)$);
+				\coordinate (D) at  ($(B)+(B)-(A)$);
+				\draw pic[draw,angle eccentricity=1.4,angle radius=0.35cm]{angle=C--B--D}; 
+				\draw pic[draw,angle eccentricity=1.4,angle radius=0.35cm]{angle=A--C--E}; 
+				 \draw (A)--(B)--(C)--cycle;
+				\draw[->,arrows={-latex}] (C)--(B); 
+				\draw[->,arrows={-latex}] (C)--(E); 
+				 \draw[->,arrows={-latex}] (B)--(D);
+				\foreach  \x/\y in {A/180,B/90,C/30,E/-90,D/90}
+				\draw[fill=black] (\x) circle (0.7pt) +  (\y:0.5cm) node{$\x$};
+			\end{tikzpicture}
+		 }
+	} 
+\end{ex}

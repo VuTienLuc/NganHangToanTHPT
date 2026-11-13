@@ -1,0 +1,1288 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Lớp 10 | Hệ thức lượng trong tam giác | Giải tam giác và ứng dụng thực tế
+% Dạng 0H4?3-2: Các ứng dụng thực tế 
+% Số câu: 31  (sinh tự động bởi tach_cau.py; từ nay thầy sửa trực tiếp file này)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%% TRẮC NGHIỆM 4 PHƯƠNG ÁN %%%%%%%%%%%%%%%%
+
+% nguồn: MaHoaNH_TracNghiem_Lop10
+\begin{ex}%[0H4H3-2]%[ma:0f0b12f9]
+	\immini[thm] 
+	{ 
+	Trên sườn đồi có một cái cây thẳng đứng (tham khảo hình vẽ) đổ bóng dài $AB=39{,}5$ mét xuống đồi.  Biết góc nghiêng của sườn đồi là $\alpha =26^\circ$ so với phương ngang và góc nâng của mặt trời là $\beta =50^\circ$.
+	Chiều cao $BC$ của cây (làm tròn đến hàng đơn vị)  là
+	 \choice
+		{$21$ m} 
+		 {$27$ m}
+		{\True $25$  m}
+		 {$23$ m}
+		}{ 
+		\begin{tikzpicture}[scale=0.8,font=\footnotesize,line join=round,line cap=round,>=stealth]
+				\path 
+					(0,0) coordinate  (O)
+					 (-3,0) coordinate (A)
+					(0,4) coordinate  (C)
+					($(A)!1!26:(O)$)  coordinate (b)
+					(intersection of A--b and  O--C) coordinate (B);;
+				\begin{scope}[shift={(B)}]
+					 \fill[blue!50!yellow] (-.1,0) rectangle (.1,1);
+					 \foreach \x/\y/\z in {1/.6/1.2,.9/.8/1.4,.8/1/1.6,.7/1.2/1.8,.6/1.4/2,.5/1.6/2.2,.4/1.8/2.5}
+						 {
+					\fill[green!50!black] 
+						 (-\x,\y)--(\x,\y)--(0,\z)--cycle;
+					} 
+				\end{scope}
+				\draw[dashed] (A)--(O)--(C)--cycle; 
+				\draw[line  width=1.2pt,shorten <=-1cm,shorten >=-1cm] (A)--(b);
+				\draw[dashed,shorten >=-1cm] (A)--(C); 
+				 \pic[draw,"$\alpha$",angle eccentricity=1.3,angle radius=0.5cm]{angle=O--A--B};
+				\pic[draw,below,"$\beta$",angle eccentricity=1.3,angle  radius=1cm]{angle=O--A--C};
+				\draw pic[draw,angle radius=2mm]{right angle=A--O--C}; 
+				 \foreach \x/\g in {A/-90,C/0,B/-50,O/0} \fill[black] (\x) circle (1pt)+(\g:.3) node {$\x$};
+				\begin{scope}[shift={($(C)+(1,1.3)$)}]
+					\fill[orange!30!yellow] (0,0)  circle (.5cm);
+					 \foreach \i in {0,30,60,...,360}{
+						\begin{scope}[rotate=\i]
+						 \draw[orange!30!yellow,line width=1pt] (.7,0)--(1,0);
+						\end{scope}}
+				\end{scope}
+			\end{tikzpicture}
+		} 
+	\loigiai{ 
+		Ta có $\widehat{BAC}=\widehat{OAC}-\widehat{OAB}=24^\circ$  và $\widehat{BCA}=90^\circ-50^\circ=40^\circ$.\\
+		Áp dụng  định lý sintrong $\triangle ABC$, ta có
+		 \allowdisplaybreaks
+		\begin{eqnarray*}
+			 &&\dfrac{BC}{\sin\widehat{BAC}}=\dfrac{AB}{\sin\widehat{ACB}}\\
+			&\Rightarrow&  BC=\dfrac{AB\cdot\sin\widehat{BAC}}{\sin\widehat{ACB}}\\
+			&\Rightarrow& BC=\dfrac{39{,}5\cdot\sin 24^\circ}{\sin  40^\circ}\approx 25 ~(\text{m}).
+		\end{eqnarray*}
+	 }
+\end{ex}
+
+% nguồn: MaHoaNH_TracNghiem_Lop10
+\begin{ex}%[0H4H3-2]%[ma:46e44f8d]
+	\immini[thm]{ 
+	Từ đỉnh  của một tòa nhà người ta đo được góc tạo bởi hướng nhìn đến đỉnh của tháp truyền thông và phương ngang là $15^\circ$. Từ chân tòa nhà đó người ta đo được góc tạo bởi hướng nhìn đến đỉnh của tháp truyền thông và phương ngang là $29^\circ$. Biết tòa nhà cao $50$ m, tính chiều cao của tháp.
+	\choice 
+		{$91{,}5$  m}
+		{$90{,}6$  m}
+		{$93{,}9$ m} 
+		{\True $96{,}8$  m}
+		} 
+		{ 
+		\begin{tikzpicture}[scale=1,font=\footnotesize,line join=round,line cap=round,>=stealth]
+				 \path
+					 (0,4.5) coordinate (A)
+					(0,-1) coordinate (H) 
+					(4,3)  coordinate (B)
+					(4,-1) coordinate  (C)
+					(0,3) coordinate (K); 
+				\draw  [fill=gray!60]
+					(-0.4,-1) 
+					.. controls  ++(50:0.5) and ++(265: 1).. (0,4.5)
+					.. controls ++(-85:1)  and ++(130: 0.5).. (0.4,-1)--cycle;
+				\draw[pattern=bricks,pattern color=brown]  (B)--(6,3)--(6,-1)--(4,-1)--(B);
+				\foreach \i in  {2,3,4,5}
+				 \draw[fill=white] ({4+1/3},{-1+(2/3)*(\i-1)})--({4+1/3},{-1+(2/3)*(\i-1)+0.5})--({4+2/3},{-1+(2/3)*(\i-1)+0.5})--({4+2/3},{-1+(2/3)*(\i-1)})--cycle
+					 ({5+1/3},{-1+(2/3)*(\i-1)})--({5+1/3},{-1+(2/3)*(\i-1)+0.5})--({5+2/3},{-1+(2/3)*(\i-1)+0.5})--({5+2/3},{-1+(2/3)*(\i-1)})--cycle;
+				\draw[dashed](A)--(B)--(K) 
+					(A)--(C); 
+				\draw pic["$29^{\circ}$",draw=black,angle  eccentricity=1.4,angle radius=0.9cm]{angle=A--C--H};
+				\draw  pic["$15^{\circ}$",draw=black,double,angle eccentricity=1.5,angle radius=1.2cm]{angle=A--B--K};
+				\foreach \x/\g in {A/180,B/90,C/140} 
+				\fill[black] (\x) circle (1pt)+(\g:3mm)  node {$\x$};
+				\clip (-0.7,{-1-0.25}) rectangle (6.6,-1); 
+				 \draw[fill=gray!30] (-0.7,-1)--(6.6,-1)--(6.6,{-1-0.25})--(-0.7,{-1-0.25})--cycle;
+				\foreach \i  in {1,2,...,35}
+				\draw  ({-0.5+0.2*(\i)},-1)--($({-0.5+0.2*(\i)},-1)+(-120:0.3)$);
+			\end{tikzpicture}
+		} 
+	 \loigiai{
+		\begin{center}
+			\begin{tikzpicture}[scale=1,font=\footnotesize,line join=round,line cap=round,>=stealth]
+					 \path
+						(0,4.5)  coordinate (A)
+						(0,-1) coordinate (H) 
+						(4,3) coordinate (B) 
+						(4,-1) coordinate (C) 
+						(0,3)  coordinate (K);
+					 \draw [fill=gray!60]
+						(-0.4,-1) 
+						 .. controls ++(50:0.5) and ++(265: 1).. (0,4.5)
+						.. controls ++(-85:1)  and ++(130: 0.5).. (0.4,-1)--cycle;
+					\draw[pattern=bricks,pattern color=brown] (B)--(6,3)--(6,-1)--(4,-1)--(B); 
+					\foreach \i in {2,3,4,5} 
+					\draw[fill=white]  ({4+1/3},{-1+(2/3)*(\i-1)})--({4+1/3},{-1+(2/3)*(\i-1)+0.5})--({4+2/3},{-1+(2/3)*(\i-1)+0.5})--({4+2/3},{-1+(2/3)*(\i-1)})--cycle
+						 ({5+1/3},{-1+(2/3)*(\i-1)})--({5+1/3},{-1+(2/3)*(\i-1)+0.5})--({5+2/3},{-1+(2/3)*(\i-1)+0.5})--({5+2/3},{-1+(2/3)*(\i-1)})--cycle;
+					\draw[dashed](A)--(B)--(K) 
+						(A)--(C) 
+						(A)--(H); 
+					\draw pic["$29^{\circ}$",draw=black,angle eccentricity=1.4,angle radius=0.9cm]{angle=A--C--H}; 
+					\draw pic["$15^{\circ}$",draw=black,double,angle  eccentricity=1.5,angle radius=1.2cm]{angle=A--B--K};
+					 \foreach \x/\g in {A/180,B/90,C/140,K/180}
+					\fill[black] (\x) circle (1pt)+(\g:3mm)  node {$\x$};
+					\draw (-0.5,-.8)  node{$H$};
+					\clip (-0.7,{-1-0.25}) rectangle  (6.6,-1);
+					\draw[fill=gray!30] (-0.7,-1)--(6.6,-1)--(6.6,{-1-0.25})--(-0.7,{-1-0.25})--cycle; 
+					 \foreach \i in {1,2,...,35}
+					\draw  ({-0.5+0.2*(\i)},-1)--($({-0.5+0.2*(\i)},-1)+(-120:0.3)$);
+				\end{tikzpicture}
+		\end{center}
+		Gọi $H$ là hình chiếu vuông góc của $A$ trên mặt đất, $K$ là hình chiếu vuông góc  của $B$ trên $AH$. \\
+		 Ta có $AH=CH\tan \widehat{ACH}=CH\tan 29^\circ$,
+		$AK=BK\tan  \widehat{ABK}=CH\tan 15^\circ$. \\
+		 Khi đó
+		\begin{align*}
+			&AH-AK =  BC \\
+			&\Leftrightarrow CH\tan 29^\circ- CH\tan  15^\circ=50\\
+			&\Leftrightarrow CH=\dfrac{50}{\tan 29^\circ-\tan 15^\circ}. 
+		\end{align*}
+		Chiều cao của tháp là 
+		\[AH=CH\tan 29^\circ=\dfrac{50\tan  29^\circ}{\tan 29^\circ-\tan 15^\circ} \approx 96{,}8\text{m}.\]
+	} 
+\end{ex}
+
+% nguồn: MaHoaNH_TracNghiem_Lop10
+\begin{ex}%[0H4V3-2]%[ma:57bd981a]
+	\immini[thm]{Khoảng cách từ $A$ đến $B$ không thể đo trực tiếp được vì phải qua một đầm lầy. Người ta xác định được một  điểm $C$ mà từ đó có thể nhìn được $A$ và $B$ dưới một góc $60^\circ $. Biết $CA=200$\,(m), $CB=180$\,(m). Khoảng cách $AB$ bằng bao nhiêu?
+	 \choice
+		{$168$\,(m)} 
+		 {$228$\,(m)}
+		 {\True $20\sqrt{91}$\,(m)}
+		 {$112$\,(m)}}
+		{\begin{tikzpicture}[line join=round,line cap=round,>=stealth,thick,scale=0.8]
+		\fill[blue!30]  (0,0)
+			to[out=-55,in=200]  (1.05,-0.8)--(2,-.85)
+			 to[out=10,in=263] (3,0)
+			to[out=100,in=-10]  (2,0.75)--(1,1.1)--(0.2,0.7)
+			to[out=-55,in=190] (.1,0.5)--cycle; 
+		 \path
+			(-1,0) coordinate (A) 
+			(1.5,3) coordinate  (C)
+			(3.5,0) coordinate  (B);
+		\draw [thick] (0,0)--(A)--(C)--(B)--(3,0); 
+		 \foreach \i/\g in {C/90,A/180,B/0} \fill (\i) circle (.05) node[shift={(\g:.25)}] {$\i$};
+	\end{tikzpicture}
+		 }
+	 \loigiai{
+	$AB^2=CA^2+CB^2-2CA\cdot CB\cdot\cos 60^\circ  =36400$ $\Rightarrow AB=20\sqrt{91}$\,(m).}
+\end{ex}
+
+% nguồn: MaHoaNH_TracNghiem_Lop10
+\begin{ex}%[0H4V3-2]%[ma:19c33441]
+	\immini[thm]{Khoảng cách từ $A$ đến $C$ không thể đo trực tiếp vì phải  qua một đầm lầy nên người ta làm như sau. Xác định một điểm $B$ có khoảng cách $AB$ là $12$\,km và đo được góc $\widehat{ACB}=37^\circ $. Hãy tính khoảng cách $AC$ biết rằng $BC$ bằng $5$\,km.
+	 \choice
+		{$AC\approx 17$\,km} 
+		{$AC\approx  12$\,km}
+		{\True $AC\approx 15{,}6 $\,km} 
+		{$AC\approx 20 $\,km}} 
+		{\begin{tikzpicture}[line join=round,line cap=round,>=stealth,thick,scale=0.8]
+		 \fill[blue!30] (0,0)
+			 to[out=-55,in=200] (1.05,-0.8)--(2,-.85)
+			 to[out=10,in=263] (3,0)
+			 to[out=100,in=-10] (2,0.75)--(1,1.1)--(0.2,0.7)
+			 to[out=-55,in=190] (.1,0.5)--cycle;
+		\path 
+			(-1,0) coordinate  (A)
+			 (1.5,3) coordinate (C)
+			 (3.5,0) coordinate (B);
+		\draw [thick] (0,0)--(A)--(C)--(B)--(3,0); 
+		 \foreach \i/\g in {C/90,A/180,B/0} \fill (\i) circle (.05) node[shift={(\g:.25)}] {$\i$};
+	\end{tikzpicture}
+		} 
+	 \loigiai{
+		 Áp dụng đinh lí Côsinta có
+		\begin{eqnarray*}
+			&&AB^2=AC^2+BC^2-2AC\cdot BC\cdot \cos \widehat{ACB}\\ 
+			&\Leftrightarrow& 144=AC^2+25-10\cdot AC\cdot  \cos 37^\circ\\
+			&\Leftrightarrow& AC^2-10\cdot AC\cdot \cos 37^\circ -119=0\\ 
+			&\Leftrightarrow& \hoac{&AC=5\cos 37^\circ +\sqrt{25\cos^237^\circ +119}\approx 15{,}6&& (\text{nhận}) \\&AC=5\cos 37^\circ -\sqrt{25\cos^237^\circ +119}\approx -7{,}6.  &&(\text{loại})}
+		\end{eqnarray*}
+	Vậy  $AC\approx 15{,}6 $\,km.}
+\end{ex}
+
+% nguồn: MaHoaNH_TracNghiem_Lop10
+\begin{ex}%[0H4V3-2]%[ma:e1dd3ac5]
+	\immini{Để đo khoảng cách từ một ngôi nhà ven hồ đến một hòn đảo nhỏ giữa hồ, người ta chọn một gốc cây (trên bờ hồ) cách ngôi nhà $50$ m và gọi vị trí ngôi nhà là điểm $A$, gốc cây là điểm $B$, hòn đảo là  điểm $C$, người ta đo được $\widehat{CBA}=32^\circ$ và $\widehat{CAB}=68^\circ$. Hỏi khoảng cách giữa hòn đảo và ngôi nhà gần nhất với kết quả nào dưới đây?
+	\choice 
+		{$27$ m} 
+		{$25{,}5$  m}
+		{$40$ m} 
+		 {\True $26{,}9$ m}
+		} 
+		{\begin{tikzpicture}[line join=round,line cap=round,scale=1.5,transform shape]
+		\definecolor{darkbrown}{rgb}{0.4,0.26,0.13} 
+		 \definecolor{lightcornflowerblue}{rgb}{0.6,0.81,0.93}
+		\definecolor{forestgreen (web)}{rgb}{0.13,0.55,0.13} 
+		 \definecolor{darkpastelgreen}{rgb}{0.01,0.75,0.24}
+		 \definecolor{bronze}{rgb}{0.8,0.5,0.2}
+		\definecolor{deepskyblue}{rgb}{0.0,0.75,1.0} 
+		 \clip (-1.8,-2.5) rectangle (2.3,1.5);
+		\tikzset{gon_song/.pic={ 
+		 \def\S{
+			 (-1.35,-2.15)
+			..controls  +(160:.5) and +(-40:.5)..(-2.5,-2.15)
+			(3.5,-2.2) 
+			..controls +(160:.2)  and +(-40:.5)..(2,-2.2)
+			(3,-2.5) 
+			..controls +(160:.5) and  +(-40:.5)..(1.4,-2.5)
+			..controls +(160:.5)  and +(-40:.5)..(.3,-2.5)
+			..controls +(160:.5) and +(-40:.5)..(-.75,-2.55);} 
+		 \draw[color=deepskyblue] \S;
+			}} 
+		\tikzset{nuoc/.pic={ 
+		 \def\N{
+			(-4,.3) 
+			..controls +(120:.5) and +(-100:0.2)..(4,.8)--(4,-1.1) 
+			..controls +(-150:.3) and +(60:.3)..(2,-1.2) 
+			 ..controls +(-100:.5) and +(120:1)..(-4,-1.9)
+			 --cycle;}
+		 \fill[lightcornflowerblue] \N;
+			}} 
+		 \tikzset{dat/.pic={
+		\def\T{ 
+			(0,0) 
+			..controls +(170:.2)  and +(40:.3).. (-.7,-.1)
+			..controls +(-120:.15) and +(40:.15)..  (-1.1,-.25)
+			 ..controls +(-150:.4) and +(170:.4).. (-.7,-.55)
+			..controls +(-35:.4) and +(-150:.2)..  (.2,-.7)
+			 ..controls +(50:.4) and +(-120:.35).. (.8,-.5)
+			..controls +(60:.3) and  +(-120:.2).. (1.3,-.3)
+			..controls +(60:.2) and +(-50:.1)..  (.7,-.1)
+			..controls +(60:.2) and  +(-40:.1).. (0,0);}
+		 \draw \T;
+		 \fill[darkbrown] \T;
+			}} 
+		\tikzset{cay/.pic={ 
+		\def\T{ 
+			 (-.33,0)
+			..controls +(-50:.25)  and +(40:.45).. (-.57,-1.45)
+			..controls +(20:.1) and +(-160:.15)..  (-.1,-1.3)
+			..controls +(-120:.1) and  +(60:.15).. (-.2,-1.6)
+			..controls  +(-30:.1) and +(-140:.15).. (.15,-1.3)
+			..controls  +(-20:.1) and +(-160:.15).. (.57,-1.4)
+			 ..controls +(170:.4) and +(-160:.1).. (.35,0)
+			..controls  +(110:.5) and +(80:.5).. (-.33,0);}
+		\fill[bronze]  \T;
+		\def\C{ 
+			(0,.3) 
+			..controls +(-100:.25)  and +(-60:.2).. (-.3,.1)
+			..controls +(-100:.25) and +(-60:.2)..  (-.6,0)
+			..controls  +(-120:.45) and +(-110:.35).. (-1,.2)
+			..controls +(-150:.5) and +(-140:.35)..  (-1.15,.7)
+			..controls +(-170:.4) and +(-170:.35).. (-1,1.15) 
+			..controls +(140:.35) and  +(110:.4).. (-.37,1.35)
+			..controls +(110:.25) and  +(80:.3).. (-.15,1.35)
+			..controls +(80:.3) and +(95:.8).. (.55,1.1) 
+			..controls +(80:.2) and +(95:.2)..  (.8,1.1)
+			 ..controls +(20:.1) and +(95:.1).. (.95,1)
+			 ..controls +(-20:.4) and +(35:.25).. (1,.47)
+			 ..controls +(-30:.3) and +(-20:.3).. (.75,0.05)
+			 ..controls +(-120:.3) and +(-60:.2).. (.35,0)
+			..controls  +(175:.2) and +(-160:.1).. (.2,0.2)
+			..controls  +(-160:.1) and +(-70:.1).. (0,.3);}
+		 \draw \C;
+		\fill[forestgreen (web)] \C; 
+		 \def\C1{
+			(-1.15,.7) 
+			..controls +(-170:.4) and +(-170:.35).. (-1,1.15) 
+			..controls  +(140:.35) and +(110:.4).. (-.37,1.35)
+			 ..controls +(110:.25) and +(80:.3).. (-.15,1.35)
+			..controls +(80:.3)  and +(95:.8).. (.55,1.1)
+			..controls +(80:.2)  and +(95:.2).. (.8,1.1)
+			..controls  +(20:.1) and +(95:.1).. (.95,1)
+			..controls +(-20:.4)  and +(35:.25).. (1,.47)
+			..controls  +(-50:.5) and +(-85:.6).. (.65,.55)
+			..controls +(-160:.4)  and +(-120:.4).. (0,.7)
+			..controls +(-150:.2) and +(-80:.4)..  (-.63,.6)
+			 ..controls +(-140:.5) and +(-130:.4).. (-1.15,.7);}
+		\fill[darkpastelgreen]  \C1;
+		 \def\G{
+			 (-.8,.2)
+			..controls +(-35:.1) and +(130:.35).. 
+			 (-.32,0)
+			..controls +(-40:.1) and  +(45:.35).. (-.42,-1.25)
+			(-.32,0) 
+			..controls +(120:.1) and +(-45:.35)..  (-.58,.45)
+			(-.32,0) 
+			..controls  +(80:.1) and +(-170:.35).. (-.05,.45)
+			(-.28,.3) 
+			..controls +(80:.1) and +(-60:.05)..  (-.35,.55)
+			(.45,-1.3) 
+			..controls  +(130:.6) and +(-160:.3).. (.6,0.35)
+			 (.37,0)
+			..controls +(35:.2)  and +(-150:.1).. (.66,0.15)
+			 (.37,0)
+			 ..controls +(80:.2) and +(-40:.1).. (.18,0.4)
+			(.31,0.25) 
+			..controls +(80:.1)  and +(-150:.1).. (.38,0.5)
+			(.25,-0.15) 
+			 ..controls +(-110:.05) and +(110:.05).. (.2,-0.5)
+			 (.2,-0.25)
+			..controls  +(-110:.05) and +(110:.05).. (.17,-0.45)
+			 (-.2,-0.15)
+			..controls +(-70:.1) and +(110:.05)..  (-.18,-0.5)
+			 (-.15,-0.15)
+			..controls  +(-70:.1) and +(110:.05).. (-.15,-0.7)
+			 (-.05,-0.8)
+			..controls +(-80:.15) and +(-10:.15)..  (-.3,-1.28)
+			 (-.1,-0.9)
+			..controls +(-110:.1)  and +(20:.05).. (-.2,-1.1)
+			 (.1,-1)
+			..controls +(-50:.05)  and +(120:.05).. (.15,-1.2)
+			(.1,-1.15) 
+			..controls  +(-50:.05) and +(120:.05).. (.12,-1.2)
+			(.15,-.75) 
+			..controls +(-120:.1) and  +(-140:.1).. (.22,-.9)
+			..controls +(70:.12) and  +(120:.05).. (.18,-.9);}
+		\draw  \G;
+			 }}
+		 \path
+			(0,0)  pic[scale=1]{nuoc}
+			(0,0) pic[scale=1]{dat} 
+			(-1,-1)  pic[scale=.6]{cay}
+			(0,.5)  pic[scale=.6]{gon_song}
+			 (2,1.5) pic[scale=.6]{gon_song}
+			(-2.5,1.3)  pic[scale=.5]{gon_song};
+		\path (2,-1.6)  coordinate (A)
+			(-1,-1.8)  coordinate (B)
+			(0,-.3) coordinate  (C);
+		\node[white] at  (B) [above]{\tiny $B$};
+		\node at (A)  [right]{\tiny $A$};
+		\node[white] at (C) [above]{\tiny $C$}; 
+		\node at (0.5,-1.35) [below]{\tiny  $40$};
+		\draw (B)--(C)--(A)--cycle; 
+		 \draw pic["\tiny $\alpha$",draw=black,angle eccentricity=1.6,angle radius=.4cm,color=blue]
+			{angle=C--A--B}; 
+		\draw pic["\tiny $\beta$",draw=black,angle eccentricity=1.6,angle  radius=.4cm,color=blue]
+			{angle=A--B--C}; 
+	\end{tikzpicture}
+		} 
+	\loigiai{ 
+		Khoảng cách giữa ngôi nhà và hòn đảo bằng độ  dài đoạn $AC$.\\
+		Ta có $\widehat{C}=180^\circ-\widehat{A}-\widehat{B}=180^\circ-32^\circ-68^\circ=80^\circ$.\\ 
+		Áp dụng định lí sin vào tam giác $ABC$,  ta có\\
+		$\dfrac{AC}{\sin B}=\dfrac{AB}{\sin C}\Leftrightarrow AC=\dfrac{AB\cdot \sin B}{\sin C}=\dfrac{50\cdot\sin 32^\circ}{\sin 80^\circ}\approx  26{,}9$ (m).\\
+		 Vậy hòn đảo cách ngôi nhà khoảng $26{,}9$ (m).
+	} 
+\end{ex}
+
+% nguồn: MaHoaNH_TracNghiem_Lop10
+\begin{ex}%[0H4Y3-2]%[ma:fcae2fcc]
+	Trong  mặt phẳng $O x y$, phương trình nào sau đây là phương trình chính tắc của elip?
+	 \choice
+		{\True$\dfrac{x^2}{25}+\dfrac{y^2}{16}=1$} 
+		{$\dfrac{x^2}{16}+\dfrac{y^2}{16}=1$} 
+		{$\dfrac{x^2}{16}+\dfrac{y^2}{25}=1$} 
+		{$\dfrac{x^2}{25}-\dfrac{y^2}{16}=1$} 
+	 \loigiai{Phương trình chính tắc của elip có dạng $\dfrac{x^2}{a^2}+\dfrac{y^2}{b^2}=1$ trong đó $ a>b>0 $.}
+\end{ex}
+
+% nguồn: MaHoaNH_TracNghiem_Lop10
+\begin{ex}%[0H4Y3-2]%[ma:abfd8182]
+	Trong các phương trình sau, phương trình nào là phương  trình chính tắc của elip
+	 \choice
+		 {$x^2-y^2=1$}
+		 {$\dfrac{x^2}{64}+\dfrac{y^2}{16}=-1$}
+		{\True $\dfrac{x^2}{9}+\dfrac{y^2}{4}=1$} 
+		 {$\dfrac{x^2}{8}-\dfrac{y^2}{4}=1$}
+	 \loigiai{Phương trình chính tắc của elip là$\colon\dfrac{x^2}{9}+\dfrac{y^2}{4}=1$
+	 }
+\end{ex}
+
+% nguồn: MaHoaNH_TracNghiem_Lop10
+\begin{ex}%[0H4Y3-2]%[ma:a5a3dab0]
+	Trong  các phương trình sau, phương trình nào là phương trình chính tắc của elip?
+	\choice 
+		 {\True $\dfrac{x^2}{4}+\dfrac{y^2}{3}=1$}
+		 {$\dfrac{x^2}{4}-\dfrac{y^2}{3}=1$}
+		 {$\dfrac{x^2}{3}+\dfrac{y^2}{4}=1$}
+		{$\dfrac{x}{4}+\dfrac{y}{3}=1$} 
+	\loigiai{Phương trình chính tắc của  elip có dạng $\dfrac{x^2}{a^2}+\dfrac{y^2}{b^2}=1$ với $(a, b>0)$.\\
+		Do đó  phương trình $\dfrac{x^2}{4}+\dfrac{y^2}{3}=1$ thỏa đề bài.
+	 }
+\end{ex}
+
+% nguồn: MaHoaNH_TracNghiem_Lop10
+\begin{ex}%[0H4Y3-2]%[ma:b08402ec]
+	Trong mặt phẳng $O  x y$, phương trình chính tắc của elip có độ dài trục lớn là $ 34 $ và tiêu điểm $F_2(8,0)$ là
+	 \choice
+		 {$\dfrac{x^2}{17^2}+\dfrac{y^2}{8^2}=1$}
+		{$\dfrac{x^2}{34^2}+\dfrac{y^2}{30^2}=1$} 
+		 {$\dfrac{x^2}{15^2}+\dfrac{y^2}{8^2}=1$}
+		 {\True$\dfrac{x^2}{17^2}+\dfrac{y^2}{15^2}=1$}
+	\loigiai{Độ dài  trục lớn là $ 34 \Rightarrow 2a=34 \Rightarrow a=17$.\\Tiêu điểm $F_2(8,0) \Rightarrow c=8$. Do đó, $ b=\sqrt{a^2-c^2}=15$.\\
+		Vậy phương trình chính  tắc của elip là $\dfrac{x^2}{17^2}+\dfrac{y^2}{15^2}=1$.
+	 }
+\end{ex}
+
+% nguồn: MaHoaNH_TracNghiem_Lop10
+\begin{ex}%[0H4Y3-2]%[ma:fb7ab987]
+	Phương trình nào sau đây là phương trình chính tắc của đường  elip?
+	\choice 
+		{$\dfrac{x^2}{16}-\dfrac{y^2}{25}=1$} 
+		{\True $\dfrac{x^2}{16}+\dfrac{y^2}9=1$} 
+		{$\dfrac{x^2}{25}-\dfrac{y^2}9=-1$} 
+		 {$\dfrac{x^2}{25}+\dfrac{y^2}9=-1$}
+	\loigiai{ 
+		Phương trình chính tắc của đường elip có dạng  $\dfrac{x^2}{a^2}+\dfrac{y^2}{b^2}=1$.\\
+		Do  đó đáp án đúng là phương trình $\dfrac{x^2}{16}+\dfrac{y^2}9=1$.
+	 }
+\end{ex}
+
+% nguồn: MaHoaNH_TracNghiem_Lop10
+\begin{ex}%[0H4B3-2]%[ma:e4452343]
+	Phương trình chính tắc của elip đi qua điểm $B(0;4)$ và có một tiêu  điểm $F_2(3;0)$ là
+	 \choice
+		 {$\dfrac{x^2}{10}+\dfrac{y^2}{8}=1$}
+		{\True $\dfrac{x^2}{25}+\dfrac{y^2}{16}=1$} 
+		{$\dfrac{x^2}{25}+\dfrac{y^2}{9}=1$} 
+		 {$\dfrac{x^2}{16}+\dfrac{y^2}{25}=1$}
+	 \loigiai{
+		 Elip đi qua điểm $B(0;4)$ và có một tiêu điểm $F_2(3;0)$ suy ra $b=4$, $c=3$.\\
+		Ta có $a^2=b^2+c^2=4^2+3^2=25$.\\ 
+		Vậy $(E)\colon \dfrac{x^2}{25}+\dfrac{y^2}{16}=1$. 
+	 }
+\end{ex}
+
+% nguồn: MaHoaNH_TracNghiem_Lop10
+\begin{ex}%[0H4B3-2]%[ma:20738436]
+	Phương trình chính tắc của Elip có độ dài trục lớn bằng $8$ và  độ dài trục nhỏ bằng $6$ là
+	\choice 
+		 {$\dfrac{x^2}{9}+\dfrac{y^2}{16}=1$}
+		{$\dfrac{x^2}{64}+\dfrac{y^2}{36}=1$} 
+		 {$\dfrac{x^2}{8}+\dfrac{y^2}{6}=1$}
+		{$\dfrac{x^2}{16}+\dfrac{y^2}{9}=1$} 
+	 \loigiai{
+		Trục lớn  bằng $8$ suy ra $2a=8 \Leftrightarrow a=4$.\\
+		Trục nhỏ bằng $6$ suy ra $2b=6  \Leftrightarrow b=3$.\\
+		Vậy $(E) \colon \dfrac{x^2}{16}+\dfrac{y^2}{9}=1$. 
+	 }
+\end{ex}
+
+% nguồn: MaHoaNH_TracNghiem_Lop10
+\begin{ex}%[0H4B3-2]%[ma:cbe5f380]
+	Viết phương trình chính tắc  của elip $(E)$ biết trục lớn $2a=8$, trục bé $2b=6$.
+	\choice 
+		 {\True $(E)\colon\dfrac{x^2}{16}+\dfrac{y^2}{9}=1$}
+		{$(E)\colon\dfrac{x^2}{25}+\dfrac{y^2}{9}=1$} 
+		 {$(E)\colon\dfrac{x^2}{25}+\dfrac{y^2}{16}=1$}
+		 {$(E)\colon\dfrac{x^2}{9}+\dfrac{y^2}{16}=1$}
+	\loigiai{ 
+		Ta có  $a=4$, $b=3$.\\
+		Phương trình chính tắc của elip $(E)$  là
+		\begin{equation*}
+			 \dfrac{x^2}{a^2}+\dfrac{y^2}{b^2}=1\Leftrightarrow\dfrac{x^2}{16}+\dfrac{y^2}{9}=1.
+		\end{equation*}
+	 }
+\end{ex}
+
+% nguồn: MaHoaNH_TracNghiem_Lop10
+\begin{ex}%[0H4K3-2]%[ma:f5f9f00e]
+	Trong mặt phẳng tọa độ  $Oxy$, cho Elip có một tiêu điểm $F_1(-3;0)$ và đi qua điểm $K(0;-4)$. Phương trình chính tắc của Elip đó là
+	 \choice
+		 {$\dfrac{x^2}{5}+\dfrac{y^2}{4}=1$}
+		 {\True $\dfrac{x^2}{25}+\dfrac{y^2}{16}=1$}
+		{$\dfrac{x^2}{25}+\dfrac{y^2}{16}=-1$} 
+		{$\dfrac{x^2}{25}-\dfrac{y^2}{16}=1$} 
+	\loigiai{ 
+		Giả sử phương trình chính tắc của  Elip có dạng $\dfrac{x^2}{a^2}+\dfrac{y^2}{b^2}=1$.\\
+		Vì Elip đi qua điểm $K(0;-4)$ nên 
+		\[\dfrac{0^2}{a^2}+\dfrac{(-4)^2}{b^2}=1\Leftrightarrow  b^2=16. \]
+		Mặt khác Elip  có một tiêu điểm $F_1(-3;0)$ nên $c=3$.\\
+		Mà $a^2-b^2=c^2$ nên $a^2-16=9\Leftrightarrow  a^2=25$.\\
+		Vậy phương trình chính  tắc của Elip là $\dfrac{x^2}{25}+\dfrac{y^2}{16}=1$.
+	} 
+\end{ex}
+
+
+%%%%%%%%%%%%%%%% ĐÚNG/SAI %%%%%%%%%%%%%%%%
+
+% nguồn: MaHoaNH_DungSai_Lop10
+\begin{ex}%[0H4H3-2]%[ma:f4217a96]
+	Khu  vườn nhà anh T có dạng miền tứ giác $ABCD$ với các kích thước đo đạc được ghi trên hình vẽ bên dưới
+	\begin{center}
+		\begin{tikzpicture}[>=stealth,line join=round,line cap=round,font=\footnotesize,scale=1.3]
+				\coordinate  (B) at (0,0);
+				\coordinate (A)  at (1,3);
+				 \coordinate (C) at (3,-1);
+				 \coordinate (D) at (4,0);
+				\foreach \x/\g in {A/90,B/180,C/-85,D/0}  \fill (\x) circle (1pt) +(\g:3mm) node{$\x$};
+				\draw (A)--(B)--(C)--(D) node[above,midway,sloped]{$6$ m}--(A)  node[above,midway,sloped]{$20$ m}--(C) node[above,midway,sloped]{$22$ m};
+				\draw pic[draw,angle radius=3mm,angle eccentricity=2.5,"$30^\circ$"]  {angle = A--C--B};
+				\draw pic[draw,angle radius=3mm,angle  eccentricity=2.5,"$105^\circ$"] {angle = C--B--A};
+			\end{tikzpicture}
+	\end{center}
+	\choiceTF 
+		{\True Khoảng cách từ  điểm $A$ đến điểm $B$ là $11{,}4$ m}
+		{Khoảng cách từ điểm $C$ đến điểm $B$ là $14{,}6$ m} 
+		{\True Diện  tích khu vườn $ABCD$ là $147{,}5$ m$^2$}
+		{Diện tích khu vườn $ABC$ là  $87{,}8$ m$^2$}
+	\loigiai{ 
+		Ta  có $\widehat{BAC}=180^\circ-105^\circ-30^\circ=45^\circ$.
+		\begin{itemize}
+			\item Áp dụng định lý sintrong tam giác $ABC$ ta có 
+			 $$\dfrac{AB}{\sin 30^{\circ}}=\dfrac{AC}{\sin 105^{\circ}} \Leftrightarrow AB=\dfrac{22 \cdot \sin 30^{\circ}}{\sin 105^{\circ}} \approx 11{,}4\text{ (m)}.$$
+			$$\dfrac{BC}{\sin 45^{\circ}}=\dfrac{AC}{\sin 105^{\circ}} \Leftrightarrow BC=\dfrac{22 \cdot \sin 45^{\circ}}{\sin  105^{\circ}} \approx 16{,}1\text{ (m)}.$$
+			 \item
+			\begin{itemize}
+				\item Diện tích tam giác $ABC$ là $S_1=\dfrac{1}{2} \cdot A B \cdot A C \cdot \sin \widehat{BAC} \approx \dfrac{1}{2} \cdot 11{,}4 \cdot 22 \cdot \sin 45^{\circ}  \approx 88{,}7~\left(\mathrm{m}^2\right)$.
+				\item Áp dụng  công thức Hê-rông tính được diện tích tam giác $ADC$ là $S_2=24 \sqrt{6}~\left(\mathrm{m}^2\right)$.
+				\item Diện tích khu vườn  là $S=S_1+S_2 \approx 147{,}5\left(\mathrm{~m}^2\right)$.
+			\end{itemize}
+		\end{itemize}
+	 }
+\end{ex}
+
+% nguồn: MaHoaNH_DungSai_Lop10
+\begin{ex}%[0H4H3-2]%[ma:4ca45bdb]
+	\immini{Đứng ở vị trí $A$ trên bờ biển, bạn An đo được góc nghiêng so với bờ biển tới một vị trí $C$ trên đảo là $75^{\circ}$. Sau đó di chuyển dọc bờ biển đến vị trí $B$ cách $A$ một khoảng $1$ ki-lô-mét và đo được góc nghiêng so  với bờ biển tới vị trí $C$ đã chọn là $80^{\circ}$ (hình vẽ tham khảo).
+	 \choiceTF
+		{Khoảng cách từ vị trí $A$ đến vị trí $H$ gần bằng  $630$ m}
+		{\True Khoảng cách  từ vị trí $C$ trên đảo tới vị trí $A$ gần bằng $2330$ m}
+		{Khoảng cách từ vị  trí $C$ trên đảo tới vị trí $B$ gần bằng $2826$ m}
+		{\True Khoảng cách từ vị trí $C$ trên đảo tới bờ biển gần bằng $2251$ m} 
+		}{ 
+		\begin{tikzpicture}[scale=0.75,line join=round,font=\footnotesize,line cap=round,>=stealth]
+				\def  \r{3}
+				\path 
+					(0,0)  coordinate (A)
+					(\r,0) coordinate  (B)
+					(60:1.2*\r) coordinate (C) 
+					($(A)!(C)!(B)$) coordinate (H); 
+				\foreach \x/\g in {A/180,B/0,C/90,H/-90}\fill[black]  (\x) circle (1pt)+(\g:.4) node{$\x$};
+				\draw  (A)--(B)--(C)--(A)
+					 (C)--(H)
+					pic [draw,angle radius=2mm] {right angle =C--H--A}; 
+				\begin{scope}
+					\clip  (H)--(A)--(C);
+					\draw  (A) circle (.4)+(0.3,0.4) node[right]{$75^\circ$};
+				\end{scope}
+				\begin{scope}
+					\clip  (C)--(B)--(A);
+					\draw (B)  circle (.4)+(-0.2,0.4) node[left]{$80^\circ$};
+				\end{scope}
+			\end{tikzpicture}
+		} 
+	 \loigiai{
+		Ta có  $C=180^\circ-(A+B)=180^\circ-\left(75^\circ+80^\circ\right)=25^\circ$.\\
+		Áp dụng định lí sin cho  tam giác $ABC$ ta có
+		$$\dfrac{AC}{\sin B}=\dfrac{AB}{\sin C}\Leftrightarrow AC=\dfrac{AB\cdot\sin B}{\sin  C}=\dfrac{1\cdot\sin 80^\circ}{\sin 25^\circ}\approx 2{,}330\,\mathrm{km}=2330\,\mathrm m.$$
+		$$\dfrac{CB}{\sin A}=\dfrac{AB}{\sin C}\Leftrightarrow CB=\dfrac{AB\cdot\sin A}{\sin C}=\dfrac{1\cdot\sin 75^\circ}{\sin 25^\circ}\approx 2{,}286\,\mathrm{km}=2286\,\mathrm  m.$$
+		Áp dụng hệ thức lượng cho tam giác vuông  $AHC$
+		$$HC=AC\cdot\sin A=\dfrac{AB\cdot\sin B}{\sin C}\cdot\sin A=\dfrac{1\cdot\sin 80^\circ}{\sin 25^\circ}\cdot\sin 75^\circ\approx2{,}251\,\mathrm{km}=2251\,\mathrm  m.$$
+		$$AH=AC\cdot\cos A=\dfrac{AB\cdot\sin B}{\sin  C}\cdot\cos A=\dfrac{1\cdot\sin 80^\circ}{\sin 25^\circ}\cdot\cos 75^\circ\approx 0{,}603\,\mathrm{km}=603\,\mathrm m.$$
+	 }
+\end{ex}
+
+% nguồn: MaHoaNH_DungSai_Lop10
+\begin{ex}%[0H4V3-2]%[ma:9082aa93]
+	\immini[thm]{Một con tàu biển $M$ rời cảng $O$ và chuyển  động thẳng theo phương tạo với bờ biển một góc $60^\circ$. Trên bờ biển có hai đài quan sát $A$ và $B$ nằm về hai phía so với cảng $O$ và lần lượt cách cảng $O$ khoảng cách $1$ km và $3$ km (như hình vẽ). Đặt độ dài của $MO$ là $x$ km.
+	 }{
+	\begin{tikzpicture}[thick,scale=0.6]
+			\tikzset{every  node/.style={scale=0.8}}
+			 \coordinate (O) at (0,0);
+			\coordinate (A) at  (-2,0);
+			\coordinate  (B) at (6,0);
+			 \coordinate (M) at (60:8);
+			\coordinate (C)  at (6,-0.5);
+			\coordinate (D) at  (-2,-0.5);
+			\fill[pattern=north east  lines](A)--(B)--(C)--(D)--cycle;
+			\draw  (A)--(B)--(M)--cycle (O)--(M);
+			\foreach \i/\g in {A/170,O/120,B/10,M/90}{\draw[fill=black](\i) circle (1pt) 
+				 ($(\i)+(\g:3mm)$) node[scale=1]{$\i$};}
+			\path (A)--(O) node[pos=0.5,above]{$1$  km}
+				(O)--(B)  node[pos=0.5,above]{$3$ km}
+				(O)--(M) node[pos=0.5,below,sloped]{$x$}; 
+			\draw  pic["$60^\circ$",draw,angle eccentricity=1.8,angle radius=0.5cm]{angle=B--O--M};
+		\end{tikzpicture}
+	} 
+	 \choiceTF
+		{Theo định lí Côsin trong  tam giác $OMB$ thì\\$MB^2=MO^2+OB^2+2MO\cdot OB\cdot \cos \widehat{MOB}$}
+		{\True Biểu diễn khoảng cách từ tàu  đến $A$ theo $x$, ta được $MA=\sqrt{x^2-x+1}$}
+		{\True Biểu diễn khoảng cách từ tàu đến $B$ theo $x$,  ta được $MB=\sqrt{x^2-3x+9}$}
+		{Để khoảng cách từ tàu đến $B$ bằng khoảng cách từ tàu đến $A$ thì  $x=3$ km}
+	\loigiai{ 
+		\begin{itemchoice}
+			\itemch Theo  định lí Côsin trong tam giác $OMB$ ta có
+			 \[MB^2=MO^2+OB^2-2MO\cdot OB\cdot \cos \widehat{MOB}.\]
+			\itemch Ta có $\widehat{MOB}=60^\circ$ nên suy ra  $\widehat{AOM}=180^\circ-60^\circ=120^\circ$.\\
+			Áp dụng định lý Côsin trong tam giác $AOM$  ta có
+			 \allowdisplaybreaks
+			\begin{eqnarray*}
+				 MA^2&=&OA^2+OM^2-2OA\cdot OM\cdot \cos \widehat{AOM}\\
+				&=&1^2+x^2-2\cdot 1\cdot x\cdot \cos120^\circ\\ 
+				&=&x^2-x+1. 
+			\end{eqnarray*}
+			 Suy ra $MA=\sqrt{x^2-x+1}$.
+			\itemch  Ta có
+			\allowdisplaybreaks 
+			\begin{eqnarray*}
+				MB^2&=&MO^2+OB^2-2MO\cdot OB\cdot \cos \widehat{MOB}\\ 
+				&=&x^2+3^2-2\cdot x\cdot  3\cdot \cos 60^\circ\\
+				&=&x^2-3x+9. 
+			\end{eqnarray*}
+			Suy ra $MB=\sqrt{x^2-3x+9}$. 
+			 \itemch Khoảng cách từ tàu đến $B$ bằng khoảng cách từ tàu đến $A$ khi và chỉ khi
+			\allowdisplaybreaks 
+			\begin{eqnarray*}
+				 MA=MB&\Leftrightarrow&\sqrt{x^2-x+1}=\sqrt{x^2-3x+9}\\
+				&\Leftrightarrow&\heva{&x^2-x+1\ge 0\\&x^2-x+1=x^2-3x+9}\\ 
+				 &\Leftrightarrow&x=4.
+			\end{eqnarray*}
+			Vậy để khoảng cách  từ tàu đến $B$ bằng khoảng cách từ tàu đến $A$ thì $x=4$ km.
+		\end{itemchoice}
+	} 
+\end{ex}
+
+
+%%%%%%%%%%%%%%%% TRẢ LỜI NGẮN %%%%%%%%%%%%%%%%
+
+% nguồn: MaHoaNH_TraLoiNgan_Lop10
+\begin{bt}%[0H4H3-2]%[ma:51d10322]
+	Hai tàu đánh cá cùng xuất phát từ bến A và đi thẳng đều về hai vùng biển khác nhau, theo hai hướng tạo với nhau góc $120^{\circ}$. Tàu thứ  nhất đi với tốc độ 8 hải lí một giờ và tàu thứ hai đi với tốc độ 10 hải lí một giờ. Hỏi sau bao lâu thì khoảng cách giữa hai tàu là 60 hải lí (làm tròn kết quả đến hàng phần mười theo đơn vị giờ)?
+	 \shortans{3,8}
+	 \loigiai{
+		Giả sử sau $x$  (giờ) ($x>0$) tàu thứ nhất ở vị trí $B$, tàu thứ hai ở vị trí khoảng cách $BC=60$ hải lí.\\
+		Ta có $AB=8x$  (hải lí); $AC=10x$ (hải lí); $\widehat{A}=120^{\circ}$.\\
+		Áp dụng định lí côsin\\ 
+		$BC^{2}=AB^{2}+AC^{2}-2AB\cdot AC\cdot\cos\widehat{BAC}$\\ 
+		 $60^{2}=(8x)^{2}+(10x)^{2}-2(8x)(10x)\cos 120^{\circ}$\\
+		 $3600=64x^{2}+100x^{2}-160x^{2}(-\dfrac{1}{2})$\\
+		$3600=164x^{2}+80x^{2} \Leftrightarrow  244x^{2}=3600\Rightarrow x=\sqrt{\dfrac{3600}{244}}\approx3{,}83$.\\
+		Làm tròn đến hàng  phần mười $x\approx3{,}8$ giờ.
+	} 
+\end{bt}
+
+% nguồn: MaHoaNH_TraLoiNgan_Lop10
+\begin{bt}%[0H4H3-2]%[ma:04b88aa7]
+	Hai chiếc xe cùng  xuất phát ở một vị trí, đi theo hai hướng tạo với nhau một góc $75^\circ$. Xe thứ
+	nhất chạy với tốc độ $50$ km/h, xe thứ hai chạy  với tốc độ $60$ km/h. Hỏi sau 2h , khoảng cách
+	giữa hai xe là bao nhiêu km (làm tròn đến hàng đơn  vị)?
+	 \shortans{135}
+	\loigiai{ 
+		Giả sử hai xe cùng xuất phát  từ điểm $A$. Sau 2h xe thứ nhất đi tới điểm $B$, xe thứ 2 đi đến điểm $C$.\\
+		$A B=2\cdot50=100$ km; $A C=2.60=120$  km.\\
+		Bài toán  cần tính độ dài đoạn $BC$.
+		$$ 
+		B C=\sqrt{A  B^2+A C^2-2 A B \cdot A C \cdot \cos A}=\sqrt{100^2+120^2-2 \cdot 100 \cdot 120 \cdot \cos 75^{\circ}} \approx 135 \mathrm{~km}.
+		 $$
+	 }
+\end{bt}
+
+% nguồn: MaHoaNH_TraLoiNgan_Lop10
+\begin{bt}%[0H4V3-2]%[ma:30df88ea]
+	Có ba ngôi làng $A$, $B$, $C$ mỗi làng cách nhau $6$ km. Vào lúc $5$ giờ sáng, một người chạy thể dục từ $A$ đến $B$ với vận tốc $10$ km/h và cùng lúc đó một  người đạp xe đi chợ từ $C$ đến $B$ với vận tốc $12$ km/h. Thời điểm sớm nhất (đơn vị là giờ) mà hai người cách nhau $1$ km (theo đường chim bay) là bao nhiêu?
+	 \shortans{0,5}
+	\loigiai{ 
+		\begin{center}
+			\begin{tikzpicture}[scale=2]
+					\coordinate (A)  at (0,1);
+					 \coordinate (B) at ({-sqrt (3)/2},-0.5);
+					\coordinate (C) at ({sqrt (3)/2},-0.5); 
+					\coordinate (M) at ($(B)!1/3!(A)$); 
+					\coordinate  (N) at ($(B)!1/3!(C)$);
+					\draw (A) -- (B) -- (C)  -- cycle;
+					\draw  (M) -- (N);
+					\foreach  \point in {A,B,C,M,N}{
+						\fill (\point) circle  (1pt);
+					} 
+					 \foreach \point/\label/\position in {A/A/above,B/B/below left,C/C/below right,M/M/above left,N/N/below}{
+						\node[\position] at  (\point) {$\label$};
+					} 
+				\end{tikzpicture}
+		\end{center}
+		Gọi điểm $M$ thuộc đoạn $AB$, điểm $N$ thuộc đoạn $BC$ là các vị trí mà người chèo thuyền gặp nhau và $x$ là thời gian (đơn vị  giờ) $(x > 0)$. \\
+		Quãng đường $AM = 10x \Rightarrow BM = 6 -  10x$ (km). \\
+		Quãng đường $CN = 12x \Rightarrow BN = 6 - 12x$ (km).  \\
+		Xét tam giác $BMN$ có $\widehat{MBN} = 60^\circ$  nên ta có
+		\begin{eqnarray*}
+			&& MN^2 = BM^2 + BN^2  - 2BM\cdot BN\cdot \cos \widehat{MBN} \\
+			&\Leftrightarrow& (6-10x)^2 + (6-12x)^2 - 2(6-10x)(6-12x)\dfrac{1}{2} =  1 \\
+			&\Leftrightarrow& 124x^2 - 132x +  35 = 0 \\
+			&\Leftrightarrow& \hoac{ &x = \dfrac{1}{2} \\&x  = \dfrac{35}{62}.}
+		\end{eqnarray*}
+		Ta thấy $x= 0{,}5$ (giờ) là thời điểm sớm nhất thỏa  mãn yêu cầu bài toán. \\
+		Vậy  đáp số là $0{,}5$ giờ.
+	} 
+\end{bt}
+
+% nguồn: MaHoaNH_TraLoiNgan_Lop10
+\begin{bt}%[0H4V3-2]%[ma:14885718]
+	Muốn đo chiều cao của tháp chàm Por Klong Garai ở Ninh Thuận người ta lấy hai điểm $A$ và $B$ trên mặt đất có khoảng cách $AB=12$ m cùng thẳng hàng với chân $C$ của tháp để đặt hai giác kế. Chân của giác kế có chiều cao $h=1{,}3$ m. Gọi $D$ là đỉnh tháp và hai điểm $A_1$, $B_1$ cùng thẳng hàng  với $C_1$ thuộc chiều cao $CD$ của tháp. Người ta đo được góc $\widehat{DA_1 C_1}=49^{^{\circ}}$ và $\widehat{DB_1 C_1}=35^{^{\circ}}$. Tính chiều cao $CD$ của tháp. (làm tròn kết quả đến hàng phần mười)
+	\begin{center}
+		\begin{tikzpicture}[scale=0.8,font=\footnotesize,line join=round,line cap=round,>=stealth]
+				\coordinate (O) at  (0,0);
+				 \def\h{8}
+				\coordinate  (D) at (0,\h);
+				\draw[] (O)--(D)..controls (-0.15,7)  and (0,7)..(-0.5,0.74*\h)--(-.75,0.74*\h)--(-.75,0.69*\h)--(-0.5,0.69*\h)--(-0.5,0.08*\h)--(-1,0.08*\h)--(-1.3,0)--cycle;
+				\begin{scope}[xscale=-1]
+					 \draw[fill=black!70] (O)--(D)..controls (-0.15,7) and (0,7)..(-0.5,0.74*\h)--(-.75,0.74*\h)--(-.75,0.69*\h)--(-0.5,0.69*\h)--
+						 (-0.5,0.08*\h)--(-1,0.08*\h)--(-1.3,0)--cycle;
+				\end{scope}
+				\draw (-.75,0.74*\h)--(.75,0.74*\h)--(0.75,0.69*\h)--(-0.75,0.69*\h)--cycle; 
+				 \draw (-1,0.08*\h)--(1,0.08*\h);
+				 \draw (D) node[above]{$D$}
+					(0,0) coordinate (C)  node[below] {$C$}
+					(8,0) coordinate (B) node[below] {$B$} 
+					(0,2)  coordinate (C1)
+					(8,2) coordinate (B1) node[right]  {$B_1$}
+					 (5,0) coordinate (A) node[below] {$A$}
+					 (5,2) coordinate (A1) node[above right] {$A_1$}
+					(0.2,2)  node[left] {$C_1$}
+					(0.5,1) node[right] {$1{,}3$ m} 
+					(6.5,0)  node[below] {$12$ m};
+				 \draw (C)--(B)--(B1)--(C1)--(C)
+					 (A)--(A1)--(D)--(B1);
+				\pic["$49^\circ$"{shift={(1pt,-3pt)}},draw,angle  radius=4mm,angle eccentricity=1.79] {angle = D--A1--C1};
+				\pic["$35^\circ$"{shift={(1pt,-3pt)}},draw,angle radius=4mm,angle  eccentricity=1.79] {angle = D--B1--C1};
+			\end{tikzpicture}
+	\end{center}
+	\shortans{22,8} 
+	 \loigiai{
+		 Ta có $\widehat{C_1 DA_1}=90^{\circ}-49^{\circ}=41^{\circ}$; $\widehat{C_1 DB_1}=90^{\circ}-35^{\circ}=55^{\circ}$ nên $\widehat{A_1 DB_1}=14^{\circ}$.\\
+		 Xét tam giác $A_1 DB_1$ có: $\dfrac{A_1 B_1}{\sin \widehat{A_1 DB_1}}=\dfrac{A_1 D}{\sin \widehat{A_1 B_1 D}} \Rightarrow A_1 D=\dfrac{12\cdot \sin 35^{\circ}}{\sin 14^{\circ}} \approx 28,45$ m.\\
+		Xét  tam giác $C_1 A_1 D$ vuông tại $C_1$, có:
+		\[\sin \widehat{C_1 A_1 D}=\dfrac{C_1 D}{A_1  D} \Rightarrow C_1 D=A_1 D\cdot \sin C_1 A_1 D=28{,}45\cdot \sin 49^{\circ} \approx 21{,}47\; \text{m}.\]
+		 Suy ra $CD=C_1 D+CC_1 \approx 22{,}77$ m.
+	} 
+\end{bt}
+
+% nguồn: MaHoaNH_TraLoiNgan_Lop10
+\begin{bt}%[0H4V3-2]%[ma:4c5f2b66]
+	Trên nóc một tòa nhà có cột ăng-ten cao $5$ m. Từ vị trí quan sát $A$ cao $7$ m so với mặt đất, có thể nhìn thấy đỉnh $B$ và chân $C$ của cột ăng-ten dưới góc $50^{\circ}$ và $40^{\circ}$ so với phương nằm ngang (như hình vẽ bên). Tính  chiều cao $CH$ của tòa nhà (được làm tròn đến hàng phần mười).
+	\begin{center}
+		\begin{tikzpicture}[scale=1,font=\footnotesize,line join=round,line cap=round,>=stealth]
+				 \path
+					 (0,0) coordinate (A)
+					(4,3) coordinate  (C)
+					(4,4) coordinate (B) 
+					(0,-1)  coordinate (A')
+					(4,0) coordinate (D); 
+				 \draw (B)--(C)
+					(C)--(6,3)--(6,-1)--(4,-1)  node[above left]{$H$}--(C)
+					 (-0.5,-1)--(6.6,-1);
+				\draw[fill=cyan]  (C)--(6,3)--(6,-1)--(4,-1)--(C);
+				\foreach \i in {2,3,4,5} 
+				\draw[fill=white] ({4+1/3},{-1+(2/3)*(\i-1)})--({4+1/3},{-1+(2/3)*(\i-1)+0.5})--({4+2/3},{-1+(2/3)*(\i-1)+0.5})--({4+2/3},{-1+(2/3)*(\i-1)})--cycle 
+					({5+1/3},{-1+(2/3)*(\i-1)})--({5+1/3},{-1+(2/3)*(\i-1)+0.5})--({5+2/3},{-1+(2/3)*(\i-1)+0.5})--({5+2/3},{-1+(2/3)*(\i-1)})--cycle; 
+				 \draw[dashed](A)--(B)
+					 (A)--(C)
+					 (A)--(D);
+				\draw  [<->](A)--(A');
+				\draw ($(B)!0.5!(C)$)  node[right]{$5 \mathrm{~m}$}
+					 ($(A)!0.5!(A')$) node[left]{$7 \mathrm{~m}$};
+				\draw  pic["$50^{\circ}$",draw=black,angle eccentricity=1.2,angle radius=1.4cm]{angle=D--A--B};
+				\draw pic["$40^{\circ}$",draw=black,double,angle eccentricity=1.5,angle radius=0.7cm]{angle=D--A--C}; 
+				\foreach \x/\g in {A/180,B/90,C/140,D/140} 
+				\fill[black] (\x) circle (1pt)+(\g:3mm)  node {$\x$};
+				\clip (-0.5,{-1-0.25}) rectangle  (6.6,-1);
+				 \draw[fill=gray!30] (-0.5,-1)--(6.6,-1)--(6.6,{-1-0.25})--(-0.5,{-1-0.25})--cycle;
+				\foreach \i in {1,2,...,35} 
+				\draw  ({-0.5+0.2*(\i)},-1)--($({-0.5+0.2*(\i)},-1)+(-120:0.3)$);
+			\end{tikzpicture}
+	\end{center}
+	 \shortans{18,9}
+	\loigiai{ 
+		 Ta có chiều cao của tòa nhà chính là đoạn $CH$.\\
+		 Mà $CH=CD+DH$ $=CD+7$.\\
+		Ta có $\widehat{BAC}=10^{\circ}$, $\widehat{ACD}=90^{\circ}-\widehat{CAD}=50^{\circ}$,  $\widehat{ABD}=90^{\circ}-\widehat{BAD}=40^{\circ}$.\\
+		Xét tam giác $ABC$ có  $\dfrac{AC}{\sin \widehat{ABC}}=\dfrac{BC}{\sin \widehat{BAC}} \Rightarrow AC=\dfrac{BC\cdot \sin \widehat{ABC}}{\sin \widehat{BAC}}$.\\
+		Xét  tam giác $ACD$ vuông tại $D$ có\\ $CD=AC\cdot \sin 40^{\circ}=\dfrac{BC\cdot \sin \widehat{ABC}}{\sin \widehat{BAC}}\cdot \sin 40^{\circ}\approx 11{,}9$ m.
+		\[\Rightarrow  CH\approx 7+11{,}9\approx 18{,}9~ (\text{m}).\]
+	} 
+\end{bt}
+
+% nguồn: MaHoaNH_TraLoiNgan_Lop10
+\begin{bt}%[0H4V3-2]%[ma:ac7fb94a]
+	Để đo chiều cao của một cột cờ trên đỉnh một toà nhà anh Bắc đã làm như sau: Anh đứng trên một đài quan sát có tầm quan sát cao $5\; m$ so với mặt đất, khi quan sát anh đo được góc quan sát chân cột là $40^{^{\circ}}$ và góc quan sát đỉnh cột là $50^{\circ}$, khoảng cách từ chân toà nhà đến vị trí quan sát là $18$ m. Tính tổng chiều của cao cột cờ và chiều cao của toà nhà (làm tròn kết quả đến hàng  phần chục).
+	\begin{center}
+		\begin{tikzpicture}[scale=.5,font=\footnotesize,line join=round,>=stealth]
+				 \coordinate (O) at (0,0);
+				 \def\nhathap{1.5}
+				\def\nhacao{5} 
+				 \def\kc{12}
+				\def\dai{1} 
+				\def\cao{2} 
+				\coordinate  (H) at (\kc,0);
+				\newcommand{\xaynha}[2]{ 
+				\draw[very thick]  (#1,#2) rectangle (#1+\dai,#2+\cao);
+				\draw[very thick,fill=black] (#1,#2) rectangle  (#1+\dai,#2+0.25*\cao);
+				\draw[very thick] (#1+0.2*\dai,#2+0.25*\cao) rectangle  (#1+0.8*\dai,#2+0.9*\cao);
+				 }
+				\foreach \j in {1,...,\nhacao}{ 
+					 \foreach \i in {0,...,4}{
+					\xaynha{\i*1.1+\kc}{\j*\cao} 
+				} 
+				 }
+				\draw[line width=0.2cm]  (-0.1+\kc,\cao*\nhacao+\cao)--(5*\dai*1.1+\kc,\cao*\nhacao+\cao);
+				\coordinate (A)  at (5*\dai*1.1,\cao*\nhathap+\cao+0.1);
+				 \coordinate (K) at (5*\dai*1.1,\cao);
+				\draw  (A) node[left]{$C$};
+				\coordinate (C)  at (\kc,\cao*\nhacao+\cao);
+				 \draw (C) node[left]{$A$};
+				\coordinate (B) at ($(C)+(0,2)$); 
+				\draw (B) node[above]{$B$}; 
+				\coordinate (H) at (\kc,\cao); 
+				\draw (H)  node[below]{$E$};
+				\coordinate  (D) at (\kc,\cao*\nhathap+\cao+0.1);
+				\draw  (D) node[below left]{$D$};
+				\draw[very  thick] (3,\cao)--(\kc+5*\dai*1.2,\cao);
+				\draw  (B)--(A)--(C);
+				 \draw[line width=0.07cm] (C)--(B);
+				\draw  [<->] (A)--(K) node[left,pos=0.5]{$5$m};
+				\draw  [dashed,<->] (A)--(D) node[below,pos=0.5]{$18$m};
+				\draw ($(B)+(135:0.5cm)$)--($(B)+(-45:0.5cm)$); 
+				\draw pic["$50^\circ$",draw,double,angle  eccentricity=1.3,angle radius=.9cm] {angle=D--A--B};
+				\draw  pic["$40^\circ$",draw,angle eccentricity=2,angle radius=.3cm] {angle=D--A--C};
+			\end{tikzpicture}
+	\end{center}
+	\shortans{26,5} 
+	\loigiai{ 
+		Trong  tam giác $DAC$, ta có
+		$\cos \widehat{ACD}=\dfrac{DC}{AC}$, suy ra $AC=\dfrac{DC}{\cos A}=\dfrac{18}{\cos  40^{\circ}} \approx 23{,}5$ m.\\
+		$\tan \widehat{ACD}=\tan 40^{\circ}=\dfrac{AD}{DC}$, suy ra $AD=DC\cdot \tan 40^{\circ}=18\cdot \tan 40^{\circ} \approx  15{,}10$ m.\\
+		$\tan \widehat{BCD}=\tan 50^{\circ}=\dfrac{BD}{DC}$, suy ra $BD=DC\cdot \tan 40^{\circ}=18\cdot  \tan 50^{\circ} \approx 21{,}5$ m.\\
+		Vậy tổng chiều cao của tòa nhà và của cột cờ  khoảng là $21{,}5+5=26{,}5$.
+	 }
+\end{bt}
+
+% nguồn: MaHoaNH_TraLoiNgan_Lop10
+\begin{bt}%[0H4V3-2]%[ma:565188a6]
+	Trên nóc  một tòa nhà có một cột ăng-ten cao $5\mathrm{\,m}$. Từ một vị trí quan sát $A$ cao $7\mathrm{\,m}$ so với mặt đất có thể nhìn thấy đỉnh $B$ và chân $C$ của cột ăng-ten, với các góc tương ứng là $50^\circ$ và $40^\circ$ so với phương nằm ngang (hình bên dưới). Tính chiều cao của tòa nhà (làm tròn kết quả đến hàng phần mười).
+	\begin{center}
+		\begin{tikzpicture}[scale=.6,font=\footnotesize,line join=round,>=stealth,thick]
+				 \coordinate (O) at (0,0);
+				 \def\nhathap{2}
+				\def\nhacao{5} 
+				\def\kc{10} 
+				 \def\dai{1}
+				\def\cao{2} 
+				 \coordinate (H) at (\kc,0);
+				 \newcommand{\xaynha}[2]{
+				\draw[very thick] (#1,#2)  rectangle (#1+\dai,#2+\cao);
+				\draw[very thick,fill=black] (#1,#2) rectangle (#1+\dai,#2+0.25*\cao); 
+				\draw[very thick]  (#1+0.2*\dai,#2+0.25*\cao) rectangle (#1+0.8*\dai,#2+0.9*\cao);
+				 }
+				\foreach \j in  {1,...,\nhathap}{
+					\foreach \i  in {0,...,4}{
+					 \xaynha{\i*1.1}{\j*\cao}
+				} 
+				 }
+				\draw[line width=0.2cm]  (-0.1,\cao*\nhathap+\cao)--(5*\dai*1.1,\cao*\nhathap+\cao);
+				\foreach \j  in {1,...,\nhacao}{
+					\foreach \i  in {0,...,4}{
+					\xaynha{\i*1.1+\kc}{\j*\cao} 
+				 }
+				 }
+				\draw[line width=0.2cm]  (-0.1+\kc,\cao*\nhacao+\cao)--(5*\dai*1.1+\kc,\cao*\nhacao+\cao);
+				 \coordinate (A) at (5*\dai*1.1,\cao*\nhathap+\cao+0.1);
+				 \draw (A) node[above left]{$A$};
+				 \coordinate (C) at (\kc,\cao*\nhacao+\cao);
+				\draw (C)  node[above right]{$C$};
+				 \coordinate (B) at ($(C)+(0,2)$);
+				 \draw (B) node[above]{$B$};
+				\coordinate (H) at (\kc,\cao); 
+				\draw (H) node[below]{$H$}; 
+				 \coordinate (D) at (\kc,\cao*\nhathap+\cao+0.1);
+				 \draw (D) node[above left]{$D$};
+				\draw[very  thick] (-0.5,\cao)--(\kc+5*\dai*1.2,\cao);
+				\draw [dashed](A)--(D);  \draw (B)--(A)--(C); \draw[line width=0.07cm] (C)--(B);
+				\draw  ($(B)+(135:0.5cm)$)--($(B)+(-45:0.5cm)$);
+				\pic["$40^\circ$",draw,angle radius=5mm,angle eccentricity=1.6]{angle=D--A--C}; 
+				\pic["$50^\circ$",draw,double,angle radius=12mm,angle eccentricity=1.3]{angle=D--A--B}; 
+				\path ($(C)!0.55!(B)$)  node [right]{$5\mathrm{\,m}$};
+				\path ($(D)!0.5!(H)$) node [left]{$7\mathrm{\,m}$}; 
+			\end{tikzpicture}
+	\end{center}
+	 \shortans{18,9}
+	 \loigiai{
+		Xét tam  giác $ABC$, ta có $\widehat{A}=50^\circ-40^\circ=10^\circ$.\\
+		 Ta có tam giác $ABD$ vuông tại $D$ nên $\widehat{B}=90^\circ-50^\circ=40^\circ$.\\
+		Áp dụng  định lí sintrong tam giác $ABC$, ta có $AC=b=\dfrac{a\cdot \sin B}{\sin A}=\dfrac{5\cdot \sin 40^\circ}{\sin 10^\circ}\approx 18{,}5\mathrm{\,cm}$.\\
+		Xét tam giác $ACD$ vuông tại  $D$, ta có $CD=AC\cdot \sin A=18{,}5\cdot \sin 40^\circ\approx 11{,}9\mathrm{\,cm}$.\\
+		Vậy chiều  cao tòa nhà $CH=CD+DH\approx 11{,}9+7\approx 18{,}9\mathrm{\,cm}$.
+	 }
+\end{bt}
+
+% nguồn: MaHoaNH_TraLoiNgan_Lop10
+\begin{bt}%[0H4V3-2]%[ma:95997669]
+	\immini[thm] 
+	{Một người đứng ở trên một tháp truyền hình cao $352$ m so với mặt đất, muốn xác định khoảng cách giữa hai cột mốc trên mặt dất bên dưới. Người đó quan sát thấy góc được tạo bởi hai đường ngắm tới hai mốc này là $43^{\circ}$, góc giữa phương thẳng đứng và đường ngắm tới một điểm mốc trên mặt đất là $62^{\circ}$ và đến điểm mốc khác là $54^\circ$ (Hình vẽ). Tính khoảng cách giữa hai cột mốc này (kết quả làm tròn tới  hàng đơn vị).}{
+	\begin{tikzpicture}[font=\footnotesize,line join=round,line cap=round,>=stealth,scale=0.35]
+			\begin{scope}[shift={(-18,-8)},scale=2.25]
+				 \def\l{5}
+				 \def\a{0.2}
+				 \fill[ball color=gray!30](-\a,0)--(-0.1*\a,1.5*\l)--(0.1*\a,1.5*\l)--(\a,0)--cycle;
+				 \tikzset{vongtron/.pic={
+				 \fill[ball color=blue!50!gray](-0.95*\a,0.15*\l) arc (180:360:{0.95*\a} and {0.5*\a})--(1.2*\a,0) arc (0:-180:{1.2*\a} and {0.5*\a})--cycle;
+					}} 
+				\tikzset{vongred/.pic={ 
+				\fill[ball color=red!50!gray](-0.95*\a,0.15*\l) arc (180:360:{0.95*\a} and {0.5*\a})--(1.2*\a,0) arc (0:-180:{1.2*\a}  and {0.5*\a})--cycle;
+					}} 
+				\tikzset{cau/.pic={ 
+				\def\r{1} 
+				\fill[ball color=gray!30!white](0,0) circle (\r); 
+				\fill[ball color=blue,opacity=0.5](-25:\r)  arc (-25:-155:\r)[out=-30,in=-150]to (-25:\r);
+					}} 
+				\tikzset{ov/.pic={ 
+				\fill[ball color=gray!40!blue!50!white](0,0) rectangle (1,1); 
+				\fill[gray](1,1)--++(30:0.5)--++(-90:1)--(1,0)++(30:0.5) coordinate  (A);
+				\fill[ball  color=gray!70!blue!50!white](0,1)--++(30:0.5)--++(1,0)--++(-150:0.5);
+					 }}
+				 \path (0,0) pic{vongtron}
+					 (0,0.7*\l) pic[scale=0.5]{vongtron}
+					(0,0.96*\l) pic[scale=0.45]{vongtron} 
+					(0,\l)  pic[scale=0.5]{cau};
+				 \foreach \i/\m in{1.1/0.4,1.25/0.35,1.4/0.2}
+				\path (0,\i*\l) pic[scale=\m]{vongred} 
+					(-4,0)  pic[scale=0.75]{ov}
+					 (-5,2) pic[scale=0.5]{ov};
+				\draw[teal,line width=1pt](A)--++(37:5.1) coordinate  (B)--++(-119:5.8) coordinate (C)
+					 (B)--++(-90:\l) coordinate (D);
+				 \draw[dashed] (D)--(A);
+				\draw (C)--(D); 
+				\begin{scope}[teal]
+					\clip (A)--(B)--(C)--cycle; 
+					\draw (B)  circle (1)++(-130:1.2) node{\tiny $43^\circ$};
+				\end{scope}
+				\begin{scope}[blue]
+					\clip  (C)--(B)--(D)--cycle;
+					\draw (B) circle (1.2)++(-105:1.35) node{\tiny $54^\circ$}; 
+				\end{scope}
+				\begin{scope}[magenta]
+					 \clip (A)--(B)--(D)--cycle;
+					\draw (B) circle (1.55)++(-125:1.75) node{\tiny  $62^\circ$};
+				\end{scope}
+			\end{scope}
+		\end{tikzpicture}
+	} 
+	\shortans{142} 
+	 \loigiai{
+	\immini{Gọi  các điểm $A$, $B$, $C$, $H$ như hình trên.\\
+		 Xét tam giác $ABH$ ta có\\
+		 $AH=352$, $\widehat{BAH}=62^{\circ}$.\\
+		Mà $\cos \widehat{BAH}=\dfrac{AH}{AB}  \Rightarrow AB=352 \cdot \cos 62^{\circ} \approx 165{,}25$.\\
+		Tương tự, ta có 
+		$\cos  \widehat{CAH}=\dfrac{AH}{AC}\\
+		\Rightarrow AC=352 \cdot \cos 54^{\circ}  \approx 206{,}9$\\
+		Áp dụng định lí côsin cho tam giác $ABC$, ta  có
+		\allowdisplaybreaks 
+		\begin{eqnarray*}
+			&&BC^2=AB^2+AC^2-2 \cdot AB \cdot AC \cdot \cos A\\ &&\qquad  \,=165{,}25^2+206{,}9^2-2\cdot 165{,}25\cdot 206{,}9 \cdot \cos 43^{\circ}\\
+			\Rightarrow&& BC  \approx 142
+		\end{eqnarray*}
+		Vậy khoảng cách giữa hai cột mốc này là  $142$ m.
+		 }{
+		\begin{tikzpicture}[font=\footnotesize,line join=round,line cap=round,>=stealth,scale=0.35]
+				\begin{scope}[shift={(-18,-8)},scale=2.25]
+					\def\l{5} 
+					 \def\a{0.2}
+					 \fill[ball color=gray!30](-\a,0)--(-0.1*\a,1.5*\l)--(0.1*\a,1.5*\l)--(\a,0)--cycle;
+					 \tikzset{vongtron/.pic={
+					\fill[ball color=blue!50!gray](-0.95*\a,0.15*\l) arc (180:360:{0.95*\a} and {0.5*\a})--(1.2*\a,0) arc (0:-180:{1.2*\a}  and {0.5*\a})--cycle;
+						}} 
+					\tikzset{vongred/.pic={ 
+					\fill[ball color=red!50!gray](-0.95*\a,0.15*\l) arc (180:360:{0.95*\a} and {0.5*\a})--(1.2*\a,0) arc (0:-180:{1.2*\a} and {0.5*\a})--cycle; 
+						}} 
+					 \tikzset{cau/.pic={
+					 \def\r{1}
+					 \fill[ball color=gray!30!white](0,0) circle (\r);
+					\fill[ball color=blue,opacity=0.5](-25:\r) arc (-25:-155:\r)[out=-30,in=-150]to  (-25:\r);
+						 }}
+					\tikzset{ov/.pic={ 
+					\fill[ball color=gray!40!blue!50!white](0,0) rectangle  (1,1);
+					\fill[gray](1,1)--++(30:0.5)--++(-90:1)--(1,0)++(30:0.5)  coordinate (A);
+					\fill[ball  color=gray!70!blue!50!white](0,1)--++(30:0.5)--++(1,0)--++(-150:0.5);
+						 }}
+					 \path (0,0) pic{vongtron}
+						 (0,0.7*\l) pic[scale=0.5]{vongtron}
+						(0,0.96*\l) pic[scale=0.45]{vongtron} 
+						 (0,\l) pic[scale=0.5]{cau};
+					 \foreach \i/\m in{1.1/0.4,1.25/0.35,1.4/0.2}
+					\path  (0,\i*\l) pic[scale=\m]{vongred}
+						(-4,0)  pic[scale=0.75]{ov}
+						(-5,2) pic[scale=0.5]{ov}; 
+					\draw[teal,line width=1pt](A)--++(37:5.1) coordinate (B)--++(-119:5.8) coordinate  (C)
+						(B)--++(-90:\l) coordinate (D); 
+					 \draw[dashed] (D)--(A);
+					\draw  (C)--(D);
+					\begin{scope}[teal]
+						\clip  (A)--(B)--(C)--cycle;
+						\draw  (B) circle (1)++(-130:1.2) node{\tiny $43^\circ$};
+					\end{scope}
+					\begin{scope}[blue]
+						\clip  (C)--(B)--(D)--cycle;
+						\draw  (B) circle (1.2)++(-105:1.35) node{\tiny $54^\circ$};
+					\end{scope}
+					\begin{scope}[magenta]
+						\clip  (A)--(B)--(D)--cycle;
+						\draw (B) circle  (1.55)++(-125:1.75) node{\tiny $62^\circ$};
+					\end{scope}
+				\end{scope}
+				\path  (A) node[below]{$B$};
+				\path (B)  node[left]{$A$};
+				 \path (C) node[below=0.1cm]{$C$};
+				\path  (D) node[below=0.2cm]{$H$};
+				\foreach \x/\g  in{A/180,B/-90,C/0,D/-90}
+				 \fill[black](\x) circle (1pt);
+			\end{tikzpicture}
+	}} 
+\end{bt}
+
+
+%%%%%%%%%%%%%%%% TỰ LUẬN %%%%%%%%%%%%%%%%
+
+% nguồn: MaHoaNH_TuLuan_Lop10
+\begin{bt}%[0H4V3-2]%[ma:949a6189]
+	\immini[thm]{Bác An cần đo khoảng cách từ một địa điểm $A$ trên bờ hồ đến một địa điểm $B$ ở giữa hồ. Bác sử dụng giác kế để chọn một điểm $C$ cùng nằm trên bờ với $A$ sao cho $\widehat{BAC}=45^\circ$, $\widehat{ACB}=85^\circ$ và $AC=60$\,m. Hỏi khoảng cách $AB$ bằng bao nhiêu mét?}{\begin{tikzpicture}[scale=1,font=\footnotesize,line cap=round,line join=round,>=stealth]
+		\coordinate  (A) at (0,0);
+		 \coordinate (C) at (4,0);
+		\coordinate (B) at (4.5,3); 
+		\fill[cyan!30] (-.5,2).. controls +(-70:2) and +(150:1).. (2.5,1).. controls +(-15:2) and +(-30:1).. (5.5,3.5).. controls +(150:1) and +(40:1).. (3,4).. controls +(-150:1.5) and +(100:2)..  cycle;
+		 \draw (A)--(B)--(C)--cycle;
+		\foreach  \d/\g in {A/-135,B/90,C/-45}
+		\fill (\d) circle (1pt) node[shift={(\g:.3)}]{$\d$}; 
+		\path  pic[draw,angle radius=.3cm]{angle=C--A--B}
+			(A) node[shift={(20:.8)}]{$ $} pic[draw,angle  radius=.3cm]{angle=B--C--A} pic[draw,angle radius=.35cm]{angle=B--C--A}
+			(C)  node[shift={(150:.7)}]{$ $};
+	\end{tikzpicture}
+	 }
+	\loigiai{Xét tam giác $ABC$  có $\widehat{B}=180^\circ-\widehat{A}-\widehat{C}=50^\circ$.\\
+	Áp dụng định lý sintrong tam giác $ABC$ ta được\[\dfrac{AB}{\sin C}=\dfrac{AC}{\sin  B}\Rightarrow AB=\dfrac{AC\cdot\sin C}{\sin B}=\dfrac{60\cdot\sin85^\circ}{\sin50^\circ}\approx60{,}9 \text{(m)}.\]}
+\end{bt}
+
+% nguồn: MaHoaNH_TuLuan_Lop10
+\begin{bt}%[0H4V3-2]%[ma:3ec56081]
+	Hai chiếc tàu thủy cùng xuất phát từ vị trí $A$, đi thẳng theo hai hướng tạo với nhau một góc $60^{\circ}$. Tàu thứ  nhất chạy với tốc độ $20$ km/h, tàu thứ hai chạy với tốc độ $30$ km/h. Hỏi sau $3$ giờ hai tàu cách nhau bao nhiêu km? (làm tròn kết quả đến hàng phần chục).
+	 \loigiai{\immini{
+		Ta có quãng đường tàu thứ nhất đi được là $s_1=v_1\cdot t=20\cdot3=60$ (km).\\ 
+		Quãng đường tàu thứ hai đi được là  $s_2=v_2\cdot t=30\cdot3=90$ (km).\\
+		Áp  dụng định lý cosin cho tam giác $ABC$ với $B$ là vị trí tàu thứ nhất chạy đến sau $3$ giờ, nghĩa là $AB=s_1=60$ (km), $C$ là vị trí tàu thứ hai chạy đến sau $3$ (giờ), nghĩa là $AC=s_2=90$ (km).\\
+		 Ta có \allowdisplaybreaks
+		\begin{eqnarray*}
+			&&BC^2=AB^2+AC^2-2AB\cdot AC\cdot\cos \widehat{BAC}\\ 
+			&\Leftrightarrow& BC^2=60^2+90^2-2\cdot60\cdot90\cdot\cos 60^{\circ} \\ 
+			&\Leftrightarrow& BC^2=6300  \\
+			 &\Rightarrow& BC=30\sqrt{7}\approx79{,}4.
+		\end{eqnarray*}
+		Vậy khoảng  cách hai tàu sau $3$ giờ chạy xấp xỉ $79{,}4$ (km).
+		 }
+		{\begin{tikzpicture}[scale=0.7,font=\footnotesize,line join = round,line cap = round,>=stealth]
+		\path 
+			(-5,-2.09)  coordinate (A)
+			 (0,1.5) coordinate (C)
+			(0.1,-3) coordinate (T) 
+			 (0,-3) coordinate (B);
+		\draw (C)--(A)--(B)--(C); 
+		\pic[draw,"$60^{\circ}$",angle eccentricity=1.4,angle radius=0.8cm]{angle=B--A--C}; 
+		\foreach \x/\g in {A/180,B/-90,C/90} \fill[black]  (\x)+(\g:.3) node {$\x$};
+	\end{tikzpicture}
+		} 
+	} 
+\end{bt}
+
+% nguồn: MaHoaNH_TuLuan_Lop10
+\begin{bt}%[0H4V3-2]%[ma:1f14de9d]
+	Từ hai vị trí $A$, $B$  của một tòa nhà người ta quan sát đỉnh $C$ của ngọn núi. Biết rằng độ cao $AB$ bằng $70$ m, phương nhìn $AC$ tạo với phương nằm ngang một góc $30^{\circ}$, phương nhìn $BC$ tạo với phương nằm ngang một góc $15^\circ30'$. Hỏi ngọn núi đó có độ cao bao nhiêu mét so với mặt đất?
+	\begin{center}
+		\begin{tikzpicture}7[scale=0.8,font=\footnotesize,line join = round,line cap = round,>=stealth]
+				\path 
+					(-5,-1.5) coordinate (B) 
+					 (0,1.5) coordinate (C)
+					 (0.1,-3) coordinate (T)
+					(-5,-3)  coordinate (A)
+					(0,-3) coordinate  (H)
+					(0,-1.5) coordinate  (D);
+					(myman)  {man};
+				\draw  (A)--(C)--(B)--(A)--(H)--(D)--(C)
+					 (D)--(B);
+				\pic[draw,"$15^{\circ}30'$",angle  eccentricity=1.4,angle radius=1.1cm]{angle=D--B--C};
+				 \pic[draw,"$30^{\circ}$",angle eccentricity=1.4,angle radius=0.8cm]{angle=H--A--C};
+				\pic[draw,"$ $",angle eccentricity=1.4,angle  radius=0.7cm]{angle=H--A--C};
+				 \draw pic[draw,angle radius=2mm]{right angle=C--H--A};
+				\path (A)--(B) node[below,midway,sloped]{$70$}; 
+				\foreach \x/\g  in {A/180,B/180,C/90,H/-90,D/0} \fill[black] (\x)+(\g:.3) node {$\x$};
+			\end{tikzpicture}
+	\end{center}
+	\loigiai{ 
+		Ta có \allowdisplaybreaks$\begin{aligned}
+		 &\widehat{CAB}=90^{\circ}-30^{\circ}=60^{\circ}.\\
+		&\widehat{ABC}=90^{\circ}+15^{\circ} 30'=105^{\circ}  30'\\
+		&\Rightarrow \widehat{ACB}=180^{\circ}-\left(105^{\circ} 30'+60^{\circ} \right)=14^{\circ}  30'.
+	\end{aligned}$ \\
+	Áp dụng định lí  sin cho tam giác $ABC$ ta có
+	$$\dfrac{AB}{\sin \widehat{ACB}}=\dfrac{AC}{\sin \widehat{ABC}} \Rightarrow AC=\dfrac{AB\cdot\sin 105^{\circ}30'}{\sin 14^{\circ} 30'} \approx 269{,}41.$$ 
+	 Xét $\triangle ACH$ có $\sin 30^{\circ}=\dfrac{CH}{AC} \Rightarrow CH=AC\cdot\sin 30^{\circ}=134{,}71$ (m).
+ }
+\end{bt}
+
+% nguồn: MaHoaNH_TuLuan_Lop10
+\begin{bt}%[0H4V3-2]%[ma:f278070f]
+	 \immini[thm]{
+	Từ vị trí $A$ người  ta quan sát một cây cao (hình vẽ). Biết $AH=4$ m, $HB=20$ m, $\widehat{BAC}=45^\circ$. Tính chiều cao $BC$ của cây đó. (Kết quả làm tròn đến hàng phần chục)
+	 }{
+	\begin{tikzpicture}[line join=round,line cap=round,scale=1,transform shape,x=1.5cm,y=1.5cm]
+			\tikzset{ 
+				ex_markstyle/.style={}, 
+				ex_mark/.style  n args={1}{decoration={markings,
+				mark= at  position 0.5 with
+				 with{
+			 \ifnum#1=1
+			\draw[ex_markstyle] (0pt,-2pt) -- (0pt,2pt); 
+			\fi 
+			 \ifnum#1=2
+			 \draw[ex_markstyle] (-1pt,-2pt) -- (-1pt,2pt);
+			\draw[ex_markstyle]  (1pt,-2pt) -- (1pt,2pt);
+			 \fi
+			\ifnum#1=3 
+			 \draw[ex_markstyle] (-2pt,-2pt) -- (-2pt,2pt);
+			\draw[ex_markstyle] (0pt,-2pt) -- (0pt,2pt); 
+			\draw[ex_markstyle] (2pt,-2pt)  -- (2pt,2pt);
+			 \fi
+			\ifnum#1=4 
+			 \draw[ex_markstyle] (-1pt,-1pt) -- (1pt,1pt);
+			 \draw[ex_markstyle] (-1pt,1pt) -- (1pt,-1pt);
+			 \fi
+				}}, 
+			pic actions/.append code=\tikzset{postaction=decorate}},
+		} 
+		\clip  (-3,-1.5) rectangle (3,1.7);
+		 \tikzset{cay/.pic={
+		\def\T{ 
+			(-.33,0) 
+			..controls +(-50:.25) and +(40:.45)..  (-.57,-1.45)
+			..controls +(20:.1) and +(-160:.15)..  (-.1,-1.3)
+			..controls +(-120:.1) and  +(60:.15).. (-.2,-1.6)
+			..controls  +(-30:.1) and +(-140:.15).. (.15,-1.3)
+			..controls +(-20:.1) and  +(-160:.15).. (.57,-1.4)
+			..controls  +(170:.4) and +(-160:.1).. (.35,0)
+			..controls +(110:.5)  and +(80:.5).. (-.33,0);}
+		\fill[gray]  \T;
+		\def\C{ 
+			(0,.3) 
+			..controls +(-100:.25) and +(-60:.2)..  (-.3,.1)
+			..controls +(-100:.25) and +(-60:.2)..  (-.6,0)
+			..controls +(-120:.45)  and +(-110:.35).. (-1,.2)
+			..controls +(-150:.5)  and +(-140:.35).. (-1.15,.7)
+			..controls  +(-170:.4) and +(-170:.35).. (-1,1.15)
+			..controls +(140:.35)  and +(110:.4).. (-.37,1.35)
+			..controls  +(110:.25) and +(80:.3).. (-.15,1.35)
+			..controls +(80:.3) and  +(95:.8).. (.55,1.1)
+			..controls +(80:.2) and +(95:.2).. (.8,1.1) 
+			..controls  +(20:.1) and +(95:.1).. (.95,1)
+			..controls +(-20:.4)  and +(35:.25).. (1,.47)
+			 ..controls +(-30:.3) and +(-20:.3).. (.75,0.05)
+			..controls +(-120:.3) and  +(-60:.2).. (.35,0)
+			..controls  +(175:.2) and +(-160:.1).. (.2,0.2)
+			..controls +(-160:.1) and +(-70:.1).. (0,.3);} 
+		\draw  \C;
+		\fill[green] \C; 
+		 \def\C1{
+			 (-1.15,.7)
+			..controls +(-170:.4) and  +(-170:.35).. (-1,1.15)
+			..controls +(140:.35)  and +(110:.4).. (-.37,1.35)
+			..controls +(110:.25) and +(80:.3)..  (-.15,1.35)
+			..controls +(80:.3)  and +(95:.8).. (.55,1.1)
+			..controls  +(80:.2) and +(95:.2).. (.8,1.1)
+			..controls +(20:.1) and +(95:.1).. (.95,1) 
+			 ..controls +(-20:.4) and +(35:.25).. (1,.47)
+			..controls  +(-50:.5) and +(-85:.6).. (.65,.55)
+			..controls +(-160:.4) and +(-120:.4)..  (0,.7)
+			 ..controls +(-150:.2) and +(-80:.4).. (-.63,.6)
+			..controls  +(-140:.5) and +(-130:.4).. (-1.15,.7);}
+		 \fill[green] \C1;
+		\def\G{ 
+			 (-.8,.2)
+			..controls +(-35:.1) and +(130:.35).. 
+			(-.32,0) 
+			..controls +(-40:.1)  and +(45:.35).. (-.42,-1.25)
+			(-.32,0) 
+			 ..controls +(120:.1) and +(-45:.35).. (-.58,.45)
+			(-.32,0) 
+			 ..controls +(80:.1) and +(-170:.35).. (-.05,.45)
+			 (-.28,.3)
+			..controls +(80:.1) and +(-60:.05)..  (-.35,.55)
+			(.45,-1.3) 
+			 ..controls +(130:.6) and +(-160:.3).. (.6,0.35)
+			(.37,0) 
+			..controls +(35:.2) and  +(-150:.1).. (.66,0.15)
+			 (.37,0)
+			 ..controls +(80:.2) and +(-40:.1).. (.18,0.4)
+			 (.31,0.25)
+			..controls +(80:.1) and +(-150:.1)..  (.38,0.5)
+			 (.25,-0.15)
+			..controls +(-110:.05)  and +(110:.05).. (.2,-0.5)
+			 (.2,-0.25)
+			..controls  +(-110:.05) and +(110:.05).. (.17,-0.45)
+			 (-.2,-0.15)
+			..controls +(-70:.1) and +(110:.05)..  (-.18,-0.5)
+			 (-.15,-0.15)
+			..controls +(-70:.1) and  +(110:.05).. (-.15,-0.7)
+			(-.05,-0.8) 
+			..controls +(-80:.15) and +(-10:.15)..  (-.3,-1.28)
+			 (-.1,-0.9)
+			 ..controls +(-110:.1) and +(20:.05).. (-.2,-1.1)
+			 (.1,-1)
+			..controls +(-50:.05) and +(120:.05).. (.15,-1.2) 
+			(.1,-1.15) 
+			..controls +(-50:.05) and +(120:.05).. (.12,-1.2) 
+			(.15,-.75) 
+			..controls +(-120:.1) and +(-140:.1)..  (.22,-.9)
+			..controls +(70:.12)  and +(120:.05).. (.18,-.9);}
+		\draw  \G;
+			}} 
+		 \path
+			(2,0)  pic[scale=.8]{cay};
+		\path (2,-1.1)  coordinate (B)
+			(-2,-1.1) coordinate (H) 
+			(-2,-.5) coordinate (A) 
+			(2,1.25)  coordinate (C);
+		\node  at (B) [below]{$B$};
+		\node at (H) [below]{$H$}; 
+		\node at (A) [left]{$A$}; 
+		\node  at (C) [above]{$C$};
+		\node at  (-2,-.8) [left]{$4$ m};
+		\node at (0,-1.1)  [below]{$20$ m};
+		\draw  (B)--(H)--(A)--(C)
+			(A)--(B); 
+		\draw  pic["$45^\circ$",draw=black,angle eccentricity=2.5,ex_mark=1,angle radius=.6cm,color=blue]
+			{angle=B--A--C}; 
+		 \draw pic[draw=black,angle radius=.2cm]
+			{right  angle=A--H--B};
+	\end{tikzpicture}
+	} 
+	\loigiai{ 
+		Độ dài $AB=\sqrt{4^2+20^2}=4\sqrt{26}$.\\ 
+		Xét tam  giác vuông $AHB$, ta có $\tan\widehat{ABH}=\dfrac{AH}{BH}=\dfrac{4}{20}=\dfrac{1}{5}$.\\
+		Ta có $\widehat{CBA}=90^\circ-\widehat{ABH}=78^\circ  41' \Rightarrow \widehat{ACB}=180^\circ-45^\circ-CBA=56^\circ 18'$.\\
+		Áp dụng định lí sintrong tam  giác $ABC$, ta có\\ $\dfrac{BC}{\sin45^\circ}=\dfrac{AB}{\sin\widehat{ACB}} \Rightarrow BC=\dfrac{AB\sin45^\circ}{\sin\widehat{ACB}}=\dfrac{52}{3} \approx 17{,}3$.
+	} 
+\end{bt}
+
+% nguồn: MaHoaNH_TuLuan_Lop10
+\begin{bt}%[0H4B3-2]%[ma:91c47524]
+	Viết phương trình chính tắc của Elip, biết  $(E)$ có một tiêu điểm $F_2(5;0)$ và đi qua điểm $M(0;3)$.
+	 \loigiai{
+		Giả sử phương trình chính tắc của Elip  có dạng $\dfrac{x^2}{a^2}+\dfrac{y^2}{b^2}=1$, $(a>b>0)$.\\
+		Vì $(E)$  có một tiêu điểm $F_2(5;0)$ nên $ c=5$.\\
+		Vì $(E)$ đi qua điểm $M(0;3)$ nên $\dfrac{0^2}{a^2}+\dfrac{3^2}{b^2}=1  \Rightarrow{b^2}=9$.\\
+		Ta có  $a^2=b^2+c^2=25+9=34$.\\
+		Vậy  phương trình chính tắc của $(E)$ là $\dfrac{x^2}{34}+\dfrac{y^2}{9}=1$.
+	 }
+\end{bt}
+
+% nguồn: MaHoaNH_TuLuan_Lop10
+\begin{bt}%[0H4B3-2]%[0X1Y3-2]%[0X1B4-3]%[ma:583644cf]
+	Trong mặt phẳng $Oxy$, viết phương trình chính tắc của  elip đi qua điểm $A(6;4)$ và có độ dài trục lớn gấp hai lần độ dài trục nhỏ.
+	\loigiai{ 
+		Gọi phương  trình chính tắc của elip là $\dfrac{x^2}{a^2} + \dfrac{y^2}{b^2} = 1$, ($a > b$).\\
+		Vì elip đi qua điểm $A(6;4)$ nên $\dfrac{36}{a^2} + \dfrac{16}{b^2} =  1$. $\hfill (1)$\\
+		Hơn nữa, vì elip có độ dài trục lớn gấp hai lần độ dài trục  nhỏ nên $a = 2b$. $\hfill (2)$\\
+		 Từ $(1)$ và $(2)$, ta có
+		$$ \heva{&\dfrac{36}{a^2} +  \dfrac{16}{b^2} = 1\\&a = 2b} \Leftrightarrow \heva{&a^2 = 100\\&b^2 = 25.} $$
+		 Vậy $(E)\colon \dfrac{x^2}{100} + \dfrac{y^2}{25} = 1$.
+	} 
+\end{bt}

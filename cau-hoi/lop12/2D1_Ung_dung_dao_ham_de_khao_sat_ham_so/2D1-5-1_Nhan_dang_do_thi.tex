@@ -1,0 +1,4319 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Lớp 12 | Ứng dụng đạo hàm để khảo sát hàm số | Khảo sát sự biến thiên và vẽ đồ thị hàm số
+% Dạng 2D1?5-1: Nhận dạng đồ thị
+% Số câu: 111  (sinh tự động bởi tach_cau.py; từ nay thầy sửa trực tiếp file này)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%% TRẮC NGHIỆM 4 PHƯƠNG ÁN %%%%%%%%%%%%%%%%
+
+% nguồn: Phan1_Lop_12_Dai_so_Chuong_1
+\begin{ex}%[2D1N5-1]%[ma:d4fa5a34]
+	 \immini{
+		Đường cong trong hình vẽ bên là  đồ thị của hàm số nào dưới đây?
+	 \choice
+			{\True  $y=\dfrac{x+1}{x-1}$}
+			{$y=x^3-3x-1$} 
+			{$y=\dfrac{2x-1}{x-1}$} 
+			 {$y=\dfrac{x^2-x+1}{x-1}$}
+			 }
+			 {
+			\begin{tikzpicture}[scale=.6,font=\footnotesize,line join=round,line cap=round,>=stealth]
+				\draw[->]  (-4,0)--(0,0) node[below right]{$O$}--(6,0) node[below]{$x$};
+				\draw[->]  (0,-3.6) --(0,4) node[right]{$y$};
+				 \draw [domain=1.7:5.5,samples=100]
+					plot (\x,{(\x+1)/((\x)-1)}); 
+				\draw [domain=-4:0.55,samples=100] 
+					plot (\x,{(\x+1)/((\x)-1)}); 
+				 \draw[fill] (0,0) circle (1.5pt);
+				\draw  (-4,1)--(6,1);
+				\draw  (1,-3.6)--(1,4);
+				\draw (-1,0) node[below] {$-1$}  circle (1.5pt);
+				\draw (0,-1)  node[left] {$-1$} circle (1.5pt);
+				\draw (1,0) node[below right] {$1$}  circle (1.5pt);
+				\draw (0,1)  node[above left] {$1$} circle (1.5pt);
+			\end{tikzpicture}
+			 }
+	\loigiai{ 
+			Từ đồ thị hàm số đã cho, ta thấy $x=1$ là tiệm cận đứng của đồ thị hàm số, $y=1$ là tiệm cận ngang của  đồ thị hàm số.\\
+			Do đó, đây là đồ thị  của hàm số $y=\dfrac{x+1}{x-1}$.
+		 }
+	\end{ex}
+
+% nguồn: Phan1_Lop_12_Dai_so_Chuong_1
+\begin{ex}%[2D1N5-1]%[ma:b004278f]
+		Đường cong ở hình  vẽ dưới đây là đồ thị của hàm số $y=\dfrac{x+a}{bx+c}$, $(a,b,c\in \mathbb{Z})$.
+		\begin{center}
+			\begin{tikzpicture}[scale=0.7,font=\footnotesize,line join=round,line cap=round,>=stealth]
+				\def\xmin{-3}; \def\ymin{-3}; \def\xmax{5};  \def\ymax{4};
+				 \coordinate (O) at (0,0);
+				\draw[->] (\xmin,0)--(\xmax,0) node[below]{$x$}; 
+				 \draw[->] (0,\ymin)--(0,\ymax) node[left]{$y$};
+				\fill (O)  node[below left]{$O$} circle (1pt);
+				\clip ({\xmin-0.1},{\ymin-0.1}) rectangle ({\xmax+0.1},{\ymax+0.1}); 
+				 \foreach \x in {2}{
+					\fill (\x,0) node[below]{$\x$}  circle (1pt);
+				} 
+				 \foreach \y in {2}{
+					\fill (0,\y)  node[left]{$\y$} circle (1pt);
+				} 
+				\draw[samples=100] plot[domain=\xmin:0.99](\x,{(\x-2)/(\x-1)}); 
+				\draw[samples=100]  plot[domain=1.01:\xmax](\x,{(\x-2)/(\x-1)});
+				\draw[dashed]  (1.0,\ymin)--(1.0,\ymax);
+				\draw[dashed] (\xmin,1.0)--(\xmax,1.0); 
+				\draw (1,3) node[right]{$x=1$} 
+					 (-2,0.2) node[above]{$y=1$};
+			\end{tikzpicture}
+		\end{center}
+		Giá trị biểu thức $T=a-3b-2c$  bằng
+	 \choice
+			{$3$} 
+			 {$2$}
+			 {$0$}
+			{\True $-3$} 
+	\loigiai{ 
+			Đồ thị hàm số có tiệm cận  ngang $y=1\Rightarrow \dfrac{1}{b}=1\Leftrightarrow b=1$.\\
+			Đồ thị hàm số có tiệm cận đứng $x=1\Rightarrow-\dfrac{c}{b}=1\Leftrightarrow  b=-c\Rightarrow c=-1$.\\
+			Đồ thị hàm số đi qua điểm $(0;2)\Rightarrow  2=\dfrac{0+a}{1\cdot 0+(-1)} \Leftrightarrow a=-2$.\\
+			Vậy $T=a-3b-2c=(-2)-3\cdot  1-2\cdot (-1)=-3$.
+		 }
+	\end{ex}
+
+% nguồn: Phan1_Lop_12_Dai_so_Chuong_1
+\begin{ex}%[2D1N5-1]%[ma:76133325]
+		Cho hàm số $f(x)=\dfrac{ax+1}{bx+c}$ ($a,b,c\in \mathbb{R}$)  có bảng biến thiên như sau
+		\begin{center}
+			\begin{tikzpicture}[scale=1,font=\footnotesize]
+				\tkzTabInit[nocadre=false,lgt=1.2,espcl=2.5,deltacl=0.7] 
+					{$x$/0.8,$f'(x)$/0.6,$f  (x)$/2}
+					 {$-\infty$,$3$,$+\infty$};
+				 \tkzTabLine{,-,d,-,};
+				\tkzTabVar{+/$\dfrac{1}{2}$,-D+/$-\infty$/$+\infty$,-/$\dfrac{1}{2}$}; 
+			\end{tikzpicture}
+		\end{center}
+		Khẳng định  nào dưới đây đúng?
+	 \choice
+			{$\hoac{&b>\dfrac{2}{3}\\&b <  0}$}
+			 {\True $\hoac{&b > 0\\&b <-\dfrac{2}{3}}$}
+			{$-\dfrac{2}{3} <  b < 0$}
+			{$0\le b  < \dfrac{2}{3}$}
+	 \loigiai{
+			Tập  xác định $\mathscr{D}=\mathbb{R}\setminus \left\{\dfrac{-c}{b} \right\}$.\\
+			Từ bảng biến thiên ta có 
+			\begin{itemize}
+				\item $\lim\limits_{x\to 3^{+}} f(x)=+\infty$ nên đường thẳng $x=3$ là tiệm cận đứng của đồ  thị hàm số.
+				\item $\lim\limits_{x\to \pm  \infty} f(x)=\dfrac{1}{2}$ nên đường thẳng $y=\dfrac{1}{2}$ là tiệm cận ngang của đồ thị hàm số.
+			\end{itemize}
+			Nghĩa là ta có, $\heva{&\dfrac{-c}{b}=3\\&\dfrac{a}{b}=\dfrac{1}{2}} \Rightarrow \heva{&c=-3b \\&a=\dfrac{1}{2}b}\quad  (1).$\\
+			Mặt  khác $y'=\dfrac{ac-b}{\left(bx+c\right)^2} < 0\Leftrightarrow ac-b < 0\quad (2)$.\\
+			 Từ $(1)$ và $(2)$ ta có $\dfrac{1}{2} b\cdot (-3b)-b < 0\Leftrightarrow-\dfrac{3}{2} b^2-b < 0\Leftrightarrow \hoac{&b > 0\\
+			&b  <-\dfrac{2}{3}.}$
+		} 
+	\end{ex}
+
+% nguồn: Phan1_Lop_12_Dai_so_Chuong_1
+\begin{ex}%[2D1N5-1]%[ma:0d0c7198]
+	\immini{Đường cong trong hình bên là đồ thị của hàm số  nào?
+	 \choice
+			 {$y=\dfrac{x^2+x+2}{x+1}$}
+			 {$y=\dfrac{x^2-x+2}{-x+1}$}
+			 {$y=\dfrac{x^2-x-2}{x-1}$}
+			 {\True $y=\dfrac{x^2-x+2}{x-1}$}}
+			{\begin{tikzpicture}[line join = round,line cap = round,>=stealth,font=\footnotesize,scale=0.5]
+		\def\xt{-3.5} \def\xp{5.5} \def\yd{-5.5}  \def\yt{5.5}
+		 \def\a{1}
+		\def\b{0} 
+		 \def\c{2}
+		 \def\d{1}
+		\def\e{-1} 
+		 \draw[->] (\xt,0)--(\xp,0) node[below]{$x$};
+		\draw[->] (0,\yd)--(0,\yt)  node[left]{$y$};
+		\foreach \x/\y/\label/\pos in {0/0/$O$/above left,1/0/$1$/above right,0/1/$1$/above  left,0/-2/$-2$/below left}
+			{ 
+		\fill  (\x,\y) circle (1pt) node [\pos]{\label};
+		 }
+		\clip (\xt+0.1,\yd+0.1) rectangle (\xp-0.1,\yt-0.1); 
+		 \draw[samples=150,smooth,domain=\xt:0.99] plot (\x,{\a*\x+\b+\c/(\d*\x+\e)});
+		\draw[samples=150,smooth,domain=1.01:\xp] plot (\x,{\a*\x+\b+\c/(\d*\x+\e)}); 
+		 \draw[dashed,samples=150,smooth,domain=\xt:\xp] plot (\x,{\a*\x+\b});
+		\draw[dashed]  (1,\yd) -- (1,\yt);
+		\draw[dashed] (0,1) -- (1,1); 
+	\end{tikzpicture}
+			} 
+	\loigiai{Vì đồ thị hàm số có đường tiệm cận đứng là $x=1$ và đường tiệm cận xiên là $y=x$ nên hàm số  có thể viết được dưới dạng: $y=x+\dfrac{c}{x-1}$.\\
+			Vì đồ thị hàm số cắt trục tung tại  điểm $(0;-2)$ nên ta có: $\dfrac{c}{-1}=-2\Leftrightarrow c=2$.\\
+			Suy ra $y=x+\dfrac{2}{x-1}$ hay  $y=\dfrac{x^2-x+2}{x-2}$.
+		} 
+	\end{ex}
+
+% nguồn: Phan1_Lop_12_Dai_so_Chuong_1
+\begin{ex}%[2D1N5-1]%[ma:c797edf5]
+		Cho hàm số $y=\dfrac{ax+b}{cx+d}$ ($a < 0$) có đồ thị  như sau
+		\begin{center}
+			\begin{tikzpicture}[scale=0.7,font=\footnotesize,line join=round,line cap=round,>=stealth]
+				\def\xmin{-5}; \def\ymin{-5}; \def\xmax{4}; \def\ymax{4}; 
+				\coordinate  (O) at (0,0);
+				\draw[->] (\xmin,0)--(\xmax,0)  node[below]{$x$};
+				\draw[->]  (0,\ymin)--(0,\ymax) node[left]{$y$};
+				\fill (O) node[below  left]{$O$} circle (1pt);
+				\clip  ({\xmin-0.1},{\ymin-0.1}) rectangle ({\xmax+0.1},{\ymax+0.1});
+				\draw[samples=100] plot[domain=\xmin:-1.01](\x,{(-\x+1)/(\x+1)}); 
+				\draw[samples=100]  plot[domain=-0.99:\xmax](\x,{(-\x+1)/(\x+1)});
+				\draw[dashed]  (-1.0,\ymin)--(-1.0,\ymax);
+				\draw[dashed]  (\xmin,-1.0)--(\xmax,-1.0);
+			\end{tikzpicture}
+		\end{center}
+		Mệnh đề nào sau  đây là đúng?
+	\choice 
+			{$ab<0$, $bc<0$, $cd > 0$} 
+			{$ab>0$, $bc<0$, $cd  > 0$}
+			{$ab>0$,  $bc>0$, $cd > 0$}
+			{\True  $ab<0$, $bc>0$, $cd > 0$}
+	 \loigiai{
+			Dựa vào đồ thị  ta thấy
+			\begin{itemize}
+				\item Đồ thị hàm số có tiệm cận  đứng là $x=-\dfrac{d}{c}<0\Leftrightarrow \dfrac{d}{c}>0$. Suy ra, $d$ và $c$ cùng dấu.
+				\item Đồ  thị hàm số có tiệm cận ngang là $y=\dfrac{a}{c}<0$. Suy ra, $a$ và $c$ trái dấu.
+			\end{itemize}
+			Mà theo giả thiết $a<0$ nên $c>0$ và  suy ra $d>0$.\\
+			Đồ thị hàm  số cắt trục tung tại điểm $\left(0;\dfrac{b}{d} \right)$ và $\dfrac{b}{d}>0$ nên $b$ và $d$ cùng dấu dẫn đến $b>0$.\\
+			Do đó  $ab<0$, $bc>0$, $cd>0$.
+		 }
+	\end{ex}
+
+% nguồn: Phan1_Lop_12_Dai_so_Chuong_1
+\begin{ex}%[2D1N5-1]%[ma:4015077f]
+		Đồ thị hàm số nào dưới đây có dạng như đường cong  trong hình vẽ?
+		\begin{center}
+			\begin{tikzpicture}[scale=0.7,font=\footnotesize,line join=round,line cap=round,>=stealth]
+				\def\xmin{-3}; \def\ymin{-3}; \def\xmax{5};  \def\ymax{4};
+				 \coordinate (O) at (0,0);
+				\draw[->] (\xmin,0)--(\xmax,0) node[below]{$x$}; 
+				\draw[->] (0,\ymin)--(0,\ymax)  node[left]{$y$};
+				\fill (O) node[below left]{$O$}  circle (1pt);
+				\clip ({\xmin-0.1},{\ymin-0.1}) rectangle  ({\xmax+0.1},{\ymax+0.1});
+				\draw[samples=100]  plot[domain=\xmin:0.99](\x,{(\x-2)/(\x-1)});
+				\draw[samples=100]  plot[domain=1.01:\xmax](\x,{(\x-2)/(\x-1)});
+				\draw[dashed]  (1.0,\ymin)--(1.0,\ymax);
+				 \draw[dashed] (\xmin,1.0)--(\xmax,1.0);
+				\draw  (1,3.5) node[right]{$x=1$}
+					 (-2,0.2) node[above]{$y=1$};
+			\end{tikzpicture}
+		\end{center}
+	\choice 
+			 {\True $y=\dfrac{x-2}{x-1}$}
+			 {$y=\dfrac{x-2}{x+1}$}
+			 {$y=\dfrac{2x+1}{x-1}$}
+			 {$y=-x^3+3x+2$}
+	 \loigiai{
+			Gọi hàm  số cần tìm có dạng $y=\dfrac{ax+b}{cx+d}$, với $a, b, c, d\in\mathbb{R}$ có độ thị $(C)$.\\
+			Đồ thị có các đường tiệm cận đứng $x=1$ và tiệm cận ngang $y=1$  nên chỉ có hàm số $y=\dfrac{x-2}{x-1}$ thỏa mãn yêu cầu bài toán.
+		 }
+	\end{ex}
+
+% nguồn: Phan1_Lop_12_Dai_so_Chuong_1
+\begin{ex}%[2D1N5-1]%[ma:f28fcf67]
+		Đồ thị của hàm số nào dưới đây có dạng như đường cong trong  hình dưới?
+		\begin{center}
+			\begin{tikzpicture}[scale=0.7,font=\footnotesize,line join=round,line cap=round,>=stealth]
+				\draw[->]  (-2,0)--(4,0) node[below left] {$x$};
+				\draw[->]  (0,-1.5)--(0,4) node[below left] {$y$};
+				\draw (0,0) node [shift={(135:3mm)}]  {$O$};
+				 \foreach \x/\g in {-1/-90,1/-90,2/-90}
+				 \fill (\x,0) circle (1pt) node[shift={(\g:3mm)}]{\scriptsize $\x$};
+				\foreach  \y/\g in {-1/-30,1/0,2/0,3/30}
+				\fill  (0,\y) circle (1pt) node[shift={(\g:3mm)}]{\scriptsize $\y$};
+				\draw[dashed,thin] 
+					 (-1,0)|-(0,3)-|(2,0);
+				\begin{scope}
+					\clip (-2,-1.5) rectangle  (4,4);
+					 \draw[smooth,samples=200,domain=-1.8:3.5,smooth,variable=\x] plot (\x,{-1*((\x)^3)+3*((\x)^2)-1});
+				\end{scope}
+			\end{tikzpicture}
+		\end{center}
+	\choice 
+			{$y=-x^3+3x^2+1$} 
+			 {$y=x^3+3x^2-1$}
+			{\True $y=-x^3+3x^2-1$} 
+			{$y=-x^3-3x-1$} 
+	\loigiai{ 
+			Dựa vào hàm số ta  thấy,\\
+			+) Hình dáng đồ thị cho ta hệ số  $a<0$.\\
+			+) Đồ thị cắt trục tung  tại $-1$ nên hệ số tự do $-1$.\\
+			+) Đồ thị có hai cực trị nên $\Delta_{y'}  = b^2-3ac > 0$.\\
+			Như vậy, hàm số  cần tìm là $y=-x^3+3x^2-1$.
+		} 
+	\end{ex}
+
+% nguồn: Phan1_Lop_12_Dai_so_Chuong_1
+\begin{ex}%[2D1N5-1]%[ma:2e290b25]
+		Cho hàm số $f(x)=\dfrac{ax+1}{bx+c}$ ($a,b,c\in \mathbb{R}$) có bảng biến  thiên như sau
+		\begin{center}
+			\begin{tikzpicture}[scale=1,font=\footnotesize]
+				 \tkzTabInit[nocadre=false,lgt=1.2,espcl=2.5,deltacl=0.7]
+					 {$x$/0.8,$f'(x)$/0.6,$f (x)$/2}
+					 {$-\infty$,$-1$,$+\infty$};
+				\tkzTabLine{,-,d,-,}; 
+				\tkzTabVar{+/$2$,-D+/$-\infty$/$+\infty$,-/$2$}; 
+			\end{tikzpicture}
+		\end{center}
+		Trong  các số $a,b,c$ có bao nhiêu số dương?
+	\choice 
+			 {$2$}
+			{$1$} 
+			 {$0$}
+			 {\True $3$}
+	 \loigiai{
+			Từ bảng biến  thiên ta thấy đồ thị hàm số có đường tiệm cận đứng là $x=-1$ và tiệm cận ngang $y=2$.\\
+			Suy ra $\heva{&\dfrac{-c}{b}=-1 \\&\dfrac{a}{b}=2}  \Rightarrow \heva{&c=b \\&a=2b.}$\\
+			Hàm số đã cho nghịch biến trên từng khoảng xác định  nên $y'=\dfrac{ac-b}{(bx+c)^2}<0$.\\
+			Suy ra $ac-b < 0\Rightarrow 2b^2-b <  0\Rightarrow 0< b < \dfrac{1}{2}$.\\
+			Suy ra cả ba số $a,b,c$ đều dương. 
+		} 
+	\end{ex}
+
+% nguồn: Phan1_Lop_12_Dai_so_Chuong_1
+\begin{ex}%[2D1N5-1]%[ma:90f98762]
+		Cho  hàm số $y=\dfrac{ax-b}{x-1}$, với $a, b\in\mathbb{R}$ có đồ thị như hình vẽ.
+		\begin{center}
+			\begin{tikzpicture}[scale=0.7,font=\footnotesize,line join=round,line cap=round,>=stealth]
+				\def\xmin{-4}; \def\ymin{-5};  \def\xmax{4}; \def\ymax{3};
+				 \coordinate (O) at (0,0);
+				 \draw[->] (\xmin,0)--(\xmax,0) node[below]{$x$};
+				\draw[->] (0,\ymin)--(0,\ymax)  node[left]{$y$};
+				\fill (O) node[below left]{$O$}  circle (1pt);
+				\clip ({\xmin-0.1},{\ymin-0.1}) rectangle ({\xmax+0.1},{\ymax+0.1}); 
+				\foreach \x  in {2}{
+					\fill  (\x,0) node[below]{$\x$} circle (1pt);
+				} 
+				\foreach \y in  {-2}{
+					\fill (0,\y)  node[left]{$\y$} circle (1pt);
+				} 
+				\draw[samples=100] plot[domain=\xmin:0.99](\x,{(-\x+2)/(\x-1)}); 
+				\draw[samples=100]  plot[domain=1.01:\xmax](\x,{(-\x+2)/(\x-1)});
+				\draw[dashed] (1.0,\ymin)--(1.0,\ymax); 
+				\draw[dashed]  (\xmin,-1.0)--(\xmax,-1.0);
+				\draw  (1,-4) node[right]{$x=1$}
+					(-3,-0.9) node[above]{$y=-1$}; 
+			\end{tikzpicture}
+		\end{center}
+		 Khẳng định nào dưới đây là đúng?
+	 \choice
+			{\True $b < a <  0$}
+			{$0< b < a$} 
+			{$b <  0< a$}
+			{$0< a  < b$}
+	\loigiai{ 
+			Đồ thị hàm số có tiệm cận ngang là đường thẳng  $y=-1\Rightarrow\dfrac{a}{c}=-1\Rightarrow a=-1$.\\
+			Đồ thị hàm số đi qua  điểm $(2;0)\Rightarrow 2a-b=0\Rightarrow b=-2$.\\ Vậy $b<a<0$.
+		} 
+	\end{ex}
+
+% nguồn: Phan1_Lop_12_Dai_so_Chuong_1
+\begin{ex}%[2D1N5-1]%[ma:cd95b799]
+		Cho hàm số $y=\dfrac{ax-b}{x-1}$, với $a, b \in\mathbb{R}$ có đồ thị như hình  vẽ dưới đây
+		\begin{center}
+			\begin{tikzpicture}[scale=0.7,font=\footnotesize,line join=round,line cap=round,>=stealth]
+				 \def\xmin{-4}; \def\ymin{-4}; \def\xmax{4}; \def\ymax{4};
+				\coordinate  (O) at (0,0);
+				\draw[->] (\xmin,0)--(\xmax,0) node[below]{$x$}; 
+				\draw[->] (0,\ymin)--(0,\ymax)  node[left]{$y$};
+				\fill (O) node[below left]{$O$}  circle (1pt);
+				\clip ({\xmin-0.1},{\ymin-0.1})  rectangle ({\xmax+0.1},{\ymax+0.1});
+				\foreach  \x in {2}{
+					\fill (\x,0) node[below]{$\x$} circle  (1pt);
+				} 
+				\foreach \y  in {-2}{
+					\fill  (0,\y) node[left]{$\y$} circle (1pt);
+				 }
+				 \draw[samples=100] plot[domain=\xmin:0.99](\x,{(-\x+2)/(\x-1)});
+				\draw[samples=100]  plot[domain=1.01:\xmax](\x,{(-\x+2)/(\x-1)});
+				 \draw[dashed] (1.0,\ymin)--(1.0,\ymax);
+				\draw[dashed] (\xmin,-1.0)--(\xmax,-1.0); 
+				 \draw (-3,-1) node[above]{$y=-1$}
+					(1.0,\ymin) node[right]{$x=1$}; 
+			\end{tikzpicture}
+		\end{center}
+		Tích $a.b$ bằng 
+	\choice 
+			{\True $2$} 
+			{$-3$} 
+			 {$-2$}
+			 {$3$}
+	\loigiai{ 
+			Hàm số $y=\dfrac{ax-b}{x-1}$  có đồ thị là $(C)$.\\
+			Từ đồ thị ta có  tiệm cận ngang $y=-1$ nên $a=-1$.\\
+			Đồ thị hàm số cắt trục hoành tại điểm có hoành độ bằng $2$  nên $M\left(2;0\right)\in (C)$.\\
+			 Suy ra, $0=\dfrac{-2-b}{2-1} \Leftrightarrow b=-2$.\\
+			Vậy $a\cdot b=2$. 
+		} 
+	\end{ex}
+
+% nguồn: Phan1_Lop_12_Dai_so_Chuong_1
+\begin{ex}%[2D1N5-1]%[ma:6c9516a0]
+		Cho hàm số $y=f(x)$ liên tục trên $[-3;2]$ và có bảng biến thiên như sau. Gọi $M$, $m$ lần lượt là giá trị lớn nhất và giá trị nhỏ nhất của hàm  số $y=f(x)$ trên đoạn $[-1;1]$. Tính $M+m$.
+		\begin{center}
+			\begin{tikzpicture}
+				 \tkzTabInit[nocadre=true,lgt=1.2,espcl=2,deltacl=0.5]
+					 {$x$/0.7,$f (x)$/2}
+					 {$-3$,$-1$,$0$,$1$,$2$}
+				 \tkzTabVar{-/$-2$,+/$3$,-/$0$,+/$2$,-/$1$}
+			\end{tikzpicture}
+		\end{center}
+	\choice 
+			{$0$} 
+			{\True  $3$}
+			 {$2$}
+			{$1$} 
+	\loigiai{Trên đoạn $[-1;1]$ ta có giá trị lớn nhất $M=3$ khi $x=-1$ và giá  trị nhỏ nhất $m=0$ khi $x=0$.\\
+		 Khi đó $M=+m=3+0=3$.}
+	\end{ex}
+
+% nguồn: Phan1_Lop_12_Dai_so_Chuong_1
+\begin{ex}%[2D1N5-1]%[ma:4778a72b]
+	\immini{Đường cong hình bên là đồ thị của  một trong bốn hàm số dưới đây. Hàm số đó là hàm số nào?
+	\choice 
+			 {$y=\dfrac{x-2}{x-1}$}
+			{\True  $y=x^3-3x+2$}
+			{$y=-x^3+3x+2$} 
+			 {$y=x^2+1$}}
+			{\begin{tikzpicture}[line cap=butt,line join=miter,>=stealth,xscale=0.83,yscale=0.5]
+		\tikzset{declare function={xmin=-3;  xmax=3;
+			ymin=-3; ymax=5; 
+			a=1; b=0;  c=-3; d=2;
+			 f (\x)=a*(\x)^3+b*(\x)^2+c*(\x)+d;
+			}, 
+			 smooth,samples=50
+		} 
+		\draw[->] (xmin-0.25,0)--(xmax+0.5,0) 
+			node[shift={(-100:7pt)},font=\normalsize]{$ x $}; 
+		 \draw[->] (0,ymin-0.25)--(0,ymax+0.5)
+			node[shift={(-5:7pt)},font=\normalsize]{$ y  $};
+		\fill  (0,0) node[shift={(-45:9pt)},font=\normalsize]{$ O $};
+		\begin{scope}
+			\clip  (xmin,ymin) rectangle (xmax,ymax);
+			\draw plot[domain=xmin:xmax] (\x,{f  (\x)});
+		\end{scope}
+	\end{tikzpicture}
+			 }
+	\loigiai{Ta thấy đường cong trên là đồ thị của hàm số bậc ba có hệ  số $a>0$.}
+	\end{ex}
+
+% nguồn: Phan1_Lop_12_Dai_so_Chuong_1
+\begin{ex}%[2D1N5-1]%[ma:8b901ba0]
+		Cho hàm số $y=\dfrac{ax+b}{cx+d}$, với  $a, b, c, d\in\mathbb{R}$ có đồ thị như hình bên dưới.
+		\begin{center}
+			\begin{tikzpicture}[scale=0.7,font=\footnotesize,line join=round,line cap=round,>=stealth]
+				\def\xmin{-5}; \def\ymin{-4}; \def\xmax{4}; \def\ymax{5}; 
+				\coordinate (O)  at (0,0);
+				 \draw[->] (\xmin,0)--(\xmax,0) node[below]{$x$};
+				\draw[->] (0,\ymin)--(0,\ymax) node[left]{$y$}; 
+				\fill (O) node[below left]{$O$} circle  (1pt);
+				\clip ({\xmin-0.1},{\ymin-0.1}) rectangle ({\xmax+0.1},{\ymax+0.1}); 
+				\draw[samples=100]  plot[domain=\xmin:-1.01](\x,{(\x-1)/(\x+1)});
+				\draw[samples=100] plot[domain=-0.99:\xmax](\x,{(\x-1)/(\x+1)}); 
+				\draw[dashed]  (-1.0,\ymin)--(-1.0,\ymax);
+				 \draw[dashed] (\xmin,1.0)--(\xmax,1.0);
+			\end{tikzpicture}
+		\end{center}
+		Biết rằng $a$ là một số thực  dương, hỏi trong các số $b, c, d$ có tất cả bao nhiêu số dương?
+	\choice 
+			{$3$} 
+			{$0$} 
+			{\True $2$} 
+			{$1$} 
+	\loigiai{ 
+			Đồ thị hàm số có đường tiệm cận ngang là  $y=\dfrac{a}{c} > 0$ nên $c > 0$.\\
+			Đồ thì  hàm số có đường tiệm cận đứng là $x=-\dfrac{d}{c} < 0$ nên $d > 0$.\\
+			Đồ thị hàm số cắt trục hoành tại điểm có hoành độ $x=-\dfrac{b}{a} > 0$ nên $b  < 0$.\\
+			Vậy trong các số $b, c, d$ có $2$ số  dương.
+		 }
+	\end{ex}
+
+% nguồn: Phan1_Lop_12_Dai_so_Chuong_1
+\begin{ex}%[2D1N5-1]%[ma:753e2c47]
+		Cho hàm số $y=\dfrac{ax+4-b}{cx+b}$, với $a, b\in\mathbb{R}$  có đồ thị là đường cong trong hình vẽ dưới đây.
+		\begin{center}
+			\begin{tikzpicture}[scale=0.7,font=\footnotesize,line join=round,line cap=round,>=stealth]
+				 \def\xmin{-3}; \def\ymin{-5}; \def\xmax{5}; \def\ymax{3};
+				\coordinate (O) at  (0,0);
+				\draw[->] (\xmin,0)--(\xmax,0)  node[below]{$x$};
+				\draw[->] (0,\ymin)--(0,\ymax)  node[left]{$y$};
+				\fill (O) node[below left]{$O$} circle (1pt); 
+				\clip ({\xmin-0.1},{\ymin-0.1})  rectangle ({\xmax+0.1},{\ymax+0.1});
+				 \draw[samples=100] plot[domain=\xmin:0.99](\x,{(-2*\x+6)/(2*\x-2)});
+				 \draw[samples=100] plot[domain=1.01:\xmax](\x,{(-2*\x+6)/(2*\x-2)});
+				 \draw[dashed] (1.0,\ymin)--(1.0,\ymax);
+				\draw[dashed] (\xmin,-1.0)--(\xmax,-1.0); 
+			\end{tikzpicture}
+		\end{center}
+		Khẳng định nào sau đây là đúng? 
+	\choice 
+			{$a>0$, $b >  4$, $c < 0$}
+			{\True $a>0$, $0< b  < 4$, $c < 0$}
+			 {$a>0$, $b < 0$, $c < 0$}
+			{$a<0$, $0< b < 4$,  $c < 0$}
+	\loigiai{ 
+			 Hàm số $y=\dfrac{ax+4-b}{cx+b}$ có đồ thị là đường cong $(C)$.\\
+			Đồ thị có tiệm  cận ngang $y=\dfrac{a}{c}<0$.\\
+			Đồ thị có tiệm cận đứng $x=\dfrac{-b}{c}>0\Leftrightarrow  \dfrac{b}{c}<0$.\\
+			Đồ thị hàm số  cắt trục hoành tại điểm có hoành độ $x=\dfrac{b-4}{a}>0$.\\
+			Đồ thị cắt trục tung tại điểm  có tung độ $y=\dfrac{4-b}{b}<0$.\\
+			Suy ra $\heva{&{\dfrac{a}{c} < 0}  \\ &{-\dfrac{b}{c} > 0} \\& {\dfrac{4-b}{b} > 0} \\& {\dfrac{b-4}{a} < 0}}\Leftrightarrow \heva{& {0< b < 4} \\ &{a > 0} \\ &{c < 0}.}$
+		 }
+	\end{ex}
+
+% nguồn: Phan1_Lop_12_Dai_so_Chuong_1
+\begin{ex}%[2D1N5-1]%[ma:30865136]
+		Cho hàm số $y=\dfrac{ax+b}{x+c}$ với $a,b,c\in  \mathbb{R}$ có đồ thị như hình vẽ dưới đây
+		\begin{center}
+			\begin{tikzpicture}[scale=0.7,font=\footnotesize,line join=round,line cap=round,>=stealth]
+				 \def\xmin{-4}; \def\ymin{-5}; \def\xmax{4}; \def\ymax{3};
+				\coordinate (O)  at (0,0);
+				\draw[->] (\xmin,0)--(\xmax,0) node[below]{$x$}; 
+				\draw[->]  (0,\ymin)--(0,\ymax) node[left]{$y$};
+				 \fill (O) node[below left]{$O$} circle (1pt);
+				\clip ({\xmin-0.1},{\ymin-0.1}) rectangle  ({\xmax+0.1},{\ymax+0.1});
+				\foreach \x in  {2}{
+					\fill  (\x,0) node[below]{$\x$} circle (1pt);
+				 }
+				\foreach \y  in {-2}{
+					\fill (0,\y) node[left]{$\y$} circle (1pt); 
+				 }
+				\draw[samples=100]  plot[domain=\xmin:0.99](\x,{(-\x+2)/(\x-1)});
+				\draw[samples=100]  plot[domain=1.01:\xmax](\x,{(-\x+2)/(\x-1)});
+				\draw[dashed] (1.0,\ymin)--(1.0,\ymax); 
+				\draw[dashed]  (\xmin,-1.0)--(\xmax,-1.0);
+				\draw (1.0,-4)  node[right]{$x=1$}
+					 (-3,-1.1) node[above]{$y=-1$};
+			\end{tikzpicture}
+		\end{center}
+		 Giá trị của $a+2b+3c$ bằng
+	 \choice
+			{$2$} 
+			 {\True $0$}
+			{$6$} 
+			{$-8$} 
+	\loigiai{ 
+			Tiệm cận đứng của đồ thị hàm số $x=-c$ suy ra $-c=1$ $\Leftrightarrow c=-1$.\\ 
+			Tiệm cận ngang của đồ thị hàm số $y=a$ suy ra $a=-1$.\\ 
+			Đồ thị cắt trục $Oy$ tại điểm  $\left(0;\dfrac{b}{c} \right)$ nên $\dfrac{b}{c}=-2$ mà $c=-1$ suy ra $b=2$.\\
+			Vậy  $a+2b+3c=0$.
+		 }
+	\end{ex}
+
+% nguồn: Phan1_Lop_12_Dai_so_Chuong_1
+\begin{ex}%[2D1N5-1]%[ma:578aa23e]
+		Cho hàm số $f(x)=\dfrac{ax-4}{bx+c}$ ($a,b,c\in \mathbb{R}$) có  bảng biến thiên như sau
+		\begin{center}
+			\begin{tikzpicture}[scale=1,font=\footnotesize]
+				 \tkzTabInit[nocadre=false,lgt=1.2,espcl=2.5,deltacl=0.7]
+					{$x$/0.8,$f'(x)$/0.6,$f  (x)$/2}
+					 {$-\infty$,$1$,$+\infty$};
+				 \tkzTabLine{,+,d,+,};
+				 \tkzTabVar{-/$1$,+D-/$+\infty$/$-\infty$,+/$1$};
+			\end{tikzpicture}
+		\end{center}
+		 Trong các số $a,b,c$ có bao nhiêu số dương?
+	\choice 
+			 {$3$}
+			 {$4$}
+			 {\True $2$}
+			 {$1$}
+	\loigiai{ 
+			 Tiệm cận ngang $y=\dfrac{a}{b}=1\Rightarrow a=b \quad (1)$.\\
+			Tiệm cận đứng $x=-\dfrac{c}{b}=1\Rightarrow c=-b\quad  (2)$.\\
+			Ta  có $y'=\dfrac{ac+4b}{\left(bx+c\right)^2}>0\Rightarrow ac+4b>0\quad (3)$.\\
+			 Từ (1), (2), (3) suy ra $-b^2+4b>0\Leftrightarrow 0<b<4$.\\
+			Suy ra $a=b>0$, $c<0$. 
+		 }
+	\end{ex}
+
+% nguồn: Phan1_Lop_12_Dai_so_Chuong_1
+\begin{ex}%[2D1N5-1]%[ma:58959e0e]
+		Bảng biến thiên sau đây của hàm  số nào?
+		\begin{center}
+			\begin{tikzpicture}[>=stealth]
+				 \tkzTabInit[nocadre=false,lgt=1,espcl=2.5,deltacl=0.5]
+					 {$x$/.7,$y'$/.7,$y$/2}
+					{$-\infty$,$-1$,$+\infty$} 
+				\tkzTabLine{,+,d,+,} 
+				 \tkzTabVar{-/$2$,+D-/$+\infty$/$-\infty$,+/$2$}
+			\end{tikzpicture}
+		\end{center}
+	\choice 
+			{$y=\dfrac{2x+3}{x+1}$} 
+			{$y=\dfrac{2x-1}{x-1}$} 
+			{\True  $y=\dfrac{2x-1}{x+1}$}
+			{$y=\dfrac{x+1}{2x-1}$} 
+	\loigiai{ 
+			Gọi hàm số cần tìm có  dạng $y=\dfrac{ax+b}{cx+d}$ có đồ thị $(C)$.\\
+			Dựa vào bảng biến thiên, ta  thấy đồ thị $(C)$ có
+			\begin{itemize}
+				\item Tiệm cận ngang $y=\dfrac{a}{c}=2$. 
+				\item Tiệm cận đứng  $x=\dfrac{-d}{c}=-1$.
+				\item Hàm số đồng biến trên từng khoảng xác định nên $ad-bc>0$. 
+			\end{itemize}
+			Vậy hàm số  thỏa mãn là $y=\dfrac{2x-1}{x+1}$.
+		} 
+	\end{ex}
+
+% nguồn: Phan1_Lop_12_Dai_so_Chuong_1
+\begin{ex}%[2D1N5-1]%[ma:7b3122da]
+		Cho hàm số  $y=\dfrac{ax+b}{x+1}$, với $a, b\in\mathbb{R}$ có đồ thị như hình vẽ dưới đây.
+		\begin{center}
+			\begin{tikzpicture}[scale=0.7,font=\footnotesize,line join=round,line cap=round,>=stealth]
+				\def\xmin{-4};  \def\ymin{-3}; \def\xmax{3}; \def\ymax{4};
+				\coordinate (O) at  (0,0);
+				\draw[->] (\xmin,0)--(\xmax,0)  node[below]{$x$};
+				\draw[->] (0,\ymin)--(0,\ymax) node[left]{$y$}; 
+				\fill (O) node[below  left]{$O$} circle (1pt);
+				\clip ({\xmin-0.1},{\ymin-0.1})  rectangle ({\xmax+0.1},{\ymax+0.1});
+				\draw[samples=100]  plot[domain=\xmin:-1.01](\x,{(\x+2)/(\x+1)});
+				 \draw[samples=100] plot[domain=-0.99:\xmax](\x,{(\x+2)/(\x+1)});
+				 \draw[dashed] (-1.0,\ymin)--(-1.0,\ymax);
+				\draw[dashed]  (\xmin,1.0)--(\xmax,1.0);
+				\draw  (-1,3.5) node[left]{$x=-1$};
+			\end{tikzpicture}
+		\end{center}
+		Khẳng định nào sau đây là  đúng?
+	\choice 
+			 {$0<a<b$}
+			 {$b<0<a$}
+			{$0<b<a$} 
+			 {\True $a<b<0$}
+	 \loigiai{
+			 Hàm số $y=\dfrac{ax+b}{x+1}$ xác định trên $\mathscr{D}=\left(-\infty;-1\right)\cup \left(-1;+\infty \right)$.\\
+			Ta có $y'=\dfrac{a-b}{\left(x+1\right)^2}$, $\forall x\ne-1$. Dựa  vào đồ thị ta thấy.
+			\begin{itemize}
+				\item Hàm số  có tiệm cận ngang là đường thẳng $y=a$. Dựa vào đồ thị ta có $a > 0$.\\
+				\item Đồ thị hàm số nghịch biến trên khoảng $\left(-\infty;-1\right)$ và $\left(-1;+\infty \right)$ nên $y'  < 0$, $\forall x\ne-1\Leftrightarrow a-b<0\Leftrightarrow a<b\Rightarrow 0<a<b$.
+			\end{itemize}
+		 }
+	\end{ex}
+
+% nguồn: Phan1_Lop_12_Dai_so_Chuong_1
+\begin{ex}%[2D1N5-1]%[ma:7064da16]
+		Hàm số  nào có đồ thị như đường cong trong hình vẽ dưới đây?
+		\begin{center}
+			\begin{tikzpicture}[scale=0.7,font=\footnotesize,line join=round,line cap=round,>=stealth]
+				\def\xmin{-3}; \def\ymin{-3}; \def\xmax{5};  \def\ymax{4};
+				\coordinate (O) at (0,0); 
+				\draw[->] (\xmin,0)--(\xmax,0) node[below]{$x$}; 
+				 \draw[->] (0,\ymin)--(0,\ymax) node[left]{$y$};
+				\fill (O)  node[below left]{$O$} circle (1pt);
+				\clip  ({\xmin-0.1},{\ymin-0.1}) rectangle ({\xmax+0.1},{\ymax+0.1});
+				\foreach \x in {2}{ 
+					\fill (\x,0) node[below]{$\x$}  circle (1pt);
+				 }
+				\foreach  \y in {2}{
+					\fill (0,\y) node[left]{$\y$} circle (1pt); 
+				} 
+				\draw[samples=100] plot[domain=\xmin:0.99](\x,{(\x-2)/(\x-1)}); 
+				\draw[samples=100] plot[domain=1.01:\xmax](\x,{(\x-2)/(\x-1)}); 
+				\draw[dashed]  (1.0,\ymin)--(1.0,\ymax);
+				 \draw[dashed] (\xmin,1.0)--(\xmax,1.0);
+				 \draw (1,3.5) node[right]{$x=1$}
+					(-2,0.2)  node[above]{$y=1$};
+			\end{tikzpicture}
+		\end{center}
+	 \choice
+			 {$y=x^3-3x+2$}
+			 {$y=\dfrac{x+2}{x-1}$}
+			 {\True $y=\dfrac{x-2}{x-1}$}
+			{$y=-x^4+5x^2-1$} 
+	\loigiai{ 
+			Gọi hàm số cần tìm là $y=\dfrac{ax+b}{cx+d}$, với $a, b, c, d\in\mathbb{R}$ có đồ thị là  $(C)$.\\
+			Dựa vào  đồ thị ta có
+			\begin{itemize}
+				 \item Tiệm cận ngang của $(C)$ là $y=\dfrac{a}{c}=1$.
+				\item Tiệm cận đứng của $(C)$ là $x=\dfrac{-d}{c}=1$. 
+			\end{itemize}
+			Mặt khác quan sát đồ thị thì hàm số  $y=f(x)$ đồng biến trên từng khoảng xác định nên $y=\dfrac{x-2}{x-1}$.
+		 }
+	\end{ex}
+
+% nguồn: Phan1_Lop_12_Dai_so_Chuong_1
+\begin{ex}%[2D1N5-1]%[ma:5e5a21f0]
+		Hàm số nào dưới đây có đồ thị là đường cong trong hình vẽ? 
+		\begin{center}
+			\begin{tikzpicture}[scale=0.7,font=\footnotesize,line join=round,line cap=round,>=stealth]
+				\def\xmin{-3}; \def\ymin{-2}; \def\xmax{4};  \def\ymax{6};
+				 \coordinate (O) at (0,0);
+				\draw[->]  (\xmin,0)--(\xmax,0) node[below]{$x$};
+				\draw[->]  (0,\ymin)--(0,\ymax) node[left]{$y$};
+				\fill (O) node[below left]{$O$} circle (1pt); 
+				\clip ({\xmin-0.1},{\ymin-0.1}) rectangle  ({\xmax+0.1},{\ymax+0.1});
+				\draw[samples=100] plot[domain=\xmin:0.99](\x,{(2*\x-3)/(\x-1)}); 
+				\draw[samples=100] plot[domain=1.01:\xmax](\x,{(2*\x-3)/(\x-1)}); 
+				\draw[dashed]  (1.0,\ymin)--(1.0,\ymax);
+				\draw[dashed] (\xmin,2.0)--(\xmax,2.0); 
+				\draw (1,5)  node[right]{$x=1$}
+					(-2,1.2)  node[above]{$y=2$};
+			\end{tikzpicture}
+		\end{center}
+	\choice 
+			 {\True $y=\dfrac{2x-3}{x-1}$}
+			 {$y=\dfrac{2x-1}{x-1}$}
+			 {$y=\dfrac{x-3}{x-2}$}
+			 {$y=\dfrac{2x+3}{x-1}$}
+	\loigiai{ 
+			Đồ thị hàm số có tiệm cận đứng $x=1$ và tiệm  cận ngang $y=2$.\\
+			Từ hình vẽ ta được hàm số đồng biến trên  các khoảng xác định.
+			\begin{itemize}
+				\item Hàm số $y=\dfrac{2x-3}{x-1}$ có đạo hàm $y'=\dfrac{1}{\left(x-1\right)^2} > 0$,  $\forall x\ne 1$.
+				\item Hàm số $y=\dfrac{2x-1}{x-1}$ có đạo hàm $y'=\dfrac{-1}{\left(x-1\right)^2} < 0$,  $\forall x\ne 1$.
+				\item Hàm số $y=\dfrac{2x+3}{x-1}$ có đạo hàm $y'=\dfrac{-5}{\left(x-1\right)^2}  < 0$, $\forall x\ne 1$.
+			\end{itemize}
+			Do đó hàm số $y=\dfrac{2x-3}{x-1}$ thỏa  mãn bài toán.
+		 }
+	\end{ex}
+
+% nguồn: Phan1_Lop_12_Dai_so_Chuong_1
+\begin{ex}%[2D1N5-1]%[ma:ef33e84c]
+		Cho hàm số $y=\dfrac{bx-c}{x-a}$ ($a\ne 0$ và $a,b,c\in \mathbb{R})$ có đồ thị như hình vẽ dưới đây. 
+		\begin{center}
+			\begin{tikzpicture}[scale=0.7,font=\footnotesize,line join=round,line cap=round,>=stealth]
+				\def\xmin{-3};  \def\ymin{-3}; \def\xmax{5}; \def\ymax{4};
+				\coordinate  (O) at (0,0);
+				\draw[->] (\xmin,0)--(\xmax,0) node[below]{$x$}; 
+				\draw[->] (0,\ymin)--(0,\ymax)  node[left]{$y$};
+				\fill (O) node[below  right]{$O$} circle (1pt);
+				\clip ({\xmin-0.1},{\ymin-0.1}) rectangle ({\xmax+0.1},{\ymax+0.1}); 
+				\draw[samples=100]  plot[domain=\xmin:0.99](\x,{(\x+0.5)/(\x-1)});
+				\draw[samples=100]  plot[domain=1.01:\xmax](\x,{(\x+0.5)/(\x-1)});
+				\draw[dashed] (1.0,\ymin)--(1.0,\ymax); 
+				 \draw[dashed] (\xmin,1.0)--(\xmax,1.0);
+			\end{tikzpicture}
+		\end{center}
+		Khẳng định nào sau đây  đúng?
+	\choice 
+			{$a>0$, $b < 0$, $c-ab  < 0$}
+			{\True $a > 0$, $b > 0$, $c-ab < 0$} 
+			{$a < 0$, $b > 0$, $c-ab  < 0$}
+			{$a < 0$,  $b < 0$, $c-ab > 0$}
+	 \loigiai{
+			Hàm số  $y=\dfrac{bx-c}{x-a}$ có đồ thị $(C)$.\\
+			Dựa vào  đồ thị ta có
+			\begin{itemize}
+				\item Đồ thị có tiệm  cận ngang $y=b>0$.
+				\item Đồ thị có tiệm cận  đứng $x=a>0$.
+			\end{itemize}
+			Vì hàm số $y=\dfrac{bx-c}{x-a}$ nghịch biến trên tập xác định nên $-ab+c < 0\Leftrightarrow c-ab <  0$.
+		} 
+	\end{ex}
+
+% nguồn: Phan1_Lop_12_Dai_so_Chuong_1
+\begin{ex}%[2D1N5-1]%[ma:49306f24]
+	 \immini{Hàm số nào sau đây có đồ thị là đường cong như hình bên?
+	\choice 
+			{$y=x-\dfrac{1}{x-1}$} 
+			{$y=-x+\dfrac{1}{x-1}$} 
+			 {$y=-x-\dfrac{1}{x-1}$}
+			{\True $y=x+\dfrac{1}{x-1}$}} 
+			{\resizebox{!}{4cm}{ 
+			\begin{tikzpicture}[line cap=butt,line join=miter,>=stealth,scale=0.7]
+				 \draw[->] (-3,0)--(5,0)
+					node[shift={(-100:7pt)},font=\normalsize]{$x$}; 
+				\draw[->]  (0,-4)--(0,5)
+					node[shift={(180:7pt)},font=\normalsize]{$y$}; 
+				\draw  (5pt,0) |- (0,5pt)
+					(0,0) node[shift={(145:11pt)},font=\normalsize]{$O$}; 
+				\tikzset{declare function={f  (\x)=(\x)+1/((\x)-1);}}
+				\foreach \x in  {2}{
+					\draw[dashed] (\x,0) |- (0,{f  (\x)});
+					\fill (\x,{f (\x)})  circle (1pt);
+				 }
+				\begin{scope}
+					\clip (-3,-4)  rectangle (5,5);
+					\draw[samples=100] plot[domain=-3:5]  (\x,{f (\x)});
+					\draw[samples=50] plot[domain=-3:5] (\x,{\x}); 
+					 \draw (1,-4)--(1,5);
+					\draw[dashed,fill] (0,1)--(1,1)  circle (1pt);
+				\end{scope}
+				\foreach \x/\a in {1/below right,2/below} \fill (\x,0) circle (1pt) node [\a] {$\x$}; 
+				\foreach \y/\a  in {-1/below left,1/above left,3/left} \fill (0,\y) circle (1pt) node [\a] {$\y$};
+			\end{tikzpicture}
+			 }}
+	\loigiai{ 
+			Ta có điểm $(2;3)$ thuộc đồ thị hàm số.\\ 
+			Lần lượt thay $x=2$, $y=3$ vào các  phương án, ta có điểm $(2;3)$ chỉ thuộc đồ thị hàm số $y=x+\dfrac{1}{x-1}$.
+		} 
+	\end{ex}
+
+% nguồn: Phan1_Lop_12_Dai_so_Chuong_1
+\begin{ex}%[2D1N5-1]%[ma:3b743896]
+		Hình vẽ dưới là đồ thị của hàm số $y=\dfrac{ax+b}{cx+d}$, với $a, b, c, d\in\mathbb{R}$. 
+		\begin{center}
+			\begin{tikzpicture}[scale=0.7,font=\footnotesize,line join=round,line cap=round,>=stealth]
+				 \def\xmin{-4}; \def\ymin{-4}; \def\xmax{4}; \def\ymax{4};
+				\coordinate (O)  at (0,0);
+				 \draw[->] (\xmin,0)--(\xmax,0) node[below]{$x$};
+				\draw[->]  (0,\ymin)--(0,\ymax) node[left]{$y$};
+				\fill (O) node[below left]{$O$} circle (1pt); 
+				\clip ({\xmin-0.1},{\ymin-0.1}) rectangle  ({\xmax+0.1},{\ymax+0.1});
+				 \draw[samples=100] plot[domain=\xmin:-1.01](\x,{(\x-0.5)/(\x+1)});
+				 \draw[samples=100] plot[domain=-0.99:\xmax](\x,{(\x-0.5)/(\x+1)});
+				\draw[dashed] (-1.0,\ymin)--(-1.0,\ymax); 
+				 \draw[dashed] (\xmin,1.0)--(\xmax,1.0);
+			\end{tikzpicture}
+		\end{center}
+		Khẳng  định nào sau đây là đúng?
+	 \choice
+			{$bd>0$,  $ad>0$}
+			{$bd<0$, $ab>0$} 
+			{\True $ad>0$,  $ab<0$}
+			{$ab<0$, $ad<0$} 
+	 \loigiai{
+			Đồ thị của hàm số $y=\dfrac{ax+b}{cx+d}$ là  $(C)$.\\
+			Đồ thị có tiệm  cận ngang $y=\dfrac{a}{c}>0$. Suy ra, $a$ và $c$ cùng dấu.\\
+			Đồ thị  có tiệm cận đứng $x=\dfrac{-d}{c}<0\Leftrightarrow \dfrac{d}{c}>0$. Suy ra, $d$ và $c$ cùng dấu.\\
+			Dẫn đến $a$ và $d$ cùng  dấu.\\
+			Đồ thị cắt trục hoành tại điểm $A\left(-\dfrac{b}{a};0\right)$ và  $-\dfrac{b}{a}>0\Leftrightarrow \dfrac{b}{a}<0$. Suy ra, $b$ và $a$ trái dấu. \\
+			Vậy ta có được  $ad>0$ và $ab<0$.
+		} 
+	\end{ex}
+
+% nguồn: Phan1_Lop_12_Dai_so_Chuong_1
+\begin{ex}%[2D1N5-1]%[ma:0f62a56a]
+		Đường cong  trong hình vẽ bên là đồ thị của hàm số nào?
+		\begin{center}
+			\begin{tikzpicture}[scale=0.7,font=\footnotesize,line join=round,line cap=round,>=stealth]
+				 \def\xmin{-3}; \def\ymin{-3}; \def\xmax{5}; \def\ymax{4};
+				\coordinate (O)  at (0,0);
+				 \draw[->] (\xmin,0)--(\xmax,0) node[below]{$x$};
+				\draw[->]  (0,\ymin)--(0,\ymax) node[left]{$y$};
+				\fill (O) node[below right]{$O$} circle (1pt); 
+				\clip ({\xmin-0.1},{\ymin-0.1}) rectangle ({\xmax+0.1},{\ymax+0.1}); 
+				\draw[samples=100]  plot[domain=\xmin:0.99](\x,{(\x+1)/(\x-1)});
+				\draw[samples=100] plot[domain=1.01:\xmax](\x,{(\x+1)/(\x-1)}); 
+				\draw[dashed]  (1.0,\ymin)--(1.0,\ymax);
+				\draw[dashed]  (\xmin,1.0)--(\xmax,1.0);
+			\end{tikzpicture}
+		\end{center}
+	\choice 
+			 {$y=x^4+x^2+1$}
+			{\True $y=\dfrac{x+1}{x-1}$} 
+			{$y=x^3-3x-1$} 
+			{$y=\dfrac{2x+1}{x-1}$} 
+	 \loigiai{
+			Ta thấy đồ thị hàm số có một đường tiệm cận đứng $x=1$ và một đường tiệm cận ngang  $y=1$.\\
+			Vậy  đường cong trong hình vẽ là đồ thị của hàm số $y=\dfrac{x+1}{x-1}$.
+		} 
+	\end{ex}
+
+% nguồn: Phan1_Lop_12_Dai_so_Chuong_1
+\begin{ex}%[2D1N5-1]%[ma:4c64ab12]
+	\immini{ 
+		Đồ thị của hàm  số nào dưới đây có dạng như đường cong trong hình sau.
+		 }
+		{ 
+		\begin{tikzpicture}[scale=0.6,font=\footnotesize,line join=round,line cap=round,>=stealth]
+			\tikzset{ethicknode/.style={scale=0.9}} 
+			\draw[->] (-5.1,0)--(4.1,0) node[below  left] {$x$};
+			 \draw[->] (0,-3.1)--(0,4.1) node[below left] {$y$};
+			\draw (0,0) node [above left] {$O$}  circle (1pt);
+			 \foreach \x/\nx in {-1/-1}
+			\draw[thin]  (\x,1pt)--(\x,-1pt) node [below left] {$\nx$};
+			 \foreach \y/\ny in {2/2}
+			\draw[thin]  (1pt,\y)--(-1pt,\y) node [above left] {$\ny$};
+			 \draw (-0.99,-3)--(-0.99,4);
+			\begin{scope}
+				\clip (-5,-3) rectangle (4,4); 
+				\draw[samples=200,domain=-5:-1.01,smooth,variable=\x] plot  (\x,{(2*(\x)+-1)/(1*(\x)+1)});
+				 \draw[samples=200,domain=-0.99:4,smooth,variable=\x] plot (\x,{(2*(\x)+-1)/(1*(\x)+1)});
+				\draw (-5,2/1)--(4,2/1); 
+			\end{scope}
+		\end{tikzpicture}
+		} 
+	\choice 
+			 {$y=\dfrac{2x+1}{x+1}$}
+			 {$y=x^3-3x-1$}
+			 {\True $y=\dfrac{2x-1}{x+1}$}
+			 {$y=\dfrac{2x^2+3x+2}{x+1}$}
+	 \loigiai{
+			Quan sát đồ thị hàm số ta  thấy
+			\begin{itemize}
+				\item Đồ thị  dạng bậc nhất trên bậc nhất.
+				\item Với $x=0\Rightarrow y(0)<0$. Suy ra hàm số cần tìm là  $y=\dfrac{2x-1}{x+1}$.
+			\end{itemize}
+		} 
+	\end{ex}
+
+% nguồn: Phan1_Lop_12_Dai_so_Chuong_1
+\begin{ex}%[2D1N5-1]%[ma:bfad001b]
+	\immini{ 
+		Một  trong bốn hàm số sau đây có đồ thị như ở bên. Hàm số đó là hàm số nào?
+	\choice 
+			{\True  $y=x-1+\dfrac{1}{x-2}$}
+			{$y=x-1-\dfrac{1}{x-2}$} 
+			{$y=x-1+\dfrac{1}{2(x-2)}$} 
+			{$y=x+\dfrac{1}{x-2}$} 
+			}{\resizebox{!}{5cm}{\begin{tikzpicture}[scale=0.7,>=stealth]
+		\draw[cyan!50,thin]  (-4.5,-4) grid (5,5);
+		\draw[->] (-4,0)--(0,0) 
+			 node[below right]{$O$}--(5,0) node[below]{$x$};
+		\draw[->] (0,-4) --(0,6)  node[right]{$y$};
+		 \foreach \x in {-4,-3,-2,-1,1,2,3,4}{
+			\draw (\x,-.1)--(\x,.1) node[above]{$\x$}; 
+			 }]
+		\foreach \y in {-4,-3,-2,-1,1,2,3,4,5}{ 
+			\draw  (-.1,\y)--(.1,\y) node[right]{$\y$};
+		 }
+		\draw[samples=100,domain=-3.1:1.8] plot  (\x,{(\x)-1+1/(\x-2)});
+		\draw[samples=100,domain=2.27:4.9]  plot (\x,{(\x)-1+1/(\x-2)});
+		\draw [domain=-3:4.9] plot  (\x,{(\x-1)});
+		\draw (2,-4.1)--(2,5.1); 
+		\draw[fill]  (2,1) circle (1pt);
+	\end{tikzpicture}
+			 }
+			} 
+	\loigiai{ 
+			Quan sát đồ thị ấ thấy đây là  đồ thị của hàm số $y=\dfrac{ax^2+bx+c}{mx+n}$.\\
+			Có $3$ hàm số có tiệm cận xiên và tiệm cận đứng thoả mãn với hình nên ta không sử dụng được để đưa ra đáp án chính xác ngay.\\ 
+			 Thứ hai nữa là hàm số đi qua $2$ điểm $(3;3)$ và $(1;-1)$ nên chỉ có $y=x-1+\dfrac{1}{x-2}$ thoả mãn.
+		 }
+	\end{ex}
+
+% nguồn: Phan1_Lop_12_Dai_so_Chuong_1
+\begin{ex}%[2D1N5-1]%[ma:eb406350]
+		Đường cong trong hình vẽ dưới đây là đồ thị của hàm  số nào trong các hàm số sau?
+		\begin{center}
+			\begin{tikzpicture}[scale=0.7,font=\footnotesize,line join=round,line cap=round,>=stealth]
+				\def\xmin{-4}; \def\ymin{-4}; \def\xmax{4};  \def\ymax{4};
+				 \coordinate (O) at (0,0);
+				\draw[->] (\xmin,0)--(\xmax,0)  node[below]{$x$};
+				\draw[->] (0,\ymin)--(0,\ymax) node[left]{$y$}; 
+				\fill (O) node[below  right]{$O$} circle (1pt);
+				\clip ({\xmin-0.1},{\ymin-0.1}) rectangle ({\xmax+0.1},{\ymax+0.1}); 
+				 \draw[samples=100] plot[domain=\xmin:0.99](\x,{(\x+1)/(2*\x-2)});
+				 \draw[samples=100] plot[domain=1.01:\xmax](\x,{(\x+1)/(2*\x-2)});
+				 \draw[dashed] (1.0,\ymin)--(1.0,\ymax);
+				 \draw[dashed] (\xmin,0.5)--(\xmax,0.5);
+				 \draw (1.0,-3.5) node[right]{$x=1$}
+					(-3,0.7)  node[above]{$y=\dfrac{1}{2}$};
+			\end{tikzpicture}
+		\end{center}
+	 \choice
+			{$y=\dfrac{x+1}{x-1}$} 
+			{$y=\dfrac{2x-4}{x-1}$} 
+			 {\True $y=\dfrac{x+1}{2x-2}$}
+			 {$y=\dfrac{2x}{3x-3}$}
+	\loigiai{ 
+			Gọi hàm số cần tìm có dạng $y=\dfrac{ax+b}{cx+d}$, với $a, b, c, d\in\mathbb{R}$ có đồ thị $(C)$.\\ 
+			Dựa vào đồ thị ta thấy đồ thị hàm số có tiệm  cận ngang là $y=\dfrac{1}{2}$.\\
+			Do đó, $\lim\limits_{x\to -\infty}y=\dfrac{a}{c}=\dfrac{1}{2}$  và $\lim\limits_{x\to +\infty}y=\dfrac{a}{c}=\dfrac{1}{2}$.\\
+			Vậy hàm số  cần tìm là $y=\dfrac{x+1}{2x-2}$.
+		 }
+	\end{ex}
+
+% nguồn: Phan1_Lop_12_Dai_so_Chuong_1
+\begin{ex}%[2D1N5-1]%[ma:d6797310]
+		Đồ thị của hàm  số nào dưới đây có dạng như đường cong trong hình bên?
+		\begin{center}
+			\begin{tikzpicture}[line join=round,line cap=round,>=stealth]
+				 \tikzset{ethicknode/.style={scale=0.9}}
+				\draw[->] (-2.5,0)--(2.5,0) node[below left]  {$x$};
+				\draw[->] (0,-2.5)--(0,2.5) node[below left] {$y$}; 
+				\draw  (0,0) node [below left] {$O$};
+				\begin{scope}
+					\clip (-2.5,-2.5) rectangle (2.5,2.5); 
+					 \draw[samples=200,domain=-2:2,smooth,variable=\x] plot (\x,{1*((\x)^3)+0*((\x)^2)+-3*(\x)+0});
+				\end{scope}
+			\end{tikzpicture}
+		\end{center}
+	\choice 
+			{\True  $y=x^3-3x$}
+			 {$y=-x^3+3x$}
+			{$y=x^2-2x$} 
+			 {$y=-2x^2+3$}
+	\loigiai{ 
+			Đường cong có dạng của đồ thị hàm số  bậc ba với hệ số $a>0$ nên chỉ có hàm số $y=x^3-3x$ thỏa yêu cầu bài toán.
+		} 
+	\end{ex}
+
+% nguồn: Phan1_Lop_12_Dai_so_Chuong_1
+\begin{ex}%[2D1N5-1]%[ma:8a0f98c9]
+	\immini{Đồ thị của hàm số  nào dưới đây có dạng như đường cong trong hình dưới?
+	\choice 
+			 {$y=x^4-3x^2+1$}
+			 {$y=x^4-2x^2+1$}
+			 {\True$y=-x^4+2x^2+1$}
+			{$y=2x^4-x^2+1$}}{ 
+			\begin{tikzpicture}[>=stealth,x=1cm,y=1cm,scale=1]
+				 \def\a{-1}
+				 \def\b{2}
+				 \def\c{1}
+				\draw[->]  (-2,0) -- (2,0) node[below] {\scriptsize $x$};
+				\draw[->] (0,-.5)  -- (0,2.25) node[left] {\scriptsize $y$};
+				\draw[dashed] (0,0) node[below left]{\scriptsize  $O$}
+					(1,0) node[below]{\scriptsize $1$}|-(0,2)  node[below left]{\scriptsize $2$}-|(-1,0) node[below]{\scriptsize $-1$}
+					(0,1) node[below left]{\scriptsize  $1$};
+				\clip (-2,-.5)  rectangle (2,2.25);
+				\draw[samples=150,smooth,domain=-4:4]  plot (\x,{\a*(\x)^4+(\b)*(\x)^2+(\c)});
+				\fill  (0,0) circle (1.25pt);
+				 \fill (-1,2) circle (1.25pt);
+				\fill (1,2) circle (1.25pt); 
+				\fill (0,1) circle  (1.25pt);
+			\end{tikzpicture}
+			} 
+	 \loigiai{
+			Dựa vào đồ thị  hàm số ta thấy\\
+			+ Hình dáng đồ  thị cho ta hệ số $a<0$.\\
+			+ Phương trình $y'=0$ có 3  nghiệm phân biệt $x_1=-1$, $x_2=0$, $x_3=1$.\\
+			Như vậy,  hàm số cần tìm là $y=x^4-2x^2+1$.
+		 }
+	\end{ex}
+
+% nguồn: Phan1_Lop_12_Dai_so_Chuong_1
+\begin{ex}%[2D1N5-1]%[ma:0ef1f960]
+		Cho hàm số $y=\dfrac{ax+b}{cx+d}$, với $a, b,  c, d\in\mathbb{R}$ có đồ thị như hình vẽ bên dưới.
+		\begin{center}
+			\begin{tikzpicture}[scale=0.7,font=\footnotesize,line join=round,line cap=round,>=stealth]
+				\def\xmin{-4}; \def\ymin{-3};  \def\xmax{3}; \def\ymax{4};
+				\coordinate (O)  at (0,0);
+				\draw[->] (\xmin,0)--(\xmax,0) node[below]{$x$}; 
+				\draw[->] (0,\ymin)--(0,\ymax) node[left]{$y$}; 
+				\fill (O) node[below left]{$O$} circle (1pt); 
+				\clip ({\xmin-0.1},{\ymin-0.1}) rectangle ({\xmax+0.1},{\ymax+0.1}); 
+				\draw[samples=100] plot[domain=\xmin:-1.01](\x,{(-0.5*\x+0.2)/(-\x-1)}); 
+				\draw[samples=100] plot[domain=-0.99:\xmax](\x,{(-0.5*\x+0.2)/(-\x-1)}); 
+				 \draw[dashed] (-1.0,\ymin)--(-1.0,\ymax);
+				\draw[dashed] (\xmin,0.5)--(\xmax,0.5); 
+			\end{tikzpicture}
+		\end{center}
+		Khẳng  định nào sau đây là khẳng định đúng?
+	 \def\dotEX{}
+	\choice 
+			{$\heva{&ad<0\\&bc<0.}$} 
+			 {$\heva{&ad<0\\&bc>0.}$}
+			 {\True $\heva{&ad>0\\&bc<0.}$}
+			{$\heva{&ad>0\\&bc>0.}$} 
+	\loigiai{ 
+			 Đồ thị có tiệm cận ngang $y=\dfrac{a}{c}>0\Rightarrow ac>0\quad (1)$.\\
+			Đồ thị có  tiệm cận đứng $x=-\dfrac{d}{c}<0\Leftrightarrow \dfrac{d}{c} > 0\Rightarrow cd > 0\quad (2)$.\\
+			Đồ thị cắt trục $Oy$ tại điểm có tung độ âm $y=\dfrac{b}{d}<0\Rightarrow bd < 0\quad  (3)$.\\
+			Đồ thị cắt trục $Ox$ tại  điểm có hoành độ dương $x=-\dfrac{b}{a} > 0\Leftrightarrow \dfrac{b}{a} < 0\Rightarrow ab < 0\quad (4)$.\\
+			Lấy $(3)\cdot  (4)\Rightarrow ad\cdot b^2> 0\Rightarrow ad>0\quad (5)$.\\
+			Lấy $(1)\cdot  (4)\Rightarrow bc\cdot a^2< 0\Rightarrow bc<0\quad (6)$.
+		} 
+	\end{ex}
+
+% nguồn: Phan1_Lop_12_Dai_so_Chuong_1
+\begin{ex}%[2D1H5-1]%[ma:fdbaff57]
+		Hàm số nào dưới đây có  đồ thị như hình vẽ?
+		\begin{center}
+			\begin{tikzpicture}[line cap=round,line join=round,font=\footnotesize,>=stealth,scale=1,x=0.5cm,y=0.5cm]
+				\tikzset{label  style/.style={font=\footnotesize}}
+				\draw[->] (-4,0)--(6.1,0)  node[below] {$x$};
+				\draw[->] (0,-5)--(0,4)  node[left] {$y$};
+				\draw (0,0) node [above  left] {\scriptsize$O$};
+				\foreach \x/\nx in  {-4/-4,-3/-3,-2/-2,-1/,1/1,2/2,3/3,4/4,5/5}
+				\draw[thin] (\x,1pt)--(\x,-1pt)  node [below] {\scriptsize$\nx$};
+				\foreach \y/\ny  in {-4/left,-3/left,-2/left,-1/left,1/left,2/left,3/left}
+				\draw[thin]  (1pt,\y)--(-1pt,\y) node [\ny] {\scriptsize $\y$};
+				\draw[dashed,thin]  (1,-5)--(1,4) node[above,rotate=90,pos=0.1]{$x=1$};
+				\draw (-1,0) node[above left]{$-1$}; 
+				\begin{scope}
+					 \clip (-6,-5) rectangle (6,5);
+					\draw[samples=200,domain=-3:0.85,smooth,variable=\x,magenta]  plot (\x,{(1*((\x)^2)+-4*(\x)+2)/(1*(\x)+-1)});
+					\draw[samples=200,domain=1.1:6,smooth,variable=\x,magenta] plot  (\x,{(1*((\x)^2)+-4*(\x)+2)/(1*(\x)+-1)});
+					\draw[dashed,thin]  (-5,-8)--(6,3) node[above,rotate=45,pos=0.8]{$y=x-3$};
+				\end{scope}
+			\end{tikzpicture}
+		\end{center}
+	\choice 
+			 {$y=\dfrac{x^2-3}{x+1}$}
+			 {\True $y=\dfrac{x^2-4x+2}{x-1}$}
+			{$y=\dfrac{x^2-x}{x-1}$} 
+			 {$y=\dfrac{x^2-4x+5}{x+1}$}
+	\loigiai{ 
+			Từ đồ thị  ta thấy:
+			\begin{itemize}
+				\item Tiệm cận đứng là đường  thẳng $x=1$ và tiệm cận xiên là đường thẳng $y=x-3$.
+				\item Giới hạn $\lim\lim\limits_{x\to-\infty}y=-\infty; \lim\limits_{x  \rightarrow+\infty}y=+\infty$.
+			\end{itemize}
+			Do đó hàm số  cần tìm là $y=\dfrac{x^2-4x+2}{x-1}$.
+		} 
+	\end{ex}
+
+% nguồn: Phan1_Lop_12_Dai_so_Chuong_1
+\begin{ex}%[2D1H5-1]%[ma:7ea9f886]
+		Cho hàm số $y = \dfrac{ax - b}{x - 1}$ có đồ thị như hình  vẽ.
+		\begin{center}
+			\begin{tikzpicture}[scale=0.8,>=stealth,font=\footnotesize,line join=round,line cap=round]
+				\draw[->] (-3,0)  -- (5,0) node[below] {$x$};
+				\draw[->] (0,-4) --  (0,3) node[left] {$y$};
+				\draw[dashed] (-3,-1) -- (5,-1); 
+				\node  at (-2.5,-0.7) {\footnotesize $y=-1$};
+				\draw[dashed] (1,-4) --  (1,3);
+				\node[left] at (1.1,2.7) {\footnotesize $x=1$}; 
+				\draw[domain=-3:0.69,smooth] plot  (\x,{-1-1/(1-\x)});
+				\draw[domain=1.26:4.8,smooth] plot  (\x,{-1-1/(1-\x)});
+				\node at (0,0)  [below left] {\footnotesize $O$};
+			\end{tikzpicture}
+		\end{center}
+		Khẳng định nào  dưới đây là đúng?
+	\choice 
+			{$b < 0  < a$}
+			{$0 < b  < a$}
+			{\True $b  < a < 0$}
+			 {$0 < a < b$}
+	 \loigiai{Tập xác định $\mathscr{D}=\mathbb{R}\setminus\{1\}$.\\
+			Ta có $y = \dfrac{ax - b}{x -  1} \Rightarrow y' = \dfrac{-a + b}{(x - 1)^2}$.\\
+			Từ đồ thị suy ra hàm số nghịch biến trên mỗi khoảng xác định nên $y' <  0 \,\forall x\ne 1$\\
+			$$ \Rightarrow -a  + b < 0 \Leftrightarrow a > b.$$
+			Mặt khác, đồ thị có tiệm cận  ngang $y = -1$ nên $ a = -1 \Rightarrow a < 0$.\\
+			Vậy  $b < a < 0$.
+		} 
+	\end{ex}
+
+% nguồn: Phan1_Lop_12_Dai_so_Chuong_1
+\begin{ex}%[2D1H5-1]%[ma:1a51a5e4]
+		Hàm số  nào dưới đây có bảng biến thiên như hình vẽ?
+		\begin{center}
+			\begin{tikzpicture}[line join=round,font=\footnotesize,>=stealth,scale=1]
+				 \tkzTabInit[nocadre=false,lgt=1.2,espcl=2.5,deltacl=0.6]
+					{$x$  /1,$y'$ /1,$y$ /3}
+					{$-\infty$,$1$,$3$,$5$,$+\infty$} 
+				\tkzTabLine{,-,0,+,d,+,0,-} 
+				 \tkzTabVar{+/$+\infty$,-/$-1$,+D-/$+\infty$/$-\infty$,+/$-9$,-/$-\infty$}
+			\end{tikzpicture}
+		\end{center}
+	 \choice
+			 {$y=\dfrac{x^2-4x+3}{x-3}$}
+			 {$y=\dfrac{-x^2-x+2}{x-3}$}
+			{\True  $y=\dfrac{-x^2+x+2}{x-3}$}
+			{$y=\dfrac{x^2-4x+4}{-x+3}$} 
+	\loigiai{ 
+			Dựa vào bảng  biến thiên, ta thấy:
+			\begin{itemize}
+				\item Tiệm cận đứng là đường thẳng $x=3$, các giới hạn  $\lim\limits_{x \rightarrow+\infty}=-\infty; \lim\limits_{x \rightarrow-\infty}=+\infty$.
+				\item  Điểm cực đại $A(5; -9)$ và điểm cực tiểu $B(1; -1)$.
+			\end{itemize}
+			Do đó hàm số cần tìm là $y=\dfrac{-x^2+x+2}{x-3}$. 
+		} 
+	\end{ex}
+
+% nguồn: Phan1_Lop_12_Dai_so_Chuong_1
+\begin{ex}%[2D1H5-1]%[ma:a8654077]
+		Cho hàm số $y = f(x) = ax^3 + bx^2 + cx  + d$ có bảng biến thiên sau
+		\begin{center}
+			\begin{tikzpicture}[scale=1,font=\footnotesize,line join=round,line cap=round,>=stealth]
+				\tkzTabInit[nocadre=false,lgt=1.2,espcl=2.5,deltacl=0.6] 
+					{$x$/0.6,$y'$/0.6,$y$/2} 
+					 {$-\infty$,$-1$,$1$,$+\infty$}
+				 \tkzTabLine{,+,0,-,0,+}
+				 \path
+					($(N13)!0.1!(N12)$) node  (A1){$-\infty$}
+					($(N23)!0.8!(N22)$) node (A2){$2  $}
+					 ($(N33)!0.1!(N32)$) node (A3){$-2 $}
+					 ($(N43)!0.8!(N42)$) node (A4){$+\infty$};
+				\foreach \x/\y  in {A1/A2,A2/A3,A3/A4}{
+					\draw[-stealth] (\x)--(\y); 
+				 }
+			\end{tikzpicture}
+		\end{center}
+		Đồ thị nào  thể hiện hàm số $y=f(x)$?
+	 \choice
+			{\True \begin{tikzpicture}[line cap=butt,line join=miter,>=stealth,scale=0.7]
+		\tikzset{declare function={xmin=-2.5; xmax=2.5;  ymin=-2.5; ymax=2.5;
+			f (\x)=1*(\x)^3-3*(\x); 
+			}, 
+			smooth,samples=450 
+		 }
+		\draw[->] (xmin,0)--(xmax,0) node[shift={(-100:7pt)},font=\normalsize]{$  x $};
+		\draw[->] (0,ymin)--(0,ymax)  node[shift={(190:7pt)},font=\normalsize]{$ y $};
+		\fill (0,0)  node[shift={(225:7pt)},font=\normalsize]{$ O $};
+		 \draw[dashed] (-1,0) node[below]{$-1$}--(-1,2)--(0,2) node[right]{$2$}
+			 (1,0) node[above]{$1$}--(1,-2)--(0,-2) node[left]{$-2$};
+		 \clip (xmin,ymin) rectangle (xmax,ymax);
+		\draw plot[domain=xmin:xmax] (\x,{f (\x)}); 
+	\end{tikzpicture}
+			} 
+			{\begin{tikzpicture}[line cap=butt,line join=miter,>=stealth,scale=0.7]
+		\tikzset{declare function={xmin=-2.5; xmax=2; ymin=-1; ymax=4.5; 
+			f  (\x)=1*(\x)^3-3*(\x)+2;
+			}, 
+			 smooth,samples=450
+		 }
+		\draw[->] (xmin,0)--(xmax,0) node[shift={(-100:7pt)},font=\normalsize]{$  x $};
+		\draw[->]  (0,ymin)--(0,ymax) node[shift={(190:7pt)},font=\normalsize]{$ y $};
+		\fill (0,0) node[shift={(225:7pt)},font=\normalsize]{$ O $}; 
+		\draw[dashed] (-1,0) node[below]{$-1$}--(-1,4)--(0,4)  node[right]{$4$}
+			(1,0)  node[below]{$1$}
+			 (0,2) node[right]{$2$};
+		\clip (xmin,ymin)  rectangle (xmax,ymax);
+		\draw plot[domain=xmin:xmax]  (\x,{f (\x)});
+	\end{tikzpicture}
+			 }
+			{\begin{tikzpicture}[line cap=butt,line join=miter,>=stealth,scale=0.7]
+		\tikzset{declare function={xmin=-2.5; xmax=2; ymin=-4.5; ymax=1; 
+			 f (\x)=-1*(\x)^3+3*(\x)-2;
+			}, 
+			smooth,samples=450 
+		} 
+		\draw[->]  (xmin,0)--(xmax,0) node[shift={(-100:7pt)},font=\normalsize]{$ x $};
+		 \draw[->] (0,ymin)--(0,ymax) node[shift={(190:7pt)},font=\normalsize]{$ y $};
+		\fill (0,0) node[shift={(225:7pt)},font=\normalsize]{$ O  $};
+		\draw[dashed] (-1,0)  node[above]{$-1$}--(-1,-4)--(0,-4) node[right]{$-4$}
+			 (1,0) node[above]{$1$}
+			 (0,-2) node[right]{$-2$};
+		\clip (xmin,ymin) rectangle  (xmax,ymax);
+		 \draw plot[domain=xmin:xmax] (\x,{f (\x)});
+	\end{tikzpicture}
+			} 
+			{\begin{tikzpicture}[line cap=butt,line join=miter,>=stealth,scale=0.7]
+		\tikzset{declare function={xmin=-2.5;  xmax=2.5; ymin=-2.5; ymax=2.5;
+			f (\x)=-1*(\x)^3+3*(\x); 
+			}, 
+			 smooth,samples=450
+		 }
+		\draw[->] (xmin,0)--(xmax,0) node[shift={(-100:7pt)},font=\normalsize]{$ x  $};
+		\draw[->] (0,ymin)--(0,ymax)  node[shift={(190:7pt)},font=\normalsize]{$ y $};
+		\fill (0,0) node[shift={(225:7pt)},font=\normalsize]{$ O  $};
+		\draw[dashed] (-1,0)  node[above]{$-1$}--(-1,-2)--(0,-2) node[right]{$-2$}
+			(1,0)  node[below]{$1$}--(1,2)--(0,2) node[left]{$2$};
+		\clip (xmin,ymin) rectangle  (xmax,ymax);
+		\draw plot[domain=xmin:xmax] (\x,{f  (\x)});
+	\end{tikzpicture}
+			} 
+	\loigiai{ 
+			Dựa vào  bảng biến thiên, ta thấy:\\
+			Hàm số có giá trị cực đại bằng $2$ và giá trị cực tiểu bằng $-2$  nên loại
+			\begin{center}
+				\begin{tikzpicture}[line cap=butt,line join=miter,>=stealth,scale=0.7]
+					\tikzset{declare function={xmin=-2.5;  xmax=2; ymin=-1; ymax=4.5;
+						f  (\x)=1*(\x)^3-3*(\x)+2;
+						 },
+						smooth,samples=450 
+					} 
+					\draw[->] (xmin,0)--(xmax,0) node[shift={(-100:7pt)},font=\normalsize]{$ x $}; 
+					 \draw[->] (0,ymin)--(0,ymax) node[shift={(190:7pt)},font=\normalsize]{$ y $};
+					\fill  (0,0) node[shift={(225:7pt)},font=\normalsize]{$ O $};
+					\draw[dashed] (-1,0) node[below]{$-1$}--(-1,4)--(0,4)  node[right]{$4$}
+						 (1,0) node[below]{$1$}
+						(0,2)  node[right]{$2$};
+					 \clip (xmin,ymin) rectangle (xmax,ymax);
+					\draw  plot[domain=xmin:xmax] (\x,{f (\x)});
+				\end{tikzpicture}
+
+				\hspace{2cm} 
+				\begin{tikzpicture}[line cap=butt,line join=miter,>=stealth,scale=0.7]
+					\tikzset{declare  function={xmin=-2.5; xmax=2; ymin=-4.5; ymax=1;
+						f (\x)=-1*(\x)^3+3*(\x)-2; 
+						 },
+						 smooth,samples=450
+					} 
+					\draw[->] (xmin,0)--(xmax,0)  node[shift={(-100:7pt)},font=\normalsize]{$ x $};
+					\draw[->] (0,ymin)--(0,ymax) node[shift={(190:7pt)},font=\normalsize]{$ y $}; 
+					\fill (0,0) node[shift={(225:7pt)},font=\normalsize]{$ O $}; 
+					\draw[dashed] (-1,0) node[above]{$-1$}--(-1,-4)--(0,-4) node[right]{$-4$} 
+						(1,0) node[above]{$1$} 
+						(0,-2) node[right]{$-2$}; 
+					\clip  (xmin,ymin) rectangle (xmax,ymax);
+					\draw plot[domain=xmin:xmax]  (\x,{f (\x)});
+				\end{tikzpicture}
+			\end{center}
+			Khi  $x \to+\infty$ thì $y \to+\infty$ nên chỉ có chọn
+			\begin{center}
+				\begin{tikzpicture}[line cap=butt,line join=miter,>=stealth,scale=0.7]
+					\tikzset{declare function={xmin=-2.5;  xmax=2.5; ymin=-2.5; ymax=2.5;
+						f (\x)=1*(\x)^3-3*(\x); 
+						 },
+						 smooth,samples=450
+					 }
+					 \draw[->] (xmin,0)--(xmax,0) node[shift={(-100:7pt)},font=\normalsize]{$ x $};
+					\draw[->] (0,ymin)--(0,ymax) node[shift={(190:7pt)},font=\normalsize]{$ y  $};
+					\fill (0,0) node[shift={(225:7pt)},font=\normalsize]{$ O $}; 
+					\draw[dashed] (-1,0) node[below]{$-1$}--(-1,2)--(0,2)  node[right]{$2$}
+						(1,0) node[above]{$1$}--(1,-2)--(0,-2)  node[left]{$-2$};
+					\clip (xmin,ymin)  rectangle (xmax,ymax);
+					\draw plot[domain=xmin:xmax]  (\x,{f (\x)});
+				\end{tikzpicture}
+			\end{center}
+		} 
+	\end{ex}
+
+% nguồn: Phan1_Lop_12_Dai_so_Chuong_1
+\begin{ex}%[2D1H5-1]%[ma:c5ff4b47]
+		Một trong bốn hàm số sau đây, có một hàm số mà đồ thị nhận $Oy$ là một trục đối  xứng, hàm số đó là hàm số nào?
+	\choice 
+			{$y=\sin  x$}
+			{$y=\tan x$} 
+			 {\True $y=\cos x$}
+			 {$y=\cot x$}
+	\loigiai{ 
+			Hàm số nhận $Oy$ là một trục  đối xứng tức là hàm số chẵn. Trong các hàm số trên thì chỉ $y=\cos x$ thoả mãn.
+		} 
+	\end{ex}
+
+% nguồn: Phan1_Lop_12_Dai_so_Chuong_1
+\begin{ex}%[2D1H5-1]%[ma:6f186bbb]
+		Hàm số nào  sau đây có đồ thị như hình vẽ?
+		\begin{center}
+			\begin{tikzpicture}[line cap=round,line join=round,font=\footnotesize,>=stealth,scale=1,x=0.5cm,y=0.5cm]
+				\tikzset{label  style/.style={font=\footnotesize}}
+				\draw[->] (-4,0)--(5,0) node[below] {$x$}; 
+				 \draw[->] (0,-4)--(0,5) node[left] {$y$};
+				\draw (0,0) node [above  left] {\scriptsize$O$};
+				\foreach  \x/\nx in {-3/-3,-2/-2,-1/,1/1,2/2,3/3,4/4}
+				\draw[thin] (\x,1pt)--(\x,-1pt) node [below]  {\scriptsize$\nx$};
+				\foreach \y/\ny in {-3/left,-2/left,-1/left,1/left,2/right,3/right,4/right} 
+				\draw[thin] (1pt,\y)--(-1pt,\y) node [\ny] {\scriptsize  $\y$};
+				\draw[dashed,thin] (-1,-4)--(-1,5)  node[above,rotate=90,pos=0.1]{$x=-1$};
+				\draw (-1,0)  node[above left]{$-1$};
+				\begin{scope}
+					\clip  (-6,-5) rectangle (6,5);
+					\draw[samples=200,domain=-4:-1.2,smooth,variable=\x,magenta] plot (\x,{(-1*((\x)^2)+-(\x)+2)/(1*(\x)+1)}); 
+					\draw[samples=200,domain=-0.9:4,smooth,variable=\x,magenta] plot  (\x,{(-1*((\x)^2)+-1*(\x)+2)/(1*(\x)+1)});
+					\draw[dashed,thin] (-4,4)--(4,-4)  node[below,rotate=-45,pos=0.8]{$y=-x$};
+				\end{scope}
+			\end{tikzpicture}
+		\end{center}
+	\choice 
+			 {$y=\dfrac{x^2-x+4}{x+1}$}
+			{\True  $y=\dfrac{x^2-2x+3}{x+1}$}
+			 {$y=\dfrac{-x^2-x+2}{x+1}$}
+			 {$y=\dfrac{x^2+x-1}{x+1}$}
+	 \loigiai{
+			Dựa vào đồ thị, ta  thấy
+			\begin{itemize}
+				\item Tiệm cận đứng là đường thẳng $x=-1$, tiệm cận xiên là đường thẳng $y=-x$. 
+				 \item Giới hạn $\lim\limits_{x \rightarrow-\infty}y=+\infty; \lim\limits_{x \rightarrow+\infty}y=-\infty$.
+			\end{itemize}
+			Do đó  hàm số cần tìm là $y=\dfrac{-x^2-x+2}{x+1}$.
+		 }
+	\end{ex}
+
+% nguồn: Phan1_Lop_12_Dai_so_Chuong_1
+\begin{ex}%[2D1H5-1]%[ma:64151c4b]
+		Hàm số nào sau đây có bảng biến thiên  như hình vẽ?
+		\begin{center}
+			\begin{tikzpicture}[line join=round,font=\footnotesize,>=stealth,scale=1]
+				 \tkzTabInit[nocadre=false,lgt=1.2,espcl=2.5,deltacl=0.6]
+					{$x$  /1,$y'$ /1,$y$ /3}
+					{$-\infty$,$-9$,$-4$,$1$,$+\infty$} 
+				\tkzTabLine{,+,0,-,d,-,0,+} 
+				\tkzTabVar{-/$-\infty$,+/$-20$,-D+/$-\infty$/$+\infty$,-/$0$,+/$+\infty$} 
+			\end{tikzpicture}
+		\end{center}
+	 \choice
+			{\True $y=\dfrac{x^2-2x+1}{x+4}$} 
+			{$y=\dfrac{x^2-4x+2}{x+4}$} 
+			{$y=\dfrac{x^2-x+2}{-x-4}$} 
+			 {$y=\dfrac{x^2-3x+4}{-x-4}$}
+	\loigiai{ 
+			Dựa vào bảng biến thiên, ta  thấy:
+			\begin{itemize}
+				\item Tiệm cận đứng là đường thẳng $x=-4$, các  giới hạn $\lim\limits_{x \rightarrow+\infty}=+\infty; \lim\limits_{x \rightarrow-\infty}=-\infty$.
+				\item  Điểm cực đại $A(-9; -20)$ và điểm cực tiểu $B(1; 0)$.
+			\end{itemize}
+			Do đó hàm số  cần tìm là $y=\dfrac{x^2-2x+1}{x+4}$.
+		} 
+	\end{ex}
+
+% nguồn: Phan1_Lop_12_Dai_so_Chuong_1
+\begin{ex}%[2D1H5-1]%[ma:258bb9f5]
+		Hàm số nào  dưới đây có bảng biến thiên như hình bên dưới?
+		\begin{center}
+			\begin{tikzpicture}
+				 \tkzTabInit[espcl=3,lgt=1.5]
+					 {$x$/0.7,$y'$/0.7,$y$/2.1}
+					{$-\infty$,$5$,$+\infty$} 
+				 \tkzTabLine{,-,d,-,}
+				\tkzTabVar{+/$1$,-D+/$-\infty$/$+\infty$,-/$1$} 
+			\end{tikzpicture}
+		\end{center}
+	\choice 
+			 {$y=\dfrac{x-7}{x-5}$}
+			 {$y=\dfrac{x-5}{x-1}$}
+			{$y=\dfrac{5x}{x-1}$} 
+			{\True $y=\dfrac{x-3}{x-5}$} 
+	 \loigiai{
+			Theo bảng biến thiên ta có tiệm cận đứng có phương trình $x=5$, tiệm cận ngang có phương  trình $y=1$ và $y'<0, \forall x \in \mathbb{R}$ nên ta chọn hàm số $y=\dfrac{x-3}{x-5}$.
+		} 
+	\end{ex}
+
+% nguồn: Phan1_Lop_12_Dai_so_Chuong_1
+\begin{ex}%[2D1H5-1]%[ma:8889bed9]
+		 Hàm số nào dưới đây có bảng biến thiên như hình vẽ?
+		\begin{center}
+			\begin{tikzpicture}[line join=round,font=\footnotesize,>=stealth,scale=1]
+				\tkzTabInit[nocadre=false,lgt=1.2,espcl=2.5,deltacl=0.6] 
+					{$x$ /1,$y'$ /1,$y$ /3} 
+					{$-\infty$,$-10$,$-4$,$2$,$+\infty$} 
+				 \tkzTabLine{,-,0,+,d,+,0,-}
+				 \tkzTabVar{+/$+\infty$,-/$24$,+D-/$+\infty$/$-\infty$,+/$0$,-/$-\infty$}
+			\end{tikzpicture}
+		\end{center}
+	\choice 
+			 {$y=\dfrac{x^2-3x+4}{-x-4}$}
+			{\True $y=\dfrac{x^2-4x+4}{-x-4}$} 
+			{$y=\dfrac{x^2-5x+4}{x+4}$} 
+			{$y=\dfrac{x^2-4x+4}{x+4}$} 
+	\loigiai{ 
+			Dựa vào  bảng biến thiên ta thấy:\\
+			Tiệm cận đứng của đồ thị hàm số  là đường thẳng $x=4$ và $\lim\limits_{x \rightarrow+\infty}y=-\infty; \lim\limits_{x \rightarrow-\infty}y=+\infty$.\\
+			Điểm cực đại $A(2;0)$ và điểm  cực tiểu $B(-10; 24)$. Do đó hàm số cần tìm là $y=\dfrac{x^2-4x+4}{-x-4}$.
+		} 
+	\end{ex}
+
+% nguồn: Phan1_Lop_12_Dai_so_Chuong_1
+\begin{ex}%[2D1H5-1]%[ma:3cf3e11f]
+		Hình vẽ sau đây là đồ thị của một trong bốn hàm số cho ở các đáp án A,  B, C, D. Hỏi đó là hàm số nào?
+		\begin{center}
+			\begin{tikzpicture}[line join=round,line cap=round,>=stealth,scale=0.75,font=\footnotesize]
+				 \tikzset{ethicknode/.style={outer sep=-0.5mm}}
+				\def \xmin{-2.5} \def \xmax{2.5} 
+				\def  \ymin{-3} \def \ymax{3}
+				\def  \fx{(\x)^3-3*\x}
+				 \draw[->] (\xmin,0)--(\xmax,0) node[below left] {\normalsize$x$};
+				\draw[->] (0,\ymin)--(0,\ymax) node[below left] {\normalsize$y$}; 
+				\draw  (0,0) node[below left] {$O$};
+				\fill  (-1,0) circle (1.25pt) node[below] {$-1$};
+				\fill (1,0)  circle (1.25pt) node[above] {$1$};
+				 \draw[dashed,thin](1,0)--(1,-2)--(0,-2)
+					(0,2)--(-1,2)--(-1,0); 
+				\begin{scope}
+					\clip (\xmin+0.01,\ymin+0.01)  rectangle (\xmax-0.01,\ymax-0.01);
+					\draw[samples=150,domain=\xmin+0.01:\xmax-0.01,smooth,variable=\x]  plot (\x,{\fx});
+				\end{scope}
+			\end{tikzpicture}
+		\end{center}
+	 \choice
+			 {$y=-x^3+3x$}
+			 {$y=x^3+2x+1$}
+			{\True  $y=x^3-3x$}
+			 {$y=x^3+3x^2$}
+	\loigiai{ 
+			Từ đồ thị của hàm số $y=ax^3+bx^2+cx+d$, ta thấy hệ  số $a>0$.\\
+			Mặt khác ta thấy đồ thị đi qua  điểm $O(0;0)$ nên $d=0$.\\
+			Lại có đồ thị nhận $x=1$ là  điểm cực trị nên đáp án là $y=x^3-3x$.
+		} 
+	\end{ex}
+
+% nguồn: Phan1_Lop_12_Dai_so_Chuong_1
+\begin{ex}%[2D1H5-1]%[ma:0fd68a75]
+	\immini{ 
+		Đồ thị sau đây là của hàm  số nào?
+	\choice 
+			 {\True $y=x^3-3x+1$}
+			{$y=x^3-3x-1$} 
+			{$y=-x^3-3x-1$} 
+			 {$y=-x^3+3x+1$}
+			} 
+			 {
+			\begin{tikzpicture}[line cap=butt,line join=miter,>=stealth,scale=0.7]
+				\tikzset{declare function={xmin=-2.5; xmax=2.5;  ymin=-2; ymax=4;
+					f (\x)=1*(\x)^3-3*(\x)+1; 
+					}, 
+					 smooth,samples=450
+				} 
+				 \draw[->] (xmin,0)--(xmax,0) node[shift={(-100:7pt)},font=\normalsize]{$ x $};
+				\draw[->] (0,ymin)--(0,ymax) node[shift={(190:7pt)},font=\normalsize]{$  y $};
+				\fill (0,0) node[shift={(225:7pt)},font=\normalsize]{$ O  $};
+				\draw[dashed]  (-1,0) node[below]{$-1$}--(-1,3)--(0,3) node[right]{$3$}
+					(1,0)  node[above]{$1$}--(1,-1)--(0,-1) node[left]{$-1$}
+					 (0,1) node[right]{$1$};
+				\clip (xmin,ymin) rectangle (xmax,ymax); 
+				\draw plot[domain=xmin:xmax] (\x,{f (\x)}); 
+			\end{tikzpicture}
+			 }
+	\loigiai{ 
+			Đồ thị hàm số trên là đồ thị hàm số bậc ba  $y=a x^3+b x^2+c x+d~(a \neq 0)$.\\
+			Nhìn vào nhánh phải của đồ thị ta thấy đồ thị có hướng  đi lên suy ra $a > 0$.\\
+			Đồ thị hàm  số cắt trục tung tại điểm có tung độ $y=1$. \\
+			Vậy hàm số thỏa  đề là $y=x^3-3x+1$.
+		} 
+	\end{ex}
+
+% nguồn: Phan1_Lop_12_Dai_so_Chuong_1
+\begin{ex}%[2D1H5-1]%[ma:b268bc75]
+		Bảng biến thiên  ở hình bên dưới là một trong bốn hàm số nào sau đây?
+		\begin{center}
+			\begin{tikzpicture}[scale=1,font=\footnotesize,line join=round,line cap=round,>=stealth]
+				 \tkzTabInit[nocadre=false,lgt=1.2,espcl=2.5,deltacl=0.6]
+					 {$x$/0.6,$y'$/0.6,$y$/2}
+					 {$-\infty$,$0$,$2$,$+\infty$}
+				\tkzTabLine{,-,0,+,0,-} 
+				\path 
+					($(N13)!0.8!(N12)$) node  (A1){$+\infty$}
+					($(N23)!0.1!(N22)$)  node (A2){$1$}
+					 ($(N33)!0.8!(N32)$) node (A3){$5$}
+					 ($(N43)!0.1!(N42)$) node (A4){$-\infty$};
+				\foreach \x/\y in  {A1/A2,A2/A3,A3/A4}{
+					\draw[-stealth]  (\x)--(\y);
+				 }
+			\end{tikzpicture}
+		\end{center}
+	\choice 
+			 {$y=-x^3-3x^2$}
+			{$y=x^3-3x^2-1$} 
+			{$y=x^3+2x^2+1$} 
+			 {\True $y=-x^3+3x+1$}
+	 \loigiai{
+			Ta thấy đây là hàm số bậc ba  và $\lim\limits_{x \to-\infty}y=-\infty$ nên $a < 0$.\\
+			Ta có $f(0)=1$ nên hàm số cần tìm là $y=-x^3+3x+1$. 
+		} 
+	\end{ex}
+
+% nguồn: Phan1_Lop_12_Dai_so_Chuong_1
+\begin{ex}%[2D1H5-1]%[ma:d5a5e4dd]
+		Hàm số nào dưới đây có bảng biến  thiên như hình vẽ?
+		\begin{center}
+			\begin{tikzpicture}[line join=round,font=\footnotesize,>=stealth,scale=1]
+				\tkzTabInit[nocadre=false,lgt=1.2,espcl=2.5,deltacl=0.6] 
+					 {$x$ /0.6,$y'$ /0.6,$y$ /2}
+					 {$-\infty$,$2$,$+\infty$}
+				 \tkzTabLine{,+,d,+,}
+				 \tkzTabVar{-/$-\infty$,+D-/$+\infty$/$-\infty$,+/$+\infty$}
+			\end{tikzpicture}
+		\end{center}
+	 \choice
+			 {$y=\dfrac{x^2-3}{x-2}$}
+			{\True  $y=\dfrac{x^2-4x+2}{x-2}$}
+			{$y=\dfrac{x^2-x}{x-2}$} 
+			{$y=\dfrac{x^2-4x+5}{x-2}$} 
+	 \loigiai{
+			Dựa  vào bảng biến thiên, ta thấy:\\
+			Tiệm  cận đứng là đường thẳng $x=2$ và có đạo hàm $y'>0$ với mọi $x\neq2$.\\
+			 Do đó hàm số cần tìm là $y=\dfrac{x^2-4x+2}{x-2}$.
+		} 
+	\end{ex}
+
+% nguồn: Phan1_Lop_12_Dai_so_Chuong_1
+\begin{ex}%[2D1H5-1]%[ma:55258653]
+		 Hàm số nào dưới đây có đồ thị như hình vẽ?
+		\begin{center}
+			\begin{tikzpicture}[line cap=round,line join=round,font=\footnotesize,>=stealth,scale=1,x=0.5cm,y=0.5cm]
+				 \tikzset{label style/.style={font=\footnotesize}}
+				\draw[->] (-5,0)--(7,0) node[below] {$x$}; 
+				 \draw[->] (0,-5)--(0,7) node[left] {$y$};
+				\draw (0,0) node [above  left] {\scriptsize$O$};
+				\foreach \x/\nx in {-5/-5,-4/-4,-3/-3,-2/-2,-1/,1/1,2/2,3/3,4/4,5/5,6/6} 
+				\draw[thin] (\x,1pt)--(\x,-1pt) node  [below] {\scriptsize$\nx$};
+				 \foreach \y/\ny in {-4/right,-3/right,-2/right,-1/right,1/right,2/right,3/right,4/right,5/right,6/right}
+				\draw[thin] (1pt,\y)--(-1pt,\y) node [\ny]  {\scriptsize $\y$};
+				\draw[dashed,thin] (-1,-5)--(-1,6)  node[above,rotate=90,pos=0.1]{$x=-1$};
+				\begin{scope}
+					\clip (-6,-5) rectangle (6,5); 
+					\draw[samples=200,domain=-5:-1.01,smooth,variable=\x,magenta]  plot (\x,{(-1*((\x)^2))/(1*(\x)+1)});
+					\draw[samples=200,domain=-0.9:5.5,smooth,variable=\x,magenta]  plot (\x,{(-1*((\x)^2))/(1*(\x)+1)});
+					\draw[dashed,thin]  (-5,6)--(6,-5) node[above,rotate=-45,pos=0.8]{$y=-x+1$};
+				\end{scope}
+			\end{tikzpicture}
+		\end{center}
+	\choice 
+			{$y=\dfrac{x^2-x}{x+1}$} 
+			 {$y=\dfrac{x^2-3x}{x+1}$}
+			{$y=\dfrac{x^2+x+2}{x+1}$} 
+			{\True  $y=\dfrac{-x^2}{x+1}$}
+	 \loigiai{
+			Dựa vào đồ thị ta thấy: 
+			\begin{itemize}
+				\item Tiệm cận đứng là đường thẳng $x=-1$, tiệm cận xiên  là đường thẳng $y=-x+1$.
+				\item Giới hạn $\lim\limits_{x \rightarrow+\infty}y=-\infty; \lim\limits_{x  \rightarrow-\infty}y=+\infty$.
+			\end{itemize}
+			Do đó hàm số cần tìm là  $y=-\dfrac{x^2}{x+1}$.
+		 }
+	\end{ex}
+
+% nguồn: Phan1_Lop_12_Dai_so_Chuong_1
+\begin{ex}%[2D1H5-1]%[ma:e3697090]
+		Tìm $m$ để  đồ thị của hàm số $y=x^3+3m x^2-2x-4$ cắt trục hoành tại $3$ điểm phân biệt có hoành độ là $x_1$, $x_2$, $x_3$ thỏa mãn $x_1+x_2=2x_3$.
+	\choice 
+			 {$m=0$}
+			 {\True $m=1$}
+			{$m=2$} 
+			 {$m=3$}
+	 \loigiai{
+			Xét phương trình hoành độ giao điểm của $y=x^3+3m x^2-2x-4$ và trục hoành  ta có
+			\[x^3+3 m x^2-2 x-4=0. \qquad (1)\] 
+			Áp dụng định  lý Vi-et ta có $x_1+x_2+x_3=3x_3=-3m \Rightarrow x_3=-m$.\\
+			 Thay $x_3=-m$ vào (1) ta được $2m^3+2m-4=0\Leftrightarrow m=1$.\\
+			Thử lại: Thay $m=1$ vào (1) ta được  $x^3+3x^2-2x-4=0\Leftrightarrow\hoac{&x=-1\\& x=-1\pm \sqrt{5}}$, thỏa mãn điều kiện.\\
+			 Vậy $m=1$ thỏa mãn điều kiện bài toán.
+		 }
+	\end{ex}
+
+% nguồn: Phan1_Lop_12_Dai_so_Chuong_1
+\begin{ex}%[2D1H5-1]%[ma:8dcfb462]
+		Hàm số nào sau  đây có bảng biến thiên như hình dưới đây?
+		\begin{center}
+			\begin{tikzpicture}
+				 \tkzTabInit[nocadre=false,lgt=1.2,espcl=2.5,deltacl=0.6]
+					 {$x$/0.6,$y'$/0.6,$y$/2}
+					{$-\infty$,$2$,$+\infty$} 
+				\tkzTabLine{,-,d,-} 
+				 \tkzTabVar{+/$2$,-D+/$-\infty$ / $+\infty$,-/$2$}
+			\end{tikzpicture}
+		\end{center}
+	 \choice
+			{$y  = \dfrac{2x - 7}{x - 2}$}
+			{$y = \dfrac{2x + 1}{x +  2}$}
+			 {\True $y = \dfrac{2x + 1}{x - 2}$}
+			 {$y = \dfrac{1 - 2x}{x - 2}$}
+	\loigiai{ 
+			Ta có $y  = \dfrac{2x + 1}{x - 2}$.\\
+			Ta có $\lim\limits_{x \to +\infty} \dfrac{2x + 1}{x - 2} = 2$,$\lim\limits_{x \to -\infty} \dfrac{2x + 1}{x - 2} = 2$, $\lim\limits_{x \to 2^+} y = +  \infty$, $\lim\limits_{x \to 2^-} y = - \infty$.\\
+			Lại có $y' = \dfrac{-5}{(x - 2)^2} <  0\ \forall x\ne 2$ nên hàm số nghịch biến trên các khoảng $(-\infty;2)$ và $(2;+\infty)$.
+		 }
+	\end{ex}
+
+% nguồn: Phan1_Lop_12_Dai_so_Chuong_1
+\begin{ex}%[2D1H5-1]%[ma:a85f07de]
+	\immini{ 
+		Một trong bốn  hàm số sau đây có đồ thị như bên. Hàm số đó là hàm số nào?
+	\choice 
+			 {\True $y=\dfrac{-x^3+12 x}{8}-1$}
+			{$y=\dfrac{-x^3+12 x}{-8}-1$} 
+			{$y=\dfrac{-x^3-12 x}{8}-1$} 
+			{$y=\dfrac{x^3+12  x}{8}-1$}}
+			{\resizebox{!}{5cm}{\begin{tikzpicture}[scale=0.7,>=stealth]
+		 \draw[cyan!50,thin] (-4.5,-4) grid (4.5,3.5);
+		\draw[->] (-4,0)--(0,0) 
+			node[below  right]{$O$}--(5,0) node[below]{$x$};
+		\draw[->]  (0,-4) --(0,4) node[right]{$y$};
+		\foreach \x in  {-4,-3,-2,-1,1,2,3,4}{
+			\draw (\x,-.1)--(\x,.1)  node[above]{$\x$};
+		} 
+		\foreach  \y in {-3,-2,-1,1,2,3}{
+			\draw  (-.1,\y)--(.1,\y) node[right]{$\y$};
+		} 
+		\draw[samples=100,domain=-4.1:4.2]  plot (\x,{(-(\x)^3+12*(\x))/8-1});
+	\end{tikzpicture}
+			} 
+			 }
+	\loigiai{ 
+			Quan sát đồ thị ta thấy đây là đồ  thị hàm số bậc $3$ với hệ số $a<0$.\\
+			Đồ thị đi  qua điểm $(2;1)$, ta thay toạ độ vào thì thấy chỉ có $y=\dfrac{-x^3+12x}{8}-1$ thoả mãn.
+		 }
+	\end{ex}
+
+% nguồn: Phan1_Lop_12_Dai_so_Chuong_1
+\begin{ex}%[2D1H5-1]%[ma:0d70be99]
+	 \immini
+		 {Đường cong ở hình vẽ bên là đồ thị của hàm số nào dưới đây?
+	 \choice
+			 {$y=\dfrac{x-1}{x+1}$}
+			{\True $y=\dfrac{x+1}{x-1}$} 
+			{$y=\dfrac{x^2-x+1}{x-1}$} 
+			 {$y=x^3-3 x-1$}}
+			 {
+			\begin{tikzpicture}[scale=.75,font=\footnotesize,line join=round,line cap=round,>=stealth]
+				\def\a{1}  \def\b{1} \def\c{1} \def\d{-1}
+				\def\tcn{\a/\c}\def\tcd{-\d/\c} 
+				\draw[->] (-3,0)  -- (5,0) node[below] {$x$};
+				\draw[->] (0,-3) -- (0,5)  node[left] {$y$};
+				\clip (-3,-3) rectangle  (5,5);
+				\fill (0,0) circle (1pt) node[below right]{$O$}; 
+				 \draw[dashed] (\tcd,-5)--(\tcd,5)
+					 (-5,\tcn)--(5,\tcn);
+				 \pgfmathsetmacro{\can}{-(\d)/(\c)}
+				\fill (1,0) circle (1pt) node[below right] {$1$}; 
+				\draw[samples=150,smooth,domain=-3:{\can-.1}]  plot (\x,{(\a*\x+(\b))/(\c*\x+(\d))});
+				 \draw[samples=150,smooth,domain={\can+.1}:5] plot (\x,{(\a*\x+(\b))/(\c*\x+(\d))});
+			\end{tikzpicture}
+			} 
+	\loigiai{ 
+			Đồ thị của hàm số phân thức dạng $y=\dfrac{ax+b}{cx+d}$ nên loại {$y=x^3-3 x-1$} và 
+			 {$y=\dfrac{x^2-x+1}{x-1}$}.\\
+			Tiệm  cận đứng $x=1$ loại {$y=\dfrac{x-1}{x+1}$}.\\
+		Vậy đáp án là  hàm số {$y=\dfrac{x+1}{x-1}$}.}
+	\end{ex}
+
+% nguồn: Phan1_Lop_12_Dai_so_Chuong_1
+\begin{ex}%[2D1H5-1]%[ma:9e5a5b0f]
+		Hàm số nào sau đây mà đồ thị có  dạng như hình vẽ bên dưới?
+		\begin{center}
+			\begin{tikzpicture}[scale=0.7,>=stealth,font=\footnotesize,line join=round,line cap=round]
+				\draw[->] (-3,0)  -- (5,0) node[below] {$x$};
+				\draw[->] (0,-3) -- (0,5)  node[left] {$y$};
+				\draw[dashed] (-3,1) -- (5,1); 
+				\node at (-2.3,1.2) {\footnotesize $y=1$}; 
+				\draw[dashed]  (1,-3) -- (1,5);
+				\node at (1.5,-2.8) {\footnotesize  $x=1$};
+				\draw[domain=-3:0.75,smooth] plot (\x,{1-1/(1-\x)}); 
+				 \draw[domain=1.26:5,smooth] plot (\x,{1-1/(1-\x)});
+				 \node at (0,0) [below left] {\footnotesize $O$};
+			\end{tikzpicture}
+		\end{center}
+	\choice 
+			 {$y = \dfrac{x}{1 - x}$}
+			{$y =  \dfrac{x + 1}{1 - x}$}
+			{$y = \dfrac{x  + 1}{x - 1}$}
+			{\True  $y = \dfrac{x}{x - 1}$}
+	 \loigiai{
+			Đồ thị trong hình có đường tiệm cận ngang $y = 1$ và  tiệm cận đứng $x = 1$, đồng thời cắt trục hoành tại điểm $M(0; 0)$.\\
+			Mặt  khác ta thấy hàm số nghịch biến trên từng khoảng xác định. Do đó chỉ có hàm số $y=\dfrac{x}{x-1}$ thỏa mãn những yếu tố trên.
+		} 
+	\end{ex}
+
+% nguồn: Phan1_Lop_12_Dai_so_Chuong_1
+\begin{ex}%[2D1H5-1]%[ma:f22398b3]
+		Hàm số nào sau đây có đồ  thị như hình vẽ?
+		\begin{center}
+			\begin{tikzpicture}[line cap=round,line join=round,font=\footnotesize,>=stealth,scale=1,x=0.5cm,y=0.5cm]
+				\tikzset{label style/.style={font=\footnotesize}} 
+				\draw[->] (-5,0)--(6,0)  node[below] {$x$};
+				\draw[->] (0,-4)--(0,8)  node[left] {$y$};
+				\draw (0,0) node [above  left] {\scriptsize$O$};
+				\foreach \x/\nx in {-4/-4,-3/-3,-2/-2,-1/,1/1,2/2,3/3,4/4,5/5} 
+				\draw[thin] (\x,1pt)--(\x,-1pt) node [below]  {\scriptsize$\nx$};
+				\foreach \y/\ny in  {-3/left,-2/left,-1/left,1/right,2/right,3/left,4/left,5/left,6/left}
+				\draw[thin] (1pt,\y)--(-1pt,\y) node [\ny] {\scriptsize $\y$}; 
+				 \draw[dashed,thin] (1,-4)--(1,8) node[above,rotate=90,pos=0.1]{$x=1$};
+				\begin{scope}
+					\clip  (-5,-4) rectangle (6,8);
+					\draw[samples=200,domain=-4:0.9,smooth,variable=\x,magenta] plot  (\x,{(1*((\x)^2)+(\x)-3)/(1*(\x)+-1)});
+					 \draw[samples=200,domain=1.1:6,smooth,variable=\x,magenta] plot (\x,{(1*((\x)^2)+1*(\x)-3)/(1*(\x)+-1)});
+					 \draw[dashed,thin] (-4,-2)--(5,7) node[above,rotate=45,pos=0.8]{$y=x+2$};
+				\end{scope}
+			\end{tikzpicture}
+		\end{center}
+	\choice 
+			{$y=\dfrac{x^2+3}{x-1}$} 
+			{\True  $y=\dfrac{x^2+x-3}{x-1}$}
+			 {$y=\dfrac{x^2-2x+3}{-x+1}$}
+			{$y=\dfrac{x^2+3}{-x+1}$} 
+	 \loigiai{
+			Dựa vào đồ  thị ta thấy
+			\begin{itemize}
+				\item Tiệm cận đứng là đường thẳng $x=1$, tiệm cận xiên là đường  thẳng $y=x+2$.
+				\item Giới hạn  $\lim\limits_{x \rightarrow+\infty}y=+\infty; \lim\limits_{x \rightarrow-\infty}y=-\infty$.
+			\end{itemize}
+			Do đó  hàm số cần tìm là $y=\dfrac{x^2+x-3}{x-1}$.
+		} 
+	\end{ex}
+
+% nguồn: Phan1_Lop_12_Dai_so_Chuong_1
+\begin{ex}%[2D1H5-1]%[ma:ad8966b3]
+	 \immini{
+		Đường cong trong hình bên là đồ thị của hàm  số nào?
+	\choice 
+			 {$y=\dfrac{1}{2} x^3+\dfrac{3}{2} x^2-2x+1$}
+			 {$y=x^3-3x^2+1$}
+			{$y=-\dfrac{1}{2} x^3+3x^2+\dfrac{9}{2}  x+1$}
+			 {\True $y=\dfrac{1}{2} x^3-3x^2+\dfrac{9}{2} x+1$}
+			} 
+			 {
+			\begin{tikzpicture}[line cap=butt,line join=miter,>=stealth,scale=0.7]
+				 \tikzset{declare function={xmin=-1.5; xmax=5; ymin=-1; ymax=4;
+					f (\x)=0.5*(\x)^3-3*(\x)^2+4.5*(\x)+1;}, 
+					 smooth,samples=250
+				} 
+				 \draw[->] (xmin,0)--(xmax,0) node[shift={(-100:7pt)},font=\normalsize]{$ x $};
+				\draw[->] (0,ymin)--(0,ymax) node[shift={(190:7pt)},font=\normalsize]{$ y $}; 
+				 \fill (0,0) node[shift={(-50:7pt)},font=\normalsize]{$ O $};;
+				\clip  (xmin,ymin) rectangle (xmax,ymax);
+				\draw plot[domain=xmin:xmax] (\x,{f  (\x)});
+			\end{tikzpicture}
+			 }
+	 \loigiai{
+			Nhánh phải của đồ thị đi lên  suy ra $a>0$.\\
+			Giao điểm của  đồ thị với $Oy$ nằm trên $Ox$ suy ra $d>0$.\\
+			Hàm số có hai điểm cực trị  $x_1$; $x_2$ thỏa mãn $\heva{&x_1+x_2=-\dfrac{2b}{3a} > 0\\&x_1x_2=\dfrac{c}{3a} > 0}
+			\Rightarrow\heva{&\dfrac{b}{a} < 0\\&\dfrac{c}{a} > 0}  \Rightarrow b < 0$; $c> 0$.\\
+			Vậy đồ thị là của hàm số $y=\dfrac{1}{2} x^3-3x^2+\dfrac{9}{2} x+1$. 
+		 }
+	\end{ex}
+
+% nguồn: Phan1_Lop_12_Dai_so_Chuong_1
+\begin{ex}%[2D1V5-1]%[ma:01523f21]
+	\immini{ 
+	Cho hàm số $y=a x^3+b x^2+c  x+d$ có đồ thị như hình vẽ bên. Mệnh đề nào dưới đây đúng?
+	 \choice
+		{\True $a < 0$, $b > 0$, $c  > 0$, $d < 0$}
+		{$a < 0$, $b <  0$, $c > 0$, $d < 0$}
+		{$a > 0$, $b < 0$, $c < 0$, $d  > 0$}
+		{$a < 0$, $b  > 0$, $c < 0$, $d > 0$}
+		} 
+		{ 
+		\begin{tikzpicture}[line cap=butt,line join=miter,>=stealth,scale=0.7]
+			\tikzset{declare function={xmin=-2; xmax=2.5; ymin=-3; ymax=2.5; 
+				f (\x)=-1.29*(\x)^3+1.23*(\x)^2+3.14*(\x)-1.39; 
+				}, 
+				smooth,samples=450 
+			 }
+			\draw[->] (xmin,0)--(xmax,0) node[shift={(-100:7pt)},font=\normalsize]{$ x  $};
+			 \draw[->] (0,ymin)--(0,ymax) node[shift={(190:7pt)},font=\normalsize]{$ y $};
+			\fill (0,0)  node[shift={(225:7pt)},font=\normalsize]{$ O $};
+			 \clip (xmin,ymin) rectangle (xmax,ymax);
+			\draw plot[domain=xmin:xmax]  (\x,{f (\x)});
+		\end{tikzpicture}
+		 }
+	 \loigiai{
+		Ta thấy nhánh đồ thị ngoài cùng bên phải hướng xuống suy ra $a  < 0$.\\
+		Đồ thị cắt  trục tung tại điểm có tung độ âm suy ra $d < 0$.\\
+		Gọi $x_1$, $x_2$ là $2$ điểm cực trị của hàm số.\\ 
+		Ta có $x_1+x_2=\dfrac{-b}{3a}  > 0\Rightarrow b > 0$ và $x_1 \cdot x_2=\dfrac{c}{3a} < 0\Rightarrow c > 0$.\\
+		Vậy $a < 0$, $b > 0$, $c  > 0$, $d < 0$.
+	 }
+\end{ex}
+
+% nguồn: Phan1_Lop_12_Dai_so_Chuong_1
+\begin{ex}%[2D1V5-1]%[ma:c38237bc]
+	 \immini{
+	Cho hàm số $y=a x^3+b x^2+c  x+d$ có đồ thị như hình vẽ. Chọn khẳng định đúng?
+	 \choice
+		{$a b > 0$, $b c <  0$, $c d < 0$}
+		{\True  $a b > 0$, $b c < 0$, $c d > 0$}
+		{$a b > 0$, $b c > 0$,  $c d > 0$}
+		{$a b <  0$, $b c < 0$, $c d > 0$}
+		} 
+		 {
+		\begin{tikzpicture}[line cap=butt,line join=miter,>=stealth,scale=0.7]
+			 \tikzset{declare function={xmin=-3.5; xmax=2.5; ymin=-2.5; ymax=2.5;
+				 f (\x)=-0.34*(\x)^3-0.5*(\x)^2+1.84*(\x)+1;
+				}, 
+				 smooth,samples=450
+			 }
+			\draw[->]  (xmin,0)--(xmax,0) node[shift={(-100:7pt)},font=\normalsize]{$ x $};
+			\draw[->] (0,ymin)--(0,ymax) node[shift={(190:7pt)},font=\normalsize]{$ y $}; 
+			\fill (0,0) node[shift={(225:7pt)},font=\normalsize]{$ O  $};
+			\draw[dashed] (-2,0) node[above]{$-2$}--(-2,-2) 
+				 (1,0) node[below]{$1$}-- (1,2);
+			 \clip (xmin,ymin) rectangle (xmax,ymax);
+			\draw plot[domain=xmin:xmax]  (\x,{f (\x)});
+		\end{tikzpicture}
+		} 
+	 \loigiai{
+		Dựa vào dáng điệu đồ thị,  ta suy ra $a < 0$.\\
+		Đồ thị  cắt trục tung lại điểm có tung độ dương suy ra $d > 0$.\\
+		Hàm  số có các điểm cực trị $x=1$ và $x=-2$ nên phương trình $y'=3a x^2+2b x+c=0$ có hai nghiệm là $x=1$ và $x=-2$. \\
+		Ta có $\dfrac{-2b}{3a}=-1$ và $\dfrac{c}{3a}=-2$.\\ 
+		Do đó $b < 0$ và $c  > 0$.\\
+		Như vậy $a b > 0$, $b c < 0$ và $c d  > 0$.
+	} 
+\end{ex}
+
+% nguồn: Phan1_Lop_12_Dai_so_Chuong_1
+\begin{ex}%[2D1V5-1]%[ma:c2516224]
+	 \immini{
+	 Cho hàm số $y=a x^3+b x^2+c x+d$ có đồ thị như hình vẽ.
+	Số lớn nhất trong các số $a$,  $b$, $c$, $d$ là
+	 \choice
+		 {\True $c$}
+		 {$a$}
+		 {$b$}
+		 {$d$}
+		 }
+		{\begin{tikzpicture}[line cap=butt,line join=miter,>=stealth,scale=0.7]
+		 \tikzset{declare function={xmin=-1; xmax=4.5; ymin=-2.5; ymax=2.5;
+			f (\x)=1*(\x)^3-6*(\x)^2+9*(\x)-2; 
+			 },
+			 smooth,samples=450
+		 }
+		\draw[->] (xmin,0)--(xmax,0)  node[shift={(-100:7pt)},font=\normalsize]{$ x $};
+		\draw[->] (0,ymin)--(0,ymax) node[shift={(190:7pt)},font=\normalsize]{$ y  $};
+		\fill (0,0) node[shift={(225:7pt)},font=\normalsize]{$ O $}; 
+		 \draw[dashed]
+			(1,0) node[below]{$1$}--(1,2)--(0,2) node[left]{$2$} 
+			(3,0)  node[above]{$3$}--(3,-2)--(0,-2) node[left]{$-2$}
+			(2,0) node[above right]{$2$}; 
+		 \clip (xmin,ymin) rectangle (xmax,ymax);
+		\draw plot[domain=xmin:xmax]  (\x,{f (\x)});
+	\end{tikzpicture}
+		 }
+	\loigiai{ 
+		Ta có $y' = 3ax^2 + 2bx +  c$.\\
+		Đồ thị hàm số có hai điểm cực  trị là $M(1; 2)$ và $N(3;-2)$ nên
+		\allowdisplaybreaks 
+		\begin{eqnarray*}
+			\heva{&a \cdot 1^3 + b \cdot 1^2 + c \cdot 1 + d = 2 \\& 
+			a \cdot 3^3 + b \cdot 3^2 +  c \cdot 3 + d = -2 \\&
+			3a \cdot 1^2 + 2b \cdot 1 + c  = 0 \\&
+			3a \cdot 3^2 + 2b \cdot  3 + c = 0}
+			 &\Leftrightarrow& \heva{&a+b+c+d=2 \\&27a+9b+3c+d=-2\\&
+			3a+2b+c=0\\&27a+6b+c=0}\\\\ 
+			&\Leftrightarrow& \heva{&a=1\\ &b=-6\\ &c=9\\&d=-2.} 
+		\end{eqnarray*}
+		 Vậy $c = 9$ là số lớn nhất.
+	} 
+\end{ex}
+
+% nguồn: Phan1_Lop_12_Dai_so_Chuong_1
+\begin{ex}%[2D1V5-1]%[ma:77f02304]
+	 \immini{
+	Cho  hàm số $y=a x^3+b x^2+c x+d$ có đồ thị như hình vẽ.
+	Mệnh  đề nào sau đây đúng?
+	\choice 
+		{$a < 0$, $b > 0$, $c >  0$, $d > 0$}
+		{$a > 0$,  $b > 0$, $c < 0$, $d > 0$}
+		{$a <  0$, $b < 0$, $c < 0$, $d > 0$}
+		{\True $a < 0$, $b > 0$, $c < 0$,  $d > 0$}
+		 }
+		 {
+		\begin{tikzpicture}[line cap=butt,line join=miter,>=stealth,scale=0.7]
+			\tikzset{declare function={xmin=-1; xmax=4.5; ymin=-1.5; ymax=3; 
+				f (\x)=-0.8*(\x)^3+4.64*(\x)^2-6.42*(\x)+1.55; 
+				 },
+				 smooth,samples=450
+			 }
+			\draw[->] (xmin,0)--(xmax,0) node[shift={(-100:7pt)},font=\normalsize]{$ x $}; 
+			\draw[->] (0,ymin)--(0,ymax)  node[shift={(190:7pt)},font=\normalsize]{$ y $};
+			 \fill (0,0) node[shift={(225:7pt)},font=\normalsize]{$ O $};
+			 \clip (xmin,ymin) rectangle (xmax,ymax);
+			\draw plot[domain=xmin:xmax] (\x,{f  (\x)});
+		\end{tikzpicture}
+		} 
+	 \loigiai{
+		Do nhánh bên phải của đồ thị  đi xuống nên $a < 0$.
+		Đồ thị cắt trục tung ở phần dương nên $d  > 0$.
+		Đồ thị có 2 cực trị tại hai giá trị $x$ dương nên phương trình $y'=0$ có 2 nghiệm dương phân biệt $\Rightarrow 3a x^2+2b x+c=0$ có $2$ nghiệm dương  phân biệt
+		 $$
+		\Rightarrow\heva{&\Delta' > 0\\&S > 0\\&P > 0} \Leftrightarrow \heva{&b ^2-3 a c > 0 \\&-\dfrac {2 b}{3 a} > 0\\&\dfrac {c}{3 a} > 0} \Rightarrow\heva{&b > 0 \\& c < 0.} 
+		$$ 
+	 }
+\end{ex}
+
+% nguồn: Phan1_Lop_12_Dai_so_Chuong_1
+\begin{ex}%[2D1V5-1]%[ma:a714652e]
+	\immini{ 
+	Cho hàm số  $y=a x^3+b x^2+c x+d$ có đồ thị như hình bên. Mệnh đề nào sau đây là đúng?
+	 \choice
+		{$a < 0$, $b  > 0$, $c > 0$, $d > 0$}
+		{$a < 0$, $b < 0$, $c < 0$, $d > 0$} 
+		{$a > 0$,  $b > 0$, $c < 0$, $d > 0$}
+		{\True $a < 0$, $b > 0$, $c < 0$, $d  > 0$}
+		 }
+		{ 
+		\begin{tikzpicture}[line cap=butt,line join=miter,>=stealth,scale=0.7]
+			\tikzset{declare  function={xmin=-1; xmax=5; ymin=-2; ymax=2.5;
+				 f (\x)=-0.39*(\x)^3+2.55*(\x)^2-4.13*(\x)+0.97;
+				}, 
+				 smooth,samples=450
+			 }
+			\draw[->] (xmin,0)--(xmax,0) node[shift={(-100:7pt)},font=\normalsize]{$  x $};
+			 \draw[->] (0,ymin)--(0,ymax) node[shift={(190:7pt)},font=\normalsize]{$ y $};
+			\fill (0,0) node[shift={(225:7pt)},font=\normalsize]{$  O $};;
+			\clip (xmin,ymin)  rectangle (xmax,ymax);
+			\draw plot[domain=xmin:xmax] (\x,{f (\x)}); 
+		\end{tikzpicture}
+		} 
+	 \loigiai{
+		Dựa vào đồ  thị suy ra $a < 0$.\\
+		Giao điểm của đồ thị với trục  $Oy$ suy ra $d > 0$.\\
+		Dựa vào cực trị ta có $x_1 \cdot x_2=\dfrac{c}{3a}  > 0\Rightarrow c < 0\Rightarrow x_1+x_2=\dfrac{-2b}{3a} > 0\Rightarrow b > 0$.
+	} 
+\end{ex}
+
+% nguồn: Phan1_Lop_12_Dai_so_Chuong_1
+\begin{ex}%[2D1V5-1]%[ma:1f8a8962]
+	 \immini{
+	Cho hàm số $y=f(x)=a x^3+b x^2+c x+d$ có đồ thị như hình vẽ bên. Mệnh đề nào sau đây đúng? 
+	\choice 
+		 {$a > 0$, $b > 0$, $c > 0$, $d > 0$}
+		 {\True $a > 0$, $b < 0$, $c > 0$, $d > 0$}
+		{$a  < 0$, $b < 0$, $c > 0$, $d < 0$}
+		{$a > 0$, $b > 0$, $c < 0$, $d > 0$} 
+		 }
+		 {
+		\begin{tikzpicture}[line cap=butt,line join=miter,>=stealth,scale=0.7]
+			\tikzset{declare function={xmin=-1.5;  xmax=5; ymin=-1; ymax=4;
+				f  (\x)=0.5*(\x)^3-3*(\x)^2+4.5*(\x)+1;
+				}, 
+				smooth,samples=450 
+			 }
+			\draw[->]  (xmin,0)--(xmax,0) node[shift={(-100:7pt)},font=\normalsize]{$ x $};
+			\draw[->] (0,ymin)--(0,ymax) node[shift={(190:7pt)},font=\normalsize]{$ y $}; 
+			\fill (0,0) node[shift={(-50:7pt)},font=\normalsize]{$ O  $};;
+			\clip (xmin,ymin)  rectangle (xmax,ymax);
+			\draw plot[domain=xmin:xmax] (\x,{f (\x)}); 
+		\end{tikzpicture}
+		} 
+	 \loigiai{
+		Dựa vào dạng đồ thị hàm bậc ba ta có $a  > 0$.\\
+		Đồ thị cắt trục tung tại  điểm $M(0; 1)$ suy ra $d=1> 0$.\\
+		Hàm số  có hai điểm cực trị dương suy ra $\heva{&-\dfrac{b}{a} > 0\\
+		&\dfrac{c}{a} >  0} \Leftrightarrow\heva{&b < 0\\&c > 0.}$\\
+		Vậy $a > 0$, $b < 0$, $c > 0$, $d > 0$. 
+	} 
+\end{ex}
+
+% nguồn: Phan1_Lop_12_Dai_so_Chuong_1
+\begin{ex}%[2D1V5-1]%[ma:6d070242]
+	 \immini{
+	Cho hàm số $y=a x^3+b x^2+c x+d$ có đồ thị là đường cong trong  hình vẽ. Trong các hệ số $a$, $b$, $c$, $d$ có bao nhiêu số âm?
+	 \choice
+		 {$3$}
+		{$0$} 
+		{$1$} 
+		{\True  $2$}
+		 }
+		{ 
+		\begin{tikzpicture}[line cap=butt,line join=miter,>=stealth,scale=0.7]
+			\tikzset{declare function={xmin=-1;  xmax=4.7; ymin=-1; ymax=4;
+				 f (\x)=-0.36*(\x)^3+1.94*(\x)^2-2.18*(\x)+1.84;
+				 },
+				smooth,samples=450 
+			 }
+			\draw[->] (xmin,0)--(xmax,0) node[shift={(-100:7pt)},font=\normalsize]{$ x $}; 
+			\draw[->] (0,ymin)--(0,ymax)  node[shift={(190:7pt)},font=\normalsize]{$ y $};
+			\fill (0,0) node[shift={(225:7pt)},font=\normalsize]{$ O $};; 
+			\clip (xmin,ymin)  rectangle (xmax,ymax);
+			\draw plot[domain=xmin:xmax] (\x,{f  (\x)});
+		\end{tikzpicture}
+		} 
+	 \loigiai{
+		Dựa vào hình dạng đồ thị: đồ thị hàm bậc ba có hệ số $a < 0$, đồ thị cắt trục tung tại điểm có  tung độ dương nên $d > 0$.\\
+		Ta có $y'=3a  x^2+2b x+c$. \\
+		Đồ thị  có hai điểm cực trị cùng nằm bên phải trục tung nên $y'=0$ có hai nghiệm dương phân biệt $x_1$, $x_2$. \\
+		Ta có $\heva{&x_1+x_2=-\dfrac{2b}{3a} >  0\\&x_1\cdot x_2=\dfrac{c}{3a} > 0} \Rightarrow\heva{&b > 0\\&c < 0.}$\\
+		Vậy  $a < 0$, $c < 0$.
+	 }
+\end{ex}
+
+% nguồn: Phan1_Lop_12_Dai_so_Chuong_1
+\begin{ex}%[2D1V5-1]%[ma:abbc0197]
+	 \immini{
+	Cho hàm số $y=a x^3+b x^2+c x+d$  có đồ thị như hình bên. Khẳng định nào sau đây đúng?
+	 \choice
+		{\True $a > 0$, $b < 0$, $c < 0$, $d >  0$}
+		{$a  > 0$, $b > 0$, $c < 0$, $d > 0$}
+		{$a >  0$, $b < 0$, $c > 0$, $d > 0$}
+		{$a <  0$, $b < 0$, $c < 0$, $d > 0$}
+		 }
+		{ 
+		\begin{tikzpicture}[line cap=butt,line join=miter,>=stealth,scale=0.7]
+			 \tikzset{declare function={xmin=-2.5; xmax=2.5; ymin=-2; ymax=4;
+				f (\x)=1*(\x)^3-3*(\x)+1; 
+				}, 
+				 smooth,samples=450
+			 }
+			\draw[->] (xmin,0)--(xmax,0) node[shift={(-100:7pt)},font=\normalsize]{$ x $}; 
+			\draw[->] (0,ymin)--(0,ymax) node[shift={(190:7pt)},font=\normalsize]{$  y $};
+			 \fill (0,0) node[shift={(225:7pt)},font=\normalsize]{$ O $};
+			\draw[dashed] (-1,0)  node[below]{$-1$}--(-1,3)--(0,3) node[right]{$3$}
+				 (1,0) node[above]{$1$}--(1,-1)--(0,-1) node[left]{$-1$}
+				 (0,1) node[right]{$1$};
+			\clip (xmin,ymin) rectangle (xmax,ymax); 
+			\draw plot[domain=xmin:xmax] (\x,{f  (\x)});
+		\end{tikzpicture}
+		 }
+	 \loigiai{
+		Quan sát đồ thị hàm số ta thấy $a > 0$.\\ 
+		Đồ thị hàm số cắt trục tung tại điểm có tung độ dương suy ra $d >  0$.\\
+		Hàm số có  hai điểm cực trị $x_1$; $x_2$ thỏa mãn $\heva{&x_1+x_2=-\dfrac{2b}{3a} > 0\\&x_1x_2=\dfrac{c}{3a} < 0}
+		\Rightarrow\heva{&\dfrac{b}{a} < 0\\&\dfrac{c}{a}  < 0} \Rightarrow b < 0$; $c < 0$.
+	 }
+\end{ex}
+
+% nguồn: Phan1_Lop_12_Dai_so_Chuong_1
+\begin{ex}%[2D1V5-1]%[ma:f0f62187]
+	\immini{ 
+	Cho hàm số $y=a x^3+b x^2+c  x+d$ có đồ thị như hình vẽ.
+	 Mệnh đề nào dưới đây đúng?
+	 \choice
+		{$a < 0$, $b <  0$, $c < 0$, $d > 0$}
+		{$a > 0$,  $b < 0$, $c > 0$, $d < 0$}
+		{\True $a  > 0$, $b < 0$, $c < 0$, $d > 0$}
+		{$a >  0$, $b < 0$, $c > 0$, $d > 0$}
+		 }
+		 {
+		\begin{tikzpicture}[line cap=butt,line join=miter,>=stealth,scale=0.7]
+			\tikzset{declare  function={xmin=-2; xmax=4; ymin=-2; ymax=4;
+				f  (\x)=0.63*(\x)^3-1.25*(\x)^2-1.75*(\x)+2.52;
+				}, 
+				 smooth,samples=450
+			} 
+			\draw[->] (xmin,0)--(xmax,0) node[shift={(-100:7pt)},font=\normalsize]{$ x $}; 
+			 \draw[->] (0,ymin)--(0,ymax) node[shift={(190:7pt)},font=\normalsize]{$ y $};
+			\fill (0,0) node[shift={(225:7pt)},font=\normalsize]{$ O $}; 
+			\draw[dashed] (-.5,0)--(-.5,3)--(0,3) 
+				(1.84,0)--(1.84,-1.02)--(0,-1.02); 
+			\clip (xmin,ymin)  rectangle (xmax,ymax);
+			 \draw plot[domain=xmin:xmax] (\x,{f (\x)});
+		\end{tikzpicture}
+		} 
+	 \loigiai{
+	\immini{Ta  có $\lim\limits_{x \to+\infty} y=+\infty \Rightarrow a > 0$.\\
+		Đồ  thị hàm số cắt $Oy$ tại điểm có tọa độ $(0; d)$ suy ra $d > 0$.\\
+		Ta có  $y'=3a x^2+2b x+c$.\\
+		 Gọi $x_1$, $x_2$ là các điểm cực trị của hàm số.\\
+		Dựa vào đồ thị ta có $\heva{&x_1+x_2=-\dfrac{2b}{3a} > 0\\& x_1 x_2=\dfrac{c}{3a} < 0}$, mà $a > 0$, suy ra  $b < 0$, $c < 0$.\\
+		Vậy  $a > 0$, $b < 0$, $c < 0$, $d > 0$.
+		 }
+		{\begin{tikzpicture}[line cap=butt,line join=miter,>=stealth,scale=0.8]
+		 \tikzset{declare function={xmin=-2; xmax=4; ymin=-2; ymax=4;
+			 f (\x)=0.63*(\x)^3-1.25*(\x)^2-1.75*(\x)+2.52;
+			}, 
+			smooth,samples=450 
+		 }
+		 \draw[->] (xmin,0)--(xmax,0) node[shift={(-100:7pt)},font=\normalsize]{$ x $};
+		\draw[->] (0,ymin)--(0,ymax) node[shift={(190:7pt)},font=\normalsize]{$ y $}; 
+		\fill (0,0) node[shift={(225:7pt)},font=\normalsize]{$  O $};
+		\draw[dashed] (-.5,0) node[below]{$x_1$}--(-.5,3)--(0,3) 
+			(1.84,0) node[above]{$x_2$}--(1.84,-1.02)--(0,-1.02); 
+		\clip  (xmin,ymin) rectangle (xmax,ymax);
+		\draw plot[domain=xmin:xmax]  (\x,{f (\x)});
+	\end{tikzpicture}
+		} 
+	} 
+\end{ex}
+
+% nguồn: Phan1_Lop_12_Dai_so_Chuong_1
+\begin{ex}%[2D1V5-1]%[ma:ffa19f67]
+	\immini{ 
+	Cho hàm số  $y=a x^3+b x^2+c x+d$ có đồ thị như hình vẽ. Mệnh đề nào dưới đây đúng?
+	 \choice
+		{$a >  0$, $b > 0$, $c > 0$, $d > 0$}
+		{$a > 0$, $b > 0$, $c < 0$,  $d > 0$}
+		{\True $a > 0$, $b < 0$, $c <  0$, $d > 0$}
+		{$a > 0$, $b < 0$, $c  < 0$, $d < 0$}
+		} 
+		{\begin{tikzpicture}[line cap=butt,line join=miter,>=stealth,scale=0.7]
+		\tikzset{declare function={xmin=-3; xmax=2.5; ymin=-1;  ymax=3.5;
+			 f (\x)=0.33*(\x)^3+0.25*(\x)^2-1.08*(\x)+1.5;
+			 },
+			smooth,samples=450 
+		} 
+		\draw[->]  (xmin,0)--(xmax,0) node[shift={(-100:7pt)},font=\normalsize]{$ x $};
+		\draw[->] (0,ymin)--(0,ymax) node[shift={(190:7pt)},font=\normalsize]{$ y $}; 
+		 \fill (0,0) node[shift={(-50:7pt)},font=\normalsize]{$ O $};;
+		\clip (xmin,ymin)  rectangle (xmax,ymax);
+		\draw plot[domain=xmin:xmax] (\x,{f (\x)}); 
+	\end{tikzpicture}
+		} 
+	\loigiai{ 
+		Đồ thị hàm số đã cho là đồ thị hàm số $y=a x^3+b x^2+c x+d$ với $a > 0$.\\ 
+		Đồ thị hàm số cắt $Oy$ tại điểm  $(0, d)$ với $d > 0$.\\
+		Hàm số có hai cực trị tại $x_1 < 0$, $x_2 > 0$. Suy ra $x_1x_2 = \dfrac{c}{3a} <  0 \Rightarrow c < 0$.\\
+		Ta có $y' = 3ax^2 +  2bx + c$.\\
+		Do $x_1 + x_2 = -\dfrac{2b}{3a} < 0$ nên  $b > 0$.
+	} 
+\end{ex}
+
+% nguồn: Phan1_Lop_12_Dai_so_Chuong_1
+\begin{ex}%[2D1V5-1]%[ma:e0118f08]
+	 \immini{
+	Cho hàm số $y=a x^3+b x^2+c x+d$ có đồ thị như hình vẽ. Mệnh đề nào sau đây  đúng?
+	 \choice
+		{$a < 0$, $b  > 0$, $c > 0$, $d > 0$}
+		{$a < 0$, $b < 0$,  $c < 0$, $d > 0$}
+		{$a > 0$, $b >  0$, $c < 0$, $d > 0$}
+		{\True  $a < 0$, $b > 0$, $c < 0$, $d > 0$}
+		} 
+		{ 
+		\begin{tikzpicture}[line cap=butt,line join=miter,>=stealth,scale=0.7]
+			\tikzset{declare function={xmin=-1; xmax=4.5; ymin=-1.5; ymax=3; 
+				f  (\x)=-0.8*(\x)^3+4.64*(\x)^2-6.42*(\x)+1.55;
+				}, 
+				 smooth,samples=450
+			} 
+			\draw[->]  (xmin,0)--(xmax,0) node[shift={(-100:7pt)},font=\normalsize]{$ x $};
+			\draw[->] (0,ymin)--(0,ymax) node[shift={(190:7pt)},font=\normalsize]{$  y $};
+			\fill  (0,0) node[shift={(225:7pt)},font=\normalsize]{$ O $};
+			\clip (xmin,ymin) rectangle (xmax,ymax); 
+			\draw plot[domain=xmin:xmax] (\x,{f (\x)}); 
+		\end{tikzpicture}
+		} 
+	\loigiai{ 
+		Ta  có $a < 0$ và đồ thị cắt $Oy$ tại điểm có tung độ dương nên $d > 0$.\\
+		Mặt khác $y'=3a x^2+2b x+c$;  $y''=6a x+2b$ và từ đồ thị ta thấy đồ thị hàm số có hai điểm cực trị có hoành độ dương và điểm uốn có hoành độ dương.\\
+		Khi đó $\heva{&a c > 0\\&-\dfrac{b}{3a} > 0} \Rightarrow\heva{&b > 0\\&c < 0}$ do  $a < 0$.
+	} 
+\end{ex}
+
+% nguồn: Phan1_Lop_12_Dai_so_Chuong_1
+\begin{ex}%[2D1V5-1]%[ma:d8ba8f58]
+	 \immini{
+	Cho hàm số $y=a x^3+b  x^2+c x+d$ có đồ thị như hình vẽ bên. Mệnh đề nào dưới đây đúng?
+	\choice 
+		{\True  $a < 0$, $b > 0$, $c > 0$, $d < 0$}
+		{$a < 0$, $b < 0$, $c > 0$, $d < 0$} 
+		{$a > 0$,  $b < 0$, $c < 0$, $d > 0$}
+		{$a < 0$, $b >  0$, $c < 0$, $d < 0$}
+		 }
+		{\begin{tikzpicture}[line cap=butt,line join=miter,>=stealth,scale=0.7]
+		\tikzset{declare function={xmin=-2; xmax=2.5;  ymin=-3; ymax=2.5;
+			 f (\x)=-1.29*(\x)^3+1.23*(\x)^2+3.14*(\x)-1.39;
+			}, 
+			smooth,samples=450 
+		 }
+		\draw[->] (xmin,0)--(xmax,0) node[shift={(-100:7pt)},font=\normalsize]{$ x  $};
+		\draw[->]  (0,ymin)--(0,ymax) node[shift={(190:7pt)},font=\normalsize]{$ y $};
+		\fill (0,0) node[shift={(225:7pt)},font=\normalsize]{$ O $}; 
+		\clip (xmin,ymin) rectangle (xmax,ymax); 
+		\draw  plot[domain=xmin:xmax] (\x,{f (\x)});
+	\end{tikzpicture}
+		} 
+	 \loigiai{
+		Ta có $y' = 3ax^2 + 2bx  + c$.\\
+		 Nhìn vào đồ thị ta có phần bên phải của đồ thị đi xuống nên $a < 0$.\\
+		Giao điểm với trục tung  nằm phía dưới điểm $O$ nên $d < 0$.\\
+		Hai điểm cực trị nằm về hai phía đối  với trục tung nên suy ra phương trình $y'=0$ có hai nghiệm trái dấu $\Leftrightarrow a c < 0\Leftrightarrow c > 0$. \\
+		Điểm uốn lệch phải  so với trục tung nên $-\dfrac{b}{3a} > 0\Leftrightarrow b > 0$.\\
+		Vậy  suy ra $a < 0$, $b > 0$, $c > 0$, $d < 0$.
+	} 
+\end{ex}
+
+% nguồn: Phan1_Lop_12_Dai_so_Chuong_1
+\begin{ex}%[2D1V5-1]%[ma:f5150cbc]
+	\immini{ 
+	Cho hàm số $y=a x^3+b x^2+c x+d$ $(a \neq  0)$ có đồ thị như hình vẽ.
+	Mệnh đề nào  sau đây đúng?
+	\choice 
+		{\True $a > 0$, $b < 0$, $c < 0$, $d  > 0$}
+		{$a > 0$, $b > 0$, $c > 0$, $d >  0$}
+		{$a > 0$, $b < 0$, $c > 0$,  $d < 0$}
+		{$a > 0$, $b >  0$, $c < 0$, $d > 0$}
+		} 
+		{ 
+		\begin{tikzpicture}[line cap=butt,line join=miter,>=stealth,scale=0.7]
+			\tikzset{declare  function={xmin=-2; xmax=4; ymin=-2; ymax=4;
+				f  (\x)=0.63*(\x)^3-1.25*(\x)^2-1.75*(\x)+2.52;
+				}, 
+				 smooth,samples=450
+			 }
+			\draw[->] (xmin,0)--(xmax,0)  node[shift={(-100:7pt)},font=\normalsize]{$ x $};
+			\draw[->] (0,ymin)--(0,ymax) node[shift={(190:7pt)},font=\normalsize]{$ y $}; 
+			 \fill (0,0) node[shift={(225:7pt)},font=\normalsize]{$ O $};
+			\draw[dashed] (-.5,0)--(-.5,3)--(0,3) 
+				(1.84,0)--(1.84,-1.02)--(0,-1.02); 
+			\clip (xmin,ymin)  rectangle (xmax,ymax);
+			\draw plot[domain=xmin:xmax]  (\x,{f (\x)});
+		\end{tikzpicture}
+		 }
+	 \loigiai{
+		 Ta có $y'=3a x^2+2b x+c$.\\
+		Theo  hình vẽ\\
+		Đồ thị cắt trục tung tại điểm $(0, d)$ nằm phía trên  trục hoành nên $d > 0$.\\
+		Hàm số  có hai cực trị trái dấu nên $a c < 0$ mà $a > 0$, do đó $c < 0$.\\
+		Điểm uốn của đồ thị có hoành độ  dương nên $\dfrac{x_1+x_2}{2}=-\dfrac{2b}{6a} > 0\Leftrightarrow a b < 0$.\\
+		 Do $a > 0$ nên $b < 0$.
+	} 
+\end{ex}
+
+% nguồn: Phan1_Lop_12_Dai_so_Chuong_1
+\begin{ex}%[2D1V5-1]%[ma:9674b96a]
+	 \immini{
+	Hàm số $y=a x^3+b x^2+c x+d$ có đồ thị như  hình vẽ bên. Mệnh đề nào sau đây là đúng?
+	 \choice
+		{$a < 0$, $b < 0$, $c < 0$, $d < 0$} 
+		{$a > 0$, $b > 0$,  $c > 0$, $d < 0$}
+		{$a > 0$, $b > 0$, $c  < 0$, $d > 0$}
+		{\True $a > 0$, $b < 0$, $c < 0$, $d >  0$}
+		 }
+		{ 
+		\begin{tikzpicture}[line cap=butt,line join=miter,>=stealth,scale=0.7]
+			 \tikzset{declare function={xmin=-1.5; xmax=3.5; ymin=-3; ymax=3;
+				f (\x)=0.93*(\x)^3-1.94*(\x)^2-1.88*(\x)+1.95; 
+				 },
+				 smooth,samples=450
+			} 
+			\draw[->] (xmin,0)--(xmax,0)  node[shift={(-100:7pt)},font=\normalsize]{$ x $};
+			 \draw[->] (0,ymin)--(0,ymax) node[shift={(190:7pt)},font=\normalsize]{$ y $};
+			\fill (0,0)  node[shift={(225:7pt)},font=\normalsize]{$ O $};
+			\fill (1,-0.94) circle (1pt); \fill (-1,0.96) circle (1pt); 
+			 \draw[dashed] (-1,0) node[below,xshift=3pt]{$-1$}--(-1,0.96)
+				(1,0) node[above]{$1$}--(1,-0.94); 
+			\clip (xmin,ymin)  rectangle (xmax,ymax);
+			\draw plot[domain=xmin:xmax] (\x,{f  (\x)});
+		\end{tikzpicture}
+		 }
+	\loigiai{ 
+		Nhìn vào nhánh phải của đồ thị ta thấy đồ thị có hướng đi lên suy ra $a  > 0$.\\
+		Nhìn vào giao điểm của đồ thị với trục tung ta thấy đồ thị cắt trục tung tại điểm có tung độ dương suy ra $d >  0$.\\
+		Ta có  $y'=3a x^2+2b x+c$.\\
+		Hàm số đã  cho có hai điểm cực trị $x_1$, $x_2$ với $x_1 \cdot x_2 < 0\Leftrightarrow \dfrac{c}{3a} < 0\Leftrightarrow c < 0$ (vì $a > 0$).\\
+		Vì $-1< x_1 < 0$ và $x_2 > 1$ nên $x_1+x_2 > 0\Leftrightarrow \dfrac{-2b}{3a} > 0\Leftrightarrow-2b >  0\Leftrightarrow b < 0$ (vì $a > 0$).\\
+		Vậy $a > 0$,  $b < 0$, $c < 0$, $d > 0$.
+	 }
+\end{ex}
+
+
+%%%%%%%%%%%%%%%% ĐÚNG/SAI %%%%%%%%%%%%%%%%
+
+% nguồn: Phan1_Lop_12_Dai_so_Chuong_1
+\begin{ex}%[2D1N5-1]%[ma:3f5f7b7d]
+	\immini{ 
+	Cho hàm số $y=\dfrac{(a-1)x+b}{(c-1)x+d}$, $d<0$  có đồ thị như hình vẽ.
+	 \choiceTF
+		{$a>1, b>0, c<1$} 
+		{$a>1, b<0, c>1$} 
+		{$a<1, b>0, c<1$} 
+		{\True  $a>1, b>0, c>1$}
+		 }{
+		\begin{tikzpicture}[scale=1,font=\footnotesize,line join=round,line cap=round,>=stealth]
+			\def\a{1} \def\b{1} \def\c{2} \def\d{-1} 
+			\def\xmin{-2} \def\xmax{3} 
+			 \def\ymin{-2} \def\ymax{3}
+			\draw[->]  (\xmin,0)--(\xmax,0) node [below]{$x$};
+			\draw[->] (0,\ymin)--(0,\ymax)  node [left]{$y$};
+			\node at (0,0)  [above left]{$O$};
+			\clip (\xmin+0.1,\ymin+0.1) rectangle (\xmax-0.1,\ymax-0.1); 
+			\draw[smooth,samples=300,domain=\xmin:(-\d/\c-0.1)]  plot (\x,{(\a*(\x)+\b)/(\c*(\x)+\d)});
+			\draw[smooth,samples=300,domain=(-\d/\c+0.1:\xmax)] plot  (\x,{(\a*(\x)+\b)/(\c*(\x)+\d)});
+			 \draw[dashed] (-\d/\c,\ymin)--(-\d/\c,\ymax);
+			\draw[dashed]  (\xmin,\a/\c)--(\xmax,\a/\c);
+		\end{tikzpicture}
+		} 
+	 \loigiai{
+		Theo bài  ra, đường tiệm cận đứng của đồ thị hàm số là đường thẳng là $x=-\dfrac{d}{c-1}$.\\
+		Đường tiệm cận ngang của  đồ thị hàm số là đường thẳng $y=\dfrac{a-1}{c-1}$.\\
+		Nhìn đồ thị ta  thấy: $x=-\dfrac{d}{c-1}>0$ mà $d<0\Rightarrow c-1>0\Rightarrow c>1$.\\
+		$y=\dfrac{a-1}{c-1}>0\Rightarrow a-1>0\Rightarrow  a>1$.\\
+		Đồ thị cắt trục  tung tại điểm có tung độ bằng $\dfrac{b}{d}<0\Rightarrow b>0$.
+		\begin{itemchoice}
+			 \itemch
+			 \itemch
+			 \itemch
+			\itemch 
+		\end{itemchoice}
+	} 
+\end{ex}
+
+% nguồn: Phan1_Lop_12_Dai_so_Chuong_1
+\begin{ex}%[2D1N5-1]%[ma:0afefa06]
+	\immini{ 
+	Hình vẽ sau là  đồ thị của hàm số $y=\dfrac{ax+b}{cx+d}$.
+	 \choiceTF
+		{\True $ad>0$} 
+		{\True  $bd<0$}
+		 {$ab>0$}
+		{$ad-bc<0$} 
+		}{ 
+		\begin{tikzpicture}[>=stealth',scale=0.5]
+			 \def\xmin{-5.5} \def\xmax{4}
+			\def\ymin{-2.5}  \def\ymax{6.5}
+			\draw[domain=-5.5:4] plot  (\x,{2});
+			\draw[domain=-2.5:6.5,variable=\t]  plot ({-1},{(\t)});
+			\draw[domain=-5.5:-1.67] plot (\x,{(2*(\x)-1)/((\x)+1)}); 
+			 \draw[domain=-0.33:4] plot (\x,{(2*(\x)-1)/((\x)+1)});
+			\begin{scriptsize}
+				\draw[->](\xmin,0)--(\xmax,0); \draw (\xmax-0.1,0) node[below]{$x$}; 
+				\draw[->](0,\ymin)--(0,\ymax); \draw  (0,\ymax-0.2) node[right]{$y$};
+				\draw  node [above left]{$O$};
+			\end{scriptsize}
+		\end{tikzpicture}
+		 }
+	 \loigiai{
+		Dựa vào  đồ thị hàm số ta thấy
+		\begin{itemchoice}
+			\itemch Đồ thị hàm số có tiệm cận ngang là đường thẳng $y=\dfrac{a}{c}>0$ và tiệm cận đứng là đường thẳng $x=-\dfrac{d}{c}<0.$ Ta  có $\heva{& \dfrac{a}{c}>0\\&\dfrac{d}{c}>0}\Rightarrow\dfrac{ad}{c^2}>0\Rightarrow ad>0$.
+			\itemch Đồ thị hàm số cắt trục $Oy$ tại điểm có tung độ nhỏ hơn $0\Rightarrow\dfrac{b}{d}<0\Rightarrow  bd<0.$
+			\itemch  Từ $ad>0$ và $bd<0$ suy ra $adbd<0\Rightarrow ab<0$.
+			\itemch Hàm số đã cho là hàm đồng biến trên mỗi  khoảng xác định nên
+			$$y'=\dfrac{ad-bc}{(cx+d)^2}>0\Rightarrow  ad-bc>0.$$
+		\end{itemchoice}
+	} 
+\end{ex}
+
+% nguồn: Phan1_Lop_12_Dai_so_Chuong_1
+\begin{ex}%[2D1N5-1]%[ma:6a7ab0bb]
+	Cho hàm  số $y=\dfrac{x+a}{bx+c}$ với $a, b, c\in \mathbb{Z}$ có đồ thị như hình vẽ dưới đây
+	\begin{center}
+		\begin{tikzpicture}[scale=0.7,font=\footnotesize,line join=round,line cap=round,>=stealth]
+			\def\xmin{-3}; \def\ymin{-3}; \def\xmax{4};  \def\ymax{4};
+			\coordinate (O) at (0,0); 
+			 \draw[->] (\xmin,0)--(\xmax,0) node[below]{$x$};
+			\draw[->] (0,\ymin)--(0,\ymax) node[left]{$y$}; 
+			 \fill (O) node[below left]{$O$} circle (1pt);
+			\clip ({\xmin-0.1},{\ymin-0.1}) rectangle ({\xmax+0.1},{\ymax+0.1}); 
+			\foreach \x  in {2}{
+				 \fill (\x,0) node[below]{$\x$} circle (1pt);
+			} 
+			 \foreach \y in {2}{
+				\fill (0,\y)  node[left]{$\y$} circle (1pt);
+			 }
+			 \draw[samples=100] plot[domain=\xmin:0.99](\x,{(\x-2)/(\x-1)});
+			 \draw[samples=100] plot[domain=1.01:\xmax](\x,{(\x-2)/(\x-1)});
+			 \draw[dashed] (1.0,\ymin)--(1.0,\ymax);
+			\draw[dashed] (\xmin,1.0)--(\xmax,1.0); 
+			\draw (1,-0.3) node[left]{$1$} 
+				 (-0.2,1) node[above]{$1$};
+		\end{tikzpicture}
+	\end{center}
+	\choiceTF 
+		{\True Đồ  thị hàm số có tiệm cận đứng $x=1$}
+		{Đồ thị hàm số  có tiệm cận ngang $y=0$}
+		{Hàm số đồng biến trên $\mathbb{R}$} 
+		 {\True $T=a-3b-2c=-3$}
+	 \loigiai{
+		\begin{itemchoice}
+			 \itemch
+			Đồ thị hàm số  có tiệm cận đứng $x=1$.
+			 \itemch
+			Đồ thị hàm số  có tiệm cận ngang $y=0$.
+			 \itemch
+			Hàm số đồng biến trên các  khoảng $(-\infty;1)$ và $(1;+\infty)$.
+			\itemch 
+			Đồ thị hàm số có tiệm cận ngang  $y=1$ nên $\dfrac{1}{b}=1\Rightarrow b=1$.\\
+			 Đồ thị hàm số có tiệm cận đứng $x=1$ nên $-\dfrac{c}{b}=1$ mà $b=1\Rightarrow c=-1$.\\
+			Đồ thị hàm số cắt trục tung tại điểm  $(0;2)$ nên $\dfrac{a}{c}=2$ mà $c=-1\Rightarrow a=-2$.\\
+			Vậy $T=a-3b-2c=-2-3\cdot 1-2\cdot  (-1)=-3$.
+		\end{itemchoice}
+	} 
+\end{ex}
+
+% nguồn: Phan1_Lop_12_Dai_so_Chuong_1
+\begin{ex}%[2D1H5-1]%[2D1H2-2]%[ma:b5b25c2e]
+	\immini{Cho hàm số $y = f(x)  = x^3 + ax^2 + bx + c$ có đồ thị như hình.
+	\choiceTF 
+		{\True Hàm số $y = f(x)$ có  hai điểm cực trị là~$0$ và $2$}
+		{\True  Giá trị $b$ bằng $0$}
+		{Giá trị $c  = -2$}
+		{$f(x)  = x^3 - 6x^2 + 2$}
+		}{\resizebox{!}{4cm}{\begin{tikzpicture}[line join=round,line cap=round,>=stealth]
+		\draw[->] (-2.6,0)--(3.6,0)  node[below left]{$x$};
+		\draw[->] (0,-3.1)--(0,3.1)  node[below left]{$y$};
+		 \draw (0,0) node [below left]{$O$};
+		\foreach \x/\nx in {2/2} 
+		\draw[thin]  (\x,1pt)--(\x,-1pt) node [above]{$\nx$};
+		 \foreach \y/\ny in {2/2}
+		 \draw[thin] (1pt,\y)--(-1pt,\y) node [above left]{$\ny$};
+		 \draw[dashed,thin](2,0)--(2,-2);
+		\begin{scope}
+			\clip  (-2.5,-3) rectangle (3.5,3);
+			\draw[samples=100,domain=-2.5:3.5,smooth,variable=\x]  plot (\x,{1*((\x)^3)+-3*((\x)^2)+0*(\x)+2});
+		\end{scope}
+		\path (2,2) node{$y=f  (x)$};
+	\end{tikzpicture}
+		}} 
+	\loigiai{\begin{itemchoice}
+		\itemch  Hàm số $y = f(x)$ có điểm cực tiểu là~$x = 2$, điểm cực đại là~$x = 0$.
+		\itemch Ta có $f'(x) = 3x^2 + 2ax + b$. Vì $0$,  $2$ là~hai nghiệm của phương trình $f'(x) = 0$ nên $b = 0$, $a = -3$.
+		\itemch Vì đồ thị hàm số đi qua điểm có tọa độ $(0;  2)$ nên $c = 2$.
+		\itemch Ta có $a=-3$, $b=0$, $c=2$ suy ra $f(x) = x^3 - 3x^2 + 2$. 
+	\end{itemchoice}
+ }
+\end{ex}
+
+% nguồn: Phan1_Lop_12_Dai_so_Chuong_1
+\begin{ex}%[2D1H5-1]%[ma:d38d7484]
+	Cho hàm số $y=f(x)=ax^3+bx^2+cx+d$ có đồ thị như hình vẽ  dưới đây
+	\begin{center}
+		\begin{tikzpicture}[scale=0.8,font=\footnotesize,line join=round,line cap=round,>=stealth]
+			\draw[->]  (-2.5,0)--(3.5,0) node[below right] {$x$};
+			\draw[->] (0,-2)--(0,4) node[left]  {$y$};
+			\draw[domain=-2.1:2.1,samples=200] plot (\x,{\x*\x*\x  - 3*\x + 1});
+			 \draw[fill] (-1,3) circle (1.3pt);
+			\draw[fill] (1,-1) circle (1.3pt); 
+			\draw[fill] (0,-1)  circle (1.3pt);
+			 \draw[fill] (-1,0) circle (1.3pt);
+			\draw[fill] (0,1) circle (1.3pt)  node[right]{$1$};
+			\draw[fill]  (1,0) circle (1pt) node[above]{$1$};
+			\draw[fill] (0,3) circle  (1pt) node[right]{$3$};
+			\draw[dashed] (-1,0) -- (-1,3) --  (0,3);
+			\draw[dashed]  (1,0) -- (1,-1) -- (0,-1);
+			\foreach \x in {-1} \draw  (\x,0.1)--(\x,-0.1) node[below] {\x};
+			\foreach \y in {-1} \draw (0.1,\y)--(-0.1,\y)  node[left] {\y};
+		\end{tikzpicture}
+	\end{center}
+	 \choiceTF
+		{\True Đồ thị hàm số cắt trục  tung tại điểm có tọa độ $(0;1)$}
+		{\True Đường thẳng đi qua điểm $(0;1)$ luôn cắt đồ thị tại ba điểm phân biệt  có hoành độ lập thành một cấp số cộng}
+		{\True  $a - b + c + d = -1$}
+		{Đồ  thị hàm số đi qua điểm $(3;18)$}
+	 \loigiai{
+		\begin{itemchoice}
+			\itemch Đồ  thị có hai điểm cực trị là $(-1;3)$ và $(1;-1)$,có tâm đối xứng là $(0;1)$. Do đó, đồ thị cắt trục tung tại $(0;1)$.
+			\itemch Do $(0;1)$ là tâm đối xứng của đồ  thị nên đường thẳng qua điểm đó luôn cắt đồ thị tại ba điểm phân biệt $I$, $A$, $B$ với $I$ là trung điểm của $A$, $B$, suy ra $x_A+x_B=2x_I$.\\
+			Do đó hoành độ $3$ điểm này  lập thành cấp số cộng.
+			\itemch Ta  có:
+			 $$
+			 \heva{&
+			 f(-1) = 3\\
+			&f(1) =  -1\\
+			&f'(1) =  0\\
+			&f'(-1)  = 0}
+			 \Leftrightarrow
+			\heva{& 
+			 -a + b - c + d = 3\\
+			&a + b + c + d  = -1\\
+			&3a +  2b + c = 0\\
+			&3a -  2b + c = 0}
+			\Leftrightarrow \heva{&a = 1\\& b = 0\\&c = -3\\&d = 1.} 
+			$$ 
+			Vậy $a -  b + c + d = 1 - 0 - 3 + 1 = -1$.
+			\itemch Hàm số tìm được là  $y = x^3 - 3x + 1$, ta có
+			 $$
+			f(3) = 27 - 9 + 1  = 19 \ne 18.
+			 $$
+			Vậy đồ  thị không đi qua điểm $(3;18)$.
+		\end{itemchoice}
+	 }
+\end{ex}
+
+% nguồn: Phan1_Lop_12_Dai_so_Chuong_1
+\begin{ex}%[2D1H5-1]%[ma:43d9abff]
+	Cho hàm  số $y=\dfrac{mx-1}{2x+m}$ có đồ thị là $\left(C_m \right)$ với $m$ là tham số
+	\choiceTF 
+		{\True Khi $m=2$ thì đồ thị hàm số  có đường tiệm cận ngang $y=1$}
+		{Khi $m=2$  thì giao điểm của các đường tiệm cận có toạ độ $I\left(1;-1\right)$}
+		{\True Đường tiệm cận đứng của đồ  thị hàm số đi qua điểm $A\left(-1; \sqrt{2} \right)$ thì $m=2$}
+		{\True Với mọi giá trị của tham số $m$ thì hàm số luôn đồng biến trên mỗi khoảng  xác định của nó}
+	\loigiai{ 
+		\begin{itemchoice}
+			 \itemch
+			Khi $m=2$ thì đồ thị  hàm số có đường tiệm cận ngang $y=1$.
+			\itemch 
+			Khi $m=2$ thì giao điểm của các đường  tiệm cận có toạ độ $I\left(-1; 1\right)$.
+			 \itemch
+			Đồ thị hàm số có tiệm cận đứng khi và chỉ khi $m\left(-\dfrac{m}{2} \right)-1\ne 0\Leftrightarrow m^2+2\ne 0$  đúng với mọi giá trị $m$.\\
+			Khi đó, TCĐ là đường thẳng $x=-\dfrac{m}{2}$. Vì TCĐ đi qua điểm $A(-1; \sqrt{2})$ nên ta có $-\dfrac{m}{2}=-1\Leftrightarrow m=2$. 
+			 \itemch
+			Ta có $y'=\dfrac{m^2+2}{\left(2x+m\right)^2}  > 0, \forall x\ne-\dfrac{m}{2}$.\\
+			Vậy hàm số đồng biến trên từng khoảng xác định  của nó.
+		\end{itemchoice}
+	} 
+\end{ex}
+
+% nguồn: Phan1_Lop_12_Dai_so_Chuong_1
+\begin{ex}%[2D1H5-1]%[ma:d4a079e4]
+	Cho hàm  số $f(x)=\dfrac{ax+b}{cx+d}$ với $a, b, c, d\in \mathbb{R}$ có đồ thị hàm số $y=f'(x)$ nhận $x=-1$ làm tiệm cận đứng như hình vẽ bên.
+	\begin{center}
+		\begin{tikzpicture}[scale=0.8,font=\footnotesize,line join=round,line cap=round,>=stealth]
+			\def\xmin{-4}; \def\ymin{-1}; \def\xmax{3}; \def\ymax{6}; 
+			 \draw[->] (\xmin,0) -- (\xmax,0) node[below]{$x$};
+			\draw[->] (0,\ymin) -- (0,\ymax) node[right]{$y$}; 
+			\fill (0,0)  node[below left]{$O$} circle (1.5pt);
+			\clip ({\xmin-0.1},{\ymin-0.1})  rectangle ({\xmax+0.1},{\ymax+0.1});
+			\draw[dashed,red]  (-1,\ymin) -- (-1,\ymax);
+			\draw[blue,samples=100,domain=\xmin:-1.1]  plot (\x,{3/((\x+1)*(\x+1))});
+			\draw[blue,samples=100,domain=-0.9:\xmax] plot  (\x,{3/((\x+1)*(\x+1))});
+			\fill (0,3) node[left]{$3$}  circle (1.5pt);
+			\fill (-1,0) circle  (1.5pt);
+			 \draw (-1.3,0) node[below]{$-1$};
+		\end{tikzpicture}
+	\end{center}
+	Biết rằng giá trị lớn nhất của hàm số $y=f(x)$ trên  đoạn $\left[-3;-2\right]$ bằng $8$.
+	 \choiceTF
+		{\True $f'(0)=3$} 
+		{Hàm số $y=f(x)$ nghịch  biến trên khoảng $\left(-1;+\infty \right)$}
+		 {Giá trị của $f\left(-3\right)$ bằng $8$}
+		{\True Giá trị của $f(2)$ bằng $4$} 
+	\loigiai{ 
+		\begin{itemchoice}
+			\itemch 
+			 Theo hình vẽ, đồ thị $f'(x)$ qua điểm $\left(0; 3\right)$ nên $f'(0)=3$.
+			 \itemch
+			Do $f'(x) > 0, \forall x\ne-1$ nên hàm số đã cho $f(x)$ đồng biến trên các  khoảng $\left(-\infty;-1\right)$ và $\left(-1;+\infty \right)$.
+			\itemch 
+			Do $f'(x)> 0, \forall x\ne-1\Rightarrow \max\limits_{\left[-3;-2\right]} f(x)=f\left(-2\right)=8$ suy ra $f\left(-3\right)\ne 8$. 
+			 \itemch
+			 Ta có $f'(x)=\dfrac{ad-bc}{\left(cx+d\right)^2}$.\\
+			Đồ thị hàm số $y=f'(x)$ đi qua điểm $\left(0; 3\right)$ nên  $f'(0)=3\Leftrightarrow \dfrac{ad-bc}{d^2}=3$.\\
+			Mặt khác,  đồ thị hàm số $y=f'(x)$ có tiệm cận đứng $x=-1$ nên $-c+d=0$.\\
+			 Vì $f'(x)>0, \forall x\ne 1\Rightarrow \max\limits_{\left[-3;-2\right]} f(x)=f\left(-2\right)=8\Leftrightarrow \dfrac{-2a+b}{-2c+d}=8$.\\
+			Vậy ta có hệ phương trình $\heva{&ad-bc=3d^2 \\ 
+			 &-c+d=0 \\
+			&b-2a=8\left(d-2c\right) 
+			} \Leftrightarrow \heva{&c=d  \\
+			&a-b=3d \\ 
+			&b-2a=-8d 
+			 } \Leftrightarrow \heva{&a=5d \\
+			&b=2d  \\
+			 &c=d.
+			}$\\ 
+			Từ đó suy ra $f(x)=\dfrac{5dx+2d}{dx+d}=\dfrac{5x+2}{x+1} \Rightarrow  f(2)=4$.
+		\end{itemchoice}
+	} 
+\end{ex}
+
+% nguồn: Phan1_Lop_12_Dai_so_Chuong_1
+\begin{ex}%[2D1H5-1]%[ma:f7953c3b]
+	Cho hàm số $y=\dfrac{ax+b}{x+c}$ ($a$, $b$, $c\in\mathbb{Z}$) có đồ thị như hình dưới 
+	\begin{center}
+		\begin{tikzpicture}[scale=1,font=\footnotesize,line join=round,line cap=round,>=stealth]
+			\draw[->] (-3,0)--(0,0)  node[below left]{$O$}--(4,0) node[below left]{$x$};
+			\draw[->] (0,-3.5)--(0,3) node[below  left]{$y$};
+			\clip (-3,-3.5)  rectangle (4,3);
+			\draw[smooth,samples=100]plot[domain=-3:4](\x,{(-1*(\x)+2)/((\x)-1)}) 
+				(-3,-1)--(4,-1); 
+			\foreach \x/\y in  {-2/0,-1/0,1/0,2/0,3/0}{\node[below] at (\x,\y) {$\x$};};
+			\foreach \x/\y in {0/-3,0/-2,0/-1,0/1,0/2}{\node[left] at  (\x,\y) {$\y$};};
+		\end{tikzpicture}
+	\end{center}
+	Khi đó: 
+	\choiceTF 
+		{\True Đường thẳng $x=1$ là đường tiệm cận đứng  của đồ thị hàm số}
+		{Hàm số đồng  biến trên từng khoảng xác định}
+		{\True Hàm số đạt giá trị nhỏ nhất  bằng $-2$ trên đoạn $[-2;0]$}
+		{Các số $a$, $b$, $c$  đều âm}
+	\loigiai{ 
+		\begin{itemchoice}
+			\itemch Đúng. Vì từ đồ thị ta thấy $x=1$ là đường tiệm cận đứng của đồ thị hàm  số.
+			\itemch Sai. Vì từ đồ thị ta thấy đồ thị đi xuống nên hàm số  nghịch biến trên từng khoảng xác định.
+			\itemch Đúng. Vì hàm số nghịch biến trên đoạn  $[-2;0]$ nên $\min\limits_{[-2;0]}y=y(0)=-2$.
+			\itemch Sai.  Vì
+			\begin{itemize}
+				\item Từ  dồ thị ta có TCĐ là đường thẳng $x=1\Rightarrow 1+c=0\Rightarrow c=-1$
+				 \item TCN là đường thẳng $y=-1\Rightarrow a=-1$
+				\item Đồ  thị cắt trục $Oy$ tại điểm $(0;-2)\Rightarrow-2=\dfrac{a.0+b}{0+c}\Rightarrow b=-2c=2$.
+			\end{itemize}
+		\end{itemchoice}
+	} 
+\end{ex}
+
+% nguồn: Phan1_Lop_12_Dai_so_Chuong_1
+\begin{ex}%[2D1H5-1]%[ma:b6319406]
+	 Cho hàm số $\mathrm{f}(x)=2x+\dfrac{2}{x-1}$.
+	 \renewcommand{\dotEX}{}
+	\choiceTF 
+		{$f'(x)=1-\dfrac{1}{(x-1)^2}$.} 
+		{\True Phương trình $\mathrm{f}'(x)=0$ có hai nghiệm phân biệt là $0$ và  $2$.}
+		{\True Hàm số đã cho có bảng  biến thiên như sau
+		\begin{center}
+			\resizebox{0.7\linewidth}{!}{\begin{tikzpicture}[>=stealth]
+		\tkzTabInit[nocadre,lgt=1.2,espcl=3] 
+			{$x$ /1,$y'$  /1,$y$ /2.5}
+			{$-\infty$,$0$,$1$,$2$,$+\infty$} 
+		\tkzTabLine{,+,,-,,-,,+,} 
+		\tkzTabVar{-/$-\infty$,+/ $-2$,-D+/ $-\infty$/$+\infty$,-/  $6$,+/ $+\infty$}
+	\end{tikzpicture}
+			 }
+	\end{center}}
+	{Hàm số đã cho có đồ thị như  sau
+	\begin{center}
+		\resizebox{!}{5cm}{\begin{tikzpicture}[>=stealth]
+		\draw[cyan!50,thin] (-4.5,-4) grid  (5,5);
+		 \draw[->] (-4,0)--(0,0)
+			node[below right]{$O$}--(5,0) node[below]{$x$}; 
+		\draw[->] (0,-4) --(0,5.5)  node[right]{$y$};
+		\foreach \x  in {-4,-3,-2,-1,1,2,3,4}{
+			 \draw (\x,-.1)--(\x,.1) node[above]{$\x$};
+		 }
+		\foreach \y in  {-4,-3,-2,-1,1,2,3,4,5}{
+			 \draw (-.1,\y)--(.1,\y) node[right]{$\y$};
+		 }
+		\draw[samples=100,domain=-4.1:0.89]  plot (\x,{1/2*(\x)+1/(2*(\x-1))});
+		\draw[samples=100,domain=1.11:4.5]  plot (\x,{1/2*(\x)+1/(2*(\x-1))});
+		\draw  [domain=-4.5:5,dashed] plot (\x,{1/2*(\x)});
+		\draw  [dashed] (1,-4.1)--(1,5.1);
+		\draw[fill] (1,0.5) circle (1pt); 
+	\end{tikzpicture}
+		} 
+	\end{center}
+	} 
+	\loigiai{ 
+		\begin{itemchoice}
+			\itemch  Sai. Vì $f'(x)=2-2\dfrac{1}{(x-1)^2}$.
+			\itemch Đúng. Ta dễ dàng đạo hàm và giải phương trình $f'(x)=0$ và có $2$ nghiệm  phân biệt là $0$ và $2$.
+			\itemch Đúng. Vì ta có thể suy luận được tiệm cận  đứng là $x=1$ và $f'(x)=0$ và có $2$ nghiệm phân biệt là $0$ và $2$.
+			\itemch Sai. Vì thay $x=2$  vào hàm số $\mathrm{f}(x)=2x+\dfrac{2}{x-1}$ ta có giá trị là $6$.
+		\end{itemchoice}
+	} 
+\end{ex}
+
+% nguồn: Phan1_Lop_12_Dai_so_Chuong_1
+\begin{ex}%[2D1H5-1]%[ma:a0513258]
+	Cho  hàm số $f(x)=\dfrac{ax-1}{bx+c}$ với $a, b, c\in \mathbb{R}$ có bảng biến thiên như hình vẽ dưới đây
+	\begin{center}
+		\begin{tikzpicture}[scale=1,font=\footnotesize]
+			 \tkzTabInit[nocadre=false,lgt=1.2,espcl=2.5,deltacl=0.7]
+				{$x$/0.8,$f'(x)$/0.6,$f (x)$/2} 
+				 {$-\infty$,$3$,$+\infty$};
+			\tkzTabLine{,-,d,-,}; 
+			\tkzTabVar{+/$\dfrac{1}{2}$,-D+/$-\infty$/$+\infty$,-/$\dfrac{1}{2}$}; 
+		\end{tikzpicture}
+	\end{center}
+	\def\dotEX{} 
+	\choiceTF 
+		{\True Hàm  số nghịch biến trên khoảng $\left(-\infty; \dfrac{1}{2} \right)$.}
+		 {Đồ thị hàm số có tiệm cận đứng $x=\dfrac{1}{2}$.}
+		{\True  Đồ thị giao với trục hoành tại điểm có hoành độ nhỏ hơn $3$.}
+		{\True  $\hoac{&b>\dfrac{2}{3}\\&b<0.}$}
+	\loigiai{ 
+		\begin{itemchoice}
+			 \itemch
+			Hàm số nghịch biến trên khoảng $\left(-\infty;3\right)$ nên nghịch biến  trên khoảng $\left(-\infty;\dfrac{1}{2}\right)$.
+			 \itemch
+			Đồ thị hàm số có tiệm  cận đứng $x=3$.
+			 \itemch
+			Đồ thị giao với trục hoành tại điểm thuộc nhánh  trái của đồ thị, suy ra hoành độ giao điểm này nhỏ hơn $3$.
+			\itemch 
+			Từ bảng biến thiên, ta thấy đồ thị có tiệm cận  đứng $x=-\dfrac{c}{b}=3$ và tiệm cận ngang $y=\dfrac{a}{b}=\dfrac{1}{2}$.\\
+			Suy ra  $\heva{&\dfrac{a}{b}=\dfrac{1}{2}\\&-\dfrac{c}{b}=3}\quad (1)$.\\
+			Ta có  $y'=\dfrac{ac+b}{\left(bx+c\right)^2}<0, \forall x\ne-\dfrac{c}{b} \Leftrightarrow ac+b<0\quad (2)$.\\
+			Từ (1) và (2) suy ra $\dfrac{b}{2}\cdot (-3b)+b<0\Leftrightarrow \hoac{&b>\dfrac{2}{3}\\&b<0.}$ 
+		\end{itemchoice}
+	 }
+\end{ex}
+
+% nguồn: Phan1_Lop_12_Dai_so_Chuong_1
+\begin{ex}%[2D1H5-1]%[ma:8f8084a3]
+	\immini{Cho hàm số $y = \dfrac{ax^2 + bx + c}{mx + n}$ có đồ thị như hình  vẽ bên
+	\choiceTF 
+		{Hàm số đã cho nghịch  biến trên khoảng $\left(-2; 0 \right)$}
+		{\True Đồ thị của hàm  số đã cho có tiệm cận xiên $y = x+1$}
+		{Gọi $A$, $B$ là~hai cực trị của hàm  số đã cho, diện tích tam giác $OAB$ bằng $8$ (với $O$ là~gốc toạ độ)}
+		{\True Một trục đối xứng của đồ thị đã cho là~$d \colon y = \left(x +  1\right) \tan{\dfrac{3\pi}{8}}$}
+		}{\resizebox{!}{5cm}{\begin{tikzpicture}[line join = round,line cap=round,>=stealth]
+		 \draw[->]
+			(-4,0) --  (3,0) node[below]{$x$};
+		\draw[->] 
+			(0,-4) -- (0,3.5) node[right]{$y$}; 
+		\begin{scope}
+			 \clip (-5,-4) rectangle (3,3.5);
+			 \draw (-1,-4) -- (-1,4);
+			 \draw[samples=100,domain=-0.9:3,smooth,variable=\x] plot (\x,{((\x)^2+2*(\x)+2)/((\x)+1)});
+			 \draw[samples=100,domain=-4:-1.1,smooth,variable=\x] plot (\x,{((\x)^2+2*(\x)+2)/((\x)+1)});
+			\draw[samples=100,domain=-4:3.5,smooth,variable=\x]  plot (\x,{(\x)+1});
+		\end{scope}
+		\fill 
+			(0,0) circle  (1pt) node[below right]{$O$}
+			(-2,-2) circle (1pt) 
+			(0,2) circle  (1pt)
+			(-2,0) circle  (1pt) node[above left]{$-2$}
+			(-1,0) circle (1pt)  node[above left]{$-1$}
+			(0,-2) circle (1pt)  node[right]{$-2$}
+			(0,1) circle  (1pt) node[right]{$1$}
+			(0,2)  circle (1pt) node[below left]{$2$};
+		 \draw[dashed]
+			(-2,0) -- (-2,-2) --  (0,-2);
+	\end{tikzpicture}
+		}} 
+	\loigiai{\begin{itemchoice}
+		\itemch \textbf{Sai}.\\ 
+		Dựa vào đồ thị hàm số ta thấy hàm số nghịch biến trên $\left(-2;  -1 \right)$ và $\left(-1; 0 \right)$.
+		\itemch \textbf{Đúng}.\\ 
+		Gọi phương trình đường tiệm cận xiên của đồ thị hàm  số là~$d\colon y = a_1x + b_1 \left(a_1 \neq 0 \right)$.\\
+		Ta thấy $d$ đi qua các điểm có tọa độ $\left(0;1 \right)$, $\left(-1; 0 \right)$ nên $\heva{&1 = b\\&-a +  b = 0} \Leftrightarrow \heva{&a = 1\\&b=1.}$\\
+		Tiệm cận xiên của đồ thị hàm số có phương trình là~$y =  x+1$.
+		\itemch  \textbf{Sai}.\\
+		Ta có $2$ điểm cực trị của hàm số  đã cho có tọa độ là~$A\left(0;2 \right)$, $B\left(-2; -2 \right)$.\\
+		Ta có $AO = 2$,  $BO = 2\sqrt{2}$ và $AB = 2\sqrt{5}$.\\
+		Nửa chu vi của $\triangle ABO$ bằng $p  = \dfrac{2 + 2\sqrt{2}+ 2\sqrt{5}}{2}$.\\
+		Suy ra $S_{OAB}  = \sqrt{\mathrm{P}\left(p - 2\right) \left(p-2\sqrt{2}\right)\left(p - 2\sqrt{5}\right)} = 2$.
+		 \itemch \textbf{Đúng}.\\
+		Từ đô thị hàm số ta thấy tiệm cận đứng của đồ thị hàm số  là~$\Delta \colon x = -1$.\\
+		Trục đối xứng của đồ thị hàm số đã cho chính là~tia phân giác của góc tạo bởi tiệm cận xiên $d \colon x - y + 1 =  0$ và tiệm cận đứng $\Delta \colon x + 1 = 0$.\\
+		Phương  trình đường phân giác góc tạo bởi $\left(d, \Delta \right)$ là
+		\begin{align*}
+			\dfrac{x-y+1}{\sqrt{2}} = \pm \left(x+1 \right) \Leftrightarrow \hoac{&x - y+1 = \sqrt{2}\left(x+1 \right)\\&x-y+1=-\sqrt{2}\left(x+1 \right)} \Leftrightarrow \hoac{&y = \left(1-\sqrt{2} \right)\left(x+1 \right)\\&y = \left(1+\sqrt{2} \right) \left(x+1 \right) =  \left(x+1 \right) \tan{\dfrac{3\pi}{8}}.}
+		\end{align*}
+	\end{itemchoice}
+} 
+\end{ex}
+
+% nguồn: Phan1_Lop_12_Dai_so_Chuong_1
+\begin{ex}%[2D1H5-1]%[ma:8ae3a43b]
+	Cho hàm số $y=f(x)=ax^3+bx^2+cx+d$ có đồ thị như hình vẽ dưới  đây
+	\begin{center}
+		\begin{tikzpicture}[scale=0.8,font=\footnotesize,line join=round,line cap=round,>=stealth]
+			\draw[->] (-2.5,0)--(2,0) node[below right] {$x$}; 
+			\draw[->] (0,-1)--(0,3.5)  node[left] {$y$};
+			\draw[domain=-2.3:0.8,samples=200] plot (\x,{\x*\x*\x  +2*\x*\x + 1});
+			\draw[fill]  (-2,1) circle (1.3pt);
+			 \draw[fill] (-1,2) circle (1.3pt);
+			\draw[fill] (0,1)  circle (1.3pt);
+			\draw[fill] (-2,0) circle (1.3pt); 
+			\draw[fill] (-1,0)  circle (1.3pt);
+			 \draw[fill] (0,2) circle (1.3pt) node[right]{$2$};
+			 \draw[fill] (0,0) circle (1.3pt) node[below right]{$O$};
+			\draw[dashed]  (-2,0) -- (-2,1) -- (0,1);
+			\draw[dashed] (-1,0) -- (-1,2)  -- (0,2);
+			\draw[dashed] (0,0) --  (0,1);
+			\foreach \x in {-2,-1} \draw (\x,0.1)--(\x,-0.1) node[below]  {\x};
+			\foreach \y  in {1} \draw (0.1,\y)--(-0.1,\y) node[below right] {\y};
+		\end{tikzpicture}
+	\end{center}
+	 \choiceTF
+		{Hàm số đạt cực tiểu tại  $x = 1$}
+		{\True Đồ thị hàm số  cắt trục $Oy$ tại điểm có tọa độ $(0;1)$}
+		{Hàm số  đồng biến trên khoảng $(-\infty; -1)$}
+		{$2a + 3b +  c = 9$}
+	 \loigiai{
+		\begin{itemchoice}
+			\itemch Hàm số đạt cực tiểu tại $x = 0$, giá trị cực tiểu  là $y = 1$.
+			\itemch Đồ thị  hàm số cắt trục tung tại điểm có tọa độ $(0;1)$.
+			\itemch Hàm số đồng biến trên khoảng $(-\infty; x_0)$ với $-2  < x_0 < -1$.
+			\itemch Đồ thị đi qua các điểm $(-2;1)$, $(-1;2)$, $(0;1)$ và đạt cực  trị tại $x = 0$ nên ta có hệ phương trình
+			$$\heva{&f(-2)=1\\&f(-1)=2\\&f(0)=1\\&f'(0)=0}\Leftrightarrow 
+			 \heva{
+			&-8a + 4b - 2c + d  = 1\\&
+			-a + b  - c + d = 2\\&
+			d  = 1\\&
+			 c = 0}
+			\Leftrightarrow \heva{&a = 1\\& b = 2\\  &c = 0\\& d = 1} \Rightarrow 2a + 3b + c = 2 + 6 = 8.
+			 $$
+		\end{itemchoice}
+	} 
+\end{ex}
+
+% nguồn: Phan1_Lop_12_Dai_so_Chuong_1
+\begin{ex}%[2D1H5-1]%[ma:82c189b2]
+	Cho hàm số $y=ax^3+bx^2+cx+d$ có bảng biến thiên như hình vẽ  dưới đây
+	\begin{center}
+		\begin{tikzpicture}[scale=1,font=\footnotesize]
+			 \tkzTabInit[nocadre=false,lgt=1.2,espcl=2.5,deltacl=0.6]
+				{$x$/1,$y'$/1,$y$/2} 
+				 {$-\infty$,$-2$,$0$,$+\infty$}
+			\tkzTabLine{,-,z,+,z,-,} 
+			 \tkzTabVar{+/$+\infty$,-/0,+/4,-/$-\infty$}
+		\end{tikzpicture}
+	\end{center}
+	 \choiceTF
+		{Hàm số đạt giá trị  lớn nhất là $4$}
+		{\True Đường thẳng $y = 2$ cắt đồ thị hàm số tại ba điểm phân  biệt}
+		{\True Trong bốn hệ số $a$, $b$, $c$, $d$ có đúng hai  số âm}
+		{\True Đồ thị  hàm số đi qua điểm $(-4;20)$}
+	\loigiai{ 
+		\begin{itemchoice}
+			\itemch Hàm số không có giá trị lớn nhất  trên $\mathbb{R}$.
+			\itemch Ta có bảng biến thiên 
+			\begin{center}
+				\begin{tikzpicture}[scale=1,font=\footnotesize]
+					\tkzTabInit[nocadre=false,lgt=1.2,espcl=2.5,deltacl=0.6] 
+						 {$x$/1,$y'$/1,$y$/2}
+						 {$-\infty$,$-2$,$0$,$+\infty$}
+					 \tkzTabLine{,-,z,+,z,-,}
+					\tkzTabVar{+/$+\infty$,-/0,+/4,-/$-\infty$} 
+					\draw  (2.2,-3) -- (9.2,-3);
+					\node[above right] at (8.2,-3) {$y=2$}; 
+				\end{tikzpicture}
+			\end{center}
+			Kẻ đường thẳng $y = 2$ đi qua điểm $(0;2)$ và song song  với trục $Ox$, đường này cắt đồ thị tại ba điểm phân biệt.
+			\itemch Từ bảng  biến thiên ta có
+			$$ 
+			\heva{& f(-2) = 0\\ 
+			&f(0)  = 4\\
+			 &f'(-2) = 0\\
+			&f'(0) =  0}
+			\Leftrightarrow\heva{&-8a+4b-2c+d=0\\&d=4\\&12a-4b+c=0\\&c=0} \Leftrightarrow \heva{&a = -1\\& b = -3\\&c = 0\\ &d  = 4.}
+			$$ 
+			Vậy có đúng hai số âm  trong bốn hệ số.
+			\itemch Với $a = -1,\ b = -3,\ c = 0,\  d = 4$, ta có hàm số $y = -x^3 - 3x^2 + 4$. Thay $x = -4$ ta được
+			 $$
+			y = -(-4)^3 - 3(-4)^2 + 4 =  64 - 48 + 4 = 20.
+			 $$
+			Nên đồ thị đi qua điểm $(-4;20)$. 
+		\end{itemchoice}
+	 }
+\end{ex}
+
+% nguồn: Phan1_Lop_12_Dai_so_Chuong_1
+\begin{ex}%[2D1H5-1]%[ma:eb422168]
+	 \immini{
+	Cho  hàm số $y=\dfrac{x-2}{2x+1}$.
+	\choiceTF 
+		 {\True Tập xác định của hàm số là $\mathbb{R}\setminus \left\{-\dfrac{1}{2}\right\}$}
+		{Đạo hàm của hàm  số là $y'=\dfrac{3}{(2x+1)^2}$}
+		{Các đường  tiệm cận của hàm số là $x=\dfrac{1}{2}$, $y=-\dfrac{1}{2}$}
+		{\True Đồ thị của hàm số có  dạng như hình bên}
+		} 
+		{\resizebox{!}{5.5cm}{\begin{tikzpicture}[line join=round,line cap=round,>=stealth]
+		 \draw[->] (-4.1,0)--(5,0) node[below left] {$x$};
+		\draw[->] (0,-4.1)--(0,5.1) node[below right] {$y$}; 
+		\fill (0,0) circle (1pt)  node [below right] {$O$};
+		\foreach \x/\gx  in {-3/-3,-2/-2,-1/-1,2/2,3/3,4/4}
+		\draw (\x,1pt)--(\x,-1pt)  node [below] {$\gx$};
+		\foreach \y/\gy  in {-3/-3,-2/-2,1/1,2/2,3/3,4/4}
+		\draw (1pt,\y)--(-1pt,\y)  node [right] {$\gy$};
+		 \draw[dashed,thin] (-0.49,-4)--(-0.49,5);
+		\begin{scope}
+			\clip (-5,-4) rectangle (5,5); 
+			\draw[samples=100,domain=-4:-0.51,smooth,variable=\x] plot (\x,{((\x)+-2)/(2*(\x)+1)}); 
+			 \draw[samples=100,domain=-0.49:4,smooth,variable=\x] plot (\x,{((\x)+-2)/(2*(\x)+1)});
+			 \draw[dashed,thin] (-4,1/2)--(4,1/2);
+		\end{scope}
+	\end{tikzpicture}
+		 }
+		 }
+	\loigiai{ 
+	 \immini{
+		\begin{itemchoice}
+			\itemch Tập xác định của hàm  số là $\mathbb{R}\setminus \left\{-\dfrac{1}{2}\right\}$.
+			\itemch Đạo  hàm của hàm số là $y'=\dfrac{5}{(2x+1)^2}$.
+			\itemch Các đường tiệm cận  của hàm số là $x=-\dfrac{1}{2}$, $y=\dfrac{1}{2}$.
+			\itemch  Đồ thị của hàm số có dạng như hình bên.
+		\end{itemchoice}
+		}{\resizebox{!}{5.5cm}{\begin{tikzpicture}[line join=round,line cap=round,>=stealth]
+		\draw[->] (-4.1,0)--(5,0) node[below  left] {$x$};
+		 \draw[->] (0,-4.1)--(0,5.1) node[below right] {$y$};
+		\fill (0,0)  circle (1pt) node [below right] {$O$};
+		\foreach \x/\gx in {-3/-3,-2/-2,-1/-1,2/2,3/3,4/4} 
+		\draw (\x,1pt)--(\x,-1pt) node [below] {$\gx$}; 
+		\foreach \y/\gy in  {-3/-3,-2/-2,1/1,2/2,3/3,4/4}
+		\draw (1pt,\y)--(-1pt,\y) node [right] {$\gy$}; 
+		 \draw[dashed,thin] (-0.49,-4)--(-0.49,5);
+		\begin{scope}
+			\clip (-5,-4) rectangle (5,5); 
+			\draw[samples=100,domain=-4:-0.51,smooth,variable=\x] plot  (\x,{((\x)+-2)/(2*(\x)+1)});
+			\draw[samples=100,domain=-0.49:4,smooth,variable=\x]  plot (\x,{((\x)+-2)/(2*(\x)+1)});
+			\draw[dashed,thin]  (-4,1/2)--(4,1/2);
+		\end{scope}
+	\end{tikzpicture}
+		 }}
+	 }
+\end{ex}
+
+% nguồn: Phan1_Lop_12_Dai_so_Chuong_1
+\begin{ex}%[2D1H5-1]%[ma:40e1543c]
+	 Cho hàm số $f(x)=2 x^3-3x^2+1$.
+	 \renewcommand{\dotEX}{}
+	\choiceTF 
+		{\True $f'(x)=6 x^2-6 x.$} 
+		{\True Phương trình $f'(x)=0$ có hai nghiệm phân biệt  là 0 và 1.}
+		{Hàm số đã cho có  bảng biến thiên như sau
+		\begin{center}
+			\begin{tikzpicture}
+				 \tkzTabInit[nocadre,deltacl=0.6]{$x$/0.7,$f'(x)$/0.7,$f (x)$/2.5}{$-\infty$,$0$,$1$,$+\infty$}
+				\tkzTabLine{,+,0,-,0,+,} 
+				\tkzTabVar{-/$+\infty$,+/$1$,-/$0$,+/$-\infty$} 
+			\end{tikzpicture}
+	\end{center}}
+	{\True Hàm số đã cho có đồ thị  như sau
+	\begin{center}
+		 \resizebox{!}{5cm}{
+		\begin{tikzpicture}[>=stealth]
+			\draw[cyan!50,thin] (-3,-3) grid (4,4); 
+			\draw[->]  (-3,0)--(0,0) node[below right]{$O$}--(4,0) node[below]{$x$};
+			 \draw[->] (0,-3) --(0,4) node[right]{$y$};
+			 \foreach \x in {-2,-1,1,2,3}{
+				\draw (\x,-.1)--(\x,.1) node[above]{$\x$}; 
+			} 
+			\foreach  \y in {-2,-1,1,2,3}{
+				 \draw (-.1,\y)--(.1,\y) node[right]{$\y$};
+			 }
+			\draw[samples=100,domain=-0.9:1.9] plot  (\x,{2*(\x)^3-3*(\x)^2+1});
+		\end{tikzpicture}
+		} 
+	\end{center}}
+	 \loigiai{
+		\begin{itemchoice}
+			 \itemch Đúng. Ta dễ dàng đạo hàm để có kết quả $f'(x)=6 x^2-6 x$.
+			\itemch Đúng. Ta dễ dàng đạo hàm và giải phương trình $f'(x)=0$ và có $2$ nghiệm. 
+			 \itemch Sai. Vì
+			\itemch Đúng. Vì căn cứ vào $2$ nghiệm  khi $f'(x)=0$ và hệ số $a>0$ của hàm số bậc ba.
+		\end{itemchoice}
+	} 
+\end{ex}
+
+% nguồn: Phan1_Lop_12_Dai_so_Chuong_1
+\begin{ex}%[2D1H5-1]%[ma:18f50d8b]
+	Cho hàm số $y=f(x)=ax^3+bx^2+cx+d$ có đồ thị như hình vẽ  dưới đây
+	\begin{center}
+		\begin{tikzpicture}[scale=0.8,font=\footnotesize,line join=round,line cap=round,>=stealth]
+			\draw[->] (-2.5,0)--(3.5,0) node[below right] {$x$}; 
+			\draw[->] (0,-2)--(0,4) node[left]  {$y$};
+			\draw[domain=-2.1:2.1,samples=200] plot (\x,{\x*\x*\x  - 3*\x + 1});
+			 \draw (-1,3) circle (1.3pt);
+			\draw  (1,-1) circle (1.3pt);
+			\draw (0,-1) circle (1.3pt); 
+			\draw (-1,0)  circle (1.3pt);
+			\draw  (0,1) circle (1.3pt) node[right]{$1$};
+			 \draw (1,0) circle (1pt) node[above]{$1$};
+			\draw (0,3)  circle (1pt) node[right]{$3$};
+			\draw[dashed]  (-1,0) -- (-1,3) -- (0,3);
+			\draw[dashed] (1,0) -- (1,-1) -- (0,-1); 
+			\foreach \x in {-1} \draw (\x,0.1)--(\x,-0.1) node[below] {\x}; 
+			\foreach \y in {-1} \draw (0.1,\y)--(-0.1,\y) node[left]  {\y};
+		\end{tikzpicture}
+	\end{center}
+	 \choiceTF
+		{\True Đồ thị hàm số cắt trục tung tại điểm có tọa  độ $(0;1)$}
+		{\True Đường thẳng đi qua điểm $(0;1)$ luôn cắt đồ  thị tại ba điểm phân biệt có hoành độ lập thành một cấp số cộng}
+		{\True $a - b + c + d =  -1$}
+		{Đồ thị hàm số đi qua điểm $(3;18)$} 
+	\loigiai{ 
+		\begin{itemchoice}
+			\itemch Đồ thị có hai điểm cực trị là $(-1;3)$ và $(1;-1)$,có  tâm đối xứng là $(0;1)$. Do đó, đồ thị cắt trục tung tại $(0;1)$.
+			\itemch Do $(0;1)$ là tâm đối xứng của đồ thị nên đường thẳng qua điểm đó luôn cắt đồ thị tại ba điểm phân biệt $I$, $A$, $B$ với $I$ là trung  điểm của $A$, $B$, suy ra $x_A+x_B=2x_I$.\\
+			Do đó hoành  độ $3$ điểm này lập thành cấp số cộng.
+			\itemch  Ta có:
+			$$ 
+			\heva{& 
+			 f(-1) = 3\\
+			&f(1)  = -1\\
+			&f'(1) = 0\\ 
+			 &f'(-1) = 0}
+			\Leftrightarrow 
+			\heva{& 
+			-a + b - c + d = 3\\ 
+			&a + b  + c + d = -1\\
+			&3a + 2b + c = 0\\ 
+			&3a - 2b + c =  0}
+			\Leftrightarrow \heva{&a = 1\\& b = 0\\&c = -3\\&d =  1.}
+			 $$
+			Vậy $a - b + c + d  = 1 - 0 - 3 + 1 = -1$.
+			\itemch Hàm số tìm được là $y = x^3 - 3x + 1$,  ta có
+			 $$
+			f(3) = 27 - 9  + 1 = 19 \ne 18.
+			$$ 
+			Vậy đồ thị không  đi qua điểm $(3;18)$.
+		\end{itemchoice}
+	 }
+\end{ex}
+
+% nguồn: Phan1_Lop_12_Dai_so_Chuong_1
+\begin{ex}%[2D1H5-1]%[ma:81ad9572]
+	Cho một hàm số có đồ  thị như sau
+	\begin{center}
+		\begin{tikzpicture}[line join=round,line cap=round,>=stealth]
+			\tikzset{ethicknode/.style={scale=0.9}} 
+			 \draw[->] (-3.1,0)--(4.1,0) node[below left] {$x$};
+			\draw[->] (0,-3.1)--(0,4.1)  node[below left] {$y$};
+			\draw (0,0)  node [below left] {$O$};
+			\foreach \x/\nx in {1/1,-1/-1} 
+			\draw[thin] (\x,1pt)--(\x,-1pt) node [below left]  {$\nx$};
+			\foreach \y/\ny in {1/1,-1/-1} 
+			\draw[thin] (1pt,\y)--(-1pt,\y)  node [below left] {$\ny$};
+			\draw[dashed,thin]  (1.01,-3)--(1.01,4);
+			\begin{scope}
+				\clip (-3,-3) rectangle (4,4); 
+				\draw[samples=200,domain=-3:0.99,smooth,variable=\x] plot (\x,{(1*(\x)+1)/(1*(\x)+-1)}); 
+				 \draw[samples=200,domain=1.01:4,smooth,variable=\x] plot (\x,{(1*(\x)+1)/(1*(\x)+-1)});
+				\draw[dashed,thin]  (-3,1/1)--(4,1/1);
+			\end{scope}
+		\end{tikzpicture}
+	\end{center}
+	\choiceTF 
+		{Đây là đồ thị của một hàm số đồng biến trên  mỗi khoảng xác định}
+		{\True Đồ thị có tiệm cận đứng là đường thẳng $x=1$} 
+		{Đồ thị có tiệm  cận ngang là đường thẳng $y=0$}
+		{\True Đường cong trên là đồ thị  của hàm số $y=\dfrac{x+1}{x-1}$}
+	\loigiai{ 
+		\begin{itemchoice}
+			\itemch Vì nhìn từ trái sang  phải đồ thị hướng xuống nên hàm số nghịch biến trên mỗi khoảng xác định.
+			\itemch 
+			\itemch Vì nhìn vào đồ  thị ta thấy tiệm cận ngang là đường thẳng $y=1.$
+			 \itemch
+		\end{itemchoice}
+	 }
+\end{ex}
+
+% nguồn: Phan1_Lop_12_Dai_so_Chuong_1
+\begin{ex}%[2D1H5-1]%[ma:c5bda32b]
+	\immini{Cho hàm số  $y=ax^3+bx^2+cx+d$ có đồ thị như hình bên
+	 \choiceTF
+		{Hàm số có hai  điểm cực trị trái dấu}
+		{\True Tổng giá trị cực đại  và cực tiểu là số âm}
+		{Phương trình $y' = 0$ có ba  nghiệm phân biệt}
+		{\True Trong các hệ số $a$, $b$, $c$, $d$  có $2$ hệ số dương}}
+		{\begin{tikzpicture}[scale=0.4,font=\footnotesize,line join=round,line cap=round,>=stealth]
+		\draw[->] (-3.2,0)--(5.2,0)  node[below] {$x$};
+		 \draw[->] (0,-6.5)--(0,3.2) node[left] {$y$};
+		 \draw[domain=-0.6:4.59,samples=200] plot (\x,{(\x-2)*(\x-2)*(\x-2) - 5*(\x-2)-2});
+		\draw[fill] (0,0) circle (1pt) node[below  left] {$O$};
+	\end{tikzpicture}
+		} 
+	\loigiai{ 
+		Ta có $y=ax^3+bx^2+cx+d$, $y'=3ax^2+2bx+c$.\\ 
+		Gọi $x_1$, $x_2$ lần lượt là điểm cực  đại, cực tiểu của hàm số $\Rightarrow y_1$, $y_2$ lần lượt là giá trị cực đại, cực tiểu của hàm số.
+		\begin{itemchoice}
+			\itemch Hàm số có hai  điểm cực trị cùng dấu.
+			\itemch  Từ đồ thị ta thấy $y_1>0$, $y_2<0$ mà $-y_1>y_2\Rightarrow y_1+y_2<0$.
+			\itemch Từ hình vẽ ta thấy đồ thị có hai điểm  cực trị.\\
+			Do đó phương trình $y' = 3ax^2 + 2bx + c = 0$ có hai nghiệm phân biệt $x_1$, $x_2$. 
+			\itemch Dựa vào đồ  thị ta thấy
+			\begin{itemize}
+				\item Nhánh bên phải  hướng lên $\Rightarrow a>0$.
+				\item Đồ thị hàm số đi qua  gốc tọa độ $O(0;0)\Rightarrow d=0$.\\
+				$\heva{&x_1+x_2=\dfrac{-2b}{3a}>0\\&x_1\cdot x_2=\dfrac{c}{3a}>0}\Rightarrow\heva{& \dfrac{b}{a}<0\\&c>0}\Rightarrow\heva{& b<0\\&c>0.}$\\ 
+				Do đó $a > 0$, $b < 0$, $c > 0$, $d = 0$ $\Rightarrow$  Trong các hệ số $a$, $b$, $c$, $d$ có $2$ hệ số dương.
+			\end{itemize}
+		\end{itemchoice}
+	 }
+\end{ex}
+
+% nguồn: Phan1_Lop_12_Dai_so_Chuong_1
+\begin{ex}%[2D1V5-1]%[ma:7e298f30]
+	Cho $a$, $b$, $c\in  \mathbb{R}$, $a\ne 0$, hàm số $f(x)=ax+b+\dfrac{c}{x+d}$ có đồ thị như hình bên.
+	\begin{center}
+		\resizebox{!}{5cm}{\begin{tikzpicture}[line join=round,line cap=round,>=stealth]
+		\draw[cyan!50,thin](-3.5,-3.5) grid  (4.5,4.5);
+		 \draw[->] (-3.5,0)--(4.5,0) node[below]{$x$};
+		\draw[->]  (0,-3.5)--(0,4.5) node[left]{$y$};
+		\fill (0,0) circle (1pt) node[above  left]{$O$};
+		\fill (0,-1) circle  (1pt) node[left]{$-1$};
+		\fill (0,3) circle (1pt) node[left]{$3$}; 
+		 \fill (3,0) circle (1pt) node[below]{$3$};
+		\fill (2,0) circle (1pt) node[below  right]{$2$};
+		\fill (1,0) circle (1pt) node[below right]{$1$}; 
+		\begin{scope}
+			\clip (-3.5,-3.5)  rectangle (4.5,4.5);
+			 \draw[domain=-3.5:1.1,smooth,samples=100] plot (\x,{(\x)^2-3*(\x)+3)/(\x-2)});
+			 \draw[domain=1.15:4.5,smooth,samples=100] plot (\x,{(\x)^2-3*(\x)+3)/(\x-2)});
+			 \draw[domain=-3.5:4.5,smooth] plot (\x,{(\x)-1});
+		\end{scope}
+		\draw  [dashed] (3,0)--(3,3)--(0,3);
+	\end{tikzpicture}
+		} 
+	\end{center}
+	 \choiceTF
+		{\True  $d=-2$}
+		{$a-\dfrac{c}{(x+d)^2}>0,\forall x \in  (1;2)\cup (2;3)$}
+		{\True $a=1$, $b=-1$} 
+		{$c=-2$} 
+	\loigiai{ 
+		\begin{itemchoice}
+			\itemch Đúng.  Vì đồ thị hàm số có tiệm cận đứng $x=2$ nên $d=-2$.
+			\itemch Sai. Vì $y'=a-\dfrac{c}{(x+d)^2}<0,\forall x  \in (1;2)\cup (2;3)$ do đồ thị đi xuống trên các khoảng $(1;2)$ và $(2;3)$.
+			\itemch Đúng. Vì đồ thị hàm số có tiệm cận xiên $y=ax+b$ đi  qua điểm $A(1;0)$ và $B(0;-1)$.\\
+			Suy ra $\heva{&a+b=0\\&b=-1} \Leftrightarrow \heva{&a=1\\&b=-1.}$ 
+			\itemch Sai. Vì hàm số $f(x)=x-1+\dfrac{c}{x-2}$ có  đạo hàm $f'(x)=1-\dfrac{c}{(x-2)^2}$.\\
+			Từ  đồ thị hàm số ta có $f'(1)=f'(3)=0 \Leftrightarrow 1-c=0 \Leftrightarrow c=1$.
+		\end{itemchoice}
+	} 
+\end{ex}
+
+% nguồn: Phan1_Lop_12_Dai_so_Chuong_1
+\begin{ex}%[2D1V5-1]%[ma:2ee9f316]
+	\immini{Cho hàm số $f(x)=x^3+ax^2+bx+c$, có đồ  thị như hình vẽ.
+	 \choiceTF
+		 {\True Hàm số $y=f(x)$ có hai điểm cực trị là $0$ và $2$}
+		 {\True Giá trị $b$ bằng $0$}
+		{Giá trị $c$  bằng $-2$}
+		 {$f(x)=x^3-6x^2+2$}}
+		{\resizebox{!}{3.5cm}{\begin{tikzpicture}[line cap=butt,line join=miter,>=stealth,scale=0.55]
+		 \draw[->] (-2,0)--(4,0)
+			node[shift={(-100:7pt)},font=\normalsize]{$x$}; 
+		\draw[->]  (0,-3)--(0,3.5)
+			node[shift={(180:7pt)},font=\normalsize]{$y$}; 
+		\draw  (5pt,0) |- (0,5pt)
+			(0,0) node[shift={(220:11pt)},font=\normalsize]{$O$}; 
+		\tikzset{declare  function={f (\x)=(\x)^3-3*(\x)^2+2;}}
+		\begin{scope}
+			\clip (-2,-3)  rectangle (4,3.5);
+			\draw[samples=100]  plot[domain=-2.5:4] (\x,{f (\x)});
+		\end{scope}
+		\draw[dashed,fill] 
+			 (0,2) circle (1pt) node[shift=(150:0.25)]{$2$}
+			(2,0) circle  (1pt) node[shift=(90:0.2)]{$2$}--
+			(2,-2)  circle (1pt);
+	\end{tikzpicture}
+		 }}
+	 \loigiaiDS{
+		\begin{itemchoice}
+			 \itemch {\bf Đúng}.\\
+			 Từ đồ thị hàm số, suy ra hàm số $y=f(x)$ có hai điểm cực trị là $x_{\text{ CĐ}}=0$ và $x_{\text{ CT}}=2$.
+			\itemch  {\bf Sai}.\\
+			Ta có $f'(x)=3x^2+2ax+b$.\\ 
+			Vì $x=0$ là điểm cực  đại của hàm số nên $f'(0)=0$. Suy ra $b=0$.
+			 \itemch {\bf Sai}.\\
+			Vì đồ thị hàm số đi qua điểm có tọa độ $(0;2)$ nên $f(0)=2$. Suy ra $c=2$. 
+			\itemch {\bf Sai}.\\ 
+			Ta có $\heva{&f'(0)=0 \\&f'(2)=0  \\&f(0)=2} \Leftrightarrow \heva{&a=-3\\&b=0\\&c=2.}$\\
+			Vậy  hàm số cần tìm là $f(x)=x^3-3x^2+2$.
+		\end{itemchoice}
+	 }
+\end{ex}
+
+% nguồn: Phan1_Lop_12_Dai_so_Chuong_1
+\begin{ex}%[2D1V5-1]%[ma:641a4539]
+	Cho hàm số $y=\dfrac{x-1}{x+1}$ có đồ  thị $\left( C \right)$.
+	 \choiceTF
+		{\True Đạo hàm  hàm số là $y'=\dfrac{2}{\left( x+1 \right)^2}$}
+		{\True Tiệm cận ngang của đồ thị hàm số  là $y=1$}
+		{Tâm đối xứng của đồ thị hàm số  là $\left( 1;-1 \right)$}
+		{Với mọi $M\in \left( C \right)$, tích khoảng cách từ $M$  đến các đường tiệm cận bằng $3$}
+	 \loigiai{
+		\begin{itemchoice}
+			 \itemch {\bf Đúng.}\\
+			Đạo hàm hàm  số là $y'=\dfrac{2}{\left( x+1 \right)^2}$.
+			\itemch {\bf Đúng.}\\ 
+			Tiệm cận ngang của đồ thị hàm số là $y=1$. 
+			 \itemch {\bf Sai.}\\
+			Tâm đối xứng của đồ thị hàm số  $\left( -1;1 \right)$.
+			\itemch {\bf  Sai.}\\
+			 Gọi $M\left( x_0;y_0 \right)\in \left( C \right)\Rightarrow M\left( x_0;1-\dfrac{2}{x_0+1} \right)$.\\
+			 Khoảng cách từ $M$ đến tiệm cận đứng: $d_1=\left| x_0+1 \right|$.\\
+			Khoảng cách từ $M$ đến tiệm cận ngang: $d_2=\left| y_0-1 \right|=\left| 1-\dfrac{2}{x_0+1}-1 \right|=\dfrac{2}{\left| x_0+1 \right|}$.\\ 
+			Vậy $d_1\cdot  d_2=2$.
+	\end{itemchoice}}
+\end{ex}
+
+% nguồn: Phan1_Lop_12_Dai_so_Chuong_1
+\begin{ex}%[2D1V5-1]%[ma:e3163d6d]
+	Cho hàm số $ y=f(x)=ax^3+bx^2+cx+d$ có đồ thị  như hình dưới đây:
+	\begin{center}
+		\begin{tikzpicture}[x=1cm,y=1cm,>=stealth]
+			\def\aa{1} \def\bb{2} \def\cc{0} \def\dd{1} 
+			\draw[->] (-2.46,0)--(1.5,0) node[below right]{$x$}; 
+			\draw[->] (0,-1)--(0,3.5) node[left]{$y$}; 
+			\fill (0,0) node[below left]{$O$}; 
+			\draw[samples=150,smooth,domain=-2.36:0.9] plot (\x,{\aa*(\x)^3+\bb*(\x)^2+\cc*\x+\dd}); 
+			\path  (-2,0) coordinate[label=below:$-2$](A)
+				(-1,0)  coordinate[label=below:$-1$](B)
+				(0,1) coordinate[label=right:$1$](C) 
+				(0,2) coordinate[label=right:$2$](D) 
+				(-2,1)  coordinate (E)
+				(-1,2) coordinate (F); 
+			\draw [dashed] (A)--(E)--(C) 
+				 (B)--(F)--(D);
+			\foreach \diem in  {A,B,C,D,E,F} \fill (\diem) circle (1pt);
+		\end{tikzpicture}
+	\end{center}
+	\choiceTF 
+		{\True Trong $4$  số $a$,$ b$, $c$, $d$ có ba số dương}
+		 {Hàm số đồng biến trên khoảng $(-\infty;-1)$}
+		{\True Đồ thị hàm số cắt $Oy$ tại điểm có toạ độ  $(0;1)$}
+		{Hàm số  đạt cực tiểu tại $x=1$}
+	 \loigiai{
+		\begin{itemchoice}
+			 \itemch \textbf{Đúng.}\\
+			Ta  có$y'=f'(x)=3ax^2+2bx+c$.\\
+			Hàm số đạt cực  tiểu tại $x=0$ nên $c=0$.\\
+			Đồ thị đi qua điểm $(0;1)$ nên  $d=1$.\\
+			Đồ thị đi qua các điểm $(-1;2)$; $(-2;1)$ nên $-a+b+1=2$ và $-8a+4b+1=1$.\\ 
+			Ta  có hệ phương trình $\heva{&-a+b=1 \\ & -8a+4b=0 }$ $\Leftrightarrow \heva{&a=1 \\ & b=2 }$.\\
+			 Vậy $ a=1,b=2,c=0,d=1$. Trong 4 số $ a,b,c,d$ có ba số dương.
+			\itemch \textbf{Sai.}\\ 
+			Trên khoảng $(-\infty;-1)$ hàm số vừa đồng biến vừa nghịch  biến.\\
+			 \itemch \textbf{Đúng.}\\
+			\itemch  \textbf{Sai.}\\
+			Hàm số đạt cực tiểu  tại $x=0$.
+		\end{itemchoice}
+	 }
+\end{ex}
+
+% nguồn: Phan1_Lop_12_Dai_so_Chuong_1
+\begin{ex}%[2D1V5-1]%[ma:55c34dbd]
+	Cho hàm số $y = ax^3 + bx^2 + cx + d$,($a, b, c, d$ là~các số thực) có đồ thị  như hình vẽ bên dưới.
+	\begin{center}
+		\begin{tikzpicture}[line join=round,line cap=round,>=stealth,scale=0.7]
+			\tikzset{ethicknode/.style={scale=0.9}} 
+			\draw[->] (-2.1,0)--(6.1,0) node[below left]{$x$}; 
+			\draw[->] (0,-1.1)--(0,7.1)  node[below left]{$y$};
+			\draw (0,0) node  [below left]{$O$};
+			\foreach  \x/\nx in {-1/-1,1/1,2/2,3/3,4/4,5/5}
+			\draw[thin] (\x,1pt)--(\x,-1pt) node  [below]{$\nx$};
+			\foreach  \y/\ny in {-1/-1,1/1,2/2,3/3,4/4,5/5}
+			\draw[thin] (1pt,\y)--(-1pt,\y) node [left]{$\ny$}; 
+			\draw[dashed,thin](1,0)--(1,5)--(0,5); 
+			 \draw[dashed,thin](3,0)--(3,1)--(0,1);
+			\begin{scope}
+				\clip (-2,-1) rectangle (6,7); 
+				 \draw[samples=100,domain=-1:5,smooth,variable=\x] plot (\x,{1*((\x)^3)+-6*((\x)^2)+9*(\x)+1});
+			\end{scope}
+		\end{tikzpicture}
+	\end{center}
+	\choiceTF 
+		{Hàm số đã cho nghịch biến trên khoảng $\left(3;  +\infty\right)$}
+		{\True  Tâm đối xứng của đồ thị hàm số đã cho là~điểm $I\left(2; 3\right)$}
+		{Giá trị nhỏ nhất của  hàm số đã cho trên khoảng $\left(1; +\infty\right)$ bằng $3$}
+		{$a, b, c$ là~các số  thực dương}
+	\loigiai{ 
+		\begin{itemchoice}
+			\itemch Từ đồ thị ta thấy hàm  số đồng biến trên khoảng $\left(3; +\infty\right)$.
+			\itemch Từ đồ thị ta thấy tâm đối xứng của đồ  thị hàm số là~điểm $I\left(2; 3\right)$.
+			\itemch  Giá trị nhỏ nhất của hàm số trên khoảng $\left(1; +\infty\right)$ là~$1$.
+			\itemch Từ  đồ thị ta thấy
+			\begin{itemize}
+				\item  $\lim\limits_{x\to +\infty}=+\infty$ nên $a > 0$.
+				\item Do đồ thị đi qua điểm $\left(0;1\right)$ nên $  d=1>0$.
+				 \item Ta có $y'=3ax^2+2bx+c$. \\
+				Do hàm số có hai điểm cực trị $x_1$, $x_2$ thỏa  mãn
+				$$\heva{&x_1+x_2>0\\&x_1 \cdot  x_2>0.}$$
+				 Nên
+				$$\heva{&-\dfrac{2b}{3a}>0\\&\dfrac{c}{3a}>0}\Rightarrow \heva{&b<0\\&c>0.}$$ 
+			\end{itemize}
+		\end{itemchoice}
+	} 
+\end{ex}
+
+
+%%%%%%%%%%%%%%%% TRẢ LỜI NGẮN %%%%%%%%%%%%%%%%
+
+% nguồn: Phan2_Lop_12_Dai_so_Chuong_1
+\begin{bt}%[2D1N5-1]%[ma:f474fc24]
+	\immini{ 
+	Hình bên là đồ thị của  hàm số $y=\dfrac{ax+b}{x+c}$ (với $a,b,c\in\mathbb{R}$). Khi đó $ab-c$ bằng bao nhiêu?
+	\shortans{-1} 
+	}{ 
+	\begin{tikzpicture}[>=stealth,scale=.8]
+		\def\xmin{-2}\def\xmax{4}\def\ymin{-3}\def\ymax{1.5} 
+		\draw[->](\xmin,0)--(\xmax,0) node  [shift={(-90:.2)},scale=1]{\scriptsize $x$};
+		\draw[->](0,\ymin)--(0,\ymax)  node [below left] {\scriptsize $y$};
+		\clip (\xmin,\ymin) rectangle (\xmax,\ymax); 
+		 \foreach \p/\g in {1/135,2/45}\draw (\p,0) node[shift={(\g:.2)},scale=1]{\scriptsize $\p$}--+(0,.05)--+(0,-.05);
+		 \foreach \p/\g in {-2/180,-1/135}\draw (0,\p) node[shift={(\g:.3)},scale=1]{\scriptsize $\p$}--+(.05,0)--+(-.05,0);
+		\foreach \p/\g in {0/-135}\draw  (0,\p) node[shift={(\g:.3)},scale=1]{\scriptsize $O$};
+		\draw[smooth,samples=100] plot[domain=\xmin:0.99](\x,{(-\x+2)/(\x-1)})  node[left]{\scriptsize};
+		\draw[blue,smooth,samples=100]  plot[domain=1.01:\xmax](\x,{(-\x+2)/(\x-1)}) node[left]{\scriptsize};
+		\draw[dashed,smooth,samples=100]  plot[domain=\xmin:\xmax](\x,{-1}) node[left]{\scriptsize};
+		\draw[dashed,blue,smooth,samples=100](1,\ymin)--(1,\ymax); 
+	\end{tikzpicture}
+	 }
+	\loigiai{ 
+		 Đồ thị có tiệm cận đứng là đường thẳng $x=1$. Suy ra $-c=1 \Rightarrow c=-1$.\\
+		 Đồ thị có tiệm cận ngang là đường thẳng $y=-1\Rightarrow a=-1$.\\
+		 Mặt khác, $y(0)=-2\Leftrightarrow \dfrac bc=-2\Rightarrow b=2$.\\
+		 Vậy, $ab-c=-2-(-1)=-1$.
+	} 
+\end{bt}
+
+% nguồn: Phan2_Lop_12_Dai_so_Chuong_1
+\begin{bt}%[2D1N5-1]%[ma:e7c6205d]
+	 \immini{
+	Cho hàm số $ y=\dfrac{ax+2}{cx+d}$ có đồ thị như hình vẽ. Tích $acd$ bằng bao  nhiêu?
+	\shortans{-3} 
+	 }{
+	\begin{tikzpicture}[>=stealth,scale=.5]
+		\def\xmin{-4}\def\xmax{10}\def\ymin{-3}\def\ymax{5} 
+		\draw[->](\xmin,0)--(\xmax,0) node  [shift={(-90:.2)},scale=1]{\scriptsize $x$};
+		 \draw[->](0,\ymin)--(0,\ymax) node [below right] {\scriptsize $y$};
+		\clip (\xmin,\ymin) rectangle (\xmax,\ymax); 
+		\foreach \p/\g/\a in  {0/-45/O,3/-45/3,-2/-90/-2}\draw (\p,0) node[shift={(\g:.2)},scale=1]{\scriptsize $\a$}--+(0,.05)--+(0,-.05);
+		\foreach \p/\g in  {-1/180,1/120}\draw (0,\p) node[shift={(\g:.3)},scale=1]{\scriptsize $\p$}--+(.05,0)--+(-.05,0);
+		 \draw[smooth,samples=100] plot[domain=\xmin:2.99](\x,{((\x)+2)/(\x-3)}) node[left]{\scriptsize};
+		\draw[smooth,samples=100] plot[domain=3.01:\xmax](\x,{((\x)+2)/(\x-3)})  node[left]{\scriptsize};
+		 \draw (\xmin,1)--(\xmax,1)
+			 (3,\ymin)--(3,\ymax);
+	\end{tikzpicture}
+	} 
+	\loigiai{ 
+		Nhìn vào  đồ thị hàm số, ta thấy:
+		\begin{itemize}
+			\item Đồ thị hàm  số cắt $Ox$ tại điểm có hoành độ bằng $-2$, nên $\dfrac{-2}{a}=-2$, do đó $ a=1$.
+			\item Đồ thị hàm số có đường tiệm cận ngang là  đường thẳng $ y=\dfrac{a}{c}=1$, mà $ a=1$, do đó $ c=1$.
+			\item Đồ thị hàm số có đường tiệm cận đứng là đường thẳng $ x=-\dfrac{d}{c}=3$,  mà $ c=1$, do đó $ d=-3$.
+		\end{itemize}
+		Vậy $acd=1\cdot1\cdot(-3)=-3$. 
+	} 
+\end{bt}
+
+% nguồn: Phan2_Lop_12_Dai_so_Chuong_1
+\begin{bt}%[2D1H5-1]%[ma:d820318f]
+	Cho hàm số $y=\dfrac{ax^2+bx+c}{mx+n}$ ($a>0, m\ne 0$) có đồ  thị như hình vẽ bên.
+	\begin{center}
+		\begin{tikzpicture}[line cap=butt,line join=miter,>=stealth,scale=1,line width=1pt,font=\tiny]
+			\tikzset{declare  function={xmin=-2; xmax=5; ymin=-2; ymax=6;},
+				 smooth,samples=450}
+			\draw[->] (xmin,0)--(xmax,0) node[shift={(0:7pt)}]{$ x $}; 
+			\draw[->] (0,ymin)--(0,ymax) node[shift={(90:7pt)}]{$ y $}; 
+			\fill (0,0) node[shift={(45:5pt)}]{$ O  $};
+			\clip (xmin,ymin-1) rectangle (xmax,ymax); 
+			\draw[samples=250]  plot[domain=-2:0.8] (\x,{(\x)^2/((\x)-1)+1});
+			\draw[samples=250] plot[domain=1.2:4] (\x,{(\x)^2/((\x)-1)+1}); 
+			\draw  plot [domain=-2:4] (\x,{(\x)+2});
+			\draw  (1,ymin)--(1,ymax);
+			 \fill (0,2) node[left]{$2$}
+				(0,3)  node[left]{$3$}
+				(1,0) node[below  right]{$1$};
+			\draw[dashed] (0,3)--(1,3); 
+		\end{tikzpicture}
+	\end{center}
+	Hỏi trong các số $b,c,m,n$ có tất cả  bao nhiêu số dương?
+	 \shortans{3}
+	\loigiai{ 
+		Ta có $y=\dfrac{ax^2+bx+c}{mx+n}$  ($a>0, m\ne 0$);\,\, $\mathbb{D}=\mathbb{R}\setminus\{-\dfrac{n}{m}\}$\\
+		Tiệm cận xiên $y=x+2$.\\ 
+		$\lim\limits_{x\to\infty}\dfrac{ax^2+bx+c}{mx^2+nx}=\dfrac{a}{m}=1\Rightarrow  a=m>0$.\\
+		 $\lim\limits_{x\to\infty}[\dfrac{ax^2+bx+c}{mx+n}-x]=\lim\limits_{x\to\infty}\dfrac{(b+n)x+c}{mx+n}=\dfrac{b+n}{m}=2$.\\
+		$\Rightarrow b+n=2m\Leftrightarrow  b-m=2m\Leftrightarrow b=3m=3a>0$.\\
+	Tiệm cận đứng $x=-\dfrac{n}{m}=1\Leftrightarrow n=-m=-a<0$. Đồ  thị hàm số cắt trục tung tại $y_0=\dfrac{c}{n}>0\Rightarrow c<0$.}
+\end{bt}
+
+% nguồn: Phan2_Lop_12_Dai_so_Chuong_1
+\begin{bt}%[2D1H5-1]%[ma:97ec07b8]
+	\immini{Biết rằng hàm số $y=ax+b+\dfrac{c}{x+d}$ ($a$, $b$, $c$, $d\in \mathbb{R}$) có đồ thị như hình vẽ. Giá trị của $a+b+c+d$ là bao  nhiêu?}
+	{\resizebox{!}{5cm}{\begin{tikzpicture}[line join=round,line cap=round,>=stealth]
+		 \draw[->] (-3.5,0)--(4.5,0) node[below]{$x$};
+		\draw[->] (0,-3.5)--(0,4.5) node[left]{$y$}; 
+		\fill (0,0) circle (1pt)  node[above left]{$O$};
+		\fill (0,-2) circle (1pt)  node[right]{$-2$};
+		\fill (0,2) circle (1pt) node[left]{$2$}; 
+		\fill (0,1) circle (1pt)  node[left]{$1$};
+		\fill (1,0) circle (1pt)  node[below]{$1$};
+		 \fill (-1,0) circle (1pt) node[above left]{$-1$};
+		\begin{scope}
+			\clip (-3.5,-3.5) rectangle (4.5,4.5); 
+			\draw[domain=-3.5:1.1,smooth,samples=100] plot (\x,{(\x)^2+1)/(\x)}); 
+			\draw[domain=1.15:4.5,smooth,samples=100] plot (\x,{(\x)^2+1)/(\x)}); 
+			 \draw[domain=-3.5:4.5,smooth,dashed] plot (\x,{(\x)});
+		\end{scope}
+		\draw  [dashed] (1,0)--(1,2)--(0,2)
+			 (1,1)--(0,1)
+			(-1,0)--(-1,-2)--(0,-2); 
+	\end{tikzpicture}
+	 }
+	} 
+	 \shortans{2}
+	 \loigiai{
+		Đồ thị hàm số có tiệm  cận đứng $x=0$ nên $d=0$.\\
+		Đồ thị hàm số  có tiệm cận xiên $y=x$ nên $a=1$, $b=0$.\\
+		Đồ thị hàm  số $y=x+\dfrac{c}{x}$ đi qua điểm $A(1;2)$ nên $2=1+c \Leftrightarrow c=1$.\\
+		Suy ra  $a+b+c+d=2$.
+	 }
+\end{bt}
+
+% nguồn: Phan2_Lop_12_Dai_so_Chuong_1
+\begin{bt}%[2D1H5-1]%[ma:5213597f]
+	Cho hàm số $y=\dfrac{ax+2}{x+b}$ ($a$, $b \in  \mathbb{R}$) có bảng biến thiên như hình bên. Giá trị của $a+b$ là bao nhiêu?
+	\begin{center}
+		\begin{tikzpicture}
+			\tkzTabInit[nocadre,lgt=1.3,espcl=3,deltacl=0.7] 
+				 {$x$/1,$f’(x)$/1,$f (x)$/2}
+				{$-\infty$,$-1$,$+\infty$} 
+			 \tkzTabLine{,-,d,-,}
+			 \tkzTabVar{+/$2$,-D+/$-\infty$/$+\infty$,-/$2$}
+		\end{tikzpicture}
+	\end{center}
+	\shortans{3} 
+	 \loigiai{
+		Đồ thị hàm số có tiệm cận đứng $x=-1$ nên  $b=1$.\\
+		 Đồ thị hàm số có tiệm cận ngang $y=2$ nên $a=2$.\\
+		 Suy ra $a+b=3$.
+	} 
+\end{bt}
+
+% nguồn: Phan2_Lop_12_Dai_so_Chuong_1
+\begin{bt}%[2D1H5-1]%[ma:64ef6e1d]
+	\immini{Biết rằng hàm số $y=\dfrac{ax+b}{x-1}$ có đồ thị như hình vẽ. Giá trị của  $a+b$ là bao nhiêu?
+	\shortans{3}}{\resizebox{!}{5cm}{\begin{tikzpicture}[>=stealth]
+		 \def\a{1}
+		 \def\b{2}
+		 \def\c{1}
+		 \def\d{-1}
+		 \draw[->] (-5,0) -- (5,0) node[below] {$x$};
+		\draw[->] (0,-5) -- (0,5)  node[left] {$y$};
+		\draw  (0,0) node[above left]{$O$};
+		 \draw[dashed] (1,-5)--(1,5)
+			(-5,1)--(5,1); 
+		\clip (-5,-5)  rectangle (5,5);
+		 \pgfmathsetmacro{\can}{-(\d)/(\c)}
+		 \draw[samples=100,smooth,domain=-5:{\can-.1}] plot (\x,{(\a*\x+(\b))/(\c*\x+(\d))});
+		\draw[samples=100,smooth,domain={\can+.1}:5]  plot (\x,{(\a*\x+(\b))/(\c*\x+(\d))});
+		\draw (1,0)  node[below right]{$1$} circle (1pt);
+		\draw  (0,1) node[above left]{$1$} circle (1pt);
+		\draw (0,-2) node[below left]{$-2$} circle (1pt); 
+		 \draw (-2,0) node[below]{$-2$} circle (1pt);
+	\end{tikzpicture}
+	 }
+	} 
+	 \loigiai{
+		Đồ thị hàm số đi qua $C(0;-2)$ nên  $b=2$.\\
+		Đồ thị hàm  số có tiệm cận đứng $y=1$ nên $a=1$.\\
+		 Vậy $a+b=3$.
+	} 
+\end{bt}
+
+% nguồn: Phan2_Lop_12_Dai_so_Chuong_1
+\begin{bt}%[2D1H5-1]%[ma:70a62a83]
+	Cho hàm  số $y=\dfrac{ax+2}{bx-2}$ với $a,b\in \mathbb{Z}$ có đồ thị như hình bên dưới. Tính giá trị của biểu thức $T=a+b$.
+	\begin{center}
+		\begin{tikzpicture}[line join=round,line cap=round,>=stealth]
+			\tikzset{ethicknode/.style={scale=0.9}} 
+			\draw[->]  (-2.6,0)--(6.1,0) node[below left] {$x$};
+			\draw[->] (0,-2.1)--(0,6.1) node[below left]  {$y$};
+			\draw (0,0) node  [below left] {$O$};
+			\foreach  \x/\nx in {-2/-2,2/2}
+			\draw[thin] (\x,1pt)--(\x,-1pt) node [below]  {$\nx$};
+			\foreach \y/\ny  in {-1/-1,1/1}
+			 \draw[thin] (1pt,\y)--(-1pt,\y) node [left] {$\ny$};
+			 \draw[dashed,thin] (2.01,-2)--(2.01,6);
+			\draw[dashed,thin]  (2.01,-2)--(2.01,6);
+			\begin{scope}
+				\clip (-2.5,-2)  rectangle (6,6);
+				\draw[samples=200,domain=-2.5:1.99,smooth,variable=\x] plot  (\x,{(1*(\x)+2)/(1*(\x)+-2)});
+				\draw[samples=200,domain=2.01:8,smooth,variable=\x] plot (\x,{(1*(\x)+2)/(1*(\x)+-2)}); 
+				\draw[dashed,thin] (-2.5,1/1)--(8,1/1); 
+			\end{scope}
+		\end{tikzpicture}
+	\end{center}
+	 \shortans{2}
+	\loigiai{ 
+		 Đường tiệm cận đứng có phương trình là $x=2$ thì $\dfrac{2}{b}=2\Rightarrow b=1$.\\
+		Đường  tiệm cận ngang có phương trình là $y=1$ thì $\dfrac{a}{1}=1\Rightarrow a=1$.\\
+		Vậy $T=a+b=1+1=2$. 
+	} 
+\end{bt}
+
+% nguồn: Phan2_Lop_12_Dai_so_Chuong_1
+\begin{bt}%[2D1H5-1]%[ma:22e262e8]
+	 \immini{Biết rằng hàm số $y=ax^3+bx^2+c$ ($a, b, c\in \mathbb{R}$) có đồ thị như hình vẽ. Giá trị của $a+b+c$ là bao nhiêu?
+	\shortans{0}} 
+	{\resizebox{!}{5cm}{\begin{tikzpicture}[line join=round,line cap=round,>=stealth]
+		\draw[->]  (-2.5,0)--(4,0) node[below]{$x$};
+		 \draw[->] (0,-3)--(0,3) node[left]{$y$};
+		\begin{scope}
+			\clip (-2.5,-3)  rectangle (3,4);
+			\draw[smooth,domain=-3:3,samples=100] 
+				plot (\x,{(\x)^3-3*(\x)^2+2}); 
+		\end{scope}
+		 \draw[dashed] (2,0)--(2,-2)--(-1,-2)--(-1,0);
+		\fill (-1,0)  circle (1pt) node[above left] {$-1$}
+			(2,0) circle (1pt)  node[above] {$2$};
+		\fill (0,-2) circle (1pt) node[below right]  {$-2$}
+			 (0,2) circle (1pt) node[above right] {$2$};
+		\fill  (0,0) circle (1pt) node[below left]{$O$};
+	\end{tikzpicture}
+	} 
+	} 
+	 \loigiai{
+		 Đồ thị hàm số đi qua $A(0;2)$ nên $c=2$.\\
+		Đồ thị hàm số $y=ax^3+bx^2+2$ đi qua $A(-1;-2)$ và $B(2;-2)$ nên ta  có
+		 \[\heva{&-a+b+2=-2\\&8a+4b+2=-2} \Leftrightarrow \heva{&a=1\\&b=-3.}\]
+		Suy ra  $a+b+c=1-3+2=0$.
+	 }
+\end{bt}
+
+% nguồn: Phan2_Lop_12_Dai_so_Chuong_1
+\begin{bt}%[2D1H5-1]%[ma:da32c66d]
+	Cho hàm số $y=ax^3+bx^2+cx+d$ ($a$, $b$, $c$, $d \in \mathbb{R}$) có bảng biến thiên như hình bên. Giá trị  của $a+b+c+d$ là bao nhiêu?
+	\begin{center}
+		\begin{tikzpicture}
+			\tkzTabInit[nocadre,lgt=1.2,espcl=3,deltacl=0.7] 
+				{$x$ /1,$f’(x)$ /1,$f (x)$  /2}
+				 {$-\infty$,$-1$,$1$,$+\infty$}
+			\tkzTabLine{,+,0,-,0,+,} 
+			 \tkzTabVar{-/$-\infty$,+/$4$,-/$-4$,+/$+\infty$}
+		\end{tikzpicture}
+	\end{center}
+	 \shortans{6,75}
+	 \loigiai{
+		Do đồ thị hàm số đi qua $A(1;-4)$ nên $a+b+c+d=-4$. 
+	 }
+\end{bt}
+
+% nguồn: Phan2_Lop_12_Dai_so_Chuong_1
+\begin{bt}%[2D1H5-1]%[ma:fb2e9eff]
+	Đồ thị trong hình  bên dưới là của hàm số $y=ax+b+\dfrac{1}{x+c}$ ($a,b,c \in \mathbb{R}$).
+	Khi đó tổng  $a+b+c$ bằng bao nhiêu?
+	\begin{center}\begin{tikzpicture}[line cap=butt,line join=miter,>=stealth,scale=1,font=\tiny]
+		\tikzset{declare function={xmin=-2;  xmax=5; ymin=-3; ymax=6;},
+			smooth,samples=450} 
+		\draw[->] (xmin,0)--(xmax,0)  node[shift={(0:7pt)}]{$ x $};
+		\draw[->] (0,ymin)--(0,ymax)  node[shift={(90:7pt)}]{$ y $};
+		\fill (0,0)  node[shift={(45:5pt)}]{$ O $};
+		\clip (xmin,ymin-1)  rectangle (xmax,ymax);
+		\draw[blue,samples=250] plot[domain=-2:0.8]  (\x,{(\x)^2/((\x)-1)});
+		 \draw[blue,samples=250] plot[domain=1.2:4] (\x,{(\x)^2/((\x)-1)});
+		\draw[red] plot [domain=-2:4] (\x,{(\x)+1}); 
+		\draw[red!60]  (1,ymin)--(1,ymax);
+		 \fill (0,1) node[left]{$1$}
+			(0,2) node[left]{$2$} 
+			 (1,0) node[below right]{$1$};
+		\draw[dashed]  (0,2)--(1,2);
+	\end{tikzpicture}
+	\end{center}
+	\shortans{3} 
+	 \loigiai{
+		Ta có $y=ax+b$ là đường tiệm cận xiên của đồ  thị hàm số. Từ đồ thị ta suy ra được $y=x+1$ là tiệm cận xiên nên $a=1$, $b=1$.\\
+	$x=1$ là tiệm cận đứng của đồ thị hàm số  nên $c=-1$. Vậy $a+b+c=3$.}
+\end{bt}
+
+% nguồn: Phan2_Lop_12_Dai_so_Chuong_1
+\begin{bt}%[2D1V5-1]%[ma:40428485]
+	\immini{ 
+	Cho hàm số $y=f(x)=ax^3+bx^2+cx+d$ có đồ thị $(C)$ như  hình vẽ. Khi đó $f(5)$ bằng
+	\shortans{64} 
+	}{ 
+	\begin{tikzpicture}[>=stealth]
+		 \draw[->,line width = 1pt] (-2,0)--(0,0) node[below left]{$O$}--(3,0) node[below]{$x$};
+		\draw[->,line width = 1pt] (0,-2)  --(0,3) node[right]{$y$};
+		\foreach \x in  {-1,1,2}{
+			\draw (\x,0) node[below]{$\x$} circle  (1pt);
+			\draw (0,\x) node[left]{$\x$} circle (1pt); 
+		} 
+		\draw  [domain=-0.2:2.3,samples=100]
+			plot (\x,{(\x)^3-3*(\x)^2+3*(\x)-1}) node[right]{$(C)$}; 
+	\end{tikzpicture}
+	} 
+	\loigiai{ 
+		Gọi hàm số bậc $3$ cần tìm có dạng là $y=ax^3+bx^2+cx+d  \Rightarrow y' = 3ax^2+ 2bx + c$. Từ đồ thị ta có
+		$$\heva{&d=-1\\&a+b+c+d=0\\&3a+2b+c=0\\&b^2-3ac=0}\Leftrightarrow\heva{&a=1\\&b=-3\\&c=3\\&d=-1}\Rightarrow y=x^3-3x^2+3x-1.$$ 
+		Suy  ra $f(5)=64$.
+	 }
+\end{bt}
+
+% nguồn: Phan2_Lop_12_Dai_so_Chuong_1
+\begin{bt}%[2D1V5-1]%[ma:0d0b12cd]
+	Có bao nhiêu giá trị nguyên dương của m sao cho đường thẳng $y=x+m$ cắt đồ thị hàm  số $y=\dfrac{2x-1}{x+1}$ tại hai điểm phân biệt $A$, $B$ và $AB\le 4$.
+	 \shortans{1}
+	 \loigiai{
+		Xét phương trình hoành  độ giao điểm
+		\begin{eqnarray*}
+			& &\dfrac{2x-1}{x+1}=x+m\\ 
+			 &\Leftrightarrow& \heva{&x\ne-1\\&\left(x+1\right)\left(x+m\right)=2x-1
+			 }\\
+			 &\Leftrightarrow& \heva{&x\ne-1\\&x^2+\left(m-1\right)x+m+1=0.\quad (*)
+			 }
+		\end{eqnarray*}
+		Đường thẳng $y=x+m$ cắt đồ thị hàm số $y=\dfrac{2x-1}{x+1}$ tại hai điểm phân biệt $A$, $B$ khi và chỉ khi phương trình (*) có $2$ nghiệm phân biệt khác $-1$.  Ta có
+		\begin{eqnarray*}
+			&\Leftrightarrow&  \heva{&\Delta > 0\\ &\left(-1\right)^2+\left(m-1\right).\left(-1\right)+m+1\ne 0
+			 }\\
+			&\Leftrightarrow&  \heva{&\left(m-1\right)^2-4\left(m+1\right)>0\\
+			&3\ne  0}\\
+			&\Leftrightarrow& m^2-6m-3>0\\ 
+			&\Leftrightarrow& \hoac{&m >  3+2\sqrt{3} \\
+			&m  < 3-2\sqrt{3}.}
+		\end{eqnarray*}
+		Giao điểm của $2$ đồ thị hàm số lần lượt là  $A\left(x_1;x_1+m\right)$ và $B\left(x_2;x_2+m\right)$, trong đó $x_1, x_2$ là $2$ nghiệm phân biệt của phương trình (*).\\
+		Theo định lý Vi-et, ta  có $\heva{&x_1+x_2=1-m\\&x_1x_2=m+1}$.\\
+		 Khi đó
+		\begin{eqnarray*}
+			 &&AB=\sqrt{2\left(x_1-x_2\right)^2} \le 4\\
+			&\Leftrightarrow& \left(x_1-x_2\right)^2\le 8\\ 
+			 &\Leftrightarrow& \left(x_1+x_2\right)^2-4x_1x_2\le 8\\
+			 &\Leftrightarrow& \left(1-m\right)^2-4\left(m+1\right)\le 8\\
+			&\Leftrightarrow& m^2-6m-11\le  0\\
+			&\Leftrightarrow& 3-2\sqrt{5}  \le m\le 3+2\sqrt{5}.
+		\end{eqnarray*}
+		Kết  hợp với điều kiện có nghiệm $\Leftrightarrow \hoac{&m > 3+2\sqrt{3}\\&m < 3-2\sqrt{3}}\Rightarrow \hoac{&3+2\sqrt{3} < m\le 3+2\sqrt{5} \\&3-2\sqrt{5} \le m < 3-2\sqrt{3}.}$\\
+		 Suy ra, một giá trị nguyên dương của $m$ là $7$.
+	 }
+\end{bt}
+
+% nguồn: Phan2_Lop_12_Dai_so_Chuong_1
+\begin{bt}%[2D1V5-1]%[ma:7dd89546]
+	Cho hàm số $y=\dfrac{\left(2m-1\right)x-m}{x+m}$ ($m\ne 0$) có đồ thị $\left(C_m \right)$. Biết rằng tồn  tại duy nhất một đường thẳng $(d)$ có phương trình $y=ax+b$ sao cho $\left(C_m \right)$ luôn tiếp xúc với $(d)$. Tính giá trị của $a+b$.
+	 \shortans{1}
+	 \loigiai{
+		 Điều kiện: $x\neq-m$.\\
+		Phương  trình hoành độ giao điểm của $\left(C\right)$ và $(d)$ như sau
+		\[\dfrac{\left(2m-1\right)x-m}{x+m}=ax+b \Leftrightarrow ax^2+\left(am+b-2m+1\right)x+bm+m=0\,  (1).\]
+		Do $(d)$ luôn tiếp xúc với $\left(C\right)$ nên phương trình $(1)$  luôn có nghiệm kép khác $-m$ với mọi $m\neq0$.\\
+		Suy ra $a\ne 0$ và 
+		\begin{align*}
+			\Delta'&=\left(am+b-2m+1\right)^2-4am\left(b+1\right)=0,\forall  m\ne 0\\
+			 &\Leftrightarrow \left(a-2\right)^2m^2+\left[2\left(a-2\right)\left(b+1\right)-4a\left(b+1\right)\right]m+\left(b+1\right)^2=0,\forall m\ne 0\\
+			 &\Leftrightarrow\heva{&\left(a-2\right)^2=0\\
+			&2\left(a-2\right)\left(b+1\right)-4a\left(b+1\right)=0\\ 
+			&\left(b+1\right)^2=0 
+			} \Leftrightarrow \heva{&a=2 \\  &b=-1.}
+		\end{align*}
+		 Vậy $a+b=1$.
+	 }
+\end{bt}
+
+% nguồn: Phan2_Lop_12_Dai_so_Chuong_1
+\begin{bt}%[2D1V5-1]%[ma:bca03100]
+	\immini{Cho hàm số $y=ax^3+bx^2+cx+d \, (a,b,c,d \in \mathbb{R})$ có đồ thị  là đường cong trong hình bên. Có bao~nhiêu số dương trong các số $a,b,c,d$?}
+	 {
+	\begin{tikzpicture}[line join=round,line cap=round,>=stealth,scale=0.6]
+		\tikzset{ethicknode/.style={scale=0.9}} 
+		\draw[->] (-4.1,0)--(2.1,0) node[below left]  {$x$};
+		 \draw[->] (0,-2.1)--(0,5.1) node[below left] {$y$};
+		\draw (0,0)  node [below left] {$O$};
+		\begin{scope}
+			\clip  (-4,-2) rectangle (2,5);
+			\draw[samples=100,domain=-4:2,smooth,variable=\x]  plot (\x,{-1*((\x+1.5)^3)+0*((\x+1.5)^2)+3*(\x+1.5)+2.5});
+		\end{scope}
+	\end{tikzpicture}
+	 }
+	\shortans{1} 
+	 \loigiai{
+		 \textbf{Phương pháp:}\\
+		Từ đồ thị xác định dấu của hệ số $a$,  $b$, $c$, $d$.\\
+		 \textbf{Cách giải:}\\
+		Ta  có $y'=3ax^2+2bx+c$.\\
+		Dựa vào đồ thị  ta thấy $a<0$.\\
+		Hàm số có $2$ cực trị âm nên $$\heva{&\Delta_{y'} > 0 \\& S < 0 \\& P > 0 } \Leftrightarrow \heva{& (2b)^2-4(3a)c > 0 \\& -\dfrac{2b}{3a} < 0 \\& \dfrac{c}{3a} > 0 } \Rightarrow \heva{& 4b^2-12ac > 0 \\&  \dfrac{b}{a} > 0 \\& \dfrac{c}{a} < 0 } \Rightarrow \heva{& b < 0 \\&c > 0. }$$
+		Đồ thị cắt trục  $Oy$ tại điểm $(0;d)$ nên $d>0$.\\
+		Vậy có đúng $1$ số dương trong các số $a$, $b$, $c$,  $d$.
+	 }
+\end{bt}
+
+% nguồn: Phan2_Lop_12_Dai_so_Chuong_1
+\begin{bt}%[2D1V5-1]%[ma:863cf2f4]
+	\immini{ 
+	Cho hàm số bậc ba $y=ax^3+bx^2+cx+d$ có đồ thị như hình vẽ. Tìm giá trị nhỏ nhất của biểu thức $P=a^2+c^2+b+1$. (Kết quả làm tròn đến  hàng phần trăm).
+	}{ 
+	\begin{tikzpicture}[>=stealth,font=\footnotesize,xscale=.8,scale=.8]
+		\draw[->] (-1.5,0)--(3,0)  node[below]{$x$};
+		\draw[->] (0,-1)--(0,3) node[left]{$y$}; 
+		\draw  plot[smooth,samples=100,domain=-.25:2.25] (\x,{(\x-1)^3+1})
+			(1-.5,1)--(1+.5,1); 
+		\fill (1,1)  circle (1.5pt)
+			(0,0)  node[below left]{$O$}circle (1.5pt);
+	\end{tikzpicture}
+	 }
+	\loigiai{ 
+		 Ta có $y'=3ax^2+2bx+c$. Từ đồ thị suy ra $d=0$, $b^2-3ac=0\Rightarrow ac=\dfrac{b^2}{3}$.\\
+		Do đó, $P\ge 2ac+b+1=\dfrac{2b^2}{3}+b+1=\dfrac{2}{3}\left(b+\dfrac{3}{4}\right)^2+\dfrac{5}{8}\ge  \dfrac{5}{8}$.\\
+		Vậy $\min P=\dfrac{5}{8}\approx 0{,}63$ tương  ứng với $a=c=\dfrac{\sqrt{3}}{4},b=-\dfrac{3}{4}$.
+	 \shortans{0,63}
+	} 
+\end{bt}
+
+% nguồn: Phan2_Lop_12_Dai_so_Chuong_1
+\begin{bt}%[2D1V5-1]%[ma:54db2a5f]
+	Tập tất cả các giá trị thực của tham số $m$ để đường thẳng $d\colon y=x-2m$ cắt đồ thị hàm số $y=\dfrac{x-3}{x+1}$  tại hai điểm phân biệt có hoành độ dương là $\left(a; b\right)$. Tính giá trị biểu thức $a+b$.
+	\shortans{2,5} 
+	\loigiai{ 
+		Điều kiện:  $x\neq-1$.\\
+		Xét phương trình hoành độ giao  điểm
+		\begin{eqnarray*}
+			 & &\dfrac{x-3}{x+1}=x-2m\\
+			 &\Leftrightarrow& x-3=\left(x+1\right)\left(x-2m\right)\\
+			&\Leftrightarrow&  x-3=x^2-2mx+x-2m\\
+			&\Leftrightarrow& x^2-2mx+3-2m=0\quad  (1).
+		\end{eqnarray*}
+		Đường  thẳng $d\colon y=x-2m$ cắt đồ thị hàm số $y=\dfrac{x-3}{x+1}$ tại hai điểm phân biệt có hoành độ dương $\Leftrightarrow$ (1) có hai nghiệm dương phân biệt.
+		\[\Leftrightarrow \heva{&\Delta '=m^2-\left(3-2m\right)>0\\&S=2m>0\\&P=3-2m>0}\Leftrightarrow \heva{&m^2+2m-3> 0\\&m > 0\\&m < \dfrac{3}{2}} \heva{&\hoac{&m <-3\\&m > 1}\\&m > 0\\&m < \dfrac{3}{2}} \Leftrightarrow 1< m < \dfrac{3}{2}.\] 
+		Vậy  với $1< m < \dfrac{3}{2}$ thì đường thẳng $d\colon y=x-2m$ cắt đồ thị hàm số $y=\dfrac{x-3}{x+1}$ tại hai điểm phân biệt có hoành độ dương nên $a+b=\dfrac{5}{2}=2{,}5$.
+	} 
+\end{bt}
+
+% nguồn: Phan2_Lop_12_Dai_so_Chuong_1
+\begin{bt}%[2D1V5-1]%[ma:94958a81]
+	Cho hàm số $y=\dfrac{x+2}{x+1} \left(C\right)$ và đường thẳng $(d)\colon y=x+m$. Có bao nhiêu giá trị nguyên $m$ thuộc khoảng $\left(-10;10\right)$ để đường thẳng  $(d)$ cắt đồ thị $\left(C\right)$ tại hai điểm về hai phía của trục hoành?
+	 \shortans{11}
+	 \loigiai{
+		Phương trình hoành độ giao điểm của $(C)$ và $(d)$ là 
+		\begin{eqnarray*}
+			& &\dfrac{x+2}{x+1}=x+m\quad (1)\\ 
+			(1)&\Leftrightarrow& \heva{&x\ne-1\\&f(x)=x^2+mx+m-2=0\quad  (2).}
+		\end{eqnarray*}
+		Đường thẳng $(d)$ cắt $\left(C\right)$ tại hai  điểm phân biệt $\Leftrightarrow$ Phương trình (2) có hai nghiệm phân biệt khác $-1$
+		$\Leftrightarrow \heva{&\Delta=m^2-4m+8>0\\&f\left(-1\right)=1-m+m-2\ne 0}\Leftrightarrow \forall  m\in \mathbb{R}$.\\
+		Gọi $x_1; x_2$ là hai  nghiệm phương trình (2).\\
+		Theo định lý Vi-et ta có  $\heva{&x_1+x_2=-m\\&x_1\cdot x_2=m-2.}$\\
+		Đường thẳng $(d)$ cắt đồ thị $\left(C\right)$ tại hai  điểm về hai phía của trục hoành
+		\begin{eqnarray*}
+			&\Leftrightarrow& y_1\cdot  y_2< 0\\
+			&\Leftrightarrow& \left(x_1+m\right)\left(x_2+m\right)  < 0\\
+			 &\Leftrightarrow& x_1\cdot x_2+m\left(x_1+x_2\right)+m^2< 0\\
+			&\Leftrightarrow& m-2-m^2+m^2< 0\Leftrightarrow m  < 2.
+		\end{eqnarray*}
+		Do $m\in \mathbb{Z}$  và $m\in \left(-10;10\right)\Rightarrow m\in \left\{-9;-8;\ldots;-1;0;1\right\}$.\\
+		Vậy có $11$ giá  trị $m$.
+	 }
+\end{bt}
+
+% nguồn: Phan2_Lop_12_Dai_so_Chuong_1
+\begin{bt}%[2D1V5-1]%[ma:076ee1e1]
+	Cho hàm số $y=\dfrac{x+m}{x-1}$ có đồ thị là đường cong $\left(H\right)$ và đường thẳng $\Delta$ có phương trình  $y=x+1$. Số giá trị nguyên của tham số $m$ nhỏ hơn $10$ để đường thẳng $\Delta$ cắt đường cong $\left(H\right)$ tại hai điểm phân biệt nằm về hai nhánh của đồ thị bằng bao nhiêu?
+	 \shortans{10}
+	 \loigiai{
+		Phương trình hoành độ giao điểm $\dfrac{x+m}{x-1}=x+1\Leftrightarrow \heva{&x\ne 1\\  &f(x)=x^2-x-m-1=0\quad (*).}$\\
+		Đường thẳng  $\Delta$ cắt đường cong $\left(H\right)$ tại hai điểm phân biệt khi
+		\[\heva{&f(1)\ne 0\\&\Delta  _{\left(*\right)} > 0
+		} \Leftrightarrow 4m+5>  0\Leftrightarrow m >-\dfrac{5}{4}.
+		\] 
+		Gọi $x_1, x_2$ là hai nghiệm của phương trình (*), ta  có $\heva{&x_1+x_2=1\\ &x_1x_2=-m-1.}$\\
+		Do $\Delta$ cắt $(H)$ tại hai điểm phân biệt nằm  về hai nhánh của đồ thị nên ta có
+		\begin{eqnarray*}
+			&&\left(x_1-1\right)\left(x_2-1\right)  < 0\\
+			&\Leftrightarrow& x_1  x_2-\left(x_1+x_2 \right)+1< 0\\
+			&\Leftrightarrow&-m-1< 0\Leftrightarrow m >-1. 
+		\end{eqnarray*}
+		Vì $m$ nguyên và  $m<10$ nên ta có $m\in \left\{0;1;2;3;4;5;6;7;8;9\right\}$.\\
+		Vậy có $10$ giá  trị nguyên của tham số $m$ thỏa mãn điều kiện đề bài.
+	} 
+\end{bt}
+
+
+%%%%%%%%%%%%%%%% TỰ LUẬN %%%%%%%%%%%%%%%%
+
+% nguồn: Phan2_Lop_12_Dai_so_Chuong_1
+\begin{bt}%[2D1N5-1]%[ma:32c2eb93]
+	 \immini{
+	Cho hàm  số $y=ax^3+bx^2+cx+d$ có đồ thị như hình bên. Xác định dấu của các hệ số $a$, $b$, $c$ và $d$.
+	}{ 
+	\begin{tikzpicture}[scale=1,font=\footnotesize,line join=round,line cap=round,>=stealth]
+		 \def\a{0.5}
+		\def\xmin{-1.3}  \def\xmax{4}
+		\def\ymin{-2.5} \def\ymax{2} 
+		 \draw[->] (\xmin,0)--(\xmax,0) node [below]{$x$};
+		\draw[->] (0,\ymin)--(0,\ymax)  node [left]{$y$};
+		\node at  (0,0) [below left]{$O$};
+		 \clip (\xmin+0.1,\ymin+0.1) rectangle (\xmax-0.1,\ymax-0.1);
+		 \draw[smooth,samples=300] plot (\x,{\a*((\x+0.8)*(\x-0.6)*(\x-3))});
+	\end{tikzpicture}
+	} 
+	 \loigiai{
+		Từ dáng điệu của đồ thị ta có $\lim\limits_{x\to+\infty} y=+\infty;\lim\limits_{x\to-\infty} y=-\infty\Rightarrow  a>0$.\\
+		Đồ thị hàm số cắt trục tung tại một điểm có tung độ dương nên  $d>0$.\\
+		Ta  có $y'=3ax^2+2bx+c$.\\
+		Mặt khác dựa vào đồ thị ta  thấy phương trình $y'=0$ có hai nghiệm trái dấu và tổng hai nghiệm này luôn dương nên $\heva{&ac<0\\&-\dfrac{2b}{3a}>0}\Rightarrow \heva{&c<0\\&b<0.}$\\
+		Vậy  $a>0$, $b<0$, $c<0$ và $d>0$.
+	} 
+\end{bt}
+
+% nguồn: Phan2_Lop_12_Dai_so_Chuong_1
+\begin{bt}%[2D1H5-1]%[ma:392f9e4b]
+	Khảo sát sự biến thiên và vẽ đồ thị  các hàm số sau
+	\begin{enumerate}
+		\item  $y=x^3-3x^2+1$.
+		\item $y=-2x^3-3x^2+1$. 
+		\item  $y=x^3+3x^2+3x+2$.
+		 \item $y=x^3-3x^2+4x-2$.
+	\end{enumerate}
+	 \loigiai{
+		\begin{enumerate}
+			\item  $y=x^3-3x^2+1$.\\
+			 Tập xác định $\mathscr{D}=\mathbb{R}$.\\
+			Sự  biến thiên:\\
+			 $y'=3x^2-6x$.\\
+			$y' = 0 \Leftrightarrow\hoac{&x=0\\&x=2}$ và $\lim\limits_{x  \to-\infty}y=-\infty$; $\lim\limits_{x \to+\infty}y=+\infty$.\\
+			Bảng biến thiên 
+			\begin{center}
+				\begin{tikzpicture}[scale=1,font=\footnotesize,line join=round,line cap=round,>=stealth]
+					\tkzTabInit[nocadre=false,lgt=1.2,espcl=2.5,deltacl=0.6] 
+						 {$x$/0.6,$y'$/0.6,$y$/2}
+						 {$-\infty$,$0$,$2$,$+\infty$}
+					\tkzTabLine{,+,0,-,0,+} 
+					 \path
+						($(N13)!0.1!(N12)$) node  (A1){$-\infty$}
+						($(N23)!0.8!(N22)$) node  (A2){$1$}
+						($(N33)!0.1!(N32)$) node (A3){$-3  $}
+						($(N43)!0.8!(N42)$)  node (A4){$+\infty$};
+					\foreach \x/\y in  {A1/A2,A2/A3,A3/A4}{
+						\draw[-stealth]  (\x)--(\y);
+					 }
+				\end{tikzpicture}
+			\end{center}
+		 \immini{
+			Từ bảng biến thiên ta thấy hàm số nghịch biến trên khoảng $(0;  2)$ và đồng biến trên mỗi khoảng $(-\infty; 0)$ và $(2;+\infty)$.\\
+			Hàm số đạt cực đại tại $x=0$; $y_{\text{ CĐ}}=1$ và đạt cực tiểu tại  $x=2$; $y_{\text{ CT}}=-3$.\\
+			Đồ thị hàm số đi qua các điểm $(2;-3)$;  $(-1;-3)$; $(3; 1)$.\\
+			Đồ thị nhận điểm  $I(1;-1)$ làm tâm đối xứng.
+			 }
+			 {
+			\begin{tikzpicture}[line cap=butt,line join=miter,>=stealth,scale=0.7]
+				\tikzset{declare  function={xmin=-1.5; xmax=4; ymin=-4; ymax=2;
+					 f (\x)=1*(\x)^3-3*(\x)^2+1;
+					}, 
+					smooth,samples=450 
+				} 
+				\draw[->] (xmin,0)--(xmax,0) node[shift={(-100:7pt)},font=\normalsize]{$ x $}; 
+				\draw[->]  (0,ymin)--(0,ymax) node[shift={(190:7pt)},font=\normalsize]{$ y $};
+				\fill (0,0)  node[shift={(225:7pt)},font=\normalsize]{$ O $};
+				\draw[dashed] (-1,0) node[above]{$-1$}--(-1,-3)--(0,-3) node[below left]{$-3$}--(2,-3)--(2,0)  node[above]{$2$}
+					(1,0) node[above]{$1$}--(1,-1)--(0,-1) 
+					(0,-1)  node[left,xshift=4pt] {$-1$}
+					(3,0) node[below]{$3$}--(3,1)--(0,1) node[above  left]{$1$};
+				\clip  (xmin,ymin) rectangle (xmax,ymax);
+				\draw  plot[domain=xmin:xmax] (\x,{f (\x)});
+			\end{tikzpicture}
+			} 
+			\item  $y=-2x^3-3x^2+1$.\\
+			 Tập xác định $\mathscr{D}=\mathbb{R}$.\\
+			 Sự biến thiên:\\
+			$y'=-6x^2-6x$.\\ 
+			 $y'=0\Leftrightarrow\hoac{&x=0\\&x=-1}$ và $\lim\limits_{x \to-\infty}y=-\infty$; $\lim\limits_{x \to+\infty}y=+\infty$.\\
+			Bảng  biến thiên
+			\begin{center}
+				\begin{tikzpicture}[scale=1,font=\footnotesize,line join=round,line cap=round,>=stealth]
+					\tkzTabInit[nocadre=false,lgt=1.2,espcl=2.5,deltacl=0.6] 
+						 {$x$/0.6,$y'$/0.6,$y$/2}
+						{$-\infty$,$-1$,$0$,$+\infty$} 
+					 \tkzTabLine{,-,0,+,0,-}
+					\path 
+						($(N13)!0.8!(N12)$) node  (A1){$+\infty$}
+						($(N23)!0.1!(N22)$) node  (A2){$0$}
+						($(N33)!0.8!(N32)$) node  (A3){$1$}
+						 ($(N43)!0.1!(N42)$) node (A4){$-\infty$};
+					\foreach \x/\y  in {A1/A2,A2/A3,A3/A4}{
+						\draw[-stealth] (\x)--(\y); 
+					} 
+				\end{tikzpicture}
+			\end{center}
+		\immini{ 
+			Từ bảng biến thiên ta  thấy hàm số đồng biến trên khoảng $(-1; 0)$ và nghịch biến trên mỗi khoảng ($-\infty;-1$) và ($0;+\infty$).\\
+			Hàm số đạt cực đại tại $x=0$; $y_{\text{ CĐ}}=1$ và đạt cực tiểu tại $x=-1$; $y_{\text{ CT}}=0$.\\ 
+			Đồ thị hàm số đi  qua các điểm $(1;-4)$; $(-2; 5)$.\\
+			Đồ  thị nhận điểm $I\left(\dfrac{1}{2};-\dfrac{1}{2}\right)$ làm tâm đối xứng.
+			} 
+			{ 
+			\begin{tikzpicture}[line cap=butt,line join=miter,>=stealth]
+				 \tikzset{declare function={xmin=-2; xmax=2; ymin=-1; ymax=2;
+					 f (\x)=-2*(\x)^3-3*(\x)^2+1;
+					 },
+					smooth,samples=450 
+				} 
+				 \draw[->] (xmin,0)--(xmax,0) node[shift={(-100:7pt)},font=\normalsize]{$ x $};
+				\draw[->]  (0,ymin)--(0,ymax) node[shift={(190:7pt)},font=\normalsize]{$ y $};
+				\fill (0,0) node[shift={(225:7pt)},font=\normalsize]{$ O  $};
+				\draw[dashed]  (-1,0) node[below]{$-1$}
+					(0,1) node[above left]{$1$} 
+					 (1,0) node[above]{$1$};
+				\clip (xmin,ymin) rectangle  (xmax,ymax);
+				\draw plot[domain=xmin:xmax] (\x,{f  (\x)});
+			\end{tikzpicture}
+			 }
+			 \item $y=x^3+3x^2+3x+2$.\\
+			Tập  xác định $\mathscr{D}=\mathbb{R}$.\\
+			Sự  biến thiên:\\
+			 $y'=3x^2+6x+3$.\\
+			$y'=0\Leftrightarrow x=-1$ và $\lim\limits_{x \to-\infty}y=-\infty$; $\lim\limits_{x  \to+\infty}y=+\infty$.\\
+			Bảng  biến thiên:
+			\begin{center}
+				\begin{tikzpicture}[scale=1,font=\footnotesize,line join=round,line cap=round,>=stealth]
+					\tkzTabInit[nocadre=false,lgt=1.2,espcl=2.5,deltacl=0.6] 
+						{$x$/0.6,$y'$/0.6,$y$/2} 
+						 {$-\infty$,$-1$,$+\infty$}
+					 \tkzTabLine{,+,0,+}
+					 \path
+						($(N13)!0.1!(N12)$)  node (A1){$-\infty$}
+						 ($(N23)!0.45!(N22)$) node (A2){$1$}
+						($(N33)!0.8!(N32)$) node (A3){$+\infty$}; 
+					\foreach \x/\y  in {A1/A2,A2/A3}{
+						\draw[-stealth]  (\x)--(\y);
+					 }
+				\end{tikzpicture}
+			\end{center}
+		 \immini{
+			Từ  bảng biến thiên ta thấy hàm số đồng biến trên $\mathbb{R}$ và hàm số không có cực trị.\\
+			Đồ thị nhận điểm $I(-1; 1)$ làm tâm đối xứng. 
+			} 
+			 {
+			\begin{tikzpicture}[line cap=butt,line join=miter,>=stealth]
+				\tikzset{declare function={xmin=-2.5; xmax=2; ymin=-2;  ymax=4;
+					 f (\x)=1*(\x)^3+3*(\x)^2+3*(\x)+2;
+					}, 
+					smooth,samples=450 
+				 }
+				\draw[->] (xmin,0)--(xmax,0) node[shift={(-100:7pt)},font=\normalsize]{$ x  $};
+				\draw[->] (0,ymin)--(0,ymax)  node[shift={(190:7pt)},font=\normalsize]{$ y $};
+				\fill  (0,0) node[shift={(225:7pt)},font=\normalsize]{$ O $};
+				\draw[dashed]  (-1,0) node[below]{$-1$}--(-1,1)--(0,1) node[right]{$1$}
+					 (1,0) node[below]{$1$};
+				\clip (xmin,ymin)  rectangle (xmax,ymax);
+				 \draw plot[domain=xmin:xmax] (\x,{f (\x)});
+			\end{tikzpicture}
+			 }
+			\item  $y=x^3-3x^2+4x-2$.\\
+			Tập xác định  $\mathscr{D}=\mathbb{R}$.\\
+			Sự  biến thiên: \\
+			$y'=3x^2-6x+4> 0\forall x \in \mathbb{R}$ và $\lim\limits_{x \to-\infty}y=-\infty$;  $\lim\limits_{x \to+\infty}y=+\infty$.\\
+			Bảng  biến thiên:
+			\begin{center}
+				\begin{tikzpicture}[scale=1,font=\footnotesize,line join=round,line cap=round,>=stealth]
+					 \tkzTabInit[nocadre=false,lgt=1.2,espcl=2.5,deltacl=0.6]
+						{$x$/0.6,$y'$/0.6,$y$/2} 
+						 {$-\infty$,$+\infty$}
+					 \tkzTabLine{,+}
+					\path 
+						($(N13)!0.1!(N12)$) node  (A1){$-\infty$}
+						 ($(N23)!0.8!(N22)$) node (A2){$+\infty$};
+					\foreach \x/\y in {A1/A2}{ 
+						\draw[-stealth] (\x)--(\y); 
+					 }
+				\end{tikzpicture}
+			\end{center}
+		\immini{ 
+			Từ bảng biến thiên ta thấy hàm số đồng biến trên $\mathbb{R}$  và hàm số không có cực trị.\\
+			Đồ thị hàm số đi  qua các điểm $(2; 2)$; $(0;-2)$; $(1; 0)$.\\
+			Đồ thị nhận điểm $I(1; 0)$ làm  tâm đối xứng.
+			}{ 
+			\begin{tikzpicture}[line cap=butt,line join=miter,>=stealth]
+				\tikzset{declare  function={xmin=-1.5; xmax=3.5; ymin=-2.5; ymax=2.5;
+					f (\x)=1*(\x)^3-3*(\x)^2+4*(\x)-2; 
+					}, 
+					 smooth,samples=450
+				} 
+				\draw[->] (xmin,0)--(xmax,0) node[shift={(-100:7pt)},font=\normalsize]{$  x $};
+				\draw[->] (0,ymin)--(0,ymax) node[shift={(190:7pt)},font=\normalsize]{$ y $}; 
+				\fill (0,0) node[shift={(225:7pt)},font=\normalsize]{$ O $}; 
+				\draw[dashed] (2,0) node[below]{$2$}--(2,2)--(0,2)  node[left]{$2$}
+					(1,0)  node[above]{$1$}
+					(0,-2) node[left]{$-2$}; 
+				\clip (xmin,ymin) rectangle  (xmax,ymax);
+				\draw plot[domain=xmin:xmax] (\x,{f (\x)}); 
+			\end{tikzpicture}
+			 }
+		\end{enumerate}
+	 }
+\end{bt}
+
+% nguồn: Phan2_Lop_12_Dai_so_Chuong_1
+\begin{bt}%[2D1H5-1]%[ma:ec575586]
+	Khảo sát sự biến thiên và vẽ đồ thị của các hàm  số sau
+	\begin{multicols}{2}
+		\begin{enumerate}
+			\item $y=\dfrac{x^2-x-1}{x-2}$; 
+			\item  $y=\dfrac{x^2+x-2}{x+1}$;
+			\item $y=\dfrac{2x^2-x+4}{x-1}$; 
+			\item $y=\dfrac{x^2+2x+1}{x+3}$. 
+		\end{enumerate}
+	\end{multicols}
+	\loigiai{ 
+		\begin{enumerate}
+			\item  Hàm số $y=\dfrac{x^2-x-1}{x-2}$;\\
+			Tập  xác định: $D=\mathbb{R}\setminus\{2\}$.\\
+			Sự biến thiên:  $y=x+1+\dfrac{1}{x-2}$.\\
+			 Ta có $y'=1-\dfrac{1}{(x-2)^2}=\dfrac{x^2-4x+3}{(x-2)^2}$.\\
+			 Khi đó $y'=0\Leftrightarrow \dfrac{x^2-4x+3}{(x-2)^2}=0\Leftrightarrow\hoac{&x=1\\&x=3.}$\\
+			 Ta có
+			\begin{itemize}
+				\item $\lim\limits_{x\to-\infty}y=\lim\limits_{x\to-\infty}\dfrac{x^2-x-1}{x-2}=-\infty;  \lim\limits_{x\to+\infty}y=\lim\limits_{x\to+\infty}\dfrac{x^2-x-1}{x-2}=+\infty$.
+				\item $\lim\limits_{x\to2^-}y=\lim\limits_{x\to2^-}\left(x+1+\dfrac{1}{x-2}\right)=-\infty;  \lim\limits_{x\to2^+}y=\lim\limits_{x\to2^+}\left(x+1+\dfrac{1}{x-2}\right)=+\infty$.
+				\item $\lim\limits_{x\to+\infty}\left[y-(x+1)\right]=\lim\limits_{x\to+\infty}\dfrac{1}{x-2}=0; \lim\limits_{x\to-\infty}\left[y-(x+1)\right]=\lim\limits_{x\to-\infty}\dfrac{1}{x-2}=0$. 
+			\end{itemize}
+			Do đó, đồ thị hàm số có tiệm cận đứng là đường thẳng $x=2$, tiệm cận xiên  là đường thẳng $y=x+1$.\\
+			 Bảng biến thiên
+			\begin{center}
+				\begin{tikzpicture}
+				\tikzset{double style/.append style={double distance=1.5pt}}
+				 \tkzTabInit[nocadre=false,lgt=1.2,espcl=2.5,deltacl=0.6]
+					 {$x$ /0.6,$y'$ /0.6,$y$ /2}
+					 {$-\infty$,$1$,$2$,$3$,$+\infty$}
+				\tkzTabLine{,+,$0$,-,d,-,$0$,+,} 
+				\tkzTabVar{-/$-\infty$,+/$1$,-D+/$-\infty$/$+\infty$,-/$5$,+/$+\infty$} 
+			\end{tikzpicture}
+			\end{center}
+			Đồ  thị
+			\begin{center}
+				\begin{tikzpicture}[line join=round,line cap=round,>=stealth,scale=0.7]
+					\tikzset{ethicknode/.style={scale=0.9}} 
+					\draw[->]  (-2.6,0)--(6.1,0) node[below left] {$x$};
+					\draw[->] (0,-1.6)--(0,7.1) node[below left] {$y$}; 
+					\draw (0,0) node [below left] {$O$}; 
+					\foreach  \x/\nx in {-2/-2,-1/,1/1,2/,3/3,4/4,5/5}
+					\draw[thin] (\x,1pt)--(\x,-1pt) node [below] {$\nx$}; 
+					\draw (-1,0) node  [above]{$-1$}
+						 (2,0) node[below right]{$2$};
+					\foreach \y/\ny in  {-1/-1,1/1,2/2,3/3,4/4,5/5,6/6}
+					 \draw[thin] (1pt,\y)--(-1pt,\y) node [left] {$\ny$};
+					\draw[dashed,thin](1,0)--(1,1)--(0,1); 
+					\draw[dashed,thin](3,0)--(3,5)--(0,5); 
+					\draw[dashed,thin]  (2,-1.5)--(2,7) node[pos=0.9,above,rotate=90]{$x=2$};
+					\begin{scope}
+						 \clip (-2.5,-1.5) rectangle (6,7);
+						 \draw[samples=200,domain=-2.1:1.99,smooth,variable=\x] plot (\x,{(1*((\x)^2)+-1*(\x)+-1)/(1*(\x)+-2)});
+						 \draw[samples=200,domain=2.01:6,smooth,variable=\x] plot (\x,{(1*((\x)^2)+-1*(\x)+-1)/(1*(\x)+-2)});
+						\draw[dashed,thin] (-2.2,-1.2)--(6.1,7.1) node[pos=0.8,below,rotate=45]{$y=x+1$}; 
+					\end{scope}
+					\draw  (2,-2) node{\textbf{\textit{Hình 1.31}}};
+				\end{tikzpicture}
+			\end{center}
+			\begin{itemize}
+				\item Giao điểm của đồ thị hàm số với  trục tung là điểm $\left(0; \dfrac{1}{2}\right)$.
+				\item Ta có $y=0 \Leftrightarrow \dfrac{x^{2}-x-1}{x-2}=0 \Leftrightarrow x=\dfrac{1-\sqrt{5}}{2}$ hoặc $x=\dfrac{1+\sqrt{5}}{2}$. Do đó giao điểm của  đồ thị hàm số với trục hoành là các điểm $\left(\dfrac{1-\sqrt{5}}{2}; 0\right)$ và $\left(\dfrac{1+\sqrt{5}}{2}; 0\right)$.
+				\item Đồ thị hàm số nhận giao điểm $I(2; 3)$ của hai đường tiệm cận làm tâm đối xứng và nhận hai đường phân giác của các góc  tạo bởi hai đường tiệm cận này làm các trục đối xứng.
+			\end{itemize}
+			\item Hàm  số $y=\dfrac{x^2+x-2}{x+1}$;\\
+			Tập xác định của hàm số: $\mathbb{R} \setminus\{-1\}$.\\ 
+			Sự biến thiên: 
+			\begin{itemize}
+				\item Viết $y=x-\dfrac{2}{x+1}$, ta có $y^{\prime}=1+\dfrac{2}{(x+1)^{2}}>0$  với mọi $x \neq-1$.
+				\item Hàm số đồng biến trên từng khoảng $(-\infty;-1)$ và $(-1;+\infty)$. 
+				\item  Hàm số không có cực trị.
+				 \item $\lim\limits _{x \rightarrow-\infty} y=\lim\limits _{x \rightarrow-\infty} \dfrac{x^{2}+x-2}{x+1}=\lim\limits _{x \rightarrow-\infty} \dfrac{x+1-\dfrac{2}{x}}{1+\dfrac{1}{x}}=-\infty$;\\ $\lim\limits _{x \rightarrow+\infty} y=\lim\limits _{x \rightarrow+\infty} \dfrac{x^{2}+x-2}{x+1}=\lim\limits _{x \rightarrow+\infty} \dfrac{x+1-\dfrac{2}{x}}{1+\dfrac{1}{x}}=+\infty$.
+				\item Tiệm  cận:
+				\begin{align*}
+					&\lim\limits _{x \rightarrow-1^{-}} y=\lim\limits  _{x \rightarrow-1^{-}}\left(x-\dfrac{2}{x+1}\right)=+\infty; \lim\limits _{x \rightarrow-1^{+}} y=\lim\limits _{x \rightarrow-1^{+}}\left(x-\dfrac{2}{x+1}\right)=-\infty;\\
+					&\lim\limits  _{x \rightarrow+\infty}[y-x]=\lim\limits _{x \rightarrow+\infty}\left(-\dfrac{2}{x+1}\right)=0; \lim\limits _{x \rightarrow-\infty}[y-x]=\lim\limits _{x \rightarrow-\infty}\left(-\dfrac{2}{x+1}\right)=0.
+				\end{align*}
+			\end{itemize}
+			Do đó, đồ thị hàm số có tiệm cận  đứng là đường thẳng $x=-1$, tiệm cận xiên là đường thẳng $y=x$.\\
+			 Bảng biến thiên:
+			\begin{center}
+				\begin{tikzpicture}[line join=round,font=\footnotesize,>=stealth,scale=1]
+					 \tkzTabInit[nocadre=false,lgt=1.2,espcl=2.5,deltacl=0.6]
+						 {$x$ /0.6,$y'$ /0.6,$y$ /2}
+						 {$-\infty$,$-1$,$+\infty$}
+					\tkzTabLine{,+,d,+,} 
+					 \tkzTabVar{-/$-\infty$,+D-/$+\infty$/$-\infty$,+/$+\infty$}
+				\end{tikzpicture}
+			\end{center}
+			Đồ thị 
+			\begin{center}
+				\begin{tikzpicture}[line cap=round,line join=round,font=\footnotesize,>=stealth,scale=1,x=0.5cm,y=0.5cm]
+					\tikzset{label  style/.style={font=\footnotesize}}
+					 \draw[->] (-6.1,0)--(6.1,0) node[below] {$x$};
+					\draw[->] (0,-5.1)--(0,5.1) node[left]  {$y$};
+					\draw  (0,0) node [above left] {\scriptsize$O$};
+					\foreach \x/\nx  in {-6/-6,-5/-5,-4/-4,-3/-3,-2/-2,-1/,1/1,2/2,3/3,4/4,5/5}
+					\draw[thin] (\x,1pt)--(\x,-1pt) node  [below] {\scriptsize$\nx$};
+					\foreach \y/\ny  in {-4/right,-3/right,-2/right,-1/left,1/left,2/left,3/left,4/left}
+					\draw[thin] (1pt,\y)--(-1pt,\y) node [\ny]  {\scriptsize $\y$};
+					\draw[dashed,thin]  (-1,-5)--(-1,5) node[above,rotate=90,pos=0.1]{$x=-1$};
+					\draw (-1,0) node[above left]{$-1$}; 
+					\begin{scope}
+						\clip (-6,-5) rectangle  (6,5);
+						\draw[samples=200,domain=-6:-1.01,smooth,variable=\x,magenta]  plot (\x,{(1*((\x)^2)+1*(\x)+-2)/(1*(\x)+1)});
+						 \draw[samples=200,domain=-0.99:6,smooth,variable=\x,magenta] plot (\x,{(1*((\x)^2)+1*(\x)+-2)/(1*(\x)+1)});
+						 \draw[dashed,thin] (-6.1,-6.1)--(6.1,6.1) node[above,rotate=45,pos=0.8]{$y=x$};
+					\end{scope}
+					 \draw (0,-5.5) node{\textbf{\textit{Hình 1.32}}};
+				\end{tikzpicture}
+			\end{center}
+			\begin{itemize}
+				\item Giao điểm của đồ thị hàm số với  trục tung là điểm $(0;-2)$.
+				\item Ta  có $y=0 \Leftrightarrow \dfrac{x^{2}+x-2}{x+1}=0 \Leftrightarrow x=-2$ hoặc $x=1$.
+				Do đó giao điểm của đồ thị hàm số với trục  hoành là các điểm $(-2; 0)$ và $(1; 0)$.
+				\item Đồ  thị hàm số nhận giao điểm $I(-1;-1)$ của hai đường tiệm cận làm tâm đối xứng và nhận hai đường phân giác của góc tạo bởi hai đường tiệm cận này làm các trục đối xứng.
+			\end{itemize}
+			\item Hàm  số $y=\dfrac{2x^2-x+4}{x-1}$;\\
+			Tập xác định của hàm số: $\mathscr{D}=\mathbb{R}  \setminus\{1\}$.\\
+			Sự biến thiên: 
+			\begin{itemize}
+				\item Viết $y=2x+1+\dfrac{5}{x-1}$, ta  có $y^{\prime}=2-\dfrac{5}{(x-1)^{2}}$ với mọi $x \neq 1$.
+				Suy ra 
+				\[y'=0\Leftrightarrow x=1\pm  \dfrac{\sqrt{10}}{2}. \]
+				\item Trên các khoảng $\left( -\infty;1-\dfrac{\sqrt{10}}{2} \right)$  và $\left(1+\dfrac{\sqrt{10}}{2};+\infty \right)$ thì $y'>0$ nên hàm số đồng biến trên các khoảng này.\\
+				Trên các khoảng $\left(1-\dfrac{\sqrt{10}}{2};1 \right)$ và $\left( 1;1+\dfrac{\sqrt{10}}{2} \right)$ thì  $y'<0$ nên hàm số nghịch biến trên các khoảng này.
+				\item Đồ thị hàm số có điểm cực đại là $(x_{\text{ cđ}};y_{\text{ cđ}})=\left(1-\dfrac{\sqrt{10}}{2};3-2\sqrt{10} \right)$ và  điểm cực tiểu là $(x_{\text{ ct}},y_{\text{ ct}})=\left(1+\dfrac{\sqrt{10}}{2}; 3+2\sqrt{10} \right)$.
+				\item  $\lim\limits _{x \rightarrow-\infty} y=-\infty$; $\lim\limits _{x \rightarrow+\infty} y=+\infty$.
+				 \item Tiệm cận:
+				\begin{align*}
+					&\lim\limits _{x \rightarrow 1^{-}} y=-\infty; \lim\limits _{x \rightarrow 1^{+}} y=+\infty;\\ 
+					&\lim\limits _{x \rightarrow+\infty}[y-(2x+1)]=  \lim\limits _{x \rightarrow-\infty}[y-(2x+1)]=0.
+				\end{align*}
+				Do đó, đồ thị hàm số có tiệm cận đứng là đường thẳng $x=1$, tiệm cận xiên là đường  thẳng $y=2x+1$.\\
+				Bảng biến thiên 
+				\begin{center}
+					\begin{tikzpicture}[line join=round,font=\footnotesize,>=stealth,scale=1]
+						 \tkzTabInit[nocadre=false,lgt=1.2,espcl=2.5,deltacl=0.6]
+						{$x$ /1,$y'$ /1,$y$  /3}
+						{$-\infty$,$1-\dfrac{\sqrt{10}}{2}$,$1$,$1+\dfrac{\sqrt{10}}{2}$,$+\infty$} 
+						 \tkzTabLine{,+,0,-,d,-,0,+}
+						\tkzTabVar{-/$-\infty$,+/$3-2\sqrt{10}$,-D+/$-\infty$/$+\infty$,-/$3+2\sqrt{10}$,+/$+\infty$} 
+					\end{tikzpicture}
+				\end{center}
+			\end{itemize}
+			Đồ thị 
+			\begin{center}
+				\begin{tikzpicture}[line cap=round,line join=round,font=\footnotesize,>=stealth,scale=1,x=0.5cm,y=0.25cm]
+					\tikzset{label  style/.style={font=\footnotesize}}
+					\draw[->] (-4,0)--(6,0) node[below] {$x$}; 
+					\draw[->] (0,-8)--(0,15) node[left]  {$y$};
+					\draw[smooth,samples=100,color=red] plot[domain=-4:0.5]  (\x,{(2*(\x)^2-(\x)+4)/(\x-1)});
+					\draw[smooth,samples=100,color=red] plot[domain=1.5:6] (\x,{(2*(\x)^2-(\x)+4)/(\x-1)}); 
+					\draw[dashed] (1,-8) node  [right]{$x=1$}--(1,15)
+						plot[domain=-4:6](\x,{2*(\x)+1})  node[rotate=45,below]{$y=2x+1$}
+						({1-sqrt  (10)/2},0) node[above]{$x_{\text{ cđ}}$}--({1-sqrt (10)/2},{3-2*sqrt (10)})--(0,{3-2*sqrt (10)}) node[right]{$y_{\text{ cđ}}$}
+						({1+sqrt (10)/2},0) node[below]{$x_{\text{ ct}}$}--({1+sqrt  (10)/2},{3+2*sqrt (10)})--(0,{3+2*sqrt (10)}) node[left]{$y_{\text{ ct}}$};
+				\end{tikzpicture}
+			\end{center}
+			\begin{itemize}
+				\item Giao  điểm của đồ thị hàm số với trục tung là điểm $(0;-4)$.
+				\item Ta có $y=0 \Leftrightarrow 2x^{2}-x+4=0$. Phương trình này vô nghiệm nên đồ thị hàm số không cắt  trục hoành.
+				\item Đồ thị hàm số nhận giao điểm $I(1;3)$ của hai đường tiệm cận làm tâm đối xứng và nhận hai đường phân giác của góc tạo  bởi hai đường tiệm cận này làm các trục đối xứng.
+			\end{itemize}
+			 \item Hàm số $y=\dfrac{x^2+2x+1}{x+3}$;\\
+			Tập  xác định của hàm số: $\mathscr{D}=\mathbb{R} \setminus\{-3\}$.\\
+			 Sự biến thiên:
+			\begin{itemize}
+				\item Viết $y=x-1+\dfrac{4}{x+3}$, ta có $y^{\prime}=1-\dfrac{4}{(x+3)^{2}}$ với mọi  $x \neq -3$.
+				Suy ra  $ y'=0\Leftrightarrow x=-5$ hoặc $x=-1$.
+				\item Trên các khoảng $\left( -\infty;-5 \right)$ và $\left(-1;+\infty \right)$ thì $y'>0$  nên hàm số đồng biến trên các khoảng này.
+				Trên các khoảng $\left(-5;-3 \right)$ và $\left( -3;-1\right)$ thì $y'<0$ nên hàm số nghịch biến trên các khoảng này. 
+				\item Đồ thị hàm số  có điểm cực đại là $(x_{\text{ cđ}};y_{\text{ cđ}})=\left(-5;-8\right)$ và điểm cực tiểu là $(x_{\text{ ct}},y_{\text{ ct}})=\left(-1; 0 \right)$.
+				\item $\lim\limits _{x \rightarrow-\infty} y=-\infty$; $\lim\limits _{x \rightarrow+\infty} y=+\infty$. 
+				\item Tiệm  cận:
+				\begin{align*}
+					&\lim\limits _{x \rightarrow  (-3)^{-}} y=-\infty; \lim\limits _{x \rightarrow (-3)^{+}} y=+\infty;\\
+					&\lim\limits  _{x \rightarrow+\infty}[y-(x-1)]= \lim\limits _{x \rightarrow-\infty}[y-(x-1)]=0.
+				\end{align*}
+				Do đó, đồ thị hàm số có tiệm cận đứng là đường thẳng $x=1$, tiệm cận xiên là đường thẳng $y=x-1$.\\ 
+				Bảng biến  thiên
+				\begin{center}
+					\begin{tikzpicture}[line join=round,font=\footnotesize,>=stealth,scale=1]
+						 \tkzTabInit[nocadre=false,lgt=1.2,espcl=2.5,deltacl=0.6]
+						{$x$  /1,$y'$ /1,$y$ /3}
+						{$-\infty$,$-5$,$-3$,$-1$,$+\infty$} 
+						\tkzTabLine{,+,0,-,d,-,0,+} 
+						\tkzTabVar{-/$-\infty$,+/$-8$,-D+/$-\infty$/$+\infty$,-/$0$,+/$+\infty$} 
+					\end{tikzpicture}
+				\end{center}
+			\end{itemize}
+			Đồ  thị
+			\begin{center}
+				\begin{tikzpicture}[line cap=round,line join=round,font=\footnotesize,>=stealth,scale=1,x=0.3cm,y=0.3cm]
+					\tikzset{label  style/.style={font=\footnotesize}}
+					 \draw[->] (-10,0)--(8,0) node[below] {$x$};
+					\draw[->] (0,-12)--(0,7) node[left]  {$y$};
+					\draw[smooth,samples=100,color=red]  plot[domain=-10:-3.5] (\x,{((\x)^2+2*(\x)+1)/(\x+3)});
+					\draw[smooth,samples=100,color=red]  plot[domain=-2.6:8] (\x,{((\x)^2+2*(\x)+1)/(\x+3)});
+					\draw[dashed] (-3,-12)--(-3,7) node [above left,rotate=90]{$x=-3$} 
+						plot[domain=-10:8](\x,{(\x)-1})  node[rotate=45,below]{$y=x-1$}
+						 (-5,0) node[above]{$x_{\text{ cđ}}$}--(-5,-8)--(0,-8) node[right]{$y_{\text{ cđ}}$};
+				\end{tikzpicture}
+			\end{center}
+			\begin{itemize}
+				\item  Giao điểm của đồ thị hàm số với trục tung là điểm $\left(0;\dfrac{1}{3}\right)$.
+				\item Ta có $$y=0 \Leftrightarrow x^2+2x+1=0  \Leftrightarrow x=-1.$$
+				Đồ thị hàm số cắt trục hoành  tại điểm $(0,-1)$.
+				\item Đồ thị hàm số nhận giao điểm $I(-3;-4)$ của hai đường tiệm cận làm tâm đối xứng và nhận hai đường phân giác của góc tạo bởi hai đường tiệm cận  này làm các trục đối xứng.
+			\end{itemize}
+		\end{enumerate}
+	} 
+\end{bt}
+
+% nguồn: Phan2_Lop_12_Dai_so_Chuong_1
+\begin{bt}%[2D1H5-1]%[ma:377ece2a]
+	Khảo sát  sự biến thiên và vẽ đồ thị các hàm số sau
+	\begin{multicols}{2}
+		\begin{enumerate}
+			\item  $y = \dfrac{x+1}{x-2}$.
+			 \item $y = \dfrac{2x+1}{x+1}$.
+			\item $y  = \dfrac{x+3}{1-x}$.
+			\item $y =  \dfrac{5+x}{2-x}$.
+		\end{enumerate}
+	\end{multicols}
+	\loigiai{ 
+		\begin{enumerate}
+			\item  Xét hàm số $y = \dfrac{x+1}{x-2}$.
+			\begin{itemize}
+				 \item Tập xác định $\mathscr{D}=\mathbb{R} \setminus \{2\}$.
+				\item Đạo hàm $y' = \dfrac{-3}{(x-2)^2} < 0$ với mọi  $x \ne 2$. \\
+				Hàm  số nghịch biến trên từng khoảng $(-\infty; 2)$ và $(2; +\infty)$ và không có cực trị.
+				\item Tiệm cận 
+				\begin{itemize}
+					 \item Ta có $\lim\limits_{x\to 2^-}y=\lim\limits_{x\to 2^-}\dfrac{x+1}{x-2}=-\infty$; $\lim\limits_{x\to 2^+}y=\lim\limits_{x\to 2^+}\dfrac{x+1}{x-2}=+\infty
+					\Rightarrow$ Tiệm cận đứng của đồ thị hàm số là  đường thẳng $x = 2$.
+					\item $\lim\limits_{x\to+\infty}y=\lim\limits_{x\to+\infty}\dfrac{x+1}{x-2}=1$; $\lim\limits_{x\to-\infty}y=\lim\limits_{x\to-\infty}\dfrac{x+1}{x-2}=1\Rightarrow$ Tiệm cận ngang của đồ thị hàm số là đường thẳng $y =  1$.
+				\end{itemize}
+				\item Bảng  biến thiên
+				\begin{center}
+					\begin{tikzpicture}
+						\tkzTabInit[nocadre=false,lgt=1.5,espcl=4,deltacl=0.8] 
+						{$x$ /1,$f'(x)$ /1,$f (x)$  /2}
+						{$-\infty$,$2$,$+\infty$} 
+						 \tkzTabLine{,-,d,-,}
+						\tkzTabVar{+/ $1$,-D+/$-\infty$ / $+\infty$,-/  $1$}
+					\end{tikzpicture}
+				\end{center}
+				\item Giao điểm với trục tung $x = 0 \Rightarrow y = \dfrac{1}{-2} = -\dfrac{1}{2} \Rightarrow \left(0; -\dfrac{1}{2}\right)$. 
+				\item Giao điểm với trục hoành $y = 0 \Rightarrow x +  1 = 0 \Rightarrow x = -1 \Rightarrow (-1; 0)$.
+				\item Nhận xét: Đồ thị nhận điểm $I(2;1)$ là tâm đối xứng và đồ  thị nhận hai đường phân giác làm trục đối xứng.
+			\end{itemize}
+			\begin{center}
+				\begin{tikzpicture}[scale=0.5]
+					\draw[->] (-6,0)--(9,0)  node[below]{$x$};
+					\draw[->]  (0,-7)--(0,7) node[left]{$y$};
+					\draw[dashed] (2,-7)--(2,7) node[below left] {$x=2$}; 
+					\draw[dashed] (-6,1)--(9,1) node[below left]  {$y=1$};
+					\draw[domain=-6:1.62,smooth,variable=\x]  plot ({\x},{(\x+1)/(\x-2)});
+					 \draw[domain=2.5:9,smooth,variable=\x] plot ({\x},{(\x+1)/(\x-2)});
+					\fill (0,0) circle (1.3pt) node[above  right]{$O$};
+				\end{tikzpicture}
+			\end{center}
+			\item  Xét hàm số $y = \dfrac{2x+1}{x+1}$.
+			\begin{itemize}
+				\item Tập  xác định $\mathscr{D}=\mathbb{R} \setminus \{-1\}$.
+				\item Đạo hàm $y' =  \dfrac{1}{(x+1)^2} > 0$ với mọi $x \ne -1$. \\
+				Hàm số đồng biến trên từng khoảng $(-\infty; -1)$ và $(-1;  +\infty)$ và không có cực trị.
+				\item Tiệm cận 
+				\begin{itemize}
+					\item $\lim\limits_{x\to (-1)^-}y=\lim\limits_{x\to (-1)^-}\dfrac{2x+1}{x+1}=+\infty$; $\lim\limits_{x\to (-1)^+}y=\lim\limits_{x\to  (-1)^+}\dfrac{2x+1}{x+1}=-\infty
+					\Rightarrow$ Tiệm cận đứng của đồ thị hàm số là đường thẳng  $x = -1$.
+					\item $\lim\limits_{x\to+\infty}y=\lim\limits_{x\to+\infty}\dfrac{2x+1}{x+1}=2$; $\lim\limits_{x\to-\infty}y=\lim\limits_{x\to-\infty}\dfrac{2x+1}{x+1}=2\Rightarrow$ Tiệm cận ngang của đồ thị hàm số là  đường thẳng $y = 2$.
+				\end{itemize}
+				 \item Bảng biến thiên
+				\begin{center}
+					\begin{tikzpicture}
+						\tkzTabInit[nocadre=false,lgt=1.5,espcl=4,deltacl=0.8] 
+						 {$x$ /1,$f'(x)$ /1,$f (x)$ /2}
+						 {$-\infty$,$-1$,$+\infty$}
+						\tkzTabLine{,+,d,+,} 
+						\tkzTabVar{-/ $2$,+D-/$+\infty$ / $-\infty$,+/ $2$} 
+					\end{tikzpicture}
+				\end{center}
+				\item Giao  điểm với trục tung $x = 0 \Rightarrow y = \dfrac{1}{1} = 1 \Rightarrow (0;1)$.
+				\item Giao điểm với trục hoành $y = 0 \Rightarrow 2x + 1 = 0 \Rightarrow x =  -\dfrac{1}{2} \Rightarrow \left(-\dfrac{1}{2}; 0\right)$.
+				\item Nhận xét: Đồ thị nhận điểm $I(-1;2)$ là tâm đối xứng và đồ thị nhận hai đường  phân giác làm trục đối xứng.
+			\end{itemize}
+			\begin{center}
+				\begin{tikzpicture}[scale=0.8]
+					 \draw[->] (-6,0)--(4,0) node[below]{$x$};
+					 \draw[->] (0,-3)--(0,6) node[left]{$y$};
+					\draw[dashed] (-1,6) -- (-1,-3) node[above  left]{$x=-1$};
+					\draw[dashed] (-6,2)--(4,2)  node[above left]{$y=2$};
+					\draw[domain=-6:-1.26,smooth,variable=\x] plot ({\x},{(2*\x+1)/(\x+1)}); 
+					\draw[domain=-0.8:4,smooth,variable=\x] plot ({\x},{(2*\x+1)/(\x+1)}); 
+					\fill (0,0)  circle (1.4pt) node[below right]{$O$};
+				\end{tikzpicture}
+			\end{center}
+			\item Xét hàm số $y  = \dfrac{x+3}{1-x}$.
+			\begin{itemize}
+				\item Tập xác định $\mathscr{D} = \mathbb{R} \setminus \{1\}$. 
+				 \item Đạo hàm $y' = \dfrac{4}{(1-x)^2} > 0$ với mọi $x \ne 1$. \\
+				Hàm số đồng biến trên các khoảng $(-\infty;1)$ và $(1;+\infty)$ và không có  cực trị.
+				\item  Tiệm cận
+				\begin{itemize}
+					\item $\lim\limits_{x\to 1^-}y=\lim\limits_{x\to 1^-}\dfrac{x+3}{1-x}=+\infty$;  $\lim\limits_{x\to 1^+}y=\lim\limits_{x\to 1^+}\dfrac{x+3}{1-x}=-\infty
+					\Rightarrow$  Tiệm cận đứng của đồ thị hàm số là đường thẳng $x = 1$.
+					\item $\lim\limits_{x\to+\infty}y=\lim\limits_{x\to+\infty}\dfrac{x+3}{1-x}=-1$; $\lim\limits_{x\to-\infty}y=\lim\limits_{x\to-\infty}\dfrac{x+3}{1-x}=-1\Rightarrow$ Tiệm cận ngang của đồ thị hàm số là  đường thẳng $y = -1$.
+				\end{itemize}
+				\item Bảng biến thiên 
+				\begin{center}
+					\begin{tikzpicture}
+						\tkzTabInit[nocadre=false,lgt=1.5,espcl=4,deltacl=0.8] 
+						{$x$ /1,$f'(x)$ /1,$f  (x)$ /2}
+						{$-\infty$,$1$,$+\infty$} 
+						 \tkzTabLine{,+,d,+,}
+						\tkzTabVar{-/ $-1$,+D-/$+\infty$ / $-\infty$,+/ $-1$} 
+					\end{tikzpicture}
+				\end{center}
+				\item Giao điểm với trục tung $(0;3)$, giao điểm với  trục hoành $(-3;0)$.
+				\item Đồ thị  nhận giao điểm $I(1;-1)$ làm tâm đối xứng.
+			\end{itemize}
+			\begin{center}
+				\begin{tikzpicture}[scale=0.5]
+					\draw[->] (-7,0)--(9,0)  node[below]{$x$};
+					\draw[->] (0,-7)--(0,7)  node[left]{$y$};
+					\draw[dashed] (1,-7)--(1,7) node[below  right]{$x=1$};
+					\draw[dashed] (9,-1)--(-7,-1) node[below right]{$y=-1$}; 
+					\draw[domain=-7:0.5,smooth,variable=\x] plot  ({\x},{(\x+3)/(1-\x)});
+					\draw[domain=1.7:9,smooth,variable=\x] plot ({\x},{(\x+3)/(1-\x)}); 
+					\fill (0,0)  circle (1.4pt) node[above right]{$O$};
+				\end{tikzpicture}
+			\end{center}
+			\item Xét  hàm số $y = \dfrac{5+x}{2-x}$.
+			\begin{itemize}
+				\item Tập xác định $\mathscr{D}=\mathbb{R}  \setminus \{2\}$.
+				\item Đạo hàm $y' = \dfrac{7}{(-x+2)^2} > 0$  với mọi $x \ne 2$. \\ Hàm số đồng biến trên các khoảng $(-\infty;2)$ và $(2;+\infty)$.
+				 \item Tiệm cận
+				\begin{itemize}
+					\item $\lim\limits_{x\to 2^-}y=\lim\limits_{x\to 2^-}\dfrac{5+x}{2-x}=+\infty$; $\lim\limits_{x\to 2^+}y=\lim\limits_{x\to 2^+}\dfrac{5+x}{2-x}=-\infty 
+					\Rightarrow$ Tiệm cận đứng của đồ thị hàm số  là đường thẳng $x = 2$.
+					\item $\lim\limits_{x\to+\infty}y=\lim\limits_{x\to+\infty}\dfrac{5+x}{2-x}=-1$; $\lim\limits_{x\to-\infty}y=\lim\limits_{x\to-\infty}\dfrac{5+x}{2-x}=-1\Rightarrow$ Tiệm cận ngang của đồ thị hàm số là  đường thẳng $y = -1$.
+				\end{itemize}
+				 \item Bảng biến thiên
+				\begin{center}
+					\begin{tikzpicture}
+						 \tkzTabInit[nocadre=false,lgt=1.5,espcl=4,deltacl=0.8]
+						{$x$  /1,$f'(x)$ /1,$f (x)$ /2}
+						 {$-\infty$,$2$,$+\infty$}
+						 \tkzTabLine{,+,d,+,}
+						\tkzTabVar{-/ $-1$,+D-/$+\infty$ /  $-\infty$,+/ $-1$}
+					\end{tikzpicture}
+				\end{center}
+				\item Giao  điểm với trục tung $(0;3)$, giao điểm với trục hoành $(-5;0)$.
+				\item Đồ thị nhận  điểm $I(2;-1)$ là tâm đối xứng.
+			\end{itemize}
+			\begin{center}
+				\begin{tikzpicture}[scale=0.4]
+					 \draw[->] (-8,0)--(11,0) node[below]{$x$};
+					\draw[->] (0,-8)--(0,8) node[left]{$y$}; 
+					\draw[dashed] (2,-8)--(2,8) node[below right]{$x=2$}; 
+					\draw[dashed] (11,-1)--(-8,-1)  node[below right]{$y=-1$};
+					\draw[domain=-8:1.25,smooth,variable=\x] plot  ({\x},{(5+\x)/(2-\x)});
+					\draw[domain=2.95:11,smooth,variable=\x] plot  ({\x},{(5+\x)/(2-\x)});
+					\fill (0,0) circle (1.4pt) node[above right]{$O$}; 
+				\end{tikzpicture}
+			\end{center}
+		\end{enumerate}
+	} 
+\end{bt}
+
+% nguồn: Phan2_Lop_12_Dai_so_Chuong_1
+\begin{bt}%[2D1V5-1]%[ma:e8b2e572]
+	 \immini{
+	Cho hàm số bậc ba $f(x)=x^3+bx^2+cx+d$. Biết đồ thị của hàm số $y=f'(x)$ như hình vẽ. Tính $\dfrac{c}{b}$  (làm tròn đến hàng phần chục).
+	}{ 
+	\begin{tikzpicture}[scale=1,>=stealth,font=\footnotesize,line join=round,line cap=round]
+		\def\a{1} \def\b{-2} \def\c{0.75} 
+		 \def\xmin{-1} \def\xmax{2.5}
+		 \def\ymin{-1} \def\ymax{2}
+		 \draw[->] (\xmin,0)--(\xmax,0) node [below]{$x$};
+		\draw[->] (0,\ymin)--(0,\ymax)  node [left]{$y$};
+		\node at (0,0) [below  left]{$O$};
+		\fill (1,0) node[above]{$1$} circle (1.2pt); 
+		 \fill (0.5,0) node[below]{$\dfrac{1}{2}$} circle (1.2pt);
+		\fill (1.5,0) node[below]{$\dfrac{3}{2}$}  circle (1.2pt);
+		\clip (\xmin+0.1,\ymin+0.1)  rectangle (\xmax-0.5,\ymax-0.1);
+		 \draw[smooth,samples=300] plot (\x,{\a*(\x)^2+\b*(\x)+\c});
+	\end{tikzpicture}
+	} 
+	 \loigiai{
+		Tập xác định $\mathscr{D}=\mathbb{R}$.\\ 
+		Đạo hàm cấp $1$ của $f(x)$ là  $f'(x)=3ax^2+2bx+c$.\\
+		Dựa vào đồ thị của hàm số $f'(x)$ ta có bảng biến thiên  của hàm số $f(x)$ như sau:
+		\begin{center}
+			\begin{tikzpicture}
+				\tkzTabInit[espcl=2.5,lgt=1.5,nocadre=false] 
+					{$x$/1,$f'(x)$/0.7,$f  (x)$/2.1}
+					{$-\infty$,$\dfrac{1}{2}$,$\dfrac{3}{2}$,$+\infty$} 
+				 \tkzTabLine{,+,0,-,0,+,}
+				 \tkzTabVar{-/$-\infty$,+/$f\left(\tfrac{1}{2} \right)$,-/$f\left(\tfrac{3}{2} \right)$,+/$+\infty$}
+			\end{tikzpicture}
+		\end{center}
+		Ta có $f'\left(\dfrac{1}{2}\right)=\dfrac{3a}{4}+b+c$  và $f'\left(\dfrac{3}{2}\right)=\dfrac{27a}{4}+3b+c$.\\
+		Dựa vào bảng  biến thiên ta có
+		 $$\heva{&3a+4b+4c=0\\&27a+12b+4c=0} \Leftrightarrow \heva{&27a+36b+36c=0\\&27a+12b+4c=0}
+		\Rightarrow 24b+32c=0 \Rightarrow  \dfrac{c}{b}=-\dfrac{3}{4}.$$\\
+		Vậy $\dfrac{c}{b}=-\dfrac{3}{4}\approx-0{,}8$. 
+	} 
+\end{bt}

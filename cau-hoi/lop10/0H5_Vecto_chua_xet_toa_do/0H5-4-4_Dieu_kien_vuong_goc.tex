@@ -1,0 +1,164 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Lớp 10 | Véctơ (chưa xét tọa độ) | Tích vô hướng (chưa xét tọa độ)
+% Dạng 0H5?4-4: Điều kiện vuông góc
+% Số câu: 4  (sinh tự động bởi tach_cau.py; từ nay thầy sửa trực tiếp file này)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%% TRẮC NGHIỆM 4 PHƯƠNG ÁN %%%%%%%%%%%%%%%%
+
+% nguồn: MaHoaNH_TracNghiem_Lop10
+\begin{ex}%[0H5N4-4]%[ma:3a2afdc2]
+	Cho tam giác $ABC$  vuông cân tại $A$ và $AB=1$. Khẳng định nào sau đây \textbf{sai}?
+	 \choice
+		{$\vv{BA}\cdot \vv{BC}=1$} 
+		 {$\vv{CA}\cdot \vv{CB}=1$}
+		{\True $\vv{AB}\cdot \vv{AC}=1$} 
+		{$\vv{AB}\cdot \vv{BC}=-1$} 
+	\loigiai{ 
+		\begin{center}
+			\begin{tikzpicture}[scale=1,line join=round,font=\footnotesize,line cap=round,thick]
+					 \coordinate (B) at (-2,0);
+					\coordinate (C) at  (2.25,0);
+					\coordinate (Temp) at ($(B) + (45:1)$); 
+					 \coordinate (A) at ($(B)!(C)!(Temp)$);
+					\path ($(A)!0.5!(B)$)  node [left]{$1$};
+					 \draw (A)--(B)--(C)--cycle;
+					\pic[draw,thin,angle radius=2mm] {right angle = B--A--C}; 
+					\foreach  \i/\g in {A/90,B/-90,C/-90}{\draw[fill=white](\i) circle (1pt)
+						 ($(\i)+(\g:3mm)$) node[scale=1]{$\i$};}
+				\end{tikzpicture}
+		\end{center}
+		\begin{enumerate}[$\bullet$]
+			\allowdisplaybreaks 
+			 \item Xét $\vv{BA}\cdot \vv{BC}$.
+			\begin{align*}
+				\vv{BA}\cdot \vv{BC}&=\left|\vv{BA}  \right|\cdot\left|\vv{BC} \right|\cdot\cos\left(\vv{BA},\vv{BC} \right)\\
+				&=1\cdot \sqrt{2}\cdot  \cos 45^\circ=1.
+			\end{align*}
+			\item Xét  $\vv{CA}\cdot \vv{CB}$.
+			\begin{align*}
+				\vv{CA}\cdot \vv{CB}&=\left|\vv{CA}  \right|\cdot\left|\vv{CB} \right|\cdot\cos\left(\vv{CA},\vv{CB} \right)\\
+				&=1\cdot \sqrt{2}\cdot \cos 45^\circ=1. 
+			\end{align*}
+			\item  Xét $\vv{AB}\cdot \vv{AC}$.\\
+			Do tam giác $ABC$ vuông cân tại $A$ nên $AB\perp  AC\Rightarrow \vv{AB}\cdot \vv{AC}=0$.
+			\item Xét  $\vv{AB}\cdot \vv{BC}$.
+			\begin{align*}
+				\vv{AB}\cdot  \vv{BC}&=-\vv{BA}\cdot \vv{BC}\\
+				&=-\left|\vv{BA}\right|\cdot\left|\vv{BC} \right|\cdot\cos\left(\vv{BA},\vv{BC}  \right)\\
+				&=-1\cdot  \sqrt{2}\cdot \cos 45^\circ=-1.
+			\end{align*}
+		\end{enumerate}
+	} 
+\end{ex}
+
+
+%%%%%%%%%%%%%%%% TỰ LUẬN %%%%%%%%%%%%%%%%
+
+% nguồn: MaHoaNH_TuLuan_Lop10
+\begin{bt}%[0H5H4-4]%[ma:797fdccf]
+	Cho tứ giác lồi $ABCD$, hai đường chéo $AC$ và $BD$ cắt nhau tại $O$. Gọi $H$ và $K$ lần lượt là trực tâm các tam giác $ABO$ và $CDO$. Gọi $I$, $J$ lần lượt là trung điểm $AD$ và $BC$. Chứng  minh $HK\perp IJ$.
+	\loigiai{ 
+		Hình vẽ 
+		\begin{center}
+			\begin{tikzpicture}[line join = round,line cap = round,>=stealth,font=\footnotesize,scale=.5]
+					\coordinate (D) at  ($(0,0)$);
+					 \coordinate (A) at ($(D)+(9,0)$);
+					\coordinate (B) at ($(D)+(7,6)$); 
+					\coordinate (C)  at ($(D)+(1,5)$);
+					\coordinate (I)  at ($(D)!0.5!(A)$);
+					\coordinate (J) at  ($(B)!0.5!(C)$);
+					\coordinate (O) at (intersection of A--C and  B--D);
+					\coordinate (H1)  at ($(A)!(B)!(O)$);
+					\coordinate (H2) at  ($(A)!(O)!(B)$);
+					\coordinate (H) at (intersection of B--H1 and O--H2); 
+					\coordinate (K1) at  ($(O)!(D)!(C)$);
+					 \coordinate (K2) at ($(O)!(C)!(D)$);
+					\coordinate (K) at (intersection of  D--K1 and C--K2);
+					 \draw (D)--(A)--(B)--(C)--(D)--(B)
+						 (A)--(C)
+						 (B)--(H1)
+						 (O)--(H2)
+						 (D)--(K1)
+						 (C)--(K2)
+						 (I)--(J);
+					\path  pic[draw,angle radius=6]{right angle=A--H1--B};
+					\path pic[draw,angle radius=6]{right angle=O--H2--A}; 
+					\path pic[draw,angle  radius=6]{right angle=D--K1--C};
+					\path  pic[draw,angle radius=6]{right angle=C--K2--D};
+					\foreach \x/\y in  {A/-90,B/90,C/90,D/-90,O/90,H/-30,K/180,I/-90,J/90}
+					\draw[fill=black] (\x) circle (1.1pt) + (\y:0.5cm)  node{$\x$};
+				\end{tikzpicture}
+		\end{center}
+		Ta có 
+		 \[\heva{& \overrightarrow{IJ}=\overrightarrow{IA}+\overrightarrow{AC}+\overrightarrow{CJ} \\
+		&\overrightarrow{IJ}=\overrightarrow{ID}+\overrightarrow{DB}+\overrightarrow{BJ}}\Rightarrow 2 \overrightarrow{IJ}=\overrightarrow{AC}+\overrightarrow{DB}.\] 
+		Suy ra \begin{eqnarray*}
+		\overrightarrow{HK}  \cdot 2 \overrightarrow{IJ}&=&\overrightarrow{HK}\left(\overrightarrow{AC}+\overrightarrow{DB}\right)\\
+		&=&\overrightarrow{HK} \cdot \overrightarrow{AC}+\overrightarrow{HK} \cdot  \overrightarrow{DB}.\\
+		&=&\left(\overrightarrow{HB}+\overrightarrow{BD}+\overrightarrow{DK}\right)\cdot \overrightarrow{AC}+\left(\overrightarrow{HA}+\overrightarrow{AC}+\overrightarrow{CK}\right) \cdot  \overrightarrow{DB}\\
+		&=&\overrightarrow{AC}\cdot \left(\overrightarrow{BD}+\overrightarrow{DB}\right)\\ 
+		&=&\overrightarrow{AC} \cdot \overrightarrow 0=0. 
+	\end{eqnarray*}
+	 Vậy $\overrightarrow{HK} \cdot \overrightarrow{IJ}=0$ hay $HK\perp IJ$.
+ }
+\end{bt}
+
+% nguồn: MaHoaNH_TuLuan_Lop10
+\begin{bt}%[0H5V4-4]%[ma:1100f474]
+	Cho tam giác $ABC$ có $AB=2a$, $AC=3a$, $\widehat{BAC}=60^{\circ}$. Gọi $I$ là trung điểm  đoạn thẳng $BC$. Điểm $J$ thuộc đoạn $AC$ thỏa mãn $12AJ=7AC$. Chứng minh rằng $AI\perp BJ$.
+	 \loigiai{
+		 Hình vẽ
+		\begin{center}
+			\begin{tikzpicture}[scale=1,font=\footnotesize,line join=round,line cap=round,>=stealth]
+					\path  (0,0) coordinate (A)++(3,0) coordinate (B)
+						($(A)!1.5!60:(B)$) coordinate (C) 
+						($(B)!0.5!(C)$)  coordinate (I)
+						($(A)!7/12!(C)$) coordinate (J); 
+					\draw (A)--(B)--(C)--cycle (A)--(I) 
+						(B)--(J); 
+					\foreach \p/\g in {A/210,B/-30,C/90,I/30,J/135} \fill[black]  (\p) circle (1pt)+(\g:0.3) node{$\p$};
+				\end{tikzpicture}
+		\end{center}
+		Ta có  $\overrightarrow{AB}\cdot \overrightarrow{AC}=AB\cdot AC\cdot\cos\widehat{BAC}=2a\cdot 3a\cdot\cos 60^\circ=3a^2$.\\
+		Do $I$ là  trung điểm của $BC$ nên $\overrightarrow{AI}=\dfrac{1}{2}\overrightarrow{AB}+\dfrac{1}{2}\overrightarrow{AC}$.\\
+		Và  $\overrightarrow{BJ}=\overrightarrow{AJ}-\overrightarrow{AB}=\dfrac{7}{12}\overrightarrow{AC}-\overrightarrow{AB}=-\overrightarrow{AB}+\dfrac{7}{12}\overrightarrow{AC}$.
+		Khi đó \begin{align*}
+		\overrightarrow{AI}\cdot\overrightarrow{BJ}&=\dfrac{1}{2}(\overrightarrow{AB}+\overrightarrow{AC})\left(-\overrightarrow{AB}+\dfrac{7}{12}\overrightarrow{AC}\right)\\ 
+		 &=\dfrac{1}{2}\left(-\overrightarrow{AB}^2+\dfrac{7}{12}\overrightarrow{AB}\cdot\overrightarrow{AC}-\overrightarrow{AB}\cdot\overrightarrow{AC}+\dfrac{7}{12}\overrightarrow{AC}^2\right)\\
+		 &=\dfrac{1}{2}\left(-4a^2+\dfrac{7}{12}\cdot3a^2-3a^2+\dfrac{7}{12}\cdot9a^2\right)=0
+	\end{align*}
+	Vậy  $AI\perp BJ$.
+} 
+\end{bt}
+
+% nguồn: MaHoaNH_TuLuan_Lop10
+\begin{bt}%[0H5V4-4]%[ma:8c4b00a7]
+	Cho  tam giác $ABC$ có $AB=4\sqrt 2$, $AC=6$, $\widehat{BAC}=45^\circ$. Gọi $D$ là trung điểm của đoạn thẳng $BC$. Điểm $E$ thoả mãn $\overrightarrow{AE}=k \overrightarrow{AC}\,(k \in \mathbb{R})$ (Xem hình vẽ bên dưới). Tìm $k$ biết $AD\perp BE$.
+	\begin{center}
+		\begin{tikzpicture}[line join = round,line cap = round,scale=.5]
+				\coordinate (B) at  (0,0);
+				\coordinate (C) at  ($(B)+(6,0)$);
+				\coordinate[shift=(90:4cm)] (A) at (B); 
+				\coordinate  (D) at ($(B)!0.5!(C)$);
+				\coordinate (E) at ($(A)!2/3!(C)$); 
+				\draw  (D)--(A)--(B)--(C)--(A)
+					 (B)--(E);
+				\foreach \x/\y  in {A/90,B/180,D/-90,C/0,E/30}
+				\draw[fill=black] (\x) circle (1.1pt) + (\y:0.45cm) node{$\x$}; 
+			\end{tikzpicture}
+	\end{center}
+	 \loigiai{
+		Ta có $\overrightarrow{AB}\cdot \overrightarrow{AC}=AB\cdot AC\cdot \cos A=4 \sqrt 2  \cdot 6 \cdot \cos 45^\circ=24$.\\
+		Và $\overrightarrow{BE}=\overrightarrow{AE}-\overrightarrow{AB}=k  \overrightarrow{AC}-\overrightarrow{AB}$.\\
+		 Khi đó
+		\begin{eqnarray*}
+			\overrightarrow{AD}\cdot \overrightarrow{BE}&=&\dfrac{1}{2}\left(\overrightarrow{AB}+\overrightarrow{AC}\right) \cdot(k  \overrightarrow{AC}-\overrightarrow{AB})\\
+			&=&\dfrac{1}{2}\left(  k\overrightarrow{AB}\cdot \overrightarrow{AC}+k\overrightarrow{AC}^2-\overrightarrow{AB}^2-\overrightarrow{AB}\cdot \overrightarrow{AC} \right)\\
+			 &=&\dfrac{1}{2}\left[24k+{ 6^2}\cdot k-{{(4\sqrt 2)}^2}-24 \right]\\
+			 &=&30k-28.
+		\end{eqnarray*}
+		Mà ${AD \perp  BE \Leftrightarrow \overrightarrow{A D} \cdot \overrightarrow{BE}=0 \Leftrightarrow 30k-28=0 \Leftrightarrow k=\dfrac{14}{15}}$.\\
+		Vậy  $k=\dfrac{14}{15}$.
+	} 
+\end{bt}

@@ -1,0 +1,254 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Lớp 10 | Véctơ (chưa xét tọa độ) | Khái niệm véctơ
+% Dạng 0H5?1-5: Độ dài của một véctơ
+% Số câu: 9  (sinh tự động bởi tach_cau.py; từ nay thầy sửa trực tiếp file này)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%% TRẮC NGHIỆM 4 PHƯƠNG ÁN %%%%%%%%%%%%%%%%
+
+% nguồn: MaHoaNH_TracNghiem_Lop10
+\begin{ex}%[0H5H1-5]%[ma:529a6065]
+	Cho hình thoi $ABCD$ có cạnh bằng $2a$, $\widehat{B}=120^\circ$. Tính  độ dài vectơ $\overrightarrow{AC}$.
+	 \choice
+		 {\True $2\sqrt{3}a$}
+		 {$2a$}
+		 {$\sqrt{3}a$}
+		 {$\dfrac{\sqrt{3}a}{2}$}
+	\loigiai{ 
+		Ta có $\widehat{B}=120^\circ\Rightarrow\widehat{A}=60^\circ\Rightarrow\triangle ABD$ là tam giác đều. Gọi $O$ là giao  điểm của hai đường chéo $AC$, $BD$, suy ra $O$ là trung điểm của $BD$, $AC$.\\
+		Xét tam giác $ABD$ có  $AO^2=AB^2-BO^2=(2a)^2-a^2=3a^2\Rightarrow AO=\sqrt{3}a\Rightarrow AC=2AO=2\sqrt{3}a$.\\
+	Vậy $\left|\overrightarrow{AC}\right|=AC=2\sqrt{3}a$.} 
+\end{ex}
+
+% nguồn: MaHoaNH_TracNghiem_Lop10
+\begin{ex}%[0H5H1-5]%[ma:8bcfa507]
+	Cho tam giác $ABC$ đều  cạnh $2a$ và $M$ là trung điểm $BC$. Độ dài của vectơ $\overrightarrow{AM}$ là
+	 \choice
+		 {$\dfrac{a\sqrt{3}}{2}$}
+		{\True  $a\sqrt{3}$}
+		{$2a$} 
+		{$a$} 
+	\loigiai{ 
+	 \immini
+		{ 
+		Ta có $\left| \overrightarrow{AM}  \right| = AM = \sqrt{AB^2 - BM^2} = a\sqrt{3}$.
+		} 
+		 {
+		\begin{tikzpicture}[line join=round,line cap = round,>=stealth,scale=.8,font=\footnotesize,transform shape]
+				\foreach  \x/\y/\z/\g in
+					{ 
+					0/0/B/-135,4/0/C/-45,2/0/M/-90,2/3.5/A/90 
+				} 
+				\draw[fill=black] (\x,\y) circle (1pt) coordinate  (\z)
+					($(\z)+(\g:3.5mm)$)  node{$\z$};
+				\draw  (A)--(B)--(C)--(A);
+				\draw[->] (A)--(M); 
+			\end{tikzpicture}
+		 }
+	} 
+\end{ex}
+
+% nguồn: MaHoaNH_TracNghiem_Lop10
+\begin{ex}%[0H5H1-5]%[ma:e6808c15]
+	Cho hình chữ nhật $ABCD$ có $M$, $N$ lần lượt là trung điểm $AB$,  $BC$. Giá trị $k$ thoả mãn $\left|\overrightarrow{BD}\right| = k\left| \overrightarrow{MN} \right|$ là
+	 \choice
+		{$1$} 
+		{\True  $2$}
+		 {$3$}
+		{Không tồn  tại}
+	 \loigiai{
+	 \immini
+		 {
+		Ta có  $MN$ là đường trung bình của tam giác $BAC$ nên
+		\[ 
+		\left| \overrightarrow{MN} \right| = MN = \dfrac{1}{2} AC = \dfrac{1}{2}BD = \dfrac{1}{2} \left|  \overrightarrow{BD} \right|.
+		 \]
+		 Vậy $k=2$.
+		 }
+		{ 
+		\begin{tikzpicture}[line join=round,line cap = round,>=stealth,scale=.8,font=\footnotesize,transform shape]
+				\foreach \x/\y/\z/\g  in
+					{ 
+					 0/3/A/135,4/3/B/45,2/3/M/90,4/0/C/-45,4/1.5/N/0,0/0/D/-135
+				} 
+				 \draw[fill=black] (\x,\y) circle (1pt) coordinate (\z)
+					($(\z)+(\g:3.5mm)$)  node{$\z$};
+				\draw  (C)--(A)--(B)--(C)--(D)--(A);
+				 \draw[->] (B)--(D);
+				\draw[->] (M)--(N); 
+			\end{tikzpicture}
+		} 
+	 }
+\end{ex}
+
+
+%%%%%%%%%%%%%%%% ĐÚNG/SAI %%%%%%%%%%%%%%%%
+
+% nguồn: MaHoaNH_DungSai_Lop10
+\begin{ex}%[0H5H1-5]%[ma:56e046d9]
+	Cho hình thang $ABCD$ với  hai đáy là $AB$ và $CD$, $AB< CD$.
+	 \choiceTF
+		{\True $\left|\overrightarrow{AB}\right|<\left|\overrightarrow{CD}\right|$} 
+		 {$\overrightarrow{AD}=\overrightarrow{BC}$}
+		{\True $\overrightarrow{AB}$, $\overrightarrow{DC}$ cùng  hướng}
+		{\True Nếu $\left|\overrightarrow{BC}\right|=\left|\overrightarrow{AD}\right|$ thì $\left|\overrightarrow{AC}\right|=\left|\overrightarrow{BD}\right|$} 
+	 \loigiai{
+		\begin{center}
+			\begin{tikzpicture}[declare function={a=3; b=5; h=3.5; goc=-110;}]
+					\path 
+						(0,0)  coordinate (A)
+						(a,0)  coordinate (B)
+						(goc:h) coordinate (D) 
+						($(D)+(b,0)$)  coordinate (C);
+					\draw  (A)--(B)--(C)--(D)--cycle;
+					\foreach \t/\g in  {A/120,B/45,C/-30,D/210}{
+						\draw[fill=black] (\t) circle  (1pt) node[shift={(\g:9pt)},font=\scriptsize]{$ \t $};
+					} 
+				\end{tikzpicture}
+		\end{center}
+		\begin{itemchoice}
+			\itemch Ta  có $\left|\overrightarrow{AB}\right|<\left|\overrightarrow{CD}\right|$.
+			\itemch Ta có  $\overrightarrow{AD}$, $\overrightarrow{BC}$ không cùng hướng nên $\overrightarrow{AD} \neq \overrightarrow{BC}$.
+			\itemch Ta có  $\overrightarrow{AB}$, $\overrightarrow{DC}$ cùng hướng.
+			\itemch Vì $\left|\overrightarrow{BC}\right|=\left|\overrightarrow{AD}\right|$ nên hình thang $ABCD$ là  hình thang cân suy ra $\left|\overrightarrow{AC}\right|=\left|\overrightarrow{BD}\right|$.
+		\end{itemchoice}
+	} 
+\end{ex}
+
+% nguồn: MaHoaNH_DungSai_Lop10
+\begin{ex}%[0H5H1-5]%[ma:83b18b5e]
+	Cho hình thoi $ABCD$ có  cạnh $a$, $\widehat{ABC}=60^{\circ}$. Gọi $O$ là giao điểm của $AC$, $BD$.
+	 \choiceTF
+		{\True Vectơ-không có điểm đầu là $A$ thì nó có điểm cuối là $A$} 
+		{\True Độ dài  của $\overrightarrow{AC}$ bằng $a$}
+		{$\overrightarrow{AB}$,  $\overrightarrow{DC}$ không cùng phương}
+		{$BD=2a$} 
+	\loigiai{ 
+		\begin{center}
+			\begin{tikzpicture}[declare function={a=5; b=3; }]
+					\path 
+						 (90:{0.5*b}) coordinate (A)
+						 (0:{0.5*a}) coordinate (D)
+						(270:{0.5*b})  coordinate (C)
+						(180:{0.5*a})  coordinate (B)
+						($(A)!.5!(C)$)  coordinate (O);
+					\draw  (A)--(B)--(C)--(D)--cycle (A)--(C)
+						(B)--(D); 
+					\foreach \t/\g in  {A/90,B/180,C/-90,D/0,O/-60}{
+						\draw[fill=black] (\t) circle (1pt)  node[shift={(\g:9pt)},font=\scriptsize]{$ \t $};
+					} 
+				\end{tikzpicture}
+		\end{center}
+		\begin{itemchoice}
+			\itemch Vectơ-không có điểm đầu là $A$ thì nó có điểm cuối là  $A$.
+			\itemch Ta có $\triangle ABC$ đều  nên $AC=a$.
+			\itemch $AB\parallel DC$  nên $\overrightarrow{AB}$, $\overrightarrow{DC}$ cùng phương.
+			\itemch $BD=2BO=2\cdot \dfrac{a  \sqrt{3}}{2}=a \sqrt{3}$.
+		\end{itemchoice}
+	} 
+\end{ex}
+
+
+%%%%%%%%%%%%%%%% TRẢ LỜI NGẮN %%%%%%%%%%%%%%%%
+
+% nguồn: MaHoaNH_TraLoiNgan_Lop10
+\begin{bt}%[0H5H1-5]%[ma:e743efe2]
+	Cho vectơ $\overrightarrow{AB}$ khác vectơ-không và điểm $C$ không nằm trên đường thẳng $AB$. Có bao nhiêu điểm $D$ thoả mãn $\left| \overrightarrow{CD} \right| = \left| \overrightarrow{AB} \right|$ và hai đường thẳng $AB$, $CD$  không cắt nhau.
+	 \shortans{2}
+	\loigiai{ 
+		Hai đường thẳng  $AB$, $CD$ không cắt nhau nên $D$ thuộc đường thẳng qua $C$ song song với $AB$, gọi là đường thẳng $\Delta$.\\
+		Lại có $\left| \overrightarrow{CD} \right| =  \left| \overrightarrow{AB} \right|$ nên $AB=CD$ hay $D$ thuộc đường tròn tâm $C$ bán kính $AB$, gọi là đường tròn $(C)$.\\
+		Đường thẳng $\Delta$ cắt đường tròn $(C)$ tại hai điểm nên có $2$ điểm $D$ thoả mãn. 
+	} 
+\end{bt}
+
+
+%%%%%%%%%%%%%%%% TỰ LUẬN %%%%%%%%%%%%%%%%
+
+% nguồn: MaHoaNH_TuLuan_Lop10
+\begin{bt}%[0H5H1-5]%[ma:0423681b]
+	Cho hình  vuông $ABCD$ cạnh $2$ có $M$ là trung điểm $AB$, $N$ là điểm đối xứng với $D$ qua $C$. Tính độ dài vectơ $\overrightarrow{MN}$ (làm tròn đến chữ số thập phân thứ hai sau dấu phẩy).
+	\loigiai{ 
+	 \immini
+		{ 
+		Gọi $E$ là trung điểm cạnh $CD$.  \\
+		Khi đó  $ME\perp CD$ và $MN = AD = 2$, $EN = \dfrac{3}{2}CD = 3$.\\
+		Suy ra $\left| \overrightarrow{MN}  \right| = MN = \sqrt{ME^2 + EN^2} = \sqrt{13} \approx 3{,}61$.
+		} 
+		 {
+		\begin{tikzpicture}[line join=round,line cap = round,>=stealth,scale=.8,font=\footnotesize,transform shape]
+				 \foreach \x/\y/\z/\g in
+					 {
+					 0/2/A/135,2/2/B/45,2/0/C/-90,0/0/D/-135,4/0/N/-45,1/0/E/-90,1/2/M/90
+				} 
+				\draw[fill=black] (\x,\y)  circle (1pt) coordinate (\z)
+					 ($(\z)+(\g:3.5mm)$) node{$\z$};
+				 \draw (E)--(M)--(N)--(D)--(A)--(B)--(C);
+			\end{tikzpicture}
+		 }
+	} 
+\end{bt}
+
+% nguồn: MaHoaNH_TuLuan_Lop10
+\begin{bt}%[0H5H1-5]%[ma:035fbc6e]
+	Cho hình thoi $ABCD$ có $\widehat{BAD} = 60^\circ$ và $AB = 2\sqrt{3}$. Tính độ dài  của vectơ $\overrightarrow{AC}$.
+	 \loigiai{
+	\immini 
+		{ 
+		Gọi $O$ là giao điểm của $AC$ và $BD$. Khi đó do $ABCD$ là hình thoi nên $AO\perp BD$  và $AC = 2AO$.\\
+		Do $AB = AD$  và $\widehat{BAD} = 60^\circ$ nên $BAD$ là tam giác đều cạnh $2\sqrt{3}$.\\
+		Suy ra  $AO = 2\sqrt{3} \cdot \sin 60^\circ = 3$.\\
+		Vậy  $\left| \overrightarrow{AC} \right| = AC = 2AO = 6$.
+		 }
+		 {
+		\begin{tikzpicture}[line join=round,line cap = round,>=stealth,scale=.8,font=\footnotesize,transform shape]
+				\foreach \x/\y/\z/\g in 
+					{ 
+					 0/0/O/-45,-3.5/0/A/180,0/2/B/90,3.5/0/C/0,0/-2/D/-90
+				} 
+				 \draw[fill=black] (\x,\y) circle (1pt) coordinate (\z)
+					 ($(\z)+(\g:3.5mm)$) node{$\z$};
+				\draw (A)--(B)--(C)--(D)--(A)--(C) 
+					 (B)--(D);
+			\end{tikzpicture}
+		} 
+	 }
+\end{bt}
+
+% nguồn: MaHoaNH_TuLuan_Lop10
+\begin{bt}%[0H5V1-5]%[ma:551961e4]
+	Cho tam giác $ABC$  nhọn có trực tâm $H$, trọng tâm $G$ và tâm đường tròn ngoại tiếp $O$. Gọi $M$ là trung điểm $BC$. Chứng minh rằng
+	\begin{enumerate}[\bf a)]
+		\item $\left| \overrightarrow{AH}  \right| = 2\left| \overrightarrow{MO}\right|$.
+		 \item Chứng minh $3$ điểm $H$, $G$, $O$ thẳng hàng.
+	\end{enumerate}
+	\loigiai{ 
+		\begin{center}
+			\begin{tikzpicture}[line join=round,line cap = round,>=stealth,scale=.8,font=\footnotesize,transform shape]
+					 \foreach \x/\y/\z/\g in
+						 {
+						0/0/O/170,-2/3/A/90,3/-2/C/-45,-3/-2/B/-135,0/-2/M/-135,2/-3/D/-90,-2/-1/H/135 
+					 }
+					\draw[fill=black] (\x,\y)  circle (1pt) coordinate (\z)
+						($(\z)+(\g:3.5mm)$) node{$\z$}; 
+					\pgfmathsetmacro\rr{sqrt (13)} 
+					\draw [fill=black] (intersection of H--O and A--M) circle (1pt) node[left]{$G$}; 
+					\draw (A)--(B)--(D)--(C)--(A)--(H)--(D)--(A) 
+						 (H)--(B)--(C)--(H)
+						 (H)--(O)--(M)--(A);
+					\draw (O)  circle (\rr);
+				\end{tikzpicture}
+		\end{center}
+		\begin{enumerate}[\bf a)]
+			\item Gọi $D$  là điểm đối xứng với $A$ qua $O$.\\
+			Do $AD$ là đường kính của đường tròn $(O)$ nên $\widehat{ABD} = \widehat{ACD} = 90^\circ$.\\ 
+			Suy ra $BD\parallel  CH$, $CD\parallel BH$ hay $BDCH$ là hình bình hành.\\
+			Kết hợp với $M$ là trung điểm $BC$ ta thu được $M$ là  trung điểm $DH$.\\
+			Do đó $OM$ là đường trung bình của tam giác $ADH$  nên $AH =2OM$ hay $\left| \overrightarrow{AH} \right| = AH = 2OM = 2\left| \overrightarrow{MO}\right|$.
+			\item 
+			Vì $G$ là trọng tâm tam giác $ABC$  nên $AG=\dfrac{2}{3}AM$.\\
+			Xét $\triangle AHD$ có $M$ là trung điểm của $HD$ và $AG=\dfrac{2}{3}AM$ nên $G$ là trọng tâm $\triangle AHD$.\\ 
+			Mặt khác $O$ là trung điểm của $AD$ nên suy ra  ba điểm $H$, $G$, $O$ thẳng hàng.
+		\end{enumerate}
+	} 
+\end{bt}

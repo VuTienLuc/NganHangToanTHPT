@@ -1,0 +1,1839 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Lớp 11 | Đường thẳng, mặt phẳng. Quan hệ song song trong | Điểm, đường thẳng và mặt phẳng
+% Dạng 1H4?1-5: Xác định thiết diện
+% Số câu: 35  (sinh tự động bởi tach_cau.py; từ nay thầy sửa trực tiếp file này)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%% TRẮC NGHIỆM 4 PHƯƠNG ÁN %%%%%%%%%%%%%%%%
+
+% nguồn: Ok_Toan11_TracNghiem_Lan2
+\begin{ex}%[1H4H1-5]%[ma:1140ab20]
+	Cho hình chóp $S.ABCD$ có đáy $ABCD$ là hình bình hành, $E$ là trung điểm của $SA$, $F$, $G$ lần lượt là các điểm  thuộc cạnh $BC$, $CD$ $(CF<FB,\ GC<GD)$. Thiết diện của hình chóp cắt bởi mặt phẳng $(EFG)$ là
+	 \choice
+		{Tam  giác}
+		{Tứ giác} 
+		{\True  Ngũ giác}
+		 {Lục giác}
+	\loigiai{ 
+		\begin{center}
+			\begin{tikzpicture}[scale=0.9,font=\footnotesize,line join=round,line cap=round,>=stealth]
+					 \def\h{3}
+					\path (0,0) coordinate (A)--(4,0) coordinate (D)--(-1.5,-1.5)  coordinate (B)--($(B)+(D)-(A)$) coordinate (C)--($(A)+(1,\h)$) coordinate (S);
+					\coordinate  (E) at ($(S)!0.5!(A)$);
+					\coordinate (F) at  ($(C)!0.3!(B)$);
+					 \coordinate (G) at ($(C)!0.3!(D)$);
+					\coordinate (I)  at (intersection of A--B and F--G);
+					\coordinate (K)  at (intersection of A--D and F--G);
+					\coordinate  (J) at (intersection of K--E and S--D);
+					\coordinate (H) at (intersection of E--I and  S--B);
+					\fill[pattern=north  east lines,opacity=0.5] (E)--(J)--(G)--(F)--(H)--cycle;
+					 \draw (S)--(C)
+						(I)--(H)--(F)--cycle  (J)--(G)--(K)--cycle (F)--(C)--(G)
+						(H)--(S)--(J); 
+					 \draw[dashed] (S)--(A)--(D)
+						 (A)--(B)
+						 (H)--(E)--(J)
+						(J)--(D)--(G)--(F) 
+						 (I)--(B)--(F)
+						(H)--(B) 
+						 (D)--(K);
+					\foreach \x/\g  in {S/90,A/150,D/30,C/-90,B/-90,E/30,F/-90,G/-60,H/180,J/50,I/220,K/0}\fill (\x) circle (1pt)+(\g:0.25) node{$\x$};
+				\end{tikzpicture}
+		\end{center}
+		Trong $(ABCD)$, gọi $I=FG\cap AB;K=FG\cap AD$.\\ 
+		Trong $(SAB)$, gọi $H=IE\cap SB$.\\ 
+		Trong $(SAD)$, gọi  $J=EK\cap SD$.\\
+		$(EFG)\cap(ABCD)=FG$, $(EFG)\cap(SCD)=JG$,  $(EFG)\cap(SAD)=JE$, $(EFG)\cap(SAB)=HE$, $(EFG)\cap(SBC)=HF$.\\
+		Do đó thiết diện là ngũ giác $EJGFH$. 
+	} 
+\end{ex}
+
+% nguồn: Ok_Toan11_TracNghiem_Lan2
+\begin{ex}%[1H4H1-5]%[ma:b9db1ceb]
+	Cho hình lập phương $ABCD.A'B'C'D'$.  Gọi $I$ là trung điểm của $A'B'$. Mặt phẳng $\left(IBD\right)$ cắt hình hộp theo thiết diện là hình gì?
+	\begin{center}
+		\begin{tikzpicture}[scale=0.8,font=\footnotesize,line join=round,line cap=round,>=stealth]
+				\coordinate (B) at (0,0); 
+				 \coordinate (A) at (-2,-2);
+				\coordinate  (C) at (6,0);
+				\coordinate (D) at ($(A)+(C)-(B)$); 
+				\foreach \i in {A,B,C,D}{\coordinate (\i') at  ($(\i)-(0,4)$);}
+				\coordinate (I)  at ($(A')!0.5!(B')$);
+				\coordinate (J) at ($(A')!0.5!(D')$); 
+				 \draw (A)--(B)--(C)--(D)--cycle;
+				\draw (A)--(A') 
+					(C)--(C') 
+					(D)--(D') 
+					 (A')--(D')--(C')
+					 (J)--(D)--(B);
+				\draw[dashed,thin]  (B)--(B')--(A')
+					(B')--(C') 
+					(B)--(I)--(J) 
+					(I)--(D); 
+				\foreach \i/\g  in {A'/170,B'/170,C'/-90,D'/-90,A/90,B/90,C/-20,D/10,I/150,J/120}{\draw[fill=blue](\i) circle (1pt)
+					($(\i)+(\g:5mm)$) node[scale=1]{$\i$};} 
+			\end{tikzpicture}
+	\end{center}
+	\choice 
+		{\True  Hình thang}
+		{Hình chữ nhật} 
+		{Tam  giác}
+		{Hình  bình hành}
+	\loigiai{ 
+		Gọi $J=A'D'\cap \left(IBD\right)$. Ta có thiết diện của mặt phẳng $\left(IBD\right)$ và hình hộp là  tứ giác $IJDB$.\\
+		Mặt khác $\heva{\left(ABCD\right) \parallel \left(A'B'C'D'\right)\\ \left(IBD\right)\cap \left(A'B'C'D'\right)=IJ \\ \left(IBD\right)\cap \left(ABCD\right)=BD}$ $\Rightarrow IJ \parallel BD\Rightarrow IJDB$  là hình thang.
+	 }
+\end{ex}
+
+% nguồn: Ok_Toan11_TracNghiem_Lan2
+\begin{ex}%[1H4H1-5]%[ma:42e1422e]
+	Cho hình chóp $S.ABCD$ có đáy $ABCD$  là một hình bình hành tâm $O$. Gọi $M$, $N$, $P$ là ba điểm trên các cạnh $AD$, $CD$, $SO$. Thiết diện của hình chóp với mặt phẳng $(MNP)$ là hình gì?
+	 \choice
+		 {\True Ngũ giác}
+		{Tứ giác} 
+		{Hình  thang}
+		{Hình  bình hành}
+	\loigiai{ 
+		\begin{center}
+			\begin{tikzpicture}[scale=1,font=\footnotesize,line join=round,line cap=round,>=stealth]
+					\def\h{3} 
+					\path (0,0) coordinate (A)--(4,0) coordinate (B)--(-1.5,-1.5)  coordinate (D)--($(D)+(B)-(A)$) coordinate (C)--($(A)+(1,\h)$) coordinate (S);
+					 \coordinate (O) at ($(A)!0.5!(C)$);
+					 \coordinate (M) at ($(A)!0.4!(D)$);
+					 \coordinate (N) at ($(C)!0.3!(D)$);
+					\coordinate (P) at ($(S)!0.6!(O)$); 
+					 \coordinate (E) at (intersection of A--B and M--N);
+					 \coordinate (F) at (intersection of M--N and B--C);
+					\coordinate (K) at (intersection of M--N  and B--D);
+					\coordinate (H) at (intersection  of K--P and S--B);
+					\coordinate (T) at (intersection of E--H and S--A); 
+					\coordinate (R) at (intersection of F--H and S--C); 
+					\coordinate (X) at (intersection of  E--H and S--D);
+					\coordinate (Y) at (intersection of E--N and S--D); 
+					\fill[cyan,opacity=0.5]  (M)--(N)--(R)--(H)--(T)--cycle;
+					\draw  (S)--(D)--(N)
+						(C)--(B)--(S)--cycle  (S)--(C)
+						 (H)--(F)--(C)
+						(R)--(N)--(F) 
+						(E)--(X) 
+						(E)--(Y); 
+					\draw[dashed]  (N)--(C)
+						(S)--(A)--(D) 
+						 (C)--(A)--(B)--(D)
+						 (S)--(O)
+						 (N)--(E)
+						(T)--(M) 
+						(H)--(K) 
+						(A)--(E)--(H); 
+					\foreach \x/\g in {S/90,A/-90,B/30,C/-60,D/-90,O/-90,M/-80,N/-110,P/0,E/180,F/-90,K/-90,H/60,T/-30,R/20}\fill  (\x) circle (1pt)+(\g:0.25) node{$\x$};
+				\end{tikzpicture}
+		\end{center}
+		Trong mặt phẳng  $(ABCD)$ gọi $E$, $K$, $F$ lần lượt là giao điểm của $MN$ với $DA$, $DB$, $DC$.\\
+		Trong  mặt phẳng $(SDB)$ gọi $H=KP\cap SB$.\\
+		Trong mặt  phẳng $(SAB)$ gọi $T=EH\cap SA$.\\
+		Trong mặt phẳng $(SBC)$ gọi $R=FH\cap SC$.\\ 
+		Ta có $\heva{&E\in MN\\&H\in  KP}\Rightarrow EH\subset(MNP)$, $\heva{&T\in SA\\&T\in EH\subset(MNP)}\Rightarrow T=SA\cap(MNP)$.\\
+		Lí luận tương tự ta có  $R=SC\cap(MNP)$.\\
+	Thiết diện là ngũ giác $MNRHT$.} 
+\end{ex}
+
+% nguồn: Ok_Toan11_TracNghiem_Lan2
+\begin{ex}%[1H4H1-5]%[ma:52185930]
+	Cho hình chóp tứ giác $S.ABCD$, có đáy là hình thang với $AD$ là đáy lớn và $P$ là một điểm trên cạnh $SD$. Thiết diện của hình chóp cắt  bởi mặt phẳng $(PAB)$ là hình gì?
+	 \choice
+		{Tam  giác}
+		 {\True Tứ giác}
+		 {Hình thang}
+		{Hình bình  hành}
+	 \loigiai{
+	\immini 
+		{ 
+		Trong mặt phẳng  $(ABCD)$, gọi $E=AB\cap CD$.\\
+		Trong mặt phẳng $(SCD)$ gọi $Q=SC\cap  EP$.\\
+		Ta có $E\in  AB$ nên $EP\subset(ABP)\Rightarrow Q\in(ABP)$, do đó $Q=SC\cap(ABP)$.\\
+		Thiết diện là tứ giác $ABQP$. 
+		} 
+		 {
+		\begin{tikzpicture}[scale=0.8,font=\footnotesize,line join=round,line cap=round,>=stealth]
+				 \def\h{3}
+				\path (0,0) coordinate  (A)--(4,0) coordinate (D)--(1.5,-1.5) coordinate (B)--(3.2,-1.5) coordinate (C)--($(A)+(2,\h)$) coordinate (S);
+				\coordinate  (P) at ($(S)!1/3!(D)$);
+				\coordinate (E) at (intersection  of A--B and C--D);
+				\coordinate (Q) at (intersection of  P--E and S--C);
+				\fill[pattern=north east lines,opacity=0.5] (A)--(P)--(Q)--(B)--cycle; 
+				\draw  (S)--(A)--(B)--cycle (S)--(C)--(D)--cycle (B)--(S)--(C)
+					(B)--(E)--(C) 
+					 (P)--(Q)--(B)
+					 (Q)--(E);
+				\draw[dashed]  (P)--(A)--(D)
+					(C)--(B); 
+				\foreach \x/\g in {S/90,A/150,D/30,C/-60,B/-120,E/-90,P/60,Q/-10}\fill (\x) circle (1pt)+(\g:0.25)  node{$\x$};
+			\end{tikzpicture}
+		} 
+	} 
+\end{ex}
+
+% nguồn: Ok_Toan11_TracNghiem_Lan2
+\begin{ex}%[1H4H1-5]%[ma:72efd2d1]
+	Cho hình chóp tứ giác $S.ABCD$, có đáy là hình thang với $AD$ là đáy lớn và $P$ là một điểm trên cạnh $SD$. Gọi $M$, $N$ lần lượt là trung điểm của các cạnh $AB$, $BC$. Thiết diện của hình  chóp cắt bởi $(MNP)$ là hình gì?
+	\choice 
+		{\True  Ngũ giác}
+		{Tứ  giác}
+		{Hình thang} 
+		{Hình bình hành} 
+	\loigiai{ 
+		Trong mặt phẳng $(ABCD)$ gọi $F$, $G$ lần lượt là các giao điểm của $MN$  với $AD$ và $CD$
+		\begin{center}
+			\begin{tikzpicture}[scale=1,font=\footnotesize,line join=round,line cap=round,>=stealth]
+					 \def\h{3}
+					\path (0,0) coordinate  (A)--(4,0) coordinate (D)--(1.5,-1.5) coordinate (B)--(3.2,-1.5) coordinate (C)--($(A)+(2,\h)$) coordinate (S);
+					\coordinate  (P) at ($(S)!1/3!(D)$);
+					\coordinate (M) at  ($(A)!0.5!(B)$);
+					\coordinate (N) at  ($(B)!0.5!(C)$);
+					\coordinate (G) at (intersection of M--N and  C--D);
+					\coordinate (K) at (intersection of P--G and  S--C);
+					 \coordinate (F) at (intersection of M--N and A--D);
+					\coordinate (H)  at (intersection of S--A and F--P);
+					\fill[pattern=north  east lines,opacity=0.5] (H)--(P)--(K)--(N)--(M)--cycle;
+					\draw  (S)--(H)
+						(M)--(B) 
+						(S)--(C)--(D)--cycle (B)--(S)--(C) 
+						 (N)--(G)--(C)
+						 (P)--(K)--(B)
+						(K)--(G) 
+						 (H)--(F)--(M)--cycle (K)--(N)--(B);
+					 \draw[dashed] (F)--(D)
+						 (C)--(N)
+						(P)--(H)--(A)--(M)--(N); 
+					\foreach \x/\g in {S/90,A/120,D/0,C/-60,B/-120,G/-120,P/60,K/-10,F/180,H/120,M/240,N/-90}\fill  (\x) circle (1pt)+(\g:0.25) node{$\x$};
+				\end{tikzpicture}
+		\end{center}
+		Trong mặt phẳng $(SAD)$ gọi $H=SA\cap FP$.\\ 
+		Trong mặt phẳng  $(SCD)$ gọi $K=SC\cap PG$.\\
+		Ta có $F\in  MN\Rightarrow F\in(MNP)$, $FP\subset(MNP)\Rightarrow H\in(MNP)$.\\
+		Vậy $\heva{&H\in SA\\&H\in(MNP)}\Rightarrow H=SA\cap(MNP)$.  Tương tự $K=SC\cap(MNP)$.\\
+		 Thiết diện là ngũ giác $MNKPH$.
+	} 
+\end{ex}
+
+% nguồn: Ok_Toan11_TracNghiem_Lan2
+\begin{ex}%[1H4H1-5]%[ma:8ac4404a]
+	Cho hình chóp $S.ABCD$ có đáy $ABCD$ là  hình thang với $AB\parallel CD$. Gọi $G_1$, $G_2$ lần lượt là trọng tâm các tam giác $SAD$ và $SBC$. Thiết diện tạo bởi mặt phẳng $(SG_1G_2)$ và hình chóp $S.ABCD$ là
+	 \choice
+		{Tam giác có một đỉnh là  $G_1$}
+		 {Tam giác có cạnh là $G_1G_2$}
+		{\True Tam giác có một đỉnh là $S$} 
+		{Tứ  giác}
+	 \loigiai{
+	\immini{Gọi $M$, $N$ lần lượt  là trung điểm của $AD$, $BC$.\\
+		Khi đó, dễ thấy rằng thiết diện tạo bởi mặt phẳng $(SG_1G_2)$ và hình chóp $S.ABCD$ là tam giác $SMN$.}{\begin{tikzpicture}[>=stealth,line join=round,line cap=round,font=\footnotesize,scale=.9]
+		\path 
+			(0,0) coordinate (A)+(0:3) coordinate (B) 
+			++(120:2) coordinate (D)+(0:6) coordinate (C) 
+			+(50:4) coordinate (S) 
+			($(A)!.5!(D)$) coordinate  (M)
+			 ($(S)!2/3!(M)$) coordinate (G_1)
+			 ($(B)!.5!(C)$) coordinate (N)
+			($(S)!2/3!(N)$) coordinate (G_2); 
+		\draw (S)--(D)--(A)--(B)--(C)--cycle (S)--(A) 
+			(S)--(B) 
+			(M)--(S)--(N); 
+		 \draw[dashed] (C)--(D)
+			 (G_1)--(G_2)
+			(M)--(N); 
+		 \foreach \x/\g in {A/-120,B/-90,C/0,D/180,S/90,M/210,N/-30,G_1/180,G_2/0} \fill (\x) circle (0.04)+(\g:3mm) node[scale=0.8]{$\x$};
+	\end{tikzpicture}
+	}  }
+\end{ex}
+
+% nguồn: Ok_Toan11_TracNghiem_Lan2
+\begin{ex}%[1H4H1-5]%[ma:92dbaf3a]
+	Cho hình hộp $ABCD.A'B'C'D'$. Gọi $I$ là trung  điểm của $AB$. Mặt phẳng $\left(IB'D'\right)$ cắt hình hộp theo thiết diện là
+	\begin{center}
+		\begin{tikzpicture}[scale=0.8,font=\footnotesize,line join=round,line cap=round,>=stealth]
+				\coordinate (B) at (0,0); 
+				\coordinate (A) at  (-2,-2);
+				\coordinate (C) at  (6,0);
+				\coordinate  (D) at ($(A)+(C)-(B)$);
+				\foreach  \i in {A,B,C,D}{\coordinate (\i') at ($(\i)-(0,4)$);}
+				\coordinate (I)  at ($(A)!0.5!(B)$);
+				\coordinate (E)  at ($(A)!0.5!(D)$);
+				\draw  (A)--(B)--(C)--(D)--cycle;
+				 \draw (A)--(A')
+					(C)--(C') 
+					 (D)--(D')
+					(A')--(D')--(C') 
+					(I)--(E)--(D') 
+					 (B)--(D);
+				\draw[dashed,thin]  (B)--(B')--(A')
+					 (B')--(C')
+					(I)--(B')--(D'); 
+				\foreach \i/\g in {A'/170,B'/170,C'/-90,D'/-90,A/90,B/90,C/-20,D/10,I/150,E/120}{\draw[fill=blue](\i)  circle (1pt)
+					($(\i)+(\g:5mm)$) node[scale=1]{$\i$};} 
+			\end{tikzpicture}
+	\end{center}
+	 \choice
+		{Tam giác} 
+		{Hình bình  hành}
+		{Hình chữ nhật} 
+		 {\True Hình thang}
+	 \loigiai{
+		Ta có $\heva{B'D'\subset \left(IB'D'\right) \\ BD\subset \left(ABCD\right) \\ BD \parallel B'D'}$ nên giao tuyến của $\left(IB'D'\right)$ với $\left(ABCD\right)$ là đường thẳng $IE$ qua $I$ và  song song với $BD\left(E\in AD\right)$.\\
+		Vì $IE \parallel B'D'$ nên thiết diện  là hình thang $IED'B'$.
+	} 
+\end{ex}
+
+% nguồn: Ok_Toan11_TracNghiem_Lan2
+\begin{ex}%[1H4H1-5]%[ma:9eeaf4ee]
+	Cho tứ diện $ABCD$. Gọi $H$, $K$ lần lượt là trung điểm các cạnh $AB$, $BC$. Trên đường thẳng $CD$ lấy điểm $M$ nằm ngoài đoạn $CD$. Thiết diện của tứ diện với mặt phẳng $(HKM)$ là 
+	\choice{Tứ giác $HKMN$ với $N\in AD$} 
+		{Hình thang $HKMN$ với $N\in AD$ và $HK\parallel MN$} 
+		{\True Tam giác $HKL$  với $L=KM\cap BD$}
+		{Tam giác $HKL$ với  $L=HM\cap AD$}
+	\loigiai{ 
+		\begin{center}
+			\begin{tikzpicture}[scale=1,font=\footnotesize,line join=round,line cap=round,>=stealth]
+					\def\a{4} 
+					 \path (0:0) coordinate (B)
+						++(0:4) coordinate  (D)
+						++(-130:3) coordinate  (C)
+						($(B)+(70:\a)$) coordinate  (A);
+					 \coordinate (H) at ($(A)!0.5!(B)$);
+					\coordinate (K) at  ($(B)!0.5!(C)$);
+					 \coordinate (L) at ($(D)!0.25!(B)$);
+					 \coordinate (M) at (intersection of D--C and K--L);
+					\coordinate (X)  at (intersection of A--D and L--M);
+					 \draw[dashed] (H)--(L)
+						(B)--(D) 
+						 (K)--(X)
+						(M)--(X); 
+					 \draw (M)--(D)
+						(H)--(K) 
+						(M)--(X) 
+						 (B)--(A)--(D)
+						 (A)--(C)
+						 (B)--(C)--(D);
+					\filldraw [green!20,opacity=0.5]  (H)--(K)--(L)--cycle;
+					\foreach \x/\g in  {A/90,B/180,C/-45,D/0,K/-90,L/-90,H/180,M/-30}
+					 \fill (\x) circle (1pt)
+						 ($(\g:3mm)+(\x)$) node {$\x$};
+				\end{tikzpicture}
+		\end{center}
+		Ta có $H K, K M$ là đoạn giao  tuyến của $(H K M)$ với $(A B C)$ và $(B C D)$.\\
+		Trong mặt phẳng $(B C D)$, do $K M$ không song song với $B D$ nên  gọi $L=K M \cap B D$.\\
+	Vậy thiết diện là tam  giác $H K L$.}
+\end{ex}
+
+% nguồn: Ok_TracNghiemLop11_Lan1
+\begin{ex}%[1H4H1-5]%[ma:576ec99f]
+	Cho tứ diện đều $ABCD$ cạnh $a$, gọi $G$ là trọng tâm tam giác $AB$  cắt tứ diện bởi mặt phẳng $(GCD)$ được thiết diện có diện tích là:
+	 \choice
+		{$\dfrac{a^2\sqrt 3}{4}$} 
+		{$\dfrac{a^2\sqrt 2}{2}$} 
+		{$\dfrac{a^2\sqrt 2}{6}$} 
+		 {\True $\dfrac{a^2\sqrt 2}{4}$}
+	\loigiai{ 
+		\begin{center}
+			\begin{tikzpicture}[scale=1,font=\footnotesize,line join=round,line cap=round,>=stealth]
+					 \path
+						(-2,0) coordinate (D) 
+						 (-1,-2.5) coordinate (C)
+						(3,0)  coordinate (B)
+						($(B)!0.5!(C)$)  coordinate (N)
+						 ($(D)!2/3!(N)$) coordinate (O)
+						 ($(O)+(0,5)$) coordinate (A)
+						($(A)!0.5!(B)$)  coordinate (M);
+					\coordinate (G) at  (intersection of A--N and C--M);
+					 \draw (A)--(B)
+						(A)--(C) 
+						(A)--(D) 
+						 (A)--(N)
+						(M)--(C) 
+						(B)--(C)--(D); 
+					\draw[dashed]  (B)--(D)
+						 (D)--(N)
+						 (A)--(O)
+						(D)--(M); 
+					\foreach \x/\g in {A/90,B/0,C/-90,D/180,O/30,M/30,G/0} \draw[fill](\x) circle  (.5pt)
+						($(\x)+(\g:3mm)$) node[scale=1]{$\x$}; 
+				\end{tikzpicture}
+		\end{center}
+		Gọi $M$ là trung điểm của $AB$.\\ 
+		Khi đó thiết diện cắt bởi  $(GCD)$ là tam giác $CDM$.\\
+		Ta có $\triangle  CDM$ cân tại $M$ và $MD=MC=\dfrac{a\sqrt{3}}{2}$; $CD=a$.\\
+		Gọi $N$ là  trung điểm $CD$, tính được $MN=\sqrt{\left(\dfrac{\sqrt{3}a}{2}\right)^2-\left(\dfrac{a}{2}\right)^2}=\dfrac{a\sqrt{2}}{2}$.\\
+		Vậy $S_{\triangle CDM}=\dfrac{a^2\sqrt{2}}{4}$. 
+	} 
+\end{ex}
+
+% nguồn: Ok_TracNghiemLop11_Lan1
+\begin{ex}%[1H4H1-5]%[ma:e5e48681]
+	Cho tứ diện  $ABCD$ có $M$, $N$ lần lượt là trung điểm của $AB$, $CD$ và $P$ là một điểm thuộc cạnh $ BC$ ($P$ không là trung điểm của $BC$). Thiết diện của tứ diện bị cắt bởi mặt phẳng $(MNP)$ là
+	\choice 
+		{\True Tứ  giác}
+		{Ngũ  giác}
+		{Lục  giác}
+		{Tam giác} 
+	\loigiai{ 
+		\begin{center}
+			\begin{tikzpicture}[scale=0.8,font=\footnotesize,line join=round,line cap=round]
+					\coordinate  (A) at (0,4);
+					\coordinate  (B) at (-2.5,0);
+					\coordinate (C)  at (1,-2.5);
+					\coordinate (D) at  (3,0);
+					\coordinate (M)  at ($(A)!0.5!(B)$);
+					\coordinate (N)  at ($(C)!0.5!(D)$);
+					 \coordinate (P) at ($(B)!0.3!(C)$);
+					\coordinate (Q) at (intersection of  P--N and B--D);
+					\coordinate (R) at  (intersection of Q--M and A--D);
+					\draw  (A)--(M)--(P)--(C)--(D)--(A)--(C)
+						 (P)--(Q)--(M)
+						(R)--(N); 
+					\draw[dashed]  (Q)--(D)
+						 (P)--(B)--(M)--(N)--(P)
+						 (M)--(R);
+					\foreach \i/\g in  {A/90,B/-90,C/-90,D/0,P/-90,Q/-180,N/-60,M/120,R/20}{\draw[fill](\i) circle (1pt)
+						($(\i)+(\g:3mm)$) node  {$\i$};}
+				\end{tikzpicture}
+		\end{center}
+		Gọi $ Q=NP\cap BD$. Gọi $ R=QM\cap AD$. Suy ra $P$, $Q\in (MNP)$.\\ 
+	Vậy thiết diện của tứ diện  bị cắt bởi mặt phẳng $(MNP)$ là tứ giác $MRNP$.}
+\end{ex}
+
+% nguồn: Ok_Toan11_TracNghiem_Lan2
+\begin{ex}%[1H4V1-5]%[ma:428df64f]
+	Cho tứ diện đều $ABCD$ có cạnh bằng $a$. Gọi $G$ là trọng tâm tam giác $ABC$. Mặt phẳng $(GCD)$ cắt tứ diện theo  một thiết diện có diện tích là
+	 \choice
+		{$\dfrac{a^2\sqrt{3}}{2}$} 
+		 {\True $\dfrac{a^2\sqrt{2}}{4}$}
+		{$\dfrac{a^2\sqrt{2}}{6}$} 
+		 {$\dfrac{a^2\sqrt{3}}{4}$}
+	\loigiai{ 
+	\immini{ 
+		Gọi $M$, $N$ lần lượt là trung điểm của $AB$, $BC$  suy ra $AN\cap MC=G$.\\
+		Dễ thấy mặt  phẳng $(GCD)$ cắt đường thẳng $AB$ tại điểm $M$.\\
+		Suy ra $\triangle  MCD$ là thiết diện của mặt phẳng $(GCD)$ và tứ diện $ABCD$.\\
+		Tam giác $ABD$ đều, có $M$ là trung điểm $AB$  suy ra $MD=\dfrac{a\sqrt{3}}{2}$.\\
+		Tam giác $ABC$  đều, có $M$ là trung điểm $AB$ suy ra $MC=\dfrac{a\sqrt{3}}{2}$.\\
+		Gọi $H$ là trung  điểm của $CD\Rightarrow MH\perp CD\Rightarrow S_{\triangle MCD}=\dfrac{1}{2}\cdot MH\cdot CD$.\\
+		Với $MH=\sqrt{MC^2-HC^2}=\sqrt{MC^2-\dfrac{CD^2}{4}}=\dfrac{a\sqrt{2}}{2}$.\\ 
+		Vậy $S_{\triangle MCD}=\dfrac{1}{2}\cdot\dfrac{a\sqrt{2}}{2}\cdot a=\dfrac{a^2\sqrt{2}}{4}$.} 
+		{ 
+		\begin{tikzpicture}[scale=0.7,font=\footnotesize,line join=round,line cap=round,>=stealth]
+				\path (0,0) coordinate  (B)
+					(2,-2) coordinate  (C)
+					(6,0)  coordinate (D)
+					(2,5)  coordinate (A);
+				\coordinate (H) at ($(D)!1/2!(C)$); 
+				\coordinate (M) at ($(A)!1/2!(B)$); 
+				\coordinate (N)  at ($(C)!1/2!(B)$);
+				 \coordinate (G) at ($(A)!2/3!(N)$);
+				\fill[pattern=north east lines]  (G)--(C)--(D)--cycle;
+				\draw[dashed](B)--(D) 
+					(M)--(H) 
+					 (M)--(D);
+				\draw (A)--(B) 
+					 (A)--(C)
+					(A)--(D) 
+					(B)--(C) 
+					(C)--(D) 
+					 (N)--(A)
+					 (M)--(C);
+				\foreach  \d/\g in {A/90,B/180,C/-90,D/0,M/180,N/-120,H/-90,G/180}
+				\draw[fill=black] (\d)  circle (1pt)+(\g:3mm) node{$\d$};
+			\end{tikzpicture}
+		 }
+	} 
+\end{ex}
+
+% nguồn: Ok_Toan11_TracNghiem_Lan2
+\begin{ex}%[1H4V1-5]%[ma:e8b4136b]
+	Cho tứ diện đều $ABCD$ có độ dài các cạnh bằng $2a$. Gọi $M$, $N$ lần lượt là trung điểm các cạnh $AC$, $BC$; $P$ là trọng tâm tam giác $BCD$. Mặt phẳng $(MNP)$ cắt tứ  diện theo một thiết diện có diện tích là
+	\choice 
+		 {$\dfrac{a^2\sqrt{11}}{2}$}
+		 {$\dfrac{a^2\sqrt{2}}{4}$}
+		{\True  $\dfrac{a^2\sqrt{11}}{4}$}
+		 {$\dfrac{a^2\sqrt{3}}{4}$}
+	\loigiai{ 
+		\begin{center}
+			\begin{tikzpicture}[scale=0.8,line cap=round,line join=round,font=\footnotesize]
+					\tikzset{label style/.style={font=\footnotesize}} 
+					\path (0,0) coordinate  (B)
+						 (2,-2) coordinate (C)
+						(6,0) coordinate (D) 
+						(2,5) coordinate  (A);
+					\coordinate (M)  at ($(A)!1/2!(C)$);
+					\coordinate  (N) at ($(C)!1/2!(B)$);
+					 \coordinate (P) at ($(D)!2/3!(N)$);
+					\coordinate  (I) at ($(D)!1/2!(C)$);
+					 \draw[color=green,fill opacity = 0.5,pattern =north west lines] (M)--(N)--(D)--cycle;
+					\draw (A)--(B)--(C)--(D)--(A)--(C) 
+						 (D)--(M)--(N);
+					\draw[dashed]  (B)--(I)
+						 (B)--(D)--(N);
+					 \foreach \d/\g in{A/90,B/180,C/-90,D/0,P/-90,N/-120,M/30}
+					\draw[fill=black] (\d) circle  (1pt) +(\g:4mm) node{$\d$};
+				\end{tikzpicture}
+		\end{center}
+		\noindent 
+		Trong tam giác $BCD$ ta có $P$ là trọng tâm, $N$ là trung điểm $BC$. Suy ra $N$,  $P$, $D$ thẳng hàng.\\
+		Vậy thiết diện là tam giác $MND$.\\ 
+		Xét tam giác $MND$, ta  có $MN=\dfrac{AB}{2}=a$; $DM=DN=\dfrac{AD\sqrt{3}}{2}=a\sqrt{3}$.\\
+		Do đó tam giác  $MND$ cân tại $D$. Gọi $H$ là trung điểm $MN$ suy ra $DH\perp MN$.\\
+		Diện tích tam giác $S_{\triangle MND}=\dfrac{1}{2}MN\cdot DH=\dfrac{1}{2}MN\cdot\sqrt{DM^2-MH^2}=\dfrac{a^2\sqrt{11}}{4}$. 
+	} 
+\end{ex}
+
+
+%%%%%%%%%%%%%%%% ĐÚNG/SAI %%%%%%%%%%%%%%%%
+
+% nguồn: Ok_dungsai_lop11_Lan1
+\begin{ex}%[1H4N1-5]%[ma:fcc50684]
+ Cho tứ diện $ABCD$ đều cạnh $a$. Gọi $G$ là trọng tâm  tam giác $ABC$.
+ \choiceTF 
+  {\True Mặt phẳng $\left(CGD\right)$ cắt $AB$ tại  điểm $I$ là trung điểm đoạn thẳng $AB$}
+  {\True Thiết diện tạo bởi mặt phẳng $\left(CGD\right)$ và hình chóp là  tam giác cân}
+  {Thiết diện tạo bởi mặt phẳng  $\left(CGD\right)$ và hình chóp có chu vi là $a\sqrt 2+a$}
+  {\True Thiết diện tạo  bởi mặt phẳng $\left(CGD\right)$ và hình chóp có diện tích là $\dfrac{a^2\sqrt 2}{4}$}
+  \loigiai{
+  \begin{center}
+   \begin{tikzpicture}[>=stealth,line join=round,line cap = round,scale=1,font=\footnotesize]
+     \def\ac{6} 
+     \def\ab{3} 
+     \def\h{4} 
+      \def\gocA{-60}
+      \path
+      (0,0)  coordinate (A)
+       (\gocA:\ab) coordinate (B)
+       (\ac,0) coordinate (C)
+      (2.2,\h) coordinate (D) 
+      ($(A)!1/2!(B)$)  coordinate (I)
+       ($(C)!2/3!(I)$) coordinate (G);
+     \coordinate[label=right:H] (H) at ($(D)!(I)!(C)$); 
+     \fill[blue!10] (D)--(I)--(C);  \path
+      pic[draw,angle radius=5]{right  angle=I--H--C};
+      \foreach \p/\q in {A/180,B/-90,C/0,D/90,I/-90,G/-90}
+     \fill[black]  (\p) circle (1.0pt) node[shift={(\q:3.5mm)}]{$\p$};
+     \draw (D)--(A)--(B)--(D)--(C)--(B) 
+      (D)--(I)--(H); 
+     \draw[dashed]  (A)--(C)--(I);
+    \end{tikzpicture}
+  \end{center}
+  \begin{itemchoice}
+   \itemch \textbf{Đúng}.  Trong $\left(ABC\right)$, gọi $I=GC\cap AB$.\\
+   $\Rightarrow\heva{ 
+    &I\in GC\Rightarrow I\in\left(CGD\right)\\
+    &I\in AB}
+    \Rightarrow I=AB\cap\left(CGD\right)$. \\
+   Do $G$ là trọng tâm tam giác $ABC\Rightarrow  I$ là trung điểm $AB$.
+   \itemch \textbf{Đúng}. $DI$, $CI$ là các trung tuyến của $2$ tam giác đều bằng nhau $\Rightarrow CI=DI\Rightarrow  \triangle CDI$ cân tại $I$.
+   \itemch \textbf{Sai}. Chu vi tam giác $CID$ là $CI+DI+CD=\dfrac{a\sqrt 3}{2}+\dfrac{a\sqrt 3}{2}+a=a\sqrt 3+a$. 
+   \itemch \textbf{Đúng}. Gọi $H$ là trung điểm $CD$ $\Rightarrow IH\perp  CD$\\
+    Ta có $IH=\sqrt{IC^2-CH^2}=\sqrt{\left(\dfrac{a\sqrt 3}{2}\right)^2-\left(\dfrac{a}{2}\right)^2}=\dfrac{a}{\sqrt 2}$.\\
+   Vậy diện  tích thiết diện là $S=\dfrac{1}{2}IH\cdot CD=\dfrac{1}{2}\cdot \dfrac{a}{\sqrt 2}\cdot a=\dfrac{a^2\sqrt 2}{4}$.
+  \end{itemchoice}
+  }
+\end{ex}
+
+% nguồn: Ok_dungsai_lop11_Lan1
+\begin{ex}%[1H4H1-5]%[ma:e1e66eda]
+ Cho hình chóp tứ giác $S.ABCD$ có đáy $ABCD$ là hình vuông cạnh bằng $a$, tam giác $SAB$ đều. Gọi $M$ là trung điểm của $AD$, $\left(\alpha\right)$ là mặt phẳng chứa $M$ và song song  với mặt phẳng $\left(SAB\right)$.
+  \choiceTF
+  {\True $\left(\alpha\right)\parallel CD$} 
+  {\True $\left(\alpha\right)\cap\left(ABCD\right)=MN$ với $N$ là trung điểm  của $BC$}
+  {Thiết diện  của hình chóp $S.ABCD$ tạo bởi mặt phẳng $\left(\alpha\right)$ là một hình tam giác}
+  {Diện tích thiết diện của hình chóp $S.ABCD$ tạo bởi  mặt phẳng $\left(\alpha\right)$ bằng $\dfrac{a^2\sqrt 3}{4}$}
+ \loigiai{ 
+  \begin{tikzpicture}[>=stealth,line join=round,line cap = round,scale=1,font=\footnotesize]
+     \def\ad{2}
+     \def\ab{4}
+     \def\h{4}
+     \def\gocA{-150}
+     \path
+     (0,0)  coordinate (A)
+     (\gocA:\ad) coordinate (D) 
+     (\ab,0) coordinate  (B)
+     ($(B)+(D)-(A)$)  coordinate (C)
+     (2,\h)  coordinate (S)
+     ($(B)!1/2!(C)$) coordinate  (N)
+      ($(A)!1/2!(D)$) coordinate (M)
+     ($(S)!1/2!(D)$)  coordinate (Q)
+     ($(S)!1/2!(C)$) coordinate (P); 
+    \fill[blue!10]  (M)--(N)--(P)--(Q)--cycle;
+    \foreach  \p/\q in {S/90,A/180,B/-90,C/-90,D/-90,N/0,M/-90,P/0,Q/180}
+    \fill[black] (\p)  circle (1.0pt) node[shift={(\q:3.5mm)}]{$\p$};
+    \draw (S)--(D)--(C)--(S)--(B)--(C) 
+      (M)--(Q)--(P)--(N);
+    \draw[dashed]  (B)--(A)--(D)
+     (S)--(A) 
+      (M)--(N);
+   \end{tikzpicture}
+  \begin{itemchoice}
+   \itemch \textbf{Đúng}.  Ta có $ \heva{& \alpha \parallel (SAB)\\ & AB \subset (SAB), AB \not \subset (\alpha)}\Rightarrow AB \parallel (\alpha) $. \\
+   Mặt khác ta lại có $ \heva{&AB \parallel DC \\& DC \not \subset (\alpha)}\Rightarrow DC  \parallel (\alpha) $.
+   \itemch \textbf{Đúng}. Ta có $ \heva{& M=(\alpha)\cap (ABCD) \\& AB \parallel (\alpha)\\& AB \subset (ABCD)}$\\ $\Rightarrow (\alpha)\cap (ABCD)=MN $ với $ N\in BC, MN \parallel AB $. \\ Do $ M $  là trung điểm $ AD$ nên $ N $ là trung điểm của $ BC $.
+   \itemch \textbf{Sai}. Ta có $\left(\alpha\right)\cap\left(SAD\right)=MQ \parallel SA$  ($Q$ là trung điểm của $SD$).\\
+   $\left(\alpha\right)\cap\left(SBC\right)=NP\parallel SB$  ($P$ là trung điểm của $SC$).\\
+   Khi đó $MNPQ$ là thiết diện của  hình chóp $S.ABCD$ cắt bởi $\left(\alpha\right)$.
+   \itemch  \textbf{Sai}. $MQ=NP=PQ=\dfrac{a}{2}$, $MN=a$, $MN\parallel AB$, $MQ\parallel SA\Rightarrow\widehat{NMQ}=60^\circ$.\\
+   $\Rightarrow MNPQ$ là nửa lục giác đều  cạnh $\dfrac{a}{2}$.\\
+   $\Rightarrow{S_{MNPQ}}=3\cdot S_{\Delta OMQ}=3\cdot\left(\dfrac{a}{2}\right)^2\cdot\dfrac{\sqrt 3}{4}=\dfrac{3a^2\sqrt 3}{16}$ ($ O $ là trung  điểm $MN$ và $\triangle OMQ$ đều, cạnh bằng $\dfrac{a}{2}$).
+  \end{itemchoice}
+ } 
+\end{ex}
+
+% nguồn: Ok_dungsai_lop11_Lan1
+\begin{ex}%[1H4H1-5]%[ma:05b76be9]
+ Cho hình chóp $ S.ABCD $ có đáy $ ABCD $ là  hình vuông cạnh $ a $ và $ SA=SB=SC=SD=a $. Gọi $ I $ là trung điểm của $ SA $.
+ \choiceTF 
+  {\True $ IJ $ là đoạn giao  tuyến của mặt phẳng $ (IBC) $ và $ (SAD) $ với $ J $ là trung điểm của cạnh $ SD $}
+  {Thiết diện của hình chóp bị cắt bởi mặt  phẳng $ (IBC) $ là ngũ giác}
+  {\True Thiết diện của hình chóp bị cắt bởi mặt phẳng $ (IBC) $ là hình thang} 
+  {Diện tích thiết  diện của tứ diện bị cắt bởi mặt phẳng $(IBC) $ bằng $ \dfrac{a^2\sqrt{11}}{16} $}
+  \loigiai{
+  \begin{center}
+   \begin{tikzpicture}[>=stealth,line join=round,line cap = round,scale=1,font=\footnotesize]
+      draw[step=1,gray,very thin](0,0) grid (4,4); 
+     \def\ad{2} 
+     \def\ab{4} 
+     \def\h{4} 
+     \def\gocA{-150} 
+     \path 
+       (0,0) coordinate (A)
+      (\gocA:\ad) coordinate  (D)
+      (\ab,0) coordinate  (B)
+      ($(B)+(D)-(A)$) coordinate  (C)
+      (intersection of A--C and B--D)  coordinate (O)
+      ($(O)+(0,\h)$) coordinate  (S)
+      ($(S)!1/2!(A)$) coordinate (I) 
+       ($(S)!1/2!(D)$) coordinate (J)
+       ($(B)!1/4!(C)$) coordinate (H);
+     \foreach  \p/\q in {S/90,A/180,B/-90,C/-90,D/-90,I/45,J/180,H/-90,O/-90}
+     \fill[black] (\p)  circle (1.0pt) node[shift={(\q:3.5mm)}]{$\p$};
+      \draw (S)--(D)--(C)--(S)--(B)--(C)--(J);
+     \draw[dashed] (B)--(A)--(D)--cycle (S)--(A)--(C) 
+      (J)--(I)--(B) 
+       (S)--(O)
+      (I)--(H); 
+     \path 
+      pic[draw,angle  radius=5]{right angle=I--H--C};
+    \end{tikzpicture}
+  \end{center}
+  \begin{itemchoice}
+   \itemch \textbf{Đúng}. Ta có $ \heva{& I=(IBC)\cap  (SAD)\\ & BC\parallel (SAD)\\ & BC\subset (IBC)}\Rightarrow (IBC)\cap (SAD)=IJ\parallel AD\parallel BC; \, J\in SD $. \\
+   Do $ I $ là trung điểm $ SA $ nên $ J $ là trung  điểm $ SD $.
+   \itemch \textbf{Sai}. Xét tứ giác $ BCJI $ có $ IJ\parallel BC $ và $ IJ=\dfrac{1}{2}BC $ nên tứ  giác $ BCJI $ là hình thang.
+   \itemch \textbf{Đúng}. Ta có $ \triangle SAB =\triangle SCD \Rightarrow BI=CJ $. Suy ra hình thang $ BCIJ $ có $ IJ=\dfrac{1}{2}BC $ và $ BI=CJ $  nên hình thang $ BCJI $ là hình thang cân.
+   \itemch \textbf{Sai}.Gọi $ H $ là hình chiếu của $ I $ lên $ BC $.\\ Do $ BCJI $ là hình thang cân có $  IJ=\dfrac{1}{2}BC=\dfrac{a}{2} $ nên ta suy ra $ BH=\dfrac{a}{4} $. \\
+   Tam giác $ \triangle SAB $ đều cạnh $ a $ có  $ BI $ là trung tuyến nên $ BI= \dfrac{a\sqrt{3}}{2}$\\ $\Rightarrow IH=\sqrt{BI^2-BH^2}=\dfrac{a\sqrt{11}}{4}$.\\
+   Diện tích của thiết diện là $ S_{BCJI}=\dfrac{IH\cdot(IJ+BC)}{2}=\dfrac{\dfrac{a\sqrt{11}}{4}\cdot \left(a+\dfrac{a}{2}\right)}{2}= \dfrac{3a^2\sqrt{11}}{16} $. 
+  \end{itemchoice}
+  }
+\end{ex}
+
+% nguồn: Ok_dungsai_lop11_Lan1
+\begin{ex}%[1H4H1-5]%[ma:52278a61]
+ Cho tứ diện đều $ABCD$ có cạnh bằng $1$. Điểm $M$ di động trên đoạn $BC$, $M$ khác $B$ và $C$. Mặt phẳng $\left(\alpha\right)$ đi qua $M$ đồng thời song song với hai đường thẳng $AB$, $CD$. Gọi $(H)$ là thiết diện của tứ diện $ABCD$ cắt bởi mặt phẳng  $\left(\alpha\right)$.
+ \choiceTF 
+   {\True $(H)$ là một hình chữ nhật}
+  {\True Chu vi  của $(H)$ bằng $ 2 $}
+  {Diện tích của $(H)$ bằng  $\dfrac{1}{4}$}
+  {Quỹ tích trọng tâm  $(H)$ là một đoạn thẳng có độ dài bằng $\dfrac{\sqrt 3}{2}$}
+ \loigiai{\begin{center}
+  \begin{tikzpicture}[scale=1,font=\footnotesize,line join=round,line cap=round,>=stealth]
+    \path (-1,-2) coordinate (C) 
+     (-2,0) coordinate  (B)
+     (3,0) coordinate  (D)
+     ($(B)+(2,3)$) coordinate  (A)
+     ($(A)!1/3!(C)$) coordinate  (N)
+     ($(B)!1/3!(C)$) coordinate  (M)
+     ($(B)!1/3!(D)$)  coordinate (Q)
+     ($(A)!1/3!(D)$) coordinate  (P)
+     ($(A)!1/2!(B)$)  coordinate (I)
+     ($(C)!1/2!(D)$) coordinate (J) 
+     (intersection of N--Q and P--M) coordinate  (H);
+    \draw (A)--(B)--(C)--(A)--(D)--(C) 
+     (P)--(N)--(M); 
+    \draw[dashed,thin](B)--(D) 
+      (P)--(Q)--(M)
+     (I)--(J) 
+      (N)--(Q)
+      (P)--(M);
+    \foreach \i/\g in  {A/90,B/180,C/-90,D/0,M/180,N/45,P/90,Q/-90,I/180,J/-90,H/0}{\draw[fill=black](\i) circle (1pt)
+     ($(\i)+(\g:4mm)$)  node[scale=1]{$\i$};}
+   \end{tikzpicture}
+ \end{center}
+ \begin{itemchoice}
+  \itemch \textbf{Đúng}. Ta có $ \heva{& M=(\alpha)\cap (BCD)\\& CD\parallel (\alpha)}\Rightarrow (\alpha)\cap  (BCD)= MQ \parallel CD $ với $ Q \in BD $. \\
+  Tương tự mặt phẳng $ (\alpha) $ giao với các mặt của tứ diện theo  các đoạn giao tuyến lần lượt là $ MN$, $QP$, $PN $. \\
+  Do $ MQ  \parallel CD $ và $ MN \parallel PQ $ và $ \widehat{NMQ}=90^\circ$ nên thiết diện $ (H) $ là hình chữ nhật.
+  \itemch \textbf{Đúng}. Đặt $ BM=k\, (0<k<1) $, khi đó $ MQ=k$, $MN=1-k$. Suy ra chu vi của hình  chữ nhật $ MNPQ $ bằng $ 2(k+1-k)=2 $.
+  \itemch \textbf{Sai}. Diện tích $ (H)  $ bằng $ MQ\cdot MN=k(1-k) $.
+  \itemch \textbf{Sai}.Tâm của hình chữ nhật $ MNPQ $ nằm trên đường thẳng nối trung điểm của cạnh $ AB $ và $ CD $ có độ dài  bằng $ \dfrac{\sqrt{2}}{2} $.
+ \end{itemchoice}
+} 
+\end{ex}
+
+% nguồn: Ok_dungsai_lop11_Lan1
+\begin{ex}%[1H4H1-5]%[1H4N3-2]%[1H4H1-3]%[ma:fee18c60]
+ Cho  hình chóp $S.ABCD$ có đáy $ABCD$ là hình bình hành tâm $O$, $I$ là trung điểm cạnh $SC$. Khẳng định nào sau đây {\bf SAI}?
+ \choiceTF 
+  {$\mathrm{mp}\ (IBD)$ cắt hình chóp $S.ABCD$ theo thiết diện là  một tứ giác}
+  {\True $IO  \parallel \mathrm{mp}\ (SAB)$}
+  {\True $(IBD) \cap (SAC)=IO$} 
+  {\True $IO \parallel \mathrm{mp}\  (SAD)$}
+  \loigiai{
+  \begin{center}
+   \begin{tikzpicture}[scale=0.8,font=\footnotesize,line join=round,line cap=round,>=stealth]
+      \coordinate (A) at (0,0);
+     \coordinate (B)  at (-2,-2);
+     \coordinate  (D) at (5,0);
+     \coordinate (C) at ($(B)+(D)-(A)$); 
+     \coordinate (O) at ($(A)!0.5!(C)$); 
+     \coordinate (S) at ($(O)+(100:5)$); 
+     \coordinate (I) at  ($(S)!0.5!(C)$);
+     \draw  (S)--(B)
+       (S)--(C)
+       (S)--(D)
+      (B)--(C)--(D) 
+       (B)--(I)--(D);
+     \draw[dashed] (S)--(A) 
+       (D)--(A)--(B)
+      (A)--(C) 
+      (B)--(D) 
+      (O)--(I); 
+     \foreach \i/\g in {S/90,A/160,B/-90,C/-90,D/-90,O/-90,I/50}{\draw[fill=black](\i)  circle (.5pt)
+      ($(\i)+(\g:4mm)$)  node[scale=1]{$\i$};}
+    \end{tikzpicture}
+  \end{center}
+  \begin{itemchoice}
+   \itemch Sai. $\left(IBD\right)$ cắt hình chóp theo thiết  diện là tam giác $IBD$.
+   \itemch  Đúng.
+   $\left.\begin{array}{l}
+    OI \parallel SA\\
+   OI  \not\subset (SAB)
+ \end{array}\right\}
+  \Rightarrow OI{\parallel}\left(SAB\right)$
+  \itemch Đúng. $\left(IBD\right)\cap\left(SAC\right)=IO$.
+ \itemch  Đúng.
+ $\left.\begin{array}{l}
+ OI \parallel SA\\ 
+ OI  \not\subset (SAD)
+\end{array}\right\}
+ \Rightarrow OI{\parallel}\left(SAD\right)$.
+\end{itemchoice}
+} 
+\end{ex}
+
+% nguồn: Ok_dungsai_lop11_Lan1
+\begin{ex}%[1H4H1-5]%[ma:57b1c7dd]
+ Cho tứ diện $ ABCD $ có các mặt là những tam giác đều có các cạnh bằng $ a $. Gọi $ M$, $N $ lần lượt  là trung điểm các cạnh $ AC$, $BC $ và $ P $ là trọng tâm của tam giác $ BCD $.
+ \choiceTF 
+  {\True Mặt phẳng $ (MNP) $ cắt tứ diện theo một thiết  diện là tam giác $ DMN $}
+  {Thiết diện của tứ diện bị cắt bởi mặt  phẳng $ (MNP)$ là một tam giác đều}
+  {Chu vi thiết diện của tứ diện bị cắt bởi mặt phẳng $ (MNP) $ là  $ \dfrac{a\left(2\sqrt{3}+1\right)}{2} $}
+  {\True Diện tích thiết diện của tứ diện bị cắt bởi mặt phẳng $ (MNP)  $ là $ \dfrac{a^2\sqrt{11}}{16} $}
+ \loigiai{ \begin{center}
+  \begin{tikzpicture}[scale=1,font=\footnotesize,line join=round,line cap=round,>=stealth]
+    \path (-1,-2)  coordinate (B)
+     (-2,0) coordinate  (C)
+     (3,0)  coordinate (D)
+     ($(B)!1/2!(C)$) coordinate (N) 
+     ($(D)!2/3!(N)$) coordinate (P) 
+     ($(P)+(0,3)$) coordinate  (A)
+     ($(A)!1/2!(C)$) coordinate  (M);
+    \draw (A)--(C)--(B)--(A)--(D)--(B) 
+     (N)--(M); 
+    \draw[dashed,thin] (N)--(D)--(M) 
+     (A)--(P) 
+     (D)--(C); 
+    \foreach \i/\g  in {A/90,B/-90,C/180,D/0,M/180,N/180,P/-90}{\draw[fill=black](\i) circle (1pt)
+      ($(\i)+(\g:4mm)$) node[scale=1]{$\i$};}
+   \end{tikzpicture}
+ \end{center}
+ \begin{itemchoice}
+  \itemch \textbf{Đúng}. Mặt phẳng $ (MNP) $ cắt tứ diện theo thiết  diện là một tam giác $ MND $.
+  \itemch \textbf{Sai}. Do tứ diện $ ABCD $ có các mặt bên là các tam giác đều có độ dài bằng $ a $ nên ta suy ra $ DM=DN $, do đó tam  giác $ \triangle MND $ là tam giác cân.
+  \itemch \textbf{Sai}. Ta có $  \heva{& MD\perp AC \\ &DN\perp BC}\Rightarrow MD=DN=\dfrac{a\sqrt{3}}{2}; MN=\dfrac{1}{2}AB=\dfrac{a}{b} $. \\
+   $ 2p=MN+MD+ND=\dfrac{a\left(2\sqrt{3}+1\right)}{2}\Rightarrow p=\dfrac{MN+MD+ND}{2}=\dfrac{a\left(2\sqrt{3}+1\right)}{4} $.
+  \itemch \textbf{Đúng} 
+   \allowdisplaybreaks
+  \begin{eqnarray*}
+   S_{\triangle MND}&=&\sqrt{p(p-MN)(p-MD)(p-ND)} \\ 
+   &=&\sqrt{\dfrac{a^4}{4^4}\left(2\sqrt{3}+1\right)\left(2\sqrt{3}-1\right)}\\ 
+   &=&\dfrac{a^2\sqrt{11}}{16}. 
+  \end{eqnarray*}
+ \end{itemchoice}
+ }
+\end{ex}
+
+% nguồn: Ok_dungsai_lop11_Lan2
+\begin{ex}%[1H4V1-5]%[ma:8639f987]
+	Cho hình  chóp $S.ABCD$. Lấy một điểm $M$ thuộc miền trong tam giác $SBC$. Lấy một điểm $N$ thuộc miền trong tam giác $SCD$.
+	 \choiceTF
+		{\True Giao điểm của $MN$ với $(SAC)$ là $I$ với $I$  là giao điểm của hai đường thẳng $MN$ và $SO$}
+		{\True Giao tuyến của hai mặt phẳng $(SAC)$ và $(SEF)$ là đường thẳng $SO$ với $F$ là giao điểm của hai đường thẳng $SN$ và $CD$} 
+		{\True Giao điểm của $SC$ với $(AMN)$ là điểm $J$ với $J$ là giao điểm của hai đường thẳng $AI$ và  $SC$}
+		{\True Ta có thể xác định  được ba thiết diện của hình chóp $S.ABCD$ với mặt phẳng $(AMN)$}
+	 \loigiai{
+		\begin{center}
+			\begin{tikzpicture}[scale=1,font=\footnotesize,line join=round,line cap=round,>=stealth]
+					 \def\ad{6}
+					\def\ab{2} 
+					\def\bc{3.5} 
+					\def\as{4} 
+					 \def\gocA{50}
+					 \def\gocB{125}
+					\coordinate (A) at (0,0); 
+					\coordinate (B) at (-\gocA:\ab); 
+					\coordinate (C) at ($(B)+(180-\gocA-\gocB:\bc)$); 
+					\coordinate (D) at  (\ad,0);
+					 \coordinate (S) at (60:\as);
+					 \coordinate (E) at ($(B)!0.3!(C)$);
+					\coordinate  (M) at ($(S)!0.75!(E)$);
+					\coordinate (F) at ($(D)!0.4!(C)$); 
+					\coordinate (N)  at ($(S)!0.5!(F)$);
+					\coordinate (O) at (intersection cs:first line={(E)--(F)},second line={(C)--(A)}); 
+					\coordinate  (I) at (intersection cs:first line={(M)--(N)},second line={(S)--(O)});
+					\coordinate (J) at (intersection cs:first  line={(A)--(I)},second line={(C)--(S)});
+					\coordinate (P) at  (intersection cs:first line={(J)--(N)},second line={(S)--(D)});
+					\coordinate (Q) at (intersection cs:first line={(J)--(M)},second line={(S)--(B)}); 
+					\draw (A)--(B)--(C)--(D)--(S)--cycle (B)--(S)--(C) 
+						 (S)--(E)
+						 (S)--(F)
+						 (Q)--(B);
+					 \draw[dashed] (A)--(D)
+						 (A)--(C)
+						(E)--(F) 
+						(S)--(O) 
+						(A)--(M)--(N)--(A)--(J); 
+					\foreach \i/\j in {A/150,B/-35,C/-45,D/0,E/-90,F/-50,I/-110,O/45,M/-30,N/-5,S/90,J/0}\fill[black] (\i) circle  (1pt)
+						($(\i)+(\j:2.5mm)$)  node{$\i$};
+					\fill[pattern=dots]  (A)--(N)--(M)--cycle;
+				\end{tikzpicture}
+		\end{center}
+		\begin{itemchoice}
+			\itemch Gọi $E$ là giao điểm của đường thẳng $SM$ và cạnh  $BC$, $F$ là giao điểm của đường thẳng $SN$ và cạnh $CD$ và gọi $O$ là giao điểm của $EF$ và $AC$.
+			\begin{itemize}
+				\item Chọn mặt phẳng phụ chứa $MN$ là  $(SEF)$.
+				\item  $(SAC)\cap (SEF)=SO$.
+				\item Trong mặt phẳng $(SEF)$ hai đường thẳng $MN$ và $SO$ phải cắt nhau, gọi  giao điểm này là $I$ thì $I$ chính là giao điểm của $MN$ với $(SAC)$.
+			\end{itemize}
+			\itemch  Ta có $(SAC)\cap (SEF)=SO$.
+			\itemch  Tìm giao điểm của $SC$ với $(AMN)$.
+			\begin{itemize}
+				\item Chọn mặt phẳng phụ chứa $SC$  là $(AMN)$.
+				\item $(SAC)\cap (AMN)=AI$. 
+				\item Trong mặt phẳng $(SAC)$ hai đường thẳng $AI$ và $SC$ phải cắt nhau, gọi giao điểm  này là $J$ thì $J$ chính là giao điểm của $SC$ với $(AMN)$.
+			\end{itemize}
+			 \itemch Tìm thiết diện của hình chóp $S.ABCD$ với $(AMN)$.\\
+		\immini{\textbf{Trường hợp 1}: Đường thẳng $MJ$  cắt cạnh $SB$ tại $Q$ và đường thẳng $JN$ cắt cạnh $SD$ tại $P$.\\ Ta thấy thiết diện là tứ giác $AQJP$.}
+			{\begin{tikzpicture}[scale=1,font=\footnotesize,line join=round,line cap=round,>=stealth]
+		\def\ad{6} 
+		\def\ab{2} 
+		\def\bc{3.5} 
+		 \def\as{4}
+		 \def\gocA{50}
+		 \def\gocB{125}
+		 \coordinate (A) at (0,0);
+		\coordinate  (B) at (-\gocA:\ab);
+		\coordinate  (C) at ($(B)+(180-\gocA-\gocB:\bc)$);
+		 \coordinate (D) at (\ad,0);
+		\coordinate  (S) at (60:\as);
+		\coordinate (E) at  ($(B)!0.3!(C)$);
+		\coordinate (M)  at ($(S)!0.75!(E)$);
+		 \coordinate (F) at ($(D)!0.4!(C)$);
+		\coordinate (N) at  ($(S)!0.5!(F)$);
+		\coordinate (O) at (intersection cs:first  line={(E)--(F)},second line={(C)--(A)});
+		\coordinate (I)  at (intersection cs:first line={(M)--(N)},second line={(S)--(O)});
+		\coordinate (J)  at (intersection cs:first line={(A)--(I)},second line={(C)--(S)});
+		\coordinate  (P) at (intersection cs:first line={(J)--(N)},second line={(S)--(D)});
+		\coordinate (Q) at (intersection cs:first line={(J)--(M)},second line={(S)--(B)}); 
+		\draw  (A)--(B)--(C)--(D)--(S)--cycle (B)--(S)--(C)
+			(S)--(E) 
+			(S)--(F) 
+			 (J)--(P)
+			(J)--(Q)--(B) 
+			 (A)--(Q);
+		\draw[dashed]  (A)--(D)
+			(A)--(C) 
+			 (E)--(F)
+			(S)--(O) 
+			 (A)--(M)--(N)--(A)--(J)
+			(P)--(A); 
+		\foreach \i/\j in {A/150,B/-35,C/-45,D/0,E/-90,F/-50,I/150,O/45,M/-30,N/-5,S/90,J/0,P/0,Q/0}\fill[black] (\i)  circle (1pt)
+			($(\i)+(\j:2.5mm)$)  node{$\i$};
+		\fill[cyan,opacity=0.5]  (A)--(Q)--(J)--(P)--cycle;
+		\fill[pattern=dots]  (A)--(N)--(M)--cycle;
+	\end{tikzpicture}
+			 }
+		\immini{\textbf{Trường hợp 2}: Đường thẳng  $MJ$ cắt cạnh $BC$ tại $Q$ và đường thẳng $JN$ cắt cạnh $SD$ tại $P$.\\
+			Ta thấy  thiết diện là tứ giác $AQJP$.}
+			{\begin{tikzpicture}[scale=1,font=\footnotesize,line join=round,line cap=round,>=stealth]
+		\def\ad{6} 
+		 \def\ab{2}
+		 \def\bc{3.5}
+		 \def\as{4}
+		\def\gocA{50} 
+		 \def\gocB{125}
+		 \coordinate (A) at (0,0);
+		 \coordinate (B) at (-\gocA:\ab);
+		 \coordinate (C) at ($(B)+(180-\gocA-\gocB:\bc)$);
+		\coordinate (D) at (\ad,0); 
+		\coordinate (S) at (60:\as); 
+		\coordinate  (E) at ($(B)!0.6!(C)$);
+		\coordinate (M) at  ($(S)!0.8!(E)$);
+		 \coordinate (F) at ($(D)!0.6!(C)$);
+		\coordinate (N)  at ($(S)!0.4!(F)$);
+		\coordinate (O) at (intersection cs:first line={(E)--(F)},second  line={(C)--(A)});
+		\coordinate (I) at (intersection cs:first line={(M)--(N)},second  line={(S)--(O)});
+		\coordinate (J)  at (intersection cs:first line={(A)--(I)},second line={(C)--(S)});
+		\coordinate (P) at (intersection  cs:first line={(J)--(N)},second line={(S)--(D)});
+		\coordinate (Q) at (intersection cs:first line={(J)--(M)},second  line={(C)--(B)});
+		\draw (A)--(B)--(C)--(D)--(S)--cycle  (B)--(S)--(C)
+			(S)--(E) 
+			(S)--(F) 
+			 (J)--(P)
+			(J)--(Q)--(B); 
+		 \draw[dashed] (A)--(D)
+			 (A)--(C)
+			 (E)--(F)
+			(S)--(O) 
+			(A)--(M)--(N)--(A)--(J) 
+			(P)--(A) 
+			 (A)--(Q);
+		 \foreach \i/\j in {A/150,B/-35,C/-45,D/0,E/-90,I/150,O/45,M/-30,N/-5,S/90,J/0,P/0,Q/-90,F/0}\fill[black] (\i) circle (1pt)
+			 ($(\i)+(\j:2.5mm)$) node{$\i$};
+		\fill[cyan,opacity=0.5] (A)--(Q)--(J)--(P)--cycle; 
+		\fill[pattern=dots]  (A)--(N)--(M)--cycle;
+	\end{tikzpicture}
+			} 
+		\immini{\textbf{Trường  hợp 3}: Đường thẳng $MJ$ cắt cạnh $SB$ tại $Q$ và đường thẳng $JN$ cắt cạnh $CD$ tại $P$.\\
+			Ta thấy thiết diện là tứ giác $AQJP$.} 
+			{\begin{tikzpicture}[scale=1,font=\footnotesize,line join=round,line cap=round,>=stealth]
+		 \def\ad{6}
+		\def\ab{2} 
+		 \def\bc{3.5}
+		\def\as{4} 
+		 \def\gocA{50}
+		 \def\gocB{125}
+		\coordinate (A) at  (0,0);
+		 \coordinate (B) at (-\gocA:\ab);
+		\coordinate  (C) at ($(B)+(180-\gocA-\gocB:\bc)$);
+		 \coordinate (D) at (\ad,0);
+		\coordinate (S) at  (60:\as);
+		\coordinate (E) at ($(B)!0.4!(C)$); 
+		\coordinate (M) at ($(S)!0.34!(E)$); 
+		\coordinate (F)  at ($(D)!0.6!(C)$);
+		 \coordinate (N) at ($(S)!0.75!(F)$);
+		\coordinate  (O) at (intersection cs:first line={(E)--(F)},second line={(C)--(A)});
+		\coordinate (I) at (intersection cs:first line={(M)--(N)},second line={(S)--(O)}); 
+		\coordinate (J) at (intersection  cs:first line={(A)--(I)},second line={(C)--(S)});
+		 \coordinate (P) at (intersection cs:first line={(J)--(N)},second line={(C)--(D)});
+		\coordinate (Q) at  (intersection cs:first line={(J)--(M)},second line={(S)--(B)});
+		 \draw (A)--(B)--(C)--(D)--(S)--cycle (B)--(S)--(C)
+			(S)--(E) 
+			 (J)--(P)
+			(S)--(F) 
+			(A)--(Q)--(J); 
+		\draw[dashed]  (A)--(D)
+			(A)--(C) 
+			(E)--(F) 
+			(S)--(O) 
+			(A)--(M)--(N)--(A)--(J) 
+			(A)--(P); 
+		\foreach  \i/\j in {A/150,B/-35,C/-45,D/0,E/-90,F/-50,I/-100,O/45,M/40,N/80,S/90,J/80,P/0,Q/120}\fill[black] (\i) circle (1pt)
+			($(\i)+(\j:2.5mm)$)  node{$\i$};
+		\fill[cyan,opacity=0.5] (A)--(Q)--(J)--(P)--cycle; 
+		 \fill[pattern=dots] (A)--(N)--(M)--cycle;
+	\end{tikzpicture}
+			} 
+		\end{itemchoice}
+	 }
+\end{ex}
+
+% nguồn: Ok_dungsai_lop11_Lan2
+\begin{ex}%[1H4V1-5]%[ma:4a709928]
+	Cho hình chóp $S.ABCD$ có đáy $ABCD$ là hình thang với $AB\parallel CD$, $AB>CD$. Gọi  $I$, $J$ theo thứ tự là trung điểm $SB$ và $SC$.
+	 \choiceTF
+		{\True Giao tuyến của hai mặt phẳng $(SAD)$ và $(SBC)$ là đường thẳng $SL$ với $L$ là giao điểm của của hai mặt phẳng $(SAD)$ và  $(SBC)$}
+		{\True Giao điểm của đường thẳng $SD$ với $(AIJ)$ là điểm $M$ với $M$ là giao điểm của $SD$ và $AK$} 
+		{\True Giao  tuyến của hai mặt phẳng $(AIJ)$ và $(SCD)$ là đường thẳng $MJ$}
+		{Thiết diện của hình chóp $S.ABCD$ cắt bởi mặt phẳng $(AIJ)$  là một tam giác}
+	 \loigiai{
+		\begin{center}
+			\begin{tikzpicture}[scale=1,transform shape,line cap=round,line join=round,font=\footnotesize,>=stealth]
+					\def \a{4} \def \b{2}  \def \g{60} \def \h{3}
+					 \path
+						(0,0) coordinate  (A)++(0:\a) coordinate (B)++(\g-180:\b) coordinate (C)++
+						(180:\b)  coordinate (D)
+						 (80:\h) coordinate (S)
+						($(S)!.5!(B)$) coordinate (I) 
+						 ($(S)!.5!(C)$) coordinate (J)
+						(intersection  of A--D and B--C) coordinate (L)
+						(intersection of I--J and S--L) coordinate (K) 
+						(intersection of A--K and S--D) coordinate (M); 
+					\draw[dash pattern=on 2pt off  1.5pt,thin] (I)--(A)--(B)
+						 (D)--(C)
+						(M)--(J); 
+					\draw (S)--(L)--(A)--cycle (C)--(S)--(B)--(L) 
+						 (S)--(D)
+						(I)--(K)--(A); 
+					\foreach \p/\g in {A/180,B/0,C/-90,D/180,S/90,I/30,M/200,J/0,L/180,K/0} \fill[black] (\p) circle  (1pt)+(\g:0.3) node{$\p$};
+				\end{tikzpicture}
+		\end{center}
+		\begin{itemchoice}
+			\itemch Ta có \[S\in  (SAD) \cap (SBC).\quad (1)\]
+			Trong mặt phẳng $(ABCD)$  gọi $L=AD\cap BC$ \[L\in (SAD) \cap (SBC).\quad (2)\]
+			 Từ $(1)$, $(2)$ ta có $(SAD) \cap (SBC)=SL$.
+			 \itemch Trong mặt phẳng $(SBC)$ gọi $K=SL\cap IJ$.\\
+			Trong mặt phẳng $(SAD)$  gọi $M=SD\cap AK$ $\Rightarrow M\in SD\cap (AIJ)$.
+			\itemch Giao tuyến của hai mặt phẳng $(AIJ)$  và $(SCD)$ là đường thẳng $MJ$.
+			\itemch  Ta có
+			\[AM=(AIJ) \cap (SAD).\] \[MJ=(AIJ) \cap (SCD).\] \[JI=(AIJ) \cap (SBC).\] \[IM=(AIJ) \cap (SAB).\] 
+			Suy ra thiết diện cắt bởi mặt  phẳng $(AIJ)$ và hình chóp $S.ABCD$ là tứ giác $AMJI$.
+		\end{itemchoice}
+	} 
+\end{ex}
+
+% nguồn: Ok_dungsai_lop11_Lan2
+\begin{ex}%[1H4V1-5]%[ma:12dfdc09]
+	Cho hình chóp $S.ABCD$ có đáy $ABCD$ là hình bình hành tâm $O$. Gọi $M$, $N$, $P$ lần lượt là trung điểm của $SB$, $SD$  và $OC$.
+	 \choiceTF
+		{\True Giao tuyến của $(MNP)$ với $(SAC)$ là đường thẳng $PI$ với $I$ là  giao điểm của hai đường thẳng $MN$ và $SO$}
+		{\True Giao điểm của $SA$ và $(MNP)$ là $R$ với $R$ là giao  điểm của hai đường thẳng $PI$ và $SA$}
+		{\True Gọi $T=d\cap BC$, $Q=d\cap CD$. Khi đó thiết diện  của hình chóp với mặt phẳng $(MNP)$ là ngũ giác $MTQNR$}
+		{Tỉ số $\dfrac{SR}{RA}=3$} 
+	 \loigiai{
+		\begin{center}
+			\begin{tikzpicture}[scale=1,font=\footnotesize,line join=round,line cap=round,>=stealth]
+					\def\a{2.9} \def\b{1.2} \def\c{6} \def\d{3.9}  \def\e{6}
+					\path (0,0) coordinate (B) 
+						(\a,\b)  coordinate (A)
+						(\c,0) coordinate  (C)
+						(\d,\e) coordinate  (S)
+						 ($(A)+(C)-(B)$) coordinate (D)
+						 ($(S)!.5!(B)$) coordinate (M)
+						($(S)!.5!(D)$)  coordinate (N)
+						($(A)!.5!(C)$)  coordinate (O)
+						($(O)!.5!(C)$) coordinate  (P)
+						 ($(D)!.5!(C)$) coordinate (Q)
+						 ($(B)!.5!(C)$) coordinate (T);
+					\coordinate (I) at (intersection cs:first line={(M)--(N)},second line={(S)--(O)}); 
+					\coordinate (R) at (intersection cs:first line={(P)--(I)},second line={(S)--(A)}); 
+					 \draw (C)--(S)--(B)--(C)--(D)--(S)
+						(M)--(T) 
+						 (Q)--(N);
+					\draw[dashed](S)--(A) 
+						(B)--(A)--(D) 
+						 (A)--(C)
+						(B)--(D) 
+						 (M)--(N)--(P)--(M)
+						 (S)--(O)
+						 (P)--(R)
+						(M)--(R)--(N) 
+						(T)--(Q) node[pos=.70,above]{$d$}; 
+					\foreach \i/\j in  {A/45,B/-135,C/-45,D/0,N/45,M/180,S/90,O/-90,R/170,T/-90,Q/-90,P/-140,I/45}\fill[black] (\i) circle (1pt)
+						($(\i)+(\j:3mm)$)  node{$\i$};
+					\fill[cyan,opacity=0.5]  (M)--(T)--(Q)--(N)--(R)--cycle;
+					 \fill[pattern=dots] (P)--(N)--(M)--cycle;
+				\end{tikzpicture}
+		\end{center}
+		\begin{itemchoice}
+			\itemch Xét  hai mặt phẳng $(MNP)$ và $(SAC)$
+			\begin{itemize}
+				\item $P$ là điểm chung thứ nhất của $(MNP)$  và $(SAC)$.
+				\item Trong tam giác $SAC$, hai đoạn thẳng $MN$ và $SO$ phải cắt nhau. Gọi giao điểm  này là $I$ thì $I$ là điểm chung thứ hai của $(MNP)$ và $(SAC)$.
+			\end{itemize}
+			Vậy $(MNP)  \cap (SAC)=PI$.\\
+			\textit{Tìm giao tuyến của $(MNP)$ và  $(ABCD)$}
+			\begin{itemize}
+				\item $MN$ là đường trung bình của tam giác $SBD$ nên $MN  \parallel BD$.
+				\item Hai mặt phẳng $(MNP)$, $(ABCD)$ phân biệt, có điểm chung $P$ và lần lượt chứa hai đường thẳng song song $MN$, $BD$ nên chúng cắt nhau theo một giao tuyến $d$ qua $P$ và $d$ song song  với $BD$.
+			\end{itemize}
+			\itemch Tìm giao điểm của $SA$ và  $(MNP)$.
+			\begin{itemize}
+				\item Chọn mặt phẳng phụ chứa $SA$  là $(SAC)$.
+				\item $(SAC)\cap (MNP)=PI$. 
+				\item Trong mặt phẳng $(SAC)$ hai  đường thẳng $PI$ và $SA$ phải cắt nhau, gọi giao điểm này là $R$ thì $R$ chính là giao điểm của $SA$ với $(MNP)$.
+			\end{itemize}
+			\itemch Gọi  $T=d\cap BC$, $Q=d\cap CD$. Ta thấy, thiết diện mà mặt phẳng $(MNP)$ cắt hình chóp $S.ABCD$ là ngũ giác $MTQNR$.
+			\itemch Áp dụng định lí Menelaus cho tam  giác $SAO$ với ba điểm thẳng hàng $R$, $I$, $P$ ta có
+			 $$\dfrac{SR}{RA}\cdot\dfrac{AP}{PO}\cdot\dfrac{OI}{IS}=1\Leftrightarrow \dfrac{SR}{RA}=\dfrac{1}{3}.$$
+		\end{itemchoice}
+	 }
+\end{ex}
+
+% nguồn: Ok_dungsai_lop11_Lan2
+\begin{ex}%[1H4V1-5]%[ma:ead3d25f]
+	Cho hình chóp $S.ABCD$ có đáy $ABCD$ là hình bình hành tâm $O$. Gọi $M$ là trung điểm của $SB$, $G$ là trọng tâm tam  giác $SAD$.
+	 \choiceTF
+		{\True Giao điểm $I$ của $GM$  với $(ABCD)$ cũng là giao điểm của hai đường thẳng $MG$ và $BN$. Khi đó $2IC=ID$}
+		{\True Giao điểm của hai đường thẳng $AD$ và $OI$ là $J$ và nó cũng là giao điểm của mặt  phẳng $(OMG)$ với $AD$. Khi đó $JA=2JD$}
+		{\True Điểm $K$ là giao điểm của $(OMG)$ với $SA$ cũng là  giao điểm của hai đường thẳng $SA$ và $GJ$. Khi đó $KA=\dfrac{1}{2}KS$}
+		{Thiết diện tạo bởi $(OMG)$ với  hình chóp $S.ABCD$ là một ngũ giác}
+	\loigiai{ 
+		\begin{center}
+			\begin{tikzpicture}[scale=0.8,font=\footnotesize,line join=round,line cap=round,>=stealth]
+					\def\a{2.5} \def\b{1.2}  \def\c{5} \def\d{3.5} \def\e{6}
+					\path  (0,0) coordinate (B)
+						(\a,\b) coordinate  (A)
+						(\c,0)  coordinate (C)
+						(\d,\e)  coordinate (S)
+						 ($(A)+(C)-(B)$) coordinate (D)
+						($(S)!.5!(B)$)  coordinate (M)
+						($(A)!.5!(D)$) coordinate (N) 
+						($(S)!.(2/3)!(N)$) coordinate  (G)
+						($(A)!.5!(C)$)  coordinate (O);
+					 \coordinate (I) at (intersection cs:first line={(B)--(N)},second line={(M)--(G)});
+					\coordinate (P) at  (intersection cs:first line={(G)--(I)},second line={(S)--(D)});
+					\coordinate (Q) at (intersection cs:first  line={(N)--(I)},second line={(S)--(D)});
+					\coordinate (J) at (intersection cs:first line={(O)--(I)},second  line={(A)--(D)});
+					\coordinate  (K) at (intersection cs:first line={(A)--(S)},second line={(G)--(J)});
+					\draw  (C)--(S)--(B)--(C)--(D)--(S)
+						(D)--(I)--(S); 
+					\draw[dashed](S)--(A) 
+						 (B)--(A)--(D)
+						 (S)--(N)
+						(M)--(I) 
+						(B)--(I) 
+						 (A)--(C)
+						 (M)--(O)--(I)
+						 (O)--(G)
+						 (J)--(K)
+						 (A)--(I);
+					\foreach \i/\j in  {A/150,B/-135,C/-45,D/-20,M/150,S/90,N/70,G/70,I/70,O/230,J/-90,K/195}
+					\fill[black] (\i)  circle (1pt)
+						($(\i)+(\j:3mm)$)  node{$\i$};
+				\end{tikzpicture}
+		\end{center}
+		\begin{itemchoice}
+			\itemch  Tìm giao điểm $I$ của $GM$ với $(ABCD)$. Chứng minh $I C=2ID$.\\Gọi $N$ là trung điểm của $AD$.
+			\begin{itemize}
+				\item Chọn  mặt phẳng phụ chứa $MG$ là $(SBN)$.
+				\item  $(SBN)\cap (ABCD)=BN$.
+				\begin{itemize}
+					 \item[+] $MG$ và $BN$ đồng phẳng.
+					\item[+]  $\dfrac{SM}{SB}=\dfrac{1}{2}\neq \dfrac{SG}{GN}=\dfrac{2}{3}.$
+				\end{itemize}
+			\end{itemize}
+			Suy ra hai đường thẳng $MG$ và $BN$ phải cắt nhau. Đó chính là giao điểm  $I$ của $MG$ với $(ABCD)$.\\
+			Áp dụng định lí Menelaus cho  tam giác $SBN$ với ba điểm thẳng hàng $M, G, I$ ta có
+			$$\dfrac{SM}{MB}\cdot\dfrac{BI}{IN}\cdot\dfrac{NG}{GS}=1\Leftrightarrow \dfrac{BI}{IN}=2\Leftrightarrow  BI=2BN.$$
+			Suy ra $N$ là trung  điểm của $BE$.\\
+			Gọi $E$ là điểm đối xứng với $C$ qua $D$ thì $EC=2ED$ đồng thời $N$ là  trung điểm của $BE$.\\
+			Do đó, hai điểm $I$ và $E$  trùng nhau. Vậy ta có $IC=2ID$.
+			\itemch 
+			 Đặt $JA=k \cdot JD$.
+			\begin{itemize}
+				\item  Chọn mặt phẳng phụ chứa $AD$ là $(ABCD)$.
+				\item $(ABCD)\cap (OMG)=OI$. 
+				\item  Trong mặt phẳng $(ABCD)$ hai đoạn thẳng $AD$ và $OI$ phải cắt nhau, đó là giao điểm $J$ của $AD$ với $(OMG)$.
+				\item Tam giác $ACI$ có $IO$ và $AD$ là hai đường trung tuyến, $J$ là giao điểm của hai đoạn thẳng này nên $J$ là trọng tâm. Suy ra  $JA=2JD$, hay $k=2$.
+			\end{itemize}
+			 \itemch
+			Đặt $KA=p \cdot  KS$.
+			\begin{itemize}
+				\item Chọn  mặt phẳng phụ chứa $SA$ là $(SAD)$.
+				\item  $(SAD)\cap (OMG)=GJ$.
+				\item Trong mặt phẳng $(SAD)$ hai đường thẳng $SA$  và $GJ$ phải cắt nhau, đó là giao điểm $K$ của $SA$ với $(OMG)$.
+				\item Áp dụng định lí Menelaus cho tam giác $SAN$ với ba điểm thẳng  hàng $K, G, J$ ta có
+				$$\dfrac{SK}{KA}\cdot\dfrac{AJ}{JN}\cdot\dfrac{NG}{GS}=1\Leftrightarrow \dfrac{SK}{KA}=\dfrac{1}{2}.$$ 
+			\end{itemize}
+			 \itemch
+			Gọi $Q$ là giao điểm của đường thẳng $OI$ và cạnh $BC$. Thiết diện mà mặt phẳng $(OMG)$ cắt hình chóp $S.ABCD$ là tứ  giác $QMKJ$.
+			\begin{center}
+				\begin{tikzpicture}[scale=0.7,font=\footnotesize,line join=round,line cap=round,>=stealth]
+						\def\a{2.5} \def\b{1.2} \def\c{5}  \def\d{3.5} \def\e{6}
+						\path (0,0) coordinate  (B)
+						(\a,\b)  coordinate (A)
+						(\c,0) coordinate  (C)
+						(\d,\e) coordinate  (S)
+						($(A)+(C)-(B)$) coordinate (D) 
+						($(S)!.5!(B)$)  coordinate (M)
+						($(A)!.5!(D)$) coordinate  (N)
+						($(S)!.(2/3)!(N)$)  coordinate (G)
+						($(A)!.5!(C)$) coordinate (O); 
+						\coordinate (I) at (intersection cs:first line={(B)--(N)},second line={(M)--(G)}); 
+						\coordinate (P) at (intersection cs:first line={(G)--(I)},second line={(S)--(D)}); 
+						\coordinate (Q) at (intersection  cs:first line={(N)--(I)},second line={(S)--(D)});
+						\coordinate (J) at (intersection  cs:first line={(O)--(I)},second line={(A)--(D)});
+						\coordinate (K) at  (intersection cs:first line={(A)--(S)},second line={(G)--(J)});
+						\coordinate  (Q) at (intersection cs:first line={(O)--(I)},second line={(B)--(C)});
+						\draw (C)--(S)--(B)--(C)--(D)--(S) 
+						 (D)--(I)--(S)
+						(M)--(Q); 
+						\draw[dashed](S)--(A) 
+						(B)--(A)--(D) 
+						 (S)--(N)
+						 (M)--(I)
+						(B)--(I) 
+						 (A)--(C)
+						(M)--(O)--(I)--(K) 
+						(O)--(G) 
+						(M)--(K)--(J) 
+						 (I)--(A)
+						 (O)--(Q);
+						\foreach  \i/\j in {A/150,B/-135,C/-45,D/0,M/150,S/90,N/70,G/70,I/70,O/230,J/-90,Q/-90,K/45}
+						 \fill[black] (\i) circle (1pt)
+						($(\i)+(\j:3mm)$) node{$\i$}; 
+						\fill[cyan,opacity=0.5] (Q)--(M)--(K)--(J)--cycle; 
+						\fill[pattern=dots] (O)--(G)--(M)--cycle; 
+					\end{tikzpicture}
+			\end{center}
+		\end{itemchoice}
+	 }
+\end{ex}
+
+
+%%%%%%%%%%%%%%%% TRẢ LỜI NGẮN %%%%%%%%%%%%%%%%
+
+% nguồn: Ok_TraLoiNgan_Lop11_Lan2
+\begin{ex}%[1H4H1-5]%[ma:257e8dc5]
+	Cho hình chóp $S.ABCD$ có đáy $ABCD$ là hình bình hành.  Gọi $M,N,Q$ lần lượt là trung điểm của các cạnh $AB, AD, SC$. Thiết diện của hình chóp với mặt phẳng $(MNQ)$ là đa giác có bao nhiêu cạnh?
+	 \shortans{5}
+	\loigiai{ 
+		\begin{center}
+			\begin{tikzpicture}[scale=.7,>=stealth,font=\footnotesize,line join=round,line cap=round]
+					 \def\a{6}
+					\path (0:0) coordinate (A) 
+						++(10:\a) coordinate (D) 
+						++(-130:\a/2)  coordinate (C)
+						($(A)+(C)-(D)$) coordinate (B) 
+						($(A)+(80:\a)$) coordinate  (S)
+						(intersection of  A--C and B--D) coordinate (O);
+					\coordinate  (M) at ($(A)!0.5!(B)$);
+					\coordinate  (N) at ($(A)!0.5!(D)$);
+					\coordinate (Q) at ($(S)!0.5!(C)$); 
+					\coordinate (E) at (intersection of  M--N and B--C);
+					 \coordinate (F) at (intersection of M--N and D--C);
+					\coordinate (R) at  (intersection of Q--E and S--B);
+					\coordinate (P)  at (intersection of Q--F and S--D);
+					\draw[dashed]  (R)--(B)--(A)--(D)
+						 (A)--(S)
+						(M)--(N)--(Q)--(M)--(R) 
+						 (N)--(P)--(D);
+					 \draw (F)--(Q)--(E)--(B)-- (C)--(D)--(F)
+						(R)--(S) 
+						 (C)--(S)
+						(P)--(S); 
+					\foreach \x/\g in  {A/180,B/-90,C/-45,D/-45,S/90,M/-30,N/-60,Q/40,E/-90,F/0,R/180,P/50}
+					 \fill[black] (\x) circle (1pt)
+						 ($(\g:4mm)+(\x)$) node {$\x$};
+				\end{tikzpicture}
+		\end{center}
+		Trong mặt phẳng $(ABCD)$ gọi $E$,  $F$ lần lượt là giao điểm của $MN$ với $BC$, $CD$.\\
+		Trong mặt phẳng $(SBC)$ gọi $R=EQ\cap SB$ và trong mặt phẳng $(SCD)$ gọi $P=QF\cap  SD$.\\
+	Suy ra thiết diện của  hình chóp với mặt phẳng $(MNQ)$ là ngũ giác $MNPQR$.}
+\end{ex}
+
+% nguồn: Ok_TraLoiNgan_Lop11_Lan2
+\begin{ex}%[1H4H1-5]%[ma:c32efd45]
+	Cho tứ diện $ABCD$ có tất cả các cạnh bằng nhau và bằng $8$. Gọi $M$, $N$ lần lượt là trung điểm các cạnh $AC$, $BC$; $P$ là trọng tâm  tam giác $BCD$. Mặt phẳng $(MNP)$ cắt tứ diện theo một thiết diện có diện tích là (\textit{làm tròn đến hàng phần mười})
+	 \shortans{13,3}
+	\loigiai{\begin{center}
+		\begin{tikzpicture}[font=\footnotesize,line join=round,line cap=round,>=stealth,scale=0.8]
+				 \path
+					 (0,0) coordinate (B)
+					 (2,-2) coordinate (C)
+					 (7,0) coordinate (D)
+					(3,5) coordinate  (A)
+					 ($(C)!0.5!(B)$) coordinate (N)
+					($(C)!0.5!(A)$) coordinate  (M)
+					($(D)!2/3!(N)$) coordinate  (P)
+					 ($(D)!0.5!(C)$) coordinate (I);
+				\draw (C)--(A)--(B)--(C)--(D)--(A) 
+					(D)--(M)--(N); 
+				 \draw[dashed] (I)--(B)--(D)--(N);
+				\foreach \x/\pos  in{A/150,B/-150,C/-30,D/-80,M/180,N/-120,P/40}
+				\fill (\x) circle (1pt) node[{shift=(\pos:0.25)}]{$\x$}; 
+			\end{tikzpicture}
+		\hspace*{1cm} 
+		\begin{tikzpicture}[font=\footnotesize,line join=round,line cap=round,>=stealth,scale=0.7]
+				 \path
+					(0,0) coordinate (M) 
+					(5,0) coordinate  (N)
+					(2.5,5) coordinate  (D)
+					 ($(M)!0.5!(N)$) coordinate (H);
+				\draw  pic[thin,draw,angle radius=2mm] {right angle= D--H--N};
+				 \draw (D)--(M)--(N)--(D)--(H);
+				\foreach \x/\pos  in{D/150,M/-150,N/-30,H/-80}
+				\fill (\x) circle  (1pt) node[{shift=(\pos:0.25)}]{$\x$};
+			\end{tikzpicture}
+	\end{center}
+	Trong tam giác $BCD$ có $P$ là trọng tâm và $N$ là trung điểm của cạnh $BC$.\\ Suy ra $N$, $P$, $D$ thẳng hàng.\\ 
+	 Vậy thiết diện là tam giác $MND$.\\
+	Xét  tam giác $MND$, ta có $MN=\dfrac{A B}{2}=4$ và $DM=DN=\dfrac{AD\sqrt{3}}{2}=4\sqrt{3}$.\\
+	Do đó  tam giác $MND$ cân tại $D$.\\
+	Gọi $H$ là trung  điểm $MN$ suy ra $DH \perp MN$.\\
+	Diện tích tam giác $S_{\triangle MND}=\dfrac{1}{2}MN \cdot  DH=\dfrac{1}{2}MN \cdot \sqrt{{DM}^2-{MH}^2}=\dfrac{4^2 \sqrt{11}}{4}=13{,}3$.
+ }
+\end{ex}
+
+% nguồn: Ok_TraLoiNgan_Lop11_Lan1
+\begin{ex}%[1H4V1-5]%[ma:ca5d5f88]
+	\immini[thm]{Cho hình chóp $S.ABCD$ có đáy $ABCD$ là hình vuông cạnh bằng $4$, $SB=SC=4$. Gọi $M$, $N$, $P$ lần lượt là trung  điểm của $SA$, $AB$, $CD$. Gọi $Q$ là giao điểm của $(MNP)$ và $SD$. Tính diện tích của đa giác $MNPQ$. (Làm tròn kết quả đến hàng phần chục)}
+	{\begin{tikzpicture}[=>stealth,line join=round,line cap=round,font=\footnotesize,scale=.7]
+		\def\a{6} 
+		 \def\goc{230}
+		\def\b{4} 
+		\def\h{5.5} 
+		 \path
+			(0,0)  coordinate (A)++(0:\a) coordinate (B)++(\goc:\b) coordinate (C)++(180:\a) coordinate (D)
+			($(A)!.5!(C)$) coordinate (O) 
+			($(A)!.5!(B)$) coordinate (N) 
+			 ($(C)!.5!(D)$) coordinate (P)
+			 (O)++(100:\h) coordinate (S)
+			($(S)!.5!(A)$) coordinate (M); 
+		\draw (S)--(B)--(C)--(D)--cycle (S)--(C); 
+		\draw[dashed]  (S)--(A)--(C)
+			(B)--(A)--(D)--(B) 
+			 (M)--(N)--(P)--(M);
+		\foreach \x/\g in{A/160,B/0,C/-90,S/90,N/-90,D/-90,M/10,P/-90} 
+		\fill[black](\x) circle (1pt) 
+			($(\x)+(\g:3.5mm)$)  node{$\x$};
+	\end{tikzpicture}
+	 }
+	 \shortans{5,2}
+	 \loigiai{
+		\begin{center}
+			\begin{tikzpicture}[=>stealth,line join=round,line cap=round,font=\footnotesize,scale=.7]
+					 \def\a{6}
+					\def\goc{230} 
+					 \def\b{4}
+					\def\h{5.5} 
+					\path 
+						(0,0) coordinate (A)++(0:\a) coordinate (B)++(\goc:\b) coordinate (C)++(180:\a) coordinate (D) 
+						($(A)!.5!(C)$)  coordinate (O)
+						($(A)!.5!(B)$) coordinate  (N)
+						($(C)!.5!(D)$)  coordinate (P)
+						($(O)!.5!(P)$) coordinate  (H)
+						(O)++(100:\h) coordinate (S) 
+						($(S)!.5!(A)$) coordinate  (M)
+						($(S)!.5!(D)$)  coordinate (Q);
+					\draw (S)--(B)--(C)--(D)--cycle (S)--(C) 
+						 (Q)--(P);
+					\draw[dashed] (S)--(A)--(C) 
+						(B)--(A)--(D)--(B) 
+						(M)--(N)--(P) 
+						(M)--(Q)--(H); 
+					\foreach  \x/\g in{A/160,B/0,C/-90,S/90,N/-90,D/-90,M/10,Q/110,P/-90,H/-90}
+					\fill[black](\x) circle (1pt) 
+						($(\x)+(\g:3.5mm)$)  node{$\x$};
+				\end{tikzpicture}
+		\end{center}
+		Vì $M$ là điểm chung thứ nhất  của $(SAD)$ và $(MNP)$.\\
+		Lại  có $\heva{&NP \parallel AD \parallel BC\\& NP\subset (MNP)\\& AD\subset (SAD)}$\\
+		 $\Rightarrow(MNP)\cap (SAD)=Mx\parallel AD$.\\
+		 Trong $(SAD)$, gọi $Q=Mx\cap SD$ thì $Q=SD\cap (MNP)$.\\
+		Vì $Mx \parallel AD$ nên $Q$ là trung  điểm của $SD$ và $MQ=\dfrac{1}{2}AD=2$.\\
+		Tứ giác $MNPQ$ có $MQ\parallel NP$, $MQ=2$, $NP=4$, $MN=\dfrac{1}{2}SB=2$, $QP=\dfrac{1}{2}SC=2$.\\  Suy ra tứ giác $MNPQ$ là hình thang cân.\\
+		Kẻ $QH\perp NP$, $H\in NP$. Dễ thấy $PH=1 \Rightarrow QH=\sqrt{QP^2-PH^2}=\sqrt{3}$.\\ 
+		Vậy diện tích  hình thang cân $ MNPQ $ bằng $ \dfrac{\left(2+4\right)\cdot\sqrt{3}}{2}=3\sqrt{3}\approx 5{,}2$.
+	 }
+\end{ex}
+
+% nguồn: Ok_TraLoiNgan_Lop11_Lan1
+\begin{ex}%[1H4V1-5]%[ma:8155f018]
+	\immini{Cho tứ diện $ABCD$ có $N$, $P$ lần lượt là trung điểm của $BC$, $BD$. Điểm $M $  là điểm thay đổi trên cạnh $AC$. Mặt phẳng $(MNP)$ cắt $AD$ tại $Q$. Giả sử $AM=kAC $. Tìm $k$ để tứ giác $MNPQ$ là hình bình hành.}
+	{\begin{tikzpicture}[line cap=round,line join=round,scale=0.8]
+		\coordinate[label=left:$B$] (B) at (0,0); 
+		\coordinate[label=right:$D$] (D) at  (5.5,0);
+		\coordinate[label=below:$C$] (C) at  (3,-2);
+		\coordinate[label=above:$A$] (A) at ($(B)+(0.5,4)$); 
+		\coordinate[label=below:$N$]  (N) at ($(B)!0.5!(C)$);
+		\coordinate[label=below:$P$] (P)  at ($(B)!0.5!(D)$);
+		\coordinate[label=left:$M$]  (M) at ($(A)!.3!(C)$);
+		 \draw (A)--(B)--(C)--(D)--cycle (A)--(C)
+			 (N)--(M);
+		\draw[dashed] (B)--(D) 
+			(N)--(P)--(M); 
+		\foreach \diem in  {A,B,C,P,D,M,N,P} \fill (\diem) circle (1pt);
+	\end{tikzpicture}
+	 }
+	\shortans{0,5} 
+	\loigiai{ 
+		\begin{center}
+			\begin{tikzpicture}[line cap=round,line join=round,scale=0.8]
+					 \coordinate[label=left:$B$] (B) at (0,0);
+					\coordinate[label=right:$D$] (D) at  (5.5,0);
+					\coordinate[label=below:$C$] (C) at  (3,-2);
+					 \coordinate[label=above:$A$] (A) at ($(B)+(0.5,4)$);
+					 \coordinate[label=below:$N$] (N) at ($(B)!0.5!(C)$);
+					 \coordinate[label=below:$P$] (P) at ($(B)!0.5!(D)$);
+					 \coordinate[label=left:$M$] (M) at ($(A)!.5!(C)$);
+					\coordinate[label=above right:$Q$] (Q) at ($(A)!.5!(D)$); 
+					\draw (A)--(B)--(C)--(D)--cycle  (A)--(C)
+						(N)--(M) 
+						 (M)--(Q);
+					\draw[dashed] (B)--(D) 
+						 (N)--(P)--(Q);
+					\foreach \diem in  {A,B,C,P,D,M,N,P,Q} \fill (\diem) circle (1pt);
+				\end{tikzpicture}
+		\end{center}
+		Vì $NP$ là  đường trung bình của tam giác $BCD$ nên $NP \parallel CD $.\\
+		Ta có $M$ là điểm chung của  $(MNP)$ và $(ACD)$.\\
+		Lại có $\heva{&NP \parallel CD\\&  NP \subset (MNP)\\& CD \subset (ACD)}$\\
+		$ \Rightarrow (MNP) \cap (ACD)=Mx  \parallel CD$.\\
+		Trong mặt  phẳng $(ACD)$, gọi $Q=Mx\cap AD$ thì $Q=AD \cap (MNP)$.\\
+		Suy ra tứ giác  $MNPQ$ có $MQ \parallel NP \parallel CD$ nên tứ giác $MNPQ$ là hình thang.\\
+		Để tứ giác $MNPQ$ là hình bình hành thì  $MQ=NP$ mà $NP=\dfrac{1}{2}CD$ nên $ MQ=\dfrac{1}{2}CD$.\\
+		Vậy $MQ$  là đường trung bình của $\triangle ACD$, $M$ là trung điểm của $AC$ và $AM=\dfrac{1}{2}AC$.
+	 }
+\end{ex}
+
+% nguồn: Ok_TraLoiNgan_Lop11_Lan2
+\begin{ex}%[1H4V1-5]%[ma:52ee10dd]
+	Cho tứ diện đều $ABCD$ có cạnh bằng $2$. Gọi $G$ là trọng tâm tam giác $ABC$. Cắt tứ diện bởi mặt phẳng $( GCD)$. Tính diện  tích của thiết diện. (làm tròn đến hàng phần mười)
+	 \shortans{1,4}
+	 \loigiai{
+		\begin{center}
+			\begin{tikzpicture}[scale=.7]
+					\coordinate [label=left:$A$](A)  at (0,0);
+					\coordinate [label=above:$D$](D) at (3.5,5); 
+					\coordinate [label=below right:$B$](B)  at (3,-3);
+					\coordinate [label=right:$C$](C)  at (8,1);
+					\coordinate [label=below left:$M$](M)  at ($(A)!.5 ! (B)$);
+					\coordinate [label=above left:](N) at ($(A)!.5 ! (C)$); 
+					\coordinate [label=below right:$G$](G) at ($(B)!  2/3 ! (N)$);
+					\coordinate [label=below:](J) at  ($(B)!.5 ! (C)$);
+					\foreach \diem in {A,B,C,D,G,M,J} \fill (\diem) circle (1.5pt); 
+					\draw[smooth](D)--(A)--(B)--(C)--(D)--(B) 
+						(D)--(M); 
+					 \draw[dashed](A)--(C)--(M)
+						(A)--(J) 
+						 (D)--(G);
+				\end{tikzpicture}
+		\end{center}
+		Gọi  $M$ là trung điểm $AB$.\\
+		Khi đó  cắt tứ diện bởi mặt phẳng $( GCD)$ ta được thiết diện là $\Delta MCD$.\\
+		Ta có tứ diện  đều $ABCD$ có cạnh bằng $2\Rightarrow MC=MD=\dfrac{2\sqrt{3}}{2}=\sqrt{3}$; $CD=2$.\\
+		Khi đó nửa chu vi  $\Delta MCD$: $p=\dfrac{\sqrt{3}+\sqrt{3}+2}{2}=1+\sqrt{3}$.\\
+	Nên ${{S}_{\Delta MCD}}=\sqrt{p(  p-MC)( p-MD)( p-CD)}=\sqrt{2}=1{,}4$}
+\end{ex}
+
+% nguồn: Ok_TraLoiNgan_Lop11_Lan2
+\begin{ex}%[1H4V1-5]%[ma:a180acb6]
+	Cho khối lập phương $ABCD.A'B'C'D'$ cạnh $5$. Các điểm $E$, $F$ lần lượt trung điểm $C'B'$ và $C'D'$. Tính diện tích thiết diện của khối lập phương cắt bởi mặt phẳng $(  AEF)$. (làm tròn đến hàng phần mười)
+	\shortans{30,1} 
+	 \loigiai{
+		\begin{center}
+			\begin{tikzpicture}[scale=1,font=\footnotesize,line join=round,line cap=round,>=stealth]
+					 \def\bc{5}
+					 \def\ba{2.5}
+					 \def\gocB{25}
+					\coordinate[label=below left:$A$] (A) at (0,0); 
+					\coordinate[label=below: $D$] (D) at  (\gocB:\ba);
+					\coordinate[label=below:$B$] (B) at (\bc,0); 
+					\coordinate[label=right:$C$] (C) at  ($(B)-(A)+(D)$);
+					\coordinate[label=above:$A'$] (A')  at ($(A)+(90:\bc)$);
+					\coordinate[label=above:$B'$] (B')  at ($(B)+(90:\bc)$);
+					\coordinate[label=above:$C'$] (C')  at ($(C)+(90:\bc)$);
+					\coordinate[label=above: $D'$] (D') at ($(D)+(90:\bc)$); 
+					\coordinate[label=below  right:$E$] (E) at ($(B')!0.5!(C')$);
+					\coordinate[label=above:$F$] (F)  at ($(D')!0.5!(C')$);
+					\coordinate[label=above left:$G$] (G)  at ($(D)!2/3!(D')$);
+					\coordinate[label=below  right:$K$] (K) at ($(B)!2/3!(B')$);
+					\coordinate[label=below:$I$] (I)  at ($(C)!2!(D)$);
+					\coordinate[label=below:$J$]  (J) at ($(C)!2!(B)$);
+					\draw (B')--(B)--(C)--(C')--(D')--(A')--(B')--(C') 
+						(A')--(A)--(B) 
+						 (F)--(E)--(J)--(I)--(F)
+						(A)--(K); 
+					 \draw[dashed] (D')--(D)--(A)--(G)--(K)
+						(D)--(C) 
+						(F)--(A)--(E); 
+					\foreach \diem in {A,B,C,D,A',B',C',D',E,F,G,K,I,J} \fill (\diem)  circle (1.0pt);
+				\end{tikzpicture}
+		\end{center}
+		Qua $A$ dựng đường thẳng song song với $EF$  cắt $CD$, $CB$ lần lượt tại $I$, $J$.\\
+		Khi  đó, $IF$ cắt $DD'$ tại $G$ và $EJ$ cắt $BB'$ tại $K$, ta có thiết diện của hình lập phương cắt bởi mặt phẳng $( AEF)$ là ngũ giác $AKEFG$.\\
+		Ta  có $\dfrac{G{D}'}{GD}=\dfrac{{D}'F}{DA}=\dfrac{1}{2}\Rightarrow G{D}'=\dfrac{1}{3}D{D}'=\dfrac{5}{3}\Rightarrow GF=KE=\dfrac{5\sqrt{13}}{6}$, $GK=BD=5\sqrt{2}$\\
+		và  $EF=\dfrac{5\sqrt{2}}{2}$.
+		Suy ra ${{S}_{EFGK}}=\dfrac{{{5}^2}\sqrt{17}}{8}$.\\ 
+		Tam giác $AKG$  cân tại $A$ và $AK=AG=\dfrac{5\sqrt{13}}{3}$.\\
+		 Suy ra ${{S}_{AGK}}=\dfrac{{{5}^2}\sqrt{17}}{6}$.\\
+	 Vậy $S_{AKEFG}=S_{EFGK}+S_{AGK}=\dfrac{7\cdot5^2\sqrt{17}}{24}=30{,}1$.}
+\end{ex}
+
+% nguồn: Ok_TraLoiNgan_Lop11_Lan2
+\begin{ex}%[1H4V1-5]%[ma:9e3e74c2]
+	Cho  tứ diện $ABCD$ có tất cả các cạnh đều bằng $8$. Gọi $G$ là trọng tâm tam giác $ABC$, mặt phẳng $( CGD)$ cắt tứ diện theo một thiết diện có diện tích là. (làm tròn đến hàng phần mười)
+	 \shortans{22,6}
+	 \loigiai{
+		\begin{center}
+			\begin{tikzpicture}[scale=.7]
+					\coordinate [label=left:$A$](A)  at (0,0);
+					\coordinate [label=above:$D$](D)  at (2,5);
+					\coordinate [label=below right:$B$](B)  at (3,-3);
+					\coordinate [label=right:$C$](C)  at (8,1);
+					\coordinate [label=below left:$I$](I) at  ($(A)!.5 ! (B)$);
+					\coordinate [label=above  left:$N$](N) at ($(A)!.5 ! (C)$);
+					\coordinate [label=below right:$G$](G) at ($(B)! 2/3 !  (N)$);
+					\coordinate [label=below:$J$](J) at ($(B)!.5 ! (C)$); 
+					\foreach \diem in {A,B,C,D,G,I,N,J} \fill  (\diem) circle (1.5pt);
+					\draw[smooth](D)--(A)--(B)--(C)--(D)--(B) 
+						(A)--(I); 
+					\draw[dashed](A)--(C)--(I) 
+						(B)--(N) 
+						 (A)--(J);
+				\end{tikzpicture}
+		\end{center}
+		 Gọi giao điểm của $CG$ với $AB$ là $I$. \\
+		Thiết diện của mặt phẳng $( CGD)$ với tứ diện $ABCD$  là tam giác $DCI$.\\
+		Ta có $G$ là trọng tâm tam giác đều $ABC$ nên ta có $CI=\dfrac{8\sqrt{3}}{2}=4\sqrt{3}$ và  $CG=\dfrac{8\sqrt{3}}{3}$.\\
+		 Áp dụng định lí Pytago nên $DG=\sqrt{D{{C}^2}-C{{G}^2}}=\dfrac{8\sqrt{6}}{3}$.\\
+	Vậy ${{S}_{DCI}}=\dfrac{1}{2}DG\cdot CI=\dfrac{1}{2}\cdot\dfrac{8\sqrt{6}}{3}\cdot\dfrac{8\sqrt{3}}{2}=16\sqrt{2}=22{,}6$} 
+\end{ex}
+
+% nguồn: Ok_TraLoiNgan_Lop11_Lan2
+\begin{ex}%[1H4V1-5]%[ma:2eb3a509]
+	Cho tứ diện $ABCD$ có $M$, $N$ lần lượt là trung điểm  của $AB$, $CD$; $P$ là điểm thuộc cạnh $AC$ sao cho $AP=2PC$. Gọi $S_{MNP}$ là diện tích tam giác $MNP$ và $S_{\text{td}}$ là diện tích thiết diện của tứ diện cắt bởi $(MNP)$. Tỉ số $\dfrac{S_{MNP}}{{S_{\text{td}}}}$ bằng
+	\shortans{0,5} 
+	\loigiai{ 
+	 \immini{
+		Trong mặt phẳng $(ACD)$,  $PN\cap AD=I$.\\
+		Trong mặt  phẳng $(ABD)$, $MI\cap BD=Q$.\\
+		Thiết diện của tứ diện cắt bởi $(MNP)$ là tứ  giác $MPNQ$.\\
+		Áp dụng định  lí Menelaus cho tam giác $ACD$ với ba điểm $P$, $N$, $I$ thẳng hàng ta có
+		$$\dfrac{DI}{IA}\cdot \dfrac{AP}{PC}\cdot \dfrac{CN}{ND}=1\Leftrightarrow  \dfrac{DI}{IA}=\dfrac{1}{2}.$$
+		} 
+		{ 
+		\begin{tikzpicture}[font=\footnotesize,line join=round,line cap=round,>=stealth,scale=0.8]
+				\path 
+					 (0,0) coordinate (B)
+					(1,-2) coordinate (C) 
+					(5,0) coordinate (D) 
+					($(C)!.5!(D)$) coordinate (N) 
+					($(B)+(2,3)$) coordinate (A) 
+					($(A)!.5!(B)$) coordinate  (M)
+					 ($(A)!2/3!(C)$) coordinate (P)
+					(intersection of P--N and  A--D) coordinate (I)
+					(intersection of M--I and B--D) coordinate (Q); 
+				 \draw[dashed] (B)--(D)
+					 (I)--(M)--(N)--(Q);
+				\draw 
+					 (A)--(B)--(C)--(D)--cycle
+					(A)--(C) 
+					(M)--(P)--(I)--(D); 
+				\foreach \x/\pos in  {A/90,B/-150,C/-90,D/30,Q/45,M/120,N/-90,P/160,I/0} \fill (\x) circle (1pt) node[{shift=(\pos:0.25)}]{$\x$};
+			\end{tikzpicture}
+		 }
+		 \noindent
+		Áp dụng định lí Menelaus cho tam giác $IAP$ với ba điểm  $D$, $N$, $C$ thẳng hàng ta có
+		$$\dfrac{IN}{NP}\cdot\dfrac{PC}{CA}\cdot\dfrac{AD}{DI}=1\Leftrightarrow \dfrac{IN}{NP}=3\Rightarrow \dfrac{NP}{IP}=\dfrac{1}{4} \text{ và  }\dfrac{IN}{IP}=\dfrac{3}{4}.$$
+		Áp dụng định lí Menelaus cho tam giác $IAM$  với ba điểm $B$, $Q$, $D$ thẳng hàng ta có
+		$$\dfrac{IQ}{QM}\cdot\dfrac{MB}{BA}\cdot\dfrac{AD}{DI}=1\Leftrightarrow  \dfrac{IQ}{QM}=2\Rightarrow \dfrac{IQ}{IM}=\dfrac{2}{3}.$$
+		Ta có 
+		 $$\dfrac{S_{MNP}}{S_{MIP}}=\dfrac{NP}{IP}=\dfrac{1}{4}.\qquad (1)$$
+		$$\dfrac{S_{INQ}}{S_{IPM}}=\dfrac{IN}{IP}\cdot \dfrac{IQ}{IM}=\dfrac{3}{4}\cdot \dfrac{2}{3}=\dfrac{1}{2}\Rightarrow \dfrac{S_{\text{td}}}{S_{IPM}}=\dfrac{1}{2}.\qquad (2)$$ 
+		Từ $(1)$ và $(2)$ suy ra  $\dfrac{S_{MNP}}{S_{\text{td}}}=\dfrac{1}{2}$.
+	} 
+\end{ex}
+
+% nguồn: Ok_TraLoiNgan_Lop11_Lan2
+\begin{ex}%[1H4V1-5]%[ma:6168504d]
+	Cho hình lập phương $ABCD.A'B'C'D'$ có cạnh bằng $5$. Tính diện tích thiết diện của hình lập phương đã cho cắt  bởi mặt phẳng trung trực của đoạn $AC'$. (làm tròn đến hàng phần mười)
+	\shortans{32,5} 
+	 \loigiai{
+		\begin{center}
+			\begin{tikzpicture}[scale=1,font=\footnotesize,line join=round,line cap=round,>=stealth]
+					 \def\bc{4.5}
+					\def\ba{3} 
+					\def\gocB{35} 
+					\coordinate[label=below left:$A'$]  (A') at (0,0);
+					\coordinate[label=above left:$B'$]  (B') at (\gocB:\ba);
+					\coordinate[label=below:$D'$] (D')  at (\bc,0);
+					\coordinate[label=right:$C'$]  (C') at ($(D')-(A')+(B')$);
+					\coordinate[label=above left:$A$]  (A) at ($(A')+(90:\bc)$);
+					 \coordinate[label=above left:$D$] (D) at ($(D')+(90:\bc)$);
+					\coordinate[label=above left:$C$] (C)  at ($(C')+(90:\bc)$);
+					\coordinate[label=above left:$B$] (B) at ($(B')+(90:\bc)$); 
+					\coordinate[label=above:$E$] (E) at ($(B)!0.5!(C)$); 
+					\coordinate[label=below right:$F$] (F) at ($(D)!0.5!(C)$); 
+					 \coordinate[label=right:$G$] (G) at ($(D)!0.5!(D')$);
+					\coordinate[label=below:$H$]  (H) at ($(A')!0.5!(D')$);
+					\coordinate[label=above  left:$I$] (I) at ($(A')!0.5!(B')$);
+					\coordinate[label=above left:$J$] (J) at  ($(B)!0.5!(B')$);
+					\draw  (A)--(B)--(C)--(D)--(D')--(C')--(C)
+						(D)--(A)--(A')--(D') 
+						(E)--(F)--(G)--(H); 
+					\draw[dashed]  (B)--(B')--(A')
+						 (B')--(C')
+						 (H)--(I)--(J)--(E)
+						 (A)--(C');
+					\foreach \diem in {A,B,C,D,A',B',C',D',E,F,G,H,I,J} \fill  (\diem) circle (1.0pt);
+				\end{tikzpicture}
+		\end{center}
+		Gọi $E$, $F$, $G$, $H$, $I$,  $J$ lần lượt là trung điểm của $BC$, $CD$, $DD'$, $A'D'$, $A'B'$, $BB'$.\\
+		Ta có $EA=EC'$ suy ra  $E$ thuộc mặt phẳng trung trực của $AC'$.\\
+		Tương tự $F$, $G$, $H$, $I$, $J$ thuộc mặt phẳng  trung trực của $AC'$.\\
+		Do đó thiết diện của hình lập phương đã cho cắt bởi mặt phẳng trung trực của $AC'$ là lục giác đều $EFGHIJ$ cạnh  $EF=\dfrac{5\sqrt{2}}{2}$.\\
+	Vậy diện  tích thiết diện là $S=6\cdot\left( \dfrac{5\sqrt{2}}{2}\right)^2\cdot\dfrac{\sqrt{3}}{4}=\dfrac{75\sqrt{3}}{4}=32{,}5$.}
+\end{ex}
+
+
+%%%%%%%%%%%%%%%% TỰ LUẬN %%%%%%%%%%%%%%%%
+
+% nguồn: Ok_TuanLuan_Toan11_Lan2
+\begin{ex}%[1H4V1-5]%[ma:063ed9ea]
+	Cho hình lập phương $ABCD.A'B'C'D'$ có cạnh bằng $a$. Cắt hình lập phương  bởi mặt phẳng trung trực của đoạn thẳng $BD'$. Tính diện tích thiết diện.
+	\begin{center}
+		\begin{tikzpicture}[declare function={a=5; b=0.45*a; h=0.65*a;}]
+				\path (0:0) coordinate  (A)
+					(220:b) coordinate (B) 
+					($(B)+(a,0)$)  coordinate (C)
+					(a,0) coordinate (D) 
+				\foreach  \x in {A,B,C,D}{(\x)++(90:h) coordinate (\x1)}
+					(intersection of B--D and A--C) coordinate  (O')
+					(intersection of B1--D1 and A1--C1)  coordinate (O)
+					($(O)!0.5!(C1)$) coordinate (H) 
+					($(B1)!0.5!(C1)$) coordinate (M) 
+					($(D1)!0.5!(C1)$)  coordinate (N)
+					($(A)!0.5!(B)$) coordinate  (Q)
+					($(O')!0.5!(A)$)  coordinate (K)
+					($(A)!0.5!(D)$) coordinate (P) 
+					(intersection of A1--C and H--K)  coordinate (I);
+				\draw[dashed] (A1)--(A)--(B) 
+					 (A)--(D)
+					(A)--(C) 
+					(B)--(D) 
+					(M)--(Q) 
+					(H)--(K) 
+					(N)--(P)--(Q) 
+					 (A1)--(C);
+				\draw (B1)--(A1)--(D1)--(C1) 
+					 (D1)--(D)--(C)
+					 (B)--(C)--(C1)--(B1)--cycle
+					(A1)--(C1) 
+					 (B1)--(D1)
+					(M)--(N); 
+				\foreach  \x/\goc/\t in {A/45/B',B/-90/A',C/-90/D',D/0/C',A1/90/B,B1/90/A,C1/90/D,D1/90/C,O'/-90/O',O/90/O,H/90/H,M/130/M,N/0/N,Q/-90/Q,K/-90/K,P/90/P,I/0/I}
+				 \draw[fill=white] (\x) circle (1pt) node[shift={(\goc:7pt)},font=\scriptsize]{$\t$};
+			\end{tikzpicture}
+	\end{center}
+	\loigiai{ 
+		Thiết diện là hình chữ nhật  $MNPQ$.\\
+		Ta có $\triangle  IBH\backsim\triangle DBD'$ suy ra $\dfrac{IB}{DB}=\dfrac{IH}{DD'}=\dfrac{BH}{BD'}$.\\
+		Suy  ra $BH=\dfrac{IB\cdot BD'}{DB}=\dfrac{\dfrac{a\sqrt{3}}{2}\cdot a\sqrt{3}}{a\sqrt{2}}=\dfrac{3a\sqrt{2}}{4}$ và $IH=\dfrac{IB\cdot DD'}{DB}=\dfrac{\dfrac{a\sqrt{3}}{2}\cdot a}{a\sqrt{2}}=\dfrac{\sqrt{6}a}{4}$. \\
+		 Suy ra $\dfrac{DH}{DO}=\dfrac{BD-BH}{DO}=\dfrac{a\sqrt{2}-\dfrac{3a\sqrt{2}}{4}}{\dfrac{a\sqrt{2}}{2}}=\dfrac{1}{2}\Rightarrow MN=\dfrac{1}{2}AC=\dfrac{a\sqrt{2}}{2}$. \\
+		 Ta có $NP=HK=2HI=\dfrac{a\sqrt{6}}{2}$. \\
+		Vậy $S_{MNPQ}=MN\cdot NP=\dfrac{a\sqrt{2}}{2}\cdot\dfrac{a\sqrt{6}}{2}=\dfrac{\sqrt{3}}{2}a^2$. 
+	} 
+\end{ex}
+
+% nguồn: Ok_TuanLuan_Toan11_Lan2
+\begin{ex}%[1H4V1-5]%[ma:4a51f79b]
+	Cho hình chóp $S.ABCD$ và $M$ là một điểm trên cạnh $SC$, $N$ và $P$ lần lượt là trung điểm của $AB$  và $AD$. Tìm thiết diện của hình chóp với mặt phẳng $(MNP)$.
+	 \loigiai{
+		\begin{center}
+			\begin{tikzpicture}[scale=0.7,font=\footnotesize,line join=round,line cap=round,>=stealth]
+					 \path
+						(0,0) coordinate (A) 
+						(7,0) coordinate  (B)
+						(5,-3) coordinate  (C)
+						(-2,-3)  coordinate (D)
+						(-1,5)  coordinate (S)
+						($(B)!1/2!(A)$) coordinate (N) 
+						($(A)!1/2!(D)$) coordinate  (P)
+						($(S)!1/3!(C)$) coordinate  (M);
+					\path [name path =qc] (D)--($(D)!0.5!180:(C)$); 
+					\path  [name path =qn] (P)--($(P)!1.5!180:(N)$);
+					\path [name intersections ={of  =qc and qn,by={Q}}];
+					 \path [name path =bk] (B)--($(B)!0.5!180:(C)$);
+					\path [name path =nk] (N)--($(N)!1.5!180:(P)$); 
+					\path [name intersections ={of  =bk and nk,by={K}}];
+					\path [name  path =sb] (S)--(B);
+					\path [name  path =mk] (K)--(M);
+					 \path [name intersections ={of =sb and mk,by={E}}];
+					\path [name  path =sd] (S)--(D);
+					\path [name  path =qm] (Q)--(M);
+					\path [name intersections  ={of =sd and qm,by={F}}];
+					\draw (S)--(F)--(Q)--(C)--(K)--(E)--(S)--(C) 
+						 (F)--(D)
+						(F)--(M)--(E); 
+					\draw[dashed]  (S)--(A)--(C)
+						 (B)--(A)--(D)
+						(Q)--(K) 
+						 (F)--(P)--(N)--(E)
+						 (E)--(B);
+					\fill[pattern=north west lines](F)--(P)--(N)--(E)--(M)--(F)--cycle; 
+					\foreach \i/\g in {A/180,B/0,C/-90,D/-90,S/90,E/60,F/180,M/45,N/-60,P/-45,Q/180,K/0} 
+					\fill (\i) circle (1pt)+(\g:3.5mm)  node[scale=1]{$\i$};
+				\end{tikzpicture}
+		\end{center}
+		Gọi $N$, $P$ lần lượt là trung điểm của $AB$ và $AD$. Xét mặt phẳng $(MNP)$ cắt hình chóp  $S.ABCD$.\\
+		Trong mặt phẳng đáy $(ABCD)$, đường thẳng $NP$ cắt $CD$ tại $Q$  và cắt $BC$ tại $K$.\\
+		Xét mặt phẳng  $(SBC)$, đường thẳng qua $K$ và $M$ sẽ cắt $SB$ tại $E$.\\
+		 Tương tự, trong mặt phẳng $(SAD)$, đường thẳng qua $Q$ và $M$ cắt $SD$ tại $F$.\\
+		Khi đó, mặt phẳng $(MNP)$ cắt các cạnh của hình chóp tại các  điểm:
+		\begin{itemize}
+			\item $N$ là trung điểm  của $AB$;
+			\item $E$ là  giao điểm của $SB$ với đường thẳng $KM$;
+			\item $M$  là điểm đã cho trên cạnh $SC$;
+			\item $F$ là giao điểm của $SD$ với  đường thẳng $QM$;
+			\item $P$ là trung điểm  của $AD$.
+		\end{itemize}
+	Như vậy, thiết  diện của hình chóp với mặt phẳng $(MNP)$ là ngũ giác $NEMFP$.}
+\end{ex}
+
+% nguồn: Ok_TuanLuan_Toan11_Lan2
+\begin{ex}%[1H4V1-5]%[ma:4fb0fea3]
+	Cho hình chóp tứ giác $S.ABCD$, có đáy là hình thang với $AD$ là đáy lớn và $P$ là một điểm trên  cạnh $SD$.
+	\begin{enumerate}
+		\item Xác  định thiết diện của hình chóp cắt bởi mặt phẳng $(PAB)$.
+		\item Gọi $M$, $N$ lần lượt là trung điểm của các cạnh $AB$, $BC$. Xác định thiết diện của hình  chóp cắt bởi $(MNP)$.
+	\end{enumerate}
+	 \loigiai{
+		\begin{center}
+			\begin{tikzpicture}[scale=.8,font=\footnotesize,line join=round,line cap=round,>=stealth]
+					 \path
+						 (0,0) coordinate (A)
+						(7,0)  coordinate (D)
+						(6,-2) coordinate (C) 
+						 (2,-2) coordinate (B)
+						 (3,5) coordinate (S)
+						 ($(S)!1/3!(D)$) coordinate (P);
+					\path [name path =ab] (B)--($(B)!1.5!180:(A)$); 
+					\path [name path  =dc] (C)--($(C)!1.5!180:(D)$);
+					\path  [name intersections ={of =ab and dc,by={E}}];
+					\path  [name path =ep] (E)--(P);
+					\path [name path =sc]  (S)--(C);
+					\path  [name intersections ={of =ep and sc,by={Q}}];
+					\draw (S)--(A)--(E)--(D)--(S)--(B) 
+						 (S)--(E)--(P)
+						(S)--(C); 
+					\draw[dashed]  (P)--(A)--(D)
+						(Q)--(B)--(C); 
+					\fill[pattern=north west  lines](A)--(P)--(Q)--(B)--(A)--cycle;
+					\foreach \i/\g in {A/180,B/240,C/-60,D/0,S/90,E/-90,Q/0,P/60} 
+					\fill (\i) circle (1pt)+(\g:3.5mm)  node[scale=1]{$\i$};
+				\end{tikzpicture}
+		\end{center}
+		\begin{enumerate}
+			\item 
+			Trong mặt phẳng $(ABCD)$,  gọi $E=AB\cap CD$.\\
+			Trong mặt phẳng $(ABP)$,  kẻ $EP$.\\
+			Trong  mặt phẳng $(SCD)$, gọi $Q=SC\cap EP$.\\
+			Khi  đó:
+			\begin{itemize}
+				\item Đoạn $AB$ là giao tuyến  của mặt phẳng $(ABP)$ với mặt đáy $(ABCD)$.
+				\item Đoạn $BP$ là  giao tuyến của $(ABP)$ với mặt bên $(SBC)$.
+				\item Đoạn $PQ$ là  giao tuyến của $(ABP)$ với mặt bên $(SCD)$.
+				\item Đoạn $QA$  là giao tuyến của $(ABP)$ với mặt bên $(SAD)$.
+			\end{itemize}
+			Vậy thiết diện của hình chóp với mặt phẳng $(ABP)$ là tứ giác $ABPQ$. 
+			\begin{center}
+				\begin{tikzpicture}[scale=0.8,font=\footnotesize,line join=round,line cap=round,>=stealth]
+						 \path
+						(0,0)  coordinate (A)
+						(7,0) coordinate  (D)
+						(6,-2) coordinate  (C)
+						(2,-2) coordinate  (B)
+						(3,5) coordinate  (S)
+						($(S)!1/3!(D)$) coordinate (P) 
+						($(A)!1/2!(B)$)  coordinate (M)
+						($(C)!1/2!(B)$) coordinate (N); 
+						\path [name path =mn] (M)--($(M)!2!180:(N)$); 
+						\path  [name path =ad] (A)--($(A)!0.5!180:(D)$);
+						\path [name intersections ={of =ad and mn,by={F}}]; 
+						\path [name path  =fp] (F)--(P);
+						\path [name path =as]  (A)--(S);
+						\path [name intersections ={of  =as and fp,by={H}}];
+						\path [name path  =nm] (N)--($(N)!1!180:(M)$);
+						 \path [name path =dc] (C)--($(C)!0.3!180:(D)$);
+						\path  [name intersections ={of =dc and nm,by={G}}];
+						 \path [name path =gp] (G)--(P);
+						\path [name  path =sc] (S)--(C);
+						 \path [name intersections ={of =gp and sc,by={K}}];
+						 \draw (S)--(H)--(F)--(M)--(B)--(N)--(G)--(C)--(D)--(S)--(B)
+						 (C)--(S)
+						(G)--(P) 
+						 (N)--(K)
+						 (H)--(M);
+						 \draw[dashed] (P)--(H)--(A)--(F)
+						 (D)--(A)--(M)--(N)--(C);
+						 \fill[pattern=north west lines](N)--(M)--(H)--(P)--(K)--(N)--cycle;
+						\foreach  \i/\g in {A/135,B/-90,C/0,D/0,S/90,F/180,M/240,N/-90,H/135,P/45,K/45,G/-90}
+						\fill (\i) circle (1pt)+(\g:3.5mm)  node[scale=1]{$\i$};
+					\end{tikzpicture}
+			\end{center}
+			\item Trong mặt phẳng $(ABCD)$, gọi  $F$, $G$ lần lượt là các giao điểm của $MN$ với $AD$ và $CD$.\\
+			Trong mặt phẳng  $(SAD)$, gọi $H=SA\cap FP$.\\
+			Trong mặt phẳng $(SCD)$, gọi $K=SC\cap PG$.\\ 
+			Khi đó: 
+			\begin{itemize}
+				\item Đoạn $MN$ là giao tuyến của $(MNP)$ với đáy $(ABCD)$. 
+				\item Đoạn $NH$ là  giao tuyến của $(MNP)$ với mặt bên $(SAB)$.
+				\item  Đoạn $HP$ là giao tuyến của $(MNP)$ với mặt bên $(SAD)$.
+				\item Đoạn $PK$ là giao tuyến của  $(MNP)$ với mặt bên $(SDC)$.
+				\item Đoạn $KM$  là giao tuyến của $(MNP)$ với mặt bên $(SBC)$.
+			\end{itemize}
+			Vậy thiết diện của hình chóp  với mặt phẳng $(MNP)$ là ngũ giác $MNHKP$.
+		\end{enumerate}
+	} 
+\end{ex}
+
+% nguồn: Ok_TuanLuan_Toan11_Lan2
+\begin{ex}%[1H4V1-5]%[ma:361bba4e]
+	Cho  hình chóp $S.ABCD$, $G$ là điểm nằm trong tam giác $(SCD)$, gọi $E$, $F$ lần lượt là trung điểm của $AB$ và $AD$. Tìm thiết diện của hình chóp khi cắt bởi mặt phẳng $(EFG)$.
+	 \loigiai{
+		\begin{center}
+			\begin{tikzpicture}[scale=0.7,font=\footnotesize,line join=round,line cap=round,>=stealth]
+					 \path
+						(0,0) coordinate (B) 
+						 (7,0) coordinate (C)
+						 (5,-3) coordinate (D)
+						(-1.5,-3) coordinate  (A)
+						 (0,6) coordinate (S)
+						($(A)!1/2!(B)$) coordinate (E) 
+						($(A)!1/2!(D)$) coordinate (F) 
+						($(C)!0.45!(D)$) coordinate (X) 
+						 ($(S)!2/3!(X)$) coordinate (G);
+					\path [name path =if] (E)--($(E)!1!180:(F)$); 
+					\path [name  path =bc] (B)--($(B)!0.5!180:(C)$);
+					\path [name  intersections ={of =bc and if,by={I}}];
+					\path [name  path =fj] (F)--($(F)!1!180:(E)$);
+					\path [name path =cd] (D)--($(D)!0.5!180:(C)$); 
+					 \path [name intersections ={of =fj and cd,by={J}}];
+					\path [name  path =sc] (S)--(C);
+					\path [name path  =gj] (G)--($(G)!0.5!180:(J)$);
+					\path [name intersections ={of =gj and sc,by={K}}]; 
+					 \path [name path =sd] (S)--(D);
+					\path  [name path =gj] (G)--(J);
+					 \path [name intersections ={of =gj and sd,by={M}}];
+					 \path [name path =ik] (I)--(K);
+					\path [name path  =sb] (S)--(B);
+					\path [name intersections ={of  =ik and sb,by={H}}];
+					\path  [name path =sa] (S)--(A);
+					\path [name path =ij] (I)--(J); 
+					\path [name intersections ={of  =ik and sa,by={Y}}];
+					 \path [name intersections ={of =ij and sa,by={Z}}];
+					\draw  (S)--(A)--(F)--(J)--(C)--(S)--(D)
+						 (F)--(M)--(K)
+						 (A)--(I)--(Y)
+						(S)--(X) 
+						 (I)--(Z);
+					 \draw[dashed] (S)--(B)--(D)--(F)--(E)--(Z)
+						(A)--(B)--(I) 
+						(C)--(I) 
+						 (H)--(E)--(G)--(F)
+						 (Y)--(K);
+					 \foreach \i/\g in {A/-90,B/45,C/0,D/0,S/90,F/235,E/-75,G/45,H/135,I/180,J/-90,K/45,M/30}
+					\fill  (\i) circle (1pt)+(\g:3.5mm) node[scale=1]{$\i$};
+				\end{tikzpicture}
+		\end{center}
+		Trong mặt phẳng $(ABCD)$ gọi $I=EF\cap BC$; $EF\cap  CD=J$.\\
+		Trong mặt phẳng $(SCD)$ gọi $K=GJ\cap SC$; gọi $M=GJ\cap  SD$.\\
+		Trong mặt phẳng $(SBC)$ gọi $H=KI\cap  SB$.\\
+		Ta có 
+		\begin{itemize}
+			\item  $(GEF)\cap(ABCD)=EF$,
+			 \item $(GEF)\cap(SAD)=FM$,
+			\item $(GEF)\cap(SCD)=MK$, 
+			 \item $(GEF)\cap(SBC)=KH$,
+			\item $(GEF)\cap(SAB)=HE$. 
+		\end{itemize}
+		Vậy thiết diện của hình chóp $S.ABCD$ cắt bởi mặt phẳng $(EFG)$ là ngũ  giác $EFMKH$.
+	} 
+\end{ex}

@@ -1,0 +1,238 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Lớp 11 | Quan hệ vuông góc trong không gian | Khoảng cách
+% Dạng 1H8?5-2: Khoảng cách giữa 2 điểm, từ 1 điểm đến 1 đường thẳng
+% Số câu: 6  (sinh tự động bởi tach_cau.py; từ nay thầy sửa trực tiếp file này)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%% TRẮC NGHIỆM 4 PHƯƠNG ÁN %%%%%%%%%%%%%%%%
+
+% nguồn: Ok_TracNghiemLop11_Lan1
+\begin{ex}%[1H8H5-2]%[ma:374ec049]
+	 \immini
+	 {
+	Cho lăng trụ đều $ABCD.A'B'C'D'$  có cạnh đáy bằng $2a$, cạnh bên bằng $3a$. Tính độ dài $AC'$ theo $a$.
+	\choice 
+		{$2a\sqrt{2}$} 
+		{\True $a\sqrt{17}$} 
+		{$a\sqrt{22}$} 
+		{$a\sqrt{21}$} 
+		 }
+		{ 
+		\begin{tikzpicture}[font=\footnotesize,line join=round,line cap=round,>=stealth,scale=0.8]
+				 \def \canh{3}
+				\path 
+					(0:0) coordinate (D') 
+					+(90:\canh)  coordinate (D)
+					+(0:\canh)  coordinate (C')
+					+(40:.6*\canh) coordinate  (A')
+					 ($(C')+(D)-(D')$) coordinate (C)
+					($(D)+(A')-(D')$) coordinate (A) 
+					 ($(C')+(A')-(D')$) coordinate (B')
+					 ($(C)+(A)-(D)$) coordinate (B);
+				\draw[dashed] 
+					 (A')--(A)--(C')
+					 (A')--(B')
+					(A')--(D'); 
+				\draw 
+					(C)--(A)--(B)--(B')--(C')--(D')--(D)--(A) 
+					(C)--(B) 
+					(C)--(D) 
+					(C)--(C'); 
+				\foreach  \x/\g in {D'/-90,C'/-90,D/180,A'/135,C/-45,A/90,B'/0,B/90}
+				\fill (\x)  circle (1pt)
+					+(\g:3mm) node  {$\x$};
+			\end{tikzpicture}
+		 }
+	\loigiai{ 
+		Ta  có $AC=\sqrt{AB^2+BC^2}=\sqrt{4a^2+4a^2}=2a\sqrt{2}$.\\
+		 Suy ra $AC'=\sqrt{AC^2+CC'^2}=\sqrt{8a^2+9a^2}=a\sqrt{17}$.
+	 }
+\end{ex}
+
+% nguồn: Ok_TracNghiemLop11_Lan1
+\begin{ex}%[1H8H5-2]%[ma:df9437d2]
+	Cho tứ diện $ABCD$ có $AC=a$, $BD=3a$ và $AC$ vuông góc với  $BD$. Gọi $M$, $N$ lần lượt là trung điểm của các cạnh $AD$ và $BC$. Khi đó, độ dài đoạn thẳng $MN$ là
+	 \choice
+		{\True $ \dfrac{a\sqrt{10}}{2}$} 
+		 {$ \dfrac{3a\sqrt{2}}{2}$}
+		{$  \dfrac{a\sqrt{6}}{2}$}
+		{$  \dfrac{2a\sqrt{3}}{3}$}
+	 \loigiai{
+	 \immini{
+		 Gọi $P$ là trung điểm của $CD$.\\
+		Khi đó $  PN $ là đường trung bình của $ \triangle BCD$, suy ra $PN \parallel BD$, $NP=\dfrac{1}{2}BD=\dfrac{3a}{2}$.\\
+		Tương tự $MP\parallel AC$ và $MP=\dfrac{1}{2}AC=\dfrac{a}{2}$.\\ 
+		Suy ra tam giác $MNP$  vuông tại $P$.\\
+		Theo định lý Pythagore ta  có
+		 $$MN=\sqrt{MP^2+NP^2}=\dfrac{a\sqrt{10}}{2}.$$
+		 }{
+		\begin{tikzpicture}[font=\footnotesize,line join=round,line cap=round,>=stealth,scale=0.8]
+				\foreach \x/\y/\pos in {0/0/B,1/-2/C,5/0/D} \path ($(\x,\y)$)  coordinate (\pos);
+				\path 
+					($(B)+(2,3)$)  coordinate (A)
+					($(A)!.5!(D)$) coordinate (M) 
+					($(C)!.5!(B)$)  coordinate (N)
+					($(D)!.5!(C)$)  coordinate (P);
+				\draw[dashed]  (B)--(D)
+					(M)--(N)--(P); 
+				 \draw
+					 (A)--(B)--(C)--(D)--cycle
+					 (A)--(C)
+					(M)--(P); 
+				\foreach  \x/\pos in {A/90,B/-150,C/-90,D/30,M/30,N/180,P/-30} \fill (\x) circle (1pt) node[{shift=(\pos:0.25)}]{$\x$};
+			\end{tikzpicture}
+		} 
+	 }
+\end{ex}
+
+% nguồn: Ok_TracNghiemLop11_Lan1
+\begin{ex}%[1H8H5-2]%[ma:40343744]
+	Cho hình chóp $S.ABC$ có đáy là tam giác đều cạnh $a$. Biết $SA=a\sqrt{3}$  và $SA$ vuông góc với mặt phẳng $(ABC)$. Khoảng cách từ điểm $S$ đến đường thẳng $BC$ bằng
+	 \choice
+		{$a\sqrt{3}$} 
+		 {$a$}
+		{\True  $\dfrac{a\sqrt{15}}{2}$}
+		{$\dfrac{a\sqrt{15}}{3}$} 
+	 \loigiai{
+	\immini 
+		 {
+		Gọi $M$ là trung điểm của  $BC$.\\
+		 Khi đó $\heva{
+		 & BC\perp AM \\
+		&  BC\perp SA \\
+		}\Rightarrow BC\perp (SAM)\Rightarrow BC\perp SM$.\\ 
+		Do đó  $\mathrm{d}(S,BC)=SM$.\\
+		Xét $\Delta SAM$ vuông  tại $A$ có $$SM=\sqrt{SA^2+AM^2}=\sqrt{3a^2+{{\left(\dfrac{a\sqrt{3}}{2}\right)}^2}}=\dfrac{a\sqrt{15}}{2}.$$
+		Vậy  $\mathrm{d}(S,BC)=\dfrac{a\sqrt{15}}{2}$
+		}{ 
+		\begin{tikzpicture}[scale=.8,font=\footnotesize,line join=round,line cap=round,>=stealth]
+				\path 
+					(0,0) coordinate  (A)
+					++(-60:3) coordinate (B) 
+					(5,0) coordinate  (C)
+					 ($(A)+(0,4)$) coordinate (S)
+					($(B)!.5!(C)$)  coordinate (M);
+				 \foreach \i in {A,B,C}{\draw (S)--(\i);}
+				\draw  (A)--(B)--(C)
+					(S)--(M); 
+				\draw[dashed]  (M)--(A)--(C);
+				\pic[draw,angle radius=2mm] {right angle = S--A--C}; 
+				\foreach \i/\g in {S/90,A/180,B/-90,C/0,M/-30} 
+				\fill[black] (\i) circle (1pt)+(\g:4mm) node[scale=1]{$\i$}; 
+			\end{tikzpicture}
+		} 
+	} 
+\end{ex}
+
+
+%%%%%%%%%%%%%%%% TRẢ LỜI NGẮN %%%%%%%%%%%%%%%%
+
+% nguồn: Ok_TraLoiNgan_Lop11_Lan1
+\begin{ex}%[1H8H5-2]%[ma:7ae6a2f8]
+	Cho tứ diện $S.ABC$ trong đó $SA,SB,SC$ vuông góc với nhau từng đôi một và $SA=3a$, $SB=a$, $SC=2a$. Với $a=\sqrt{5}$, tính khoảng cách từ $A$ đến  đường thẳng $BC$.
+	 \shortans{7}
+	\loigiai{ 
+		\begin{center}
+			\begin{tikzpicture}
+					 \def\a{4}
+					 \def\h{4}
+					\path  (0:0) coordinate (S)
+						++(0:\a) coordinate  (B)
+						++(-150:4*\a/5) coordinate  (C)
+						($(S)+(90:\h)$) coordinate (A) 
+						($(S)!0.5!(B)$) coordinate (M) 
+						($(B)!0.5!(C)$)  coordinate (H);
+					\draw  (S)--(C)--(B)
+						(S)--(A) 
+						(B)--(A)--(H) 
+						(C)--(A); 
+					\draw[dashed]  (H)--(S)--(B);
+					\foreach \x /\goc  in {A/180,B/0,C/-135,S/-135,H/-20}
+					\fill[black]  (\x) circle (1pt)
+						($(\x)+(\goc:3mm)$)  node {$\x$};
+					\draw pic[draw,angle radius=2mm]{right angle=B--S--A}; 
+					\draw  pic[draw,angle radius=2mm]{right angle=A--H--B};
+				\end{tikzpicture}
+		\end{center}
+		Kẻ $AH\perp BC$ tại $H$  Suy ra $\mathrm{d}(A,BC)=AH$.\\
+		Ta có $\heva{&BC\perp  SA\\&BC\perp AH} \Rightarrow BC\perp(SAH)\Rightarrow BC\perp SH$.\\
+		Ta có $SH =\dfrac{1}{\sqrt{\dfrac{1}{SC^2}+\dfrac{1}{SB^2}}}=\dfrac{1}{\sqrt{\dfrac{1}{{(2a)}^2}+\dfrac{1}{a^2}}}=\dfrac{2\sqrt {5}}{5}a$.\\ 
+		Ta có  $AH=\sqrt{SA^2+SH^2}=\sqrt{\left(3a\right)^2+\left(\dfrac{2\sqrt{5}}{5}a\right)^2}=\dfrac{7\sqrt{5}}{5}a$.\\
+		Vậy  $\mathrm{d}(A,BC)=\dfrac{7\sqrt{5}}{5}a=7$ với $a=\sqrt{5}$.
+	 }
+\end{ex}
+
+% nguồn: Ok_TraLoiNgan_Lop11_Lan1
+\begin{ex}%[1H8V5-2]%[ma:2acaa177]
+	Cho hình chóp $A.BCD$ có $AC\perp (BCD)$ và $BCD$ là tam giác đều cạnh bằng $\dfrac{\sqrt{11}}{11}$, biết $AC=\dfrac{\sqrt{22}}{11}$. Khoảng cách từ $A$ đến đường thẳng $BD$ bằng 
+	 \shortans{0,5}
+	 \loigiai{
+	\immini{Gọi $H$ là trung điểm $BD$, ta  có $CH=\dfrac{\sqrt{11}}{11}\cdot\sin60^\circ=\dfrac{\sqrt{33}}{22}$.\\
+		Ta có  $AH=\sqrt{AC^2+CH^2}=\sqrt{\left(\dfrac{\sqrt{22}}{11}\right)^2+\left(\dfrac{\sqrt{33}}{22}\right)^2}=\dfrac{a\sqrt{11}}{2}$.\\
+		Từ $AC\perp(BCD)$ và $CB=CD=a$, $AB=AD$.\\ 
+		Theo định  lí ba đường vuông góc suy ra $AH\perp BD$.\\
+		Vậy khoảng cách từ $A$ đến đường thẳng $BD$  bằng $AH=\dfrac{1}{2}$.
+		} 
+		{\begin{tikzpicture}[line cap=round,line join=round,>=stealth,scale=.8]
+		 \path
+			 (0,0) coordinate (C)
+			(4,-3) coordinate (B) 
+			(7,0)  coordinate (D)
+			($(C)+(0,4)$)  coordinate (A)
+			($(D)!1/2!(B)$) coordinate  (H);
+		 \draw[dashed](H)--(C)--(D);
+		\draw (A)--(C)--(B)--(D)--cycle  (A)--(B)
+			 (A)--(H);
+		\foreach \p/\n in {A/above,C/left,B/below,D/right,H/right} 
+		\fill (\p) circle (1pt) node[\n]{$\p$}; 
+		\path pic[angle radius=2mm,draw=black,angle  eccentricity=1.5] {right angle = A--C--B};
+		\path pic[angle radius=2mm,draw=black,angle eccentricity=1.5] {right  angle = A--C--D};
+		\path pic[angle radius=2mm,draw=black,angle eccentricity=1.5] {right angle = C--H--D}; 
+		\path pic[angle radius=2mm,draw=black,angle  eccentricity=1.5] {right angle = A--H--D};
+	\end{tikzpicture}
+		} 
+	 }
+\end{ex}
+
+% nguồn: Ok_TraLoiNgan_Lop11_Lan1
+\begin{ex}%[1H8V5-2]%[ma:ddc52242]
+	Cho hình chóp ${S.ABCD}$ có ${SA \perp(ABCD),  SA=10, ABCD}$ là hình vuông cạnh bằng $5$. Gọi ${O}$ là tâm của ${A B C D}$. Khoảng cách từ $S$ đến $DM$ với $M$ là trung điểm ${O C}$ và làm tròn kết quả đến một chữ số thập phân.
+	 \shortans{13,8}
+	\loigiai{ 
+		\begin{center}
+			\begin{tikzpicture}[scale=1,font=\footnotesize,line join=round,line cap=round,>=stealth]
+					 \path
+						(0,0) coordinate  (A)
+						++(-140:3)  coordinate (D)
+						++(0:5) coordinate  (C)
+						 ($(A)+(C)-(D)$) coordinate (B)
+						($(A)+(0,4)$)  coordinate (S)
+						($(A)!.5!(C)$) coordinate (O) 
+						($(O)!.5!(C)$) coordinate  (M)
+						($(D)!(S)!(M)$)  coordinate (K)
+						($(S)!(A)!(C)$)  coordinate (H);
+					\foreach \i  in{B,C,D}{\draw (S)--(\i);};
+					\draw (B)--(C)--(D); 
+					\draw[dashed]  (S)--(A)--(B)
+						(A)--(D) 
+						 (A)--(C)
+						(B)--(D)--(M) 
+						 (S)--(K)--(A)--(H);
+					\pic[draw,angle eccentricity=1.8,angle radius=2mm]{right  angle=A--H--C};
+					 \pic[draw,angle eccentricity=1.8,angle radius=2mm]{right angle=S--K--M};
+					 \path (O)--(M) node[midway,sloped]{$/$};
+					\path (C)--(M) node[midway,sloped]{$/$}; 
+					 \path (S)--(A) node[left,midway]{$2a$};
+					 \path (D)--(C) node[below,midway]{$a$};
+					\foreach \i/\g in  {A/180,B/-90,C/-90,D/-90,S/90,O/90,K/-50,H/0,M/50}
+					\fill[black]  (\i) circle (1pt)+(\g:3mm) node[scale=1]{$\i$};
+				\end{tikzpicture}
+		\end{center}
+		Kẻ ${S K \perp D M}$ tại ${K  \Rightarrow \mathrm{d}(S, D M)=S K}$.\\
+		Ta có ${\heva{&D M \perp S  A \\ &D M \perp S K} \Rightarrow DM \perp(SAK) \Rightarrow DM \perp A K}$\\
+		 Ta có ${\Delta K M A \backsim \Delta O M D}$.\\
+		${\Rightarrow \dfrac{K A}{O D}=\dfrac{A M}{D M} \Rightarrow K A=\dfrac{A M \cdot O D}{D M}=\dfrac{\dfrac{3}{4}  a \sqrt{2} \cdot a \sqrt{2}}{\sqrt{\left(\dfrac{a \sqrt{2}}{2}\right)^2+\left(\dfrac{a \sqrt{2}}{4}\right)^2}}=\dfrac{3 \sqrt{10}}{5} a}$.\\
+		Ta có ${S K=\sqrt{S A^2+A K^2}=\sqrt{(2 a)^2+\left(\dfrac{3 \sqrt{10}}{5}  a\right)^2}=\dfrac{\sqrt{190}}{5} a}$\\
+		Vậy ${\mathrm{d}(S, D M)=\dfrac{\sqrt{190}}{5} a}\approx  13{,}8$ với $a=5$.
+	 }
+\end{ex}

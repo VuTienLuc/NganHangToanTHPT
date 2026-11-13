@@ -1,0 +1,81 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Lớp 10 | Véctơ (chưa xét tọa độ) | Tổng và hiệu của hai véctơ
+% Dạng 0H5?2-3: Tìm điểm nhờ đẳng thức véctơ
+% Số câu: 3  (sinh tự động bởi tach_cau.py; từ nay thầy sửa trực tiếp file này)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%% ĐÚNG/SAI %%%%%%%%%%%%%%%%
+
+% nguồn: MaHoaNH_DungSai_Lop10
+\begin{ex}%[0H5N2-3]%[ma:b92d91d4]
+	Cho tam giác $ABC$ và điểm $M$ sao cho $\vec{MA}-\vec{MB}-\vec{MC}=\vec{0}$. Hãy tìm các khẳng  định \textbf{đúng}.
+	\choiceTF 
+		{$M$ là trung  điểm của $BC$}
+		{$M$ là trung điểm của $AB$} 
+		{$M$ là trung điểm của  $AC$}
+		{\True $ABMC$ là hình bình  hành}
+	\loigiai{ 
+		 $$\vec{MA}-\vec{MB}-\vec{MC}=\vec{0} \Leftrightarrow \vec{BA}=\vec{MC}.$$
+		Suy ra $ABMC$  là hình bình hành.
+	 }
+\end{ex}
+
+% nguồn: MaHoaNH_DungSai_Lop10
+\begin{ex}%[0H5N2-3]%[ma:f77d7885]
+	Cho hình bình hành $ABCD$. $M$ là điểm bất  kì sao cho $\overrightarrow{BM}=\overrightarrow{AB}+\overrightarrow{AD}$. Hãy tìm các khẳng định \textbf{đúng}.
+	 \choiceTF
+		{\True $M$ là đỉnh thứ tư của hình bình hành  $CABM$}
+		 {\True $\vec{BM}=\vec{AC}$}
+		{$M$ là đỉnh  thứ tư của hình bình hành $ABCM$}
+		{$M$ là  đỉnh thứ tư của hình bình hành $DABM$}
+	\loigiai{ 
+		\begin{center}
+			\begin{tikzpicture}[scale=1,font=\footnotesize,line join=round,line cap=round,>=stealth]
+					\draw (0,0) coordinate (C) --++(60:2) coordinate  (B)--++(0:3) coordinate (A)--++(-120:2) coordinate (D)--(C);
+					\coordinate (M) at ($(B)+(C)-(A)$);  \draw (B)--(M)--(C)--(A);
+					 \foreach \x/\g in {A/90,B/90,C/-90,D/-90,M/-90}\fill[black] (\x) circle (1pt) +(\g:.3) node{$\x$};
+			\end{tikzpicture}
+		\end{center}
+		\begin{itemize}
+			\item  \[\overrightarrow{BM}=\overrightarrow{AB}+\overrightarrow{AD}\Leftrightarrow \overrightarrow{BM}=\overrightarrow{AC}.\]
+			Vậy $M$ là đỉnh thứ tư của  hình bình hành $CABM$.
+			\item $CABM$ là hình bình hành nên  $\vec{BM}=\vec{AC}$.
+		\end{itemize}
+	} 
+\end{ex}
+
+% nguồn: MaHoaNH_DungSai_Lop10
+\begin{ex}%[0H5H2-3]%[ma:ffa0696e]
+	Cho tam giác đều $ABC$ có cạnh bằng $a$.  Hãy tìm các khẳng định \textbf{đúng}.
+	\choiceTF 
+		{\True $|\overrightarrow{AB}+\overrightarrow{BC}|=a$} 
+		 {$|\overrightarrow{AB}+\overrightarrow{AC}|=a\sqrt{2}$}
+		{\True  $|\overrightarrow{AB}-\overrightarrow{AC}|=a$}
+		{\True $|\overrightarrow{AB}+\overrightarrow{AC}|=a\sqrt{3}$} 
+	 \loigiai{
+		\begin{center}
+			\begin{tikzpicture}[scale=1,font=\footnotesize,line join=round,line cap=round,>=stealth]
+					\draw (0,0) coordinate (A) --++(60:3) coordinate (B)--++(-60:3) coordinate (C)--(A); 
+					\coordinate (D) at ($(B)+(C)-(A)$); 
+					\path (intersection of  A--D and C--B) coordinate (M);
+					 \draw (A)--(B)--(D)--(C)
+						(A)--(D); 
+					\foreach \x/\g in {A/180,B/90,C/0,D/90,M/90}\fill[black] (\x)  circle (1pt) +(\g:.3) node{$\x$};
+				\end{tikzpicture}
+		\end{center}
+		\begin{itemize}
+			\item  $|\overrightarrow{AB}+\overrightarrow{BC}|=|\overrightarrow{AC}|=a$.
+			 \item
+			Ta có $\overrightarrow{AB}+\overrightarrow{AC}=\overrightarrow{AD}$  (với $D$ là điểm thỏa mãn $ABDC$ là hình bình hành).\\
+			Gọi $M$ là giao điểm của $AD$ và $BC$ $\Rightarrow M$ là trung điểm của $BC$ và $AD$ (tính chất hình bình  hành).\\
+			Xét  $\triangle ABC$, có
+			\begin{eqnarray*}
+				&&AB^2=AM^2+BM^2  \\
+				 &\Rightarrow&AM^2=AB^2-BM^2=AB^2-\left(\dfrac{BC}{2}\right)^2a^2-\left(\dfrac{a}{2}\right)^2=\dfrac{3a^2}{4}\\
+				 &\Rightarrow&AM=\dfrac{a\sqrt{3}}{2}.
+			\end{eqnarray*}
+			Vậy $AD=2AM=2 \cdot \dfrac{a  \sqrt{3}}{2}=a\sqrt{3}$.
+			\item $|\overrightarrow{AB}-\overrightarrow{AC}|=|\overrightarrow{CB}|=a$. 
+		\end{itemize}
+	} 
+\end{ex}

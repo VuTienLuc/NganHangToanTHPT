@@ -1,0 +1,146 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Lớp 11 | Quan hệ vuông góc trong không gian | Phép chiếu vuông góc
+% Dạng 1H8?3-2: Hình chiếu vuông góc của đa giác trên mặt phẳng
+% Số câu: 4  (sinh tự động bởi tach_cau.py; từ nay thầy sửa trực tiếp file này)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%% TRẮC NGHIỆM 4 PHƯƠNG ÁN %%%%%%%%%%%%%%%%
+
+% nguồn: Ok_TracNghiemLop11_Lan1
+\begin{ex}%[1H8N3-2]%[ma:91fa67e4]
+	Chon hình hộp chữ nhật $ABCD.A'B'C'D'$.  Hình chiếu vuông góc của điểm $C$ trên mặt phẳng $(ABB'A')$ là điểm nào dưới đây?
+	 \choice
+		{$D$} 
+		 {\True $B$}
+		 {$C'$}
+		{$B'$} 
+	 \loigiai{
+		\begin{center}
+			\begin{tikzpicture}[scale=.6,>=stealth,font=\footnotesize,line join=round,line cap=round]
+					\def\a{3} 
+					\def\b{2} 
+					\def\h{3.5} 
+					\path (0:0)  coordinate (A)
+						 ++(0:\a) coordinate (D)
+						++(-130:\b)  coordinate (C)
+						($(A)+(C)-(D)$)  coordinate (B)
+						 ($(A)+(90:\h)$) coordinate (A')
+						($(B)+(90:\h)$) coordinate (B') 
+						($(C)+(90:\h)$)  coordinate (C')
+						($(D)+(90:\h)$) coordinate  (D');
+					\draw[dashed]  (B)--(A)--(D)
+						(A)--(A'); 
+					\draw[thick] (C)--(C') 
+						(D)--(D') 
+						(B)--(B') 
+						(C)--(C') 
+						(B)--(C)--(D) 
+						 (A')--(B')--(C')--(D')--cycle;
+					\foreach  \x/\g in {A/180,B/180,C/0,D/0,A'/180,B'/180,C'/0,D'/0}
+					 \fill[black] (\x) circle (1pt)
+						($(\g:4mm)+(\x)$)  node {$\x$};
+				\end{tikzpicture}
+		\end{center}
+		Ta có $CB\perp(ABB'A')$ nên suy ra hình chiếu của $C$ trên  $(ABB'A')$ là $B$.
+	 }
+\end{ex}
+
+% nguồn: Ok_TracNghiemLop11_Lan1
+\begin{ex}%[1H8N3-2]%[ma:09359668]
+	Cho hình chóp  $S.ABCD$ có $SA\perp(ABCD)$. Hình chiếu của tam giác $SBC$ trên mặt phẳng
+	$(ABCD)$  là
+	 \choice
+		 {Tam giác $SAB$}
+		{\True Tam  giác $ABC$}
+		{Tam giác  $SAD$}
+		{Tam  giác $BCD$}
+	 \loigiai{
+		\begin{center}
+			\begin{tikzpicture}[line join=round,line cap=round,line width=.6pt,font=\footnotesize,scale=0.6]
+					 \def\a{4}
+					\def\h{4} 
+					\path (0:0)  coordinate (A)
+						++(0:\a)  coordinate (D)
+						++(-130:\a/2) coordinate (C) 
+						 ($(A)+(C)-(D)$) coordinate (B)
+						($(A)+(90:\h)$) coordinate (S) 
+						 (intersection of A--C and B--D) coordinate (O);
+					\draw[dashed] (B)--(A)--(D) 
+						(A)--(S); 
+					\draw[thick]  (B)-- (C)--(D)
+						 (B)--(S)
+						 (C)--(S)
+						(D)--(S); 
+					\foreach \x/\g  in {A/135,B/-135,C/-45,D/45,S/90}
+					\fill[black] (\x) circle (1pt) 
+						 ($(\g:3mm)+(\x)$) node {$\x$};
+					 \draw pic[draw,angle radius=3mm]{right angle=D--A--S};
+				\end{tikzpicture}
+		\end{center}
+		Ta có $A$ là hình chiếu của $S$ trên  $(ABCD)$.\\
+		 Vậy hình chiếu của tam giác $SBC$ trên mặt phẳng
+		 $(ABCD)$ là tam giác $ABC$.
+	 }
+\end{ex}
+
+% nguồn: Ok_TracNghiemLop11_Lan1
+\begin{ex}%[1H8H3-2]%[ma:905818fb]
+	Cho hình  chóp $S.ABC$ có đáy $ABC$ là tam giác đều và $SA=SB=SC$. Gọi $I$ là hình chiếu vuông góc của $S$ lên mặt phẳng $(ABC)$. Khẳng định nào sau đây đúng?
+	 \choice
+		{$I$  là trung điểm $AC$}
+		{$I$ là trung điểm  $BC$}
+		 {$I$ là trung điểm $AB$}
+		{\True  $I$ là trọng tâm tam giác $ABC$}
+	 \loigiai{
+	\immini{ Ta có $\triangle SIA$,  $\triangle SIB$, $\triangle SIC$ là các tam giác vuông tại $I$ vì $SI\perp(ABC)$.\\
+		Xét $\triangle SIA$ vuông tại $I$ và $\triangle SIB$ vuông  tại $I$ có\\
+		$\heva{&SI~\text{là cạnh  chung}\\
+		 &SA=SB~\text{(giả thiết)}}$\\
+		 $\Rightarrow \triangle SIA=\triangle SIB$ (cạnh huyền - cạnh góc vuông)\\
+		$\Rightarrow IA=IB$  (hai cạnh tương ứng)\\
+		Tương tự ta có $\triangle SIB=\triangle SIC \Rightarrow IB=IC$.\\ 
+		 $\Rightarrow IA=IB=IC$.\\
+		Vì $\triangle ABC$ đều nên $I$ là trọng tâm  của $\triangle ABC$. }{
+		\begin{tikzpicture}[scale=.9,>=stealth,font=\footnotesize,line join=round,line cap=round]
+				\def\a{5} 
+				 \def\h{5}
+				\path  (0:0) coordinate (A)
+					++(0:\a) coordinate (B) 
+					++(-150:4*\a/5) coordinate (C) 
+					($(A)!0.5!(B)$)  coordinate (M)
+					 ($(C)!2/3!(M)$) coordinate (I)
+					 ($(I)+(90:\h)$) coordinate (S);
+				\draw[thick]  (C)--(A)
+					 (C)--(B)
+					(A)--(S) 
+					(B)--(S) 
+					 (C)--(S);
+				\draw[dashed]  (A)--(B)
+					(S)--(I) 
+					 (C)--(I)
+					(A)--(I) 
+					 (I)--(B);
+				\draw  pic[draw,angle radius=2mm]{right angle=S--I--B};
+				\draw pic[draw,angle radius=2mm]{right  angle=C--I--S};
+				\draw pic[draw,angle radius=2mm]{right angle=S--I--A}; 
+				\foreach \x / \goc in  {A/180,B/0,C/-135,I/-60,S/90}
+				\fill (\x) circle (1pt) 
+					($(\x)+(\goc:3mm)$) node  {$\x$};
+			\end{tikzpicture}
+		 }
+	 }
+\end{ex}
+
+
+%%%%%%%%%%%%%%%% ĐÚNG/SAI %%%%%%%%%%%%%%%%
+
+% nguồn: Ok_dungsai_lop11_Lan2
+\begin{ex}%[1H8H3-2]%[ma:62d2d38b]
+	Cho hình chóp $S.ABCD$ có $SA \perp (ABCD)$,  tứ giác $ABCD$ là hình vuông cạnh $a$, $SA = 2a\sqrt{2}$. Gọi $M$ là
+	trung điểm của cạnh $BC$. 
+	\choiceTF 
+		{\True $SD$ là hình chiếu  vuông góc của $SC$ trên mặt phẳng $(SAD)$}
+		{\True $BD \perp (SAC)$} 
+		{Gọi $\alpha$ là  góc giữa $SC$ và mặt phẳng $(SAB)$. Khi đó $\cos\alpha = \dfrac{\sqrt{55}}{15}$}
+		{\True $\tan$ của góc giữa đường thẳng $SM$ và $(SAD)$ bằng  $\dfrac{2}{\sqrt{33}}$}
+\end{ex}

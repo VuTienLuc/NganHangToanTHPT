@@ -1,0 +1,97 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Lớp 10 | Véctơ (chưa xét tọa độ) | Tích của một số với véctơ
+% Dạng 0H5?3-9: Toán thực tế  áp dụng tích 1 số với véctơ
+% Số câu: 2  (sinh tự động bởi tach_cau.py; từ nay thầy sửa trực tiếp file này)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%% TRẢ LỜI NGẮN %%%%%%%%%%%%%%%%
+
+% nguồn: MaHoaNH_TraLoiNgan_Lop10
+\begin{bt}%[0H5V3-9]%[ma:63cad46c]
+	Một vật đang ở vị trí $O$ chịu hai lực tác dụng ngược chiều nhau là $\vv{F_1}$ và $\vv{F_2}$, trong đó độ lớn lực $\vv{F_2}$ lớn gấp đôi độ lớn lực $\vv{F_1}$. Người ta muốn vật dừng lại nên cần tác dụng vào vật hai lực $\vv{F_3}$ và $\vv{F_4}$ có phương hợp với lực $\vv{F_1}$ các góc $45^\circ$ như hình vẽ, chúng có độ lớn  bằng nhau và bằng $20\mathrm{\,N}$. Tính tổng độ lớn của hai lực $\vv{F_1}$, $\vv{F_2}$ (làm tròn kết quả đến hàng phần mười).
+	\begin{center}
+		\begin{tikzpicture}[line join=round,line cap=round,thick,>=stealth,font=\footnotesize,scale=1]
+				\coordinate (O) at (0,0); 
+				\coordinate (B) at  (4,0);
+				\coordinate (C) at  (2,2);
+				\coordinate (D) at (2,-2); 
+				\fill[gray!30] (O)  circle (1.2);
+				\path (O)  node[above left]{$O$};
+				 \draw[->](O)--(4,0) node[above]{$\vv{F}_1$};
+				\draw[->](O)--(-8,0) node[above]{$\vv{F}_2$}; 
+				\draw[->](O)--(-4,0)  node[above]{$\vv{F}_{12}$};
+				\draw[dashed,->](O)--(1.5,1.5) node[above  left]{$\vv{F}_3$};
+				\draw[dashed,->](O)--(1.5,-1.5)  node[below left]{$\vv{F}_4$};
+				\draw[dashed](1.5,1.5)--(3,0); 
+				\draw[dashed](1.5,-1.5)--(3,0); 
+				\draw[dashed,->](O)--(3,0)  node[above]{$\vv{F}_{34}$};
+				\draw  (O) circle (1.2);
+				\pic["$45^\circ$",draw,angle radius=5mm,angle eccentricity=1.6]{angle=B--O--C}; 
+				\pic["$45^\circ$",draw,angle  radius=4mm,angle eccentricity=1.7]{angle=D--O--B};
+			\end{tikzpicture}
+	\end{center}
+	\shortans{56,6} 
+	 \loigiai{
+		Ta có  $\left|\vv{F}_2 \right|=2\left|\vv{F}_1 \right|$ và $\vv{F}_1$, $\vv{F}_2$ ngược hướng.\\
+		Đặt $\vv{F}_{12}=\vv{F}_1+\vv{F}_2\Rightarrow \left|\vv{F}_{12} \right|= \left|\vv{F}_2 \right|-\left|\vv{F}_1 \right|=\left|\vv{F}_1 \right|$.\\ 
+		Đặt $\vv{F}_{34}=\vv{F}_3+\vv{F}_4$.\\ 
+		Do $\vv{F}_3$ và $\vv{F}_4$ có phương hợp với lực $\vv{F_1}$ các  góc $45^\circ$ nên $\vv{F}_3\perp \vv{F}_4$.\\
+		Mặt khác $\left|\vv{F}_3\right|=\left|\vv{F}_4\right|=20\mathrm{\,N}  $.\\
+		Do đó $\left|\vv{F}_{34}\right|=\sqrt{2}\left|\vv{F}_3\right|=20\sqrt{2}\mathrm{\,N}$.\\ 
+		Để vật dừng lại thì $\vv{F}_{12}=-\vv{F}_{34}\Rightarrow \left|\vv{F}_{12}\right|=\left|\vv{F}_{34}\right|\Leftrightarrow  \left| \vv{F}_1\right|=20\sqrt{2}\mathrm{\,N}$.\\
+		Vậy  $\left| \vv{F}_1\right|+\left| \vv{F}_2\right|=40\sqrt{2}\mathrm{\,N}\approx 56{,}6\mathrm{\,N}$.
+	} 
+\end{bt}
+
+% nguồn: MaHoaNH_TraLoiNgan_Lop10
+\begin{bt}%[0H5V3-9]%[ma:bbdd99b1]
+	 \immini[thm]{
+	Một chất điểm $A$ chịu tác dụng của ba lực $\overrightarrow{F_1}, \overrightarrow{F_2}, \overrightarrow{F_3}$ như hình vẽ biết chất điểm $A$ đang ở trạng thái cân bằng. Nếu độ lớn của lực $\overrightarrow{F}_1$ bằng $12$ N thì độ lớn của lực $F_3$ bằng bao nhiêu (làm tròn kết quả đến hàng phần mười theo đơn vị  N)?
+	}{ 
+	\begin{tikzpicture}[rotate=90,scale=1.3,font=\footnotesize,line join=round,line cap=round,>=stealth]
+			\path (0,0) coordinate (A)++(0:1)  coordinate (y)
+				($(A)+(-90:1.73)$) coordinate (x) 
+				($(A)+(120:2)$) coordinate  (z)
+				($(A)!0.8!(x)$) coordinate  (F1) node[above,scale =1]{$\overrightarrow{F_1}$}
+				($(A)!0.8!(y)$) coordinate (F2)  node[right,scale =1]{$\overrightarrow{F_2}$}
+				($(A)!0.8!(z)$) coordinate (F3) node[above left,scale =1]{$\overrightarrow{F_3}$}; 
+			\draw[thick,->] (A)--(x); 
+			 \draw[thick,->] (A)--(y);
+			 \draw[thick,->] (A)--(z);
+			 \pic[draw,thin,angle radius=2mm] {right angle = y--A--x};
+			 \pic[draw,thin,angle radius=2mm] {angle = y--A--z};
+			\foreach \x/\g in {A/-180} \fill (\x)  circle (1.2pt)+(\g:.3) node {$\x$};
+			\foreach \x/\g in {A/60} \fill (\x) circle (1.2pt)+(\g:.4) node {$120$}; 
+		\end{tikzpicture}
+	 }
+	 \shortans{13,9}
+	 \loigiai{
+	 \immini{
+		Đặt $\overrightarrow{F}_1=\overrightarrow{AB}, \overrightarrow{F_2}=\overrightarrow{AD}, \overrightarrow{F_3}=\overrightarrow{AE}$.\\ 
+		Dựng  hình chữ nhật $A BC D$. Do vật ở trạng thái cân bằng nên
+		\[ 
+		\overrightarrow{F}_1+\overrightarrow{F}_2+\overrightarrow{F_3}=\overrightarrow{0} \Leftrightarrow \overrightarrow{AB}+\overrightarrow{AD}+\overrightarrow{A E}=\overrightarrow{0} \Leftrightarrow  \overrightarrow{AC}=-\overrightarrow{A E}.
+		\] 
+		 Ta có $A B=12, \widehat{C AD}=180^{\circ}-120^{\circ}=60^{\circ} \Rightarrow \widehat{B AC}=30^{\circ}$.
+		 }{
+		\begin{tikzpicture}[rotate=90,scale=1.3,font=\footnotesize,line join=round,line cap=round,>=stealth]
+				\path (0,0) coordinate (A)++(0:1) coordinate (D) 
+					($(A)+(120:2)$)  coordinate (E)
+					($(A)+(-60:2)$)  coordinate (C)
+					($(A)+(C)-(D)$)  coordinate (B);
+				\draw  (A)--(B)
+					(A)--(D) 
+					 (A)--(E)
+					 (A)--(C)
+					(B)--(C)--(D); 
+				\pic[draw,thin,angle  radius=2mm] {right angle = D--A--B};
+				 \pic[draw,thin,angle radius=2mm] {angle = D--A--E};
+				\foreach \x/\g in {A/-180,D/30,C/-30,B/-120,E/0} \fill (\x) circle  (1.2pt)+(\g:.2) node {$\x$};
+				\foreach \x/\g in {A/60} \fill (\x) circle  (1.2pt)+(\g:.4) node {$120$};
+			\end{tikzpicture}
+		} 
+		 \noindent
+		Tam giác $A BC$ vuông tại $B$ nên  $BC=A B \tan 30^{\circ}=12 \cdot \dfrac{\sqrt{3}}{3}=4 \sqrt{3}=AD$.\\
+		Suy ra $AC=\sqrt{A B^2+BC^2}=\sqrt{12^2+(4 \sqrt{3})^2}=8 \sqrt{3}$. \\Do  vậy $\left|\overrightarrow{F_3}\right|=\left|\overrightarrow{A E}\right|=AC=8\sqrt{3} \approx 13{,}9$.
+	 }
+\end{bt}

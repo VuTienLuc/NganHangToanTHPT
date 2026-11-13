@@ -1,0 +1,594 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Lớp 11 | Đường thẳng, mặt phẳng. Quan hệ song song trong | Hình lăng trụ và hình hộp (xiên)
+% Dạng 1H4?5-1: Câu hỏi lý thuyết
+% Số câu: 20  (sinh tự động bởi tach_cau.py; từ nay thầy sửa trực tiếp file này)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%% TRẮC NGHIỆM 4 PHƯƠNG ÁN %%%%%%%%%%%%%%%%
+
+% nguồn: Ok_Toan11_TracNghiem_Lan2
+\begin{ex}%[1H4N5-1]%[ma:61e30e2e]
+	Trong các khẳng định sau, khẳng định  nào \textbf{sai}?
+	 \choice
+		 {Hai đáy của hình lăng trụ là hai đa giác bằng nhau}
+		{\True Các mặt bên của hình lăng trụ là các  hình bình hành bằng nhau}
+		{Các cạnh bên của hình lăng trụ bằng  nhau và song song với nhau}
+		{Các mặt bên  của hình lăng trụ là các hình bình hành}
+	 \loigiai{
+		\begin{center}
+			\begin{tikzpicture}[scale=0.8,font=\footnotesize,line join=round,line cap=round,>=stealth]
+					\coordinate (A) at  (0,0);
+					\coordinate (B) at  (2,-1);
+					\coordinate (C) at (2,0); 
+					\coordinate  (D) at (3,2);
+					 \coordinate (E) at (1,2);
+					\coordinate (C) at  ($(B)+(D)-(A)$);
+					\coordinate (H)  at (1,4);
+					\foreach \i in {A,B,C,D,E}{\coordinate (\i') at  ($(\i)+(H)$);}
+					 \draw (A)--(B)--(C);
+					 \draw (A')--(B')--(C')--(D')--(E')--cycle;
+					\draw  (A)--(A')
+						(B)--(B') 
+						 (C)--(C');
+					\draw[dashed,thin](A)--(E)--(D)--(C) 
+						 (D)--(D')
+						 (E)--(E');
+					\foreach \i/\g in  {A'/90,B'/90,C'/90,D'/90,A/-90,B/-90,C/-90,D/-90,E/90,E'/90}{\draw[fill=blue](\i) circle (1pt)
+						 ($(\i)+(\g:5mm)$) node[scale=1]{$ $};}
+				\end{tikzpicture}
+		\end{center}
+		Theo tính chất của hình  lăng trụ thì\\
+		Hai đáy của hình lăng trụ là hai đa  giác bằng nhau và nằm trên hai mặt phẳng song song nhau.\\
+		Các cạnh bên  của hình lăng trụ bằng nhau và song song với nhau.\\
+		Các mặt bên của hình lăng trụ là các hình bình hành nhưng chưa chắc  chúng bằng nhau.
+	} 
+\end{ex}
+
+% nguồn: Ok_Toan11_TracNghiem_Lan2
+\begin{ex}%[1H4N5-1]%[ma:ab283855]
+	Cho hình lăng trụ tam  giác, chọn khẳng định \textbf{sai}.
+	 \choice
+		{Các cạnh bên song song  với nhau}
+		{\True Các  mặt bên là các hình chữ nhật}
+		{Hai tam  giác đáy bằng nhau}
+		{Hai đáy nằm trên hai mặt  phẳng song song}
+	\loigiai{ 
+		\begin{center}
+			\begin{tikzpicture}[scale=0.8,font=\footnotesize,line join=round,line cap=round,>=stealth]
+					\coordinate (A)  at (-2,0);
+					\coordinate (B) at (-0.5,-2); 
+					\coordinate (C) at (2,0); 
+					\foreach \i in {A,B,C}{\coordinate  (\i') at ($(\i)+(1,4)$); \draw (\i)--(\i');}
+					\draw  (A')--(B')--(C')--cycle;
+					 \draw (A)--(B)--(C);
+					 \draw[dashed,thin](A)--(C);
+					\foreach \i/\g in  {A/180,B/-90,C/0,A'/180,B'/-30,C'/0}{\draw[fill=black](\i) circle (1pt)
+						($(\i)+(\g:4mm)$)  node[scale=1]{$\i$};}
+				\end{tikzpicture}
+		\end{center}
+		Theo định nghĩa hình lăng trụ thì  các mặt bên là hình bình hành.
+		Vậy khẳng định \lq \lq  Các mặt bên là hình chữ nhật\rq\rq là sai.
+	} 
+\end{ex}
+
+% nguồn: Ok_TracNghiemLop11_Lan1
+\begin{ex}%[1H4N5-1]%[ma:c8ac5daf]
+	Hình lăng trụ có các mặt bên là hình gì? 
+	 \choice
+		{Hình thoi} 
+		{Hình  vuông}
+		{Hình chữ  nhật}
+		{\True Hình bình hành} 
+	\loigiai{Hình lăng trụ có các  mặt bên là các hình bình hành.
+	 }
+\end{ex}
+
+% nguồn: Ok_TracNghiemLop11_Lan1
+\begin{ex}%[1H4N5-1]%[ma:59ad8194]
+	Cho hình hộp $ABCD.A'B'C'D'$. Trong các khẳng định sau, khẳng  định nào \textbf{sai}?
+	\choice 
+		 {$\left(ABCD\right)\parallel \left(A'B'C'D'\right)$}
+		 {$\left(AA'D'\right)\parallel \left(BCC'\right)$}
+		{\True  $\left(BDD'\right)\parallel \left(ACC'\right)$}
+		{$\left(ABB'\right)\parallel \left(CDC'\right)$} 
+	 \loigiai{
+	\immini{Gọi $O$ là giao điểm của $AC$ và $BD$.  \\
+		Khi đó, $O\in (BDD')\cap (ACC')$ nên $(BDD')$ không song song với $(ACC')$. }{\begin{tikzpicture}[scale=1,font=\footnotesize,line join=round,line cap=round,>=stealth]
+		\path (-0.5,2) coordinate (h) 
+			(0,0)  coordinate (B)++(2.5,0) coordinate (C)++(1,0.8) coordinate (D)
+			($(B)+(D)-(C)$) coordinate (A) 
+			(barycentric cs:A=1,C=1) coordinate (O); 
+		\foreach  \p in {A,B,C,D}\path ($(\p)+(h)$) coordinate (\p');
+		\draw (A')--(B')--(B)--(C)--(D)--(D')--cycle (B')--(C')--(D') 
+			 (C)--(C');
+		 \draw[dashed] (B)--(A)--(D)--(B)
+			(C)--(A)--(A'); 
+		\foreach  \p/\g in {A/150,B/240,C/-60,D/0,A'/90,B'/180,C'/-30,D'/45,O/-90} \fill[black] (\p) circle (1pt)+(\g:0.3) node{$\p$};
+	\end{tikzpicture}
+		 }
+	 }
+\end{ex}
+
+% nguồn: Ok_TracNghiemLop11_Lan1
+\begin{ex}%[1H4N5-1]%[ma:e524d302]
+	Cho hình lăng  trụ tam giác, chọn khẳng định \textbf{sai}?
+	 \choice
+		{Các cạnh bên song  song với nhau}
+		{\True Các mặt bên  là các hình chữ nhật}
+		{Hai tam giác  đáy bằng nhau}
+		{Hai đáy nằm trên hai  mặt phẳng song song}
+	\loigiai{ 
+		Theo định nghĩa hình lăng trụ thì  các mặt bên là hình bình hành. Vậy khẳng định \lq \lq Các mặt bên là hình chữ nhật\rq \rq \, là \textbf{sai}.
+	 }
+\end{ex}
+
+% nguồn: Ok_TracNghiemLop11_Lan1
+\begin{ex}%[1H4N5-1]%[ma:b8c996e4]
+	Lăng trụ ngũ  giác có số đỉnh, số cạnh, số mặt lần lượt là $n$, $ p$, $ q$. Chọn khẳng định đúng
+	 \choice
+		{$n=5$;  $p=15$; $q=7$}
+		{$n=5$;  $p=10$; $q=7$}
+		{$n=10$; $p=15$; $q=5$} 
+		{\True $n=10$; $p=15$; $q=7$} 
+	 \loigiai{
+		\begin{itemize}
+			\item Số đỉnh $n=5\cdot  2=10$.
+			 \item Số cạnh $p=5\cdot 2 +5=15$.
+			\item  Số mặt $q=2+5=7$.
+		\end{itemize}
+		Vậy, lăng trụ ngũ giác có số đỉnh, số cạnh, số mặt lần lượt là $n=10$, $p=15$  và $q=7$.
+	} 
+\end{ex}
+
+% nguồn: Ok_TracNghiemLop11_Lan1
+\begin{ex}%[1H4N5-1]%[ma:0f174306]
+	Tìm khẳng  định \textbf{ sai } về hình lăng trụ.
+	\choice 
+		{ \True Hình lăng trụ tứ giác  có mặt bên là hình tứ giác}
+		{ Hình lăng trụ có các cạnh bên song song} 
+		{ Hình hộp là hình lăng trụ có đáy là  hình bình hành}
+		{ Hình lăng  trụ tam giác có đáy là tam giác}
+	 \loigiai{
+		 \lq\lq Hình lăng trụ tứ giác có mặt bên là hình tứ giác\rq\rq\, là khẳng định sai.
+	} 
+\end{ex}
+
+% nguồn: Ok_TracNghiemLop11_Lan1
+\begin{ex}%[1H4N5-1]%[ma:4662d248]
+	Phát  biểu nào dưới đây là đúng về phép chiếu song song?
+	 \choice
+		{\True Phép chiếu  song song biến hai đường thẳng song song thành hai đường thẳng song song hoặc trùng nhau}
+		{Phép chiếu song  song biến hai đường thẳng trùng nhau thành hai đường thẳng song song}
+		{Phép chiếu song song biến hai đường thẳng bất kỳ thành hai  đường thẳng song song}
+		{Phép chiếu  song song biến hai đường thẳng song song thành hai đường thẳng bất kỳ}
+	\loigiai{ 
+		Phép chiếu song song biến  hai đường thẳng song song thành hai đường thẳng song song hoặc trùng nhau.
+	} 
+\end{ex}
+
+% nguồn: Ok_TracNghiemLop11_Lan1
+\begin{ex}%[1H4N5-1]%[ma:1d7b1dfb]
+	Cho hình hộp $ABCD.A'B'C'D'$. Mệnh đề nào  sau đây \textbf{sai}?
+	\choice 
+		{$\left(BA'C'\right)\parallel\left(ACD'\right)$} 
+		{$\left(ADD'A'\right)\parallel\left(BCC'B'\right)$} 
+		 {$\left(BA'D\right)\parallel\left(CB'D'\right)$}
+		 {\True $(ABA')\parallel(CB'D')$}
+	\loigiai{ 
+		\begin{center}
+			\begin{tikzpicture}[scale=0.6,font=\footnotesize,line join=round,line cap=round,>=stealth]
+					 \def\bc{4}
+					\def\ba{2} 
+					 \def\h{4}
+					\def\gocB{35} 
+					\coordinate[label=below  left:$B$] (B) at (0,0);
+					\coordinate[label=above left:$A$] (A)  at (\gocB:\ba);
+					\coordinate[label=below:$C$] (C) at (\bc,0); 
+					\coordinate[label=right:$D$] (D)  at ($(C)-(B)+(A)$);
+					\coordinate (H)  at ($(B)!0.4!(D)$);
+					 \coordinate[label=above left:$A'$] (A') at ($(H)+(90:\h)$);
+					 \coordinate[label=left:$B'$] (B') at ($(B)-(A)+(A')$);
+					\coordinate[label=below  right:$C'$] (C') at ($(C)-(A)+(A')$);
+					\coordinate[label=right:$D'$] (D') at  ($(D)-(A)+(A')$);
+					\draw (B')--(B)--(C)--(D)--(D')--(A')--(B')--(C')--(D') 
+						 (C)--(C');
+					 \draw[dashed] (A)--(D)
+						 (A')--(A)--(B);
+					 \foreach \diem in {A,B,C,D,A',B',C',D'} \fill (\diem) circle (1pt);
+				\end{tikzpicture}
+		\end{center}
+		Ta  có\\
+		\begin{itemize}
+			\item $\heva{&  BA'\parallel CD' \\ & A'C'\parallel AC }$$\Rightarrow (BA'C')\parallel(ACD')$.
+			\item $\heva{& AD\parallel BC  \\ & AA'\parallel BB' }$$\Rightarrow (ADD'A')\parallel(BCC'B')$.
+			\item $\heva{& BD\parallel B'D' \\ & A'D\parallel B'C }$$\Rightarrow  (BA'D)\parallel(CB'D')$.
+		\end{itemize}
+	Mặt khác $B'\in (ABA')\cap (CB'D')  $ nên D sai.}
+\end{ex}
+
+% nguồn: Ok_TracNghiemLop11_Lan1
+\begin{ex}%[1H4N5-1]%[ma:e295a98e]
+	Trong các hình sau hình nào biểu diễn cho một hình hộp có  đáy là hình bình hành?
+	\begin{center}
+		\begin{tikzpicture}[scale=0.6,font=\footnotesize,line join=round,line cap=round,>=stealth]
+				 \coordinate (B) at (-2,0);
+				\coordinate  (C) at (1,-2);
+				 \coordinate (D) at (3,0);
+				 \coordinate (A) at ($(B)+(2,3)$);
+				 \draw (A)--(B)
+					(A)--(C) 
+					 (A)--(D)
+					(C)--(D) 
+					(B)--(C); 
+				\draw[dashed](B)--(D); 
+				\node at (1,-3) {\textbf{Hình  a}};
+			\end{tikzpicture}
+		\hspace{1cm} 
+		\begin{tikzpicture}[scale=0.4,font=\footnotesize,line join=round,line cap=round,>=stealth]
+				\coordinate  (A) at (0,0);
+				 \coordinate (B) at (-2,-2);
+				\coordinate  (D) at (5,0);
+				\coordinate (C) at ($(B)+(D)-(A)$); 
+				\coordinate (H) at  (-1,4);
+				\foreach \i in {A,B,C,D}{\coordinate  (\i') at ($(\i)+(H)$);}
+				 \draw (A')--(B')--(C')--(D')--cycle;
+				 \draw (B)--(B')
+					(C)--(C') 
+					(D)--(D') 
+					 (B)--(C)--(D);
+				\draw[dashed](B)--(A)--(A') 
+					 (A)--(D);
+				\node at (1,-3.5) {\textbf{Hình b}}; 
+			\end{tikzpicture}
+	\end{center}
+	 \choice
+		 {\True Hình b}
+		{Hình a} 
+		{Cả  hình a và b}
+		{Không có hình nào} 
+	\loigiai{ 
+	Ta có hình b là hình biểu diễn cho hình hộp  có đáy là hình bình hành}
+\end{ex}
+
+% nguồn: Ok_TracNghiemLop11_Lan1
+\begin{ex}%[1H4N5-1]%[ma:68430879]
+	Cho hình hộp $ABCD.A'B'C'D'$. Cặp điểm  nào sau đây là hai đỉnh đối diện của hình hộp?
+	 \choice
+		{  $A'$ và $C'$}
+		{ \True $A$ và $C'$} 
+		{ $A$ và $B'$} 
+		{ $A$ và $C$} 
+	 \loigiai{
+		\begin{center}
+			\begin{tikzpicture}[scale=.7,font=\footnotesize,line join=round,line cap=round,>=stealth]
+					 \def\bc{4}
+					 \def\ba{2}
+					\def\gocB{35} 
+					\path (0,0) coordinate  (A')
+						 (\gocB:\ba) coordinate (B')
+						(\bc,0)  coordinate (D')
+						($(D')-(A')+(B')$) coordinate  (C')
+						($(B')+(80:\bc-1)$)  coordinate (B)
+						 ($(A')-(B')+(B)$) coordinate (A)
+						($(D')-(B')+(B)$) coordinate  (D)
+						($(C')-(B')+(B)$) coordinate  (C);
+					\draw (A)--(A')--(D')--(C')--(C)--(B)--(A)--(D)--(C) 
+						 (D')--(D);
+					\draw[dashed] (B)--(B')--(C') 
+						 (B')--(A');
+					\foreach \x/\g in {A/90,B/90,C/90,D/90,A'/180,B'/150,C'/0,D'/-30}\fill[black] (\x) circle (1pt)+(\g:0.3)  node{$\x$};
+				\end{tikzpicture}
+		\end{center}
+		Hai  đỉnh đối diện của hình hộp là $A$ và $C'$.
+	} 
+\end{ex}
+
+% nguồn: Ok_Toan11_TracNghiem_Lan2
+\begin{ex}%[1H4H5-1]%[ma:fdc4909a]
+	Đặc điểm nào sau  đây là đúng với hình lăng trụ?
+	\choice 
+		{Hình lăng trụ có tất cả các mặt bên bằng nhau} 
+		{Đáy của hình lăng trụ là hình  bình hành}
+		 {\True Hình lăng trụ có tất cả các mặt bên là hình bình hành}
+		{Hình lăng  trụ có tất cả các mặt là hình bình hành}
+	 \loigiai{
+	Hình lăng trụ là một đa diện có hai mặt đáy là các đa giác bằng nhau và những mặt bên là các hình bình  hành.}
+\end{ex}
+
+% nguồn: Ok_Toan11_TracNghiem_Lan2
+\begin{ex}%[1H4H5-1]%[ma:cc2207e4]
+	Lăng trụ tam giác  có bao nhiêu mặt?
+	\choice 
+		 {$3$}
+		 {$9$}
+		{\True $5$} 
+		 {$6$}
+	 \loigiai{
+		Theo lý thuyết ta có kết quả là  $5$ mặt.
+	} 
+\end{ex}
+
+% nguồn: Ok_TracNghiemLop11_Lan1
+\begin{ex}%[1H4H5-1]%[ma:ecd30165]
+	Cho hình lăng trụ $ABC.A'B'C'$. Cắt hình lăng trụ bởi một mặt phẳng ta được một thiết diện. Thiết diện này có tối  đa bao nhiêu cạnh?
+	\choice 
+		{\True $5$} 
+		 {$4$}
+		{$3$} 
+		{$6$} 
+	\loigiai{ 
+		Hình lăng trụ $ABC.A'B'C'$ có tất cả $5$ mặt. Do  đó một phẳng cắt hình lăng trụ $ABC.A'B'C'$ theo một thiết diện là hình đa giác có nhiều nhất là $5$ cạnh.
+	} 
+\end{ex}
+
+
+%%%%%%%%%%%%%%%% ĐÚNG/SAI %%%%%%%%%%%%%%%%
+
+% nguồn: Ok_dungsai_lop11_Lan2
+\begin{ex}%[1H4N5-1]%[ma:cd3bdea8]
+	Cho hai hình bình hành $ABCD$ và $ABEF$ nằm trong hai mặt  phẳng phân biệt.
+	\choiceTF 
+		{$AD\parallel(BEF)$} 
+		{\True $(AFD)\parallel(BEC)$} 
+		 {$(ABD)\parallel(EFC)$}
+		 {\True Sáu điểm $A$, $B$, $C$, $D$, $E$, $F$ là $6$ đỉnh của một hình lăng trụ tam giác}
+	\loigiai{ 
+		\begin{center}
+			\begin{tikzpicture}[line join=round,line cap=round,>=stealth,font=\footnotesize,scale=1]
+					 \path
+						(0,0)  coordinate (A)
+						(0:5) coordinate  (B)
+						(-60:2) coordinate  (D)
+						(70:2) coordinate (F) 
+						 ($(B)+(D)-(A)$) coordinate (C)
+						 ($(B)+(F)-(A)$) coordinate (E);
+					\draw (A)--(D)--(F)--cycle 
+						(D)--(C)--(E)--(F); 
+					 \draw[dashed] (A)--(B)--(C)
+						 (B)--(E);
+					\foreach \i/\g in {A/180,B/0,C/-90,D/-90,E/90,F/90}{\draw[fill=black](\i)  circle (1pt)
+						 ($(\i)+(\g:3mm)$) node[scale=1]{$\i$};}
+				\end{tikzpicture}
+		\end{center}
+		\begin{itemchoice}
+			\itemch \textbf{Sai}.\\ 
+			$AD$ và $(BEF)$ cắt  nhau tại $A$.
+			\itemch \textbf{Đúng}.\\ 
+			Vì $\heva{&AD\parallel BC\subset (BCE)\\&AF\parallel  BE\subset (BCE)\\&AD\cap AF=A\\&AD,AF \subset (BCE)} \Rightarrow (AFD)\parallel(BEC)$.
+			\itemch  \textbf{Sai}.\\
+			Vì $(ABD)$  và $(EFC)$ có $C$ chung.
+			\itemch \textbf{Đúng}.\\ 
+			Vì  $(AFD)\parallel(BEC)$, hai mặt đáy cùng là tam giác; các mặt bên là các hình bình hành.
+		\end{itemchoice}
+	 }
+\end{ex}
+
+
+%%%%%%%%%%%%%%%% TRẢ LỜI NGẮN %%%%%%%%%%%%%%%%
+
+% nguồn: Ok_TraLoiNgan_Lop11_Lan1
+\begin{ex}%[1H4N5-1]%[ma:7897151a]
+	Cho hình hộp  $ABCD.A'B'C'D'$. Trong các đoạn thẳng là cạnh hoặc đường chéo của hình hộp, số đoạn thẳng đồng quy tại một điểm là?
+	 \shortans{4}
+	\loigiai{ 
+		\begin{center}
+			\begin{tikzpicture}[scale=1,font=\footnotesize,line join=round,line cap=round,>=stealth]
+					 \def\bc{4}
+					 \def\ba{2}
+					\def\h{4} 
+					\def\gocB{55} 
+					\coordinate[label=below left:$B$] (B) at  (0,0);
+					 \coordinate[label=above left:$A$] (A) at (\gocB:\ba);
+					\coordinate[label=below:$C$] (C)  at (\bc,0);
+					\coordinate[label=right:$D$]  (D) at ($(C)-(B)+(A)$);
+					\coordinate (H) at  ($(B)!0.4!(D)$);
+					\coordinate[label=above left:$A'$] (A') at  ($(H)+(90:\h)$);
+					\coordinate[label=left:$B'$]  (B') at ($(B)-(A)+(A')$);
+					 \coordinate[label=below right:$C'$] (C') at ($(C)-(A)+(A')$);
+					 \coordinate[label=right:$D'$] (D') at ($(D)-(A)+(A')$);
+					\coordinate[label=below:$O$] (O) at  ($(A)!0.5!(C')$);
+					\draw (B')--(B)--(C)--(D)--(D')--(A')--(B')--(C')--(D') 
+						(C)--(C'); 
+					\draw[dashed] (A)--(D) 
+						 (A')--(A)--(B)
+						 (A')--(C)
+						 (B')--(D)
+						 (A)--(C')
+						 (B)--(D');
+					\foreach \diem in {A,B,C,D,A',B',C',D',O} \fill (\diem)  circle (1pt);
+				\end{tikzpicture}
+		\end{center}
+		Dễ thấy $\heva{&AA'\parallel CC'\\ &AA'=CC'}\Rightarrow ACC'A'$ là hình bình hành, suy ra giao điểm $O$ của $AC'$ và $CA'$  là trung điểm của mỗi đường.\\
+		Tương tự, ta có $\heva{&AB\parallel C'D'\\ &AB=C'D'}\Rightarrow ABC'D'$ là hình  bình hành; suy ra $ AC'$, $BD'$ cắt nhau tại trung điểm của mỗi đường, do đó $ BD'$ nhận $O$ làm trung điểm. Chứng minh tương tự như thế, ta cũng có $ DB'$ nhận $O$ làm trung điểm.\\
+	Vậy các đường chéo của hình hộp là $AC'$, $BD'$, $CA'$, $DB'$ cùng đi qua trung điểm  $O$ của mỗi đường.}
+\end{ex}
+
+% nguồn: Ok_TraLoiNgan_Lop11_Lan1
+\begin{ex}%[1H4N5-1]%[ma:d7d7e506]
+	Trong hình hộp $ABCD.A'B'C'D'$, các đường thẳng $AC'$,  $BD'$, $CA'$ cùng đi qua điểm $I$. Tính tỉ số $\dfrac{IB'}{ID}$.
+	 \shortans{1}
+	 \loigiai{
+	\immini{Trong hình hộp, các đường chéo $AC'$, $BD'$, $CA'$ và $DB'$ đồng  quy tại tâm $I$ là trung điểm của mỗi đường.\\
+		Vậy $\dfrac{IB'}{ID}=1$.}{\begin{tikzpicture}[scale=1,font=\footnotesize,line join=round,line cap=round,>=stealth]
+		\path (-0.7,2.5) coordinate (h) 
+			(0,0) coordinate (B)++(2.2,0) coordinate (C)++(1,0.8) coordinate (D) 
+			($(B)+(D)-(C)$)  coordinate (A);
+		\foreach \p in {A,B,C,D}\path  ($(\p)+(h)$) coordinate (\p');
+		\path (barycentric cs:A=1,C'=1)  coordinate (I);
+		\draw  (A')--(B')--(B)--(C)--(D)--(D')--cycle (B')--(C')--(D')
+			(C)--(C'); 
+		 \draw[dashed] (D')--(B)--(A)--(D)--(B')
+			 (C')--(A)--(A')--(C);
+		\foreach \p/\g in {A/45,B/240,C/-60,D/0,A'/90,B'/180,C'/90,D'/45,I/10}  \fill[black] (\p) circle (1pt)+(\g:0.3) node{$\p$};
+	\end{tikzpicture}
+		} 
+	} 
+\end{ex}
+
+
+%%%%%%%%%%%%%%%% TỰ LUẬN %%%%%%%%%%%%%%%%
+
+% nguồn: Ok_TuanLuan_Toan11_Lan2
+\begin{ex}%[1H4N5-1]%[ma:ff40d2c3]
+	\begin{enumerate}
+		\item Gọi tên các hình lăng trụ trong các hình sau  đây.
+		\item Gọi tên các thành phần của hình lăng trụ trong hình  đầu tiên.
+	\end{enumerate}
+	\begin{center}
+		\begin{tikzpicture}[line join=round,line cap=round,line width=.6pt,font=\footnotesize,scale=.7]
+				\coordinate[label=left:$A$] (A) at  (0,0);
+				\coordinate[label=below left:$B$]  (B) at (1,-1);
+				\coordinate[label=right:$C$] (C) at  (4,0);
+				 \coordinate (H) at ($(B)!.5!(C)$);
+				\path (1,-2)  node[below]{a)};
+				\coordinate[label=left:$A'$] (A1) at ($(H)+(90:4)$); 
+				\coordinate[label=left:$B'$] (B1) at  ($(B)-(A)+(A1)$);
+				\coordinate[label=right:$C'$] (C1) at  ($(C)-(A)+(A1)$);
+				\draw (A1)--(A)--(B)--(C)--(C1)--(A1)--(B1)--(C1) 
+					(B)--(B1); 
+				\draw[dashed] (A)--(C); 
+				\fill (A)  circle (1pt)
+					(B)  circle (1pt)
+					(C) circle (1pt) 
+					 (A1) circle (1pt)
+					(B1) circle (1pt) 
+					(C1)  circle (1pt);
+				\coordinate[label=below  left:$B$] (B2) at (8,-1);
+				\coordinate[label=left:$A$] (A2)  at (9,0);
+				\coordinate[label=below  right:$C$] (C2) at (12,-1);
+				\coordinate[label=right:$D$] (D2) at ($(C2)-(B2)+(A2)$); 
+				\coordinate (H1) at  ($(B2)!1/3!(D2)$);
+				\coordinate[label=left:$A'$] (A3) at  ($(H1)+(90:4)$);
+				\coordinate[label=left:$B'$] (B3) at  ($(B2)-(A2)+(A3)$);
+				\coordinate[label=below right:$C'$] (C3) at  ($(C2)-(A2)+(A3)$);
+				\coordinate[label=right:$D'$]  (D3) at ($(D2)-(A2)+(A3)$);
+				 \path (9,-2) node[below]{b)};
+				 \draw (B3)--(B2)--(C2)--(D2)--(D3)--(A3)--(B3)--(C3)--(D3)
+					 (C2)--(C3);
+				\draw[dashed] (C2)--(A2)--(D2)--(B2) 
+					 (A3)--(A2)--(B2);
+				\fill (A2)  circle (1pt)
+					(B2)  circle (1pt)
+					(C2) circle (1pt) 
+					(D2) circle (1pt) 
+					(A3) circle (1pt) 
+					(B3) circle (1pt) 
+					 (C3) circle (1pt)
+					(D3)  circle (1pt);
+				 \coordinate[label=below left:$B$] (B4) at (16,-1);
+				\coordinate[label=left:$I$] (A4)  at (17,0);
+				 \coordinate[label=below right:$C$] (C4) at (20,-1);
+				\coordinate[label=right:$J$] (D4)  at ($(C4)-(B4)+(A4)$);
+				\coordinate[label=below:$E$] (E4) at (19,.6); 
+				\coordinate  (H2) at ($(B4)!1/3!(D4)$);
+				\coordinate[label=left:$I'$] (A5) at ($(H2)+(90:4)$); 
+				\coordinate[label=left:$B'$] (B5) at ($(B4)-(A4)+(A5)$); 
+				\coordinate[label=above:$C'$] (C5)  at ($(C4)-(A4)+(A5)$);
+				\coordinate[label=right:$J'$] (D5)  at ($(D4)-(A4)+(A5)$);
+				\coordinate[label=above:$E'$] (E5)  at ($(E4)-(A4)+(A5)$);
+				\path  (17,-2) node[below]{c)};
+				\draw (B5)--(B4)--(C4)--(D4)--(D5)--(E5)--(A5)--(B5)--(C5)--(D5) 
+					 (C4)--(C5);
+				\draw[dashed] (B4)--(A4)--(E4)--(D4) 
+					(A4)--(A5) 
+					(E4)--(E5); 
+				\fill (A4)  circle (1pt)
+					 (B4) circle (1pt)
+					(C4) circle  (1pt)
+					(D4) circle (1pt) 
+					(E4)  circle (1pt)
+					(A5)  circle (1pt)
+					(B5) circle (1pt) 
+					(C5) circle (1pt) 
+					 (D5) circle (1pt)
+					 (E5) circle (1pt);
+			\end{tikzpicture}
+	\end{center}
+	 \loigiai{
+		\begin{enumerate}
+			\item  Hình a) là hình lăng trụ tam giác $ABC.A'B'C'$.\\
+			Hình b) là  hình lăng trụ tứ giác $ABCD.A'B'C'D'$.\\
+			Hình c) là hình lăng trụ ngũ giác $IBCJE.I'B'C'J'E'$. 
+			\item Hình lăng trụ tam giác $ABC.A'B'C'$ trong  hình a) có\\
+			Hai mặt đáy là các tam giác  $ABC,A'B'C'$.\\
+			Sáu đỉnh $A$, $B$, $C$, $A'$, $B'$,  $C'$.\\
+			Ba  mặt bên là các hình bình hành $AA'B'B$, $BB'C'C$, $CC'A'A$.\\
+			Ba cạnh bên  $AA'$, $BB'$, $CC'$.
+	\end{enumerate}}
+\end{ex}
+
+% nguồn: Ok_TuanLuan_Toan11_Lan2
+\begin{ex}%[1H4N5-1]%[ma:2a7da0a9]
+	Hãy liệt kê các cặp mặt đối diện, các cặp cạnh đối diện và các cặp đỉnh đối diện  của hình hộp $ABCD.A'B'C'D'$.
+	\loigiai{ 
+		\begin{center}
+			\begin{tikzpicture}[line join=round,line cap=round,line width=.6pt,font=\footnotesize,scale=1]
+					\coordinate[label=below left:$B$] (B) at  (0,0);
+					\coordinate[label=left:$A$] (A)  at (1,.8);
+					\coordinate[label=below  right:$C$] (C) at (4,0);
+					 \coordinate[label=right:$D$] (D) at ($(C)-(B)+(A)$);
+					\coordinate (H) at  ($(B)!1/3!(D)$);
+					\coordinate[label=left:$A'$] (A1) at ($(H)+(90:4)$); 
+					 \coordinate[label=left:$B'$] (B1) at ($(B)-(A)+(A1)$);
+					\coordinate[label=below right:$C'$]  (C1) at ($(C)-(A)+(A1)$);
+					\coordinate[label=right:$D'$] (D1) at  ($(D)-(A)+(A1)$);
+					\draw (B1)--(B)--(C)--(D)--(D1)--(A1)--(B1)--(C1)--(D1) 
+						(C)--(C1); 
+					\draw[dashed] (A)--(D) 
+						 (A1)--(A)--(B);
+					\fill (A)  circle (1pt)
+						 (B) circle (1pt)
+						(C)  circle (1pt)
+						 (D) circle (1pt)
+						(A1) circle (1pt) 
+						(B1)  circle (1pt)
+						 (C1) circle (1pt)
+						(D1) circle  (1pt);
+				\end{tikzpicture}
+		\end{center}
+		Trong hình hộp $ABCD.A'B'C'D'$  có\\
+		Ba cặp mặt  đối diện là $\left(ABCD\right)$ và $\left(A'B'C'D'\right)$; $\left(ABB'A'\right)$ và $\left(DCC'D'\right)$; $\left(ADD'A'\right)$ và $\left(BCC'B'\right)$.\\
+		Sáu cặp cạnh đối diện là $AB$ và $D'C'$; $BC$ và $A'D'$; $CD$ và $B'A'$; $DA$ và $C'B'$; $AA'$ và  $CC'$; $BB'$ và $DD'$.\\
+	Bốn cặp đỉnh  đối diện là $A$ và $C'$; $B$ và $D'$; $C$ và $A'$; $D$ và $B'$.}
+\end{ex}
+
+% nguồn: Ok_TuanLuan_Toan11_Lan2
+\begin{ex}%[1H4H5-1]%[ma:c8246bd9]
+	Chứng minh  rằng bốn đường chéo của hình hộp cắt nhau tại trung điểm mỗi đường.
+	 \loigiai{
+		\begin{center}
+			\begin{tikzpicture}[line join=round,line cap=round,line width=.6pt,font=\footnotesize,scale=1]
+					\coordinate[label=below  left:$B$] (B) at (0,0);
+					\coordinate[label=left:$A$] (A)  at (1,.8);
+					\coordinate[label=below right:$C$]  (C) at (4,0);
+					\coordinate[label=right:$D$] (D)  at ($(C)-(B)+(A)$);
+					\coordinate (H) at  ($(B)!1/3!(D)$);
+					 \coordinate[label=left:$A'$] (A1) at ($(H)+(90:4)$);
+					 \coordinate[label=left:$B'$] (B1) at ($(B)-(A)+(A1)$);
+					\coordinate[label=below right:$C'$] (C1) at  ($(C)-(A)+(A1)$);
+					\coordinate[label=right:$D'$] (D1)  at ($(D)-(A)+(A1)$);
+					\draw (B1)--(B)--(C)--(D)--(D1)--(A1)--(B1)--(C1)--(D1) 
+						 (C)--(C1)--(A1);
+					\draw[dashed]  (C)--(A)--(D)
+						 (A1)--(A)--(B)
+						 (A1)--(C)
+						(A)--(C1) 
+						(B)--(D1) 
+						 (B1)--(D);
+					 \fill (A) circle (1pt)
+						 (B) circle (1pt)
+						 (C) circle (1pt)
+						(D) circle  (1pt)
+						(A1) circle  (1pt)
+						(B1) circle  (1pt)
+						 (C1) circle (1pt)
+						(D1) circle  (1pt);
+				\end{tikzpicture}
+		\end{center}
+		Cho hình hộp $ABCD.A'B'C'D'$ có các đường  chéo $A'C;AC';BD'$ và $B'D$.\\
+		Tứ  giác $ACC'A'$ có $AA'\parallel CC'$ và $AA'=CC'$ (tính chất hình hộp) nên tứ giác $ACC'A'$ là hình bình hành.\\
+		Gọi $I$ là giao điểm của hai đường chéo  $AC'$ ' và $A'C$.\\
+		Khi đó $I$ là trung điểm của  mỗi đường chéo $AC'$ và $A'C$.\\
+		Tương tự, hai tứ giác $A'B'CD$ và $BCD'A'$ cũng là  các hình bình hành nên $I$ là trung điểm của $B'D$ và $BD'$.\\
+	Vậy các đường chéo của hình hộp cắt nhau  tại trung điểm mỗi đường.}
+\end{ex}

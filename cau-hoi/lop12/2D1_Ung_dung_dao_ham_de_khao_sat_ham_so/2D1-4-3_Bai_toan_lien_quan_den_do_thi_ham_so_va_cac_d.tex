@@ -1,0 +1,586 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Lớp 12 | Ứng dụng đạo hàm để khảo sát hàm số | Đường tiệm cận
+% Dạng 2D1?4-3: Bài toán liên quan đến đồ thị hàm số và các đường tiệm cận
+% Số câu: 23  (sinh tự động bởi tach_cau.py; từ nay thầy sửa trực tiếp file này)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%% TRẮC NGHIỆM 4 PHƯƠNG ÁN %%%%%%%%%%%%%%%%
+
+% nguồn: Phan1_Lop_12_Dai_so_Chuong_1
+\begin{ex}%[2D1N4-3]%[ma:18841752]
+	 \immini
+	{Cho hàm số $y=f(x)$ có đồ thị như hình vẽ dưới đây. Khẳng  định nào sau đây đúng?
+	\choice 
+		{$x=1$ là phương trình  đường tiệm cận đứng của hàm số}
+		{$y=-1$  là phương trình đường tiệm cận đứng của hàm số}
+		{$x=-1$ là phương trình đường tiệm cận  ngang của hàm số}
+		{\True $y=1$ là phương trình đường tiệm cận ngang của hàm  số}
+		} 
+		{\begin{tikzpicture}[scale=0.7,font=\footnotesize,line join=round,line cap=round,>=stealth]
+		 \def\xmin{-3.3}\def\xmax{1.8}\def\ymin{-1.5}\def\ymax{3.3}
+		\draw[->] (\xmin-0.2,0)--(\xmax+0.2,0) node[below]  {\footnotesize $x$};
+		\draw[->] (0,\ymin-0.2)--(0,\ymax+0.2)  node[right] {\footnotesize $y$};
+		\draw (0,0) node [below left] {\footnotesize $O$}; 
+		\draw (-1,0) node [above left] {\footnotesize $-1$}; 
+		\draw (0,1) node [above right] {\footnotesize $1$}; 
+		\foreach \x in {1}\draw (\x,0.1)--(\x,-0.1) node  [below] {\footnotesize $\x$};
+		\foreach \y in {-1}\draw (0.05,\y)--(-0.05,\y)  node [right] {\footnotesize $\y$};
+		\clip  (\xmin,\ymin) rectangle (\xmax,\ymax);
+		\draw[dashed]  (\xmin,1.0)--(\xmax,1.0);
+		\draw[dashed]  (-1.0,\ymin)--(-1.0,\ymax);
+		\draw[smooth,samples=200,domain=\xmin:-1.1] plot (\x,{(2*(\x)+-1)/(2*(\x)+2)}); 
+		\draw[smooth,samples=200,domain=-0.9:\xmax]  plot (\x,{(2*(\x)+-1)/(2*(\x)+2)});
+	\end{tikzpicture}
+		 }
+	\loigiai{Dựa vào đồ thị ta có phương  trình đường tiệm cận đứng là $x=-1$ và phương trình đường tiệm cận ngang là $y=1$.
+	} 
+\end{ex}
+
+% nguồn: Phan1_Lop_12_Dai_so_Chuong_1
+\begin{ex}%[2D1N4-3]%[ma:7b0b5f14]
+	 \immini
+	{Cho đồ thị hàm số $ y=\dfrac{a{x^2}+bx+c}{mx+n}$ với $a$,  $b$, $c$, $m$, $n$ $\in \mathbb{R} $ (ở hình bên) có đường tiệm cận xiên là một trong bốn đường thẳng dưới đây, đường thẳng đó là đường thẳng nào?
+	 \choice
+		{$  y=2x$}
+		{$ x=1$} 
+		{\True $  y=-2x$}
+		{$ y=-3x$}} 
+		{\resizebox{!}{5cm}{\begin{tikzpicture}[>=stealth,line join=round,line cap=round]
+		\def\a{-2}  \def\b{2} \def\c{1} \def\m{1} \def\n{-1}
+		\def\xmin{-3}  \def\xmax{3}
+		\def\ymin{-4}  \def\ymax{4}
+		\draw[->]  (\xmin,0)--(\xmax,0) node[shift=(-110:0.2)] {$x$};
+		\draw[->] (0,\ymin)--(0,\ymax)  node[shift=(-150:0.2)] {$y$};
+		\fill  (0,0) circle (1pt) node[shift=(45:0.25)]{$O$};
+		\clip  (\xmin+0.1,\ymin+0.1) rectangle (\xmax-0.1,\ymax-0.1);
+		\draw[smooth,samples=100,domain=\xmin:(-\n/\m-0.1)]  plot (\x,{(\a*(\x)^2+\b*(\x)+\c)/(\m*(\x)+\n)});
+		\draw[smooth,samples=100,domain=(-\n/\m+0.1:\xmax)] plot  (\x,{(\a*(\x)^2+\b*(\x)+\c)/(\m*(\x)+\n)});
+		 \draw[dashed] (-\m/\n,\ymin)--(-\n/\m,\ymax);
+		\draw[dashed,smooth,samples=100]  plot (\x,{-2*(\x)});
+		\foreach \i in {,-2,-1,1,2} \draw  (\i,2pt)--(\i,-2pt) node[shift=(-120:0.25)]{$\i$};
+		\foreach \j  in {1,2,3} \draw (2pt,\j)--(-2pt,\j) node[shift=(180:0.15)]{$\j$};
+		\foreach \k in {-3,-2,-1} \draw  (2pt,\k)--(-2pt,\k) node[shift=(180:0.25)]{$\k$};
+	\end{tikzpicture}
+		 }}
+	 \loigiai{
+		\begin{center}
+			\begin{tikzpicture}[>=stealth,line join=round,line cap=round]
+				\def\a{-2} \def\b{2} \def\c{1} \def\m{1} \def\n{-1} 
+				 \def\xmin{-3} \def\xmax{3}
+				 \def\ymin{-4} \def\ymax{4}
+				\draw[->] (\xmin,0)--(\xmax,0) node[shift=(-110:0.2)]  {$x$};
+				\draw[->] (0,\ymin)--(0,\ymax) node[shift=(-150:0.2)]  {$y$};
+				\fill (0,0) circle  (1pt) node[shift=(45:0.25)]{$O$};
+				 \clip (\xmin+0.1,\ymin+0.1) rectangle (\xmax-0.1,\ymax-0.1);
+				 \draw[smooth,samples=100,domain=\xmin:(-\n/\m-0.1)] plot (\x,{(\a*(\x)^2+\b*(\x)+\c)/(\m*(\x)+\n)});
+				\draw[smooth,samples=100,domain=(-\n/\m+0.1:\xmax)] plot  (\x,{(\a*(\x)^2+\b*(\x)+\c)/(\m*(\x)+\n)});
+				\draw[dashed]  (-\m/\n,\ymin)--(-\n/\m,\ymax);
+				\draw[dashed,smooth,samples=100] plot  (\x,{-2*(\x)});
+				\foreach \i in  {,-2,-1,1,2} \draw (\i,2pt)--(\i,-2pt) node[shift=(-120:0.25)]{$\i$};
+				\foreach \j in {1,2,3} \draw  (2pt,\j)--(-2pt,\j) node[shift=(180:0.15)]{$\j$};
+				\foreach \k in {-3,-2,-1} \draw  (2pt,\k)--(-2pt,\k) node[shift=(180:0.25)]{$\k$};
+				 \draw[dashed](1,0)--(1,-2)--(0,-2);
+				 \fill (1,-2) circle (1pt);
+			\end{tikzpicture}
+		\end{center}
+	Quan sát đồ thị hàm số, ta thấy đường tiệm cận xiên đi qua các điểm $O(0; 0)$ và điểm có tọa độ  $(1; -2)$ nên đường thẳng thỏa mãn là $ y=-2x$.}
+\end{ex}
+
+% nguồn: Phan1_Lop_12_Dai_so_Chuong_1
+\begin{ex}%[2D1H4-3]%[ma:9a9e865c]
+	 Cho hàm số $y=\dfrac{x-1}{x^2-3x+2}$. Xét các mệnh đề sau\\
+	(I). Đồ  thị hàm số có tiệm cận ngang là đường thẳng $y=0$.\\
+	(II). Đồ thị hàm số có hai tiệm cận đứng là các đường thẳng $x=1$ và $x=2$.\\ 
+	(III). Đồ thị hàm số  không có tiệm cận xiên.\\
+	Mệnh đề  nào sau đây là đúng?
+	 \choice
+		{Chỉ có  (III) đúng}
+		{Chỉ có (I) và (II)  đúng}
+		{\True Chỉ có (I) và (III)  đúng}
+		 {Cả 3 mệnh đề đều đúng}
+	\loigiai{Ta có $y = \dfrac{x-1}{x^2-3x+2}$. Ta có $\lim\limits_{x \to \pm \infty} y = 0$. Vậy đồ thị hàm số có tiệm cận ngang là  đường thẳng $y=0$. Do đó (I) đúng.\\
+		Do $\lim\limits_{x \to 2^+} y = +\infty$; $\lim\limits_{x \to 1} y = -1$. Vậy đồ thị hàm số chỉ có một tiệm cận  đứng là đường thẳng $x=2$.\\
+		 Do đó (II) sai.\\
+		Vì bậc tử thức bé hơn bậc mẫu thức nên đồ thị hàm số không có tiệm  cận xiên.\\
+		Do đó  (III) đúng.
+	 }
+\end{ex}
+
+% nguồn: Phan1_Lop_12_Dai_so_Chuong_1
+\begin{ex}%[2D1V4-3]%[ma:5ea9cf48]
+	Với giá trị nào của $m$ thì tiệm cận xiên của đồ thị hàm số $y  = x + m + \dfrac{3}{m-x}$ đi qua điểm $M(1;2)$?
+	 \choice
+		{\True  $m=1$}
+		{$m=0$} 
+		{$m=2$} 
+		 {$m=3$}
+	\loigiai{Ta có $\lim\limits_{x \to \pm \infty} \dfrac{3}{m-x} = 0 \Rightarrow y = x + m$ là phương trình tiệm cận xiên của  đồ thị hàm số đã cho.\\
+		Để $M(1;2)$ nằm trên tiệm cận xiên thì $2 = 1  + m \Leftrightarrow m = 1$.
+	 }
+\end{ex}
+
+
+%%%%%%%%%%%%%%%% ĐÚNG/SAI %%%%%%%%%%%%%%%%
+
+% nguồn: Phan1_Lop_12_Dai_so_Chuong_1
+\begin{ex}%[2D1H4-3]%[ma:2d40d4d7]
+	Cho hàm số $y=x^3-3x^2+1$.  Khi đó
+	\choiceTF 
+		{\True  Hàm số đồng biến trên mỗi khoảng $\left(-\infty;0\right)$ và $\left(2;+\infty \right)$}
+		{\True Hàm số đạt cực tiểu tại điểm  $x=2$}
+		{\True Bảng biến thiên của  hàm số là \\
+		\begin{tikzpicture}[>=stealth]
+			\tkzTabInit[nocadre=false,lgt=1,espcl=2,deltacl=0.5]{$x$/.7,$y'$/.7,$y$/2} 
+				 {$-\infty$,$0$,$2$,$+\infty$}
+			\tkzTabLine{,+,$0$,-,$0$,+,} 
+			\tkzTabVar{-/$-\infty$,+/$1$,-/$-3$,+/$+\infty$} 
+		\end{tikzpicture}
+		 }
+		{Đồ thị hàm  số nhận điểm $I\left(1;-2\right)$ làm tâm đối xứng}
+	 \loigiai{
+		\begin{itemchoice}
+			 \itemch
+			Tập  xác định $\mathscr{D}=\mathbb{R}$
+			\[y'=3x^2-6x=0\Leftrightarrow  \hoac{&x=0\\&x=2.} \]
+			Bảng xét dấu $y'$ 
+			\begin{center}
+				\begin{tikzpicture}[>=stealth]
+					\tkzTabInit[nocadre=false,lgt=1,espcl=2,deltacl=0.5]{$x$/.7,$y'$/.7} 
+						 {$-\infty$,$0$,$2$,$+\infty$}
+					 \tkzTabLine{,+,$0$,-,$0$,+,}
+				\end{tikzpicture}
+			\end{center}
+			Hàm số nghịch biến trên khoảng $\left(0; 2\right)$ và  đồng biến trên mỗi khoảng $\left(-\infty;0\right)$ và $\left(2;+\infty \right)$.
+			\itemch 
+			Bảng xét dấu $y'$ 
+			\begin{center}
+				\begin{tikzpicture}[>=stealth]
+					\tkzTabInit[nocadre=false,lgt=1,espcl=2,deltacl=0.5]{$x$/.7,$y'$/.7} 
+						{$-\infty$,$0$,$2$,$+\infty$} 
+					\tkzTabLine{,+,$0$,-,$0$,+,} 
+				\end{tikzpicture}
+			\end{center}
+			Từ bảng xét dấu suy ra hàm số đạt cực tiểu tại  điểm $x=2$.
+			 \itemch
+			Bảng biến thiên của hàm số  là
+			\begin{center}
+				\begin{tikzpicture}[>=stealth]
+					 \tkzTabInit[nocadre=false,lgt=1,espcl=2,deltacl=0.5]{$x$/.7,$y'$/.7,$y$/2}
+						 {$-\infty$,$0$,$2$,$+\infty$}
+					 \tkzTabLine{,+,$0$,-,$0$,+,}
+					 \tkzTabVar{-/$-\infty$,+/$1$,-/$-3$,+/$+\infty$}
+				\end{tikzpicture}
+			\end{center}
+			\itemch 
+			Ta có $y''=6x-6$, $y''=0\Leftrightarrow x=1$.\\ 
+			Đồ thị hàm số nhận điểm $I\left(1;-1\right)$ làm tâm đối  xứng.
+		\end{itemchoice}
+	} 
+\end{ex}
+
+% nguồn: Phan1_Lop_12_Dai_so_Chuong_1
+\begin{ex}%[2D1H4-3]%[ma:325e2e8a]
+	Cho hàm số $y=\dfrac{2x^2+3x-1}{x-1}$ có đồ thị $\left(C\right)$. Khi đó 
+	\choiceTF 
+		{\True Đồ thị hàm số $\left(C\right)$ có đường  tiệm cận đứng là $x=1$}
+		{Đồ thị hàm số $\left(C\right)$ có đường tiệm cận xiên là $y=2x+1$} 
+		{Hàm số đồng biến trên khoảng $\left(2;+\infty  \right)$}
+		{\True Đường tiệm cận xiên của đồ thị hàm số $\left(C\right)$ tạo với hai trục toạ  độ một tam giác có diện tích bằng $\dfrac{25}{4}$}
+	 \loigiai{
+		\begin{itemchoice}
+			 \itemch
+			 Tập xác định $\mathscr{D}=\mathbb{R}\setminus \{1\}$. Ta có
+			\begin{itemize}
+				\item $\lim\limits_{x\to 1^{-}} y=\lim\limits_{x\to  1^{-}} \dfrac{2x^2+3x-1}{x-1}=-\infty$.
+				\item $\lim\limits_{x\to 1^{+}} y=\lim\limits_{x\to  1^{+}} \dfrac{2x^2+3x-1}{x-1}=+\infty$
+			\end{itemize}
+			Suy ra $x=1$ là đường tiệm cận  đứng của đồ thị hàm số.
+			 \itemch
+			 Ta có $y=2x+5+\dfrac{4}{x-1}$
+			\begin{itemize}
+				\item  $\lim\limits_{x\to+\infty} \left[y-\left(2x+5\right)\right]=0$;
+				\item $\lim\limits_{x\to-\infty}  \left[y-\left(2x+5\right)\right]=0$.
+			\end{itemize}
+			Suy ra $y=2x+5$ là đường tiệm cận xiên của đồ  thị hàm số.
+			\itemch 
+			Ta có $y=\dfrac{2x^2+3x-1}{x-1} \Rightarrow  y'=\dfrac{2x^2-4x-2}{\left(x-1\right)^2}$.
+			\[y'=0\Rightarrow 2x^2-4x-2=0\Leftrightarrow  \hoac{&x=1-\sqrt{2} \\ &x=1+\sqrt{2}.}\]
+			Bảng xét dấu $y'$ 
+			\begin{center}
+				\begin{tikzpicture}[>=stealth]
+					\tkzTabInit[nocadre=false,lgt=1,espcl=2,deltacl=0.5]{$x$/.7,$y'$/.7} 
+						{$-\infty$,$1-\sqrt{2}$,$1$,$1+\sqrt{2}$,$+\infty$} 
+					\tkzTabLine{,+,$0$,-,d,-,$0$,+,} 
+				\end{tikzpicture}
+			\end{center}
+			Hàm  số đồng biến trên $\left(-\infty;1-\sqrt{2} \right)$ và $\left(1+\sqrt{2};+\infty \right)$.
+			 \itemch
+			Đường tiệm cận xiên của đồ thị hàm số  là $y=2x+5$.\\
+			Gọi $A$  là giao điểm của tiệm cận xiên với trục $Ox\Rightarrow A\left(-\dfrac{5}{2};0\right)\Rightarrow OA=\dfrac{5}{2}$.\\
+			Gọi  $B$ là giao điểm của tiệm cận xiên với trục $Oy\Rightarrow B\left(0;5\right)\Rightarrow OB=5$.\\
+			Khi đó,  diện tích tam giác $OAB$ là $S=\dfrac{1}{2} OA\cdot OB=\dfrac{1}{2}\cdot\dfrac{5}{2}\cdot5=\dfrac{25}{4}$.
+		\end{itemchoice}
+	 }
+\end{ex}
+
+% nguồn: Phan1_Lop_12_Dai_so_Chuong_1
+\begin{ex}%[2D1H4-3]%[ma:1adbefa2]
+	Cho hàm  số $y=\dfrac{mx^2+(3m^2-2)x-2}{x+3m}$ (1) với $m$ là số thực.
+	 \choiceTF
+		{\True Khi $m=1$ đồ thị  hàm số có 2 điểm cực trị}
+		{\True Khi $m=1$ đồ thị  hàm số có đường tiệm cận xiên là $y=x-2$}
+		{Khi $m=1$ giao điểm của đường tiệm cận xiên và tiệm cận  đứng của đồ thị là $I(3;-5)$}
+		{\True Có $2$ giá trị $m$  để góc giữa hai tiệm cận của đồ thị hàm số (1) bằng $45^\circ$}
+	\loigiai{ 
+		Khi  $m=1$ ta có $y=\dfrac{x^2+x-2}{x+3}=x-2+\dfrac{4}{x+3}$.\\
+		 Ta có $y'=1-\dfrac{4}{(x+3)^2}$, $y'=0\Leftrightarrow\hoac{&x=-1\\&x=-5.}$
+		\begin{itemchoice}
+			\itemch Ta có bảng  biến thiên như sau:
+			\begin{center}\begin{tikzpicture}[>=stealth]
+		\tkzTabInit[nocadre=false,lgt=1,espcl=2,deltacl=0.5]{$x$/.7,$y'$/.7,$y$/2} 
+			{$-\infty$,$-5$,$-3$,$-1$,$+\infty$} 
+		\tkzTabLine{,+,$0$,-,d,-,$0$,+,} 
+		\tkzTabVar{-/$-\infty$,+/$-9$,-D+/$-\infty$/$+\infty$,-/$-1$,+/$+\infty$} 
+	\end{tikzpicture}
+			\end{center}
+			Khi $m=1$ đồ thị hàm số có đạo hàm đổi dấu 2 lần nên có $2$ điểm cực trị. 
+			\itemch Khi $m=1$ ta có $\lim\limits_{x\to\pm\infty} (y-(x-2))=0$ nên đồ thị hàm số có đường tiệm  cận xiên là $y=x-2$.
+			\itemch Khi $m=1$ thì đồ thị hàm số có tiệm cận xiên $y=x-2$ và tiệm cận đứng $x=-3$ nên giao điểm của hai đường tiệm cận là  $M(-3;-5)$.
+			\itemch Ta  có $y=\dfrac{mx^2+(3m^2-2)x-2}{x+3m}=mx-2+\dfrac{6m-2}{x+3m}$.
+			\begin{itemize}
+				\item Nếu $m=\dfrac{1}{3}$ thì  đồ thị hàm số không tồn tại hai tiệm cận
+				\item Nếu $m\ne\dfrac{1}{3}$, thì đồ thị hàm số có hai tiệm cận 
+				$d_1: x=-3m\Leftrightarrow x+3m=0$ và $d_2: y=mx-2\Leftrightarrow mx-y-2=0$ 
+			\end{itemize}
+			Khi đó $\overrightarrow{n}_1=(1;0)$ và $\overrightarrow{n}_2=(m;-1)$ lần lượt là véc tơ pháp  tuyến của $d_1$ và $d_2$.\\
+			Góc giữa $d_1$ và $d_2$ bằng $45^\circ\Leftrightarrow \cos 45^\circ=\dfrac{|\overrightarrow{n}_1.\overrightarrow{n}_2|}{|\overrightarrow{n}_1|.|\overrightarrow{n}_2|}\Leftrightarrow\dfrac{|m|}{\sqrt{m^2+1}}=\dfrac{\sqrt{2}}{2} \Leftrightarrow \left( \dfrac{|m|}{\sqrt{m^2+1}}  \right)^2 = \left( \dfrac{\sqrt{2}}{2} \right)^2
+			\Leftrightarrow \dfrac{m^2}{m^2+1} = \dfrac{1}{2} \Leftrightarrow 2m^2 = m^2 + 1 \Leftrightarrow m^2 = 1  \Leftrightarrow m=\pm 1$.
+		\end{itemchoice}
+	 }
+\end{ex}
+
+% nguồn: Phan1_Lop_12_Dai_so_Chuong_1
+\begin{ex}%[2D1H4-3]%[ma:6292914e]
+	Cho hàm số $y =  \dfrac{5\sqrt{x^2 + 6} + x - 12}{4x^3 - 3x - 1}$ có đồ thị $(C)$.
+	 \choiceTF
+		{Đồ thị $(C)$ của hàm số không có tiệm cận} 
+		{Đồ thị $(C)$ của hàm số chỉ có một đường tiệm cận  ngang $y=0$}
+		{Đồ thị $(C)$ của hàm số có một đường tiệm cận ngang $y=0$ và hai đường tiệm cận đứng $x =  1$; $x = -\dfrac{1}{2}$}
+		{\True Đồ thị $(C)$ của hàm số chỉ có một đường tiệm cận ngang $y=0$ và một đường tiệm cận đứng $x=1$} 
+	\loigiai{ 
+		Tập xác định: $\mathscr{D} = \mathbb{R}  \setminus \left\{1; -\dfrac{1}{2} \right\}$. Ta có
+		\begin{itemize}
+			\item $\lim\limits_{x \to 1^+} y = +\infty$; $\lim\limits_{x \to 1^-} y = -\infty \Rightarrow$ đồ thị hàm số có một đường tiệm cận đứng là đường thẳng  $x=1$.
+			\item $\lim\limits_{x \to -\frac{1}{2}^+} y = 0$; $\lim\limits_{x \to -\frac{1}{2}^-} y =  0 \Rightarrow x = -\dfrac{1}{2}$ không phải là phương trình đường tiệm cận đứng.
+			 \item $\lim\limits_{x \to +\infty} y = 0$; $\lim\limits_{x \to -\infty} y = 0 \Rightarrow$ đồ thị hàm số có một đường tiệm cận ngang là đường thẳng $y=0$.
+		\end{itemize}
+		\begin{itemchoice}
+			\itemch Đồ thị hàm số có $1$ tiệm cận  đứng, $1$ tiệm cận ngang.
+			\itemch Đồ  thị hàm số có $1$ tiệm cận đứng, $1$ tiệm cận ngang.
+			\itemch Đồ thị hàm số có $1$ tiệm  cận đứng, $1$ tiệm cận ngang.
+			\itemch Đồ  thị hàm số có $1$ tiệm cận đứng, $1$ tiệm cận ngang.
+		\end{itemchoice}
+	} 
+\end{ex}
+
+% nguồn: Phan1_Lop_12_Dai_so_Chuong_1
+\begin{ex}%[2D1H4-3]%[ma:55fc310e]
+	Cho  hàm số $y = \dfrac{x^2 - 2x + 2}{x + 2}$.
+	 \choiceTF
+		{\True Đồ thị hàm số  có hai đường tiệm cận}
+		 {\True Giao điểm của hai tiệm cận là $I(-2; -6)$}
+		{Khoảng cách từ $O$  đến đường tiệm cận xiên bằng $4\sqrt2$}
+		{\True Tiệm cận xiên của  đồ thị hàm số đi qua điểm $M(0; -4)$}
+	\loigiai{ 
+		\begin{itemchoice}
+			\itemch Vì $y =  \dfrac{x^2-2x+2}{x+2} = x - 4 + \dfrac{10}{x+2}$. Ta có
+			\begin{itemize}
+				\item $\lim\limits_{x \to -2} y =  \pm\infty$ nên $x=-2$ là phương trình tiệm cận đứng của đồ thị hàm số.
+				\item  $\lim\limits_{x \to \pm\infty} \dfrac{10}{x+2} = 0$ nên $y=x-4$ là phương trình đường tiệm cận xiên của đồ thị hàm số.
+			\end{itemize}
+			\itemch Vì giao điểm của hai tiệm cận thỏa mãn $\heva{&x=-2\\&y=x-4} \Leftrightarrow  \heva{&x=-2\\&y=-6.}$\\
+			Tọa  độ giao điểm là $(-2; 6)$.
+			\itemch Do $\lim\limits_{x \to \pm\infty} \dfrac{10}{x+2} = 0$. Suy ra $(c)  \colon y = x-4$.\\
+			Khoảng cách từ $O$ đến tiệm cận xiên bằng $\mathrm{d}(O; (c)) =  \dfrac{\left|-4 \right|}{\sqrt{(-1)^2+1^2}} = \dfrac{4}{\sqrt2} = 2\sqrt2$.
+			\itemch Điểm $M(0; -4) \in (c)$ vì  $-4 = 0 - 4$.
+		\end{itemchoice}
+	} 
+\end{ex}
+
+% nguồn: Phan1_Lop_12_Dai_so_Chuong_1
+\begin{ex}%[2D1V4-3]%[ma:5586f444]
+	Cho hàm  số $f(x)=\dfrac{x^{3}}{3}-3x-6\ln(2-x)+1$.
+	 \choiceTF
+		{\True Đạo hàm của hàm số đã cho là~$f'(x)=\dfrac{x^{3}-2x^{2}-3x}{x-2}$} 
+		{\True Hàm số đã cho  đồng biến trong khoảng $(-\infty;-1)$}
+		{\True Tổng các giá  trị cực đại và cực tiểu của đồ thị hàm số bằng $\dfrac{14}{3}-6\ln(6)$}
+		{Hàm số $g(x)=\dfrac{f(x)}{x^{2}+2x+2}$ có đường tiệm cận xiên có dạng $y=ax+b$. Khi  đó $a+b=\dfrac{1}{3}$}
+	 \loigiai{
+		\begin{itemchoice}
+			\itemch Hàm số xác định  trên khoảng $(-\infty;2)$ và
+			 $f'(x)=x^2-3+\dfrac{6}{2-x}=\dfrac{x^3-2x^2-3x}{x-2}$.
+			\itemch Giải  $f'(x)=0\Leftrightarrow x^3-2x^2-3x=0\Leftrightarrow\hoac{&x=3\\&x=-1\\&x=0.}$\\
+			Bảng biến  thiên
+			\begin{center}
+				\resizebox{0.8\linewidth}{!}{\begin{tikzpicture}
+		\tkzTabInit 
+			[nocadre,lgt=2,espcl=3.5] 
+			{$x$/1.2,$f’(x)$/1,$f (x)$/2.5} 
+			{$-\infty$,$-1$,$0$,$2$,$ $} 
+		\tkzTabLine{,+,0,-,0,+,d,} 
+		\tkzTabVar{-/$-\infty$,+/$\frac{11}{3}-6\ln  3$,-/$1-6\ln2$,+D/$+\infty$}
+	\end{tikzpicture}
+				} 
+			\end{center}
+			Hàm số  đã cho đồng biến trong khoảng $(-\infty;-1)$.
+			\itemch Ta có $y_\text{ CĐ}=y(-1)=\dfrac{11}{3}-6\ln 3$; $y_\text{ CT}=y(0)=1-6\ln 2$. \\ 
+			Suy ra $y_\text{  CĐ}+y_\text{ CT}=\dfrac{11}{3}-6\ln 3+1-6\ln 2=\dfrac{14}{3}-6\ln 6$.
+			\itemch Xét $g(x)=\dfrac{f(x)}{x^{2}+2x+2}$ có đường tiệm cận xiên có dạng $y=ax+b$.\\ 
+			Ta có  $a=\lim\limits_{x\to-\infty}\dfrac{g(x)}{x}=\lim\limits_{x\to-\infty}\dfrac{\dfrac{x^3}{3}-3x-6\ln(2-x)+1}{x^3+2x^2+2x}=\dfrac{1}{3}$.\\ $b=\lim\limits_{x\to-\infty}\left(g(x)-\dfrac{1}{3}x \right)=\lim\limits_{x\to-\infty}\left(\dfrac{\dfrac{x^3}{3}-3x-6\ln(2-x)+1}{x^2+2x+2}-\frac{1}{3}x \right)=-\dfrac{2}{3}$. \\
+			 Vậy $a+b=\dfrac{1}{3}-\dfrac{2}{3}=-\dfrac{1}{3}$.
+		\end{itemchoice}
+	} 
+\end{ex}
+
+% nguồn: Phan1_Lop_12_Dai_so_Chuong_1
+\begin{ex}%[2D1V4-3]%[ma:1dd3d0bb]
+	Cho hàm số $y = f(x) = \dfrac{2x^2 - 6x + 2}{x+3}$. Xét tính  đúng sai của các mệnh đề sau:
+	\choiceTF 
+		{\True Đồ thị hàm số $y  = f(x)$ có đường tiệm cận đứng là đường thẳng $x = -3$}
+		{Hàm số $y = f(x)$ nghịch biến trên khoảng $(-4; -1)$} 
+		{Biết đồ thị  hàm số $y = f(x)$ có hai điểm cực trị $A$, $B$. Khoảng cách giữa hai điểm $A$ và $B$ là $30$}
+		{\True Đồ thị  hàm số $y = f(x)$ có đường tiệm cận xiên là $y = 2x - 12$}
+	 \loigiai{
+		\begin{itemchoice}
+			 \itemch
+			Tập xác định của hàm số là $D = \mathbb{R} \setminus \{-3\}$.\\ 
+			Ta  có $\lim\limits_{x \to -3^+} f(x) = +\infty$ và $\lim\limits_{x \to -3^-} f(x) = -\infty$.\\
+			Suy ra $x = -3$ là đường tiệm cận đứng  của đồ thị hàm số đã cho.
+			 \itemch
+			Tại $x = -3$, hàm số  không xác định. Do đó, hàm số $y = f(x)$ không nghịch biến trên khoảng $(-4; -1)$.
+			\itemch 
+			Ta có $y = f(x) = \dfrac{2x^2 - 6x + 2}{x+3} =  2x - 12 + \dfrac{38}{x+3}$.\\
+			Đạo hàm: $y'  =2 - \dfrac{38}{(x+3)^2} $.\\
+			$y' = 0 \Leftrightarrow 2 - \dfrac{38}{(x+3)^2} =0 \Leftrightarrow \hoac{x_1 =  -3 - \sqrt{19}&\\
+			x_2 = -3  + \sqrt{19}}$.\\
+			\begin{center}
+				\begin{tikzpicture}
+					\tkzTabInit[nocadre=true,lgt=1.2,espcl=1.8,deltacl=0.4] 
+						{$x$/1,$f'(x)$/0.75,$f (x)$/2}{$-\infty$,$-3-\sqrt{19}$,$-3$,$-3+\sqrt{19}$,$+\infty$} 
+					\tkzTabLine{,+,0,-,,-,0,+,} 
+					 \path
+						(N13)  node[shift={(0,0)}](A){$-\infty$}
+						(N22)  node[shift={(0,-0.4)}](B){}
+						(N33)  node[shift={(-0.4,0)}](C){$-\infty$}
+						(N32) node[shift={(0.4,-0.2)}](D){$+\infty$} 
+						(N43) node[shift={(0,0.4)}](E){} 
+						(N52)  node[shift={(0,-0.2)}](F){$+\infty$};
+					\foreach\X/\Y in{A/B,B/C,D/E,E/F}\draw[-stealth](\X)--(\Y); 
+					\draw[double](N31)  --(N33);
+				\end{tikzpicture}
+			\end{center}
+			Khi đó  đồ thị hàm số có hai điểm cực trị là $A(x_1; y_1)$ và $B(x_2; y_2)$.\\
+			Đường thẳng  đi qua hai điểm cực trị: $y = 4x - 6$, suy ra $A(x_1; 4x_1 - 6)$, $B(x_2; 4x_2 - 6)$.\\
+			Khoảng cách  giữa hai điểm cực trị
+			$AB = \sqrt{(x_1 - x_2)^2  + (y_1 - y_2)^2} = \sqrt{17} |x_1-x_2|=2\sqrt{323}$.
+			\itemch 
+			Ta có $\lim\limits_{x \to +\infty} \left[f(x) - (2x - 12)\right] = \lim\limits_{x \to +\infty} \dfrac{38}{x+3} =  0$.\\
+			Suy ra $y = 2x - 12$ là đường tiệm cận  xiên của đồ thị hàm số đã cho.
+		\end{itemchoice}
+	} 
+\end{ex}
+
+
+%%%%%%%%%%%%%%%% TRẢ LỜI NGẮN %%%%%%%%%%%%%%%%
+
+% nguồn: Phan2_Lop_12_Dai_so_Chuong_1
+\begin{bt}%[2D1H4-3]%[ma:39283c46]
+	Một chiếc xe ô tô mới mua có giá $30\,000$ USD. Sau thời gian $t$ (năm), người ta xác định giá trị của xe ô tô đó là $f(t)=\dfrac{30\,000+2\,000t}{t}$  (USD).
+	Khi thời gian tăng lên, hỏi giá trị của xe ô  tô đó không thể thấp hơn hơn bao nhiêu (USD)?
+	 \shortans{2000}
+	 \loigiai{
+		Ta có 
+		\[ 
+		\lim\limits_{t\to  +\infty} f(t)
+		=\lim\limits_{t\to  +\infty}\dfrac{30\,000+2\,000t}{t}
+		=\lim\limits_{t\to +\infty}\left(\dfrac{30\,000}{t}+2\,000\right)=2\,000. 
+		\] 
+		Suy ra, tiệm cận ngang của đồ thị  hàm số $f(t)$ là $y=2\,000$.\\
+		Vậy khi thời gian tăng lên, giá trị của xe ô tô đó ngày  càng giảm về và gần bằng $2\,000$ USD.
+	 }
+\end{bt}
+
+% nguồn: Phan2_Lop_12_Dai_so_Chuong_1
+\begin{bt}%[2D1H4-3]%[ma:02cbdf73]
+	Tại một công ty sản xuất đồ chơi an toàn cho trẻ em, công ty phải chi $40\,000$ USD để thiết lập dây chuyền sản xuất ban đầu. Sau đó, cứ sản xuất được một sản phẩm đồ chơi $A$, công ty phải trả $6$ USD cho nguyên liệu ban đầu và nhân công. Gọi $x$ $(x\ge 1)$ là số đồ chơi $A$ mà công ty đã sản xuất và $P(x)$ (đơn vị USD) là tổng số tiền bao gồm cả chi phí ban đầu mà công ty phải chi trả khi sản xuất $x$ đồ chơi $A$. Người ta xác định chi phí trung bình cho mỗi sản phẩm đồ chơi $A$ là $F(x)=\dfrac{P(x)}{x}$. Xem $F(x)$ là hàm số theo $x$ xác định trên nửa khoảng $\left[1; +\infty\right)$. Khi đó, chi phí trung bình của mỗi đồ  chơi $A$ thấp nhất càng gần nhưng không thể nhỏ hơn bao nhiêu (USD)?
+	\shortans{6} 
+	\loigiai{ 
+		Một đồ chơi công  ty $A$ phải trả $6$ USD nên $x$ đồ chơi công ty phải trả $60$ (USD) $(x\ge 1)$.\\
+		Khi đó tổng số tiền bao gồm  cả chi phí ban đầu mà công ty phải chi trả khi sản xuất đồ chơi $A$ là $P(x)=60x+ 40\,000$.\\
+		Chi phí trung bình cho mỗi sản phẩm  đồ chơi $A$ là $F(x)=\dfrac{P(x)}{x}=\dfrac{6x+40\,000}{x}$.\\
+		Ta  có
+		$\lim\limits_{x\to  +\infty} F(x)
+		=\lim\limits_{x\to +\infty} \dfrac{6x+40\,000}{x} 
+		= \lim\limits_{x\to  +\infty}\left(6+ \dfrac{40\,000}{x}\right)=6$.\\
+		Suy ra, tiệm cận ngang  của đồ thị hàm số $y=F(x)$ là $y=6$.\\
+		Vậy chi phí trung bình của mỗi đồ chơi $A$  thấp nhất càng gần nhưng không thể nhỏ hơn $6$ USD.
+	} 
+\end{bt}
+
+% nguồn: Phan2_Lop_12_Dai_so_Chuong_1
+\begin{bt}%[2D1H4-3]%[ma:e44e3dd7]
+	 Cho hàm số $f(x)=\dfrac{ax-5}{x+b}\left(a,b\in \mathbb{R}\right)$ có bảng biến thiên như sau
+	\begin{center}
+		\begin{tikzpicture}[scale=1,line join=round,line cap=round,font=\footnotesize,>=stealth]
+			\tkzTabInit[nocadre=false,lgt=1.2,espcl=3,deltacl=0.5] 
+				{$x$/0.7,$f’(x)$/0.7,$f  (x)$/2}
+				{$-\infty$,$2$,$+\infty$} 
+			 \tkzTabLine{,+,d,+,}
+			 \tkzTabVar{-/$1$,+D-/$+\infty$/$-\infty$,+/$1$}
+		\end{tikzpicture}
+	\end{center}
+	Tính  giá trị biểu thức $a^2+b^2$.
+	\shortans{5} 
+	 \loigiai{
+		Từ bảng biến thiên, suy ra đường tiệm  cận đứng là $x=2$ và đường tiệm cận ngang là $y=1$.\\
+		Từ hàm số $f(x)=\dfrac{ax-5}{x+b} \left(a,b \in \mathbb{R}\right)$ suy ra đồ thị hàm số có tiệm cận đứng  là $x=-b$ và đường tiệm cận ngang là $y=a$.\\
+		Do đó ta có $\heva{&-b=2\\&a=1}\Leftrightarrow \heva{&b=-2\\&a=1} \Rightarrow  a^2+b^2=5$.
+	 }
+\end{bt}
+
+% nguồn: Phan2_Lop_12_Dai_so_Chuong_1
+\begin{bt}%[2D1H4-3]%[ma:42dfd7ce]
+	Một tác giả muốn xuất bản một cuốn sách với phí xuất bản là $10$ triệu đồng và giá tiền in mỗi cuốn sách là $70\,000$ đồng. Gọi $t$ $(t\ge 1)$ là  số cuốn sách sẽ in và $f(t)$ (đơn vị: nghìn đồng) là chi phí trung bình của mỗi cuốn sách. Khi đó, người ta tính toán được chi phí trung bình của mỗi cuốn sách không thể thấp hơn $\overline{ab}$ nghìn đồng. Tìm $a+b$.
+	\shortans{7} 
+	\loigiai{ 
+		Tổng số tiền cần bỏ ra để in $t$ cuốn sách là  $10\,000+70t$ (nghìn đồng).\\
+		Chi phí trung bình của mỗi cuốn sách là $f(t)=\dfrac{10\,000+70t}{t}$  (nghìn đồng).\\
+		 Ta có
+		\[ 
+		\lim\limits_{t\to +\infty}  f(t)
+		 =\lim\limits_{t\to +\infty}\dfrac{10\,000+70t}{t}
+		 =\lim\limits_{t\to +\infty}\left(\dfrac{10\,000}{t}+70\right)=70.
+		\] 
+		Suy ra, tiệm cận ngang của đồ  thị hàm số $f(t)$ là $y=70$.\\
+		Vậy chi phí trung bình của mỗi  cuốn sách thấp nhất không thể thấp hơn $70$ nghìn đồng.\\
+		Suy ra $a=7$, $b=0$  $\Rightarrow a+b=7$.
+	 }
+\end{bt}
+
+% nguồn: Phan2_Lop_12_Dai_so_Chuong_1
+\begin{bt}%[2D1H4-3]%[ma:131f7dbf]
+	Số lượng sản phẩm của công ty bán  được trong $x$ (tháng) được tính theo công thức
+	$S(x)=400\left(2+\dfrac{3}{x+2}\right)$ với $x\ge 1$. Ta coi $y=S(x)$ là một hàm số xác  định trên $\left[1; +\infty\right)$. Khi đó, hãy tính xem số lượng sản phẩm của công ty bán được trong một khoảng thời gian dài không thể thấp hơn bao nhiêu sản phẩm ?
+	\shortans{800} 
+	\loigiai{ 
+		Ta có  $S'(x)=-\dfrac{1200}{\left(x+2\right)^2}<0$, với mọi $x\ge 1$.\\
+		Suy  ra hàm số $y=S(x)$ nghịch biến trên $\left[1; +\infty\right)$.\\
+		 Mặt khác ta có
+		\[ 
+		\lim\limits_{x\to  +\infty} S(x)
+		 =\lim\limits_{x\to +\infty}400\left(2+\dfrac{3}{x+2}\right)
+		=\lim\limits_{x\to  +\infty}\left(800+\dfrac{1\,200}{x+2}\right)=800.
+		 \]
+		Suy ra,  tiệm cận ngang của đồ thị hàm số $y=S(x)$ là $y=800$.\\
+		Vậy số lượng sản phẩm  của công ty bán được trong thời gian dài không thể thấp hơn $800$ sản phẩm.
+	 }
+\end{bt}
+
+% nguồn: Phan2_Lop_12_Dai_so_Chuong_1
+\begin{bt}%[2D1H4-3]%[ma:50a040a6]
+	Số dân của một thị trấn sau $t$ năm kể từ năm $1970$ được ước tính bởi công~thức \xuongdong  $f(t)=\dfrac{26 t+10}{t+5}\quad \big(f(t)$ được tính bằng nghìn người$\big)$. \textit{(Nguồn: Giải tích $12$ nâng cao, NXBGD Viêt Nam, $2020$)}. Xem $y=f(t)$ là một hàm số xác định trên nửa khoảng $[0;+\infty)$. Đồ thị hàm số $y=f(t)$ có đường tiệm cận ngang là $y=a$. Giá trị của $a$ là bao nhiêu?
+	\loigiai{ 
+	\shortans{26} 
+		Ta có $\lim\limits_{x\to+\pm  \infty}f(t)=26$.\\
+		Do đó đường tiệm cận ngang của đồ thị hàm  số là $y=26$.
+	 }
+\end{bt}
+
+% nguồn: Phan2_Lop_12_Dai_so_Chuong_1
+\begin{bt}%[2D1H4-3]%[ma:c11a2f81]
+	Số lượng sản phẩm của công ty bán được trong $x$ (tháng)  được tính theo công thức
+	$S(x)=300\left(2+\dfrac{4}{x+2}\right)$ với $x\ge 1$. Ta coi $y=S(x)$ là một hàm số xác định trên $\left[1; +\infty\right)$. Khi đó, hãy tính xem  số lượng sản phẩm của công ty bán được trong một khoảng thời gian dài không thể thấp hơn bao nhiêu sản phẩm?
+	 \shortans{600}
+	 \loigiai{
+		Ta có 
+		 \[
+		 \lim\limits_{x\to +\infty} S(x)
+		=\lim\limits_{x\to  +\infty}300\left(2+\dfrac{4}{x+2}\right)
+		 =\lim\limits_{x\to +\infty}\left(600+\dfrac{1\,200}{x+2}\right)=600.
+		 \]
+		Suy ra, tiệm cận ngang của đồ thị hàm số $y=S(x)$ là $y=600$.\\ 
+		Vậy số lượng sản phẩm của  công ty bán được trong thời gian dài không thể thấp hơn $600$ sản phẩm.
+	 }
+\end{bt}
+
+% nguồn: Phan2_Lop_12_Dai_so_Chuong_1
+\begin{bt}%[2D1V4-3]%[ma:c2323ac1]
+	Số dân của một thị trấn sau $t$ năm  kể từ năm $1970$ được ước tính bởi công thức $f(t)=\dfrac{26t+10}{t+5}$ là một hàm số xác định trên nửa khoảng $\left[0;+\infty\right)$. Đồ thị hàm số $y=f(t)$ có đường tiệm cận ngang là $y=a$. Giá trị của $a$ là bao nhiêu?
+	 \shortans{26}
+	\loigiai{Ta có $$\lim\limits_{t \to + \infty} f(t)  = \lim\limits_{t \to +\infty} \dfrac{26t+10}{t+5} = \lim\limits_{t \to +\infty} \dfrac{26+\dfrac{10}{t}}{1+\dfrac{5}{t}} = 26 \Rightarrow \text{ TCN}~y=26.$$}
+\end{bt}
+
+% nguồn: Phan2_Lop_12_Dai_so_Chuong_1
+\begin{bt}%[2D1C4-3]%[ma:25b83b66]
+	Cho hàm số $y=\dfrac{x-2}{x^2-3mx+m}$. Tìm $m$ để  đồ thị hàm số có đúng một tiệm cận đứng. Biết tổng các giá trị của tham số $m$ có dạng phân số $\dfrac{a}{b}$, tính tổng $S=a+b$.
+	 \shortans{101}
+	\loigiai{Dễ thấy tử thức có một nghiệm là $x=2$ do đó để đồ thị hàm số có đúng một tiệm  cận đứng thì phương trình $x^2-3mx+m=0$ có nghiệm kép hoặc có hai nghiệm phân biệt trong đó có một nghiệm bằng $2$.\\
+		$\Rightarrow \hoac{&\Delta=0\\&\heva{&\Delta  > 0\\&4 - 3 \cdot 2m + m = 0}} \Leftrightarrow \hoac{&9m^2-4m=0\\&\heva{&9m^2-4m>0\\&4-3\cdot2m+m=0}} \Leftrightarrow \hoac{&m=0\\&m=\dfrac{4}{9}\\&\heva{&\hoac{&m<0\\&m>\dfrac{4}{9}}\\&m = \dfrac{4}{5}}} \Leftrightarrow \hoac{&m=0\\&m=\dfrac{4}{9}\\&m = \dfrac{4}{5}.}$\\
+		Vậy tổng các giá trị của tham số $m$ bằng $\dfrac{56}{45} \Rightarrow S=101$. 
+	 }
+\end{bt}
+
+
+%%%%%%%%%%%%%%%% TỰ LUẬN %%%%%%%%%%%%%%%%
+
+% nguồn: Phan2_Lop_12_Dai_so_Chuong_1
+\begin{bt}%[2D1H4-3]%[ma:33ba3dab]
+	Một mảnh vườn hình chữ nhật có diện tích bằng $150$ m$^2$. Biết độ dài một cạnh của mảnh vườn là $(x-2)$ m. Biểu thức tính chu vi của mảnh vườn là $P(x)$ (mét). Phương trình  đường tiệm cận xiên của đồ thị hàm số $P(x)$ là $y=ax+b$. Giá trị của biểu thức $a^2+4b$ là bao nhiêu?
+	 \loigiai{Cạnh còn lại của hình chữ nhật là $\dfrac{150}{x-2}$ m.\\
+		Chu  vi của mảnh vườn là
+		$$P(x) = \left(x - 2 + \dfrac{150}{x-2}\right) \cdot 2 \Rightarrow P(x) = 2x - 4 + \dfrac{300}{x-2} \ (\text{m})  \ \text{ với} \ x > 2.$$
+		Ta có $\lim\limits_{x\to +\infty} (P(x) - (2x - 4)) = \lim\limits_{x \to +\infty}  \dfrac{300}{x-2} = 0$.\\
+		 Đồ thị hàm số $P(x)$ có tiệm cận xiên là đường thẳng $y=2x-4$.\\
+		Vậy $a=2$,  $b=-4 \Rightarrow a^2+4b=-12$.
+	} 
+\end{bt}
+
+% nguồn: Phan2_Lop_12_Dai_so_Chuong_1
+\begin{bt}%[2D1H4-3]%[ma:f785e177]
+	Cho hàm số $y = f(x) =  \dfrac{4x^2 - 15x + 8}{x - 3}$. Gọi $I(a; b)$ là giao điểm của đường tiệm cận đứng và đường tiệm cận xiên của đồ thị hàm số $y = f(x)$. Tính $2a+b$.
+	\loigiai{ 
+		Tập xác định: $\mathscr{D} = \mathbb{R} \setminus \{3  \}$.\\
+		Ta có $\lim\limits_{x \to 3^-} f(x) =  -\infty$; $\lim\limits_{x \to 3^+} f(x) = +\infty$.\\
+		Suy ra đường tiệm cận đứng của đồ thị hàm số là đường thẳng  $x=3$.\\
+		 Ta có $y = f(x) = \dfrac{4x^2-15x+8}{x-3} = 4x - 3 - \dfrac{17}{x-3}$.\\
+		Do $\lim\limits_{x \to -\infty} [f(x)-(4x-3)] = 0$; $\lim\limits_{x \to +\infty} [f(x) -  (4x - 3)] = 0$.\\
+		Vậy đường  tiệm cận xiên của đồ thị hàm số là đường thẳng $y = 4x - 3$.\\
+		Giao  điểm của đường tiệm cận đứng và tiệm cận xiên của đồ thị hàm số là $I(3; 9)$.\\
+		Suy  ra $2a+b=15$.
+	} 
+\end{bt}
+
+% nguồn: Phan2_Lop_12_Dai_so_Chuong_1
+\begin{bt}%[2D1V4-3]%[ma:268348c6]
+	Một bể chứa $3000$ lít nước tinh khiết. Người ta bơm vào bể đó nước muối có nồng độ $25$ gam muối cho mỗi lít nước với tốc độ $20$ lít/phút. Khi thời gian $t$ đủ lớn, nồng độ muối trong  bể không thể vượt quá ngưỡng $a$ gam/lít. Tính giá trị $a$.
+	\loigiai{ 
+		Khối lượng nước  trong bể sau $t$ phút là $3000+20t$ (lít).\\
+		Khối lượng  muối trong bể sau $t$ phút là $500t$ (gam).\\
+		Nồng độ muối trong bể sau $t$ phút là $f(t) =  \dfrac{500t}{20t+3000} = \dfrac{25t}{t+150}$.\\
+		Xét hàm số $f(t) = \dfrac{25t}{t+150}$, $t  \in (0; +\infty)$.\\
+		Ta có $f'(t)  = \dfrac{3750}{(t + 150)^2} > 0, \forall t \in (0; +\infty)$.\\
+		Do $\lim\limits_{t \to +\infty } f(t) = \lim\limits_{t \to +\infty} \dfrac{25t}{t+150}  = \lim\limits_{t\to +\infty} \dfrac{25}{1+\dfrac{150}{t}} = 25$.\\
+		Suy ra đồ thị hàm  số có đường tiệm cận ngang $y=25$.\\
+		Bảng biến  thiên
+		\begin{center}
+			\begin{tikzpicture}
+				 \tkzTabInit[lgt=1.2,espcl=5]
+					 {$t$/1,$f’(t)$/1,$f (t)$/2}
+					{$-\infty$,$+\infty$} 
+				 \tkzTabLine{,+,}
+				\tkzTabVar{-/$-\infty$,+/$25$} 
+			\end{tikzpicture}
+		\end{center}
+		Dựa vào BBT ta thấy  thời gian càng lớn thì nồng độ muối trong bể càng cao, tuy nhiên nồng độ muối trong bể không thể vượt quá ngưỡng $25$ gam/lít.
+	} 
+\end{bt}

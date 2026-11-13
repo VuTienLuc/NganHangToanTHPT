@@ -1,0 +1,453 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Lớp 12 | Ứng dụng đạo hàm để khảo sát hàm số | Sự đồng biến và nghịch biến của hàm số
+% Dạng 2D1?1-5: Toán thực tế ứng dụng sự đồng biến nghịch biến
+% Số câu: 18  (sinh tự động bởi tach_cau.py; từ nay thầy sửa trực tiếp file này)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%% TRẮC NGHIỆM 4 PHƯƠNG ÁN %%%%%%%%%%%%%%%%
+
+% nguồn: Phan1_Lop_12_Dai_so_Chuong_1
+\begin{ex}%[2D1H1-5]%[ma:e1d74550]
+	Sự ảnh hưởng khi sử dụng một loại độc tố với vi khuẩn $X$ được một nhà sinh học mô tả bởi hàm số $P(t)=\dfrac{t+1}{t^2+t+4}$, trong đó $P(t)$ là  số lượng vi khuẩn sau $t$ giờ sử dụng độc tố. Vào thời điểm nào thì số lượng vi khuẩn $X$ bắt đầu giảm?
+	 \choice
+		 {Ngay từ lúc bắt đầu sử dụng độc tố}
+		{Sau $0{,}5$  giờ}
+		 {Sau $2$ giờ}
+		{\True  Sau $1$ giờ}
+	 \loigiai{
+		Ta có $P'(t)=\dfrac{-t^2-2t+3}{\left(t^2+t+4\right)^2}=\dfrac{(t-1)(-t-3)}{\left(t^2+t+4\right)^2}  \quad (t>0)$.\\
+		$\Rightarrow  P'(t)=0 \Leftrightarrow \hoac{&t=-3 \quad \text{ (loại)}\\&t=1 \quad \text{ (nhận)}.}$\\
+		Bảng biến thiên 
+		\begin{center}
+			\begin{tikzpicture}[scale=1,font=\footnotesize,line join=round,line cap=round,>=stealth]
+				 \tkzTabInit[nocadre=false,lgt=1.5,espcl=2,deltacl=0.5]
+					{$t$/.7,$P'(t)$/.7,$P (t)$/2} 
+					 {$0$,$1$,$+\infty$}
+				 \tkzTabLine{,+,$0$,-,}
+				\tkzTabVar{-/$\dfrac{1}{4}$,+/$\dfrac{1}{3}$,-/$0$} 
+			\end{tikzpicture}
+		\end{center}
+		Ta thấy hàm số đạt cực đại tại $t=1$ và $P'(t)<0, \forall t \in(1;+\infty)$ nên sau $1$ giờ  thì vi khuẩn bắt đầu giảm.
+	} 
+\end{ex}
+
+
+%%%%%%%%%%%%%%%% ĐÚNG/SAI %%%%%%%%%%%%%%%%
+
+% nguồn: Phan1_Lop_12_Dai_so_Chuong_1
+\begin{ex}%[2D1V1-5]%[ma:4c6f8117]
+		Xét một chất điểm chuyển động dọc theo trục $Ox$. Toạ độ của chất điểm tại thời điểm $t$ được xác định bởi hàm số $x(t)=t^3-6t^2+9t$ với $t \leq 0$. Khi đó $x'(t)$ là vận tốc của chất điểm tại thời điểm $t$, kí hiệu $v(t)$; $v'(t)$ là gia tốc chuyển động của chất điểm tại thời điểm $t$, kí hiệu  $a(t)$.
+	\choiceTF 
+			{Phương trình hàm vận tốc là $v(t) =  3t^2-6t+9$}
+			{\True Phương trình hàm gia tốc là  $a(t)=6t-12$}
+			{\True Vận tốc của chất điểm  tăng khi $t \in (0;1)\cup (3;+\infty)$}
+			{\True Vận tốc của chất điểm giảm khi  $t \in (1;3)$}
+	 \loigiai{
+			\begin{itemchoice}
+				\itemch Ta có $v(t) = x'(t) =  3t^2-12t+9$.
+				\itemch Ta có $a(t) =  v'(t) = 6t-12$.
+				\itemch Xét  $v(t)=0 \Leftrightarrow \hoac{&t=1\\&t=3.}$\\
+				 Bảng xét dấu
+				\begin{center}
+					\begin{tikzpicture}[>=stealth,scale=1]
+						 \tkzTabInit[lgt=2,espcl=2.7]
+						{$t$/0.8,$v  (t)$/0.8}
+						{$0$,$1$,$3$,$+\infty$} 
+						\tkzTabLine{,+,0,-,0,+,} 
+					\end{tikzpicture}
+				\end{center}
+				Suy ra vận tốc của chất điểm tăng khi $t \in (0;1) \cup (3;+\infty)$. 
+				\itemch Vận tốc của chất điểm giảm khi $t \in  (1;3)$.
+			\end{itemchoice}
+		 }
+	\end{ex}
+
+
+%%%%%%%%%%%%%%%% TRẢ LỜI NGẮN %%%%%%%%%%%%%%%%
+
+% nguồn: Phan2_Lop_12_Dai_so_Chuong_1
+\begin{bt}%[2D1H1-5]%[ma:f276548b]
+	\immini{Một vật  chuyển động. Quãng đường $s(t)$ (tính theo mét) vật đi được sau khoảng thời gian $t$ (tính theo giây), $t \geq 0$, được mô tả là một hàm số bậc ba có đồ thị như hình vẽ dưới đây.
+	Hỏi trong $10$  giây đầu tiên, khoảng thời gian vật chuyển động nhanh dần kéo dài bao~nhiêu giây?
+	}{\resizebox{!}{5cm}{ 
+	\begin{tikzpicture}[line join=round,line cap=round,>=stealth]
+		 \def\xmin{-1}\def\xmax{5.8}\def\ymin{-1}\def\ymax{9}
+		 \draw[->] (\xmin-0.2,0)--(\xmax+0.2,0) node[below] {$t (s)$};
+		\draw[->]  (0,\ymin-0.2)--(0,\ymax+0.2) node[right] {$s (t)$(m)};
+		\draw (0,0)  node [below left] {$O$};
+		 \foreach \x in {2,4,5}\fill (\x,0) circle (1pt);
+		\foreach \y in  {1.33,2.66,5.83}\fill (0,\y) circle (1pt);
+		\clip (\xmin,\ymin) rectangle (\xmax,\ymax); 
+		 \draw[smooth,samples=100,domain=0:\xmax] plot (\x,{(1/6)*((\x)^3)+-1*((\x)^2)+2*(\x)+0});
+		\draw[dashed] (0,1.33)--(2,1.33)--(2,0) node[below]{$4$}; \fill (2,1.33) circle  (1pt);
+		\fill  (0,1.33) circle (1pt) node [left] {$\dfrac{8}{3}$};
+		\draw[dashed]  (0,2.66)--(4,2.66)--(4,0) node[below]{$8$};
+		\fill  (4,2.66) circle (1pt);
+		\fill (0,2.66) circle (1pt) node [left]  {$\dfrac{112}{3}$};
+		 \draw[dashed] (0,5.83)--(5,5.83)--(5,0) node[below]{$10$};
+		 \fill (5,5.83) circle (1pt);
+		\fill (0,5.83) circle (1pt) node [left]  {$\dfrac{260}{3}$};
+	\end{tikzpicture}
+	}} 
+	 \shortans{8}
+	 \loigiai{
+		 Gọi $s(t)=at^3+bt^2+ct+d$ $a\neq0$.\\
+		Vì đồ thị hàm số $s(t)$ đi qua các điểm $(0;0)$, $\left( 4;\dfrac{8}{3} \right)$, $\left( 8;\dfrac{112}{3} \right)$,  $\left( 10;\dfrac{260}{3} \right)$.\\
+		Nên ta có 
+		$$\heva{&64a+16b+4c=\dfrac{8}{3} \\&512a+64b+8c=\dfrac{112}{3} \\&1000a+100b+10c=\dfrac{260}{3} \\&d=0} \Leftrightarrow  \heva{&a=\dfrac{1}{6} \\&b=-1 \\&c=2 \\&d=0.}$$
+		Do đó $s(t)=\dfrac{1}{6}t^3-t^2+2t  \Rightarrow v(t)=s'(t)=\dfrac{1}{2}t^2-2t+2$.\\
+		 Xét $v'(t)=0 \Leftrightarrow t=2$.\\
+		 Bảng biến thiên
+		\begin{center}
+			\begin{tikzpicture}
+				\tkzTabInit[nocadre,lgt=1.2,espcl=2.5,deltacl=0.6] 
+					 {$t$/0.6,$v'$/0.6,$v$/2}{$0$,$2$,$10$}
+				\tkzTabLine{,-,0,+,} 
+				 \tkzTabVar{+/$2$,-/$0$,+/$32$}
+			\end{tikzpicture}
+		\end{center}
+		Dựa vào bảng biến thiên, từ giây thứ $2$ trở đi vận tốc của vật tăng  dần theo thời gian.\\
+		Do đó trong $10$ giây đầu tiên, khoảng thời gian vật chuyển  động nhanh dần kéo dài trong $8$ giây.
+	} 
+\end{bt}
+
+% nguồn: Phan2_Lop_12_Dai_so_Chuong_1
+\begin{bt}%[2D1H1-5]%[ma:44c62d8b]
+	Từ  năm 2004 đến năm 2019 doanh thu $R(t)$ (tính bằng triệu đô la) của McDonald's có thể được mô hình hóa bởi
+	\begin{align*}
+		R(t)=-130{,}769  t^3+2296{,}47 t^2-11493,5 t+35493,~(4 \leq t \leq 19),
+	\end{align*}
+	trong đó $t$ là đại diện cho năm, với $t=4$ tương ứng với năm 2004. Biết rằng $R'(t)$ là hàm tốc độ doanh thu theo thời gian. Tốc độ thay đổi  doanh thu của McDonald's lớn nhất vào năm nào? (Kết quả làm tròn đến hàng đơn vị, tính theo triệu đô la mỗi năm).
+	\shortans{2006} 
+	 \loigiai{
+		Ta có hàm tốc độ doanh thu là $R'(t)=-392{,}307 t^2+4592{,}94  t-11493{,}5$.\\
+		Cho $R''(t)=-784{,}614 t+4592{,}94=0 \Leftrightarrow  t \approx 6 ~\text {(nhận).}$\\
+		Ta  có bảng biến thiên của hàm số
+		\begin{center}
+			\begin{tikzpicture}[line join=round,line cap=round,>=stealth]
+				\tkzTabInit[nocadre,lgt=1,espcl=3,deltacl=0.5] 
+					 {$t$/.7,$R''$/.7,$R$/2}
+					 {$4$,$6$,$19$}
+				\tkzTabLine{,+,$0$,-,} 
+				\tkzTabVar{-/$601$,+/$1941$,-/$-65851$} 
+			\end{tikzpicture}
+		\end{center}
+		 Dựa bào bảng biến thiên ta thấy rằng tốc độ thay đổi doanh thu của McDonald’s lớn nhất vào năm 2006 (tương ứng với $t=6$).
+	 }
+\end{bt}
+
+% nguồn: Phan2_Lop_12_Dai_so_Chuong_1
+\begin{bt}%[2D1H1-5]%[ma:975373b3]
+	Giả sử sự lây lan của một loại virus ở một địa phương có thể được mô hình hoá bằng hàm số $N(t)=-t^3+12t^2$, $0 \le t \le 12$, trong đó $N$ là số người bị nhiễm bệnh (đơn vị là trăm người) và $t$ là thời gian (tuần).  Gọi $(a;b)$ là khoảng thời gian lâu nhất mà số người bị nhiễm bệnh tăng lên. Tính giá trị $P=2a^2-b^2$.
+	 \shortans{-64}
+	\loigiai{Để xác định khoảng thời gian số người  bị nhiễm bệnh tăng lên, ta xét các khoảng đồng biến, nghịch biến của hàm số $N(t)$.\\
+		 Xét
+		$N'(t)=0 \Leftrightarrow-3t^2+24t=0 \Leftrightarrow-3t(t-8)=0  \Leftrightarrow \hoac{&t=0\\&t=8}$.\\
+		Bảng biến  thiên
+		\begin{center}
+			\begin{tikzpicture}
+				 \tkzTabInit[espcl=2.5,lgt=1.5]
+					{$t$/0.7,$N'(t)$/0.7,$N (t)$/2.1} 
+					 {$0$,$8$,$12$}
+				 \tkzTabLine{0,+,0,-}
+				 \tkzTabVar{-/$0$,+/$256$,-/$0$}
+			\end{tikzpicture}
+		\end{center}
+		Số người bị nhiễm bệnh tăng lên khi $N'(t) > 0$,  tức là trên khoảng thời gian $(0;8)$.\\
+		Đây là khoảng thời  gian lâu nhất mà số người bị nhiễm bệnh tăng lên.\\
+		Do  đó $a=0$ và $b=8$.\\
+	Tính giá trị $P=2a^2-b^2=2 \cdot  (0)^2-(8)^2=0-64=-64$.}
+\end{bt}
+
+% nguồn: Phan2_Lop_12_Dai_so_Chuong_1
+\begin{bt}%[2D1H1-5]%[ma:5f171e86]
+	Một cửa hàng quần áo đã thống kê số lượng quần áo bán ra trong ngày thứ $x$ ($1 \le x \le 30$) của một tháng xác định tuân theo quy luật được mô hình hoá bởi hàm số $f(x)=3x^2- 54x+256$. Hỏi trong tháng đó, có bao nhiêu ngày có số lượng quần áo bán ra nhiều hơn ngày  hôm trước?
+	\shortans{21} 
+	 \loigiai{Ta có $f'(x)=6x-54$.\\
+		$f'(x)=0 \Leftrightarrow 6x-54=0 \Leftrightarrow  x=9$.\\
+		Bảng biến thiên 
+		\begin{center}
+			\begin{tikzpicture}
+				\tkzTabInit[espcl=2.5,lgt=1.5] 
+					 {$x$/0.7,$y'$/0.7,$y$/2.1}
+					{$-\infty$,$9$,$+\infty$} 
+				 \tkzTabLine{,-,0,+}
+				\tkzTabVar{+/$+\infty$,-/$13$,+/$+\infty$} 
+			\end{tikzpicture}
+		\end{center}
+		Vậy, các  ngày trong tháng có số lượng quần áo bán ra nhiều hơn ngày hôm trước là khi $f'(x) > 0$, tức là $x > 9$.\\
+		Vì $x$ là số ngày, $x$ bắt đầu từ $1$, nên các ngày có số lượng quần áo  bán ra nhiều hơn ngày hôm trước là từ ngày $x=10$ đến ngày $x=30$.\\
+	Khi đó có $30-10+1=21$ ngày thoả mãn yêu cầu  bài toán.}
+\end{bt}
+
+% nguồn: Phan2_Lop_12_Dai_so_Chuong_1
+\begin{bt}%[2D1H1-5]%[ma:9f6499f5]
+	Xét một chất điểm chuyển động trên một trục số nằm ngang, chiều dương từ trái sang phải. Giả sử vị trí $s(t)$  (mét) của chất điểm trên trục số đã chọn tại thời điểm $t$ (giây) được cho bởi công thức $s(t)=t^3-9t^2+15t$, $t \ge 0$. Hỏi chất điểm chuyển động sang trái trong khoảng thời gian bao nhiêu giây?
+	\shortans{4} 
+	\loigiai{Vận tốc của chất điểm là $v(t)=s'(t)=\left(t^3 -  9t^2+15t\right)'=3t^2-18t+15$.\\
+		Chất  điểm chuyển động sang trái khi $v(t) < 0$.\\
+		\begin{eqnarray*}
+			v(t) < 0 &\Leftrightarrow& 3t^2-18t+15 <  0\\
+			&\Leftrightarrow& t^2-6t+5  < 0\\
+			 &\Leftrightarrow& (t-1)(t-5) < 0\\
+			&\Leftrightarrow&  1 < t < 5.
+		\end{eqnarray*}
+		Chất điểm chuyển động theo chiều âm (từ phải sang trái) khi $v(t) < 0$, tức là $1 < t  < 5$.\\
+	Vậy, trong khoảng thời gian $5-1=4$ (giây) thì chất điểm chuyển động  sang trái.}
+\end{bt}
+
+% nguồn: Phan2_Lop_12_Dai_so_Chuong_1
+\begin{bt}%[2D1V1-5]%[ma:788eec77]
+	Anh Nam có một cái ao với diện tích $50 \, \text{ cm}^2$ để nuôi cá điều hồng. Vu vơ qua, anh nuôi cá mật độ $40 \, \text{ con}/\text{ m}^2$ và thu được $3$ tấn cá thành phẩm. Theo kinh  nghiệm nuôi cá của mình anh thấy cứ thả giảm đi $8 \, \text{ con}/\text{ m}^2$ thì mỗi con cá thành phẩm thu được tăng thêm $0{,}5$ kg. Để tổng năng suất cao nhất thì vu tới anh Nam nên mua bao~nhiêu cá giống để thả? (giả sử không có hao hụt trong quá trình nuôi)
+	\shortans{1600} 
+	\loigiai{ 
+		Số kilogram thành phẩm của  mỗi con cá lần nuôi đầu là $\dfrac{3\,000}{40{,}50} = 1{,}5 \, \text{ kg}$.\\
+		Gọi $x$ là lượng cá sẽ giảm trên  mỗi $m^2$.\\
+		Khi đó  khối lượng trung bình của mỗi con cá khi đó là $1{,}5 + \dfrac{x}{8} ,0{,}5 \, \text{ kg}$.\\
+		Tổng lượng cá lúc đó là $(40 -  x)\cdot50$.\\
+		Năng suất khi  đó là $f(x) = (40 - x)\cdot 50 \left(1{,}5 + \dfrac{0{,}5 x}{8}\right) = -3{,}125x^2 + 50x + 3\,000$.\\
+		Năng suất lớn nhất đạt được tại $x = \dfrac{-b}{2a} = \dfrac{-50}{2(-3{,}125)} = 8$.\\ 
+		Như  vậy can giảm $8 \, \text{ con}/\text{ m}^2$ để đạt năng suất lớn nhất.\\
+		Tổng lượng cá cần thả để đạt năng suất tốt nhất là $(40 - 8)\cdot50 = 1\,600 \, \text{ con}$. 
+	} 
+\end{bt}
+
+% nguồn: Phan2_Lop_12_Dai_so_Chuong_1
+\begin{bt}%[2D1V1-5]%[ma:a77e40fe]
+	Trong một thí nghiệm y học, người ta cấy $100000$ con vi khuẩn vào môi trường dinh dưỡng. Bằng thực nghiệm người  ta xác định được số lượng vi khuẩn N thay đổi theo thời gian bằng công thức $N(t)=80t^{3}-3600t^{2}+48000t+100000$ (thời gian $t$ tính bằng giây $0 \leq t \leq 45$). Gọi $(a;b)$ là khoảng thời gian dài nhất để vi khuẩn tăng. Hiệu $a-b$ bằng bao nhiêu?
+	\shortans{-25} 
+	 \loigiai{
+		Ta có $N(t)=80t^{3}-3600t^{2}+48000t+100000 \Rightarrow N'(t)=240 t^{2}-7200t+48000$.\\ 
+		$N'(t)=240t^{2}-7200t+48000=0  \Leftrightarrow\hoac{&t=10\\&t=20.}$\\
+		Bảng biến  thiên
+		\begin{center}
+			\begin{tikzpicture}
+				\tkzTab 
+					 [lgt=2,espcl=3]
+					{$x$/1,$f’(x)$/1,$f (x)$/2.5} 
+					{$0$,$10$,$20$,$45$} 
+					 {,+,0,-,0,+,}
+					 {-/,+/,-/,+/}
+			\end{tikzpicture}
+		\end{center}
+		Vậy vi khuẩn tăng trong khoảng thời  gian lâu nhất là $(20;45) \Rightarrow\heva{&a=20\\&b=45} \Rightarrow a-b=-25$.
+	 }
+\end{bt}
+
+% nguồn: Phan2_Lop_12_Dai_so_Chuong_1
+\begin{bt}%[2D1V1-5]%[ma:eb1e61b5]
+	Vận tốc dòng xe trên một đoạn đường quốc lộ $123$ từ $6$ giờ sáng đến $10$ giờ sáng trong ngày thường được xấp xỉ bởi $f(t)=20t-40\sqrt{t}+52$, $0 \le t  \le 4$, trong đó $f(t)$ đo bằng km/giờ và $t$ đo bằng giờ, với $t=0$ ứng với 6 giờ sáng. Qua đó người ta tìm được vào buổi sáng, tốc độ dòng xe giảm từ $a$ giờ đến $b$ giờ. Tìm $b$.
+	\shortans{7} 
+	\loigiai{Để tìm khoảng thời gian tốc độ dòng xe  giảm, ta xét đạo hàm của hàm số $f(t)$.\\
+		Đạo hàm: $f'(t)=\left(20t-40\sqrt{t}+52\right)'=20-40  \cdot \dfrac{1}{2\sqrt{t}}=20-\dfrac{20}{\sqrt{t}}$.\\
+		Với $f'(t)=0\Leftrightarrow 20-\dfrac{20}{\sqrt{t}}=0\Rightarrow=1$.\\ 
+		 Xét dấu $f'(t)$
+		\begin{itemize}
+			\item Với $0 < t < 1$: $20-\dfrac{20}{\sqrt{t}} < 0 \Rightarrow f'(t) < 0$. Do đó $f(t)$ nghịch biến trên $(0,1)$. 
+			 \item Với $1 < t \le 4$: $20-\dfrac{20}{\sqrt{t}} > 0 \Rightarrow f'(t) > 0$. Do đó $f(t)$ đồng biến trên $(1,4)$.
+		\end{itemize}
+		Tốc độ dòng xe giảm  khi $f'(t) < 0$, tức là trong khoảng thời gian $0 < t < 1$.\\
+		Khi đó $t=0$ ứng với 6 giờ sáng và  $t=1$ ứng với $6+1=7$ giờ sáng.\\
+	Vậy giá trị của $b$ là 7.} 
+\end{bt}
+
+% nguồn: Phan2_Lop_12_Dai_so_Chuong_1
+\begin{bt}%[2D1V1-5]%[ma:0d7aea45]
+	Trong một thí nghiệm y học, người ta cấy $100\,000$ con vi khuẩn vào môi trường dinh dưỡng. Bằng thực nghiệm người ta xác  định được số lượng vi khuẩn N thay đổi theo thời gian bằng công thức
+	\begin{align*}
+		N(t)=80  t^3-3\,600 t^2+48\,000 t+100\,000,
+	\end{align*}
+	(thời gian $t$ tính  bằng giây $0 \leq t \leq 45$). Gọi $(a; b)$ là khoảng thời gian tốc độ tăng trưởng của vi khuẩn giảm. Hiệu $b-a$ bằng bao~nhiêu?
+	\shortans{25} 
+	 \loigiai{
+		Ta có $N(t)=80 t^3-3\,600 t^2+48\,000 t+100\,000 \Rightarrow  N'(t)=240 t^2-7\,200 t+48\,000$.\\
+		Ta có $N'(t)=240  t^2-7\,200 t+48\,000=0 \Leftrightarrow \hoac{&t=10 \\& t=20.}$.\\
+		Bảng biến thiên 
+		\begin{center}
+			\begin{tikzpicture}[line join=round,line cap=round,>=stealth]
+				 \tkzTabInit[nocadre,lgt=1.5,espcl=2,deltacl=0.5]
+					{$x$/.7,$N'(t)$/.7,$N  (t)$/2}
+					 {$0$,$10$,$20$,$45$}
+				\tkzTabLine{,+,$0$,-,$0$,+,} 
+				\tkzTabVar{-/$ $,+/$ $,-/$ $,+/$ $} 
+			\end{tikzpicture}
+		\end{center}
+		Vậy  tốc độ tăng trưởng của vi khuẩn giảm trong khoảng thời gian $(20; 45)$.\\
+		Vậy $a=20$, $b=45  \Rightarrow b-a=25$.
+	 }
+\end{bt}
+
+% nguồn: Phan2_Lop_12_Dai_so_Chuong_1
+\begin{bt}%[2D1V1-5]%[ma:b8e73a66]
+	Ở một giải đua ô tô địa hình, một vận động cần hoàn thành chặng đường từ $A$ đến $B$ gồm $3$ đoạn: đường bằng, leo dốc và xuống dốc như hình vẽ bên dưới. Trên đoạn đường bằng $AC$ dài $10$km, xe chạy với vận tốc $100$km/h. Xe leo dốc $CD$ với vận tốc là $10$ km/h và xe xuống dốc $DB$ với vận tốc là $50$ km/h. Biết rằng: $BC=20$ km, $\widehat{DCB}=45^\circ$ và $\widehat{DBC}=30^\circ$. Hỏi vận động viên mất bao nhiêu giờ để hoàn thành chặng đường  từ $A$ đến $B$? (các kết quả làm tròn đến hàng phần trăm).
+	\begin{center}
+		\begin{tikzpicture}[scale=1,line cap=round,line join=round,font=\footnotesize,>=stealth]
+			 \def\a{2}
+			\path (0,0) coordinate  (A)
+				 (0:\a) coordinate (C)++(45:.1) coordinate (c)
+				(0:3*\a) coordinate (B)++(150:.1)  coordinate (b)
+				(intersection of C--c  and B--b) coordinate (D);
+			 \draw (A)--(C)--(D)--(B);
+			 \foreach \a/\b in {A/-90,C/-90,D/40,B/-30}{
+				\fill  (\a) circle (.7pt)
+				 ($(\a)+(\b:2mm)$) node[scale=.8]{$\a$};
+			} 
+		\end{tikzpicture}
+	\end{center}
+	 \shortans{1,43}
+	 \loigiai{
+		Thời gian xe chạy trên đoạn đường bằng là $t_1=\dfrac{10}{100}=\dfrac{1}{10}$  (h).\\
+		\begin{center}
+			\begin{tikzpicture}[scale=1,line cap=round,line join=round,font=\footnotesize,>=stealth]
+				\def\a{2} 
+				\path (0,0)  coordinate (A)
+					(0:\a) coordinate  (C)++(45:.1) coordinate (c)
+					(0:3*\a)  coordinate (B)++(150:.1) coordinate (b)
+					(intersection of C--c and B--b) coordinate  (D);
+				\draw pic[draw,angle radius=2mm,angle eccentricity=2.5,"\tiny $45^\circ$"]{angle=  B--C--D};
+				\draw pic[draw,double,angle radius=3mm,angle eccentricity=2,"\tiny  $30^\circ$"]{angle= D--B--C};
+				\draw (A)--(C)--(D)--(B)--(C); 
+				\foreach  \a/\b in {A/-90,C/-90,D/40,B/-30}{
+					\fill (\a) circle (.7pt) 
+					 ($(\a)+(\b:2mm)$) node[scale=.8]{$\a$};
+				 }
+			\end{tikzpicture}
+		\end{center}
+		 Ta có $\widehat{BDC}=180^\circ -\left(\widehat{DCB}+\widehat{DBC}\right)=105^\circ$.\\
+		Áp dụng định lý sintrong  $\triangle BCD$, ta có
+		$\dfrac{BC}{\sin \widehat{BDC}}=\dfrac{CD}{\sin \widehat{DBC}}=\dfrac{BD}{\sin \widehat{DCB}}$.\\ 
+		Suy ra $CD=\dfrac{20\cdot \sin  30^\circ}{\sin 105^\circ}=10\sqrt{6}-10\sqrt{2}$ (km) và $BD=\dfrac{20\cdot \sin 45^\circ}{\sin 105^\circ}=20\sqrt{3}-20$ (km).\\
+		 Thời gian xe chạy trên đoạn đường leo dốc là $t_2=\dfrac{10\sqrt{6}-10\sqrt{2}}{10}=\sqrt{6}-\sqrt{2}$ (h).\\
+		Thời  gian xe chạy trên đoạn đường xuống dốc là $t_3=\dfrac{20\sqrt{3}-20}{50}=\dfrac{2\sqrt{3}-2}{5}$ (h).\\
+		Tổng thời gian vận động viên hoàn  thành chặng đường từ $A$ đến $B$ là
+		 \[t_1+t_2+t_3=\dfrac{1}{10}+\sqrt{6}-\sqrt{2}+\dfrac{2\sqrt{3}-2}{5}\approx 1{,}43 \mathrm{~(h)}.\]
+		Vậy vận động viên mất $1{,}43$ giờ để hoàn thành chặng đường từ $A$  đến $B$.
+	 }
+\end{bt}
+
+% nguồn: Phan2_Lop_12_Dai_so_Chuong_1
+\begin{bt}%[2D1V1-5]%[ma:9a827204]
+	Một công ty sản xuất sản phẩm và doanh thu (đơn vị: triệu đồng) từ việc bán sản phẩm được mô tả bởi hàm số $R(x)=-2x^3+9x^2+12x+100$. Trong đó, $x$ là số lượng sản phẩm được bán ra (tính bằng ngàn sản phẩm). Hỏi số lượng sản phẩm tối thiểu phải bán ra để doanh thu bắt đầu tăng là bao nhiêu sản phẩm? (Kết quả làm tròn đến  hàng đơn vị).
+	 \shortans{3,56}
+	\loigiai{ 
+		 Ta có $R(x)=-2x^3+9x^2+12x+100$.\\
+		Tập xác định  $\mathscr{D}=(0,+\infty)$.\\
+		$\Rightarrow R'(x)=-6x^2+18x+12=0  \\
+		 \Rightarrow x=\dfrac{3-\sqrt{17}}{2}$ hoặc $x=\dfrac{3+\sqrt{17}}{2}\approx3{,}5616$.
+		\begin{center}
+			\begin{tikzpicture}[line join=round,line cap=round,>=stealth,font=\footnotesize,scale=1]
+				 \tkzTabInit
+					 {$x$/1,$R'(x)$/1,$R (x)$/3}
+					{$0$,$\dfrac{3+\sqrt{17}}{2}$,$+\infty$} 
+				\tkzTabLine{,-,0,+,} 
+				\tkzTabVar{+/$0$,-/$-14{,}16$,+/$+\infty$} 
+			\end{tikzpicture}
+		\end{center}
+		Do vậy số lượng sản  phẩm tối thiểu phải bán ra để doanh thu bắt đầu tăng là
+		\begin{center}
+			$3,5616\cdot 1\,000=3\,561{,}6$  hay $3\,562$ sản phẩm.
+		\end{center}
+	} 
+\end{bt}
+
+% nguồn: Phan2_Lop_12_Dai_so_Chuong_1
+\begin{bt}%[2D1V1-5]%[ma:9fb4ff77]
+	Hàm số $y=\sqrt{1-x}+\sqrt{x+2}$ có tập xác định là  $\mathscr{D}=\left[a;b\right]$. Tính $a+2b$.
+	 \shortans{0}
+	 \loigiai{
+		Hàm số  $y=\sqrt{1-x}+\sqrt{x+2}$ xác định khi
+		 $\heva{&1-x\ge 0 \\&x+2\ge 0}\Leftrightarrow \heva{&x\le 1 \\&x\ge -2}
+		 \Leftrightarrow -2\le x\le 1$.\\
+		 Hay tập xác định của hàm số đã cho là $\mathscr{D}=[-2; 1]$.\\
+		Do đó $a=-2$,  $b=1$.\\ Vậy $a+2b=0$.
+	} 
+\end{bt}
+
+% nguồn: Phan2_Lop_12_Dai_so_Chuong_1
+\begin{bt}%[2D1V1-5]%[ma:5068cb23]
+	Nồng độ thuốc trong máu của  một bệnh nhân sau khi tiêm $t$ giây là $P(t)\left(\dfrac{\text{ mg}}{\text{ ml}}\right)$. Với $P(t)$ cho bởi công thức
+	\begin{align*}
+		P(t)=\sqrt{0,09 t^2+0{,}018 t+0{,}05}-0{,}3  t.
+	\end{align*}
+	Nồng độ thuốc tồn dư, tức nồng độ  thuốc vẫn còn trong cơ thể bệnh nhân trong dài hạn khi tiêm là bao~nhiêu?
+	 \shortans{0,03}
+	\loigiai{ 
+		Do đề bài cho nồng độ  thuốc trong cơ thể bệnh nhân trong dài hạn nên $t \to +\infty$.\\
+		Ta có\allowdisplaybreaks 
+		\begin{eqnarray*}
+			 \lim\limits _{t \rightarrow+\infty} P(t)
+			&=&\lim\limits  _{t \rightarrow+\infty}\left(\sqrt{0{,}09 t^2+0{,}018 t+0{,}05}-0{,}3 t\right)\\
+			&=&\lim\limits _{t  \rightarrow+\infty} \dfrac{0{,}09 t^2+0{,}018 t+0{,}05-(0{,}3 t)^2}{\sqrt{0{,}09 t^2+0{,}018 t+0{,}05}+0{,}3 t} \\
+			&=&\lim\limits _{t  \rightarrow+\infty} \dfrac{0{,}018 t+0{,}05}{\sqrt{0{,}09 t^2+0{,}018 t+0{,}05}+0{,}3 t}\\
+			&=&\lim\limits _{t \rightarrow+\infty} \dfrac{t\left(0{,}018+\dfrac{0{,}05}{t}\right)}{t\left(\sqrt{0{,}09+\dfrac{0{,}018}{t}+\dfrac{0{,}05}{t^2}}+0{,}3\right)}\\ 
+			&=&\lim\limits _{t \rightarrow+\infty} \dfrac{0{,}018+\dfrac{0{,}05}{t}}{\sqrt{0{,}09+\dfrac{0{,}018}{t}+\dfrac{0{,}05}{t^2}}+0{,}3}\\ 
+			 &=&\dfrac{0{,}018}{\sqrt{0{,}09}+0{,}3}=0{,}03.
+		\end{eqnarray*}
+		Vậy nồng độ thuốc tồn dư trong cơ thể bệnh  nhân là $0{,}03~\left(\dfrac{\text{ mg}}{\text{ ml}}\right)$.
+	 }
+\end{bt}
+
+
+%%%%%%%%%%%%%%%% TỰ LUẬN %%%%%%%%%%%%%%%%
+
+% nguồn: Phan2_Lop_12_Dai_so_Chuong_1
+\begin{bt}%[2D1H1-5]%[ma:d04327be]
+	Giả sử một hạt chuyển động trên một trục thẳng đứng chiều dương hướng lên trên  sao cho toạ độ của hạt (đơn vị: mét) tại thời điểm $t$ (giây) là $y=t^3-12t+3, t \geq 0$. Tính quãng đường của hạt đi được trong $3$ giây đầu tiên.
+	 \loigiai{
+		Vận tốc của  hạt chuyển động là $v(t)=y'=3t^2-12$.\\
+		Gia tốc của hạt chuyển động là $a(t)=v'(t)=6t$, suy ra  $a(2)=12$.\\
+		 Hạt chuyển động đi xuống khi $v(t)\le 0\Leftrightarrow 0\le t\le 2$.\\
+		Hạt chuyển động đi lên khi $v(t)\ge0 \Leftrightarrow t\ge 2$.\\ 
+		Khi $0\le t\le 2$, hạt chuyển động đi xuống nên quãng đường đi được trong khoảng thời gian $0\le t \le 2$ là  $y(0)-y(2)=16$.\\
+		Khi $2\le t\le 3$, hạt chuyển động đi lên nên quãng đường đi được là trong khoảng  thời gian $2\le t \le 3$ là $y(3)-y(2)=7$.\\
+		 Do đó quãng đường đi được trong khoảng thời gian $0\le t \le 3$ là $23$ m.
+	 }
+\end{bt}
+
+% nguồn: Phan2_Lop_12_Dai_so_Chuong_1
+\begin{bt}%[2D1H1-5]%[ma:414b601d]
+	Trong $8$ phút đầu kể từ khi xuất phát, độ cao $h$ (tính bằng mét) của khinh khí cầu vào thời điểm $t$ phút được cho bởi công thức $h(t) = 6t^3 - 81t^2+324t$. Trong các khoảng thời gian nào khinh khí cầu tăng dần độ  cao, giảm dần độ cao?
+	 \loigiai{
+		Xét hàm số $h(t) = 6t^3 - 81t^2+324t$ trên đoạn $[0;8]$.\\ 
+		Ta có $h'(t)=18t^3 - 162t+324$, $h'(t)=0\Leftrightarrow 18t^3 -  162t+324 =0\Leftrightarrow \hoac{&t=3\\&t=6.}$\\
+		Bảng biến  thiên
+		\begin{center}
+			\begin{tikzpicture}[font=\footnotesize,>=stealth]
+			\tikzset{double style/.append style={double distance=1.5pt}}
+			\tkzTabInit[nocadre=false,lgt=1.2,espcl=2.5,deltacl=0.6] 
+				{$xt$ /0.6,$h'(t)$  /0.6,$h (t)$ /2}
+				{$0$,$3$,$6$,$8$} 
+			\tkzTabLine{,+,z,-,z,+,} 
+			\tkzTabVar{-/$0$,+/$405$,-/$324$,+/$480$} 
+		\end{tikzpicture}
+		\end{center}
+		 Từ bảng biến thiên suy ra\\
+		Hàm số $h(t)$ đồng biến trên các khoảng $(0; 3)$ và $(6; 8)$, nghịch biến trên khoảng  $(3;6)$.\\
+		Do đó trong khoảng thời gian từ $0$ đến $3$ phút và từ $6$ đến $8$ phút  thì khinh khí cầu tăng dần độ cao. Trong khoảng thời gian từ $3$ đến $6$ phút thì khinh khí cầu giảm dần độ cao.
+	 }
+\end{bt}
+
+% nguồn: Phan2_Lop_12_Dai_so_Chuong_1
+\begin{bt}%[2D1V1-5]%[ma:1b003e54]
+	Thể tích $V$ (đơn vị: centimét khối) của $1$ kilogam nước tại nhiệt độ  $T\,(0^{\circ} \mathrm{C} \leq T \leq 30^{\circ} \mathrm{C})$ được tính bởi công thức
+	 $$
+	V(T)=999{,}87-0{,}06426 T+0{,}0085043 T^2-0{,}0000679  T^3.
+	$$ 
+	Hỏi thể tích  $V(T)$, với $0^{\circ} \mathrm{C} \leq T \leq 30^{\circ} \mathrm{C}$, giảm trong khoảng nhiệt độ nào?
+	 \loigiai{
+		Xét hàm số $V(T)=999{,}87-0{,}06426 T+0{,}0085043 T^2-0{,}0000679 T^3$ với $T \in[0; 30]$.\\ 
+		 Ta có $V'(T)=-0{,}0002037 T^2+0{,}0170086 T-0{,}06426$.\\
+		Khi đó $V'(T)=0 \Leftrightarrow\hoac{&T=3{,}966514624=T_1  \\& T=79{,}53176716 \notin[0; 30].}$\\
+		Bảng  biến thiên của hàm số $V(T)$ như sau.
+		\begin{center}
+			\begin{tikzpicture}
+				 \tkzTabInit[nocadre=true,lgt=1.3,espcl=4,deltacl=0.6]
+					 {$T$/0.7,$V'(T)$/0.7,$V (T)$/2}
+					 {$0$,$T_1$,$30$}
+				\tkzTabLine{,-,$0$,+,} 
+				\tkzTabVar{+/$V  (0)$,-/$V (T_1)$,+/$V (30)$}
+			\end{tikzpicture}
+		\end{center}
+		Từ bảng biến thiên suy ra thể tích $V(T),\, 0^{\circ} \mathrm{C} \leq  T \leq 30^{\circ} \mathrm{C}$, giảm trong khoảng nhiệt độ $0^{\circ} \mathrm{C}$ đến nhiệt độ $3{,}966514624^{\circ} \mathrm{C}$.
+	} 
+\end{bt}

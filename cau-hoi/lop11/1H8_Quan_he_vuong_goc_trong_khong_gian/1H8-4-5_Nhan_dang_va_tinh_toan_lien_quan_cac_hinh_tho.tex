@@ -1,0 +1,238 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Lớp 11 | Quan hệ vuông góc trong không gian | Hai mặt phẳng vuông góc
+% Dạng 1H8?4-5: Nhận dạng và tính toán liên quan các hình thông dụng
+% Số câu: 5  (sinh tự động bởi tach_cau.py; từ nay thầy sửa trực tiếp file này)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%% TRẮC NGHIỆM 4 PHƯƠNG ÁN %%%%%%%%%%%%%%%%
+
+% nguồn: Ok_TracNghiemLop11_Lan1
+\begin{ex}%[1H8V4-5]%[ma:00c8e104]
+	Cho hình chóp $S.ABCD$ có $SA\perp (ABCD)$ và đáy  $ABCD$ là hình vuông. Gọi $M$, $N$ lần lượt là trung điểm của $SB$, $SD$. Mặt phẳng $(P)$ chứa $MN$ và vuông góc với mặt phẳng $(ABCD)$. Mặt phẳng $(P)$ cắt $AC$ tại $K$. Tỷ số $\dfrac{KC}{KA}$ bằng
+	\choice 
+		{\True  $3$}
+		{$2$} 
+		{$4$} 
+		{$\dfrac{3}{2}$} 
+	\loigiai{ 
+	\immini{Gọi $P$, $Q$ lần lượt là  trung điểm của $AD$, $AB$.\\
+		Ta có $MN\parallel SA$, $SA\perp (ABCD)$\\$\Rightarrow MQ\perp (ABCD)\Rightarrow (MNPQ)\perp (ABCD)$.\\ 
+		Vậy $(P)\equiv (MNPQ)$.\\ 
+		 Gọi $K=PQ\cap AC\Rightarrow K=(P)\cap AC$.\\
+		Theo tính chất đường trung bình ta  có\\
+		$\dfrac{KA}{AC}=\dfrac{KA}{2AO}=\dfrac{1}{4}\Rightarrow \dfrac{KC}{KA}=3$.} 
+		{\begin{tikzpicture}[scale=0.9,line join=round,font=\footnotesize,line cap=round]
+		\coordinate (A) at (0,0); 
+		\coordinate  (B) at (-1.5,-2);
+		\coordinate (D) at  (4,0);
+		\coordinate (C) at ($(B)+(D)-(A)$); 
+		\coordinate (S) at ($(A)+(0,4)$); 
+		\path  ($(A)!0.5!(C)$) coordinate (O);
+		\path ($(A)!0.5!(B)$)  coordinate (Q);
+		\path ($(A)!0.5!(D)$) coordinate (P); 
+		\path ($(S)!0.5!(B)$)  coordinate (M);
+		\path ($(S)!0.5!(D)$) coordinate  (N);
+		\path ($(A)!0.5!(O)$)  coordinate (K);
+		 \draw (S)--(B)
+			(S)--(C) 
+			 (S)--(D)
+			 (B)--(C)--(D);
+		 \draw[dashed](S)--(A)
+			 (A)--(B)
+			 (A)--(D)
+			(M)--(N)--(P)--(Q)--cycle  (A)--(C)
+			(B)--(D); 
+		\pic[draw,angle radius=3mm] {right angle = S--A--D} pic[draw,angle  radius=3mm] {right angle = S--A--B};
+		\foreach  \i/\g in {S/90,A/-90,B/-90,C/-90,D/0,M/180,N/0,P/45,Q/180,K/90,O/-90}{\draw[fill](\i) circle (1pt)
+			 ($(\i)+(\g:3mm)$) node[scale=1]{$\i$};}
+	\end{tikzpicture}
+	 }}
+\end{ex}
+
+% nguồn: Ok_TracNghiemLop11_Lan1
+\begin{ex}%[1H8V4-5]%[ma:3877a22b]
+	 Cho hình chóp $S.ABCD$ có đáy $ABCD$ là hình vuông cạnh $a$. Tam giác $SAB$ là tam giác vuông tại $S$ và nằm trong mặt phẳng vuông góc với mặt phẳng chứa đáy. Biết $I$ là một điểm trong không gian cách đều các điểm $A, B,C, D$ và $S$. Tính độ dài đoạn thẳng $IS$.
+	 \choice
+		{$IS=a$} 
+		{$IS=a\sqrt{2}$} 
+		{\True  $IS=\dfrac{a\sqrt{2}}{2}$}
+		{$IS=\dfrac{a}{2}$} 
+	\loigiai{ 
+	 \immini{Gọi $M$ là trung điểm $AB$, $I$ là tâm hình vuông vuông $ABCD$. Ta có $IM$ là trục đường tròn ngoại tiếp $\Delta SAB\Rightarrow IA=IB=IS$. Lại vì $I$ là tâm của $ABCD$ nên có $IA=IB=IC=ID$. Từ đó suy ra $I$ là điểm cách đều các điểm $A,B,C,D,S$. Ta có $IS=\sqrt{IM^2+SM^2}=\sqrt{\dfrac{AB^2}{4}+\dfrac{AB^2}{4}}=\sqrt{\dfrac{a^2}{4}+\dfrac{a^2}{4}}=\dfrac{a\sqrt{2}}{2}$.}
+		{\begin{tikzpicture}[>=stealth,line join=round,line cap=round,font=\footnotesize,scale=2]
+		 \draw[scale=2.5] (0,0) coordinate (A)
+			(-120:0.5)  coordinate (B)--([turn]120:1) coordinate (C)--(1,0) coordinate (D)--($(A)+(100:0.6)$) coordinate (S)
+			 (B)--(S)--(C);
+		\draw[dashed,black,scale=2.5]  (B)--(A)--(D)
+			 (S)--(A);
+		\coordinate (I) at ($(B)!0.5!(D)$); 
+		\coordinate  (M) at ($(A)!0.5!(B)$);
+		\coordinate (P)  at ($(S)!2/3!(A)$);
+		 \draw[dashed] (A)--(C)
+			 (B)--(D)
+			 (S)--(M)--(I)--(S);
+		\foreach  \diem/\vitrin in {M/below right,I/below,S/above,A/above right,B/below left,C/below right,D/right} \fill (\diem) circle (1pt) node[\vitrin]{$\diem$};
+	\end{tikzpicture}
+		} 
+	} 
+\end{ex}
+
+
+%%%%%%%%%%%%%%%% ĐÚNG/SAI %%%%%%%%%%%%%%%%
+
+% nguồn: Ok_dungsai_lop11_Lan1
+\begin{ex}%[1H8H4-5]%[ma:7e17a982]
+ Cho hình chóp $S.ABCD$  có đáy $ABCD$ là hình thoi tâm $O$, đường thẳng $SO$ vuông góc với mặt phẳng $(ABCD)$. Biết $AB=SB=a$, $SO=\dfrac{a\sqrt{6}}{3}$. Khi đó
+ \choiceTF 
+  {\True $AC\perp  (SBD)$}
+  {$\left((SAC),(SBD)\right)=60^\circ$} 
+   {\True $BD=\dfrac{2a\sqrt{3}}{3}$}
+  {\True $(SAB)\perp (SAD)$} 
+ \loigiai{ 
+  \begin{center}
+   \begin{tikzpicture}[scale=1,line join=round,font=\footnotesize,line cap=round,thick]
+     \coordinate (A) at  (0,0);
+     \coordinate (B) at  (-2.5,-2);
+      \coordinate (D) at (5,0);
+     \coordinate  (C) at ($(B)+(D)-(A)$);
+     \coordinate (O)  at ($(A)!0.5!(C)$);
+     \coordinate (S) at  ($(O)+(0,5)$);
+     \coordinate (M)  at ($(A)!0.5!(S)$);
+     \draw  (S)--(B)
+      (S)--(C) 
+       (B)--(C)
+      (C)--(D) 
+      (S)--(D); 
+      \draw[dashed,thin](A)--(C)
+      (A)--(D) 
+      (S)--(O) 
+       (B)--(D)
+       (S)--(A)
+       (A)--(B)
+      (B)--(M)--(D); 
+     \pic[draw,thin,angle radius=2mm] {right angle =  S--O--D} pic[draw,thin,angle radius=2mm] {right angle = S--O--A};
+     \foreach  \i/\g in {S/90,A/180,B/-90,C/-90,D/0,O/-90,M/45}{\draw[fill=black](\i) circle (1pt)
+      ($(\i)+(\g:3mm)$) node[scale=1]{$\i$};} 
+    \end{tikzpicture}
+  \end{center}
+  \begin{itemchoice}
+    \itemch{ Đúng.}\\
+   Ta có $\heva{&AC\perp BD\\&AC\perp SO}\Rightarrow  AC\perp (SBD)$.
+    \itemch{ Sai.}\\
+   Do $\heva{&AC\perp (SBD)\\&AC\subset  (SAC)}\Rightarrow (SAC)\perp (SBD)$.
+   \itemch{ Đúng.}\\ 
+   Xét $\triangle SOB$ vuông tại $O$,  ta có $OB^2=\sqrt{SB^2-SO^2}=\sqrt{a^2-\dfrac{2a^2}{3}}=\dfrac{a\sqrt{3}}{3}$\\$\Rightarrow BD=2OB=\dfrac{2a\sqrt{3}}{3}$.
+    \itemch{ Đúng.}\\
+   Gọi $M$ là trung điểm của $SA$.\\ 
+   Ta có $\triangle  ABS$ cân tại $B$ và $\triangle ADS$ cân tại $D$ nên $BM$ và $DM$ cùng vuông góc với $SA$.\\
+   Khi đó  góc giữa hai mặt phẳng $(SAB)$ và $(SAD)$ bằng hoặc bù với $\widehat{ BMD}$.\\
+   Xét $\triangle ABO$ vuông tại $O$, ta có $AO=\sqrt{AB^2-OB^2}=\sqrt{a^2-\dfrac{a^2}{3}}=\dfrac{a\sqrt{6}}{3}=SO$.\\$\Rightarrow\triangle SAO$ vuông cân tại $O$ nên $SA=SO\cdot \sqrt{2}=\dfrac{2a\sqrt{3}}{3}$.\\ 
+   Do đó $OM=\dfrac{1}{2}SA=\dfrac{a\sqrt{3}}{3}=\dfrac{1}{2}BD\Rightarrow \triangle BMD$ vuông  cân tại $M\Rightarrow \widehat{BMD}=90^\circ$.\\
+   Vậy  $(SAB)\perp (SAD)$.
+  \end{itemchoice}
+  }
+\end{ex}
+
+% nguồn: Ok_dungsai_lop11_Lan1
+\begin{ex}%[1H8H4-5]%[ma:da95f5f2]
+ Cho lăng trụ đứng $ABCD.A'B'C'D'$ có đáy là  tam giác vuông tại $A$, biết $AB=a$, $AC=a\sqrt{3}$ và $\left((ACB'),(ABC)\right)=60^\circ $. Khi đó
+ \choiceTF 
+   {\True $A'A\perp (ABC)$}
+   {$\left((ACB'),(ABB'A')\right)=60^\circ$}
+  {\True $\left((ACC'A'),(BCCB')\right)=30^\circ$} 
+  {\True Tổng diện tích ba  mặt bên của hình lăng trụ đã cho bằng $(3\sqrt{3}+3)a^2$}
+ \loigiai{ 
+  \begin{center}
+   \begin{tikzpicture}[scale=1,line join=round,font=\footnotesize,line cap=round,thick]
+      \def\a{4}
+     \def\h{4.5} 
+     \path (0:0) coordinate  (A)
+       ++(0:\a) coordinate (C)
+       ++(-150:3*\a/4) coordinate (B)
+      ($(A)+(90:\h)$) coordinate  (A')
+      ($(B)+(90:\h)$)  coordinate (B')
+       ($(C)+(90:\h)$) coordinate (C');
+      \draw[dashed,thick] (A)--(C);
+     \draw[thick](A)--(B')--(C) 
+      (C)--(C') 
+       (B)--(B')
+      (A)--(A') 
+      (A)--(B)--(C) 
+       (A')--(B')--(C')--cycle;
+     \foreach  \x/\g in {A/180,B/-45,C/0,A'/180,B'/90,C'/0}
+      \fill[black] (\x) circle (1pt)
+       ($(\g:4mm)+(\x)$) node {$\x$};
+      \pic[draw,thin,angle radius=3mm] {right angle = B--A--C};
+     \pic[draw,thin,angle radius=3mm] {right angle  = B'--A'--C'};
+     \path ($(A)!0.5!(B)$)  node [left]{$a$};
+     \path ($(A)!0.5!(C)$) node [above]{$a\sqrt{3}$}; 
+    \end{tikzpicture}
+  \end{center}
+  \begin{itemchoice}
+   \itemch{ Đúng.}\\ 
+   Vì $ABC.A'B'C'$ là lăng trụ  đứng nên $A'A\perp (ABC)$.
+   \itemch{  Sai.}\\
+    Ta có $A'A\perp (ABC)\Rightarrow A'A\perp AC$.\\
+   Mặt khác  $AB\perp AC$,
+    do đó $AC\perp (ABB'A')$.\\
+   Mà $AC\subset (ACB')$  nên $(ACB')\perp (ABB'A')$.
+   \itemch{  Đúng.}\\
+   Ta có $\heva{&CC'=(ACC'A')\cap (BCC'B')\\&AC\perp CC',BC\perp  CC'\\&AC\subset (ACC'A'), BC\subset (BCC'B')}$\\
+   $\Rightarrow  \left((ACC'A'),(BCC'B')\right)=(AC,BC)=\widehat{ACB}$.\\
+   Tam giác $ABC$ vuông  tại $A$ có $\tan\widehat{ACB}=\dfrac{AB}{AC}=\dfrac{a}{a\sqrt{3}}=\dfrac{1}{\sqrt{3}}\Rightarrow \widehat{ACB}=30^\circ$.
+    \itemch{ Đúng.}\\
+   Ta có $\heva{&AC=(ACB')\cap (ABC)\\&AB\perp  AC, AB'\perp AC\\&AB\subset (ABC), AB'\subset (ACB')}$\\
+   $\Rightarrow \left((ACB'),(ABC) \right)=(AB',AB)=\widehat{BAB'}=60^\circ$.\\ 
+   Tam giác $ABB'$ vuông tại $B$  có $BB'=AB\cdot \tan 60^\circ=a\sqrt{3}$.\\
+   Tam giác $ABC$ vuông tại $A$ có  $BC=\sqrt{AB^2+AC^2}=2a$.\\
+    Tổng diện tích các mặt bên của hình trụ: $a\cdot a\sqrt{3}+2a\cdot a\sqrt{3}+a\sqrt{3}\cdot a\sqrt{3}=(3\sqrt{3}+3)a^2$.
+  \end{itemchoice}
+  }
+\end{ex}
+
+
+%%%%%%%%%%%%%%%% TRẢ LỜI NGẮN %%%%%%%%%%%%%%%%
+
+% nguồn: Ok_TraLoiNgan_Lop11_Lan1
+\begin{ex}%[1H8V4-5]%[ma:1cd59e3b]
+	Cho hình chóp cụt tứ giác đều có cạnh đáy nhỏ là $a$, cạnh đáy lớn là $2a$ và chiều cao là $3a$. Độ dài cạnh bên của  hình chóp cụt bằng $m\cdot a$. Giá trị $m$ là bao nhiêu? (kết quả làm tròn đến hàng phần trăm)
+	\shortans{3,08} 
+	 \loigiai{
+	 \immini{
+		Kẻ  $C'H\perp OC$.\\
+		Ta có  $$HC=OC-OH=\dfrac{2a\sqrt{2}}{2}-\dfrac{a\sqrt{2}}{2}=\dfrac{a\sqrt{2}}{2}.$$
+		Trong tam giác $CC'H$ vuông, ta có $$CC'=\sqrt{C'H^2+HC^2}=\sqrt{9a^2+\dfrac{a^2}{2}}=\dfrac{\sqrt{38}}{2}a.$$\\Vậy $m=\dfrac{\sqrt{38}}{2}\approx 3{,}08$.}{\begin{tikzpicture}[scale=1,line join=round,font=\footnotesize,line cap=round]
+		\def\a{5.5} 
+		 \def\h{6}
+		 \def\tiso{0.5}
+		\path  (0:0) coordinate (A)
+			++(0:\a) coordinate  (B)
+			($(A)+(-130:\a/2)$) coordinate (D) 
+			($(B)+(D)-(A)$)  coordinate (Ct)
+			($(D)!1!(Ct)$) coordinate  (C)
+			($(A)!0.5!(C)$) coordinate (H); 
+		\coordinate (S) at  ($(H)+(90:\h)$);
+		\path \foreach \x in  {A,B,C,D}{($(\x)!\tiso!(S)$) coordinate (\x')};
+		\path ($(A)!0.5!(C)$) coordinate (O); 
+		\path ($(A')!0.5!(C')$) coordinate  (O');
+		\path  ($(O)!0.5!(C)$) coordinate (H);
+		\draw[dashed] (B)--(A)--(D) 
+			 (A)--(A')
+			 (A)--(C)
+			(B)--(D) 
+			(O)--(O') 
+			(C')--(H); 
+		 \draw (B)--(C)--(D)
+			(D')--(C')--(B')--(A')--cycle 
+			(B)--(B') 
+			 (C)--(C')
+			(D)--(D') 
+			(A')--(C') 
+			 (B')--(D');
+		\foreach \x/\g in  {A/135,B/45,C/-45,D/-135,A'/135,B'/45,C'/-35,D'/180,O/-90,O'/90,H/-90}
+		\fill[black]  (\x) circle (1pt)
+			($(\g:4mm)+(\x)$) node {$\x$}; 
+	\end{tikzpicture}
+		 }
+	} 
+\end{ex}

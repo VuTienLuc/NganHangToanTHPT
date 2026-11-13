@@ -1,0 +1,53 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Lớp 11 | Quan hệ vuông góc trong không gian | Đường thẳng vuông góc với mặt phẳng
+% Dạng 1H8?2-6: Toán thực tế áp dụng đường thẳng vuông góc mặt phẳng
+% Số câu: 1  (sinh tự động bởi tach_cau.py; từ nay thầy sửa trực tiếp file này)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%% TRẢ LỜI NGẮN %%%%%%%%%%%%%%%%
+
+% nguồn: Ok_TraLoiNgan_Lop11_Lan2
+\begin{ex}%[1H8C2-6]%[ma:0b56353c]
+	Trên mặt đất phẳng, người ta dựng một cây cột $AB$ có chiều dài bằng $10$ m và tạo với mặt đất góc $80^\circ$. Tại một thời điểm dưới ánh sáng mặt trời, bóng $BC$ của cây cột trên mặt đất dài $12$ m và tạo với cây cột một góc bằng $120^\circ$ (tức là $\widehat{ABC}=120^\circ$). Tính góc giữa mặt đất và đường thẳng chứa tia sáng mặt trời tại  thời điểm nói trên. (đơn vị độ, kết quả làm tròn đến hàng đơn vị)
+	 \shortans{31}
+	\loigiai{ 
+		\begin{center}
+			\begin{tikzpicture}[scale=1,font=\footnotesize,line join=round,line cap=round,>=stealth]
+					\def\a{4} 
+					 \def\h{5}
+					\path (0:0)  coordinate (H)
+						++(150:\a/2)  coordinate (B)
+						 ++(-160:4*\a/3) coordinate (C)
+						($(H)+(90:\h)$) coordinate  (A)
+						($(H)!0.5!(B)$) coordinate  (M)
+						($(A)!0.5!(B)$) coordinate  (m)
+						 ($(C)!0.5!(B)$) coordinate (n);
+					\draw (H)--(C)--(B) 
+						(H)--(A) 
+						(B)--(A) 
+						 (C)--(A);
+					 \draw[dashed] (H)--(B);
+					\foreach \x /\goc in  {H/0,B/-90,C/-135,A/90}
+					\fill (\x)  circle (1pt)
+						($(\x)+(\goc:3mm)$) node {$\x$}; 
+					\draw pic[draw,angle  radius=2mm]{right angle=A--H--B};
+					\draw pic[draw,angle radius=2mm]{right angle=A--H--C}; 
+					\pic["\scriptsize $80^\circ $",draw,double,angle  radius=7mm]{angle=H--B--A};
+					\pic["\scriptsize  $120^\circ $",draw,angle radius=8mm]{angle=A--B--C};
+					\fill  (m) node[left]{$10$ m};
+					\fill  (n) node[above=0.1]{$12$ m};
+					\fill[black!30,opacity=0.2] (-9,-2)--(1,-2)--(4,1)--(-6,1)--(-9,-2); 
+					\fill  (-3,-1.7) node[above]{\textbf{Mặt đất}};
+				\end{tikzpicture}
+		\end{center}
+		Gọi $H$ là hình chiếu vuông góc của  $A$ lên mặt đất $\Rightarrow AH$ vuông góc với mặt đất.\\
+		Vì  góc giữa $AB$ và mặt đất là $80^\circ$ nên $\widehat{ABH}=80^\circ$.\\
+		Vì $AH$ vuông góc với mặt đất  nên $AH\perp BH$.\\
+		$\Rightarrow AH=AB\cdot  \sin 80^\circ=10\cdot \sin 80^\circ$.\\
+		$AC=\sqrt{AB^2+BC^2-2\cdot AB\cdot BC\cdot \cos 120^\circ}=\sqrt{10^2+12^2-2\cdot 10\cdot 12\cdot \cos 120^\circ}=2\sqrt{91}$.\\ 
+		Vì $H$ là hình chiếu vuông góc của $A$ lên mặt đất nên góc giữa  $AC$ và mặt đất là $\widehat{ACH}$.\\
+		Vì $AH$ vuông góc với  mặt đất nên $AH\perp HC$.\\
+		$\Rightarrow \sin \widehat{ACH}=\dfrac{AH}{AC}=\dfrac{10\cdot \sin 80^\circ}{2\sqrt{91}}\Rightarrow \widehat{ACH}\approx  31^\circ$.\\
+		 Vậy góc giữa mặt đất và đường thẳng chứa tia sáng mặt trời tại thời điểm nói trên khoảng $31^\circ4'$.\\
+	} 
+\end{ex}

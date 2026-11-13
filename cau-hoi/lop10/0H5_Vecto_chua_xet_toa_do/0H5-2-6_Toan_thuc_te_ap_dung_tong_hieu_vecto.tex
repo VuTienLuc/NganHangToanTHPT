@@ -1,0 +1,442 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Lớp 10 | Véctơ (chưa xét tọa độ) | Tổng và hiệu của hai véctơ
+% Dạng 0H5?2-6: Toán thực tế  áp dụng tổng hiệu véctơ
+% Số câu: 11  (sinh tự động bởi tach_cau.py; từ nay thầy sửa trực tiếp file này)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%% TRẮC NGHIỆM 4 PHƯƠNG ÁN %%%%%%%%%%%%%%%%
+
+% nguồn: MaHoaNH_TracNghiem_Lop10
+\begin{ex}%[0H5H2-6]%[ma:ac9d4213]
+	Một máy bay đang bay từ hướng Đông sang hướng Tây với tốc độ $650$ km/h thì gặp luồng gió thổi từ hướng Đông Bắc sang hướng Tây Nam  với vận tốc $35$ km/h. Máy bay bị thay đổi vận tốc sau khi gặp gió thổi.
+	\begin{center}
+		\begin{tikzpicture}[scale=1,font=\footnotesize,line join=round,line cap=round,>=stealth]
+				\foreach  \a/\text in {0/Đông,45/Đông Bắc,90/Bắc,135/Tây Bắc,180/Tây,225/Tây Nam,270/Nam,315/Đông Nam}{
+					\draw[->] (0,0)  -- (\a:1.8);
+					\node at  (\a:2.4) {\text};}
+			\end{tikzpicture}
+			\begin{tikzpicture}[line cap=round,line join=round]
+				\path[left color=cyan!80!black,right color=cyan!80!black] 
+					(2.32,0.03).. controls (2.27,0.11) and (2.93,1.15).. 
+					(3.21,1.64)..  controls (3.21,1.64) and (1.91,1.29)..
+					(1.26,1.12).. controls (1.26,1.12)  and (1.55,1.43)..
+					(1.34,1.62).. controls  (1.21,1.72) and (0.82,1.57)..
+					(0.65,1.52).. controls (0.63,1.51)  and (0.01,2.28)..
+					(0.01,2.31)..  controls (0.01,2.32) and (0.02,2.34)..
+					(0.03,2.35).. controls (0.03,2.35)  and (0.47,2.5)..
+					(0.56,2.47).. controls  (0.65,2.45) and (1.2,1.89)..
+					(1.24,1.9).. controls  (1.26,1.9) and (4.22,2.69)..
+					 (4.58,2.79).. controls (4.82,2.86) and (5.12,2.87)..
+					(5.32,2.71).. controls (5.29,2.67) and  (4.86,2.63)..
+					(4.86,2.52)..  controls (4.86,2.49) and (4.87,2.47)..
+					(4.9,2.46).. controls  (5.07,2.44) and (5.53,2.61)..
+					(5.53,2.61).. controls (5.7,2.65)  and (5.93,2.53)..
+					(5.94,2.38).. controls (5.94,2.38) and  (4.25,1.92)..
+					(4.24,1.92).. controls (4.24,1.91) and  (3.46,0.62)..
+					(3.44,0.59).. controls  (3.18,0.25) and (2.38,-0.07).. cycle
+					(2.02,2.65).. controls  (1.76,2.8) and (1.54,2.94)..
+					(1.53,2.95).. controls (1.52,2.97) and  (1.52,2.98)..
+					 (1.54,3).. controls (1.55,3.02) and (1.56,3.03)..
+					(1.57,3.03).. controls (1.58,3.03) and  (1.71,3.05)..
+					(1.86,3.07).. controls (2.01,3.09)  and (2.17,3.12)..
+					(2.23,3.12).. controls (2.43,3.14) and (2.67,3.1).. 
+					(2.84,3.01).. controls  (3.04,2.91) and (3.5,2.65)..
+					(3.48,2.65).. controls (3.47,2.64) and (3.24,2.58).. 
+					(2.98,2.51) -- (2.49,2.38)  -- cycle
+					(4.4,1.81).. controls  (4.53,1.86) and (5.93,2.22)..
+					 (5.97,2.23).. controls (5.99,2.24) and (5.99,2.24)..
+					(5.98,2.21).. controls (5.92,1.79) and (4.81,1.61).. 
+					(4.15,1.47).. controls (4.12,1.46)  and (4.33,1.79)..
+					(4.4,1.81) -- cycle 
+					 (1.45,1.02).. controls (1.83,1.13) and (2.87,1.4)..
+					 (2.91,1.41).. controls (2.86,1.3) and (2.81,1.19)..
+					(2.74,1.1)..  controls (2.32,1.02) and (1.88,0.97)..
+					 (1.45,1.02) -- cycle
+					(0.5,0.64).. controls (0.49,0.65) and (0.48,0.68).. 
+					(0.48,0.69).. controls (0.56,0.91) and (0.64,1.16).. 
+					(0.73,1.39).. controls (0.89,1.44) and  (1.04,1.48)..
+					(1.21,1.52).. controls (1.26,1.53)  and (1.28,1.49)..
+					(1.27,1.45).. controls (1.25,1.4) and (0.93,0.85).. 
+					(0.89,0.8).. controls (0.82,0.69) and  (0.54,0.62).. cycle;
+				\path (2.2,1.8)  coordinate (ta)
+					(4.3,2.4) coordinate  (tb);
+				 \foreach \x in {0,1,...,5}{
+					 \pgfmathsetmacro{\vt}{\x/5}
+					\fill[white]  ($(ta)!\vt!(tb)$) circle (0.08);
+				} 
+			\end{tikzpicture}
+	\end{center}
+	Tìm tốc độ mới của máy  bay (kết quả làm tròn đến hàng đơn vị, đơn vị: km/h).
+	\choice 
+		{\True $675$} 
+		 {$674$}
+		{$673$} 
+		 {$676$}
+	 \loigiai{Dựng hình bình hành $MNPQ$ thỏa mãn $\left|\overrightarrow{MN}\right|=650, \left|\overrightarrow{MQ}\right|=35$.\\
+	\begin{center}
+		\begin{tikzpicture}[scale=1,font=\footnotesize,line join=round,line cap=round,>=stealth]
+				\coordinate  (M) at (13.3,0);
+				\coordinate (N) at (6.8,0); 
+				 \coordinate (Q) at (11.8,-1.5);
+				\coordinate (P)  at (5.3,-1.5);
+				\draw[dashed,->]  (M) -- (N)
+					(M)--(Q); 
+				 \draw[dashed] (N)--(P)--(Q);
+				\draw[->,blue]  (M)--(P);
+				\foreach  \x/\y in {M/90,N/90,P/-90,Q/-90} \fill[black](\x) circle (1pt)
+					 ($(\x)+(\y:3mm)$) node{$\x$};
+			\end{tikzpicture}
+	\end{center}
+	 Khi đó hướng bay và vận tốc mới của máy bay chính là vectơ $\overrightarrow{MP}$.\\
+	Theo định lý cosintrong  tam giác $MNP$, ta có
+	\[MP=\sqrt{MN^2+MQ^2-2\cdot MN\cdot MQ\cdot \cos  135^\circ}=\sqrt{423725+22750\sqrt{2}}\approx 675.\]
+	 Tốc độ mới của máy bay là $675$ km/h.
+	} 
+\end{ex}
+
+
+%%%%%%%%%%%%%%%% TRẢ LỜI NGẮN %%%%%%%%%%%%%%%%
+
+% nguồn: MaHoaNH_TraLoiNgan_Lop10
+\begin{bt}%[0H5H2-6]%[ma:96e3bbae]
+	Cho hai lực $\overrightarrow{F}_1=\overrightarrow{MA}$, $\overrightarrow{F}_2=\overrightarrow{MB}$ cùng tác động vào một vật đặt tại điểm $M$. Cho biết cường độ lực $\overrightarrow{F}_1$, $\overrightarrow{F}_2$ đều bằng $50$\,N, tam giác $MAB$ vuông tại $M$. Điểm $M$ thỏa mãn  $\overrightarrow{MA}+\overrightarrow{MB}=\overrightarrow{MC}$.
+	 Tính độ dài của $\sqrt{2}\cdot \left(\overrightarrow{MA}+\overrightarrow{MB}\right) $.
+	 \shortans{100}
+	 \loigiai{
+		\begin{center}
+			\begin{tikzpicture}[declare function={a=3;}]
+					 \path
+						(0,0) coordinate (A) 
+						(a,0) coordinate  (C)
+						(0,-a) coordinate  (M)
+						($(M)+(C)$)  coordinate (B)
+						($(A)!0.5!(B)$)  coordinate (O);
+					 \draw (A)--(C)--(B);
+					\draw[->] (M)--(A); 
+					\draw[->]  (M)--(B);
+					\draw[->]  (M)--(C);
+					\foreach  \t/\g in {A/135,C/45,B/-45,M/225}{
+						\draw[fill=black] (\t) circle (1pt) node[shift={(\g:9pt)},font=\scriptsize]{$ \t $}; 
+					 }
+				\end{tikzpicture}
+		\end{center}
+		Ta có $\overrightarrow{MA}+\overrightarrow{MB}=\overrightarrow{MC} \Rightarrow\left|\overrightarrow{MA}+\overrightarrow{MB}\right|=\left|\overrightarrow{MC}\right|$.\\ 
+		Lại có  $\triangle MAB$ vuông tại $M$ nên ta có $\left|\overrightarrow{MC}\right|=\sqrt{MA^2+MB^2}=50\sqrt{2} \Rightarrow \sqrt{2}\cdot\left|\overrightarrow{MA}+\overrightarrow{MB}\right|=100$.
+	 }
+\end{bt}
+
+% nguồn: MaHoaNH_TraLoiNgan_Lop10
+\begin{bt}%[0H5H2-6]%[ma:5868caea]
+	Cho ba lực $\overrightarrow{F}_1=\overrightarrow{MA}$, $\overrightarrow{F}_2=\overrightarrow{MB}$, $\overrightarrow{F}_3=\overrightarrow{MC}$, cùng tác động vào một vật tại điểm $M$ và vật đứng yên khi đó. Cho biết cường độ của $\overrightarrow{F}_1$, $\overrightarrow{F}_2$ đều bằng $100$\,N và góc $\widehat{AMB}=90^{\circ}$. Tính cường độ lực  $\overrightarrow{F}_3$ (kết quả làm tròn đến hàng đơn vị).
+	\shortans{141} 
+	 \loigiai{
+		\begin{center}
+			\begin{tikzpicture}[declare function={a=3;}]
+					 \path
+						(0,0) coordinate  (A)
+						(a,0) coordinate  (D)
+						(0,-a) coordinate  (M)
+						($(M)+(D)$) coordinate  (B)
+						 ($(A)!0.5!(B)$) coordinate (O)
+						($(M)!-1!(D)$) coordinate (C); 
+					\draw (A)--(D)--(B); 
+					 \draw[->] (M)--(A);
+					\draw[->]  (M)--(B);
+					\draw[->] (M)--(D); 
+					 \draw[->] (M)--(C);
+					\foreach \t/\g in {A/135,D/45,B/-45,M/-80,C/0}{ 
+						\draw[fill=black] (\t)  circle (1pt) node[shift={(\g:9pt)},font=\scriptsize]{$ \t $};
+					 }
+				\end{tikzpicture}
+		\end{center}
+		Vẽ hình vuông $ADBM$,  cạnh $MA=100\Rightarrow MD=100\sqrt{2}$.\\
+		Lại có $\overrightarrow{MA}+\overrightarrow{MB}=\overrightarrow{MD} \Rightarrow \overrightarrow{F}_3=-\overrightarrow{MD} \Rightarrow\left|\overrightarrow{F}_3\right|=100\sqrt{2} \approx  141$.
+	} 
+\end{bt}
+
+% nguồn: MaHoaNH_TraLoiNgan_Lop10
+\begin{bt}%[0H5H2-6]%[ma:28468fa3]
+	\immini{Cho hai lực $\vec{F}_1=\overrightarrow{MA}$, $\vec{F}_2=\overrightarrow{MB}$ cùng tác động vào một vật tại điểm $M$. Cường độ hai lực $\vec{F}_1$, $\vec{F}_2$ lần lượt là $300$ N và $400$ N, $\widehat{AMB}=90^\circ $. Cường độ của lực tác động lên vật là bao  nhiêu?
+	}{\begin{tikzpicture}[line join=round,line cap=round,>=stealth,scale=.5,font=\footnotesize]
+		\foreach \x/\y/\n in {0/0/M,4/0/A,0/-3/B}  \coordinate (\n) at (\x,\y);
+		\shade[ball color=white] (M) circle (.3cm); 
+		\draw[->,thick] (M)--(A); 
+		\draw[->,thick] (M)--(B); 
+		\foreach \t/\g in {A/0,B/-90,M/180}{ 
+			\draw[fill=black]  (\t) circle (1pt) node[shift={(\g:10pt)}]{$ \t $};
+		 }
+		\draw pic[thin,draw,angle radius=3mm] {right  angle= A--M--B};
+	\end{tikzpicture}
+	} 
+	\shortans{500} 
+	\loigiai{ \immini{ Ta có tổng lực tác dụng lên vật là $\vec{F}_1+\vec{F}_2=\overrightarrow{MA}+\overrightarrow{MB}=\overrightarrow{MC}$ (với $C$ là điểm sao cho $AMBC$ là hình  bình)\\
+		Khi đó cường độ lực tác  dụng lên vật là $\left|\vec{F}_1+\vec{F}_2\right|=|\overrightarrow{MC}|=MC$.
+		}{\begin{tikzpicture}[line join=round,line cap=round,>=stealth,scale=.5,font=\footnotesize]
+		\foreach \x/\y/\n in {0/0/M,4/0/A,0/-3/B,4/-3/C} \coordinate (\n) at  (\x,\y);
+		\shade[ball  color=white] (M) circle (.3cm);
+		 \draw[->,thick] (M)--(A);
+		\draw[->,thick] (M)--(C); 
+		 \draw[->,thick] (M)--(B);
+		\draw [dashed] (A)--(C)--(B); 
+		\foreach  \t/\g in {A/0,B/-90,M/180,C/0}{
+			 \draw[fill=black] (\t) circle (1pt) node[shift={(\g:10pt)}]{$ \t $};
+		 }
+		\draw pic[thin,draw,angle  radius=3mm] {right angle= A--M--B};
+	\end{tikzpicture}
+		} 
+		 \noindent Ta có $MA=\left|\overrightarrow{MA}\right|=\left|\vec{F}_1\right|=400$ N, $MB=\left|\overrightarrow{MB}\right|=\left|\vec{F}_2\right|=300$ N.\\
+		Mặt  khác, do $\widehat{AMB}=90^{\circ}$ nên $AMBC$ là hình chữ nhật.\\
+	Khi đó  $MC=\sqrt{MA^2+MB^2}=\sqrt{400^2+300^2}=500$ N.}
+\end{bt}
+
+% nguồn: MaHoaNH_TraLoiNgan_Lop10
+\begin{bt}%[0H5V2-6]%[ma:7bd9d659]
+	Cho hai lực $\vec{F}_1$, $\vec{F}_2$ có điểm đặt tại $A$ tạo với nhau góc $45^{\circ}$, biết rằng cường độ của hai lực $\vec{F}_1$ và $\vec{F}_2$ lần lượt bằng $60$ N, $90$ N. Tính cường độ tổng hợp của hai lực trên (làm tròn đến  hàng đơn vị của Newton).
+	 \shortans{139}
+	\loigiai{ 
+	 \immini{
+		Đặt  $\vec{F}_1=\overrightarrow{AB}$, $\vec{F}_2=\overrightarrow{AD}$.\\
+		Vẽ hình bình hành  $ABCD$.\\
+		Ta có  $\vec{F}_1+\vec{F}_2=\overrightarrow{AB}+\overrightarrow{AD}=\overrightarrow{AC}$.\\
+		Vì  $\widehat{BAD}=45^{\circ}\Rightarrow\widehat{ABC}=135^{\circ}$; $AD=90=BC$.\\
+		Theo định  lí cosinta có
+		}{\begin{tikzpicture}[line join=round,line cap=round,>=stealth,scale=1.1,font=\footnotesize]
+		 \foreach \x/\y/\n in {0/0/A} \coordinate (\n) at (\x,\y);
+		\coordinate  (B) at ($(A)+({2*cos (45)},{2*sin (45)})$);
+		\coordinate (D) at ($(A)+({3*cos (0)},{3*sin (0)})$); 
+		\coordinate (C)  at ($(B)+(D)-(A)$);
+		\draw[arrow style,thick] (A)--(B) node[sloped,midway,above]{$\vec{F}_1$}; 
+		 \draw[arrow style,thick] (A)--(D) node[sloped,midway,below]{$\vec{F}_2$};
+		\draw[arrow style,dashed,thick] (A)--(C); 
+		\draw[dashed] (B)--(C)--(D); 
+		\foreach \t/\g in {B/45,D/-45,A/-135,C/30}{ 
+			\draw[fill=black] (\t) circle (1pt) node[shift={(\g:10pt)}]{$ \t $}; 
+		} 
+		\draw pic[thin,draw,"",angle  radius=.5cm] {angle= D--A--B};
+		\draw pic[thin,draw,"$135^\circ$",angle radius=.6cm]  {angle= A--B--C};
+	\end{tikzpicture}
+		 }
+		\noindent 
+		$$AC=\sqrt{AB^2+BC^2-2AB\cdot BC\cdot\cos135^{^\circ}}=\sqrt{60^2+90^2-2\cdot 60\cdot 90\cdot\left(-\dfrac{\sqrt{2}}{2}\right)}\approx 139.$$ 
+		Vậy véc-tơ hợp lực của $\vec{F}_1$, $\vec{F}_2$ có  độ lớn là $\left|\vec{F}_1+\vec{F}_2\right|\approx 139$ N.
+	 }
+\end{bt}
+
+% nguồn: MaHoaNH_TraLoiNgan_Lop10
+\begin{bt}%[0H5V2-6]%[ma:6ad4b79c]
+	Một dòng sông chảy từ phía Bắc xuống phía Nam với vận  tốc $10\mathrm{\,km/h}$, có một chiếc ca nô
+	chuyển động từ phía Đông sang phía Tây với vận  tốc $35\mathrm{\,km/h}$ so với dòng nước. Tìm vận tốc của ca nô
+	 so với bờ (làm tròn kết quả đến chữ số thập phân thứ nhất)?
+	\shortans{36,4} 
+	 \loigiai{
+		\begin{center}
+			\begin{tikzpicture}[scale=1,line join=round,font=\footnotesize,line cap=round,thick,>=stealth]
+					\coordinate (A) at (0,3); 
+					\coordinate (B)  at (5,3);
+					 \coordinate (D) at (0,0);
+					\coordinate (C) at  ($(B)+(D)-(A)$);
+					\path ($(A)!0.5!(B)$)  node [above]{$\vv{v}_1$};
+					 \path ($(B)!0.5!(C)$) node [right]{$\vv{v}_2$};
+					\path ($(B)!0.5!(D)$) node  [above,rotate=31]{$\vv{v}=\vv{v}_1+\vv{v}_2$};
+					 \draw[->](B)--(A);
+					 \draw[->](B)--(C);
+					\draw[->](B)--(D); 
+					\draw[dashed](A)--(D)--(C); 
+					 \foreach \i/\g in {A/90,B/90,C/-90,D/-90}{\draw[fill=white](\i) circle (0pt)
+						($(\i)+(\g:3mm)$) node[scale=1]{$\i$};} 
+				\end{tikzpicture}
+		\end{center}
+		Giả sử ca nô di chuyển từ Đông sang Tây theo hướng từ $B$ sang $A$, khi đó vận tốc của ca nô so với dòng nước  là $\vv{v}_1=\vv{BA}$ có độ lớn $\left|\vv{v}_1\right|= 35\mathrm{\,km/h}$.\\
+		Vận tốc dòng chảy từ Bắc sang Nam theo hướng từ $B$ sang $C$ được biểu  thị bởi $\vv{v}_2=\vv{BC}$ có độ lớn $\left|\vv{v}_2\right|= 10\mathrm{\,km/h}$.\\
+		Khi đó vận tốc của ca nô so với bờ sông được biểu thị bởi  $\vv{v}=\vv{v}_1+\vv{v}_2=\vv{BA}+\vv{BC}$.\\
+		Do hướng  Bắc-Nam và hướng Đông-Tây vuông góc nhau nên $\vv{BA}+\vv{BC}=\vv{BD}$ (với $ABCD$ là hình chữ nhật).\\
+		Ta  có $AB=CD=35$, $AD=BC=10\Rightarrow BD=\sqrt{10^2+35^2}=5\sqrt{53}$.\\
+		Do đó $\left|\vv{v}\right|=\left|\vv{BA}+\vv{BC}\right|=\left|\vv{BD}  \right|=5\sqrt{53}\approx 36{,}4\mathrm{\,km/h}$.
+	} 
+\end{bt}
+
+% nguồn: MaHoaNH_TraLoiNgan_Lop10
+\begin{bt}%[0H5V2-6]%[ma:6c3135ed]
+	Cho ba lực $\vec{F}_1=\overrightarrow{MA}$, $\vec{F}_2=\overrightarrow{MB}$, $\vec{F}_3=\overrightarrow{MC}$ cùng tác động vào một vật tại điểm $M$ và vật đứng yên. Cho biết cường  độ của $\vec{F}_1$, $\vec{F}_2$ đều bằng $100$ N và góc $\widehat{AMB}=90^{\circ}$. Khi đó cường độ $\vec{F}_3$ bằng bao nhiêu Newton (làm tròn kết quả đến hàng đơn vị của Newton)?
+	\begin{center}
+		\begin{tikzpicture}[line join=round,line cap=round,>=stealth,scale=1,font=\footnotesize]
+				\foreach \x/\y/\n in {0/0/M} \coordinate (\n) at (\x,\y); 
+				\coordinate (A) at  ($(M)+({2*cos (135)},{2*sin (135)})$);
+				 \coordinate (B) at ($(M)+({2*cos (225)},{2*sin (225)})$);
+				\coordinate (D) at  ($(A)+(B)-(M)$);
+				\coordinate (C)  at ($(M)+(M)-(D)$);
+				\shade[ball color=white]  (M) circle (.2cm);
+				\draw[->,thick] (M)--(A)  node[sloped,midway,above]{$\vec{F}_1$};
+				 \draw[->,thick] (M)--(B) node[sloped,midway,below]{$\vec{F}_2$};
+				 \draw[->,thick] (M)--(C) node[sloped,midway,above]{$\vec{F}_3$};
+				\foreach \t/\g  in {A/150,B/-150,M/-90,C/0}{
+					\draw[fill=black] (\t) circle  (1pt) node[shift={(\g:10pt)}]{$ \t $};
+				 }
+				\draw pic[thin,draw,angle radius=3mm] {right  angle= A--M--B};
+			\end{tikzpicture}
+	\end{center}
+	 \shortans{141}
+	 \loigiai{
+		Vẽ hình vuông $ADBM$,  cạnh $MA=100$ thì $MD=100\sqrt{2}$.
+		\begin{center}
+			\begin{tikzpicture}[line join=round,line cap=round,>=stealth,scale=1,font=\footnotesize]
+					\foreach \x/\y/\n in  {0/0/M} \coordinate (\n) at (\x,\y);
+					\coordinate (A) at ($(M)+({2*cos (135)},{2*sin (135)})$); 
+					\coordinate (B)  at ($(M)+({2*cos (225)},{2*sin (225)})$);
+					\coordinate (D) at  ($(A)+(B)-(M)$);
+					\coordinate (C) at ($(M)+(M)-(D)$); 
+					\shade[ball color=white]  (M) circle (.2cm);
+					\draw[->,thick] (M)--(A)  node[sloped,midway,above]{$\vec{F}_1$};
+					\draw[->,thick] (M)--(B)  node[sloped,midway,below]{$\vec{F}_2$};
+					 \draw[->,thick] (M)--(C) node[sloped,midway,above]{$\vec{F}_3$};
+					\draw[->,thick]  (M)--(D);
+					\draw[dashed]  (A)--(D)
+						(B)--(D); 
+					 \foreach \t/\g in {A/150,B/-150,M/-90,C/0,D/180}{
+						 \draw[fill=black] (\t) circle (1pt) node[shift={(\g:10pt)}]{$ \t $};
+					 }
+					\draw pic[thin,draw,angle radius=3mm] {right  angle= A--M--B};
+				\end{tikzpicture}
+		\end{center}
+		Theo qui tắc hình bình hành có $\overrightarrow{MA}+\overrightarrow{MB}=\overrightarrow{MD}$.\\ Vật đứng yên khi $\vec{F}_3=-\overrightarrow{MD}$.\\ 
+		Suy ra cường độ của lực $\vec{F}_3$  là $\left|\vec{F}_3\right|=100\sqrt{2}\approx 141$ N.
+	 }
+\end{bt}
+
+
+%%%%%%%%%%%%%%%% TỰ LUẬN %%%%%%%%%%%%%%%%
+
+% nguồn: MaHoaNH_TuLuan_Lop10
+\begin{bt}%[0H5H2-6]%[ma:ed48d3cc]
+	Một vật đồng chất được thả vào một cốc chất lỏng. Ở trạng thái cân bằng, vật chìm một nửa thể tích  trong chất lỏng. Tìm mối liên hệ giữa trọng lực $\overrightarrow{P}$ của vật và lực đẩy Archimedes $\overrightarrow{F}$ mà chất lỏng tác động lên vật. Tính tỉ số giữa trọng lượng riêng của vật và của chất lỏng.
+	 \loigiai{
+		Lực đẩy Archimedes $\overrightarrow{F}_A$ và trọng lực $\overrightarrow{P}$  đều tác động lên vật theo phương thẳng đứng, hai lực này ngược hướng. Do ở trạng thái cân bằng vật nổi (chìm một nửa), nên hai lực này có cường độ bằng nhau.\\
+		Gọi $d$, $d'$ tương ứng là trọng lượng riêng của vật  và trọng lượng riêng của chất lỏng; gọi $V$ là thể tích của vật. Khi đó trọng lượng của vật bằng $P=|\overrightarrow{P}|=d V$.\\
+		Lực đẩy Archimedes tác động lên vật có cường  độ bằng $F_A=\left|\overrightarrow{F}_a\right|=d'\cdot \dfrac{V}{2}$.\\
+		Do $P=F_A$ suy ra $\dfrac{d}{d'}=2$. 
+	} 
+\end{bt}
+
+% nguồn: MaHoaNH_TuLuan_Lop10
+\begin{bt}%[0H5V2-6]%[ma:fef2c0ba]
+	Cho hai lực $\vec{F}_1$, $\vec{F}_2$ có điểm đặt $O$ tạo với nhau góc $60^{\circ}$, biết rằng  cường độ của hai lực $\vec{F}_1$ và $\vec{F}_2$ đều bằng $100\sqrt{3}$ N. Tính cường độ tổng hợp của hai lực trên.
+	\loigiai{ 
+	\immini{ 
+		Chọn các  điểm $A$, $B$ thỏa mãn $\vec{F}_1=\overrightarrow{OA}$, $\vec{F}_2=\overrightarrow{OB}$.\\
+		Gọi điểm $C$ là một đỉnh của hình bình hành $OACB$, khi đó \begin{center}
+		$\vec{F}_1+\vec{F}_2=\overrightarrow{OA}+\overrightarrow{OB}=\overrightarrow{OC}$ (quy tắc hình  bình hành).
+	\end{center}
+	Cường độ tổng hợp hai lực là  $\left|\vec{F}_1+\vec{F}_2\right|=\left|\overrightarrow{OC}\right|=OC$.
+	}{ 
+	\begin{tikzpicture}[line join=round,line cap=round,>=stealth,scale=1,font=\footnotesize]
+			 \foreach \x/\y/\n in {0/0/O} \coordinate (\n) at (\x,\y);
+			\coordinate (A) at ($(O)+({2*cos  (30)},{2*sin (30)})$);
+			 \coordinate (B) at ($(O)+({2*cos (-30)},{2*sin (-30)})$);
+			\coordinate (C)  at ($(A)+(B)-(O)$);
+			\coordinate (I) at ($(A)!0.5!(B)$); 
+			\draw[arrow style,,thick] (O)--(A) node[sloped,midway,above]{$\vec{F}_1$}; 
+			 \draw[arrow style,,thick] (O)--(B) node[sloped,midway,below]{$\vec{F}_2$};
+			\draw[arrow style,dashed,thick]  (O)--(C);
+			\draw[dashed] (A)--(C)--(B)--(A); 
+			\foreach  \t/\g in {A/30,B/-30,O/180,C/0,I/-45}{
+				\draw[fill=black]  (\t) circle (1pt) node[shift={(\g:10pt)}]{$ \t $};
+			} 
+			\draw pic[thin,draw,"$60^\circ$",angle radius=.8cm]  {angle= B--O--A};
+			\draw pic[thin,draw,angle  radius=2mm] {right angle= A--I--O};
+		\end{tikzpicture}
+	 }
+	\noindent Xét tam giác $OAB$ có $OA=OB=100\sqrt{3}$ và $\widehat{AOB}=60^\circ$ nên tam giác $OAB$ đều.\\ 
+	Gọi $I$ là tâm hình bình hành $OACB$, khi đó $OI$  cũng là đường cao tam giác đều $OAB$.\\
+	 Do đó $OI=\dfrac{100\sqrt{3}\cdot\sqrt{3}}{2}=150$, suy ra $OC=2OI=300$.\\
+	Vậy hợp lực của $\vec{F}_1$, $\vec{F}_2$ có độ lớn là  $300$ N.
+} 
+\end{bt}
+
+% nguồn: MaHoaNH_TuLuan_Lop10
+\begin{bt}%[0H5V2-6]%[ma:39669129]
+	Một dòng sông chảy từ phía Bắc xuống phía Nam với vận tốc $10$ km/h, có một chiếc ca nô chuyển động từ phía Đông sang phía Tây với vận tốc $35$ km/h so với dòng nước. Vận tốc của ca nô  so với bờ là bao nhiêu km/h (kết quả làm tròn đến hàng phần chục)?
+	\loigiai{ 
+	 \immini{
+		Gọi $\vec{v}_1$, $\vec{v}_2$ lần lượt là vectơ vận tốc của dòng nước đối với bờ và ca nô đối với dòng nước. Khi đó vận tốc của ca nô đối với bờ chính là tổng $\vec{v}_1+\vec{v}_2$.\\ 
+		Đặt $\vec{v}_1=\overrightarrow{AD}$, $\vec{v}_2=\overrightarrow{AB}$ với $A$ là vị trí của ca nô.\\ 
+		Vẽ hình bình hành  $ABCD$, ta có $$\vec{v}_1+\vec{v}_2=\overrightarrow{AB}+\overrightarrow{AD}=\overrightarrow{AC}.$$
+		 Theo định lí Py-ta-go $AC=\sqrt{10^2+35^2}=5\sqrt{53}\approx 36{,}4$.\\
+		Vậy vận tốc của ca nô đối  với bờ là xấp xỉ $36{,}4$ km/h.
+		 }{
+		\begin{tikzpicture}[line join=round,line cap=round,>=stealth,font=\footnotesize]
+				\coordinate (A) at  (0,0);
+				\coordinate (B) at  ($(A)+({1*cos (-90)},{1*sin (-90)})$);
+				 \coordinate (D) at ($(A)+({3.5*cos (180)},{3.5*sin (180)})$);
+				\coordinate (C) at ($(B)+(D)-(A)$); 
+				\coordinate (M)  at ($(D)!0.5!(A)$);
+				\coordinate (o)  at ($(M)+(0,2)$);
+				\coordinate (b)  at ($(o)+(0,.5)$);
+				\coordinate (t)  at ($(o)+(-.5,0)$);
+				\coordinate (d) at  ($(o)+(.5,0)$);
+				\coordinate  (n) at ($(o)+(0,-.5)$);
+				\draw[arrow style,thick] (A)--(B) node[sloped,midway,above]{$\vec{v}_1$}; 
+				\draw[arrow style,thick] (A)--(D)  node[sloped,midway,above]{$\vec{v}_2$};
+				\draw[arrow  style,dashed,thick] (A)--(C);
+				 \draw[dashed] (B)--(C)--(D);
+				\draw[arrow style] (o)--(b) node[above]{Bắc}; 
+				\draw[arrow style]  (o)--(d) node[right]{Đông};
+				 \draw[arrow style] (o)--(n) node[below]{Nam};
+				\draw[arrow style] (o)--(t) node[left]{Tây}; 
+				\foreach \t/\g in  {B/-45,D/135,A/45,C/-135}{
+					\draw[fill=black] (\t) circle (1pt)  node[shift={(\g:10pt)}]{$ \t $};
+				 }
+				\draw pic[thin,draw,angle radius=2mm]  {right angle= B--A--D};
+			\end{tikzpicture}
+		} 
+	} 
+\end{bt}
+
+% nguồn: MaHoaNH_TuLuan_Lop10
+\begin{bt}%[0H5V2-6]%[ma:46e89589]
+	Cho ba lực $\vec{F}_1=\overrightarrow{MA}$, $\vec{F}_2=\overrightarrow{MB}$, $\vec{F}_3=\overrightarrow{MC}$ cùng tác động vào một ô tô tại điểm $M$ và ô tô đứng yên. Cho biết cường độ hai lực $\vec{F}_1$, $\vec{F}_2$ đều bằng $25$ N và góc $\widehat{AMB}=60^\circ$. Khi đó cường độ $\vec{F}_3$ bằng bao nhiêu Newton (làm  tròn kết quả đến hàng phần chục của Newton)?
+	\begin{center}
+		\begin{tikzpicture}[line join=round,line cap=round,>=stealth,scale=1,font=\footnotesize]
+				\foreach  \x/\y/\n in {0/0/M} \coordinate (\n) at (\x,\y);
+				\coordinate (A) at ($(M)+({2*cos (150)},{2*sin  (150)})$);
+				\coordinate (B) at ($(M)+({2*cos (210)},{2*sin (210)})$); 
+				\coordinate  (D) at ($(A)+(B)-(M)$);
+				\coordinate (C) at  ($(M)+(M)-(D)$);
+				\shade[ball color=white] (M) circle (.2cm); 
+				\draw[->,thick] (M)--(A) node[sloped,midway,above]{$\vec{F}_1$}; 
+				\draw[->,thick] (M)--(B)  node[sloped,midway,below]{$\vec{F}_2$};
+				 \draw[->,thick] (M)--(C) node[sloped,midway,above]{$\vec{F}_3$};
+				\foreach \t/\g  in {A/150,B/-150,M/-90,C/0}{
+					\draw[fill=black] (\t) circle (1pt) node[shift={(\g:10pt)}]{$  \t $};
+				 }
+				\draw pic[thin,draw,"$60^\circ$",angle  radius=.8cm] {angle= A--M--B};
+			\end{tikzpicture}
+	\end{center}
+	\loigiai{ 
+		\begin{center}
+			\begin{tikzpicture}[line join=round,line cap=round,>=stealth,scale=1,font=\footnotesize]
+					 \foreach \x/\y/\n in {0/0/M} \coordinate (\n) at (\x,\y);
+					\coordinate (A) at ($(M)+({2*cos (150)},{2*sin (150)})$); 
+					 \coordinate (B) at ($(M)+({2*cos (210)},{2*sin (210)})$);
+					\coordinate (D) at ($(A)+(B)-(M)$); 
+					 \coordinate (C) at ($(M)+(M)-(D)$);
+					\shade[ball  color=white] (M) circle (.2cm);
+					\draw[->,thick]  (M)--(A) node[sloped,midway,above]{$\vec{F}_1$};
+					 \draw[->,thick] (M)--(B) node[sloped,midway,below]{$\vec{F}_2$};
+					\draw[->,thick]  (M)--(C) node[sloped,midway,above]{$\vec{F}_3$};
+					 \draw[->,thick] (M)--(D);
+					\draw[dashed] (A)--(D) 
+						(B)--(D); 
+					\foreach \t/\g  in {A/150,B/-150,M/-90,C/0,D/180}{
+						\draw[fill=black] (\t) circle  (1pt) node[shift={(\g:10pt)}]{$ \t $};
+					} 
+					\draw pic[thin,draw,"$60^\circ$",angle radius=.8cm] {angle=  A--M--B};
+				\end{tikzpicture}
+		\end{center}
+		Ta có $\vec{F}_1+\vec{F}_2=\overrightarrow{MA}+\overrightarrow{MB}=\overrightarrow{MD}$ (với  $D$ là điểm sao cho $AMBD$ là hình bình hành).\\
+		 Ta có $MA=\left|\overrightarrow{MA}\right|=\left|\vec{F}_1\right|=25$ N và $MB=\left|\overrightarrow{MB}\right|=\left|\vec{F}_2\right|=25$ N.\\
+		Do $\widehat{AMB}=60^{\circ}$  nên $\triangle MAB$ là tam giác đều. \\
+		Khi đó $MD=2\cdot\dfrac{25\sqrt{3}}{2}=25\sqrt{3}$  N.\\
+		Do ô tô đứng yên nên cường độ lực tác dụng lên ô tô bằng $0$ hay  $\vec{F}_1+\vec{F}_2+\vec{F}_3=\vec{0}$.\\
+		Suy ra $\vec{F}_3=-\left(\vec{F}_1+\vec{F}_2\right)\Rightarrow\left|\vec{F}_3\right|=\left|-\left(\vec{F}_1+\vec{F}_2\right)\right|=\left|\overrightarrow{DM}\right|=MD=25\sqrt{3}\approx  43{,}3$ N.\\
+	Vậy cường độ của $\vec{F}_3\approx  43{,}3$ N.}
+\end{bt}
