@@ -384,6 +384,11 @@ footer .gian{flex:1}
       <div><b>Số câu luyện tập</b> <span class="nho">— bài tập về nhà cùng số câu, cùng dạng, cùng mức (câu khác)</span>
         <div class="so"><label>Trắc nghiệm<input type="number" id="ph-tn" min="0" max="40"></label>
           <label>Đúng/Sai<input type="number" id="ph-ds" min="0" max="20"></label><label>Trả lời ngắn<input type="number" id="ph-tln" min="0" max="20"></label></div></div>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center">
+        <label class="hop"><input type="checkbox" id="ph-nc"> <b>Bổ sung câu vận dụng / vận dụng cao</b></label>
+        <label class="hop">Vận dụng <input type="number" id="ph-vd" min="0" max="10" value="2" style="width:64px" disabled></label>
+        <label class="hop">Vận dụng cao <input type="number" id="ph-vdc" min="0" max="10" value="1" style="width:64px" disabled></label>
+        <span class="nho">— thêm vào cả luyện tập và về nhà (câu khác nhau), mục riêng có nhãn mức</span></div>
       <div style="display:flex;gap:14px;flex-wrap:wrap;align-items:center"><b>I. Kiến thức trọng tâm trên phiếu</b>
         <label class="hop"><input type="radio" name="ph-kt-in" value="in_san" checked> In sẵn nội dung</label>
         <label class="hop"><input type="radio" name="ph-kt-in" value="dong_trong"> Dòng trống để học sinh tự ghi</label></div>
@@ -1133,13 +1138,14 @@ Yêu cầu:
   hopThoai("Prompt AI soạn kiến thức trọng tâm",`Chép prompt, dán vào ChatGPT/Gemini/Claude, rồi dán mã LaTeX AI trả về vào ô "Kiến thức trọng tâm".\n${"─".repeat(60)}\n\n`+p,
     [["Chép prompt",async e=>{try{await navigator.clipboard.writeText(p);e.target.textContent="Đã chép ✓"}catch(_){alert("Bôi đen rồi Cmd+C.")}},true]]);
 };
+$("#ph-nc").onchange=e=>{$("#ph-vd").disabled=$("#ph-vdc").disabled=!e.target.checked};
 $("#ph-tao").onclick=async()=>{
   const bai=phBaiChon(); if(!bai.length){alert("Chọn ít nhất một bài.");return}
   const dang=[...document.querySelectorAll("#ph-dang input:checked")].map(x=>x.value); if(!dang.length){alert("Chọn ít nhất một dạng.");return}
   const loai=$("#ph-loai").dataset.loai, tl=+document.querySelector('input[name="ph-tl"]:checked').value;
   const cfg={pham_vi:loai==="on_tap_chuong"?[$("#ph-chuong").value]:bai,dang,loai_phieu:loai,ten:$("#ph-ten").value.trim(),thoi_luong:tl,
     so_cau:{TN:+$("#ph-tn").value||0,DS:+$("#ph-ds").value||0,TLN:+$("#ph-tln").value||0},kien_thuc:$("#ph-kt").value,
-    co_chu:+$("#ph-co").value,hai_cot:$("#ph-hai-cot").checked,beamer:$("#ph-beamer").checked,kien_thuc_in:document.querySelector('input[name="ph-kt-in"]:checked').value,giao_vien:$("#giao_vien").value.trim(),truong:$("#truong").value.trim(),
+    co_chu:+$("#ph-co").value,hai_cot:$("#ph-hai-cot").checked,beamer:$("#ph-beamer").checked,nang_cao:$("#ph-nc").checked?{V:+$("#ph-vd").value||0,C:+$("#ph-vdc").value||0}:{},kien_thuc_in:document.querySelector('input[name="ph-kt-in"]:checked').value,giao_vien:$("#giao_vien").value.trim(),truong:$("#truong").value.trim(),
     nam_hoc:$("#nam_hoc").value.trim(),so_gd:$("#so_gd").value.trim()};
   const b=$("#ph-tao");b.disabled=true;b.textContent="Đang tạo…";
   try{const r=await api("/api/phieu",{cau_hinh:cfg,bien_dich:$("#bien_dich").checked});

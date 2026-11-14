@@ -97,6 +97,32 @@ def chon_cau(cau_hinh_phieu, rng):
     def lay(c):
         da_lay.add(c["ma"]); da_nd.add(c["_k"])
     so = {"LT": cau_hinh_phieu["so_cau"], "BTVN": cau_hinh_phieu.get("so_cau_btvn") or cau_hinh_phieu["so_cau"]}
+    # 0) bổ sung câu VẬN DỤNG / VẬN DỤNG CAO (nếu chọn) — mỗi phần (luyện tập, về nhà) một bộ riêng, rải đều các dạng
+    nc = cau_hinh_phieu.get("nang_cao") or {}
+    for muc_phan in ("LT", "BTVN"):
+        kq[muc_phan]["VD"] = []
+    for muc_cau, ten_muc in (("V", "Vận dụng"), ("C", "Vận dụng cao")):
+        can = int(nc.get(muc_cau) or 0)
+        if can <= 0:
+            continue
+        nhom = collections.defaultdict(list)
+        for c in ds:
+            if (c.get("muc_chuan") or "") == muc_cau:
+                nhom[c["dang_key"]].append(c)
+        for v in nhom.values():
+            rng.shuffle(v); v.sort(key=lambda c: (c.get("so_lan_dung") or 0) > 0)
+        for muc_phan, ten_phan in (("LT", "Luyện tập"), ("BTVN", "Bài tập về nhà")):
+            lay_duoc, vong = [], 0
+            while len(lay_duoc) < can:
+                con = [d for d in cac_dang if any(moi(c) for c in nhom.get(d, []))]
+                if not con:
+                    break
+                d = con[vong % len(con)]; vong += 1
+                c = next(c for c in nhom[d] if moi(c))
+                lay(c); lay_duoc.append(dict(c, _muc_nc=ten_muc))
+            if len(lay_duoc) < can:
+                thieu.append(f"{ten_phan} – {ten_muc}: cần {can}, kho chỉ có {len(lay_duoc)} câu phù hợp")
+            kq[muc_phan]["VD"] += sorted(lay_duoc, key=lambda c: (CAC_LOAI.index(c["loai"]), cac_dang.index(c["dang_key"])))
     for loai in CAC_LOAI:
         dang_co = [d for d in cac_dang if theo.get((loai, d))]
         # 1) luyện tập: rải đều các dạng (vòng tròn), mỗi dạng lấy dần từ mức thấp đến cao
@@ -177,6 +203,7 @@ def tao(cfg, in_ra=print):
             r"\vspace{-2pt}\noindent{\color{mauPhieu}\rule{\linewidth}{0.6pt}}\par\smallskip}",
             r"\newcommand{\phanCon}[1]{\par\smallskip\noindent{\bfseries\color{mauPhieu}#1}\par}",
             r"\newcommand{\dangPhieu}[2]{\par\smallskip\noindent{\colorbox{mauDang!12}{\color{mauDang}\bfseries\small\ Dạng #1\ }\ \textit{#2}}\par\nopagebreak}",
+            r"\newcommand{\nhanMuc}[2]{\par\smallskip\noindent{\colorbox{red!75!black}{\color{white}\bfseries\scriptsize\ #1\ }\ {\scriptsize\itshape\color{black!60}Dạng #2}}\par\nopagebreak}",
             r"\newcommand{\dongKe}[1]{\par\foreach \i in {1,...,#1}{\noindent\makebox[\linewidth]{\color{black!35}\dotfill}\par}}",
             r"\pagestyle{fancy}\fancyhf{}\renewcommand{\headrulewidth}{0pt}\renewcommand{\footrulewidth}{0.4pt}",
             r"\fancyfoot[L]{\footnotesize GV: " + thoat(gv) + r"}\fancyfoot[C]{\footnotesize " + thoat(f"{nhan.title()}: {ten}") + r"}"
@@ -239,6 +266,24 @@ def tao(cfg, in_ra=print):
                 k.append(c["noi_dung"])
             k.append(f"\\Closesolutionfile{{{sf}}}")
             bang.append((nhan_muc, so_phan, TEN_PHAN[loai], tm, tep))
+        vd = kq[muc].get("VD") or []
+        if vd:
+            so_phan += 1
+            k.append(r"\phanCon{" + f"{so_phan}. Vận dụng – Vận dụng cao ({len(vd)} câu)" + "}")
+            for loai in CAC_LOAI:
+                v = [c for c in vd if c["loai"] == loai]
+                if not v:
+                    continue
+                ct, sf, tm = MOI_TRUONG[loai]
+                tep = f"{muc}_VD_{loai}"
+                k.append(r"\par\noindent{\small\itshape " + TEN_PHAN[loai] + r"}\par")
+                k.append(f"\\setcounter{{{ct}}}{{0}}")
+                k.append(f"\\Opensolutionfile{{{sf}}}[{tm}/{tep}]")
+                for c in v:
+                    k.append(r"\nhanMuc{" + c["_muc_nc"] + "}{" + str(so_dang[c["dang_key"]]) + "}")
+                    k.append(c["noi_dung"])
+                k.append(f"\\Closesolutionfile{{{sf}}}")
+                bang.append((nhan_muc, so_phan, "Vận dụng – VDC · " + TEN_PHAN[loai], tm, tep))
         return "\n".join(k)
     lt, btvn = khoi_phan("LT", "II. LUYỆN TẬP"), khoi_phan("BTVN", "III. BÀI TẬP VỀ NHÀ")
     bat, tat = ("\\begin{multicols}{2}\n", "\n\\end{multicols}") if hai_cot else ("", "")
@@ -287,6 +332,8 @@ def tao(cfg, in_ra=print):
     so_lt = {l: len(kq["LT"][l]) for l in CAC_LOAI}; so_bt = {l: len(kq["BTVN"][l]) for l in CAC_LOAI}
     in_ra(f"{nhan}: {ten} — {len(cac_dang)} dạng · Luyện tập TN {so_lt['TN']}, ĐS {so_lt['DS']}, TLN {so_lt['TLN']}"
           f" · Bài tập về nhà TN {so_bt['TN']}, ĐS {so_bt['DS']}, TLN {so_bt['TLN']}")
+    if kq["LT"].get("VD") or kq["BTVN"].get("VD"):
+        in_ra(f"  + Vận dụng – vận dụng cao: luyện tập {len(kq['LT']['VD'])} câu, về nhà {len(kq['BTVN']['VD'])} câu")
     for t in thieu:
         in_ra("  ⚠ " + t)
     rel = os.path.relpath(out_goc, GOC)

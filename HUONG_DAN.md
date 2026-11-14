@@ -295,6 +295,9 @@ Nút **Phiếu bài học** trên thanh đầu ứng dụng.
 2. Tích/bỏ **dạng toán** (bên cạnh là số câu trong kho TN/ĐS/TLN).
 3. **Thời lượng** 45 phút (mặc định 8 TN · 2 ĐS · 2 TLN) hoặc 90 phút (12 · 4 · 6) — sửa được số câu.
    Bài tập về nhà có **cùng số câu, cùng dạng, cùng mức** nhưng là câu khác.
+   **Bổ sung câu vận dụng / vận dụng cao** (tích ô, nhập số câu): thêm mục "Vận dụng – Vận dụng cao" vào cả Luyện tập và
+   Bài tập về nhà (câu khác nhau, rải đều các dạng, nhãn đỏ "Vận dụng"/"Vận dụng cao"), có trong bảng đáp án và lời giải.
+   Kho không đủ câu mức đó thì ứng dụng báo thiếu.
 4. **I. Kiến thức trọng tâm** — chọn cách in trên phiếu:
    - *In sẵn nội dung*: in nội dung LaTeX thầy dán (có nút *Prompt AI soạn kiến thức trọng tâm*);
    - *Dòng trống để học sinh tự ghi*: khung "Kiến thức cần nhớ" (4 dòng; 6 dòng với 90 phút) + "Phương pháp" từng dạng (2 dòng; 3 dòng với 90 phút).
