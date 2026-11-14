@@ -13,6 +13,7 @@ Thầy dạy Toán THPT (Trường THPT Nguyễn Hữu Cảnh, TP.HCM), sách K�
 - `/nlm-soan-cau` — soạn câu MỚI theo bài, bám tài liệu trong NotebookLM.
 - `/nlm-go-de` — gõ lại một đề / phiếu có sẵn trong NotebookLM vào kho.
 - `/nhap-kho` — kiểm tra → xem trước → nhập → lưu git (dùng cho mọi file trong `ai-nhap/`).
+- `/nhap-nguon` — nhập từ **nguồn khác** (file .tex ngân hàng khác, Word, PDF, ảnh, thư mục đề). Thầy nói "nhập kho từ …" là làm đủ các bước trong `.agents/workflows/nhap-nguon.md`.
 
 ## Luật cứng
 1. Định dạng câu: theo `.agents/rules/dinh-dang-ngan-hang.md` và mẫu `mau_cau_moi.tex`. Không tự chế lệnh LaTeX mới.
@@ -20,7 +21,8 @@ Thầy dạy Toán THPT (Trường THPT Nguyễn Hữu Cảnh, TP.HCM), sách K�
 3. Mọi đáp án phải được em **tự giải lại**; phép tính có số thì kiểm bằng `python3 -c ...`. Nghi ngờ → ghi `% KIEM_TRA`.
 4. File chờ nhập đặt ở `ai-nhap/` (tên `YYYY-MM-DD_<lop>_<bai>.tex` hoặc `.json`); nháp thô NotebookLM ở `ai-nhap/tho/`.
 5. Trước khi nhập phải chạy `python3 scripts/kiem_tra_ai.py <file>` tới khi **0 câu LỖI**, rồi `nhap_cau.py <file> --thu`.
-6. Nhập thật (`nhap_cau.py <file>`) và `git push` chỉ làm sau khi thầy đồng ý. Nhập xong chuyển file sang `ai-nhap/da-nhap/`.
+6. Nhập thật (`nhap_cau.py <file>`) chỉ làm sau khi thầy đồng ý. Nhập xong chuyển file sang `ai-nhap/da-nhap/`. Không tự `git push`: đưa lệnh cho thầy chạy.
+6b. **Câu lỗi không nhập kho, không lên GitHub**: `nhap_cau.py` tự biên dịch thử từng câu, câu lỗi ghi vào `ai-nhap/_loi/` kèm lý do. Không dùng `--khong-bien-dich`.
 7. KHÔNG sửa/xoá: `cau-hoi/` bằng tay hàng loạt, `khung/`, `scripts/` có sẵn, `du-lieu/lich_su_dung.json`, `de-da-ra/`. Không xoá file (dời vào `_cu/`).
 8. Mỗi lần gọi NotebookLM: tối đa ~10 câu hoặc 1 dạng; yêu cầu trả **JSON trong khối ```json**; lưu nguyên văn vào `ai-nhap/tho/` trước khi xử lý.
 9. NotebookLM lỗi đăng nhập → bảo thầy chạy `nlm login` trong Terminal; MCP hỏng hẳn → chuyển chế độ thủ công (xem `notebooklm/HUONG_DAN_NOTEBOOKLM.md`).
