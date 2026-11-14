@@ -537,16 +537,32 @@ $("#tep-nhap").onchange=async e=>{
   const fs=[...e.target.files]; if(!fs.length) return;
   const tep=await Promise.all(fs.map(async f=>({ten:f.name,noi_dung:await f.text()})));
   e.target.value="";
-  const ma_dang=(prompt("Mã dạng gán cho câu CHƯA có mã %[..] (ví dụ 2D1?1-2, dấu ? = theo mức độ của câu).\nĐể trống nếu các câu đã có mã hoặc muốn để vào mục chưa phân loại:","")||"").trim();
+  xemNhap(tep,"");
+};
+// Xem trước khi nhập. Chỉ khi có câu CHƯA có mã %[..] mới hiện ô gán mã dạng (không hỏi bằng hộp thoại của trình duyệt)
+async function xemNhap(tep,ma_dang){
   hopThoai("Đang đọc file…","");
   const r=await api("/api/nhap",{tep,thu:true,ma_dang});
   if(!r.so_cau){hopThoai("Không có câu mới để nhập",r.nhat_ky);return}
-  hopThoai(`Xem trước: ${r.so_cau} câu mới`,r.nhat_ky,[["Nhập vào ngân hàng",async()=>{
+  const chuaMa=[...r.nhat_ky.matchAll(/chưa có mã (\d+)/g)].reduce((a,m)=>a+ +m[1],0);
+  const nut=[["Nhập vào ngân hàng",async()=>{
     $("#ht-noi").textContent="Đang nhập…";
     const r2=await api("/api/nhap",{tep,thu:false,ma_dang});
     hopThoai(`Đã nhập ${r2.so_cau} câu`,r2.nhat_ky); tai();
-  },true]]);
-};
+  },true]];
+  if(chuaMa) nut.push(["Gán mã dạng cho câu chưa có mã…",()=>{
+    const o=$("#ht-nut"); if(o.querySelector("#o-ma-dang")) return;
+    const w=document.createElement("span");w.id="o-ma-dang";w.style.cssText="display:flex;gap:6px;align-items:center;margin-right:auto";
+    w.innerHTML=`<input id="nhap-ma-dang" placeholder="vd 0D3?1-7" style="width:130px;padding:6px 8px;border:1px solid var(--vien);border-radius:8px" value="${ma_dang||""}">
+      <button class="chinh" id="nhap-ap-dung">Áp dụng và xem lại</button>`;
+    o.prepend(w);
+    $("#nhap-ap-dung").onclick=()=>xemNhap(tep,$("#nhap-ma-dang").value.trim());
+    $("#nhap-ma-dang").focus();
+  }]);
+  hopThoai(`Xem trước: ${r.so_cau} câu mới`+(chuaMa?` — ${chuaMa} câu chưa có mã dạng (sẽ vào mục chưa phân loại)`:""),
+    r.nhat_ky+(chuaMa?"\n\nCâu chưa có mã: bấm “Gán mã dạng…”, gõ mã như 2D1?1-2 (dấu ? = tự theo mức độ của câu) rồi “Áp dụng và xem lại”.":""),nut);
+}
+
 
 // ---------------- TRỘN ĐỀ TỪ FILE
 let TEP_TRON=null;

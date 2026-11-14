@@ -118,15 +118,65 @@ Nếu không có dạng nào phù hợp, chọn dạng gần nhất cùng bài/c
   Công thức dài hoặc quan trọng đặt riêng một dòng: `\[ \overline{x}=\dfrac{1525}{100}=15{,}25. \]`
 - Bảng số liệu: `\begin{center}\begin{tabular}{|l|c|c|…|}\hline … \\ \hline\end{tabular}\end{center}`;
   bảng nhiều hơn 8 cột bọc thêm `\resizebox{\linewidth}{!}{ … }` để in 2 cột không tràn.
-- Bảng biến thiên / bảng xét dấu: dùng `tkz-tab` trong `\begin{tikzpicture}…\end{tikzpicture}`.
-- Hình vẽ: vẽ lại bằng TikZ nếu làm được. Không chắc thì để
-  `\begin{center}\textit{[Hình: mô tả ngắn]}\end{center} % CAN_VE_HINH` — thầy sẽ vẽ sau.
-- Hình đặt cạnh đề bài: `\immini{nội dung câu hỏi}{\begin{tikzpicture}…\end{tikzpicture}}`.
+- Hình vẽ, đồ thị, bảng biến thiên: làm theo mục **HÌNH VẼ (TikZ)** bên dưới.
 - Đề có đáp án/lời giải: dùng của đề. Đề **không** có: tự giải cẩn thận, tính lại từng phép tính, viết lời giải ngắn gọn đúng chuẩn.
   Câu nào không chắc chắn, thêm chú thích cuối dòng mở khối: `%[2D1V3-6] % KIEM_TRA: lý do`.
 - Lời giải không nhắc tới thứ tự phương án/ý ("Chọn B", "phương án A", "ý a)…") vì khi trộn đề thứ tự bị đảo.
 - KHÔNG viết `\documentclass`, `\begin{document}`, lời dẫn hay giải thích ngoài các khối câu hỏi.
 - Không đánh số "Câu 1." trong nội dung (số câu tự sinh khi in).
+
+# HÌNH VẼ (TikZ) — cấu trúc và vị trí
+**Nguyên tắc chung**
+- Mỗi hình là MỘT khối `\begin{tikzpicture}[scale=…] … \end{tikzpicture}`, gõ thẳng trong câu hỏi.
+  KHÔNG viết `\documentclass`, `\usepackage`, `\usetikzlibrary`, `\begin{document}`, không dùng `\includegraphics`, không file ảnh ngoài.
+- Gói đã có sẵn: `tikz` (thư viện calc, angles, quotes, intersections, patterns, arrows.meta, decorations.markings, shapes),
+  `tkz-euclide`, `tkz-tab` (bảng biến thiên), `tikz-3dplot`, `pgfplots`. Chỉ dùng lệnh của các gói này.
+- Trong khối tikzpicture: **không để dòng trống**, không chú thích `%`, ngoặc `{}` `[]` `()` đóng mở khớp,
+  mỗi lệnh kết thúc bằng `;`. Nhãn toán trong `$…$`: `node[below]{$A$}`. Không dùng `\pgfmathsetmacro`, `\newcommand`, `\def` trong hình.
+- Kích thước: hình đặt cạnh đề rộng ≤ 5 cm, hình đặt giữa rộng ≤ 9 cm (dùng `scale=0.6`…`1`); nét `line join=round`, mũi tên `->` hoặc `-stealth`.
+- Đồ thị hàm số: `\draw[thick,smooth,samples=100,domain=a:b] plot(\x,{biểu thức});` — biểu thức viết kiểu pgf:
+  `\x^2` → `(\x)^2` hoặc `\x*\x`, `e^x` → `exp(\x)`, `ln x` → `ln(\x)`, `sin x` (radian) → `sin(\x r)`.
+- Hình không vẽ chắc chắn đúng thì KHÔNG vẽ bừa: để `\begin{center}\textit{[Hình: mô tả ngắn]}\end{center} % CAN_VE_HINH`.
+
+**Vị trí đặt hình trong câu** (sai vị trí là lỗi nhập/biên dịch hay gặp)
+1. Hình nhỏ minh hoạ đề (đồ thị, hình học phẳng/không gian) → đặt **bên phải đề** bằng `\immini`, ngay sau dòng mở khối, **trước** `\choice`:
+```latex
+\begin{ex}%[2D1H1-1]
+	\immini{Cho hàm số $y=f(x)$ có đồ thị như hình bên. Hàm số đồng biến trên khoảng nào?}
+	{\begin{tikzpicture}[scale=0.7,>=stealth]
+		\draw[->] (-2,0)--(3,0) node[below]{$x$};
+		\draw[->] (0,-2)--(0,3) node[left]{$y$};
+		\draw[thick,smooth,samples=100,domain=-1.3:2.4] plot(\x,{(\x)^3-1.5*(\x)^2});
+		\node[below left] at (0,0) {$O$};
+	\end{tikzpicture}}
+	\choice
+	{$(0;1)$}
+	{\True $(1;+\infty)$}
+	{$(-1;0)$}
+	{$(-\infty;1)$}
+	\loigiai{ … }
+\end{ex}
+```
+   `\immini` có đúng **2 cặp ngoặc**: `{nội dung đề}` rồi `{khối tikzpicture}`; câu hỏi chính nằm trong cặp ngoặc thứ nhất.
+2. Hình lớn hoặc **bảng biến thiên / bảng xét dấu** → đặt **giữa đề** trong `\begin{center}…\end{center}`, sau câu dẫn, trước câu hỏi chính và trước `\choice`:
+```latex
+	Cho hàm số $y=f(x)$ có bảng biến thiên như sau:
+	\begin{center}
+		\begin{tikzpicture}
+			\tkzTabInit[lgt=1.2,espcl=2.2]{$x$/0.8,$y'$/0.8,$y$/2}{$-\infty$,$-1$,$1$,$+\infty$}
+			\tkzTabLine{,+,0,-,0,+,}
+			\tkzTabVar{-/$-\infty$,+/$3$,-/$-1$,+/$+\infty$}
+		\end{tikzpicture}
+	\end{center}
+	Hàm số đạt cực đại tại điểm nào?
+	\choice …
+```
+   Số cột của `\tkzTabLine` = 2×(số giá trị $x$) − 1 ô (dùng `,` ngăn cách; `0` là nghiệm, `d` là không xác định, `+`/`-` là dấu).
+   `\tkzTabVar`: mỗi giá trị $x$ một mục `-/giá trị` (đáy) hoặc `+/giá trị` (đỉnh).
+3. Hình trong **lời giải** → đặt **bên trong** `\loigiai{ … }` (thường trong `\begin{center}…\end{center}`).
+4. Hình làm **phương án** A/B/C/D (chọn đồ thị đúng) → mỗi phương án một tikzpicture nhỏ (`scale=0.4`, rộng ≤ 3,5 cm) đặt trong ngoặc của phương án:
+   `{\begin{tikzpicture}[scale=0.4] … \end{tikzpicture}}`.
+5. KHÔNG đặt hình sau `\choice`/`\shortans`, giữa các phương án, hay ngoài `\end{ex}`.
 
 # CHỌN MÃ DẠNG CHO ĐÚNG (quan trọng nhất)
 1. Xác định **việc câu hỏi yêu cầu làm** (tính trung bình, tìm trung vị, tính độ lớn hợp lực, đọc giá trị từ bảng…),
@@ -143,6 +193,7 @@ Nếu không có dạng nào phù hợp, chọn dạng gần nhất cùng bài/c
       mỗi `\itemch` bắt đầu bằng "Đúng." hoặc "Sai." **khớp** với `\True` của ý tương ứng.
 - [ ] Trả lời ngắn: `\shortans{…}` là một số, tối đa 4 ký tự (kể cả `-` và `,`), đúng yêu cầu làm tròn, khớp kết quả cuối lời giải.
 - [ ] Mọi mã `%[…]` có trong DANH MỤC (sau khi thay `?` bằng N/H/V/C).
+- [ ] Mỗi hình: khối tikzpicture không dòng trống, ngoặc khớp, đúng vị trí (immini / center / trong \loigiai / trong ngoặc phương án).
 - [ ] Số thập phân trong `$…$` đã viết `{,}`; các bước lời giải đã có `\\` cuối dòng hoặc `\[…\]`.
 
 # KẾT QUẢ TRẢ VỀ
