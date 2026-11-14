@@ -229,6 +229,25 @@ class XuLy(BaseHTTPRequestHandler):
                 dong = []
                 so = cau_trung.xoa(d.get("ma") or [], dong.append)
                 return self.gui(200, {"ok": True, "so": so, "nhat_ky": "\n".join(dong)})
+            if u.path == "/api/cau-lac":
+                import quan_ly_cau
+                if d.get("tim"):
+                    return self.gui(200, {"ok": True, "ds": quan_ly_cau.tim_cau(d["tim"])})
+                return self.gui(200, {"ok": True, "ds": quan_ly_cau.tim_lac()})
+            if u.path == "/api/sua-cau":
+                import quan_ly_cau
+                dong = []
+                try:
+                    if d.get("viec") == "chuyen":
+                        so = quan_ly_cau.chuyen(d.get("ds") or [], dong.append)
+                    elif d.get("viec") == "xoa":
+                        so = quan_ly_cau.xoa(d.get("ma") or [], dong.append)
+                    else:
+                        so = quan_ly_cau.bo_qua(d.get("ma") or [])
+                        dong.append(f"Đã đánh dấu {so} câu là đúng bài (lần sau không báo nữa).")
+                except ValueError as e:
+                    return self.gui(200, {"ok": False, "nhat_ky": str(e)})
+                return self.gui(200, {"ok": True, "so": so, "nhat_ky": "\n".join(dong)})
             if u.path == "/api/danh-muc-dang":
                 import tao_prompt
                 return self.gui(200, {"ok": True, "dang": tao_prompt.danh_sach_dang()})

@@ -65,7 +65,7 @@ def gon(d):
     t = re.sub(r"\\(choiceTF|choice|shortans)(?![A-Za-z])", " ▸ ", t)
     t = re.sub(r"\s+", " ", t).strip()
     return {"ma": d["ma"], "id": d.get("id") or "", "loai": d["loai"], "dap_an": d.get("dap_an") or "",
-            "file": d["file"], "ten_dang": d.get("ten_dang") or "", "lg": d["_lg"], "hinh": bool(d.get("co_hinh")),
+            "file": d["file"], "ten_dang": d.get("ten_dang") or "", "lg": d["_lg"] if "_lg" in d else tach(d["noi_dung"])[2], "hinh": bool(d.get("co_hinh")),
             "dung": d.get("so_lan_dung") or 0, "xem": t[:420], "tex": d["noi_dung"]}
 
 def tim(nguong=0.9, gan_giong=True):
@@ -133,7 +133,7 @@ def tim(nguong=0.9, gan_giong=True):
     ket_qua.sort(key=lambda g: (thu_tu[g["kieu"]], g["cau"][0]["file"]))
     return ket_qua
 
-def xoa(cac_ma, in_ra=print):
+def xoa(cac_ma, in_ra=print, nhan="xoa_trung", lap_lai=True):
     """Xoá khối câu có %[ma:…] trong các file cau-hoi/, lưu bản sao, lập lại chỉ mục."""
     cac_ma = set(cac_ma)
     if not cac_ma:
@@ -163,10 +163,12 @@ def xoa(cac_ma, in_ra=print):
     if sao:
         thu = os.path.join(GOC, "du-lieu", "da_xoa")
         os.makedirs(thu, exist_ok=True)
-        ten = os.path.join(thu, time.strftime("xoa_trung_%Y%m%d-%H%M%S.tex"))
-        open(ten, "w", encoding="utf-8").write(f"% {len(sao)} câu đã xoá khỏi ngân hàng (câu trùng) — chép lại vào file dạng để khôi phục\n\n"
+        ten = os.path.join(thu, time.strftime(nhan + "_%Y%m%d-%H%M%S.tex"))
+        open(ten, "w", encoding="utf-8").write(f"% {len(sao)} câu đã gỡ khỏi ngân hàng ({nhan}) — chép lại vào file dạng để khôi phục\n\n"
                                                + "\n".join(sao))
-        in_ra(f"Đã xoá {da} câu. Bản sao: {os.path.relpath(ten, GOC)}")
+        in_ra(f"Đã gỡ {da} câu. Bản sao: {os.path.relpath(ten, GOC)}")
+    if not lap_lai:
+        return da
     r = subprocess.run([sys.executable, os.path.join(GOC, "scripts", "lap_chi_muc.py")], cwd=GOC,
                        capture_output=True, text=True)
     in_ra((r.stdout or "").strip().splitlines()[-1] if r.stdout else "Đã lập lại chỉ mục.")

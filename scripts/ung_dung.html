@@ -131,6 +131,25 @@ footer .gian{flex:1}
 .nhom-trung pre{white-space:pre-wrap;background:#f9fafb;padding:6px;border-radius:6px;max-height:260px;overflow:auto}
 .nhan-giu{background:#dcfce7;color:#166534;border-radius:6px;padding:0 6px;font-size:11px;margin-left:6px}
 #hop-trung .chan{padding:10px 18px;border-top:1px solid var(--vien);display:flex;gap:10px;align-items:center;font-size:13px}
+#hop-lac{position:fixed;inset:0;background:rgba(17,24,39,.35);display:none;align-items:center;justify-content:center;z-index:11}
+#hop-lac .noi{background:#fff;border-radius:14px;width:min(1150px,96vw);height:min(92vh,920px);display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.25)}
+#hop-lac h2{margin:0;padding:12px 18px;font-size:16px;border-bottom:1px solid var(--vien)}
+#hop-lac .tab{display:flex;gap:6px;padding:10px 18px;border-bottom:1px solid var(--vien);align-items:center;flex-wrap:wrap}
+#hop-lac .tab button.on{background:#1f3a8a;color:#fff;border-color:#1f3a8a}
+#hop-lac .tab input{flex:1;min-width:240px;padding:7px 9px;border:1px solid var(--vien);border-radius:8px;font:inherit}
+#lac-ds{overflow:auto;flex:1;padding:8px 18px;font-size:13px}
+.the-lac{border:1px solid var(--vien);border-radius:10px;margin:8px 0;padding:8px 10px;display:grid;grid-template-columns:24px 1fr;gap:6px}
+.the-lac .meta{color:#555;font-size:12px}
+.the-lac .meta b{color:#111}
+.the-lac .xem{margin:4px 0;line-height:1.45}
+.the-lac .viec{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:4px}
+.the-lac .viec select,.the-lac .viec input{padding:5px 7px;border:1px solid var(--vien);border-radius:7px;font:inherit;font-size:12.5px}
+.the-lac .viec select{max-width:520px}
+.the-lac .viec input{width:110px}
+.the-lac .viec button{padding:4px 10px;font-size:12.5px}
+.the-lac pre{white-space:pre-wrap;background:#f9fafb;padding:6px;border-radius:6px;max-height:260px;overflow:auto;font-size:12px}
+.nhan-lac{background:#fee2e2;color:#991b1b;border-radius:6px;padding:0 6px;font-size:11px}
+#hop-lac .chan{padding:10px 18px;border-top:1px solid var(--vien);display:flex;gap:8px;align-items:center;font-size:13px;flex-wrap:wrap}
 </style>
 </head>
 <body>
@@ -142,6 +161,7 @@ footer .gian{flex:1}
   <button id="nut-prompt" title="Sinh prompt cho AI: gõ lại đề thi, hoặc soạn câu hỏi mới theo bài học từ tài liệu">Prompt cho AI</button>
   <button id="nut-tron-file" title="Trộn một đề có sẵn (file .tex/.txt/.json đúng cấu trúc, vd đề AI gõ lại) thành nhiều mã đề, xuất PDF / Word / đáp án Excel">Trộn đề từ file</button>
   <input type="file" id="tep-tron" accept=".tex,.txt,.md,.json" hidden>
+  <button id="nut-lac" title="Tìm câu có nội dung không khớp bài/dạng đang gắn; chuyển sang đúng dạng hoặc xoá">Câu lạc bài</button>
   <button id="nut-trung" title="Dò câu trùng / gần giống trong ngân hàng và xoá bản thừa">Câu trùng</button>
   <button id="nut-bang-ma" title="Tra cứu mã dạng %[..] theo lớp – chương – bài – dạng">Bảng mã dạng</button>
   <button id="nut-nhap" title="Thêm câu từ file .tex / .txt / .json (đúng cấu trúc \\begin{ex}…, hoặc JSON các trường Nội dung, Lựa chọn, Đáp án, Lời giải) vào ngân hàng">Nhập câu hỏi</button>
@@ -277,6 +297,15 @@ footer .gian{flex:1}
   <div class="chan"><span id="trung-chon">0 câu được chọn để xoá</span>
     <button id="trung-bo-chon" style="margin-left:auto">Bỏ chọn tất cả</button><button id="trung-chon-goi-y">Chọn theo gợi ý (giữ 1 bản tốt nhất)</button>
     <button id="trung-xoa" class="chinh">Xoá câu đã chọn</button><button id="trung-dong">Đóng</button></div>
+</div></div>
+<div id="hop-lac"><div class="noi">
+  <h2>Câu lạc bài — chuyển đúng dạng hoặc xoá</h2>
+  <div class="tab"><button data-k="lac" class="on">Nghi lạc bài</button><button data-k="tim">Tìm câu theo nội dung</button>
+    <input id="lac-tim" placeholder="Gõ nội dung câu, mã dạng hoặc mã câu (không cần dấu), Enter để tìm…" style="display:none"></div>
+  <div id="lac-ds"></div>
+  <div class="chan"><span id="lac-chon">0 câu được chọn</span>
+    <button id="lac-chuyen-chon" style="margin-left:auto">Chuyển các câu đã chọn (theo ô đang chọn)</button>
+    <button id="lac-bo-qua-chon">Đúng rồi — bỏ qua</button><button id="lac-xoa-chon">Xoá các câu đã chọn</button><button id="lac-dong">Đóng</button></div>
 </div></div>
 <div id="hop-thoai"><div class="noi"><h2 id="ht-tieu">…</h2><pre id="ht-noi"></pre><div class="nut" id="ht-nut"></div></div></div>
 
@@ -673,6 +702,7 @@ $("#ma-tim").oninput=veBangMa; $("#ma-lop").onchange=veBangMa; $("#ma-muc").onch
 $("#ma-ds").onclick=async e=>{
   const d=e.target.closest(".d"); if(!d) return;
   const ma=d.dataset.ma, o=$("#nhap-ma-dang");
+  if(window.O_NHAN_MA && document.body.contains(O_NHAN_MA)){O_NHAN_MA.value=ma;O_NHAN_MA.dispatchEvent(new Event("input"));$("#hop-ma").style.display="none";O_NHAN_MA.focus();O_NHAN_MA=null;return}
   if(o && $("#hop-thoai").style.display==="flex"){o.value=ma;$("#hop-ma").style.display="none";o.focus();return}
   try{await navigator.clipboard.writeText(`%[${ma}]`);$("#ma-goi-y").textContent=`Đã chép %[${ma}] — dán vào dòng \\begin{ex} của câu.`}
   catch(_){prompt("Chép mã này:",`%[${ma}]`)}
@@ -721,6 +751,72 @@ $("#trung-xoa").onclick=async()=>{
     $("#hop-trung").style.display="none"; hopThoai(`Đã xoá ${r.so} câu trùng`,r.nhat_ky); tai();}
   finally{b.disabled=false;b.textContent="Xoá câu đã chọn"}
 };
+
+// ---------------- CÂU LẠC BÀI
+let DS_LAC=[],TAB_LAC="lac",CHON_LAC=new Set();window.O_NHAN_MA=null;
+async function moLac(){
+  $("#hop-lac").style.display="flex"; TAB_LAC="lac"; doiTabLac();
+}
+async function taiLac(){
+  CHON_LAC.clear();
+  $("#lac-ds").innerHTML=TAB_LAC==="lac"?"<p>Đang so nội dung từng câu với các bài học (lần đầu khoảng 15 giây)…</p>":"<p>Đang tìm…</p>";
+  const r=await api("/api/cau-lac",TAB_LAC==="tim"?{tim:$("#lac-tim").value.trim()}:{});
+  DS_LAC=r.ds||[]; veLac();
+}
+function doiTabLac(){
+  document.querySelectorAll("#hop-lac .tab button").forEach(b=>b.classList.toggle("on",b.dataset.k===TAB_LAC));
+  $("#lac-tim").style.display=TAB_LAC==="tim"?"":"none";
+  if(TAB_LAC==="lac") taiLac(); else {DS_LAC=[];veLac();$("#lac-tim").focus()}
+}
+function veLac(){
+  const ds=DS_LAC.slice(0,150);
+  $("#lac-ds").innerHTML=(TAB_LAC==="lac"&&DS_LAC.length?`<p style="color:#555;margin:4px 0 8px">${DS_LAC.length} câu có nội dung giống một bài khác hơn bài đang gắn (xếp từ rõ nhất). Mỗi câu: chọn dạng gợi ý (hoặc gõ / tra mã khác) rồi <b>Chuyển</b>; câu hỏng thì <b>Xoá</b>; xếp đúng rồi thì <b>Đúng rồi</b> để lần sau không báo.</p>`:"")
+   +ds.map((c,i)=>{
+    const gy=(c.goi_y||[]).map(g=>`<option value="${g.k}">${g.k} · ${esc(g.ten_bai)} › ${esc(g.ten_dang)}</option>`).join("");
+    return `<div class="the-lac" data-ma="${c.ma}"><input type="checkbox" class="lac-cb" ${CHON_LAC.has(c.ma)?"checked":""}>
+     <div><div class="meta">${c.tin_cay?`<span class="nhan-lac">lệch ${c.tin_cay}</span> `:""}<b>${esc(c.id||"chưa có mã")}</b> · ${esc(c.ten_bai||"")} › ${esc(c.ten_dang||"")} · ${TEN_LOAI_NGAN[c.loai]||c.loai} · đáp án ${esc(c.dap_an)}${c.dung?` · đã dùng ${c.dung} lần`:""}<br>${esc(c.file.replace(/^cau-hoi\//,""))}</div>
+     <div class="xem">${esc(c.xem)}</div>
+     <details><summary style="font-size:12px;color:#555">Mã LaTeX</summary><pre>${esc(c.tex)}</pre></details>
+     <div class="viec">Chuyển sang: <select class="lac-goi-y">${gy}<option value="">— mã khác (gõ ô bên) —</option></select>
+       <input class="lac-ma" placeholder="2D1?1-2"><button class="lac-tra">Tra mã…</button>
+       <button class="lac-chuyen chinh">Chuyển</button><button class="lac-xoa">Xoá</button><button class="lac-dung">Đúng rồi</button></div></div></div>`}).join("")
+   +(DS_LAC.length>150?`<p>… còn ${DS_LAC.length-150} câu — xử lý bớt rồi mở lại.</p>`:"")
+   +(!DS_LAC.length?(TAB_LAC==="tim"?"<p>Gõ từ khoá rồi Enter.</p>":"<p>Không còn câu nghi lạc bài.</p>"):"");
+  $("#lac-chon").textContent=`${CHON_LAC.size} câu được chọn`;
+}
+function maDich(the){const o=the.querySelector(".lac-ma").value.trim();return o||the.querySelector(".lac-goi-y").value}
+async function lamLac(viec,cacThe){
+  if(!cacThe.length){alert("Chưa chọn câu nào.");return}
+  const ma=cacThe.map(t=>t.dataset.ma);
+  let body={viec,ma};
+  if(viec==="chuyen"){
+    const ds=cacThe.map(t=>({ma:t.dataset.ma,ma_dang:maDich(t)}));
+    const thieu=ds.filter(x=>!x.ma_dang).length; if(thieu){alert(`${thieu} câu chưa có mã dạng đích.`);return}
+    body={viec,ds};
+  }
+  if(viec==="xoa"&&!confirm(`Xoá ${ma.length} câu khỏi ngân hàng?\nBản sao lưu trong du-lieu/da_xoa/ để khôi phục khi cần.`))return;
+  $("#lac-chon").textContent="Đang xử lý…";
+  const r=await api("/api/sua-cau",body);
+  if(!r.ok){alert(r.nhat_ky);veLac();return}
+  DS_LAC=DS_LAC.filter(c=>!ma.includes(c.ma)); ma.forEach(m=>CHON_LAC.delete(m)); veLac();
+  $("#lac-chon").textContent=r.nhat_ky.split("\n").filter(Boolean).pop()||"Xong."; if(viec!=="bo_qua") tai();
+}
+$("#nut-lac").onclick=moLac;
+$("#lac-dong").onclick=()=>$("#hop-lac").style.display="none";
+document.querySelectorAll("#hop-lac .tab button").forEach(b=>b.onclick=()=>{TAB_LAC=b.dataset.k;doiTabLac()});
+$("#lac-tim").onkeydown=e=>{if(e.key==="Enter")taiLac()};
+$("#lac-ds").onclick=e=>{
+  const the=e.target.closest(".the-lac"); if(!the) return;
+  if(e.target.classList.contains("lac-cb")){e.target.checked?CHON_LAC.add(the.dataset.ma):CHON_LAC.delete(the.dataset.ma);$("#lac-chon").textContent=`${CHON_LAC.size} câu được chọn`;return}
+  if(e.target.classList.contains("lac-tra")){O_NHAN_MA=the.querySelector(".lac-ma");moBangMa();return}
+  if(e.target.classList.contains("lac-chuyen")) lamLac("chuyen",[the]);
+  if(e.target.classList.contains("lac-xoa")) lamLac("xoa",[the]);
+  if(e.target.classList.contains("lac-dung")) lamLac("bo_qua",[the]);
+};
+const theChon=()=>[...document.querySelectorAll("#lac-ds .the-lac")].filter(t=>CHON_LAC.has(t.dataset.ma));
+$("#lac-chuyen-chon").onclick=()=>lamLac("chuyen",theChon());
+$("#lac-xoa-chon").onclick=()=>lamLac("xoa",theChon());
+$("#lac-bo-qua-chon").onclick=()=>lamLac("bo_qua",theChon());
 tai();
 </script>
 </body>

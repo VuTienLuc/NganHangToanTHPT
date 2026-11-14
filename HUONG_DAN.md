@@ -174,6 +174,19 @@ Nạp đáp án: Chấm Phiếu AI → ô **Đáp án** → **Nhập từ file E
 Khung đề chính thức nằm ở `khung/DeThiChinhThuc/mau_de.tex` (in đen trắng). Muốn dạng ôn tập có màu
 như phần mềm cũ thì ghi `"khung": "DeThi"` trong file JSON.
 
+## Câu lạc bài — chuyển đúng dạng hoặc xoá
+
+Nút **Câu lạc bài** trên thanh đầu, 2 thẻ:
+- **Nghi lạc bài**: máy so nội dung từng câu với "hồ sơ từ khoá" của mọi bài học; câu nào giống một bài khác rõ hơn bài
+  đang gắn thì liệt kê (xếp theo độ lệch, rõ nhất trước) kèm **gợi ý dạng đúng** (vd câu cấp số cộng đang nằm ở
+  "Hàm số liên tục" → gợi ý `1D2?2-3 Số hạng tổng quát của cấp số cộng`). Lần đầu mất khoảng 15 giây.
+- **Tìm câu theo nội dung**: gõ cụm từ (không cần dấu), mã dạng hoặc mã câu, Enter — để tự tìm câu lạc mà thầy biết.
+Mỗi câu: chọn dạng gợi ý, hoặc gõ mã vào ô bên / bấm **Tra mã…** (mở Bảng mã dạng, bấm dòng là điền), rồi
+- **Chuyển**: đổi mã `%[..]` (giữ mức N/H/V/C cũ nếu mã có `?`) và dời câu sang file của dạng mới;
+- **Xoá**: gỡ câu khỏi kho; **Đúng rồi**: câu xếp đúng, lần sau không báo (lưu `du-lieu/da_kiem_tra_lac.json`).
+Có thể tích nhiều câu rồi dùng các nút ở chân hộp thoại. Mọi câu bị chuyển/xoá đều có bản sao trong `du-lieu/da_xoa/`.
+Dòng lệnh: `python3 scripts/quan_ly_cau.py` (thống kê) · `python3 scripts/quan_ly_cau.py --tim "cấp số cộng"`.
+
 ## Câu hỏi trùng — dò và xoá
 
 Nút **Câu trùng** trên thanh đầu dò toàn bộ ngân hàng (khoảng 10 giây), chia 3 thẻ:
