@@ -4,7 +4,7 @@
 - Theo lớp: lớp 10: 4,053, lớp 11: 11,968, lớp 12: 4,478, chưa mã: 198
 - Theo loại: Trắc nghiệm 4 phương án: 10,594, Đúng/Sai: 3,210, Trả lời ngắn: 3,907, Tự luận: 2,986
 - Câu mới vừa được gắn mã: 0
-- Dạng trong id_map có dưới 5 câu: 344
+- Dạng trong id_map có dưới 5 câu: 521
 
 ## Thiếu mã dạng %[..]: 198
 
@@ -489,3 +489,180 @@
 - 8H0?39-1: Nhận biết các yếu tố của hình chóp tứ giác đều — 0 câu
 - 8H0?39-2: Diện tích xung quanh, diện tích toàn phần, thể tích — 0 câu
 - 8H0?39-3: Bài toán thực tế — 0 câu
+- 6D1?1-1: Viết tập hợp bằng cách liệt kê, chỉ ra tính chất đặc trưng — 0 câu
+- 6D1?1-2: Sử dụng kí hiệu thuộc, không thuộc — 0 câu
+- 6D1?2-1: Đọc, viết số tự nhiên; giá trị chữ số theo hàng — 0 câu
+- 6D1?2-2: Số La Mã — 0 câu
+- 6D1?3-1: So sánh số tự nhiên, số liền trước, liền sau — 0 câu
+- 6D1?3-2: Tìm số tự nhiên thỏa điều kiện thứ tự — 0 câu
+- 6D1?4-1: Tính nhanh nhờ tính chất phép cộng — 0 câu
+- 6D1?4-2: Tìm x trong phép cộng, phép trừ — 0 câu
+- 6D1?4-3: Bài toán thực tế — 0 câu
+- 6D1?5-1: Tính nhanh nhờ tính chất phép nhân — 0 câu
+- 6D1?5-2: Phép chia hết, phép chia có dư — 0 câu
+- 6D1?5-3: Tìm x, bài toán thực tế — 0 câu
+- 6D1?6-1: Viết gọn tích bằng lũy thừa, tính lũy thừa — 0 câu
+- 6D1?6-2: Nhân, chia hai lũy thừa cùng cơ số — 0 câu
+- 6D1?6-3: So sánh lũy thừa, tìm số mũ — 0 câu
+- 6D1?7-1: Tính giá trị biểu thức không có dấu ngoặc — 0 câu
+- 6D1?7-2: Tính giá trị biểu thức có dấu ngoặc — 0 câu
+- 6D1?7-3: Tìm x, bài toán thực tế — 0 câu
+- 6D2?8-1: Tìm ước, bội của một số — 0 câu
+- 6D2?8-2: Tính chất chia hết của tổng, hiệu — 0 câu
+- 6D2?9-1: Dấu hiệu chia hết cho 2, 5 — 0 câu
+- 6D2?9-2: Dấu hiệu chia hết cho 3, 9 — 0 câu
+- 6D2?9-3: Tìm chữ số thỏa điều kiện chia hết — 0 câu
+- 6D2?10-1: Nhận biết số nguyên tố, hợp số — 0 câu
+- 6D2?10-2: Phân tích một số ra thừa số nguyên tố — 0 câu
+- 6D2?11-1: Tìm ước chung, ƯCLN — 0 câu
+- 6D2?11-2: Rút gọn phân số về tối giản — 0 câu
+- 6D2?11-3: Bài toán thực tế dùng ƯCLN — 0 câu
+- 6D2?12-1: Tìm bội chung, BCNN — 0 câu
+- 6D2?12-2: Quy đồng mẫu các phân số — 0 câu
+- 6D2?12-3: Bài toán thực tế dùng BCNN — 0 câu
+- 6D3?13-1: Biểu diễn số nguyên trên trục số, số đối — 0 câu
+- 6D3?13-2: So sánh số nguyên — 0 câu
+- 6D3?13-3: Số nguyên trong thực tế (nhiệt độ, độ cao, lãi lỗ) — 0 câu
+- 6D3?14-1: Cộng hai số nguyên cùng dấu, khác dấu — 0 câu
+- 6D3?14-2: Trừ số nguyên, tính nhanh — 0 câu
+- 6D3?14-3: Bài toán thực tế — 0 câu
+- 6D3?15-1: Bỏ dấu ngoặc, tính nhanh — 0 câu
+- 6D3?15-2: Tìm x — 0 câu
+- 6D3?16-1: Nhân hai số nguyên, xét dấu tích — 0 câu
+- 6D3?16-2: Tính chất phép nhân, tính nhanh — 0 câu
+- 6D3?16-3: Bài toán thực tế — 0 câu
+- 6D3?17-1: Phép chia hết hai số nguyên — 0 câu
+- 6D3?17-2: Tìm ước, bội của số nguyên — 0 câu
+- 6D3?17-3: Tìm x nguyên thỏa điều kiện chia hết — 0 câu
+- 6H4?18-1: Nhận biết, đặc điểm của tam giác đều, hình vuông, lục giác đều — 0 câu
+- 6H4?18-2: Vẽ hình — 0 câu
+- 6H4?19-1: Nhận biết, đặc điểm các hình — 0 câu
+- 6H4?19-2: Vẽ hình — 0 câu
+- 6H4?20-1: Tính chu vi, diện tích — 0 câu
+- 6H4?20-2: Bài toán thực tế (lát nền, trồng cây, sơn tường) — 0 câu
+- 6H5?21-1: Nhận biết hình có trục đối xứng, tìm trục đối xứng — 0 câu
+- 6H5?22-1: Nhận biết hình có tâm đối xứng, tìm tâm đối xứng — 0 câu
+- 6D6?23-1: Nhận biết phân số, hai phân số bằng nhau — 0 câu
+- 6D6?23-2: Rút gọn phân số, tìm x trong phân số bằng nhau — 0 câu
+- 6D6?24-1: So sánh phân số — 0 câu
+- 6D6?24-2: Hỗn số dương: chuyển đổi hỗn số – phân số — 0 câu
+- 6D6?25-1: Cộng, trừ phân số — 0 câu
+- 6D6?25-2: Tính nhanh, tìm x — 0 câu
+- 6D6?25-3: Bài toán thực tế — 0 câu
+- 6D6?26-1: Nhân, chia phân số — 0 câu
+- 6D6?26-2: Tính giá trị biểu thức, tìm x — 0 câu
+- 6D6?26-3: Bài toán thực tế — 0 câu
+- 6D6?27-1: Tìm giá trị phân số của một số — 0 câu
+- 6D6?27-2: Tìm một số biết giá trị một phân số của nó — 0 câu
+- 6D7?28-1: Đọc, viết, so sánh số thập phân (cả số âm) — 0 câu
+- 6D7?28-2: Chuyển phân số thập phân sang số thập phân — 0 câu
+- 6D7?29-1: Cộng, trừ, nhân, chia số thập phân — 0 câu
+- 6D7?29-2: Tính giá trị biểu thức, bài toán thực tế — 0 câu
+- 6D7?30-1: Làm tròn số thập phân — 0 câu
+- 6D7?30-2: Ước lượng kết quả phép tính — 0 câu
+- 6D7?31-1: Tỉ số, tỉ số phần trăm của hai số — 0 câu
+- 6D7?31-2: Tìm giá trị phần trăm của một số, tìm một số biết giá trị phần trăm — 0 câu
+- 6D7?31-3: Bài toán thực tế (lãi suất, giảm giá) — 0 câu
+- 6H8?32-1: Điểm thuộc, không thuộc đường thẳng; ba điểm thẳng hàng — 0 câu
+- 6H8?32-2: Vị trí tương đối của hai đường thẳng, đếm đường thẳng — 0 câu
+- 6H8?33-1: Điểm nằm giữa hai điểm — 0 câu
+- 6H8?33-2: Tia, hai tia đối nhau, trùng nhau — 0 câu
+- 6H8?34-1: Nhận biết đoạn thẳng, đếm đoạn thẳng — 0 câu
+- 6H8?34-2: Tính độ dài đoạn thẳng, so sánh đoạn thẳng — 0 câu
+- 6H8?35-1: Nhận biết trung điểm — 0 câu
+- 6H8?35-2: Tính độ dài liên quan trung điểm — 0 câu
+- 6H8?36-1: Nhận biết góc, đỉnh, cạnh, điểm trong của góc — 0 câu
+- 6H8?36-2: Đếm số góc — 0 câu
+- 6H8?37-1: Đo góc, so sánh góc — 0 câu
+- 6H8?37-2: Góc nhọn, vuông, tù, bẹt — 0 câu
+- 6D9?38-1: Phân loại dữ liệu, dữ liệu không hợp lí — 0 câu
+- 6D9?38-2: Phương pháp thu thập dữ liệu — 0 câu
+- 6D9?39-1: Đọc, lập bảng thống kê — 0 câu
+- 6D9?39-2: Đọc, vẽ biểu đồ tranh — 0 câu
+- 6D9?40-1: Đọc biểu đồ cột — 0 câu
+- 6D9?40-2: Vẽ biểu đồ cột, nhận xét — 0 câu
+- 6D9?41-1: Đọc biểu đồ cột kép — 0 câu
+- 6D9?41-2: Vẽ biểu đồ cột kép, so sánh dữ liệu — 0 câu
+- 6D9?42-1: Liệt kê kết quả có thể — 0 câu
+- 6D9?42-2: Sự kiện có thể xảy ra, không thể, chắc chắn — 0 câu
+- 6D9?43-1: Tính xác suất thực nghiệm — 0 câu
+- 6D9?43-2: Ước lượng, dự đoán dựa vào xác suất thực nghiệm — 0 câu
+- 7D1?1-1: Nhận biết số hữu tỉ, biểu diễn trên trục số — 0 câu
+- 7D1?1-2: Số đối, so sánh số hữu tỉ — 0 câu
+- 7D1?2-1: Thực hiện phép tính số hữu tỉ — 0 câu
+- 7D1?2-2: Tính nhanh, tính hợp lí — 0 câu
+- 7D1?2-3: Bài toán thực tế — 0 câu
+- 7D1?3-1: Tính lũy thừa, lũy thừa của lũy thừa — 0 câu
+- 7D1?3-2: Nhân, chia lũy thừa cùng cơ số — 0 câu
+- 7D1?3-3: Tìm x, so sánh lũy thừa — 0 câu
+- 7D1?4-1: Tính giá trị biểu thức — 0 câu
+- 7D1?4-2: Quy tắc chuyển vế, tìm x — 0 câu
+- 7D2?5-1: Nhận biết số thập phân hữu hạn, vô hạn tuần hoàn; chu kì — 0 câu
+- 7D2?5-2: Làm tròn số, độ chính xác — 0 câu
+- 7D2?6-1: Nhận biết số vô tỉ — 0 câu
+- 7D2?6-2: Căn bậc hai số học: tính, so sánh — 0 câu
+- 7D2?7-1: Số thực, số đối, giá trị tuyệt đối — 0 câu
+- 7D2?7-2: So sánh, sắp xếp số thực — 0 câu
+- 7D2?7-3: Tìm x có giá trị tuyệt đối — 0 câu
+- 7H3?8-1: Hai góc kề bù, đối đỉnh: tính góc — 0 câu
+- 7H3?8-2: Tia phân giác của một góc — 0 câu
+- 7H3?9-1: Góc so le trong, đồng vị — 0 câu
+- 7H3?9-2: Chứng minh hai đường thẳng song song — 0 câu
+- 7H3?10-1: Vận dụng tiên đề Euclid — 0 câu
+- 7H3?10-2: Tính góc nhờ tính chất hai đường thẳng song song — 0 câu
+- 7H3?11-1: Giả thiết, kết luận của định lí — 0 câu
+- 7H3?11-2: Chứng minh định lí đơn giản — 0 câu
+- 7H4?12-1: Tính số đo góc trong tam giác — 0 câu
+- 7H4?12-2: Góc ngoài của tam giác — 0 câu
+- 7H4?13-1: Viết kí hiệu, suy ra cạnh, góc bằng nhau — 0 câu
+- 7H4?13-2: Trường hợp cạnh – cạnh – cạnh — 0 câu
+- 7H4?14-1: Trường hợp cạnh – góc – cạnh — 0 câu
+- 7H4?14-2: Trường hợp góc – cạnh – góc — 0 câu
+- 7H4?14-3: Chứng minh đoạn thẳng, góc bằng nhau — 0 câu
+- 7H4?15-1: Nhận biết hai tam giác vuông bằng nhau — 0 câu
+- 7H4?15-2: Chứng minh, tính toán — 0 câu
+- 7H4?16-1: Tính chất, dấu hiệu nhận biết tam giác cân, tam giác đều — 0 câu
+- 7H4?16-2: Đường trung trực của đoạn thẳng — 0 câu
+- 7D5?17-1: Phân loại dữ liệu — 0 câu
+- 7D5?17-2: Tính hợp lí, đại diện của dữ liệu — 0 câu
+- 7D5?18-1: Đọc, phân tích biểu đồ hình quạt tròn — 0 câu
+- 7D5?18-2: Biểu diễn dữ liệu vào biểu đồ hình quạt tròn — 0 câu
+- 7D5?19-1: Đọc, phân tích biểu đồ đoạn thẳng — 0 câu
+- 7D5?19-2: Vẽ biểu đồ đoạn thẳng, nhận xét xu hướng — 0 câu
+- 7D6?20-1: Nhận biết, lập tỉ lệ thức — 0 câu
+- 7D6?20-2: Tìm số chưa biết trong tỉ lệ thức — 0 câu
+- 7D6?21-1: Tìm x, y biết tổng/hiệu và tỉ số — 0 câu
+- 7D6?21-2: Bài toán chia tỉ lệ thực tế — 0 câu
+- 7D6?22-1: Hệ số tỉ lệ, tính giá trị — 0 câu
+- 7D6?22-2: Bài toán thực tế về tỉ lệ thuận — 0 câu
+- 7D6?23-1: Hệ số tỉ lệ, tính giá trị — 0 câu
+- 7D6?23-2: Bài toán thực tế về tỉ lệ nghịch — 0 câu
+- 7D7?24-1: Viết biểu thức đại số — 0 câu
+- 7D7?24-2: Tính giá trị biểu thức đại số — 0 câu
+- 7D7?25-1: Thu gọn, sắp xếp đa thức; bậc, hệ số — 0 câu
+- 7D7?25-2: Nghiệm của đa thức một biến — 0 câu
+- 7D7?26-1: Cộng, trừ đa thức — 0 câu
+- 7D7?26-2: Tìm đa thức thỏa đẳng thức — 0 câu
+- 7D7?27-1: Nhân đơn thức với đa thức — 0 câu
+- 7D7?27-2: Nhân đa thức với đa thức — 0 câu
+- 7D7?27-3: Rút gọn, bài toán thực tế — 0 câu
+- 7D7?28-1: Chia đa thức cho đơn thức — 0 câu
+- 7D7?28-2: Chia đa thức cho đa thức, tìm dư — 0 câu
+- 7D8?29-1: Biến cố chắc chắn, không thể, ngẫu nhiên — 0 câu
+- 7D8?30-1: Tính xác suất biến cố (đồng khả năng) — 0 câu
+- 7D8?30-2: So sánh khả năng xảy ra — 0 câu
+- 7H9?31-1: So sánh góc khi biết cạnh và ngược lại — 0 câu
+- 7H9?32-1: So sánh đường vuông góc, đường xiên — 0 câu
+- 7H9?32-2: Khoảng cách từ điểm đến đường thẳng — 0 câu
+- 7H9?33-1: Bất đẳng thức tam giác, kiểm tra bộ ba độ dài — 0 câu
+- 7H9?33-2: Tìm độ dài cạnh thỏa điều kiện — 0 câu
+- 7H9?34-1: Trọng tâm, tính độ dài — 0 câu
+- 7H9?34-2: Giao điểm ba đường phân giác — 0 câu
+- 7H9?35-1: Giao điểm ba đường trung trực — 0 câu
+- 7H9?35-2: Trực tâm, ba đường cao — 0 câu
+- 7H0?36-1: Nhận biết các yếu tố — 0 câu
+- 7H0?36-2: Diện tích xung quanh, thể tích — 0 câu
+- 7H0?36-3: Bài toán thực tế — 0 câu
+- 7H0?37-1: Nhận biết các yếu tố — 0 câu
+- 7H0?37-2: Diện tích xung quanh, thể tích — 0 câu
+- 7H0?37-3: Bài toán thực tế — 0 câu
