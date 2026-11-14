@@ -401,6 +401,14 @@ Dạng toán + tỉ lệ ra đề lấy từ file Excel ma trận 135 đề (`du
 - Nhiều đề một lượt không trùng bài (kho hết mới dùng lại). Xuất `de-da-ra/Tuyển sinh 10 - <tên> - <ngày>/`: `Đề 01.pdf`, `Đề 01 - Lời giải.pdf`… + thư mục `tex/`.
 - Lịch sử dùng: `du-lieu/ts10_lich_su.json`. **Ma trận & tỉ lệ dạng**: xem nhanh ma trận đề, tỉ lệ từng dạng, số bài trong kho.
 
+## Antigravity (bộ não) + NotebookLM (kho tài liệu)
+
+Mở thư mục này trong **Antigravity**: agent tự đọc `AGENTS.md` và luật `.agents/rules/`, lấy nguồn từ NotebookLM qua MCP,
+tự gắn mã dạng, giải lại để kiểm đáp án, kiểm tra chặt rồi nhập bằng chính `nhap_cau.py`.
+Cài một lần: nhấp đúp **`Cai dat NotebookLM cho Antigravity.command`**. Lệnh tắt: `/nlm-soan-cau`, `/nlm-go-de`, `/nhap-kho`.
+File chờ nhập ở `ai-nhap/`. Công cụ mới: `scripts/kiem_tra_ai.py` (kiểm tra chặt), `scripts/tra_dang.py` (tra mã dạng).
+Chi tiết: `notebooklm/HUONG_DAN_NOTEBOOKLM.md`.
+
 
 ## Bộ đề ôn tập nhiều lần (nút **＋ Bộ đề nhiều lần** ở chân trang)
 
