@@ -18,7 +18,7 @@ def tho(s):
     return re.sub(r"(?<!\\)([&%#_])", r"\\\1", s or "")
 
 # --------------------------------------------------------------------------- phần đầu Beamer
-def dau_beamer(thu_muc_tex, kieu, tt, ma_de):
+def dau_beamer(thu_muc_tex, kieu, tt, ma_de, khung_de="2/3"):
     """Lấy các gói/macro toán từ file đề (KhaibaoToan, Khaibao, tkz…) nhưng bỏ những gì chỉ dành cho sách in."""
     pre = r"""\usepackage[utf8]{vietnam}
 \input{Khaibao/KhaibaoToan}
@@ -69,6 +69,7 @@ def dau_beamer(thu_muc_tex, kieu, tt, ma_de):
 \newcommand{\coChu}{\normalsize}
 \colorlet{mauDung}{red!80!black}
 """
+    ti_le = {"1/2": "0.47", "2/3": "0.62", "day": "0.865"}.get(khung_de, "0.62")
     return (r"\documentclass[aspectratio=169,12pt,noamsthm]{beamer}" + "\n" + pre + r"""
 \usepackage[shortlabels]{enumitem}
 \setlist[itemize]{label=\textbullet}
@@ -101,6 +102,8 @@ def dau_beamer(thu_muc_tex, kieu, tt, ma_de):
 % phóng chữ lớn nhất có thể: soạn nội dung ở khổ hẹp (bề rộng / k) rồi phóng k lần cho đầy bề ngang,
 % chọn k lớn nhất (1,9 → 1,0) mà chiều cao vẫn vừa khung; vẫn không vừa thì thu nhỏ cho vừa chiều cao
 \newlength\rongTam\newlength\caoToiDa\setlength\caoToiDa{0.865\textheight}
+% phần ĐỀ BÀI chỉ chiếm phần trên màn hình (1/2, 2/3…) — phía dưới để trống cho giáo viên viết, vẽ khi giảng
+\newlength\caoDe\setlength\caoDe{TI_LE_DE\textheight}
 \newif\ifvuaKhung
 \newcommand{\vuaKhung}[1]{\vuaKhungfalse
   \def\thuCo##1{\ifvuaKhung\else\setlength\rongTam{\dimexpr\linewidth*100/##1\relax}%
@@ -115,15 +118,15 @@ def dau_beamer(thu_muc_tex, kieu, tt, ma_de):
 \newcommand{\vuaKhungCau}[2]{\vuaKhungfalse
   \def\thuCo##1{\ifvuaKhung\else\setlength\rongTam{\dimexpr\linewidth*100/##1\relax}%
     \sbox\hopCau{\begin{minipage}[t]{\rongTam}\vspace{0pt}\coChu\raggedright\parindent=0pt #1\par #2\end{minipage}}%
-    \ifdim\dimexpr(\ht\hopCau+\dp\hopCau)*##1/100\relax<\caoToiDa\vuaKhungtrue\fi\fi}%
+    \ifdim\dimexpr(\ht\hopCau+\dp\hopCau)*##1/100\relax<\caoDe\vuaKhungtrue\fi\fi}%
   \thuCo{190}\thuCo{170}\thuCo{155}\thuCo{140}\thuCo{128}\thuCo{116}\thuCo{106}\thuCo{100}%
   \def\thuCo##1{\ifvuaKhung\else\setlength\rongTam{\dimexpr\linewidth*100/##1\relax}%
     \sbox\hopCau{\begin{minipage}[t]{\rongTam}\vspace{0pt}\coChu\raggedright\parindent=0pt
       \begin{minipage}[t]{0.56\linewidth}\vspace{0pt}#1\end{minipage}\hfill
       \begin{minipage}[t]{0.41\linewidth}\vspace{0pt}\let\phuongAn\phuongAnDoc #2\end{minipage}\end{minipage}}%
-    \ifdim\dimexpr(\ht\hopCau+\dp\hopCau)*##1/100\relax<\caoToiDa\vuaKhungtrue\fi\fi}%
+    \ifdim\dimexpr(\ht\hopCau+\dp\hopCau)*##1/100\relax<\caoDe\vuaKhungtrue\fi\fi}%
   \thuCo{150}\thuCo{130}\thuCo{115}\thuCo{100}%
-  \ifvuaKhung\resizebox{\linewidth}{!}{\usebox\hopCau}\else\resizebox*{!}{\caoToiDa}{\usebox\hopCau}\fi}
+  \ifvuaKhung\resizebox{\linewidth}{!}{\usebox\hopCau}\else\resizebox*{!}{\caoDe}{\usebox\hopCau}\fi}
 % ---------- phương án: tự xếp 4 / 2 / 1 cột; slide 2 tô đáp án đúng
 \newlength\rongPA\newlength\tamPA
 \newcommand{\nhanPA}[2]{\alt<2->{\ifnum#2=1 \tikz[baseline=(n.base)]\node[circle,fill=mauDung,text=white,inner sep=1.2pt,font=\bfseries\small](n){#1};\else\textbf{#1.}\fi}{\textbf{#1.}}}
@@ -144,7 +147,7 @@ def dau_beamer(thu_muc_tex, kieu, tt, ma_de):
     \item[\nhanPA{C}{#6}] #5\item[\nhanPA{D}{#8}] #7\end{itemize}}
 \newcommand{\yDS}[3]{\item[\textbf{#1)}] #3\only<2->{\hfill\textbf{\textcolor{mauDung}{#2}}}}
 \begin{document}
-""")
+""").replace("TI_LE_DE", ti_le)
 
 def boc_hinh(t):
     """Bọc tikzpicture / tabular ở mức ngoài cùng bằng \\vuaRong{…} để không tràn khung khi chữ được phóng to."""
@@ -200,7 +203,7 @@ def khung_cau(so, loai, tieu_phan, p, dap_an, xanh):
             fr += (f"\\begin{{frame}}[t,allowframebreaks]{{Lời giải câu {so}}}{{{dap}}}{hu}\n\\large\n{lg}\n\\end{{frame}}\n")
     return fr
 
-def tao_beamer(thu_muc_de, kieu="trang"):
+def tao_beamer(thu_muc_de, kieu="trang", khung_de="2/3"):
     tex = os.path.join(thu_muc_de, "tex")
     du_lieu = json.load(open(os.path.join(tex, "_k12_cau.json"), encoding="utf-8"))
     try:
@@ -209,7 +212,7 @@ def tao_beamer(thu_muc_de, kieu="trang"):
         tt = {}
     ra = []
     for ma_de, ds in du_lieu.items():
-        than = [dau_beamer(tex, kieu, tt, ma_de)]
+        than = [dau_beamer(tex, kieu, tt, ma_de, khung_de)]
         than.append(r"""\begin{frame}[plain]\centering\vspace*{1.2cm}
 {\large """ + tho(tt.get("truong") or "") + r"""}\par\bigskip
 {\LARGE\bfseries """ + tho(tt.get("ten_ky_thi") or "") + r"""}\par\medskip
@@ -263,11 +266,11 @@ def tao_leftnote(thu_muc_de):
         ra.append(ten)
     return ra
 
-def xuat(thu_muc_de, leftnote=True, beamer=True, in_ra=print):
+def xuat(thu_muc_de, leftnote=True, beamer=True, in_ra=print, khung_de="2/3"):
     ds = []
     if leftnote:
         ds += tao_leftnote(thu_muc_de)
     if beamer:
-        ds += tao_beamer(thu_muc_de, "trang") + tao_beamer(thu_muc_de, "xanh")
+        ds += tao_beamer(thu_muc_de, "trang", khung_de) + tao_beamer(thu_muc_de, "xanh", khung_de)
     in_ra(f"Đã tạo {len(ds)} file Leftnote/Beamer trong tex/ (biên dịch cùng đề PDF).")
     return ds

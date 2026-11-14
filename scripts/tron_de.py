@@ -598,7 +598,8 @@ print("THU_MUC:" + rel)
 if mt.get("xuat_leftnote", True) or mt.get("xuat_beamer", True):
     import beamer_de
     try:
-        beamer_de.xuat(out_goc, leftnote=mt.get("xuat_leftnote", True), beamer=mt.get("xuat_beamer", True))
+        beamer_de.xuat(out_goc, leftnote=mt.get("xuat_leftnote", True), beamer=mt.get("xuat_beamer", True),
+                       khung_de=mt.get("beamer_khung_de") or "2/3")
     except Exception as e:
         print("  ✗ Không tạo được Leftnote/Beamer:", e)
 

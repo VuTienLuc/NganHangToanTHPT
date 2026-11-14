@@ -237,6 +237,8 @@ Ngoài `De_101.pdf` (đề in) và `LoiGiai_101.pdf` (đề + lời giải), m�
   (chiếu lên bảng để viết, sửa bài trực tiếp). Slide đề → bấm tiếp: tô đáp án đúng / hiện Đúng–Sai từng ý / hiện đáp số
   → slide **Lời giải câu n** (dài thì tự sang nhiều slide).
 - **`BeamerXanh_101.pdf`** — cùng nội dung, nền xanh, thanh tiêu đề xanh, hiệu ứng chuyển slide (thao giảng, ôn tập).
+- Ô **"Đề bài trên slide Beamer chiếm"**: *2/3 trên* (mặc định) hoặc *1/2 trên* — chữ đề dồn sát mép trên, phần dưới màn hình
+  để trống cho giáo viên viết, vẽ khi giảng; *Cả màn hình* — chữ to nhất. Chỉ áp dụng slide đề bài, slide lời giải giữ nguyên.
 Cùng thứ tự câu, cùng phương án với mã đề tương ứng. Mở PDF Beamer bằng chế độ toàn màn hình (Preview/Acrobat) để trình chiếu.
 Mã nguồn trong `tex/` (`Leftnote_101.tex`, `BeamerTrang_101.tex`, `BeamerXanh_101.tex`).
 
