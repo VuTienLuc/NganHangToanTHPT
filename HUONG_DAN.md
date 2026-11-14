@@ -299,6 +299,6 @@ Nút **Phiếu bài học** trên thanh đầu ứng dụng.
    Để trống thì phiếu in khung có dòng kẻ ghi phương pháp từng dạng. Nội dung được lưu ở `du-lieu/kien_thuc/` và tự nạp lại lần sau.
 5. In ấn: cỡ chữ 10/11/12, 2 cột tiết kiệm giấy. Chân trang: **GV** (ô Giáo viên ở khung chính) · tên phiếu · Trang x/y.
 
-Kết quả ở `de-da-ra/Phiếu … - <tên> - <ngày>/`: PDF phiếu học sinh và PDF lời giải + bảng đáp án.
+Kết quả ở `de-da-ra/Phiếu … - <tên> - <ngày>/`: 2 file riêng — **phiếu học sinh** (không có đáp án) và **file lời giải** (đầu "LỜI GIẢI PHIẾU…", bảng đáp án ngay trang 1, rồi lời giải chi tiết phần II, III; bỏ phần I và dòng kẻ).
 Câu được lấy xoay vòng qua các dạng, ưu tiên câu chưa dùng; thiếu câu sẽ được báo.
 Dòng lệnh: `python3 scripts/phieu_bai_hoc.py cau_hinh.json --bien-dich`.

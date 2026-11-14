@@ -174,13 +174,15 @@ def tao(cfg, in_ra=print):
     mau = mau.replace("\\begin{document}", "\n".join(them) + "\n\\begin{document}", 1)
     # ---------- đầu phiếu
     chuong = (vd.get("chap_name") or "").strip()
-    dau = (r"\begin{tcolorbox}[colback=mauPhieu!4,colframe=mauPhieu,boxrule=0.8pt,arc=2mm,left=3mm,right=3mm,top=1.5mm,bottom=1.5mm]" "\n"
+    def dau_phieu(tieu_de, ho_ten=True):
+        return (r"\begin{tcolorbox}[colback=mauPhieu!4,colframe=mauPhieu,boxrule=0.8pt,arc=2mm,left=3mm,right=3mm,top=1.5mm,bottom=1.5mm]" "\n"
            r"{\small " + thoat(tt.get("truong") or "") + r"\hfill " + thoat(tt.get("nam_hoc") or "") + r"}\par\smallskip" "\n"
-           r"\begin{center}{\Large\bfseries\color{mauPhieu} " + nhan + r"}\\[2pt]{\large\bfseries " + thoat(ten.upper()) + r"}\\[2pt]"
+           r"\begin{center}{\Large\bfseries\color{mauPhieu} " + tieu_de + r"}\\[2pt]{\large\bfseries " + thoat(ten.upper()) + r"}\\[2pt]"
            r"{\small Toán " + str(lop) + (" · " + thoat(chuong) if chuong and loai_phieu != "on_tap_chuong" else "") +
-           r" · Thời lượng: " + str(tl) + r" phút}\end{center}" "\n"
-           r"{\small Họ và tên: \makebox[6cm]{\dotfill}\hfill Lớp: \makebox[1.8cm]{\dotfill}\hfill Ngày: \makebox[2.4cm]{\dotfill}}" "\n"
+           r" · Thời lượng: " + str(tl) + r" phút}\end{center}" "\n" +
+           (r"{\small Họ và tên: \makebox[6cm]{\dotfill}\hfill Lớp: \makebox[1.8cm]{\dotfill}\hfill Ngày: \makebox[2.4cm]{\dotfill}}" "\n" if ho_ten else "") +
            r"\end{tcolorbox}")
+    dau = dau_phieu(nhan)
     # ---------- I. kiến thức trọng tâm
     kt = (cfg.get("kien_thuc") or "").strip()
     if kt:
@@ -222,17 +224,22 @@ def tao(cfg, in_ra=print):
     lt, btvn = khoi_phan("LT", "II. LUYỆN TẬP"), khoi_phan("BTVN", "III. BÀI TẬP VỀ NHÀ")
     bat, tat = ("\\begin{multicols}{2}\n", "\n\\end{multicols}") if hai_cot else ("", "")
     than = (dau + "\n" + r"\phanPhieu{I. KIẾN THỨC TRỌNG TÂM}" + "\n" + kien + "\n" + bat + lt + "\n\n" + btvn + tat)
-    dap = ["\\newpage", r"\phanPhieu{ĐÁP ÁN}"]
+    # File lời giải riêng: đầu "LỜI GIẢI", bảng đáp án ngay đầu, rồi lời giải chi tiết II, III (không có phần I, không dòng kẻ)
+    dap = [r"\phanPhieu{BẢNG ĐÁP ÁN}"]
     cu = None
     for nhan_muc, so_phan, tp, tm, tep in bang:
         if nhan_muc != cu:
             cu = nhan_muc; dap.append(r"\phanCon{" + nhan_muc + "}")
-        dap.append(f"\\par\\noindent\\textbf{{{so_phan}. {tp}}}\\par\n\\begin{{flushleft}}\n\\input{{{tm}/{tep}}}\n\\end{{flushleft}}")
+        dap.append(f"\\par\\noindent\\textbf{{{so_phan}. {tp}}}\\par\n\\begin{{flushleft}}\n"
+                   f"\\IfFileExists{{{tm}/{tep}.tex}}{{\\input{{{tm}/{tep}}}}}{{(biên dịch lại để hiện đáp án)}}\n\\end{{flushleft}}")
     het = "\n\\par\\bigskip\\begin{center}{\\small\\itshape --- Hết ---}\\end{center}\\label{trangCuoiPhieu}\n"
+    lg = (dau_phieu("LỜI GIẢI " + nhan, ho_ten=False) + "\n" + "\n".join(dap) + "\n" +
+          r"\phanPhieu{LỜI GIẢI CHI TIẾT}" + "\n" + bat + lt + "\n\n" + btvn + tat)
     ghi(os.path.join(out, "PhieuBaiHoc.tex"),
         mau.replace("<<CHE_DO_LOI_GIAI>>", "\\anloigiai").replace("<<NOI_DUNG>>", than + het))
+    mau_lg = mau.replace(thoat(f"{nhan.title()}: {ten}"), thoat(f"Lời giải {nhan.lower()}: {ten}"))
     ghi(os.path.join(out, "PhieuBaiHoc_LoiGiai.tex"),
-        mau.replace("<<CHE_DO_LOI_GIAI>>", "\\hienthiloigiai").replace("<<NOI_DUNG>>", than + "\n" + "\n".join(dap) + het))
+        mau_lg.replace("<<CHE_DO_LOI_GIAI>>", "\\hienthiloigiai").replace("<<NOI_DUNG>>", lg + het))
     ghi(os.path.join(out, "_ten_phieu.txt"), ten_tep(f"{nhan.title()} - {ten}", 90))
     json.dump(cfg, open(os.path.join(out, "cau_hinh_phieu.json"), "w", encoding="utf-8"), ensure_ascii=False, indent=1)
     so_lt = {l: len(kq["LT"][l]) for l in CAC_LOAI}; so_bt = {l: len(kq["BTVN"][l]) for l in CAC_LOAI}
