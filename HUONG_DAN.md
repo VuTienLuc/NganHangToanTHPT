@@ -325,6 +325,13 @@ Câu 1, 2 lấy từ phần Luyện tập của phiếu (đúng câu học sinh 
 Phương pháp từng dạng lấy từ ô Kiến thức trọng tâm: dòng `%% DANG <mã dạng>` (prompt AI đã hướng dẫn) hoặc mục `\textbf{Dạng n. …}`;
 được lưu ở `du-lieu/phuong_phap/` để dùng lại cho phiếu sau. Chưa có thì slide phương pháp để các bước trống cho thầy ghi bảng.
 
+**Kiểu phiếu "Chỉ tự luận"** (ô *Kiểu phiếu*): mỗi dạng một khối 2 cột song song —
+trái **VÍ DỤ MẪU** (đề + lời giải in sẵn), phải **TỰ LUYỆN**: câu tương tự (mặc định 2) + câu vận dụng (1 hoặc 2, nhãn đỏ).
+Hai cột có nền màu, mép trên – mép dưới luôn bằng nhau, tự ngắt sang trang sau khi dài (không bỏ trống nửa trang), dòng kẻ làm bài chỉnh được.
+Nguồn câu: tự luận → trả lời ngắn → trắc nghiệm đổi sang tự luận (bỏ phương án, chỉ nhận câu có đề tự đủ nghĩa).
+Xuất: `<tên>.pdf` (phiếu học sinh), `<tên> - Lời giải.pdf` (lời giải các bài tự luyện, 2 cột), `<tên> - Trình chiếu.pdf`
+(Beamer cùng loại phiếu: phương pháp → ví dụ mẫu → từng bài tự luyện: đề chiếm 2/3 trên, bấm tiếp hiện đáp số, rồi lời giải).
+
 Không có hai câu trùng đề (khác mã nhưng cùng nội dung) trong cùng một phiếu.
 Câu được lấy xoay vòng qua các dạng, ưu tiên câu chưa dùng; thiếu câu sẽ được báo.
 Dòng lệnh: `python3 scripts/phieu_bai_hoc.py cau_hinh.json --bien-dich`.

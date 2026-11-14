@@ -29,6 +29,20 @@ MAU = [("1565C0", "E3F2FD"), ("E65100", "FFF3E0"), ("2E7D32", "E8F5E9"), ("6A1B9
 TEN_LOAI = {"TN": "Trắc nghiệm", "DS": "Đúng/Sai", "TLN": "Trả lời ngắn"}
 
 
+def bo_ky_tu_toan(t):
+    """Chữ toán Unicode (𝑚, 𝑥, 𝐴…, khối U+1D400–U+1D7FF) → chữ thường ASCII (pdflatex không có glyph)."""
+    import unicodedata
+    def doi(m):
+        ten = unicodedata.name(m.group(0), "")
+        mm = re.search(r"(?:CAPITAL|SMALL) ([A-Z])$", ten)
+        if mm:
+            return mm.group(1) if "CAPITAL" in ten else mm.group(1).lower()
+        mm = re.search(r"DIGIT (\w+)$", ten)
+        so = {"ZERO": "0", "ONE": "1", "TWO": "2", "THREE": "3", "FOUR": "4", "FIVE": "5", "SIX": "6", "SEVEN": "7", "EIGHT": "8", "NINE": "9"}
+        return so.get(mm.group(1), "") if mm else ""
+    return re.sub("[\U0001D400-\U0001D7FF]", doi, t)
+
+
 def tep_pp(dang_key):
     return os.path.join(THU_MUC_PP, dang_key.replace("?", "_") + ".tex")
 
@@ -153,7 +167,9 @@ def frame_mo_dang(j, ten, so_cau):
             r"{\small\color{black!60} Phương pháp \,·\, " + str(so_cau) + r" câu luyện tập}\vfill\end{frame}" "\n")
 
 
-def tao(out_tex, ten, nhan, tt, lop, tl, cac_dang, ten_dang, kq, kien_thuc, cac_loai=("TN", "DS", "TLN"), phan_ve_nha="III"):
+def tao(out_tex, ten, nhan, tt, lop, tl, cac_dang, ten_dang, kq, kien_thuc, cac_loai=("TN", "DS", "TLN"), phan_ve_nha="III",
+        cau_theo_dang=None, loi_ket=None):
+    """cau_theo_dang (tùy chọn, phiếu tự luận): {dạng: [{"tieu", "nhan", "loai", "p", "dap"}…]} thay cho câu 1, 2 lấy từ luyện tập."""
     """Ghi out_tex/PhieuBeamer.tex. ten_dang: {mã: tên}. kq: {LT:{loai:[câu]}, …}."""
     chung, pp = tach_phuong_phap(kien_thuc, cac_dang)
     luu_pp(pp)
@@ -191,21 +207,26 @@ def tao(out_tex, ten, nhan, tt, lop, tl, cac_dang, ten_dang, kq, kien_thuc, cac_
     for j, d in enumerate(cac_dang, 1):
         dm, dn = MAU[(j - 1) % len(MAU)]
         f.append(r"\datMau{" + dm + "}{" + dn + "}\n")
-        cau = [c for c in lt if c["dang_key"] == d]
+        if cau_theo_dang is not None:
+            muc = cau_theo_dang.get(d, [])
+        else:
+            cau = [c for c in lt if c["dang_key"] == d][:2]
+            muc = [{"tieu": f"Câu {so} \\textendash{{}} " + ("Ví dụ mẫu" if so == 1 else "Học sinh tự làm"),
+                    "nhan": r"\nhanViDu" if so == 1 else r"\nhanTuLam", "loai": c["loai"], "p": tach_cau(c),
+                    "dap": c.get("dap_an") or ""} for so, c in enumerate(cau, 1)]
         tdg = ten_dang.get(d, d)
-        f.append(frame_mo_dang(j, tdg, len(cau)))
+        f.append(frame_mo_dang(j, tdg, len(muc)))
         f.append(frame_pp(j, tdg, pp.get(d) or doc_pp(d)))
-        for so, c in enumerate(cau[:2], 1):
-            tieu = (r"\nhanViDu" if so == 1 else r"\nhanTuLam") + r"\ Dạng " + str(j) + " · " + TEN_LOAI.get(c["loai"], "")
-            fr = khung_cau(so, c["loai"], tieu, tach_cau(c), c.get("dap_an") or "", True)
-            fr = fr.replace(f"[t]{{Câu {so}}}", f"[t]{{Câu {so} \\textendash{{}} " + ("Ví dụ mẫu" if so == 1 else "Học sinh tự làm") + "}", 1)
-            fr = fr.replace(f"{{Lời giải câu {so}", f"{{Dạng {j} \\textendash{{}} Lời giải câu {so}")
+        for m in muc:
+            fr = khung_cau(1, m["loai"], m["nhan"] + r"\ Dạng " + str(j) + " · " + TEN_LOAI.get(m["loai"], "Tự luận"), m["p"], m["dap"], True)
+            fr = fr.replace("[t]{Câu 1}", "[t]{" + m["tieu"] + "}", 1)
+            fr = fr.replace("{Lời giải câu 1", f"{{Dạng {j} \\textendash{{}} Lời giải " + re.sub(r"\\textendash\{\}.*", "", m["tieu"]).strip().lower())
             f.append(fr)
     # ---------- kết
     so_bt = sum(len(v) for v in kq["BTVN"].values())
     f.append(r"\datMau{" + MAU[0][0] + "}{" + MAU[0][1] + "}\n")
     f.append(r"\begin{frame}[plain]\nenTrangTri\centering\vfill{\LARGE\bfseries\color{mauHT} BÀI TẬP VỀ NHÀ}\par\bigskip" "\n"
-             r"{\large Làm phần \textbf{" + phan_ve_nha + r"} trên phiếu" + (f" ({so_bt} câu)" if so_bt else "") + r" \,·\, các câu luyện tập còn lại}\par\bigskip"
+             r"{\large " + (loi_ket or (r"Làm phần \textbf{" + phan_ve_nha + r"} trên phiếu" + (f" ({so_bt} câu)" if so_bt else "") + r" \,·\, các câu luyện tập còn lại")) + r"}\par\bigskip"
              r"{\normalsize\itshape Chúc các em học tốt!}\vfill\end{frame}" "\n\\end{document}\n")
-    open(os.path.join(out_tex, "PhieuBeamer.tex"), "w", encoding="utf-8").write("".join(f))
+    open(os.path.join(out_tex, "PhieuBeamer.tex"), "w", encoding="utf-8").write(bo_ky_tu_toan("".join(f)))
     return pp

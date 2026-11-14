@@ -73,6 +73,7 @@ def dau_beamer(thu_muc_tex, kieu, tt, ma_de, khung_de="2/3"):
     return (r"\documentclass[aspectratio=169,12pt,noamsthm]{beamer}" + "\n" + pre + r"""
 \usepackage[shortlabels]{enumitem}
 \setlist[itemize]{label=\textbullet}
+\setlist[enumerate,1]{label=\arabic*.}\setlist[enumerate,2]{label=\alph*)}\setlist[enumerate,3]{label=\roman*.}
 \usepackage{multicol}
 \setbeamertemplate{navigation symbols}{}
 \setbeamertemplate{frametitle continuation}{}

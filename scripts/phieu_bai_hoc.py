@@ -163,8 +163,25 @@ def tao(cfg, in_ra=print):
     rng = random.Random(cfg.get("seed") or time.time())
     tl = int(cfg.get("thoi_luong") or 45)
     cfg.setdefault("so_cau", MAC_DINH_SO_CAU.get(tl, MAC_DINH_SO_CAU[45]))
-    cac_dang, kq, thieu = chon_cau(cfg, rng)
-    if not any(kq["LT"][l] for l in CAC_LOAI):
+    tu_luan = cfg.get("kieu_cau") == "tu_luan"
+    if tu_luan:
+        import phieu_tu_luan
+        cfg["hai_cot"] = False          # khối 2 cột tự dựng, không dùng multicols
+        ds = [c for c in map(json.loads, open(os.path.join(GOC, "du-lieu", "chi_muc.jsonl"), encoding="utf-8"))
+              if c["loai"] in ("TL", "TLN", "TN") and thuoc(c, cfg["pham_vi"]) and (c["loai"] == "TL" or hop_le(c))
+              and (not cfg.get("dang") or c["dang_key"] in cfg["dang"])]
+        def khoa_dang(k):
+            m = re.match(r"(\d)([A-Z])(\d+)\?(\d+)-(\d+)", k or "")
+            return tuple(int(x) if x.isdigit() else x for x in m.groups()) if m else (k or "",)
+        cac_dang = sorted({c["dang_key"] for c in ds if c.get("dang_key")}, key=khoa_dang)
+        kq_tl, thieu = phieu_tu_luan.chon(ds, cac_dang, cfg, rng, khoa_noi_dung)
+        cac_dang = [d for d in cac_dang if d in kq_tl]
+        if not kq_tl:
+            raise RuntimeError("Không tìm thấy câu tự luận nào (có lời giải) trong phạm vi đã chọn.")
+        kq = {"LT": {l: [] for l in CAC_LOAI}, "BTVN": {l: [] for l in CAC_LOAI}}
+    else:
+        cac_dang, kq, thieu = chon_cau(cfg, rng)
+    if not tu_luan and not any(kq["LT"][l] for l in CAC_LOAI):
         raise RuntimeError("Không tìm thấy câu nào trong phạm vi đã chọn.")
     loai_phieu = cfg.get("loai_phieu") or ("on_tap_chuong" if all("?" not in p for p in cfg["pham_vi"])
                                            else "bai_hoc" if len(cfg["pham_vi"]) == 1 else "chuyen_de")
@@ -175,7 +192,7 @@ def tao(cfg, in_ra=print):
     gv = tt.get("giao_vien") or "Vũ Tiến Lực"
     # ---------- thư mục ra
     ngay = time.strftime("%d-%m-%Y")
-    goc_ten = ten_tep(f"{nhan.title()} - {ten} - {ngay}", 90)
+    goc_ten = ten_tep(f"{nhan.title()}{' Tự Luận' if tu_luan else ''} - {ten} - {ngay}", 90)
     out_goc, i = os.path.join(GOC, "de-da-ra", goc_ten), 2
     while os.path.exists(out_goc):
         out_goc = os.path.join(GOC, "de-da-ra", f"{goc_ten} ({i})"); i += 1
@@ -241,6 +258,8 @@ def tao(cfg, in_ra=print):
                         r"{\small Phương pháp:}\dongKe{" + so_ke + "}")
         kien = (r"\begin{tcolorbox}[colback=white,colframe=mauPhieu!60,boxrule=0.5pt,arc=1mm,left=2mm,right=2mm,top=1mm,bottom=1mm,breakable]"
                 "\n{\\small\\itshape Học sinh tự ghi: tóm tắt kiến thức và phương pháp giải từng dạng.}\n" + "\n".join(dong) + "\n\\end{tcolorbox}")
+    if tu_luan:
+        return _ghi_tu_luan(locals())
     # ---------- II, III: câu hỏi theo phần, chia dạng
     so_dang = {d: j for j, d in enumerate(cac_dang, 1)}
     bang = []
@@ -349,6 +368,56 @@ def tao(cfg, in_ra=print):
     rel = os.path.relpath(out_goc, GOC)
     in_ra(f"THU_MUC:{rel}")
     return out_goc
+
+def _ghi_tu_luan(L):
+    import phieu_tu_luan
+    cfg, out, out_goc, mau, kien, nhan, ten, cac_dang = (L[k] for k in ("cfg", "out", "out_goc", "mau", "kien", "nhan", "ten", "cac_dang"))
+    kq_tl, thieu, id_map, dau_phieu, in_ra, tl = (L[k] for k in ("kq_tl", "thieu", "id_map", "dau_phieu", "in_ra", "tl"))
+    ten_dang = {d: (id_map.get(d, {}).get("type_name") or d).strip() for d in cac_dang}
+    mau = mau.replace("\\begin{document}", phieu_tu_luan.MACRO + "\\begin{document}", 1)
+    kt_in = cfg.get("kien_thuc_in") or "in_san"
+    so_dong = int(cfg.get("so_dong_lam_bai", 2))
+    het = "\n\\par\\bigskip\\begin{center}{\\small\\itshape --- Hết ---}\\end{center}\\label{trangCuoiPhieu}\n"
+    muc_kt = "" if kt_in == "khong" else (r"\phanPhieu{I. KIẾN THỨC TRỌNG TÂM}" + "\n" + kien + "\n")
+    tieu_muc = r"\phanPhieu{" + ("I" if kt_in == "khong" else "II") + r". CÁC DẠNG TOÁN – VÍ DỤ MẪU VÀ TỰ LUYỆN}" + "\n"
+    hs = dau_phieu(nhan + " – TỰ LUẬN") + "\n" + muc_kt + tieu_muc + phieu_tu_luan.khoi(kq_tl, cac_dang, ten_dang, False, so_dong, thoat)
+    lg = (dau_phieu("LỜI GIẢI " + nhan + " – TỰ LUẬN", ho_ten=False) + "\n" +
+          r"\phanPhieu{LỜI GIẢI CÁC BÀI TỰ LUYỆN}" + "\n{\\small\\itshape (Ví dụ mẫu đã có lời giải trên phiếu học sinh.)}\n" +
+          "\\begin{multicols}{2}\\nhoHinh\n" + phieu_tu_luan.khoi(kq_tl, cac_dang, ten_dang, True, 0, thoat) + "\n\\end{multicols}")
+    chan_goc = thoat(f"{nhan.title()}: {ten}")
+    ghi(os.path.join(out, "PhieuBaiHoc.tex"), mau.replace("<<CHE_DO_LOI_GIAI>>", "\\hienthiloigiai").replace("<<NOI_DUNG>>", hs + het))
+    ghi(os.path.join(out, "PhieuBaiHoc_LoiGiai.tex"),
+        mau.replace(chan_goc, thoat(f"Lời giải {nhan.lower()}: {ten}")).replace("<<CHE_DO_LOI_GIAI>>", "\\hienthiloigiai").replace("<<NOI_DUNG>>", lg + het))
+    ghi(os.path.join(out, "_ten_phieu.txt"), ten_tep(f"{nhan.title()} Tự Luận - {ten}", 90))
+    json.dump(cfg, open(os.path.join(out, "cau_hinh_phieu.json"), "w", encoding="utf-8"), ensure_ascii=False, indent=1)
+    if cfg.get("beamer", True):            # Beamer cùng loại phiếu: phương pháp → ví dụ mẫu → từng bài tự luyện (đề, lời giải)
+        import beamer_phieu
+        ctd, so_vd, so_bai = {}, 0, 0
+        for d in cac_dang:
+            if d not in kq_tl:
+                continue
+            ds_m = []
+            vd = kq_tl[d]["vd"]; so_vd += 1
+            def muc(c, tieu, nhan):
+                t = c["_tl"]
+                return {"tieu": tieu, "nhan": nhan, "loai": "TL" if c["loai"] == "TL" or not t["dap"] else "TLN",
+                        "p": {"de": t["de"], "lg": t["lg"], "pa": None, "y_giai": None}, "dap": t["dap"]}
+            ds_m.append(muc(vd, f"Ví dụ {so_vd}", r"\nhanViDu"))
+            for c in kq_tl[d]["tu_luyen"]:
+                so_bai += 1
+                ds_m.append(muc(c, f"Bài {so_bai} \\textendash{{}} " + ("Vận dụng" if c["_vai"] == "van_dung" else "Học sinh tự làm"),
+                                r"\nhanTuLam"))
+            ctd[d] = ds_m
+        beamer_phieu.tao(out, ten, nhan + " – TỰ LUẬN", dict(L["tt"], giao_vien=L["gv"]), L["lop"], tl, cac_dang, ten_dang,
+                         {"LT": {}, "BTVN": {}}, L["kt"], cau_theo_dang=ctd,
+                         loi_ket=r"Hoàn thành các bài \textbf{tự luyện} còn lại trên phiếu")
+    n_tl = sum(len(v["tu_luyen"]) for v in kq_tl.values())
+    in_ra(f"{nhan} – TỰ LUẬN: {ten} — {len(kq_tl)} dạng · {len(kq_tl)} ví dụ mẫu · {n_tl} bài tự luyện")
+    for t in thieu:
+        in_ra("  ⚠ " + t)
+    in_ra(f"THU_MUC:{os.path.relpath(out_goc, GOC)}")
+    return out_goc
+
 
 if __name__ == "__main__":
     cfg = json.load(open(sys.argv[1], encoding="utf-8"))
