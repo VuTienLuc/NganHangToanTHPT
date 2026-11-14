@@ -304,18 +304,27 @@ def tao(cfg, in_ra=print):
                      f"\\IfFileExists{{{tm}/{tep}.tex}}{{\\input{{{tm}/{tep}}}}}{{(biên dịch lại để hiện đáp án)}}\n\\end{{flushleft}}")
         return "\n".join(d)
 
+    khong_kt = (cfg.get("kien_thuc_in") or "") == "khong"     # bỏ hẳn mục I để tiết kiệm giấy
+
+    def danh_so(t):
+        """Không có mục I → đánh số lại: I. LUYỆN TẬP, II. BÀI TẬP VỀ NHÀ."""
+        if not khong_kt:
+            return t
+        return t.replace("III. BÀI TẬP VỀ NHÀ", "II. BÀI TẬP VỀ NHÀ").replace("II. LUYỆN TẬP", "I. LUYỆN TẬP")
+
     def viet(tep, tieu_de, chan, noi, cac_muc, co_kien_thuc):
+        co_kien_thuc = co_kien_thuc and not khong_kt
         """Ghi 1 cặp file: <tep>.tex (câu hỏi, phát HS) và <tep>_LoiGiai.tex (bảng đáp án + lời giải chi tiết)."""
         m = mau.replace(chan_goc, thoat(chan))
         hs = dau_phieu(tieu_de) + "\n"
         if co_kien_thuc:
             hs += r"\phanPhieu{I. KIẾN THỨC TRỌNG TÂM}" + "\n" + kien + "\n"
         hs += bat + noi + tat
-        ghi(os.path.join(out, tep + ".tex"), m.replace("<<CHE_DO_LOI_GIAI>>", "\\anloigiai").replace("<<NOI_DUNG>>", hs + het))
+        ghi(os.path.join(out, tep + ".tex"), m.replace("<<CHE_DO_LOI_GIAI>>", "\\anloigiai").replace("<<NOI_DUNG>>", danh_so(hs) + het))
         m2 = mau.replace(chan_goc, thoat("Lời giải " + chan[:1].lower() + chan[1:]))
         lg = (dau_phieu("LỜI GIẢI " + tieu_de, ho_ten=False) + "\n" + bang_dap_an(cac_muc) + "\n" +
               r"\phanPhieu{LỜI GIẢI CHI TIẾT}" + "\n" + bat + noi + tat)
-        ghi(os.path.join(out, tep + "_LoiGiai.tex"), m2.replace("<<CHE_DO_LOI_GIAI>>", "\\hienthiloigiai").replace("<<NOI_DUNG>>", lg + het))
+        ghi(os.path.join(out, tep + "_LoiGiai.tex"), m2.replace("<<CHE_DO_LOI_GIAI>>", "\\hienthiloigiai").replace("<<NOI_DUNG>>", danh_so(lg) + het))
 
     # 1) Phiếu đầy đủ (I + II + III); 2) Phiếu trên lớp (I + II); 3) Phiếu về nhà (III) — mỗi phiếu có file lời giải riêng
     viet("PhieuBaiHoc", nhan, f"{nhan.title()}: {ten}", lt + "\n\n" + btvn, ("II. LUYỆN TẬP", "III. BÀI TẬP VỀ NHÀ"), True)
@@ -326,7 +335,8 @@ def tao(cfg, in_ra=print):
     if cfg.get("beamer", True):
         import beamer_phieu
         beamer_phieu.tao(out, ten, nhan, dict(tt, giao_vien=gv), lop, tl, cac_dang,
-                         {d: (id_map.get(d, {}).get("type_name") or d).strip() for d in cac_dang}, kq, kt)
+                         {d: (id_map.get(d, {}).get("type_name") or d).strip() for d in cac_dang}, kq, kt,
+                         phan_ve_nha="II" if khong_kt else "III")
     ghi(os.path.join(out, "_ten_phieu.txt"), ten_tep(f"{nhan.title()} - {ten}", 90))
     json.dump(cfg, open(os.path.join(out, "cau_hinh_phieu.json"), "w", encoding="utf-8"), ensure_ascii=False, indent=1)
     so_lt = {l: len(kq["LT"][l]) for l in CAC_LOAI}; so_bt = {l: len(kq["BTVN"][l]) for l in CAC_LOAI}

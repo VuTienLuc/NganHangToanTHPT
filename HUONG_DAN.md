@@ -300,6 +300,8 @@ Nút **Phiếu bài học** trên thanh đầu ứng dụng.
    Kho không đủ câu mức đó thì ứng dụng báo thiếu.
 4. **I. Kiến thức trọng tâm** — chọn cách in trên phiếu:
    - *In sẵn nội dung*: in nội dung LaTeX thầy dán (có nút *Prompt AI soạn kiến thức trọng tâm*);
+   - *Không in (tiết kiệm giấy)*: bỏ hẳn mục I; phiếu đánh số lại I. LUYỆN TẬP, II. BÀI TẬP VỀ NHÀ
+     (kiến thức đã soạn vẫn được lưu và vẫn chiếu trên Beamer);
    - *Dòng trống để học sinh tự ghi*: khung "Kiến thức cần nhớ" (4 dòng; 6 dòng với 90 phút) + "Phương pháp" từng dạng (2 dòng; 3 dòng với 90 phút).
    Nội dung đã soạn vẫn được lưu ở `du-lieu/kien_thuc/` và vẫn dùng cho Beamer (chiếu phương pháp để học sinh chép vào phiếu).
    Ô nội dung để trống thì phiếu luôn có dòng kẻ.

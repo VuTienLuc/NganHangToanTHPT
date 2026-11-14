@@ -153,7 +153,7 @@ def frame_mo_dang(j, ten, so_cau):
             r"{\small\color{black!60} Phương pháp \,·\, " + str(so_cau) + r" câu luyện tập}\vfill\end{frame}" "\n")
 
 
-def tao(out_tex, ten, nhan, tt, lop, tl, cac_dang, ten_dang, kq, kien_thuc, cac_loai=("TN", "DS", "TLN")):
+def tao(out_tex, ten, nhan, tt, lop, tl, cac_dang, ten_dang, kq, kien_thuc, cac_loai=("TN", "DS", "TLN"), phan_ve_nha="III"):
     """Ghi out_tex/PhieuBeamer.tex. ten_dang: {mã: tên}. kq: {LT:{loai:[câu]}, …}."""
     chung, pp = tach_phuong_phap(kien_thuc, cac_dang)
     luu_pp(pp)
@@ -205,7 +205,7 @@ def tao(out_tex, ten, nhan, tt, lop, tl, cac_dang, ten_dang, kq, kien_thuc, cac_
     so_bt = sum(len(v) for v in kq["BTVN"].values())
     f.append(r"\datMau{" + MAU[0][0] + "}{" + MAU[0][1] + "}\n")
     f.append(r"\begin{frame}[plain]\nenTrangTri\centering\vfill{\LARGE\bfseries\color{mauHT} BÀI TẬP VỀ NHÀ}\par\bigskip" "\n"
-             r"{\large Làm phần \textbf{III} trên phiếu" + (f" ({so_bt} câu)" if so_bt else "") + r" \,·\, các câu luyện tập còn lại}\par\bigskip"
+             r"{\large Làm phần \textbf{" + phan_ve_nha + r"} trên phiếu" + (f" ({so_bt} câu)" if so_bt else "") + r" \,·\, các câu luyện tập còn lại}\par\bigskip"
              r"{\normalsize\itshape Chúc các em học tốt!}\vfill\end{frame}" "\n\\end{document}\n")
     open(os.path.join(out_tex, "PhieuBeamer.tex"), "w", encoding="utf-8").write("".join(f))
     return pp
