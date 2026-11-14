@@ -196,6 +196,19 @@ footer .gian{flex:1}
 #kt-ds .tt{margin-left:auto;font-size:11px;white-space:nowrap}
 #kt-ds .co{color:#15803d}#kt-ds .chua{color:#b45309}
 #hop-kt .cot{display:flex;flex-direction:column;gap:8px;min-width:0;min-height:0}
+#hop-xt{position:fixed;inset:0;background:rgba(17,24,39,.35);display:none;align-items:center;justify-content:center;z-index:15}
+#hop-xt .noi{background:#fff;border-radius:14px;width:min(1100px,96vw);height:min(92vh,960px);display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.25)}
+#hop-xt h2{margin:0;padding:12px 18px;font-size:16px;border-bottom:1px solid var(--vien);display:flex;gap:10px;align-items:center}
+#xt-tab{display:flex;gap:4px;flex-wrap:wrap}#xt-tab button{padding:3px 10px;font-size:12px}#xt-tab button.dang{background:#1e3a8a;color:#fff}
+#xt-than{flex:1;overflow:auto;padding:10px 18px;font-size:14px;line-height:1.5}
+#xt-than .phan{font-weight:700;color:#1e3a8a;margin:14px 0 6px;border-bottom:2px solid #dbe4ff}
+.the-cau{border:1px solid var(--vien);border-radius:10px;padding:8px 12px;margin:6px 0;display:grid;grid-template-columns:1fr auto;gap:4px 12px}
+.the-cau.moi{animation:nhay 1.2s}.the-cau .dau{font-size:12px;color:#555;grid-column:1}.the-cau .dau b{color:#111}
+.the-cau .nd{grid-column:1}.the-cau .pa{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:2px 16px;margin-top:4px}
+.the-cau .pa .dung{color:#15803d;font-weight:700}.the-cau .nut{grid-column:2;grid-row:1/span 3;display:flex;flex-direction:column;gap:6px;align-items:flex-end}
+.the-cau .muc{display:inline-block;padding:0 6px;border-radius:6px;background:#eef2ff;font-weight:600}
+@keyframes nhay{from{background:#fef9c3}to{background:#fff}}
+#hop-xt .chan{padding:10px 18px;border-top:1px solid var(--vien);display:flex;gap:8px;align-items:center}
 </style>
 </head>
 <body>
@@ -457,6 +470,13 @@ footer .gian{flex:1}
   </div>
   <div class="chan"><span style="font-size:12px;color:#666">Lưu ở du-lieu/kien_thuc/ (phương pháp từng dạng tách sang du-lieu/phuong_phap/ cho Beamer)</span><button id="kt-dong" style="margin-left:auto">Đóng</button></div>
 </div></div>
+<div id="hop-xt"><div class="noi">
+  <h2>Xem trước câu được chọn <span id="xt-tom" style="font-weight:400;font-size:12px;color:#666"></span><span id="xt-tab" style="margin-left:auto"></span></h2>
+  <div id="xt-than"></div>
+  <div class="chan"><span style="font-size:12px;color:#666">“Đổi câu” lấy ngẫu nhiên câu khác cùng dạng, cùng mức (ưu tiên câu chưa dùng). Hài lòng thì bấm Xác nhận.</span>
+    <button id="xt-random" style="margin-left:auto">↻ Random lại tất cả</button><button id="xt-nhatky">Nhật ký chọn câu</button>
+    <button id="xt-ok" class="chinh">Xác nhận &amp; xuất đề</button><button id="xt-dong">Đóng</button></div>
+</div></div>
 <div id="hop-thoai"><div class="noi"><h2 id="ht-tieu">…</h2><pre id="ht-noi"></pre><div class="nut" id="ht-nut"></div></div></div>
 
 <script>
@@ -617,13 +637,13 @@ function hopThoai(tieu,noi,nut=[]){
   $("#hop-thoai").style.display="flex";
 }
 
-async function xuat(thu){
+async function xuat(thu,chonSan){
   const mt=maTran();
   if(!mt.phan.length){alert("Ma trận chưa có số câu nào.");return}
   const b=thu?$("#nut-xem"):$("#nut-xuat"); b.disabled=true; b.textContent=thu?"Đang chọn…":"Đang xuất…";
   try{
-    const r=await api("/api/xuat",{ma_tran:mt,thu,bien_dich:!thu&&$("#bien_dich").checked});
-    if(thu){hopThoai("Xem trước các câu được chọn",r.nhat_ky);return}
+    const r=await api("/api/xuat",{ma_tran:chonSan?{...mt,chon_san:chonSan}:mt,thu,bien_dich:!thu&&$("#bien_dich").checked});
+    if(thu){ if(r.ok&&r.xem){XT={...r.xem,nhat_ky:r.nhat_ky,mt,tab:0};veXT();} else hopThoai("Xem trước các câu được chọn",r.nhat_ky); return}
     if(!r.ok){hopThoai("Chưa xuất được",r.nhat_ky);return}
     const nut=[["Mở thư mục đề",()=>api("/api/mo",{duong_dan:r.thu_muc}),true]];
     hopThoai(`Đã xuất: ${r.thu_muc}`,r.nhat_ky+(r.bien_dich?"\nĐang biên dịch PDF (mỗi mã đề khoảng vài chục giây)…":""),nut);
@@ -1309,6 +1329,64 @@ $("#kt-dan").onclick=()=>{
 $("#ph-kho-kt").onclick=()=>{const b=phBaiChon(); moKhoKT($("#ph-lop").value,b[0])};
 $("#ph-nhap-kho").onclick=()=>moNhapKho();
 $("#ph-prompt-kt").onclick=()=>ktPrompt(phBaiChon());   // dùng prompt của kho kiến thức (có %% DANG để Beamer tách phương pháp)
+
+// ---------------- XEM TRƯỚC BỘ CÂU · ĐỔI CÂU · XÁC NHẬN
+let XT=null;
+function napMathJax(){
+  if(window.MathJax&&MathJax.typesetPromise) return Promise.resolve(true);
+  if(window._mjDang) return window._mjDang;
+  window.MathJax={tex:{inlineMath:[["$","$"],["\\(","\\)"]],displayMath:[["$$","$$"],["\\[","\\]"]],
+    macros:{dfrac:["\\frac{#1}{#2}",2],heva:["\\left\\{\\begin{array}{l}#1\\end{array}\\right.",1],hoac:["\\left[\\begin{array}{l}#1\\end{array}\\right.",1]}},
+    svg:{fontCache:"global"},startup:{typeset:false}};
+  window._mjDang=new Promise(ok=>{const s=document.createElement("script");s.src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js";
+    s.onload=()=>MathJax.startup.promise.then(()=>ok(true));s.onerror=()=>ok(false);document.head.appendChild(s)});
+  return window._mjDang;
+}
+async function veCong(el){ if(await napMathJax()){ try{await MathJax.typesetPromise([el])}catch(e){} } }
+function htmlThe(c,so){
+  if(c.mat) return `<div class="the-cau"><div class="dau">Câu ${so} · <b>${c.ma}</b> — không còn trong kho</div></div>`;
+  const pa=c.pa&&c.pa.length===4?`<div class="pa">${c.pa.map((x,i)=>{const n=c.loai==="TN"?"ABCD"[i]:"abcd"[i];
+      const dung=c.loai==="TN"?c.dap_an===n:(c.dap_an[i]==="Đ");
+      return `<div class="${dung?"dung":""}">${n}${c.loai==="TN"?".":")"} ${x}${c.loai==="DS"?` <small>(${dung?"Đ":"S"})</small>`:""}</div>`}).join("")}</div>`:"";
+  const dap=c.loai==="TLN"?`<div><b>Đáp số:</b> ${esc(c.dap_an)}</div>`:"";
+  return `<div class="the-cau" data-ma="${c.ma}"><div class="dau">Câu ${so} · <span class="muc">${c.muc||"?"}</span> · ${esc(c.ten_dang||"")} · <b>${c.ma}</b>
+      ${c.da_dung?` · <span style="color:#b45309">đã dùng ${c.da_dung} lần</span>`:""}${c.ghi_chu?` · <i>${esc(c.ghi_chu)}</i>`:""}</div>
+    <div class="nd">${c.de}${pa}${dap}</div>
+    <div class="nut"><button class="xt-doi">↻ Đổi câu</button></div></div>`;
+}
+function veXT(){
+  $("#hop-xt").style.display="flex";
+  const bo=XT.bo; const t=Math.min(XT.tab,bo.length-1);
+  $("#xt-tab").innerHTML=bo.length>1?bo.map((_,i)=>`<button data-i="${i}" class="${i===t?"dang":""}">Bộ ${i+1}</button>`).join(""):"";
+  $("#xt-tab").querySelectorAll("button").forEach(b=>b.onclick=()=>{XT.tab=+b.dataset.i;veXT()});
+  const b=bo[t]; let h="",tong=0;
+  for(const [l,ds] of Object.entries(b)){ if(!ds.length)continue; tong+=ds.length;
+    h+=`<div class="phan">${({TN:"PHẦN I. Trắc nghiệm nhiều phương án",DS:"PHẦN II. Đúng/Sai",TLN:"PHẦN III. Trả lời ngắn",TL:"Tự luận"})[l]||l} (${ds.length} câu)</div>`;
+    ds.forEach((c,i)=>h+=htmlThe(c,i+1)); }
+  $("#xt-tom").textContent=`${tong} câu`+(bo.length>1?` · ${bo.length} bộ (mỗi mã đề một bộ)`:" · dùng chung cho mọi mã đề");
+  $("#xt-than").innerHTML=h;
+  $("#xt-than").querySelectorAll(".xt-doi").forEach(n=>n.onclick=()=>doiCau(n.closest(".the-cau").dataset.ma,n));
+  veCong($("#xt-than"));
+}
+async function doiCau(ma,nut){
+  const b=XT.bo[Math.min(XT.tab,XT.bo.length-1)];
+  const tranh=XT.bo.flatMap(x=>Object.values(x).flat().map(c=>c.ma));
+  nut.disabled=true;nut.textContent="Đang đổi…";
+  const r=await api("/api/doi-cau",{ma,tranh});
+  if(!r.ok){nut.textContent="Hết câu thay";alert("Kho không còn câu khác cùng dạng (cùng loại) để đổi.");return}
+  for(const ds of Object.values(b)){const i=ds.findIndex(c=>c.ma===ma); if(i>=0){ds[i]=r.cau;
+    const so=i+1, cu=$("#xt-than").querySelector(`.the-cau[data-ma="${ma}"]`);
+    const tmp=document.createElement("div");tmp.innerHTML=htmlThe(r.cau,so);const moi=tmp.firstElementChild;moi.classList.add("moi");
+    cu.replaceWith(moi); moi.querySelector(".xt-doi").onclick=()=>doiCau(r.cau.ma,moi.querySelector(".xt-doi")); veCong(moi); break}}
+}
+$("#xt-dong").onclick=()=>$("#hop-xt").style.display="none";
+$("#xt-nhatky").onclick=()=>hopThoai("Nhật ký chọn câu",XT.nhat_ky);
+$("#xt-random").onclick=async()=>{$("#xt-random").disabled=true;$("#xt-random").textContent="Đang chọn lại…";
+  try{await xuat(true)}finally{$("#xt-random").disabled=false;$("#xt-random").textContent="↻ Random lại tất cả"}};
+$("#xt-ok").onclick=async()=>{
+  const cs=XT.bo.map(b=>Object.fromEntries(Object.entries(b).map(([l,ds])=>[l,ds.filter(c=>!c.mat).map(c=>c.ma)])));
+  $("#hop-xt").style.display="none"; await xuat(false,cs);
+};
 tai();
 </script>
 </body>

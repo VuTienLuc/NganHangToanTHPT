@@ -391,6 +391,19 @@ if TU_FILE:
     cac_bo = [collections.OrderedDict((l, [c for c in cau_file if c["loai"] == l]) for l in CAC_LOAI
                                       if any(c["loai"] == l for c in cau_file)) for _ in range(so_ma)]
     ghi_chu_bu, thieu = [], []
+elif mt.get("chon_san"):
+    # Đã xem trước và xác nhận bộ câu: dùng đúng các câu này (mỗi mã đề một danh sách mã câu theo loại)
+    theo_ma = {c["ma"]: c for c in tat_ca}
+    cs = mt["chon_san"]
+    cac_bo, ghi_chu_bu, thieu = [], [], []
+    for s_ in range(so_ma):
+        b = collections.OrderedDict()
+        for l, ds in cs[s_ % len(cs)].items():
+            b[l] = [theo_ma[m] for m in ds if m in theo_ma]
+            if len(b[l]) < len(ds):
+                thieu.append(f"{LOAI_TEN.get(l, l)}: {len(ds) - len(b[l])} câu đã chọn không còn trong kho")
+        cac_bo.append(b)
+    print(f"Dùng bộ câu đã xem trước và xác nhận ({len(cs)} bộ).")
 else:
     cac_bo, ghi_chu_bu, thieu = lap_ke_hoach(so_ma, khac_cau)
 bo_chung = cac_bo[0]
@@ -413,6 +426,9 @@ if not TU_FILE:
   print(f"  Câu đã dùng ở đề trước: " + {"uu_tien": "ưu tiên câu chưa dùng", "loai_bo": "KHÔNG lấy lại",
       "khong": "không xét"}.get(CHE_DO_DA_DUNG, CHE_DO_DA_DUNG))
 if a.thu:
+    # ghi bộ câu để giao diện xem trước / đổi câu / xác nhận
+    json.dump({"khac_cau": khac_cau, "bo": [{l: [c["ma"] for c in v] for l, v in b.items()} for b in (cac_bo if khac_cau else cac_bo[:1])]},
+              open(os.path.join(GOC, "du-lieu", "_xem_truoc.json"), "w", encoding="utf-8"), ensure_ascii=False)
     for loai, ds in bo_chung.items():
         for c in ds:
             dd = f" (đã dùng {so_lan_dung(c)} lần)" if so_lan_dung(c) else ""

@@ -375,3 +375,13 @@ Nút **Kho kiến thức** (hoặc *Kho kiến thức…* trong Phiếu bài h�
 - **Soạn hàng loạt bằng AI**: tích nhiều bài (có nút *tích bài chưa có*) → **Prompt AI soạn kiến thức** → dán vào AI →
   chép kết quả → **Dán kết quả AI nhiều bài…** → *Nhập kho kiến thức* (tự tách từng bài theo dòng `%%% BAI <mã bài>`).
 - Phiếu bài học tự lấy kiến thức: 1 bài → bản của bài đó; nhiều bài / cả chương → ghép bản của từng bài (có tên bài). Sửa trong phiếu thì lưu thành bản riêng cho tổ hợp đó.
+
+
+## Xem trước bộ câu · đổi câu · xác nhận (ra đề theo ma trận)
+
+Nút **Xem trước câu được chọn** giờ mở hộp xem trước: từng câu hiện đầy đủ đề, phương án (đáp án đúng tô xanh), đáp số, mức, dạng, mã câu,
+số lần đã dùng; công thức vẽ bằng MathJax (cần mạng; không có mạng thì hiện mã $…$).
+- **↻ Đổi câu**: thay câu đó bằng câu ngẫu nhiên khác cùng loại, cùng dạng, cùng mức (ưu tiên câu chưa dùng; hết thì khác mức, rồi dạng khác cùng bài).
+- **↻ Random lại tất cả**: chọn lại cả bộ.
+- Chế độ "mỗi mã đề câu khác nhau": có các thẻ *Bộ 1, Bộ 2…* để xem/đổi từng mã đề.
+- **Xác nhận & xuất đề**: xuất đúng bộ câu đang xem (vẫn xáo thứ tự câu/phương án theo cài đặt). Ma trận lưu lại không kèm danh sách câu.

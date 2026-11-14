@@ -166,6 +166,10 @@ class XuLy(BaseHTTPRequestHandler):
                 else:
                     mt = {**mt, "ten": ten_khong_dau(mt.get("ten") or "De", 60) or "De"}
                     p = os.path.join(GOC, "ma-tran", mt["ten"] + ".json")
+                    if mt.get("chon_san"):      # bộ câu đã xác nhận: lưu ma trận sạch, chạy bằng file tạm có danh sách câu
+                        json.dump({k: v for k, v in mt.items() if k != "chon_san"}, open(p, "w", encoding="utf-8"),
+                                  ensure_ascii=False, indent=2)
+                        p = os.path.join(GOC, "du-lieu", "_ma_tran_tam.json")
                 json.dump(mt, open(p, "w", encoding="utf-8"), ensure_ascii=False, indent=2)
                 rc, log = chay([os.path.join(SCRIPTS, "tron_de.py"), p] + (["--thu"] if thu else []))
                 ok = rc == 0
@@ -176,7 +180,19 @@ class XuLy(BaseHTTPRequestHandler):
                 if ok and rel and not thu and d.get("bien_dich") and tim_pdflatex():
                     dang_bd = True
                     threading.Thread(target=bien_dich_nen, args=(rel,), daemon=True).start()
-                return self.gui(200, {"ok": ok, "nhat_ky": log, "ten": mt["ten"], "thu_muc": rel, "bien_dich": dang_bd})
+                bo = None
+                if thu and ok:
+                    try:
+                        import xem_truoc
+                        x = json.load(open(os.path.join(GOC, "du-lieu", "_xem_truoc.json"), encoding="utf-8"))
+                        bo = {"khac_cau": x["khac_cau"], "bo": xem_truoc.bo_cau(x["bo"])}
+                    except Exception as e:
+                        log += f"\n(không dựng được bản xem trước: {e})"
+                return self.gui(200, {"ok": ok, "nhat_ky": log, "ten": mt["ten"], "thu_muc": rel, "bien_dich": dang_bd, "xem": bo})
+            if u.path == "/api/doi-cau":
+                import xem_truoc
+                t = xem_truoc.doi(d.get("ma"), d.get("tranh") or [])
+                return self.gui(200, {"ok": bool(t), "cau": t})
             if u.path == "/api/luu-ma-tran":
                 mt = d["ma_tran"]; ten = ten_khong_dau(mt.get("ten") or "MaTran", 60)
                 json.dump({**mt, "ten": ten}, open(os.path.join(GOC, "ma-tran", ten + ".json"), "w", encoding="utf-8"),
