@@ -1151,3 +1151,1354 @@
 		Vì  $\dfrac{5}{9} < 1$, nên $\lim S_n = \lim \left( \dfrac{5}{9} \right)^n = 0$.
 	} 
 \end{ex}
+
+% nguồn: 2026-11-15_11_1D2_Day_so_Cap_so (nhập 14/11/2026)
+\begin{bt}%[1D3V1-6]%[ma:3725f016]
+% nguon: Archive/SP_KhoLatex/ID6_old/1K5-15.tex #2799
+%[Dự án 2 - TLDH - TeamTeXHoa - Võ Thị Thùy Trang]
+	Một bệnh nhân hàng ngày phải uống một viên thuốc $150\mathrm{mg}$. Sau ngày đầu, trước mỗi lần uống, hàm lượng thuốc cũ trong cơ thể vẫn còn $5 \% $. Tính lượng thuốc có trong cơ thể sau khi uống viên thuốc của ngày thứ $5$. Ước tính lượng thuốc trong cơ thể nếu bệnh nhân sử dụng thuốc trong một thời gian dài.
+	\loigiai{
+		Đặt $r=5\%$\\
+		\textbullet~ Sau khi uống viên thuốc ngày thứ $1$, hàm lượng thuốc trong cơ thể là $u_1=150~\mathrm{mg}$
+		\textbullet~ Sau khi uống viên thuốc ngày thứ $2$, hàm lượng thuốc trong cơ thể là $$u_2=5\%u_1+150=5\%.150+150=150\left(1+r\right).$$
+		\textbullet~ Hàm lượng thuốc trong cơ thể sau khi uống viên thuốc ngày thứ $3$ là $$u_3=5\%u_2+150=150\left(1+r\right)r+150=150\left(r^2+r+1\right).$$
+		\textbullet~ Hàm lượng thuốc trong cơ thể sau khi uống viên thuốc ngày thứ $4$ là $$u_4=5\%u_3+150=150\left(r^2+r+1\right)r+150=150\left(r^3+r^2+r+1\right).$$
+		\textbullet~ Hàm lượng thuốc trong cơ thể sau khi uống viên thuốc ngày thứ $5 $ là $$u_5=5\%u_4+150=150\left(r^3+r^2+r+1\right)r+150=150\left(r^4+r^3+r^2+r+1\right)\approx 157{,}9~\mathrm{mg}$$
+		Lượng thuốc trong cơ thể nếu bệnh nhân sử dụng liên tục trong $n$ ngày là $$u_n=150\left(r^{n-1}+r^{n-2}+\ldots+r+1\right).$$
+		Nếu sử dụng thuốc lâu ngày thì hàm lượng thuốc trong cơ thể hằng ngày là\\
+		$\lim\limits_{n \to +\infty}u_n=\lim\limits_{n \to +\infty}\left[150\left(r^{n-1}+r^{n-2}+\ldots+r+1\right)\right]=150\cdot \dfrac{1}{1-r}=150\cdot\dfrac{100}{95}=150\cdot\dfrac{20}{19}$.
+	}
+\end{bt}
+
+% nguồn: 2026-11-15_11_1D3_Gioi_han (nhập 14/11/2026)
+\begin{bt}%[1D3C1-6]%[ma:13d1e1e3]
+% nguon: Archive/SP_SauLuoi_2024-2025/SP_HKI/1-TN-DS-TLN-THPT-ThuanThanhSo1-BacNinh-HKI-NH24-25.tex #4
+%[Đề thi HK1 lớp 11 THPT Thuận Thành Số 1-24-25]%[Nguyễn Chiến]
+\immini{
+($1{,}0$ điểm) Từ độ cao $55{,}8$ m của tháp nghiêng Pisa nước Ý, nguời ta thả một quả bóng cao su chạm xuống đất (hình vẽ). Giả sử mỗi lần chạm đất quả bóng nảy lên với độ cao bằng $\dfrac{1}{10}$ độ cao mà quả bóng đạt được trước đó. Tổng quãng đường mà quả bóng di chuyển từ khi thả cho đến khi dừng hẳn bằng bao nhiêu mét? (Kết quả làm tròn đến hàng phần chục).
+}{
+\definecolor{lightcornflowerblue}{rgb}{0.6, 0.81, 0.93}
+	\definecolor{cadmiumgreen}{rgb}{0.0, 0.42, 0.24}
+	\definecolor{trueblue}{rgb}{0.0, 0.45, 0.81}
+	\definecolor{tumbleweed}{rgb}{0.87, 0.67, 0.53}%màu cát
+	\begin{tikzpicture}[line join=round, line cap=round,scale=0.7,transform shape]
+		\clip (-4,-3.5) rectangle (4,3.5);
+		\tikzset{thap/.pic={%Xây từ dưới lên
+				\def\T{ 
+					(-.88,-1.78)%1
+					..controls +(40:.17) and +(120:.1) ..  (.686,-1.91)--(.68,-1.94)
+					..controls +(120:.1) and +(40:.12) ..  (-.87,-1.81)
+					--cycle
+					
+					(-.8,-1.2)%2
+					..controls +(40:.14) and +(120:.14) ..  (.72,-1.34)--(.7,-1.36)
+					..controls +(120:.1) and +(40:.12) ..  (-.78,-1.23)
+					--cycle
+					
+					(-.74,-.65)%3
+					..controls +(40:.22) and +(120:.17) ..  (.74,-.78)--(.72,-.8)
+					..controls +(120:.15) and +(40:.15) ..  (-.72,-.67)
+					--cycle
+					
+					(-.68,-.13)%4
+					..controls +(40:.34) and +(110:.2) ..  (.8,-.26)--(.78,-.28)
+					..controls +(110:.17) and +(40:.27) ..  (-.66,-.15)
+					--cycle
+					
+					(-.65,.36)%5
+					..controls +(40:.44) and +(120:.3) ..  (.85,.24)--(.83,.22)
+					..controls +(130:.35) and +(40:.35) ..  (-.63,.34)
+					--cycle
+					
+					(-.58,.88)%6
+					..controls +(40:.44) and +(120:.3) ..  (.87,.78)--(.85,.76)
+					..controls +(130:.35) and +(40:.35) ..  (-.56,.86)
+					--cycle
+					
+					(-.52,1.35)%7
+					..controls +(120:.32) and +(110:.47) ..  (.93,1.26)--(.9,1.25)
+					..controls +(110:.43) and +(110:.27) ..  (-.49,1.35)
+					--cycle
+					
+					(-.31,2)%8
+					..controls +(120:.47) and +(55:.46) ..  (.76,1.94)--(.74,1.94)
+					..controls +(75:.31) and +(115:.28) ..  (-.28,2)
+					--cycle
+					
+					(-.48,1.5)
+					..controls +(40:.33) and +(110:.2) ..  (.86,1.4)
+					(-.476,1.52)
+					..controls +(40:.33) and +(110:.2) ..  (.86,1.42)
+					(-.472,1.54)
+					..controls +(40:.33) and +(110:.2) ..  (.86,1.44)
+					(-.468,1.56)
+					..controls +(40:.33) and +(110:.2) ..  (.86,1.46)
+					
+					(-.28,2.2)
+					..controls +(40:.27) and +(140:.2) ..  (.74,2.16)
+					(-.276,2.22)
+					..controls +(40:.27) and +(140:.2) ..  (.74,2.18)
+					(-.272,2.24)
+					..controls +(40:.27) and +(140:.2) ..  (.74,2.2)
+					(-.268,2.26)
+					..controls +(40:.27) and +(140:.2) ..  (.74,2.22)
+					;}
+				\draw \T;
+				%\fill[tumbleweed] \T;
+		}}
+		
+		\tikzset{rao/.pic={%Rào
+				\def\R{ 
+					(-.48,1.5)
+					..controls +(40:.33) and +(110:.2) ..  (.86,1.4)
+					(-.476,1.52)
+					..controls +(40:.33) and +(110:.2) ..  (.86,1.42)
+					(-.472,1.54)
+					..controls +(40:.33) and +(110:.2) ..  (.86,1.44)
+					(-.468,1.56)
+					..controls +(40:.33) and +(110:.2) ..  (.86,1.46)
+					
+					(-.28,2.2)
+					..controls +(40:.27) and +(140:.2) ..  (.74,2.16)
+					(-.276,2.22)
+					..controls +(40:.27) and +(140:.2) ..  (.74,2.18)
+					(-.272,2.24)
+					..controls +(40:.27) and +(140:.2) ..  (.74,2.2)
+					(-.268,2.26)
+					..controls +(40:.27) and +(140:.2) ..  (.74,2.22)
+					;}
+				\draw \R;
+				%\fill[tumbleweed] \R;
+		}}
+		
+		\tikzset{co/.pic={%Cờ
+				\def\C{ 
+					(0.1,2.3)--(.1,2.9)
+					(.1,2.82)
+					..controls +(-40:.2) and +(140:.22) ..  (.2,2.6)
+					..controls +(-60:0) and +(100:.1) ..(.16,2.5)
+					..controls +(140:.1) and +(-30:0) ..  (.1,2.53)--cycle
+					;}
+				\draw \C;
+				\fill[red] \C;
+		}}
+		
+		\tikzset{cong0/.pic={%Đường cong trệt
+				\def\D0{ 
+					(.68,-1.96)
+					..controls +(120:.1) and +(40:.12) ..  (-.87,-1.81)--
+					(-.87,-1.94)
+					..controls +(80:.12) and +(95:0.12) ..  (-.68,-2.06)
+					..controls +(80:.12) and +(85:0.3) ..  (-.4,-2.12)
+					..controls +(80:.25) and +(95:0.25) ..  (-.02,-2.12)
+					..controls +(80:.25) and +(95:0.25) ..  (.27,-2.14)
+					..controls +(80:.12) and +(95:0.12) ..  (.5,-2.14)
+					..controls +(70:.12) and +(95:0.02) ..  (.66,-2.1)--cycle
+					;}
+				\draw \D0;
+				\fill[tumbleweed] \D0;
+		}}
+		
+		\tikzset{cong1/.pic={%Đường cong 1
+				\def\D1{ 
+					(.7,-1.36)
+					..controls +(120:.1) and +(40:.12) ..  (-.78,-1.23)--
+					(-.78,-1.35)
+					..controls +(80:.12) and +(95:0.12) ..  (-.72,-1.35)
+					..controls +(80:.12) and +(95:0.12) ..  (-.64,-1.35)
+					..controls +(80:.12) and +(95:0.12) ..  (-.55,-1.35)
+					..controls +(80:.12) and +(95:0.12) ..  (-.44,-1.36)
+					..controls +(80:.12) and +(95:0.12) ..  (-.3,-1.37)
+					..controls +(80:.12) and +(95:0.12) ..  (-.14,-1.38)
+					..controls +(80:.12) and +(95:0.12) ..  (0.02,-1.39)
+					..controls +(80:.12) and +(95:0.12) ..  (0.18,-1.4)
+					..controls +(80:.12) and +(95:0.12) ..  (0.32,-1.42)
+					..controls +(70:.12) and +(95:0.12) ..  (0.42,-1.44)
+					..controls +(70:.12) and +(95:0.12) ..  (0.52,-1.46)
+					..controls +(70:.12) and +(95:0.12) ..  (0.6,-1.47)
+					..controls +(70:.12) and +(95:0.12) ..  (0.68,-1.5)--cycle
+					;}
+				\draw \D1;
+				\fill[tumbleweed] \D1;
+		}}
+		
+		\tikzset{cong2/.pic={%Đường cong 2
+				\def\D2{ 
+					(.72,-.8)
+					..controls +(120:.15) and +(40:.15) ..  (-.72,-.67)--
+					(-.72,-.79)
+					..controls +(80:.12) and +(95:0.12) ..  (-.66,-.79)
+					..controls +(80:.12) and +(95:0.12) ..  (-.58,-.79)
+					..controls +(80:.12) and +(95:0.12) ..  (-.48,-.79)
+					..controls +(80:.12) and +(95:0.12) ..  (-.38,-.8)
+					..controls +(80:.12) and +(95:0.12) ..  (-.23,-.8)
+					..controls +(80:.12) and +(95:0.12) ..  (-0.08,-.81)
+					..controls +(80:.12) and +(95:0.12) ..  (0.08,-.82)
+					..controls +(80:.12) and +(95:0.12) ..  (0.22,-.84)
+					..controls +(80:.12) and +(95:0.12) ..  (0.36,-.85)
+					..controls +(70:.12) and +(95:0.12) ..  (0.48,-.87)
+					..controls +(70:.12) and +(95:0.12) ..  (0.58,-.89)
+					..controls +(70:.12) and +(95:0.12) ..  (0.66,-.9)
+					..controls +(70:.12) and +(95:0.12) ..  (0.71,-.92)--cycle
+					;}
+				\draw \D2;
+				\fill[tumbleweed] \D2;
+		}}
+		
+		\tikzset{cong3/.pic={%Đường cong 3
+				\def\D3{ 
+					(.78,-.28)
+					..controls +(110:.17) and +(40:.27) ..  (-.66,-.15)--
+					(-.66,-.26)
+					..controls +(80:.12) and +(95:0.12) ..  (-.6,-.25)
+					..controls +(80:.12) and +(95:0.12) ..  (-.52,-.24)
+					..controls +(80:.12) and +(95:0.12) ..  (-.44,-.23)
+					..controls +(80:.12) and +(95:0.12) ..  (-.32,-.23)
+					..controls +(80:.12) and +(95:0.12) ..  (-.18,-.23)
+					..controls +(80:.12) and +(95:0.12) ..  (-.04,-.24)
+					..controls +(80:.12) and +(95:0.12) ..  (0.13,-.25)
+					..controls +(80:.12) and +(95:0.12) ..  (0.26,-.26)
+					..controls +(70:.12) and +(95:0.12) ..  (0.42,-.29)
+					..controls +(70:.12) and +(95:0.12) ..  (0.54,-.31)
+					..controls +(70:.12) and +(95:0.12) ..  (0.63,-.33)
+					..controls +(70:.12) and +(95:0.12) ..  (0.7,-.35)
+					..controls +(70:.12) and +(95:0.12) ..  (0.765,-.38)--cycle
+					;}
+				\draw \D3;
+				\fill[tumbleweed] \D3;
+		}}
+		
+		\tikzset{cong4/.pic={%Đường cong 4
+				\def\D4{ 
+					(.83,.22)
+					..controls +(130:.35) and +(40:.35) ..  (-.63,.34)--
+					(-.63,.23)
+					..controls +(80:.12) and +(95:0.12) ..  (-.57,.25)
+					..controls +(80:.12) and +(95:0.12) ..  (-.49,.26)
+					..controls +(80:.12) and +(95:0.12) ..  (-.4,.28)
+					..controls +(80:.12) and +(95:0.12) ..  (-.27,.3)
+					..controls +(80:.12) and +(95:0.12) ..  (-.15,.3)
+					..controls +(80:.12) and +(95:0.12) ..  (0.02,.3)
+					..controls +(80:.12) and +(95:0.12) ..  (0.16,.29)
+					..controls +(80:.12) and +(95:0.12) ..  (0.31,.27)
+					..controls +(70:.12) and +(95:0.12) ..  (0.45,.25)
+					..controls +(70:.12) and +(95:0.12) ..  (0.58,.23)
+					..controls +(70:.12) and +(95:0.12) ..  (0.67,.2)
+					..controls +(70:.12) and +(95:0.12) ..  (0.75,.17)
+					..controls +(70:.12) and +(95:0.12) ..  (0.8,.14)--cycle
+					;}
+				\draw \D4;
+				\fill[tumbleweed] \D4;
+		}}
+		
+		\tikzset{cong5/.pic={%Đường cong 5
+				\def\D5{ 
+					(.85,.76)
+					..controls +(130:.35) and +(40:.35) ..  (-.56,.86)--
+					(-.56,.74)
+					..controls +(80:.12) and +(95:0.12) ..  (-.5,.77)
+					..controls +(80:.12) and +(95:0.12) ..  (-.44,.79)
+					..controls +(80:.12) and +(95:0.12) ..  (-.34,.81)
+					..controls +(80:.12) and +(95:0.12) ..  (-.22,.83)
+					..controls +(80:.12) and +(95:0.12) ..  (-0.08,.85)
+					..controls +(80:.12) and +(95:0.12) ..  (0.06,.85)
+					..controls +(80:.12) and +(95:0.12) ..  (0.22,.83)
+					..controls +(70:.12) and +(95:0.12) ..  (0.36,.81)
+					..controls +(70:.12) and +(95:0.12) ..  (0.5,.78)
+					..controls +(70:.12) and +(95:0.12) ..  (0.62,.74)
+					..controls +(70:.12) and +(95:0.12) ..  (0.73,.72)
+					..controls +(70:.12) and +(95:0.12) ..  (0.82,.68)--cycle
+					;}
+				\draw \D5;
+				\fill[tumbleweed] \D5;
+		}}
+		
+		\tikzset{cong6/.pic={%Đường cong 6
+				\def\D6{ 
+					(.9,1.25)
+					..controls +(110:.43) and +(110:.27) ..  (-.49,1.35)--
+					(-.49,1.3)
+					..controls +(80:.12) and +(95:0.12) ..  (-.45,1.33)
+					..controls +(80:.12) and +(95:0.12) ..  (-.38,1.33)
+					..controls +(80:.12) and +(95:0.12) ..  (-.28,1.35)
+					..controls +(80:.12) and +(95:0.12) ..  (-.16,1.37)
+					..controls +(80:.12) and +(95:0.12) ..  (-0.04,1.38)
+					..controls +(80:.12) and +(95:0.12) ..  (0.12,1.38)
+					..controls +(80:.12) and +(95:0.12) ..  (0.26,1.38)
+					..controls +(70:.12) and +(95:0.12) ..  (0.42,1.37)
+					..controls +(70:.12) and +(95:0.12) ..  (0.55,1.34)
+					..controls +(70:.12) and +(95:0.12) ..  (0.67,1.3)
+					..controls +(70:.12) and +(95:0.12) ..  (0.78,1.25)
+					..controls +(70:.12) and +(95:0.12) ..  (0.84,1.21)
+					..controls +(70:.12) and +(95:0.12) ..  (0.88,1.16)--cycle
+					;}
+				\draw \D6;
+				\fill[tumbleweed] \D6;
+		}}
+		
+		\tikzset{cong7/.pic={%Đường cong 7
+				\def\D7{ 
+					(.74,1.94)
+					..controls +(75:.31) and +(115:.28) ..  (-.28,2)--
+					(-.28,1.94)
+					..controls +(80:.12) and +(95:0.12) ..  (-.24,1.98)
+					..controls +(80:.12) and +(95:0.12) ..  (-.14,2.04)
+					..controls +(80:.12) and +(95:0.12) ..  (0.02,2.08)
+					..controls +(80:.12) and +(95:0.12) ..  (0.2,2.08)
+					..controls +(80:.12) and +(95:0.12) ..  (0.4,2.05)
+					..controls +(80:.12) and +(95:0.12) ..  (0.56,2)
+					..controls +(80:.12) and +(95:0.12) ..  (0.66,1.96)
+					..controls +(70:.12) and +(95:0.12) ..  (0.74,1.9)--cycle
+					;}
+				\draw \D7;
+				\fill[tumbleweed] \D7;
+		}}
+		
+		\tikzset{cua/.pic={%Cửa
+				\def\W{ 
+					(-.7,-2.85)--(-.63,-2.25)
+					..controls +(70:.1) and +(100:.1) ..  (-.46,-2.25)--(-.52,-2.85)
+					--cycle
+					;}
+				\draw \W;
+				\fill[tumbleweed] \W;
+		}}
+		
+		\tikzset{vien/.pic={%viền ngoài
+				\def\V{ 
+					(.9,1.25)
+					..controls +(110:.43) and +(110:.27) ..  (-.49,1.35)--(-.98,-2.85)--(.59,-2.85)--cycle
+					
+					(.74,1.94)
+					..controls +(75:.31) and +(115:.28) ..  (-.28,2)--(-.32,1.54)
+					..controls +(115:.2) and +(75:.13) ..  (.72,1.48)--cycle
+					;}
+				\draw \V;
+				\fill[gray!50!] \V;
+		}}
+		
+		\tikzset{soc/.pic={%Thanh sọc
+				\def\S{ 
+					(.82,1.36)--(.54,-1.85)--(.58,-1.85)--(.86,1.36)
+					--cycle
+					;}
+				\draw \S;
+				\fill[tumbleweed!40!] \S;
+		}}
+		
+		\tikzset{soc2/.pic={%Thanh sọc lớn
+				\def\S{ 
+					(.54,-1.95)--(.44,-2.85)--(.48,-2.85)--(.58,-1.95)
+					--cycle
+					;}
+				\draw \S;
+				\fill[tumbleweed!40!] \S;
+		}}
+		
+		\tikzset{soc3/.pic={%Thanh sọc
+				\def\S{ 
+					(.54,2)--(.57,2)--(.54,1.5)--(.51,1.5)
+					--cycle
+					(.66,2)--(.69,2)--(.66,1.5)--(.63,1.5)
+					--cycle
+					(-.26,2)--(-.23,2)--(-.26,1.5)--(-.29,1.5)
+					--cycle
+					;}
+				\draw \S;
+				\fill[tumbleweed!40!] \S;
+		}}
+		
+		\tikzset{thoi/.pic={%Hình thoi
+				\def\T{ 
+					(0.15,-1.98)--(.24,-2.12)--(0.13,-2.22)--(0.04,-2.1)
+					--cycle
+					;}
+				\draw \T;
+				\fill[tumbleweed!40!] \T;
+		}}
+		
+		\tikzset{cay/.pic={%Cây
+				\def\T{ 
+					(-1.73,-2.85)
+					..controls +(40:.03) and +(40:.01) ..  (-1.74,-2.7)
+					..controls +(140:.04) and +(60:.02) ..  (-1.78,-2.6)
+					..controls +(140:.04) and +(60:.02) ..  (-1.8,-2.55)
+					..controls +(100:.03) and +(70:.02) ..  (-1.82,-2.5)
+					..controls +(140:.04) and +(60:.02) ..  (-1.815,-2.4)
+					..controls +(140:.04) and +(60:.02) ..  (-1.818,-2.3)
+					..controls +(85:.03) and +(-30:.03) ..  (-1.8,-2.2)
+					..controls +(80:.04) and +(50:.02) ..  (-1.78,-2)
+					..controls +(60:.04) and +(120:.02) ..  (-1.76,-1.9)
+					..controls +(80:.03) and +(-100:.02) ..  (-1.74,-1.8)
+					..controls +(80:.01) and +(-100:.02) ..  (-1.72,-1.9)
+					..controls +(60:.02) and +(-120:.02) ..  (-1.7,-2)
+					..controls +(-80:.02) and +(110:.03) ..  (-1.66,-2.2)
+					..controls +(-100:.02) and +(60:.03) ..  (-1.64,-2.3)
+					..controls +(-30:.02) and +(70:.02) ..  (-1.6,-2.44)
+					..controls +(-100:.02) and +(70:.02) ..  (-1.63,-2.52)
+					..controls +(-60:.02) and +(70:.01) ..  (-1.66,-2.6)
+					..controls +(60:.01) and +(70:.02) ..  (-1.7,-2.7)
+					..controls +(-120:.02) and +(120:.03) ..  (-1.68,-2.85)
+					;}
+				\draw \T;
+				\fill[cadmiumgreen!90!] \T;
+		}}
+		\fill[cadmiumgreen!80!] (-4,-3.5) rectangle (8,-2.2);
+		\fill[lightcornflowerblue] (-4,3.5) rectangle (8,-2.2);
+		\path 
+		(0,0)pic[scale=1]{cay}(.35,0)pic[scale=.9]{cay}(1.05,0.6)pic[scale=1.2]{cay}(-.5,-1)pic[scale=.6]{cay}
+		(3,0)pic[scale=1]{cay}(2.8,0)pic[scale=1]{cay}
+		(0,0)pic[scale=1]{vien}
+		(0,0)pic[scale=1]{soc} (0,0)pic[scale=1]{soc}(-.15,0)pic[scale=1]{soc}(-.3,0)pic[scale=1]{soc}(-.45,0)pic[scale=1]{soc}(-.6,0)pic[scale=1]{soc}(-.75,0)pic[scale=1]{soc}(-.9,0)pic[scale=1]{soc}(-1.02,0)pic[scale=1]{soc}(-1.12,0)pic[scale=1]{soc}(-1.22,0)pic[scale=1]{soc}(-1.32,0)pic[scale=1]{soc}
+		
+		(0,0)pic[scale=1]{soc3}
+		(0,0)pic[scale=1]{thap}(0,0)pic[scale=1]{co}
+		(.4,3.6)pic[scale=.7,rotate=3]{cua}
+		(.8,3.6)pic[scale=1.2,rotate=7,yscale=.6]{cua}
+		(.3,3.4)pic[scale=1.1,rotate=7,yscale=.6]{cua}
+		(0,-.04)pic[scale=1]{thoi}(0.25,-.05)pic[scale=1]{thoi}(-0.35,0)pic[scale=1]{thoi}(-.67,0)pic[scale=1]{thoi}(-.9,0)pic[scale=1]{thoi}
+		(-1.22,0)pic[scale=1]{soc2}(-1.36,0)pic[scale=1]{soc2}
+		(-.94,0)pic[scale=1]{soc2}(-.56,0)pic[scale=1]{soc2}
+		(-.56,0)pic[scale=1]{soc2}(.08,0)pic[scale=1]{soc2}(-.04,0)pic[scale=1]{soc2}(-.28,0)pic[scale=1]{soc2}
+		(0,0)pic[scale=1]{cong0} (0,0.02)pic[scale=1]{cong0}%
+		(0,0)pic[scale=1]{cong1} (0,0.02)pic[scale=1]{cong1}%
+		(0,0)pic[scale=1]{cong2} (0,0.02)pic[scale=1]{cong2}%
+		(0,0)pic[scale=1]{cong3}(0,0.02)pic[scale=1]{cong3}
+		(0,0)pic[scale=1]{cong4}(0,0.02)pic[scale=1]{cong4}
+		(0,0)pic[scale=1]{cong5}(0,0.02)pic[scale=1]{cong5}
+		(0,0)pic[scale=1]{cong6}(0,0.02)pic[scale=1]{cong6}
+		(0,0)pic[scale=1]{cong7}(0,0.02)pic[scale=1]{cong7}
+		(0,0)pic[scale=1]{cua}
+		
+		(0,0)pic[scale=1]{rao}
+		;		
+	\end{tikzpicture}
+} 
+\loigiai{
+Mỗi khi chạm đất quả bóng lại nảy lên một độ cao bằng $\dfrac{1}{10}$ độ cao của lần rơi ngay trước đó và sau đó lại rơi xuống từ độ cao thứ hai này. Do đó, độ dài quãng đường của quả bóng kể từ thời điểm rơi ban đầu đến:\\    
+		Thời điểm chạm đất lần thứ nhất là $d_1=55{,}8$.\\
+		Thời điểm chạm đất lần thứ hai là $d_2=55{,}8+2\cdot \dfrac{55{,}8}{10}$.\\
+		Thời điểm chạm đất lần thứ ba là $d_3=55{,}8+2 \cdot\dfrac{55{,}8}{10}+2\cdot \dfrac{55{,}8}{10^2}$.\\
+		Thời điểm chạm đất lần thứ tư là $d_4=55{,}8+2 \cdot\dfrac{55{,}8}{10}+2\cdot \dfrac{55{,}8}{10^2}+2\cdot \dfrac{55{,}8}{10^3}$.\\
+		$\ldots$\\
+		Thời điểm chạm đất lần thứ $n$ ($n>1$) là
+		$$d_n=55{,}8+2\cdot \frac{55{,}8}{10}+2\cdot \frac{55{,}8}{10^2}+2\cdot \frac{55{,}8}{10^3}+\cdots+2\cdot \frac{55{,}8}{10^{n-1}}.$$
+		Do đó, quãng đường mà quả bóng đi được kể từ thời điểm rơi đến khi nằm yên trên mặt đất là
+		$$ d=55{,}8+2\cdot \frac{55{,}8}{10}+2\cdot \frac{55{,}8}{10^2}+2\cdot \frac{55{,}8}{10^3}+\cdots+2\cdot \frac{55{,}8}{10^{n-1}}+\cdots=\lim d_n.$$
+		Vì $2\cdot \dfrac{55{,}8}{10}$; $2\cdot \dfrac{55{,}8}{10^2}$; $2\cdot \dfrac{55{,}8}{10^3}$; $\ldots$; $2\cdot \dfrac{55{,}8}{10^{n-1}}$; $\ldots$ là một cấp số nhân lùi vô hạn với công bội $q=\dfrac{1}{10}$ nên ta có
+		\[2 \cdot\dfrac{55{,}8}{10}+2\cdot \dfrac{55{,}8}{10^2}+2\cdot \dfrac{55{,}8}{10^3}+\cdots+2\cdot \dfrac{55{,}8}{10^{n-1}}+\cdots=\dfrac{2\cdot \dfrac{55{,}8}{10}}{1-\dfrac{1}{10}}=12{,}4.\]
+		Vậy $d=55{,}8+12{,}4=68{,}2$ m.
+}
+\end{bt}
+
+% nguồn: 2026-11-15_11_1D3_Gioi_han (nhập 14/11/2026)
+\begin{bt}%[1D3V1-6]%[ma:afb0b7ec]
+% nguon: Archive/2024/TOAN_11_XE/TOAN_11_XE/data4/11C5/KNTT-5.OTC.tex #658
+%[TeX hóa SGK11]%[Lê Quang Xe]
+	\immini{Từ độ cao $55{,}8 \mathrm{~m}$ của tháp nghiêng Pisa nước Ý, người ta thả một quả bóng cao su chạm xuống đất hình bên dưới. Giả sử mỗi lần chạm đất quả bóng lại nảy lên độ cao bằng $\dfrac{1}{10}$ độ cao mà quả bóng đạt được trước đó. Gọi $S_n$ là tổng độ dài quãng đường di chuyển của quả bóng tính từ lúc thả ban đầu cho đến khi quả bóng đó chạm đất $n$ lần. Tính $\lim S_n$.}{
+		
+		\definecolor{lightcornflowerblue}{rgb}{0.6, 0.81, 0.93}
+		\definecolor{cadmiumgreen}{rgb}{0.0, 0.42, 0.24}
+		\definecolor{trueblue}{rgb}{0.0, 0.45, 0.81}
+		\definecolor{tumbleweed}{rgb}{0.87, 0.67, 0.53}%màu cát
+		\begin{tikzpicture}[line join=round, line cap=round,scale=1,transform shape]
+			\clip (-4,-3.5) rectangle (4,3.5);
+			\tikzset{thap/.pic={%Xây từ dưới lên
+					\def\T{ 
+						(-.88,-1.78)%1
+						..controls +(40:.17) and +(120:.1) ..  (.686,-1.91)--(.68,-1.94)
+						..controls +(120:.1) and +(40:.12) ..  (-.87,-1.81)
+						--cycle
+						
+						(-.8,-1.2)%2
+						..controls +(40:.14) and +(120:.14) ..  (.72,-1.34)--(.7,-1.36)
+						..controls +(120:.1) and +(40:.12) ..  (-.78,-1.23)
+						--cycle
+						
+						(-.74,-.65)%3
+						..controls +(40:.22) and +(120:.17) ..  (.74,-.78)--(.72,-.8)
+						..controls +(120:.15) and +(40:.15) ..  (-.72,-.67)
+						--cycle
+						
+						(-.68,-.13)%4
+						..controls +(40:.34) and +(110:.2) ..  (.8,-.26)--(.78,-.28)
+						..controls +(110:.17) and +(40:.27) ..  (-.66,-.15)
+						--cycle
+						
+						(-.65,.36)%5
+						..controls +(40:.44) and +(120:.3) ..  (.85,.24)--(.83,.22)
+						..controls +(130:.35) and +(40:.35) ..  (-.63,.34)
+						--cycle
+						
+						(-.58,.88)%6
+						..controls +(40:.44) and +(120:.3) ..  (.87,.78)--(.85,.76)
+						..controls +(130:.35) and +(40:.35) ..  (-.56,.86)
+						--cycle
+						
+						(-.52,1.35)%7
+						..controls +(120:.32) and +(110:.47) ..  (.93,1.26)--(.9,1.25)
+						..controls +(110:.43) and +(110:.27) ..  (-.49,1.35)
+						--cycle
+						
+						(-.31,2)%8
+						..controls +(120:.47) and +(55:.46) ..  (.76,1.94)--(.74,1.94)
+						..controls +(75:.31) and +(115:.28) ..  (-.28,2)
+						--cycle
+						
+						(-.48,1.5)
+						..controls +(40:.33) and +(110:.2) ..  (.86,1.4)
+						(-.476,1.52)
+						..controls +(40:.33) and +(110:.2) ..  (.86,1.42)
+						(-.472,1.54)
+						..controls +(40:.33) and +(110:.2) ..  (.86,1.44)
+						(-.468,1.56)
+						..controls +(40:.33) and +(110:.2) ..  (.86,1.46)
+						
+						(-.28,2.2)
+						..controls +(40:.27) and +(140:.2) ..  (.74,2.16)
+						(-.276,2.22)
+						..controls +(40:.27) and +(140:.2) ..  (.74,2.18)
+						(-.272,2.24)
+						..controls +(40:.27) and +(140:.2) ..  (.74,2.2)
+						(-.268,2.26)
+						..controls +(40:.27) and +(140:.2) ..  (.74,2.22)
+						;}
+					\draw \T;
+					%\fill[tumbleweed] \T;
+			}}
+			
+			\tikzset{rao/.pic={%Rào
+					\def\R{ 
+						(-.48,1.5)
+						..controls +(40:.33) and +(110:.2) ..  (.86,1.4)
+						(-.476,1.52)
+						..controls +(40:.33) and +(110:.2) ..  (.86,1.42)
+						(-.472,1.54)
+						..controls +(40:.33) and +(110:.2) ..  (.86,1.44)
+						(-.468,1.56)
+						..controls +(40:.33) and +(110:.2) ..  (.86,1.46)
+						
+						(-.28,2.2)
+						..controls +(40:.27) and +(140:.2) ..  (.74,2.16)
+						(-.276,2.22)
+						..controls +(40:.27) and +(140:.2) ..  (.74,2.18)
+						(-.272,2.24)
+						..controls +(40:.27) and +(140:.2) ..  (.74,2.2)
+						(-.268,2.26)
+						..controls +(40:.27) and +(140:.2) ..  (.74,2.22)
+						;}
+					\draw \R;
+					%\fill[tumbleweed] \R;
+			}}
+			
+			\tikzset{co/.pic={%Cờ
+					\def\C{ 
+						(0.1,2.3)--(.1,2.9)
+						(.1,2.82)
+						..controls +(-40:.2) and +(140:.22) ..  (.2,2.6)
+						..controls +(-60:0) and +(100:.1) ..(.16,2.5)
+						..controls +(140:.1) and +(-30:0) ..  (.1,2.53)--cycle
+						;}
+					\draw \C;
+					\fill[red] \C;
+			}}
+			
+			\tikzset{cong0/.pic={%Đường cong trệt
+					\def\D0{ 
+						(.68,-1.96)
+						..controls +(120:.1) and +(40:.12) ..  (-.87,-1.81)--
+						(-.87,-1.94)
+						..controls +(80:.12) and +(95:0.12) ..  (-.68,-2.06)
+						..controls +(80:.12) and +(85:0.3) ..  (-.4,-2.12)
+						..controls +(80:.25) and +(95:0.25) ..  (-.02,-2.12)
+						..controls +(80:.25) and +(95:0.25) ..  (.27,-2.14)
+						..controls +(80:.12) and +(95:0.12) ..  (.5,-2.14)
+						..controls +(70:.12) and +(95:0.02) ..  (.66,-2.1)--cycle
+						;}
+					\draw \D0;
+					\fill[tumbleweed] \D0;
+			}}
+			
+			\tikzset{cong1/.pic={%Đường cong 1
+					\def\D1{ 
+						(.7,-1.36)
+						..controls +(120:.1) and +(40:.12) ..  (-.78,-1.23)--
+						(-.78,-1.35)
+						..controls +(80:.12) and +(95:0.12) ..  (-.72,-1.35)
+						..controls +(80:.12) and +(95:0.12) ..  (-.64,-1.35)
+						..controls +(80:.12) and +(95:0.12) ..  (-.55,-1.35)
+						..controls +(80:.12) and +(95:0.12) ..  (-.44,-1.36)
+						..controls +(80:.12) and +(95:0.12) ..  (-.3,-1.37)
+						..controls +(80:.12) and +(95:0.12) ..  (-.14,-1.38)
+						..controls +(80:.12) and +(95:0.12) ..  (0.02,-1.39)
+						..controls +(80:.12) and +(95:0.12) ..  (0.18,-1.4)
+						..controls +(80:.12) and +(95:0.12) ..  (0.32,-1.42)
+						..controls +(70:.12) and +(95:0.12) ..  (0.42,-1.44)
+						..controls +(70:.12) and +(95:0.12) ..  (0.52,-1.46)
+						..controls +(70:.12) and +(95:0.12) ..  (0.6,-1.47)
+						..controls +(70:.12) and +(95:0.12) ..  (0.68,-1.5)--cycle
+						;}
+					\draw \D1;
+					\fill[tumbleweed] \D1;
+			}}
+			
+			\tikzset{cong2/.pic={%Đường cong 2
+					\def\D2{ 
+						(.72,-.8)
+						..controls +(120:.15) and +(40:.15) ..  (-.72,-.67)--
+						(-.72,-.79)
+						..controls +(80:.12) and +(95:0.12) ..  (-.66,-.79)
+						..controls +(80:.12) and +(95:0.12) ..  (-.58,-.79)
+						..controls +(80:.12) and +(95:0.12) ..  (-.48,-.79)
+						..controls +(80:.12) and +(95:0.12) ..  (-.38,-.8)
+						..controls +(80:.12) and +(95:0.12) ..  (-.23,-.8)
+						..controls +(80:.12) and +(95:0.12) ..  (-0.08,-.81)
+						..controls +(80:.12) and +(95:0.12) ..  (0.08,-.82)
+						..controls +(80:.12) and +(95:0.12) ..  (0.22,-.84)
+						..controls +(80:.12) and +(95:0.12) ..  (0.36,-.85)
+						..controls +(70:.12) and +(95:0.12) ..  (0.48,-.87)
+						..controls +(70:.12) and +(95:0.12) ..  (0.58,-.89)
+						..controls +(70:.12) and +(95:0.12) ..  (0.66,-.9)
+						..controls +(70:.12) and +(95:0.12) ..  (0.71,-.92)--cycle
+						;}
+					\draw \D2;
+					\fill[tumbleweed] \D2;
+			}}
+			
+			\tikzset{cong3/.pic={%Đường cong 3
+					\def\D3{ 
+						(.78,-.28)
+						..controls +(110:.17) and +(40:.27) ..  (-.66,-.15)--
+						(-.66,-.26)
+						..controls +(80:.12) and +(95:0.12) ..  (-.6,-.25)
+						..controls +(80:.12) and +(95:0.12) ..  (-.52,-.24)
+						..controls +(80:.12) and +(95:0.12) ..  (-.44,-.23)
+						..controls +(80:.12) and +(95:0.12) ..  (-.32,-.23)
+						..controls +(80:.12) and +(95:0.12) ..  (-.18,-.23)
+						..controls +(80:.12) and +(95:0.12) ..  (-.04,-.24)
+						..controls +(80:.12) and +(95:0.12) ..  (0.13,-.25)
+						..controls +(80:.12) and +(95:0.12) ..  (0.26,-.26)
+						..controls +(70:.12) and +(95:0.12) ..  (0.42,-.29)
+						..controls +(70:.12) and +(95:0.12) ..  (0.54,-.31)
+						..controls +(70:.12) and +(95:0.12) ..  (0.63,-.33)
+						..controls +(70:.12) and +(95:0.12) ..  (0.7,-.35)
+						..controls +(70:.12) and +(95:0.12) ..  (0.765,-.38)--cycle
+						;}
+					\draw \D3;
+					\fill[tumbleweed] \D3;
+			}}
+			
+			\tikzset{cong4/.pic={%Đường cong 4
+					\def\D4{ 
+						(.83,.22)
+						..controls +(130:.35) and +(40:.35) ..  (-.63,.34)--
+						(-.63,.23)
+						..controls +(80:.12) and +(95:0.12) ..  (-.57,.25)
+						..controls +(80:.12) and +(95:0.12) ..  (-.49,.26)
+						..controls +(80:.12) and +(95:0.12) ..  (-.4,.28)
+						..controls +(80:.12) and +(95:0.12) ..  (-.27,.3)
+						..controls +(80:.12) and +(95:0.12) ..  (-.15,.3)
+						..controls +(80:.12) and +(95:0.12) ..  (0.02,.3)
+						..controls +(80:.12) and +(95:0.12) ..  (0.16,.29)
+						..controls +(80:.12) and +(95:0.12) ..  (0.31,.27)
+						..controls +(70:.12) and +(95:0.12) ..  (0.45,.25)
+						..controls +(70:.12) and +(95:0.12) ..  (0.58,.23)
+						..controls +(70:.12) and +(95:0.12) ..  (0.67,.2)
+						..controls +(70:.12) and +(95:0.12) ..  (0.75,.17)
+						..controls +(70:.12) and +(95:0.12) ..  (0.8,.14)--cycle
+						;}
+					\draw \D4;
+					\fill[tumbleweed] \D4;
+			}}
+			
+			\tikzset{cong5/.pic={%Đường cong 5
+					\def\D5{ 
+						(.85,.76)
+						..controls +(130:.35) and +(40:.35) ..  (-.56,.86)--
+						(-.56,.74)
+						..controls +(80:.12) and +(95:0.12) ..  (-.5,.77)
+						..controls +(80:.12) and +(95:0.12) ..  (-.44,.79)
+						..controls +(80:.12) and +(95:0.12) ..  (-.34,.81)
+						..controls +(80:.12) and +(95:0.12) ..  (-.22,.83)
+						..controls +(80:.12) and +(95:0.12) ..  (-0.08,.85)
+						..controls +(80:.12) and +(95:0.12) ..  (0.06,.85)
+						..controls +(80:.12) and +(95:0.12) ..  (0.22,.83)
+						..controls +(70:.12) and +(95:0.12) ..  (0.36,.81)
+						..controls +(70:.12) and +(95:0.12) ..  (0.5,.78)
+						..controls +(70:.12) and +(95:0.12) ..  (0.62,.74)
+						..controls +(70:.12) and +(95:0.12) ..  (0.73,.72)
+						..controls +(70:.12) and +(95:0.12) ..  (0.82,.68)--cycle
+						;}
+					\draw \D5;
+					\fill[tumbleweed] \D5;
+			}}
+			
+			\tikzset{cong6/.pic={%Đường cong 6
+					\def\D6{ 
+						(.9,1.25)
+						..controls +(110:.43) and +(110:.27) ..  (-.49,1.35)--
+						(-.49,1.3)
+						..controls +(80:.12) and +(95:0.12) ..  (-.45,1.33)
+						..controls +(80:.12) and +(95:0.12) ..  (-.38,1.33)
+						..controls +(80:.12) and +(95:0.12) ..  (-.28,1.35)
+						..controls +(80:.12) and +(95:0.12) ..  (-.16,1.37)
+						..controls +(80:.12) and +(95:0.12) ..  (-0.04,1.38)
+						..controls +(80:.12) and +(95:0.12) ..  (0.12,1.38)
+						..controls +(80:.12) and +(95:0.12) ..  (0.26,1.38)
+						..controls +(70:.12) and +(95:0.12) ..  (0.42,1.37)
+						..controls +(70:.12) and +(95:0.12) ..  (0.55,1.34)
+						..controls +(70:.12) and +(95:0.12) ..  (0.67,1.3)
+						..controls +(70:.12) and +(95:0.12) ..  (0.78,1.25)
+						..controls +(70:.12) and +(95:0.12) ..  (0.84,1.21)
+						..controls +(70:.12) and +(95:0.12) ..  (0.88,1.16)--cycle
+						;}
+					\draw \D6;
+					\fill[tumbleweed] \D6;
+			}}
+			
+			\tikzset{cong7/.pic={%Đường cong 7
+					\def\D7{ 
+						(.74,1.94)
+						..controls +(75:.31) and +(115:.28) ..  (-.28,2)--
+						(-.28,1.94)
+						..controls +(80:.12) and +(95:0.12) ..  (-.24,1.98)
+						..controls +(80:.12) and +(95:0.12) ..  (-.14,2.04)
+						..controls +(80:.12) and +(95:0.12) ..  (0.02,2.08)
+						..controls +(80:.12) and +(95:0.12) ..  (0.2,2.08)
+						..controls +(80:.12) and +(95:0.12) ..  (0.4,2.05)
+						..controls +(80:.12) and +(95:0.12) ..  (0.56,2)
+						..controls +(80:.12) and +(95:0.12) ..  (0.66,1.96)
+						..controls +(70:.12) and +(95:0.12) ..  (0.74,1.9)--cycle
+						;}
+					\draw \D7;
+					\fill[tumbleweed] \D7;
+			}}
+			
+			\tikzset{cua/.pic={%Cửa
+					\def\W{ 
+						(-.7,-2.85)--(-.63,-2.25)
+						..controls +(70:.1) and +(100:.1) ..  (-.46,-2.25)--(-.52,-2.85)
+						--cycle
+						;}
+					\draw \W;
+					\fill[tumbleweed] \W;
+			}}
+			
+			\tikzset{vien/.pic={%viền ngoài
+					\def\V{ 
+						(.9,1.25)
+						..controls +(110:.43) and +(110:.27) ..  (-.49,1.35)--(-.98,-2.85)--(.59,-2.85)--cycle
+						
+						(.74,1.94)
+						..controls +(75:.31) and +(115:.28) ..  (-.28,2)--(-.32,1.54)
+						..controls +(115:.2) and +(75:.13) ..  (.72,1.48)--cycle
+						;}
+					\draw \V;
+					\fill[gray!50!] \V;
+			}}
+			
+			\tikzset{soc/.pic={%Thanh sọc
+					\def\S{ 
+						(.82,1.36)--(.54,-1.85)--(.58,-1.85)--(.86,1.36)
+						--cycle
+						;}
+					\draw \S;
+					\fill[tumbleweed!40!] \S;
+			}}
+			
+			\tikzset{soc2/.pic={%Thanh sọc lớn
+					\def\S{ 
+						(.54,-1.95)--(.44,-2.85)--(.48,-2.85)--(.58,-1.95)
+						--cycle
+						;}
+					\draw \S;
+					\fill[tumbleweed!40!] \S;
+			}}
+			
+			\tikzset{soc3/.pic={%Thanh sọc
+					\def\S{ 
+						(.54,2)--(.57,2)--(.54,1.5)--(.51,1.5)
+						--cycle
+						(.66,2)--(.69,2)--(.66,1.5)--(.63,1.5)
+						--cycle
+						(-.26,2)--(-.23,2)--(-.26,1.5)--(-.29,1.5)
+						--cycle
+						;}
+					\draw \S;
+					\fill[tumbleweed!40!] \S;
+			}}
+			
+			\tikzset{thoi/.pic={%Hình thoi
+					\def\T{ 
+						(0.15,-1.98)--(.24,-2.12)--(0.13,-2.22)--(0.04,-2.1)
+						--cycle
+						;}
+					\draw \T;
+					\fill[tumbleweed!40!] \T;
+			}}
+			
+			\tikzset{cay/.pic={%Cây
+					\def\T{ 
+						(-1.73,-2.85)
+						..controls +(40:.03) and +(40:.01) ..  (-1.74,-2.7)
+						..controls +(140:.04) and +(60:.02) ..  (-1.78,-2.6)
+						..controls +(140:.04) and +(60:.02) ..  (-1.8,-2.55)
+						..controls +(100:.03) and +(70:.02) ..  (-1.82,-2.5)
+						..controls +(140:.04) and +(60:.02) ..  (-1.815,-2.4)
+						..controls +(140:.04) and +(60:.02) ..  (-1.818,-2.3)
+						..controls +(85:.03) and +(-30:.03) ..  (-1.8,-2.2)
+						..controls +(80:.04) and +(50:.02) ..  (-1.78,-2)
+						..controls +(60:.04) and +(120:.02) ..  (-1.76,-1.9)
+						..controls +(80:.03) and +(-100:.02) ..  (-1.74,-1.8)
+						..controls +(80:.01) and +(-100:.02) ..  (-1.72,-1.9)
+						..controls +(60:.02) and +(-120:.02) ..  (-1.7,-2)
+						..controls +(-80:.02) and +(110:.03) ..  (-1.66,-2.2)
+						..controls +(-100:.02) and +(60:.03) ..  (-1.64,-2.3)
+						..controls +(-30:.02) and +(70:.02) ..  (-1.6,-2.44)
+						..controls +(-100:.02) and +(70:.02) ..  (-1.63,-2.52)
+						..controls +(-60:.02) and +(70:.01) ..  (-1.66,-2.6)
+						..controls +(60:.01) and +(70:.02) ..  (-1.7,-2.7)
+						..controls +(-120:.02) and +(120:.03) ..  (-1.68,-2.85)
+						;}
+					\draw \T;
+					\fill[cadmiumgreen!90!] \T;
+			}}
+			\fill[cadmiumgreen!80!] (-4,-3.5) rectangle (8,-2.2);
+			\fill[lightcornflowerblue] (-4,3.5) rectangle (8,-2.2);
+			\path 
+			(0,0)pic[scale=1]{cay}(.35,0)pic[scale=.9]{cay}(1.05,0.6)pic[scale=1.2]{cay}(-.5,-1)pic[scale=.6]{cay}
+			(3,0)pic[scale=1]{cay}(2.8,0)pic[scale=1]{cay}
+			(0,0)pic[scale=1]{vien}
+			(0,0)pic[scale=1]{soc} (0,0)pic[scale=1]{soc}(-.15,0)pic[scale=1]{soc}(-.3,0)pic[scale=1]{soc}(-.45,0)pic[scale=1]{soc}(-.6,0)pic[scale=1]{soc}(-.75,0)pic[scale=1]{soc}(-.9,0)pic[scale=1]{soc}(-1.02,0)pic[scale=1]{soc}(-1.12,0)pic[scale=1]{soc}(-1.22,0)pic[scale=1]{soc}(-1.32,0)pic[scale=1]{soc}
+			
+			(0,0)pic[scale=1]{soc3}
+			(0,0)pic[scale=1]{thap}(0,0)pic[scale=1]{co}
+			(.4,3.6)pic[scale=.7,rotate=3]{cua}
+			(.8,3.6)pic[scale=1.2,rotate=7,yscale=.6]{cua}
+			(.3,3.4)pic[scale=1.1,rotate=7,yscale=.6]{cua}
+			(0,-.04)pic[scale=1]{thoi}(0.25,-.05)pic[scale=1]{thoi}(-0.35,0)pic[scale=1]{thoi}(-.67,0)pic[scale=1]{thoi}(-.9,0)pic[scale=1]{thoi}
+			(-1.22,0)pic[scale=1]{soc2}(-1.36,0)pic[scale=1]{soc2}
+			(-.94,0)pic[scale=1]{soc2}(-.56,0)pic[scale=1]{soc2}
+			(-.56,0)pic[scale=1]{soc2}(.08,0)pic[scale=1]{soc2}(-.04,0)pic[scale=1]{soc2}(-.28,0)pic[scale=1]{soc2}
+			(0,0)pic[scale=1]{cong0} (0,0.02)pic[scale=1]{cong0}%
+			(0,0)pic[scale=1]{cong1} (0,0.02)pic[scale=1]{cong1}%
+			(0,0)pic[scale=1]{cong2} (0,0.02)pic[scale=1]{cong2}%
+			(0,0)pic[scale=1]{cong3}(0,0.02)pic[scale=1]{cong3}
+			(0,0)pic[scale=1]{cong4}(0,0.02)pic[scale=1]{cong4}
+			(0,0)pic[scale=1]{cong5}(0,0.02)pic[scale=1]{cong5}
+			(0,0)pic[scale=1]{cong6}(0,0.02)pic[scale=1]{cong6}
+			(0,0)pic[scale=1]{cong7}(0,0.02)pic[scale=1]{cong7}
+			(0,0)pic[scale=1]{cua}
+			
+			(0,0)pic[scale=1]{rao}
+			;		
+		\end{tikzpicture}
+	}
+	\loigiai{Mỗi khi chạm đất quả bóng lại nảy lên một độ cao bằng $\dfrac{1}{10}$ độ cao của lần rơi ngay trước đó và sau đó lại rơi xuống từ độ cao thứ hai này. Do đó, độ dài hành trình của quả bóng kể từ thời điểm rơi ban đầu đến:\\    
+		Thời điểm chạm đất lần thứ nhất là $d_1=55{,}8$.\\
+		Thời điềm chạm đất lần thứ hai là $d_2=55{,}8+2\cdot \dfrac{55{,}8}{10}$.\\
+		Thời điểm chạm đất lần thứ ba là $d_3=55{,}8+2 \cdot\dfrac{55{,}8}{10}+2\cdot \dfrac{55{,}8}{10^2}$.\\
+		Thời điểm chạm đất lần thứ tư là $d_4=55{,}8+2 \cdot\dfrac{55{,}8}{10}+2\cdot \dfrac{55{,}8}{10^2}+2\cdot \dfrac{55{,}8}{10^3}$.\\
+		$\ldots$\\
+		Thời điểm chạm đất lần thứ $n~(n>1)$ là
+		$$d_n=55{,}8+2\cdot55{,}8+2\cdot \frac{55{,}8}{10^2}+2\cdot \frac{55{,}8}{10^3}+\ldots+2\cdot \frac{55{,}8}{10^{n-1}}.$$
+		Do đó, quãng đường mà quả bóng đi được kể từ thời điềm rơi đến khi nằm yên trên mặt đất là:
+		$$ d=55{,}8+2.55{,}8+2\cdot \frac{55{,}8}{10^2}+2\cdot \frac{55{,}8}{10^3}+\ldots+2\cdot \frac{55{,}8}{10^{n-1}}+\ldots=\lim d_n.$$
+		Vì $2\cdot \dfrac{55{,}8}{10} ; 2\cdot \dfrac{55{,}8}{10^2} ; 2\cdot \dfrac{55{,}8}{10^3}; \ldots ; 2\cdot \dfrac{55{,}8}{10^{n-1}}; \ldots$ là một cấp số nhân lùi vô hạn với công bội $q=\dfrac{1}{10}$ nên ta có:
+		$$ 2 \cdot\dfrac{55{,}8}{10}+2\cdot \dfrac{55{,}8}{10^2}+2\cdot \dfrac{55{,}8}{10^3}+\ldots+2\cdot \dfrac{55{,}8}{10^{n-1}}+\ldots=\dfrac{2\cdot \dfrac{55{,}8}{10}}{1-\dfrac{1}{10}}=12{,}4.$$
+		Vậy $d=55{,}8+12{,}4=68{,}2$ m.
+	}
+\end{bt}
+
+% nguồn: 2026-11-15_11_1D3_Gioi_han (nhập 14/11/2026)
+\begin{bt}%[1D3C1-6]%[ma:8f378643]
+% nguon: Archive/SP_KhoLatex/ID6_old/1-CK1-OT-De-24.tex #2825
+
+	Bạn An thả một quả bóng cao su từ độ cao $6\,m$ so với mặt đất, mỗi lần chạm đất quả bóng lại nảy lên một độ cao bằng ba phần tư độ cao lần rơi trước. Biết rằng quả bóng luôn chuyển động vuông góc với mặt đất. Tính quãng đường quả bóng đã di chuyển (từ lúc thả bóng cho đến lúc bóng không nảy nữa)?
+	\loigiai{
+		Quãng đường bóng đã di chuyển bằng tổng quãng đường bóng nảy lên và quãng đường bóng rơi xuống.\\
+		Gọi $u_n$ (m) là quãng đường quả bóng rơi xuống ở lần rơi thứ $n$ ($u_n >0$).\\
+		Gọi $v_n$ (m) là quãng đường quả bóng nảy lên ở lần thứ $n$ ($v_n >0$).\\
+		Theo đề bài, ta có $(u_n)$ là một cấp số nhân lùi vô hạn với $u_1 = 6$ và công bội $q=0{,}75$; và $(v_n)$ là cấp số nhân lùi vô hạn với $v_1 = 6\cdot 0{,}75 = 4{,}5$ và công bội $q'=0{,}75$.\\
+		\begin{itemize}
+			\item Tổng quãng đường quả bóng rơi xuống
+			\[S = \dfrac{u_1}{1-q}=\dfrac{6}{1-0{,}75} =24 \quad\text{(m)}.\]
+			\item Tổng quãng đường quả bóng nảy lên
+			\[S' = \dfrac{v_1}{1-q'}=\dfrac{4{,}5}{1-0{,}75}=18\quad\text{(m)}.\]
+		\end{itemize}
+		Vậy quãng đường quả bóng đã di chuyển là $24 + 18 =42$ (m).	
+	}
+\end{bt}
+
+% nguồn: 2026-11-15_11_1D3_Gioi_han (nhập 14/11/2026)
+\begin{bt}%[1D3V1-6]%[ma:60f2866f]
+% nguon: Archive/SP_KhoLatex/SP_Đề Theo Bài-Khối 11/1-B15.tex #4119
+
+	Từ độ cao $55{,}8$ m của tháp nghiêng Pisa nước Ý, người ta thả một quả bóng cao su chạm xuống đất (như hình vẽ). Giả sử mỗi lần chạm đất quả bóng lại nảy lên độ cao bằng $\dfrac{1}{10}$ độ cao mà quả bóng đạt được trước đó. Tính tổng độ dài quãng đường di chuyển của quả bóng tính từ lúc thả ban đầu cho đến khi quả bóng đó dừng hẳn trên mặt đất.
+	\definecolor{lightcornflowerblue}{rgb}{0.6, 0.81, 0.93}
+	\definecolor{cadmiumgreen}{rgb}{0.0, 0.42, 0.24}
+	\definecolor{trueblue}{rgb}{0.0, 0.45, 0.81}
+	\definecolor{tumbleweed}{rgb}{0.87, 0.67, 0.53}%màu cát
+	
+	\begin{center}
+	\begin{tikzpicture}[line join=round, line cap=round,scale=1,transform shape]
+	\clip (-4,-3.5) rectangle (8,3.5);
+
+	\tikzset{thap/.pic={%Xây từ dưới lên
+	\def\T{ 
+	(-.88,-1.78)%1
+	..controls +(40:.17) and +(120:.1) ..  (.686,-1.91)--(.68,-1.94)
+	..controls +(120:.1) and +(40:.12) ..  (-.87,-1.81)
+	--cycle
+
+	(-.8,-1.2)%2
+	..controls +(40:.14) and +(120:.14) ..  (.72,-1.34)--(.7,-1.36)
+	..controls +(120:.1) and +(40:.12) ..  (-.78,-1.23)
+	--cycle
+
+	(-.74,-.65)%3
+	..controls +(40:.22) and +(120:.17) ..  (.74,-.78)--(.72,-.8)
+	..controls +(120:.15) and +(40:.15) ..  (-.72,-.67)
+	--cycle
+
+	(-.68,-.13)%4
+	..controls +(40:.34) and +(110:.2) ..  (.8,-.26)--(.78,-.28)
+	..controls +(110:.17) and +(40:.27) ..  (-.66,-.15)
+	--cycle
+
+	(-.65,.36)%5
+	..controls +(40:.44) and +(120:.3) ..  (.85,.24)--(.83,.22)
+	..controls +(130:.35) and +(40:.35) ..  (-.63,.34)
+	--cycle
+
+	(-.58,.88)%6
+	..controls +(40:.44) and +(120:.3) ..  (.87,.78)--(.85,.76)
+	..controls +(130:.35) and +(40:.35) ..  (-.56,.86)
+	--cycle
+
+	(-.52,1.35)%7
+	..controls +(120:.32) and +(110:.47) ..  (.93,1.26)--(.9,1.25)
+	..controls +(110:.43) and +(110:.27) ..  (-.49,1.35)
+	--cycle
+
+	(-.31,2)%8
+	..controls +(120:.47) and +(55:.46) ..  (.76,1.94)--(.74,1.94)
+	..controls +(75:.31) and +(115:.28) ..  (-.28,2)
+	--cycle
+
+	(-.48,1.5)
+	..controls +(40:.33) and +(110:.2) ..  (.86,1.4)
+	(-.476,1.52)
+	..controls +(40:.33) and +(110:.2) ..  (.86,1.42)
+	(-.472,1.54)
+	..controls +(40:.33) and +(110:.2) ..  (.86,1.44)
+	(-.468,1.56)
+	..controls +(40:.33) and +(110:.2) ..  (.86,1.46)
+
+	(-.28,2.2)
+	..controls +(40:.27) and +(140:.2) ..  (.74,2.16)
+	(-.276,2.22)
+	..controls +(40:.27) and +(140:.2) ..  (.74,2.18)
+	(-.272,2.24)
+	..controls +(40:.27) and +(140:.2) ..  (.74,2.2)
+	(-.268,2.26)
+	..controls +(40:.27) and +(140:.2) ..  (.74,2.22)
+	;}
+	\draw \T;
+	%\fill[tumbleweed] \T;
+	}}
+
+	\tikzset{rao/.pic={%Rào
+	\def\R{ 
+	(-.48,1.5)
+	..controls +(40:.33) and +(110:.2) ..  (.86,1.4)
+	(-.476,1.52)
+	..controls +(40:.33) and +(110:.2) ..  (.86,1.42)
+	(-.472,1.54)
+	..controls +(40:.33) and +(110:.2) ..  (.86,1.44)
+	(-.468,1.56)
+	..controls +(40:.33) and +(110:.2) ..  (.86,1.46)
+	(-.28,2.2)
+	..controls +(40:.27) and +(140:.2) ..  (.74,2.16)
+	(-.276,2.22)
+	..controls +(40:.27) and +(140:.2) ..  (.74,2.18)
+	(-.272,2.24)
+	..controls +(40:.27) and +(140:.2) ..  (.74,2.2)
+	(-.268,2.26)
+	..controls +(40:.27) and +(140:.2) ..  (.74,2.22)
+	;}
+	\draw \R;
+	%\fill[tumbleweed] \R;
+	}}
+
+	\tikzset{co/.pic={%Cờ
+	\def\C{ 
+	(0.1,2.3)--(.1,2.9)
+	(.1,2.82)
+	..controls +(-40:.2) and +(140:.22) ..  (.2,2.6)
+	..controls +(-60:0) and +(100:.1) ..(.16,2.5)
+	..controls +(140:.1) and +(-30:0) ..  (.1,2.53)--cycle
+	;}
+	\draw \C;
+	\fill[red] \C;
+	}}
+
+	\tikzset{cong0/.pic={%Đường cong trệt
+	\def\D0{ 
+	(.68,-1.96)
+	..controls +(120:.1) and +(40:.12) ..  (-.87,-1.81)--
+	(-.87,-1.94)
+	..controls +(80:.12) and +(95:0.12) ..  (-.68,-2.06)
+	..controls +(80:.12) and +(85:0.3) ..  (-.4,-2.12)
+	..controls +(80:.25) and +(95:0.25) ..  (-.02,-2.12)
+	..controls +(80:.25) and +(95:0.25) ..  (.27,-2.14)
+	..controls +(80:.12) and +(95:0.12) ..  (.5,-2.14)
+	..controls +(70:.12) and +(95:0.02) ..  (.66,-2.1)--cycle
+	;}
+	\draw \D0;
+	\fill[tumbleweed] \D0;
+	}}
+
+	\tikzset{cong1/.pic={%Đường cong 1
+	\def\D1{ 
+	(.7,-1.36)
+	..controls +(120:.1) and +(40:.12) ..  (-.78,-1.23)--
+	(-.78,-1.35)
+	..controls +(80:.12) and +(95:0.12) ..  (-.72,-1.35)
+	..controls +(80:.12) and +(95:0.12) ..  (-.64,-1.35)
+	..controls +(80:.12) and +(95:0.12) ..  (-.55,-1.35)
+	..controls +(80:.12) and +(95:0.12) ..  (-.44,-1.36)
+	..controls +(80:.12) and +(95:0.12) ..  (-.3,-1.37)
+	..controls +(80:.12) and +(95:0.12) ..  (-.14,-1.38)
+	..controls +(80:.12) and +(95:0.12) ..  (0.02,-1.39)
+	..controls +(80:.12) and +(95:0.12) ..  (0.18,-1.4)
+	..controls +(80:.12) and +(95:0.12) ..  (0.32,-1.42)
+	..controls +(70:.12) and +(95:0.12) ..  (0.42,-1.44)
+	..controls +(70:.12) and +(95:0.12) ..  (0.52,-1.46)
+	..controls +(70:.12) and +(95:0.12) ..  (0.6,-1.47)
+	..controls +(70:.12) and +(95:0.12) ..  (0.68,-1.5)--cycle
+	;}
+	\draw \D1;
+	\fill[tumbleweed] \D1;
+	}}
+
+        \tikzset{cong2/.pic={%Đường cong 2
+        \def\D2{ 
+        (.72,-.8)
+        ..controls +(120:.15) and +(40:.15) ..  (-.72,-.67)--
+        (-.72,-.79)
+        ..controls +(80:.12) and +(95:0.12) ..  (-.66,-.79)
+        ..controls +(80:.12) and +(95:0.12) ..  (-.58,-.79)
+        ..controls +(80:.12) and +(95:0.12) ..  (-.48,-.79)
+        ..controls +(80:.12) and +(95:0.12) ..  (-.38,-.8)
+        ..controls +(80:.12) and +(95:0.12) ..  (-.23,-.8)
+        ..controls +(80:.12) and +(95:0.12) ..  (-0.08,-.81)
+        ..controls +(80:.12) and +(95:0.12) ..  (0.08,-.82)
+        ..controls +(80:.12) and +(95:0.12) ..  (0.22,-.84)
+        ..controls +(80:.12) and +(95:0.12) ..  (0.36,-.85)
+        ..controls +(70:.12) and +(95:0.12) ..  (0.48,-.87)
+        ..controls +(70:.12) and +(95:0.12) ..  (0.58,-.89)
+        ..controls +(70:.12) and +(95:0.12) ..  (0.66,-.9)
+        ..controls +(70:.12) and +(95:0.12) ..  (0.71,-.92)--cycle
+        ;}
+        \draw \D2;
+        \fill[tumbleweed] \D2;
+        }}
+
+        \tikzset{cong3/.pic={%Đường cong 3
+        \def\D3{ 
+        (.78,-.28)
+        ..controls +(110:.17) and +(40:.27) ..  (-.66,-.15)--
+        (-.66,-.26)
+        ..controls +(80:.12) and +(95:0.12) ..  (-.6,-.25)
+        ..controls +(80:.12) and +(95:0.12) ..  (-.52,-.24)
+        ..controls +(80:.12) and +(95:0.12) ..  (-.44,-.23)
+        ..controls +(80:.12) and +(95:0.12) ..  (-.32,-.23)
+        ..controls +(80:.12) and +(95:0.12) ..  (-.18,-.23)
+        ..controls +(80:.12) and +(95:0.12) ..  (-.04,-.24)
+        ..controls +(80:.12) and +(95:0.12) ..  (0.13,-.25)
+        ..controls +(80:.12) and +(95:0.12) ..  (0.26,-.26)
+        ..controls +(70:.12) and +(95:0.12) ..  (0.42,-.29)
+        ..controls +(70:.12) and +(95:0.12) ..  (0.54,-.31)
+        ..controls +(70:.12) and +(95:0.12) ..  (0.63,-.33)
+        ..controls +(70:.12) and +(95:0.12) ..  (0.7,-.35)
+        ..controls +(70:.12) and +(95:0.12) ..  (0.765,-.38)--cycle
+        ;}
+        \draw \D3;
+        \fill[tumbleweed] \D3;
+        }}
+
+        \tikzset{cong4/.pic={%Đường cong 4
+        \def\D4{ 
+        (.83,.22)
+        ..controls +(130:.35) and +(40:.35) ..  (-.63,.34)--
+        (-.63,.23)
+        ..controls +(80:.12) and +(95:0.12) ..  (-.57,.25)
+        ..controls +(80:.12) and +(95:0.12) ..  (-.49,.26)
+        ..controls +(80:.12) and +(95:0.12) ..  (-.4,.28)
+        ..controls +(80:.12) and +(95:0.12) ..  (-.27,.3)
+        ..controls +(80:.12) and +(95:0.12) ..  (-.15,.3)
+        ..controls +(80:.12) and +(95:0.12) ..  (0.02,.3)
+        ..controls +(80:.12) and +(95:0.12) ..  (0.16,.29)
+        ..controls +(80:.12) and +(95:0.12) ..  (0.31,.27)
+        ..controls +(70:.12) and +(95:0.12) ..  (0.45,.25)
+        ..controls +(70:.12) and +(95:0.12) ..  (0.58,.23)
+        ..controls +(70:.12) and +(95:0.12) ..  (0.67,.2)
+        ..controls +(70:.12) and +(95:0.12) ..  (0.75,.17)
+        ..controls +(70:.12) and +(95:0.12) ..  (0.8,.14)--cycle
+        ;}
+        \draw \D4;
+        \fill[tumbleweed] \D4;
+        }}
+        
+        \tikzset{cong5/.pic={%Đường cong 5
+        \def\D5{ 
+        (.85,.76)
+        ..controls +(130:.35) and +(40:.35) ..  (-.56,.86)--
+        (-.56,.74)
+        ..controls +(80:.12) and +(95:0.12) ..  (-.5,.77)
+        ..controls +(80:.12) and +(95:0.12) ..  (-.44,.79)
+        ..controls +(80:.12) and +(95:0.12) ..  (-.34,.81)
+        ..controls +(80:.12) and +(95:0.12) ..  (-.22,.83)
+        ..controls +(80:.12) and +(95:0.12) ..  (-0.08,.85)
+        ..controls +(80:.12) and +(95:0.12) ..  (0.06,.85)
+        ..controls +(80:.12) and +(95:0.12) ..  (0.22,.83)
+        ..controls +(70:.12) and +(95:0.12) ..  (0.36,.81)
+        ..controls +(70:.12) and +(95:0.12) ..  (0.5,.78)
+        ..controls +(70:.12) and +(95:0.12) ..  (0.62,.74)
+        ..controls +(70:.12) and +(95:0.12) ..  (0.73,.72)
+        ..controls +(70:.12) and +(95:0.12) ..  (0.82,.68)--cycle
+        ;}
+        \draw \D5;
+        \fill[tumbleweed] \D5;
+        }}
+
+        \tikzset{cong6/.pic={%Đường cong 6
+        \def\D6{ 
+        (.9,1.25)
+        ..controls +(110:.43) and +(110:.27) ..  (-.49,1.35)--
+        (-.49,1.3)
+        ..controls +(80:.12) and +(95:0.12) ..  (-.45,1.33)
+        ..controls +(80:.12) and +(95:0.12) ..  (-.38,1.33)
+        ..controls +(80:.12) and +(95:0.12) ..  (-.28,1.35)
+        ..controls +(80:.12) and +(95:0.12) ..  (-.16,1.37)
+        ..controls +(80:.12) and +(95:0.12) ..  (-0.04,1.38)
+        ..controls +(80:.12) and +(95:0.12) ..  (0.12,1.38)
+        ..controls +(80:.12) and +(95:0.12) ..  (0.26,1.38)
+        ..controls +(70:.12) and +(95:0.12) ..  (0.42,1.37)
+        ..controls +(70:.12) and +(95:0.12) ..  (0.55,1.34)
+        ..controls +(70:.12) and +(95:0.12) ..  (0.67,1.3)
+        ..controls +(70:.12) and +(95:0.12) ..  (0.78,1.25)
+        ..controls +(70:.12) and +(95:0.12) ..  (0.84,1.21)
+        ..controls +(70:.12) and +(95:0.12) ..  (0.88,1.16)--cycle
+        ;}
+        \draw \D6;
+        \fill[tumbleweed] \D6;
+        }}
+        
+        \tikzset{cong7/.pic={%Đường cong 7
+        \def\D7{ 
+        (.74,1.94)
+        ..controls +(75:.31) and +(115:.28) ..  (-.28,2)--
+        (-.28,1.94)
+        ..controls +(80:.12) and +(95:0.12) ..  (-.24,1.98)
+        ..controls +(80:.12) and +(95:0.12) ..  (-.14,2.04)
+        ..controls +(80:.12) and +(95:0.12) ..  (0.02,2.08)
+        ..controls +(80:.12) and +(95:0.12) ..  (0.2,2.08)
+        ..controls +(80:.12) and +(95:0.12) ..  (0.4,2.05)
+        ..controls +(80:.12) and +(95:0.12) ..  (0.56,2)
+        ..controls +(80:.12) and +(95:0.12) ..  (0.66,1.96)
+        ..controls +(70:.12) and +(95:0.12) ..  (0.74,1.9)--cycle
+        ;}
+        \draw \D7;
+        \fill[tumbleweed] \D7;
+        }}
+        
+        \tikzset{cua/.pic={%Cửa
+        \def\W{ 
+        (-.7,-2.85)--(-.63,-2.25)
+        ..controls +(70:.1) and +(100:.1) ..  (-.46,-2.25)--(-.52,-2.85)
+        --cycle
+        ;}
+        \draw \W;
+        \fill[tumbleweed] \W;
+        }}
+        
+        \tikzset{vien/.pic={%viền ngoài
+        \def\V{ 
+        (.9,1.25)
+        ..controls +(110:.43) and +(110:.27) ..  (-.49,1.35)--(-.98,-2.85)--(.59,-2.85)--cycle
+        
+        (.74,1.94)
+        ..controls +(75:.31) and +(115:.28) ..  (-.28,2)--(-.32,1.54)
+        ..controls +(115:.2) and +(75:.13) ..  (.72,1.48)--cycle
+        ;}
+        \draw \V;
+        \fill[gray!50!] \V;
+        }}
+        
+        \tikzset{soc/.pic={%Thanh sọc
+        \def\S{ 
+        (.82,1.36)--(.54,-1.85)--(.58,-1.85)--(.86,1.36)
+        --cycle
+        ;}
+        \draw \S;
+        \fill[tumbleweed!40!] \S;
+        }}
+        
+        \tikzset{soc2/.pic={%Thanh sọc lớn
+        \def\S{ 
+        (.54,-1.95)--(.44,-2.85)--(.48,-2.85)--(.58,-1.95)
+        --cycle
+        ;}
+        \draw \S;
+        \fill[tumbleweed!40!] \S;
+        }}
+        
+        \tikzset{soc3/.pic={%Thanh sọc
+        \def\S{ 
+        (.54,2)--(.57,2)--(.54,1.5)--(.51,1.5)
+        --cycle
+        (.66,2)--(.69,2)--(.66,1.5)--(.63,1.5)
+        --cycle
+        (-.26,2)--(-.23,2)--(-.26,1.5)--(-.29,1.5)
+        --cycle
+        ;}
+        \draw \S;
+        \fill[tumbleweed!40!] \S;
+        }}
+        
+        \tikzset{thoi/.pic={%Hình thoi
+        \def\T{ 
+        (0.15,-1.98)--(.24,-2.12)--(0.13,-2.22)--(0.04,-2.1)
+        --cycle
+        ;}
+        \draw \T;
+        \fill[tumbleweed!40!] \T;
+        }}
+        
+        \tikzset{cay/.pic={%Cây
+        \def\T{ 
+        (-1.73,-2.85)
+        ..controls +(40:.03) and +(40:.01) ..  (-1.74,-2.7)
+        ..controls +(140:.04) and +(60:.02) ..  (-1.78,-2.6)
+        ..controls +(140:.04) and +(60:.02) ..  (-1.8,-2.55)
+        ..controls +(100:.03) and +(70:.02) ..  (-1.82,-2.5)
+        ..controls +(140:.04) and +(60:.02) ..  (-1.815,-2.4)
+        ..controls +(140:.04) and +(60:.02) ..  (-1.818,-2.3)
+        ..controls +(85:.03) and +(-30:.03) ..  (-1.8,-2.2)
+        ..controls +(80:.04) and +(50:.02) ..  (-1.78,-2)
+        ..controls +(60:.04) and +(120:.02) ..  (-1.76,-1.9)
+        ..controls +(80:.03) and +(-100:.02) ..  (-1.74,-1.8)
+        ..controls +(80:.01) and +(-100:.02) ..  (-1.72,-1.9)
+        ..controls +(60:.02) and +(-120:.02) ..  (-1.7,-2)
+        ..controls +(-80:.02) and +(110:.03) ..  (-1.66,-2.2)
+        ..controls +(-100:.02) and +(60:.03) ..  (-1.64,-2.3)
+        ..controls +(-30:.02) and +(70:.02) ..  (-1.6,-2.44)
+        ..controls +(-100:.02) and +(70:.02) ..  (-1.63,-2.52)
+        ..controls +(-60:.02) and +(70:.01) ..  (-1.66,-2.6)
+        ..controls +(60:.01) and +(70:.02) ..  (-1.7,-2.7)
+        ..controls +(-120:.02) and +(120:.03) ..  (-1.68,-2.85)
+        ;}
+        \draw \T;
+        \fill[cadmiumgreen!90!] \T;
+        }}
+        \fill[cadmiumgreen!80!] (-4,-3.5) rectangle (8,-2.2);
+        \fill[lightcornflowerblue] (-4,3.5) rectangle (8,-2.2);
+        \path 
+        (0,0)pic[scale=1]{cay}(.35,0)pic[scale=.9]{cay}(1.05,0.6)pic[scale=1.2]{cay}(-.5,-1)pic[scale=.6]{cay}
+        (3,0)pic[scale=1]{cay}(2.8,0)pic[scale=1]{cay}
+        (0,0)pic[scale=1]{vien}
+        (0,0)pic[scale=1]{soc} (0,0)pic[scale=1]{soc}(-.15,0)pic[scale=1]{soc}(-.3,0)pic[scale=1]{soc}(-.45,0)pic[scale=1]{soc}(-.6,0)pic[scale=1]{soc}(-.75,0)pic[scale=1]{soc}(-.9,0)pic[scale=1]{soc}(-1.02,0)pic[scale=1]{soc}(-1.12,0)pic[scale=1]{soc}(-1.22,0)pic[scale=1]{soc}(-1.32,0)pic[scale=1]{soc}
+        
+        (0,0)pic[scale=1]{soc3}
+        (0,0)pic[scale=1]{thap}(0,0)pic[scale=1]{co}
+        (.4,3.6)pic[scale=.7,rotate=3]{cua}
+        (.8,3.6)pic[scale=1.2,rotate=7,yscale=.6]{cua}
+        (.3,3.4)pic[scale=1.1,rotate=7,yscale=.6]{cua}
+        (0,-.04)pic[scale=1]{thoi}(0.25,-.05)pic[scale=1]{thoi}(-0.35,0)pic[scale=1]{thoi}(-.67,0)pic[scale=1]{thoi}(-.9,0)pic[scale=1]{thoi}
+        (-1.22,0)pic[scale=1]{soc2}(-1.36,0)pic[scale=1]{soc2}
+        (-.94,0)pic[scale=1]{soc2}(-.56,0)pic[scale=1]{soc2}
+        (-.56,0)pic[scale=1]{soc2}(.08,0)pic[scale=1]{soc2}(-.04,0)pic[scale=1]{soc2}(-.28,0)pic[scale=1]{soc2}
+        (0,0)pic[scale=1]{cong0} (0,0.02)pic[scale=1]{cong0}%
+        (0,0)pic[scale=1]{cong1} (0,0.02)pic[scale=1]{cong1}%
+        (0,0)pic[scale=1]{cong2} (0,0.02)pic[scale=1]{cong2}%
+        (0,0)pic[scale=1]{cong3}(0,0.02)pic[scale=1]{cong3}
+        (0,0)pic[scale=1]{cong4}(0,0.02)pic[scale=1]{cong4}
+        (0,0)pic[scale=1]{cong5}(0,0.02)pic[scale=1]{cong5}
+        (0,0)pic[scale=1]{cong6}(0,0.02)pic[scale=1]{cong6}
+        (0,0)pic[scale=1]{cong7}(0,0.02)pic[scale=1]{cong7}
+        (0,0)pic[scale=1]{cua}
+        
+        (0,0)pic[scale=1]{rao}
+        ;
+        
+        \draw[fill=yellow] (1.5,1.5) circle (0.3);
+
+	\end{tikzpicture}
+	\end{center}
+	
+	\shortans{$62$}
+	\loigiai{
+		Gọi $\left(u_n\right)$ là dãy số thể hiện quãng đường di chuyển của quả bóng sau mỗi lần chạm đất. Ta có
+		\[u_1=55{,}8 \; ; \; u_2=\dfrac{1}{10}u_1 \; ; \;  u_3=\left(\dfrac{1}{10}\right)^2 u_1 \; ; \;  \ldots \; ; \; u_n=\left(\dfrac{1}{10}\right)^{n-1} u_1.\]
+		Khi đó dãy $\left(u_n\right)$ lập thành một cấp số nhân lùi vô hạn có số hạng đầu $u_1=55{,}8$ và công bội $q=\dfrac{1}{10}$ thỏa mãn $\vert q\vert < 1$. Suy ra 
+		\[S=u_1+u_2+\cdots +u_n=\dfrac{55{,}8}{1-\dfrac{1}{10}}=62\text{ m}.\]
+		Vậy tổng quãng đường di chuyển của quả bóng tính từ lúc thả ban đầu đến khi quả bóng dừng hẳn là $62$ m.
+	}
+\end{bt}
+
+% nguồn: 2026-11-15_11_1D3_Gioi_han (nhập 14/11/2026)
+\begin{bt}%[1D3V1-6]%[ma:d1b769e9]
+% nguon: Archive/SP_KhoLatex/SP_Đề Theo Bài-Khối 11/1-B15.tex #4120
+
+	Một bệnh nhân hàng ngày phải uống một viên thuốc $150$ mg. Sau ngày đầu, trước mỗi lần uống, hàm lượng thuốc cũ trong cơ thể vẫn còn $5\%$. Ước tính lượng thuốc trong cơ thể nếu bệnh nhân sử dụng thuốc trong một thời gian dài. (Kết quả làm tròn đến hàng đơn vị).
+	\shortans{$157$}
+	\loigiai{
+		Đặt $r=5\%$.
+		\begin{itemize}
+			\item Sau khi uống viên thuốc ngày thứ 1, hàm lượng thuốc trong cơ thể là $u_1=150$ mg.
+			\item Hàm lượng thuốc trong cơ thể sau khi uống viên thuốc ngày thứ 2 là 
+				\[u_2=5\%\cdot u_1+150=5\% \cdot 150+150=150(1+r).\]
+			\item Hàm lượng thuốc trong cơ thể sau khi uống viên thuốc ngày thứ 3 là
+				\[u_3=5\%\cdot u_2+150=150r(1+r)+150=150(r^2+r+1).\]
+			\item Hàm lượng thuốc trong cơ thể sau khi uống viên thuốc ngày thứ 4 là
+				\[u_4=5\%\cdot u_3+150=150r(r^2+r+1)+150=150(r^3+r^2+r+1).\]
+			\item Hàm lượng thuốc trong cơ thể nếu bệnh nhân sử dụng liên tục trong $n$ ngày là
+				\[u_n=150\left(r^{n-1}+r^{n-2}+\cdots+r+1\right).\]
+		\end{itemize}
+		Suy ra nếu sử dụng thuốc lâu ngày thì hàm lượng thuốc trong cơ thể là
+		\[ \lim\limits_{n\to +\infty} u_n=\lim\limits_{n\to +\infty} \left[150\left(r^{n-1}+r^{n-2}+\cdots+r+1\right)\right] =150\cdot \dfrac{1}{1-r}=150\cdot \dfrac{100}{95}\approx 157\text{ mg}.\]
+	}
+\end{bt}
+
+% nguồn: 2026-11-15_11_1D3_Gioi_han (nhập 14/11/2026)
+\begin{bt}%[1D3V1-6]%[ma:130e0ab6]
+% nguon: Archive/SP_KhoLatex/SP_Đề Theo Bài-Khối 11/1-B15.tex #4123
+
+	Một khinh khí cầu bay cao $300$ m ở phút đầu tiên sau khi được thả. Mỗi phút tiếp theo, nó bay cao 
+thêm độ cao bằng $\dfrac{2}{5}$ độ cao bay được ở phút trước đó. Hỏi khinh khí cầu có thể đạt độ cao tối đa là bao nhiêu?
+	\shortans{$500$}
+	\loigiai{
+		Ta có
+		\begin{itemize}
+			\item Khinh khí cầu ở phút đầu tiên sau khi được thả bay cao $300$ m.
+			\item Khinh khí cầu ở phút thứ hai sau khi được thả bay cao $300+300\cdot \dfrac{2}{5}$ m.
+			\item Khinh khí cầu ở phút thứ ba sau khi được thả bay cao $300+300\cdot \dfrac{2}{5}+300\cdot \left(\dfrac{2}{5}\right)^2$ m.
+		\end{itemize}
+		Suy ra khinh khí cầu có thể đạt độ cao tối đa  
+		\[300+300\cdot \dfrac{2}{5}+300\cdot \left(\dfrac{2}{5}\right)^2+\cdots =300\cdot\dfrac{1}{1-\dfrac{2}{5}}=500 \text{ m}.\]
+	}
+\end{bt}
+
+% nguồn: 2026-11-15_11_1D3_Gioi_han (nhập 14/11/2026)
+\begin{bt}%[1D3V1-6]%[ma:f6901fc9]
+% nguon: Archive/2025-Sangtac/SP-Main/Data/1-KNTT/KNTT_1-OTHK1_De10.tex #5088
+%
+	Từ độ cao $300$ m, người ta thả một quả bóng cao su xuống đất. Giả sử cứ sau mỗi lần chạm đất, quả bóng nảy lên một độ cao bằng $\dfrac{1}{4}$ độ cao mà quả bóng đạt được trước đó. Gọi $h_n$ là độ cao quả bóng đạt được ở lần nảy thứ $n$. Gọi $S_n$ là tổng độ dài quãng đường đi được của quả bóng từ lúc bắt đầu thả quả bóng đến khi quả bóng chạm đất lần thứ $n$. Tính $S_n$, nếu quá trình này cứ tiếp tục diễn ra mãi thì tổng quãng đường quả bóng di chuyển được là bao nhiêu?
+	\shortans[0]{$400$}
+	\loigiai{
+		Ta thấy tổng $S_n$ là tổng của cấp số nhân lùi vô hạn có  $u_1=300$, công bội $q=\dfrac{1}{4}$.\\
+		Ta có $S_n=300+300\cdot\dfrac{1}{4}+300\cdot\left(\dfrac{1}{4}\right)^2+\ldots+300\cdot\left(\dfrac{1}{4}\right)^n+\ldots=300\cdot\dfrac{1}{1-\frac{1}{4}}=400$ m.	
+	}	
+\end{bt}

@@ -671,3 +671,333 @@
  Biên độ là $ A=2\sqrt 2 $ và pha ban đầu là $\varphi=-\dfrac{\pi}{12}$.
  }
 \end{ex}
+
+% nguồn: 2026-11-15_11_1D1_Luong_giac (nhập 14/11/2026)
+\begin{bt}%[1D1V3-7]%[ma:3198fefb]
+% nguon: Archive/SP_SauLuoi_2024-2025/SP_GHKI/1-TN-DS-TLN-chuyenLeQuyDon-NinhThuan-GHKI-NH24-25..tex #117
+%[Dự án đề kiểm tra Toán 11 GKI NH24-25-Trung Kiên]%[THPT Chuyên Bình Thuận - Bình Thuận]
+	Cho sơ đồ cấu trúc kim loại của một cây cầu ({\it tham khảo hình vẽ sau}).
+	\begin{center}
+		\begin{tikzpicture}[line join=round,line cap=round,>=stealth,font=\footnotesize,scale=0.6]
+		\path
+			(0,0) coordinate (O)
+			(7.5,0) coordinate (A)
+			(7.5,4) coordinate (Y)
+			(1.66,-3.11) coordinate (X)
+			(13.5,-2.5) coordinate (M)
+			(13.5,1.5) coordinate (N)
+		;
+		\draw (O)--(Y)--(A)--(O)--(X)--(A)--(M)--(N)--(Y);
+		\draw[ultra thick] (O)--(Y)--(N);
+		\fill[gray!50] (O)--(Y)--(N)--(M)--(A)--(X)--(O);
+		
+		\foreach \x in {0.5,1,1.5} \draw (0,\x)--(7.5,\x+4)--(13.5,\x+1.5);
+		\foreach \x/\i in {0/0,1/1,2/2,3/3,4/4,5/5}\draw (1.5*\x,0.8*\i)--(1.5*\x,1.5+0.8*\i);
+		\foreach \x/\i in {6/3.375,7/2.75,8/2.125,9/1.5}\draw (1.5*\x,\i)--(1.5*\x,1.5+\i);
+		
+		\foreach \x/\y in {O/180,A/-90,X/-90}{
+			\draw ($(\x)+(\y:4mm)$) node{$\x$};\fill[black] (\x) circle(1pt);}
+		\draw 
+			(O)--(A) node[sloped,pos=0.5,above]{$15$ m}
+			(O)--(X) node[sloped,pos=0.5,below]{$9$ m}
+			(A)--(Y) node[sloped,pos=0.5,below]{$8$ m}
+			(Y) node[shift={(-60:4mm)}]{$Y$};
+			;
+		
+		\draw pic[draw,angle radius=0.3cm]{right angle=A--X--O};
+		\draw pic[draw,angle radius=0.3cm]{right angle=O--A--Y};
+		\draw pic[draw,angle radius=0.3cm,angle eccentricity=1.5, "$\alpha$"]{angle=X--O--A};
+		\draw pic[draw,angle radius=0.5cm,angle eccentricity=1.4, "$\beta$"]{angle=A--O--Y};
+		\end{tikzpicture}
+	\end{center}
+	Biết $OX=9$ m, $OA=15$ m, $AY=8$ m, $\sin\widehat{XOY}=\dfrac{a}{b}$. Tính $b-a$.
+	\shortans{$1$}
+	\loigiai{
+		Đặt $\alpha=\widehat{XOA}$ và $\beta=\widehat{AOY}$.\\
+		Trong tam giác vuông $XOA$ vuông tại $X$, $AX=\sqrt{OA^2-OX^2}=12$ và
+		$$\sin\alpha=\dfrac{AX}{OA}=\dfrac{12}{15}=\dfrac{4}{5},\quad \cos\alpha=\dfrac{OX}{OA}=\dfrac{9}{15}=\dfrac{3}{5}.$$
+		Trong tam giác vuông $AOY$ vuông tại $A$, $OY=\sqrt{OA^2+AY^2}=17$ và
+		$$\sin\beta=\dfrac{AY}{OY}=\dfrac{8}{17}, \quad \cos\beta=\dfrac{OA}{OY}=\dfrac{15}{17}.$$
+		Ta có
+		\begin{align*}
+		\sin\widehat{XOY}
+		&=\sin\left(\alpha+\beta\right)\\
+		&=\sin\alpha\cos\beta+\sin\beta\cos\alpha\\
+		&=\dfrac{4}{5}\cdot \dfrac{15}{17}+\dfrac{8}{17}\cdot \dfrac{3}{5}\\
+		&=\dfrac{84}{85}.
+		\end{align*}
+		Vậy $b-a=85-84=1$.
+	}
+\end{bt}
+
+% nguồn: 2026-11-15_11_1D1_Luong_giac (nhập 14/11/2026)
+\begin{bt}%[1D1V3-7]%[ma:2d0ce081]
+% nguon: Archive/2024/SP-K10-K11-LyVanHoang_TVN-023/11. C1-LuongGiac-lvhoang_TVN-023/dataC1K11/Bai2-Dang1-Congthuccong.tex #1931
+%[CTST]%[Đỗ Vũ Minh Thắng, 24-25 BG 10 11]
+	Trong Hình bên dưới, ba điểm $M$, $N$, $P$ nằm ở đầu các cánh quạt của tua-bin gió. Biết các cánh quạt dài $31$ m, độ cao của điểm $M$ so với mặt đất là $30$ m, góc giữa các cánh quạt là $\dfrac{2 \pi}{3}$ và số đo góc $(OA, OM)$ là $\alpha$.
+	\begin{itemize}
+		\item[a)] Tính $\sin \alpha$ và $\cos \alpha$.
+		\item[b)] Tính $\sin$ của các góc lượng giác $(OA, ON)$ và $(OA, OP)$, từ đó tính chiều cao của các điểm $N$ và $P$ so với mặt đất (theo đơn vị mét). Làm tròn kết quả đến hàng phần trăm.
+	\end{itemize}
+	\begin{minipage}{0.5\textwidth}
+		\centering
+		\tikzset{
+			ex_markstyle/.style={},
+			ex_mark/.style  n args={1}{decoration={ markings, %
+					mark= at position 0.5 with
+					with{
+						\ifnum#1=1
+						\draw[ex_markstyle] (0pt,-2pt) -- (0pt,2pt);
+						\fi
+						\ifnum#1=2
+						\draw[ex_markstyle] (-1pt,-2pt) -- (-1pt,2pt);
+						\draw[ex_markstyle] (1pt,-2pt) -- (1pt,2pt);
+						\fi
+						\ifnum#1=3
+						\draw[ex_markstyle] (-2pt,-2pt) -- (-2pt,2pt);
+						\draw[ex_markstyle] (0pt,-2pt) -- (0pt,2pt);
+						\draw[ex_markstyle] (2pt,-2pt) -- (2pt,2pt);
+						\fi
+						\ifnum#1=4
+						\draw[ex_markstyle] (-1pt,-1pt) -- (1pt,1pt);
+						\draw[ex_markstyle] (-1pt,1pt) -- (1pt,-1pt);
+						\fi
+				} },
+				pic actions/.append code=\tikzset{postaction=decorate}},
+		}
+		\definecolor{deepskyblue}{rgb}{0.0, 0.75, 1.0}
+		\definecolor{green(ryb)}{rgb}{0.4, 0.69, 0.2}
+		\definecolor{anti-flashwhite}{rgb}{0.95, 0.95, 0.96}
+		\definecolor{bittersweet}{rgb}{1.0, 0.44, 0.37}
+		\begin{tikzpicture}[scale=1, font=\footnotesize, line join=round, line cap=round,>=stealth]
+			%\draw[gray!50] (-3,-3) grid (4,4);
+			
+			\fill[bottom color=white,top color=deepskyblue!90, middle color=deepskyblue!90] (-3,0) rectangle (4,4);  
+			
+			\fill[green(ryb)] (-3,-3) rectangle (4,0);  
+			
+			\tikzset{quat_gio/.pic={
+					\coordinate (O) at (0,0);
+					\coordinate (N) at ($(O)+(160:1.5)$);
+					\coordinate (P) at ($(O)+(40:1.5)$);
+					\coordinate (M) at ($(O)+(-70:1.5)$);
+					
+					\draw[fill=anti-flashwhite] (P)..controls +(-155:.3) and +(65:.4) ..  (O)--cycle;				
+					\draw[fill=anti-flashwhite] (N)..controls +(-40:.3) and +(-140:.2) ..  (O)--cycle;
+					\draw[fill=anti-flashwhite] (O)..controls +(-30:.3) and +(100:.3) ..  (M)--cycle;
+					\draw[fill=anti-flashwhite] (O)..controls +(-95:.3) and +(70:.3) ..  (-.15,-2.8)--(.15,-2.8)
+					..controls +(110:.3) and +(-80:.3) ..  (O)
+					;
+			}}
+	
+\path (-1.7,1)pic[scale=.7,yscale=.85,yslant=-.05]{quat_gio}
+(0,1.5)pic[scale=.8,yscale=1,yslant=-.08]{quat_gio}
+(3,1.1)pic[scale=.6,yscale=.8,yslant=-.08]{quat_gio}
+(2,1.35)pic[scale=1,yscale=1.2,yslant=-.1]{quat_gio};
+		\end{tikzpicture}
+		
+	\end{minipage}%
+	\hspace{0.5cm} % Khoảng cách giữa hai hình
+	\begin{minipage}{0.5\textwidth}
+		\centering
+		\begin{tikzpicture}[scale=1.2, font=\footnotesize, line join=round, line cap=round,>=stealth]
+			\def\a{1/16}  
+			\def\xmin{-2.5} \def\xmax{4}
+			\def\ymin{-3.1} \def\ymax{2} 
+			\draw[->] (\xmin,0)--(\xmax,0) node [below]{$x$};
+			\draw[->] (0,\ymin)--(0,\ymax) node [left]{$y$};
+			\coordinate[label=above left:$O$] (O) at (0,0);
+			\coordinate[label=above left:$N$] (N) at ($(O)+(160:1.5)$);
+			\coordinate[label=above right:$P$] (P) at ($(O)+(40:1.5)$);
+			\coordinate[label=below:$M$] (M) at ($(O)+(-70:1.5)$);
+			\coordinate[label=above:$A$] (A) at ($(O)+(0:1.5)$);
+			\draw pic["$\dfrac{2\pi}{3}$", draw=black,below, angle eccentricity=1.4, angle radius=.5cm]{angle=M--O--P}; %góc
+			\draw pic["$\dfrac{2\pi}{3}$", draw=black,angle eccentricity=1.8, angle radius=.4cm]{angle=N--O--M}; %góc
+			\draw pic["$\alpha$", draw=black, angle eccentricity=1.6, angle radius=.2cm]{angle=M--O--A}; 
+			\draw[dashed] (M)--($(M)+(0:1.8)$) 
+			(0,-2.8)--($(0,-2.8)+(0:3)$);
+			\coordinate (E) at ($(M)+(0:1.2)$);
+			\draw[<->](E)--($(E)+(-90:1.4)$); 
+			\draw[<->](2.8,0)--(2.8,-2.8);
+			\draw[fill=gray] (P)..controls +(-155:.3) and +(65:.4) ..  (O)--cycle;				\draw[fill=gray] (N)..controls +(-40:.3) and +(-140:.2) ..  (O)--cycle;
+			\draw[fill=gray] (O)..controls +(-30:.3) and +(100:.3) ..  (M)--cycle;
+			\draw[fill=gray] (O)..controls +(-95:.3) and +(70:.3) ..  (-.15,-2.8)--(.15,-2.8)
+			..controls +(110:.3) and +(-80:.3) ..  (O)
+			;
+			\node at (2.8,-1.5) [right]{$60$ m};
+			\node at (1.7,-2.1) [right]{$30$ m};
+		\end{tikzpicture}
+	\end{minipage}
+	\loigiai{
+		\begin{itemize}
+			\item[a)] Ta có tọa độ điểm $M$ trong hệ trục tọa độ $Oxy$ là $M(x_M; y_M)$.\\
+			Với $\sin \alpha = \dfrac{y_M}{OM} = -\dfrac{30}{31}$ và $\cos \alpha =\sqrt{1 - \sin^2 \alpha} = \dfrac{\sqrt{61}}{31}$.
+			\item[b)] 		
+			Ta có $(OA, OP)=(OA,OM)+(OM,OP)=\alpha+\dfrac{2\pi}{3}$.\\ Suy ra \begin{eqnarray*}
+				\sin (OA,OP)=\sin\left(\alpha+\dfrac{2\pi}{3}\right)&=&\sin\alpha\cos\dfrac{2\pi}{3}+\sin\dfrac{2\pi}{3}\cos\alpha\\
+				&=&-\dfrac{30}{31}\cdot \left(-\dfrac{1}{2}\right)+\dfrac{\sqrt{3}}{2}\cdot\dfrac{\sqrt{61}}{31}=\dfrac{30+\sqrt{183}}{62}.
+			\end{eqnarray*}
+			Do đó chiều cao của điểm $P$ so với mặt đất là $60+31\sin(OA,OP)=60+31\cdot \dfrac{30+\sqrt{183}}{62}\approx 81{,}76$ m.\\
+			Tương tự, ta có $(OA, ON)=(OA,OM)+(OM,ON)=\alpha+\dfrac{4\pi}{3}$. \\
+			Suy ra \begin{eqnarray*}
+				\sin (OA,ON)=\sin\left(\alpha+\dfrac{4\pi}{3}\right)&=&\sin\alpha\cos\dfrac{4\pi}{3}+\sin\dfrac{4\pi}{3}\cos\alpha\\
+				&=&-\dfrac{30}{31}\cdot \left(-\dfrac{1}{2}\right)+\left(-\dfrac{\sqrt{3}}{2}\right) \cdot\dfrac{\sqrt{61}}{31}=\dfrac{30-\sqrt{183}}{62}.
+			\end{eqnarray*}
+			Do đó chiều cao của điểm $N$ so với mặt đất là $60+31\sin(OA,ON)=60+31\cdot \dfrac{30-\sqrt{183}}{62}\approx 68{,}24$ m.
+		\end{itemize}
+	} 
+\end{bt}
+
+% nguồn: 2026-11-15_11_1D1_Luong_giac (nhập 14/11/2026)
+\begin{bt}%[1D1V3-7]%[ma:11b9f78f]
+% nguon: Archive/2024/SP-K10-K11-LyVanHoang_TVN-023/11. C1-LuongGiac-lvhoang_TVN-023/dataC1K11/Bai2-Dang1-Congthuccong.tex #1939
+%[Cánh diều]%[Đỗ Vũ Minh Thắng, 24-25 BG 10 11]
+	Có hai chung cư cao tầng xây cạnh nhau với khoảng cách giữa chúng là $H K=20 \mathrm{~m}$. Để đảm bảo an ninh, trên nóc chung cư thứ hai người ta lắp camera ở vị trí $C$. Gọi $A, B$ lần lượt là vị trí thấp nhất, cao nhất trên chung cư thứ nhất mà camera có thể quan sát được (Hình dưới). Hãy tính số đo góc $A C B$ (phạm vi camera có thể quan sát được ở chung cư thứ nhất). Biết rằng chiều cao của chung cư thứ hai là $C K=32 \mathrm{~m}$, $A H=6 \mathrm{~m}, B H=24 \mathrm{~m}$ (làm tròn kết quả đến hàng phần mười theo đơn vị độ).
+	\shortans{30,6}
+	\begin{center}
+		\begin{tikzpicture}[>=stealth,line join=round,line cap=round,font=\footnotesize,scale=.7]	
+		\path
+		(0,0) coordinate (H)node[below]{$H$}
+		(-1,0) coordinate (H1)
+		(0,1) coordinate (A)node[right]{$A$}
+		(0,4) coordinate (B)node[above]{$B$}
+		(-1,4) coordinate (B1)
+		(3,0) coordinate (K)node[below]{$K$}
+		(4,0) coordinate (K1)
+		(3,5) coordinate (C)node[above]{$C$}
+		(4,5) coordinate (C1)
+		;
+		\fill[green!45]
+		(H)--(B)--(B1)--(H1)--cycle
+		;
+		\fill[blue!45]
+		(C)--(K)--(K1)--(C1)--cycle
+		;
+		\draw[red]
+		(B)--(C)
+		(A)--(C)
+		(H)--(K)
+		;
+		\draw[black]
+		(H)--(B)--(B1)--(H1)--cycle
+		(C)--(K)--(K1)--(C1)--cycle
+		;
+		\end{tikzpicture}
+	\end{center}
+	\loigiai{
+		\immini{Ta có $CD=CK-BH=8$, $CI=CK-AH=26$, $BD=AI=HK=20$.\\
+			$\tan\widehat{BCD}=\dfrac{BD}{CD}=\dfrac{20}{8}=\dfrac{5}{2}$, $\tan\widehat{ACI}=\dfrac{AI}{CI}=\dfrac{20}{26}=\dfrac{10}{13}$.\\
+			$\tan\widehat{BCA}=\tan\left(\widehat{BCD}-\widehat{ACI}\right)=\dfrac{\tan\widehat{BCD}-\tan\widehat{ACI}}{1+\tan\widehat{BCD}.\tan\widehat{ACI}}=\dfrac{\frac{5}{2}-\frac{10}{13}}{1+\frac{5}{2}\cdot\frac{10}{13}}$\\
+			$\tan\widehat{BCA}=\dfrac{45}{76}\Rightarrow \widehat{BCA}\approx 30{,}6^\circ $.
+			
+		}
+		{\begin{tikzpicture}[>=stealth,line join=round,line cap=round,font=\footnotesize,scale=.7]	
+			\path
+			(0,0) coordinate (H)node[below]{$H$}
+			(-1,0) coordinate (H1)
+			(0,1) coordinate (A)node[below right]{$A$}
+			(0,4) coordinate (B)node[above]{$B$}
+			(-1,4) coordinate (B1)
+			(3,0) coordinate (K)node[below]{$K$}
+			(4,0) coordinate (K1)
+			(3,5) coordinate (C)node[above]{$C$}
+			(4,5) coordinate (C1)
+			(3,4) coordinate (D)node[below left]{$D$}
+			(3,1) coordinate (I)node[below left]{$I$}
+			;
+			\fill[green!45]
+			(H)--(B)--(B1)--(H1)--cycle
+			;
+			\fill[blue!45]
+			(C)--(K)--(K1)--(C1)--cycle
+			;
+			\draw[red]
+			(B)--(C)
+			(A)--(C)
+			(H)--(K)
+			(B)--(D)
+			(A)--(I)
+			;
+			\draw[black]
+			(H)--(B)--(B1)--(H1)--cycle
+			(C)--(K)--(K1)--(C1)--cycle
+			;
+			\end{tikzpicture}
+		}
+	}	
+\end{bt}
+
+% nguồn: 2026-11-15_11_1D1_Luong_giac (nhập 14/11/2026)
+\begin{bt}%[1D1V3-7]%[ma:1555ea39]
+% nguon: Archive/2024/SP-K10-K11-LyVanHoang_TVN-023/11. C1-LuongGiac-lvhoang_TVN-023/dataC1K11/Bai2-Dang4-Congthucbiendoitongthanhtich.tex #2076
+%[BG - 11 New - 4in1, Lê Đạt]
+	Hiệu điện thế và cường độ dòng điện trong một thiết bị điện lần lượt được cho bởi các biểu thức sau
+	$$
+	\begin{aligned}
+	& u=40 \sin (120 \pi t)+10 \sin (360 \pi t)(\mathrm{V}) \\
+	& i=4 \sin (120 \pi t)+\sin (360 \pi t) \quad \text { (A). }
+	\end{aligned}
+	$$
+	\begin{flushright}
+		(Nguồn: Ron Larson, Intermediate Algebra, Cengage)
+	\end{flushright}
+	Biết rằng công suất tiêu thụ tức thời của thiết bị đó được tính theo công thức: $P=u \cdot i$ (W). Hãy viết biểu thức biểu thị công suất tiêu thụ tức thời ở dạng không có lũy thừa và tích của các biểu thức lượng giác.
+	\loigiai{
+		Ta có:
+		$$
+		\begin{aligned}
+		P & =u \cdot i=[40 \sin (120 \pi t)+10 \sin (360 \pi t)] \cdot[4 \sin (120 \pi t)+\sin (360 \pi t)] \\
+		& =160 \sin ^{2}(120 \pi t)+10 \sin ^{2}(360 \pi t)+80 \sin (120 \pi t) \sin (360 \pi t) \\
+		& =80[1-\cos (240 \pi t)]+5[1-\cos (720 \pi t)]+40[\cos (360 \pi t-120 \pi t)-\cos (360 \pi t+120 \pi t)] \\
+		& =85-80 \cos (240 \pi t)-5 \cos (720 \pi t)+40 \cos (240 \pi t)-40 \cos (480 \pi t) \\
+		& =85-40 \cos (240 \pi t)-5 \cos (720 \pi t)-40 \cos (480 \pi t)(\mathrm{W}).
+		\end{aligned}
+		$$	
+	}
+\end{bt}
+
+% nguồn: 2026-11-15_11_1D1_Luong_giac (nhập 14/11/2026)
+\begin{bt}%[1D1V3-7]%[ma:a6121b61]
+% nguon: Archive/SP_KhoLatex/ID6_old/1.3.2.tex #3278
+%::Cau 14::
+	
+	Trong Vật lí, phương trình tổng quát của một vật dao động điều hòa cho bởi công thức\\ $x\left( t \right)=A\cos \left( \omega t+\varphi \right)$, trong đó $t$ là thời điểm (tính bằng giây), $x\left( t \right)$ là li độ của vật tại thời điểm $t,A$ là biên độ dao động $\left( A>0 \right)$ và $\varphi \in \left[ -\pi ;\pi \right]$ là pha ban đầu của dao động. Xét hai dao động điều hòa có phương trình ${x_1}\left( t \right)=5.\cos \left( \dfrac{\pi }{4}t+\dfrac{\pi }{3} \right)$ và ${x_2}\left( t \right)=5.\cos \left( \dfrac{\pi }{4}t-\dfrac{\pi }{6} \right)$.Tìm dao động tổng hợp $x\left( t \right)=x_1\left( t \right)+x_2\left( t \right)$ và sử dụng công thức biến đổi tổng thành tích để tìm biên độ và pha ban đầu của dao động tổng hợp này
+	\loigiai{
+		Dao động tổng hợp $x\left( t \right)=x_1\left( \text{t} \right)+x_2\left( t \right)$.\\
+		Suy ra $x\left( \text{t} \right)=5\cos \left( \dfrac{\pi }{4}t+\dfrac{\pi }{3} \right)+5\cos \left( \dfrac{\pi }{4}t-\dfrac{\pi }{6} \right)$ (cm).\\
+		Ta có 
+		\begin{eqnarray*}
+			5\cos \left( \dfrac{\pi }{4}t+\dfrac{\pi }{3} \right)+5\cos \left( \dfrac{\pi }{4}t-\dfrac{\pi }{6} \right)
+			&=&5\left[ \cos \left( \dfrac{\pi }{4}t+\dfrac{\pi }{3} \right)+\cos \left( \dfrac{\pi }{4}t-\dfrac{\pi }{6} \right) \right]\\
+			&=&5\cdot2\cos \dfrac{\left( \dfrac{\pi }{4}t+\dfrac{\pi }{3} \right)+\left( \dfrac{\pi }{4}t-\dfrac{\pi }{6} \right)}{2}\cos \dfrac{\left( \dfrac{\pi }{4}t+\dfrac{\pi }{3} \right)-\left( \dfrac{\pi }{4}t-\dfrac{\pi }{6} \right)}{2}\\
+			&=& 10\cos \left( \dfrac{\pi }{4}t+\dfrac{\pi }{12} \right)\cos \dfrac{\pi }{4}\\
+			&=& 10\cos \left( \dfrac{\pi }{4}t+\dfrac{\pi }{12} \right)\cdot \dfrac{\sqrt{2}}{2}\\
+			&=& 5\sqrt{2}\cos \left( \dfrac{\pi }{4}t+\dfrac{\pi }{12} \right).
+		\end{eqnarray*}
+		Vậy dao động tổng hợp có phương trình là $x\left( t \right)=2\sqrt{2}\cos \left( \dfrac{\pi }{6}t+\dfrac{\pi }{12} \right)$ với biên độ $A=5\sqrt{2}$ và pha ban đầu là $\varphi =\dfrac{\pi }{12}$.\\
+	}
+\end{bt}
+
+% nguồn: 2026-11-15_11_1D1_Luong_giac (nhập 14/11/2026)
+\begin{bt}%[1D1V3-7]%[ma:50a66916]
+% nguon: Archive/2025-Sangtac/Khoi12/Data/1-KNTT/KNTT_1-OTGK1_De05.tex #5064
+
+	Trong Vật lí, phương trình tổng quát của một vật dao động điều hoà cho bởi công thức $x(t)=A\cos(\omega t+\varphi)$, $t$ trong đó   là thời điểm (tính bằng giây), $x(t)$  là li độ của vật tại thời điểm $t$, $A$ là biên độ dao động $(A>0)$ và $\varphi \in \left[-\pi; \pi \right]$ là pha ban đầu của dao động. Xét hai dao động điều hoà có phương trình
+	\allowdisplaybreaks
+	\begin{eqnarray*}
+		x_{1}(t)&=&2\cos \left(\dfrac{\pi}{2}t+\dfrac{\pi}{5} \right)\text{ (cm)},\\
+		x_{2}(t)&=&2\cos \left(\dfrac{\pi}{2}t -\dfrac{3\pi}{10}\right)\text{ (cm)}.
+	\end{eqnarray*}
+	Xét dao động tổng hợp $x(t)=x_{1}(t) + x_{2}(t)$, giả sử pha ban đầu của dao động tổng hợp này là $\dfrac{\pi}{a}$. Tính $a$.
+
+	\shortans{-20}
+	\loigiai{	Dao động tổng hợp là \allowdisplaybreaks
+		\begin{eqnarray*}
+			x(t)&=&x_{1}(t)+x_{2}(t)= 2\cos \left(\dfrac{\pi}{2}t+\dfrac{\pi}{5} \right)+2\cos \left(\dfrac{\pi}{2}t-\dfrac{3\pi}{10}\right)\\
+			\Rightarrow x(t)&=&2\left[\cos\left(\dfrac{\pi}{2}t+\dfrac{\pi}{5}\right)+\cos\left(\dfrac{\pi}{2}t-\dfrac{3\pi}{10}\right)\right]\\
+			\Rightarrow x(t)&=&4\cos\left[\dfrac{\left(\dfrac{\pi}{2}t+\dfrac{\pi}{5}\right)+\left(\dfrac{\pi}{2}t-\dfrac{3\pi}{10}\right)}{2}\right].\cos\left[\dfrac{\left(\dfrac{\pi}{2}t+\dfrac{\pi}{5}\right)-\left(\dfrac{\pi}{2}t-\dfrac{3\pi}{10}\right)}{2}\right].\\
+			\Rightarrow x(t)&=&4\cdot \cos\left(\dfrac{\pi}{2}t-\dfrac{\pi}{20}\right)\cdot \cos\dfrac{\pi}{4}\Rightarrow x(t)=2\sqrt{2}.\cos\left(\dfrac{\pi}{2}t-\dfrac{\pi}{20}\right).
+		\end{eqnarray*}
+		Vậy biên độ của dao động tổng hợp là $A=2\sqrt{2}$ và pha ban đầu của dao động tổng hợp là $\varphi=-\dfrac{\pi}{20}$. Do đó $a=-20$.
+	}	
+\end{bt}

@@ -3685,3 +3685,169 @@ Dựa  vào đồ thị ta thấy $x_A < x_B \Leftrightarrow c < a$.\\ Vậy $a>
 		Vậy giá trị của biểu thức bằng  $17$.
 	} 
 \end{ex}
+
+% nguồn: 2026-11-15_11_1D3_Gioi_han (nhập 14/11/2026)
+\begin{bt}%[1D6C3-3]%[ma:998e7fe8]
+% nguon: Archive/SP_KhoLatex/ID6_old/KNTT6-OT-GV19.tex #3572
+
+	\quad
+	\begin{enumEX}{1}
+		\item Vẽ đồ thị của hai hàm số $y=\mathrm{e}^x$ và $y=\ln x$ trên cùng một hệ trục toạ độ.
+		\item Chứng minh rằng hai đồ thị trên đối xứng nhau qua đường thẳng $y=x$, tức là nếu điểm $M$ nằm trên một đồ thị thì điểm $M'$ đối xứng với $M$ qua đường thẳng $y=x$ sẽ nằm trên đồ thị còn lại.
+	\end{enumEX}
+	\loigiai{
+	\begin{enumEX}{1}
+		\item Đồ thị của hai hàm số $y=\mathrm{e}^x$ và $y=\ln x$ trên cùng một hệ trục toạ độ như hình sau:
+		\begin{center}
+			\begin{tikzpicture}[line join=round, line cap=round,>=stealth,thick]
+				\tikzset{every node/.style={scale=0.9}}
+				\draw[->] (-3.1,0)--(6.1,0) node[below left] {$x$};
+				\draw[->] (0,-3.1)--(0,6.1) node[below left] {$y$};
+				\draw (0,0) node [below left] {$O$};
+				\foreach \x in {1}
+				\draw[thin] (\x,1pt)--(\x,-1pt) node [below] {$\x$};
+				\foreach \y in {1}
+				\draw[thin] (1pt,\y)--(-1pt,\y) node [left] {$\y$};
+				\begin{scope}
+					\clip (-3,-3) rectangle (6,6);
+					\draw[samples=200,domain=-3:1.8,smooth,variable=\x] plot (\x,{e^(\x)}) node[below left]{$ \mathrm{e}^x $};
+					\draw[samples=200,domain=0.05:6,smooth,variable=\x] plot (\x,{ln(\x)}) node[above left]{$ \ln x $};
+				\end{scope}
+			\end{tikzpicture}
+		\end{center}
+		\item Xét điểm $A\left(x_0, e^{x_0}\right)$ nằm trên đồ thị hàm số $y=\mathrm{e}^x$.\\
+		Phương trình đường thẳng đi qua $A$ vuông góc với đường thẳng $y=x$ là $d: y=-x+x_0+\mathrm{e}^{x_0}$.
+		\begin{center}
+			\begin{tikzpicture}[line join=round, line cap=round,>=stealth,thick,scale=0.8]
+				\tikzset{every node/.style={scale=0.9}}
+				\draw[->] (-3.1,0)--(6.1,0) node[below left] {$x$};
+				\draw[->] (0,-3.1)--(0,6.1) node[below left] {$y$};
+				\draw (0,0) node [above left] {$O$};
+				\foreach \x in {1}
+				\draw[thin] (\x,1pt)--(\x,-1pt) node [below] {$\x$};
+				\foreach \y in {1}
+				\draw[thin] (1pt,\y)--(-1pt,\y) node [left] {$\y$};
+				\coordinate[label = left:$A$] (A) at (0.5,e^0.5);
+				\coordinate[label =below right:$A'$] (A1) at (e^0.5,0.5);
+				\coordinate[label = above:$B$] (B) at ($(A)!0.5!(A1)$);
+				\draw (A)--(A1);
+				\foreach \x in {A,A1,B} \fill[black] (\x) circle (1.5pt);
+				
+				\begin{scope}
+					\clip (-3,-3) rectangle (6,6);
+					\draw[samples=200,domain=-3:1.8,smooth,variable=\x] plot (\x,{e^(\x)}) node[below left]{$ \mathrm{e}^x $};
+					\draw[samples=200,domain=0.05:6,smooth,variable=\x] plot (\x,{ln(\x)}) node[above left]{$ \ln x $};
+					\draw[samples=200,domain=-3:6,smooth,variable=\x] plot (\x,{(\x)}) node[above left]{$ y=x $};
+				\end{scope}
+			\end{tikzpicture}
+		\end{center}
+		Toạ độ giao điểm của đường thẳng $d$ và đường thẳng $y=x$ là điểm $B\left(\dfrac{x_0+\mathrm{e}^{x_0}}{2}; \dfrac{x_0+\mathrm{e}^{x_0}}{2}\right).$\\
+		Gọi $A'$ là điểm đối xứng của $A$ qua đường thẳng $y=x$.\\
+		Ta tìm được $A'\left(\mathrm{e}^{x_0}; x_0\right)$.\\
+		Khi đó $A'$ thuộc đồ thị hàm số $y=\ln x$.\\
+		Tương tự, nếu điểm $B\left(x_0; \ln x_0\right)$ nằm trên đồ thị hàm số $y=\ln x$ thì ta cũng có thể tìm toạ độ của điểm $B'$ đối xứng với $B$ qua đường thẳng $y=x$ và chứng minh $B'$ thuộc đồ thị hàm số $y=\mathrm{e}^x$.\\
+		Vậy hai đồ thị đã cho đối xứng với nhau qua đường thẳng $y=x$.
+	\end{enumEX}	
+}
+\end{bt}
+
+% nguồn: 2026-11-15_11_1D6_Mu_Logarit (nhập 14/11/2026)
+\begin{bt}%[1D6H3-3]%[ma:2e04fb41]
+% nguon: Archive/SP-4Phan-Dot3/Data/CD_1_OTGK2_De03.tex #4260
+%
+Xét tính biến thiên và vẽ đồ thị hàm số $y=\dfrac{1}{3^x}$.
+\loigiai{
+Ta có $y=\dfrac{1}{3^x}=\left(\dfrac{1}{3}\right)^x$.\\
+Tập xác định $\mathscr{D}=\mathbb{R}$.\\
+Do cơ số là $\dfrac{1}{3}<1$ nên hàm số nghịch biến trên $\mathbb{R}$.
+Với $x=-2 \Rightarrow y=9$ nên đồ thị hàm số đi qua điểm $A(-2;9)$.\\
+Bảng biến thiên
+\begin{center}
+	\begin{tikzpicture}
+		\tkzTabInit[nocadre=false,lgt=1.2,espcl=2.5,deltacl=0.6] 
+		{$x$/.6, $f(x)$/2} % cột đầu tiên
+		{$-\infty$,$+\infty$} % hàng 1 cột 2
+		\tkzTabVar{+/ $+\infty$ , -/ $0$} % hàng 3 cột 2
+	\end{tikzpicture}	
+\end{center}
+Ta có bảng giá trị
+			\begin{center}
+				\begin{table}[htp]
+					\renewcommand{\arraystretch}{2}
+					\centering
+					\begin{tabular}{|>{$}c<{$}|*{5}{>{$}c<{$}|}}
+						\hline
+						x & -2 & -1 & 0 & 1 & 2\\
+						\hline
+						y & 9 & 3 & 1 & \dfrac{1}{3} & \dfrac{1}{9}\\
+						\hline
+					\end{tabular}
+				\end{table}
+			\end{center}	
+Đồ thị của hàm số $y=\left(\dfrac{1}{3}\right)^x$\\
+			\begin{center}
+				\begin{tikzpicture}[scale=0.5,>=stealth]
+					\def \xmin{-3.1}
+					\def \xmax{2.5}
+					\def \ymin{-0.7}
+					\def \ymax{9.5}
+					\draw[->] (\xmin,0) -- (\xmax,0);
+					\draw[->,color=black] (0,\ymin) -- (0,\ymax);
+					\draw[color=black](\xmax-0.3,.2)node[right] {$x$};
+					\draw[color=black] (.1,\ymax) node[right] {\normalsize $y$};
+					\begin{scope}
+						\clip(\xmin ,\ymin) rectangle (\xmax-.3,\ymax-.3);
+						%Vẽ đồ thị
+						\draw[color=black,smooth,samples=100,domain=-4.08:4.06] 
+						plot(\x,{3^(-\x)});
+					\end{scope}
+					%vẽ râu ria
+					\draw[dashed] (-2,0)node[below]{\tiny $-2$}|-(0,9)node[right]{\tiny $9$} (-1,0)node[below]{\tiny $-1$}|-(0,3)node[right]{\tiny $3$} (1,0)node[below]{\tiny $1$}|-(0,1/3)  (2,0)node[below]{\tiny $2$}|-(0,1/9) (0,0)node[below right]{\tiny $O$}
+					(0,1)node[right]{\tiny $1$};
+				\end{tikzpicture} 
+			\end{center}
+			
+	} 
+\end{bt}
+
+% nguồn: 2026-11-15_11_1D6_Mu_Logarit (nhập 14/11/2026)
+\begin{bt}%[1D6V3-3]%[ma:1f6c976e]
+% nguon: Archive/SP-4Phan-Dot3/Data/CD_1_OTGK2_De03.tex #4262
+%
+	\immini
+	{Cho các hàm số $y=\log_{a} x$ và $y=\log_{b} x$ có đồ thị như hình vẽ bên. Đường thẳng $x=5$ cắt trục hoành, đồ thị hàm số $y=\log_{a} x$ và $y=\log_{b} x$ lần lượt tại $A$, $B$ và $C$ . Biết rằng $CB=2AB$ và $a=mb^n$ với $m$, $n$ là các số nguyên dương. Tính $m^2+n^2$.}
+	{\begin{tikzpicture}[scale=0.8, font=\footnotesize, line join=round, line cap=round, >=stealth]
+			\tikzset{label style/.style={font=\footnotesize}}
+			\def \xmin{-1}
+			\def \xmax{7}
+			\def \ymin{-2}
+			\def \ymax{4.5}
+			\def \hamso{sin(\x r)}
+			\draw[->] (\xmin,0)--(\xmax,0) node[below left] {$x$};
+			\draw[->] (0,\ymin)--(0,\ymax) node[below left] {$y$};
+			\draw (0,0) node [below left] {$O$};
+			\foreach \x in {5}
+			\draw[thin] (\x,1pt)--(\x,-1pt) node [below left] {$\x$};
+			\begin{scope}
+				\clip (\xmin+0.01,\ymin+0.01) rectangle (\xmax-0.01,\ymax-0.01);
+				\draw[samples=350,domain=0.01:\xmax-0.01,smooth,variable=\x] plot (\x,{ln(\x)/ln(2)}) node[above left]{$\log_{b} x$};
+				\draw[samples=350,domain=0.01:\xmax-0.01,smooth,variable=\x] plot (\x,{ln(\x)/ln(8)}) node[above left]{$\log_{a} x$};
+				\draw[samples=350,domain=0.01:\xmax-0.01,smooth,variable=\x] plot (\x,{ln(\x)/ln(2)}) node[above left]{$\log_{b} x$};
+				\draw(5,-0.8)--(5,4) node[above]{$x=5$};
+				\draw(5.,0.) circle (1.0pt) node[below right]{$A$};
+				\draw(5.,{ln(5)/ln(8)}) circle (1.0pt) node[below right]{$B$};
+				\draw(5.,{ln(5)/ln(2)}) circle (1.0pt) node[below right]{$C$};
+			\end{scope}
+	\end{tikzpicture}}
+	\loigiai{
+		Ta có $A(5; 0)$, $B\left(5;\log_{a}5\right)$, $C\left(5;\log_{b}5\right)$.\\
+		Do đó	
+		\begin{eqnarray*}
+			&CB=2AB &\Leftrightarrow \log_{b}5-\log_{a}5=2\log_{a}5\\
+			&&\Leftrightarrow \log_{b}5=3\log_{a}5\\
+			&&\Leftrightarrow \log_{5}a=3\log_{5}b\\
+			&&\Leftrightarrow a=b^3.
+		\end{eqnarray*}
+		Vậy $m=1$, $n=3$ nên $m^2+n^2=10$.
+	}
+\end{bt}

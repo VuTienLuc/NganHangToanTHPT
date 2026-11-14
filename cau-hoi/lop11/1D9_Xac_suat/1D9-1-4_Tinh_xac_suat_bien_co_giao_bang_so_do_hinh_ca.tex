@@ -120,3 +120,146 @@
   \end{itemchoice}
   }
 \end{ex}
+
+% nguồn: 2026-11-15_11_1D9_Xac_suat (nhập 14/11/2026)
+\begin{bt}%[1D9V1-4]%[ma:214aa06a]
+% nguon: Archive/2024/TOAN_10_XE/TOAN_10_XE/data4/10D9/DS10-C9-OTC.tex #438
+ %Câu 9.20
+ Dự báo thời tiết trong ba ngày thứ Hai, thứ Ba, thứ Tư của tuần sau cho biết, trong mỗi ngày này, khả năng có mưa và không mưa như nhau.
+ \begin{enumerate}
+ 	\item Vẽ sơ đồ hình cây mô tả không gian mẫu. 
+	\item  	Tính xác suất của các biến cố:\\
+	 F: ``Trong ba ngày, có đúng một ngày có mưa'';\\
+	 G: ``Trong ba ngày, có ít nhất hai ngày không mưa''.
+ \end{enumerate}
+	\loigiai
+	{
+\begin{enumerate}
+	\item Sơ đồ cây
+\begin{center}
+			\tikzset{solid node/.style={circle,draw,inner sep=1.2,fill=black},hollow node/.style={circle,draw,inner sep=1.2},}
+	\begin{tikzpicture}[font=\footnotesize,scale=0.7]
+		\tikzset{
+			level 1/.style={level distance=15mm,sibling distance=65mm},
+			level 2/.style={level distance=15mm,sibling distance=30mm},
+			level 3/.style={level distance=15mm,sibling distance=15mm},
+			level 4/.style={level distance=15mm,sibling distance=10mm},
+		}
+		\node[hollow node,label=above:{}]{}
+		child{node(T21)[solid node,label=left:{Nắng}]{}
+						child{node(T31)[solid node,label=left:{Nắng}]{}
+							child{node(T41)[solid node,label=below:{Nắng}]{}edge from parent node[left]{}}
+							child{node(T42)[solid node,label=below:{Mưa}]{}edge from parent node[right]{}}
+						}
+							child{node(T32)[solid node, label=right:{Mưa}]{}
+						child{node(T43)[solid node,label=below:{Nắng}]{}edge from parent node[left]{}}
+						child{node(T44)[solid node,label=below:{Mưa}]{}edge from parent node[right]{}}
+					}
+					}
+		child{node(T22)[solid node,label=right:{Mưa}]{}
+						child{node(T33)[solid node,label=left:{Nắng}]{}
+							child{node(T45)[solid node,label=below:{Nắng}]{}edge from parent node[left]{}}
+							child{node(T46)[solid node,label=below:{Mưa}]{}edge from parent node[right]{}}
+					}
+						child{node(T34)[solid node,label=right:{Mưa}]{}
+					child{node(T47)[solid node,label=below:{Nắng}]{}edge from parent node[left]{}}
+					child{node(T48)[solid node,label=below:{Mưa}]{}edge from parent node[right]{}}
+				}
+					};
+				\draw[dashed](T21)--(T22)node[midway,above]{Thứ 2} (T31)--(T34)node[midway,above]{Thứ 3} (T41)--(T48)node[midway,above]{Thứ 4};
+	\end{tikzpicture}
+\end{center}
+Khi đó không gian mẫu $\Omega=\left\{\text{NNN,NNM,NMN,NMM, MNN,MNM,MMN,MMM} \right\}$.\\
+Khi đó $n(\Omega)=8$
+\item Ta có $n(F)=2$ suy ra $P(F)=\dfrac{2}{8}=\dfrac{1}{4}.$\\
+$n(G)=4$ suy ra $P(G)=\dfrac{4}{8}=\dfrac{1}{2}.$
+
+\end{enumerate}
+	}
+\end{bt}
+
+% nguồn: 2026-11-15_11_1D9_Xac_suat (nhập 14/11/2026)
+\begin{bt}%[1D9V1-4]%[ma:39462aa9]
+% nguon: Archive/2024/TOAN_10_XE/TOAN_10_XE/data4/10D9/DS10-C9-OTC.tex #439
+ %9.21
+	Gieo một đồng xu cân đối liên tiếp bốn lần.
+	\begin{enumerate}
+		\item Vẽ sơ đồ hình cây mô tả không gian mẫu.
+		\item Tính xác suất để trong bốn lần gieo đó có hai lần xuất hiện mặt sấp và hai lần xuất hiện mặt ngửa.
+	\end{enumerate}
+ 
+	\loigiai
+	{
+\begin{enumerate}
+	\item  Sơ đồ cây
+	\begin{center}
+			\tikzset{solid node/.style={circle,draw,inner sep=1.2,fill=black},hollow node/.style={circle,draw,inner sep=1.2},}
+		\begin{tikzpicture}[font=\footnotesize,scale=0.7]
+			\tikzset{
+				level 1/.style={level distance=15mm,sibling distance=65mm},
+				level 2/.style={level distance=15mm,sibling distance=30mm},
+				level 3/.style={level distance=15mm,sibling distance=15mm},
+				level 4/.style={level distance=15mm,sibling distance=10mm},
+			}
+			\node[hollow node,label=above:{}]{}
+			child{node(h11)[solid node,label=left:{S}]{}
+				child{node(h21)[solid node,label=left:{S}]{}
+					child{node(h31)[solid node,label=left:{S}]{}
+						child{node(h41)[solid node,label=below:{S}]{}edge from parent node[left]{}}
+						child{node[solid node,label=below:{N}]{}edge from parent node[right]{}}
+						edge from parent node[right]{}}
+					child{node(r3)[solid node,label=right:{N}]{}
+						child{node[solid node,label=below:{S}]{}edge from parent node[left]{}}
+						child{node[solid node,label=below:{N}]{}edge from parent node[right]{}}
+						edge from parent node[right]{}}
+					edge from parent node[left]{}
+				}
+				child{node(l2)[solid node,label=right:{N}]{}
+					child{node(r3)[solid node,label=left:{S}]{}
+						child{node[solid node,label=below:{S}]{}edge from parent node[left]{}}
+						child{node[solid node,label=below:{N}]{}edge from parent node[right]{}}
+						edge from parent node[right]{}}
+					child{node(r3)[solid node,label=right:{N}]{}
+						child{node[solid node,label=below:{S}]{}edge from parent node[left]{}}
+						child{node[solid node,label=below:{N}]{}edge from parent node[right]{}}
+						edge from parent node[right]{}}
+					edge from parent node[right]{}
+				}
+				edge from parent node[left,xshift=-10]{}
+			}
+			child{node(h12)[solid node,label=right:{N}]{}
+				child{node(l1)[solid node,label=left:{S}]{}
+					child{node(r3)[solid node,label=left:{S}]{}
+						child{node[solid node,label=below:{S}]{}edge from parent node[left]{}}
+						child{node[solid node,label=below:{N}]{}edge from parent node[right]{}}
+						edge from parent node[right]{}}
+					child{node(r3)[solid node,label=right:{N}]{}
+						child{node[solid node,label=below:{S}]{}edge from parent node[left]{}}
+						child{node[solid node,label=below:{N}]{}edge from parent node[right]{}}
+						edge from parent node[right]{}}
+					edge from parent node[left]{}
+				}
+				child{node(h22)[solid node,label=right:{N}]{}
+					child{node(r3)[solid node,label=left:{S}]{}
+						child{node[solid node,label=below:{S}]{}edge from parent node[left]{}}
+						child{node[solid node,label=below:{N}]{}edge from parent node[right]{}}
+						edge from parent node[right]{}}
+					child{node(h32)[solid node,label=right:{N}]{}
+						child{node[solid node,label=below:{S}]{}edge from parent node[left]{}}
+						child{node(h42)[solid node,label=below:{N}]{}edge from parent node[right]{}}
+						edge from parent node[right]{}}
+					edge from parent node[right]{}
+				}
+				edge from parent node[left,xshift=-10]{}};
+					\draw[dashed](h11)--(h12) node[midway,above]{\scriptsize Lần 1} (h21)--(h22) node[midway,above]{\scriptsize Lần 2} (h31)--(h32) node[midway,above]{ \scriptsize Lần 3}  (h41)--(h42) node[midway,above]{\scriptsize Lần 4};
+		\end{tikzpicture}
+	\end{center}
+Không gian mẫu\\
+$ \Omega=\left\{\right.  SSSS,SSSN,SSNS,SSNN,
+	SNSS,SNSN,SNNS,SNNN, NSSS, NSSN$,\\ $NSNS, NSNN, NNSS,NNSN, NNNS,NNNN \left. \right\}$.\\
+Khi đó $n(\Omega)=16.$
+\item Gọi $A$ là biến cố ``Trong bốn lần gieo đó có hai lần xuất hiện mặt sấp và hai lần xuất hiện mặt ngửa.''\\
+Khi đó $n(A)=5$ suy ra $P(A)=\dfrac{5}{16}.$
+\end{enumerate}
+	}
+\end{bt}
