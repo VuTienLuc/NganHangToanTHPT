@@ -414,3 +414,10 @@ Nhập liên tiếp nhiều ma trận (Lần 1, Lần 2, …), lần sau thêm /
    mã đề nối tiếp (101–104, 105–108…), và khi bật biên dịch PDF: 2 quyển gộp **<Tên bộ> - Câu hỏi.pdf**, **<Tên bộ> - Lời giải.pdf**
    (trang bìa + bảng lần/mã đề bấm được để nhảy tới đề).
 Bộ đề lưu trong trình duyệt (đóng mở ứng dụng vẫn còn). Dòng lệnh: `python3 scripts/bo_de.py bo.json --bien-dich`.
+
+
+## Câu lỗi biên dịch: dấu `% LOI_BIEN_DICH`
+
+Câu có dòng đầu chứa `% LOI_BIEN_DICH: <lý do>` bị **tạm loại khỏi chỉ mục** (không vào đề, phiếu, thống kê) — báo cáo kiểm tra liệt kê riêng.
+Sửa câu xong thì xoá đoạn `% LOI_BIEN_DICH: …` và bấm **Cập nhật kho**. Danh sách câu nhập từ Archive cần sửa: `cau-hoi/_CAU_CAN_SUA.md`.
+Nhập kho không còn đổi dấu phẩy trong hình TikZ thành `{,}` (lỗi cũ làm hỏng tọa độ `(1,2)`).

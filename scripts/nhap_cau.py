@@ -23,8 +23,11 @@ def sua_thap_phan(k):
             dem[0] += 1
             return x.group(1) + "{,}" + x.group(2)
         return re.sub(r"(?<![\d,])(\d+),(\d+)(?!\d*,\d)", thay, m.group(0))
-    k2 = re.sub(r"(?<!\\)\$(?!\$)(.+?)(?<!\\)\$", trong_toan, k, flags=re.S)
-    return k2, dem[0]
+    # không đụng vào hình TikZ: dấu phẩy ở đó là dấu phân cách tọa độ (1,2), không phải số thập phân
+    phan = re.split(r"(\\begin\{tikzpicture\}.*?\\end\{tikzpicture\})", k, flags=re.S)
+    for i in range(0, len(phan), 2):
+        phan[i] = re.sub(r"(?<!\\)\$(?!\$)(.+?)(?<!\\)\$", trong_toan, phan[i], flags=re.S)
+    return "".join(phan), dem[0]
 
 def kiem_tra_cau(k, info):
     """Cảnh báo định dạng hay gặp ở câu do AI gõ (không chặn nhập)."""

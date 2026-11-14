@@ -34,6 +34,10 @@ for f in sorted(glob.glob(os.path.join(GOC, "cau-hoi", "**", "*.tex"), recursive
         ghi(f, t2); t = t2
     for k in tach_khoi(t):
         info = phan_tich_cau(k)
+        if "LOI_BIEN_DICH" in k.split("\n", 1)[0]:      # câu lỗi LaTeX: tạm loại khỏi chỉ mục (sửa xong xoá dấu này)
+            loi["Câu đang đánh dấu LOI_BIEN_DICH (tạm không dùng ra đề — sửa xong xoá dấu % LOI_BIEN_DICH ở dòng đầu)"].append(
+                f"`{info['ma']}` {rel}")
+            continue
         ten = id_map.get(info["dang_key"] or "", {})
         info.update(file=rel, muc_chuan=quy_doi.get(info["muc"] or "", None),
                     ten_chuong=ten.get("chap_name"), ten_bai=ten.get("lesson_name"), ten_dang=ten.get("type_name"),
