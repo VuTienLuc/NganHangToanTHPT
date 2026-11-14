@@ -92,9 +92,19 @@ p_ls = os.path.join(GOC, "du-lieu", "lich_su_dung.json")
 lich_su = json.load(open(p_ls, encoding="utf-8")) if os.path.exists(p_ls) else {}
 
 # ---------------------------------------------------------------- chọn câu
+def tach_gop(m):
+    """Dòng ma trận GỘP BÀI: "0D1?1+0D1?2+0H5?3" (hoặc danh sách) → các phần; dòng thường → [m]."""
+    ds = m if isinstance(m, (list, tuple)) else re.split(r"\s*[+,;]\s*", str(m))
+    return [x.strip() for x in ds if str(x).strip()]
+
+def ten_dang_yc(m):
+    return " + ".join(tach_gop(m))
+
 def mau_dang(m):
-    r = re.escape(m).replace(r"\?", ".").replace(r"\*", ".*")
-    return re.compile("^" + r + r"(?:[?\-].*)?$")
+    phan = []
+    for x in tach_gop(m):
+        phan.append(re.escape(x).replace(r"\?", ".").replace(r"\*", ".*") + r"(?:[?\-].*)?")
+    return re.compile("^(?:" + "|".join(phan or ["$^"]) + ")$")
 
 def hop_le(c, loai):
     if loai == "TN":
@@ -118,11 +128,11 @@ def ung_vien(loai, yc):
     co_ban = [c for c in tat_ca if c["loai"] == loai and hop_le(c, loai)
               and (CHE_DO_DA_DUNG != "loai_bo" or not so_lan_dung(c))]
     tang = []
-    def xen_ke_dang(ds):
-        """Xếp xen kẽ theo dạng (dạng A, dạng B, dạng C, dạng A…) để chọn theo bài/chương được nhiều dạng khác nhau."""
+    gop = len(tach_gop(yc["dang"])) > 1
+    def xen_ke(ds, khoa):
         nhom = collections.OrderedDict()
         for c in ds:
-            nhom.setdefault(c["dang_key"], []).append(c)
+            nhom.setdefault(khoa(c), []).append(c)
         hang = list(nhom.values()); rng.shuffle(hang)
         out = []
         while any(hang):
@@ -130,6 +140,12 @@ def ung_vien(loai, yc):
                 if h:
                     out.append(h.pop(0))
         return out
+    def xen_ke_dang(ds):
+        """Xếp xen kẽ theo dạng (dạng A, dạng B, dạng C, dạng A…) để chọn theo bài/chương được nhiều dạng khác nhau.
+        Dòng GỘP BÀI: xen kẽ theo bài trước (bài 1, bài 2, bài 3, bài 1…) rồi mới theo dạng trong bài
+        → câu rải ngẫu nhiên đều cho các bài gộp, bài nhiều dạng không lấn bài ít dạng."""
+        ds = xen_ke(ds, lambda c: c["dang_key"])
+        return xen_ke(ds, lambda c: c["dang_key"].split("-")[0]) if gop else ds
     def them(ds, ghi_chu):
         ds = list(ds); rng.shuffle(ds)
         if CHE_DO_DA_DUNG == "uu_tien":
@@ -145,16 +161,19 @@ def ung_vien(loai, yc):
         them([c for c in khop if c["muc_chuan"] in nhom], "mức cùng nhóm (N↔H / V↔C)")
     if mt.get("mo_rong_dang_khac", True):
         mm = set(muc) | (nhom if mt.get("bu_cung_nhom", True) else set())
-        k = yc["dang"]
-        mb = re.match(r"(\d[A-Z]\d+)[?A-Z](\d+)-", k)
-        mc = re.match(r"(\d[A-Z]\d+)", k)
-        tien_to_bai = f"{mb.group(1)}?{mb.group(2)}-" if mb else None
-        if tien_to_bai:
-            them([c for c in co_ban if c["dang_key"].startswith(tien_to_bai) and not rx.match(c["dang_key"])
+        tt_bai, tt_chuong = set(), set()
+        for k in tach_gop(yc["dang"]):
+            mb = re.match(r"(\d[A-Z]\d+)[?A-Z](\d+)-", k)
+            mc = re.match(r"(\d[A-Z]\d+)", k)
+            if mb: tt_bai.add(f"{mb.group(1)}?{mb.group(2)}-")
+            if mc: tt_chuong.add(mc.group(1) + "?")
+        tt_bai, tt_chuong = tuple(tt_bai), tuple(tt_chuong)
+        if tt_bai:
+            them([c for c in co_ban if c["dang_key"].startswith(tt_bai) and not rx.match(c["dang_key"])
                   and (not mm or c["muc_chuan"] in mm)], "dạng khác cùng bài")
-        if mc:
-            them([c for c in co_ban if c["dang_key"].startswith(mc.group(1) + "?") and not rx.match(c["dang_key"])
-                  and not (tien_to_bai and c["dang_key"].startswith(tien_to_bai))
+        if tt_chuong:
+            them([c for c in co_ban if c["dang_key"].startswith(tt_chuong) and not rx.match(c["dang_key"])
+                  and not (tt_bai and c["dang_key"].startswith(tt_bai))
                   and (not mm or c["muc_chuan"] in mm)], "bài khác cùng chương")
     return tang
 
@@ -181,7 +200,7 @@ def lap_ke_hoach(so_ma, khac_cau):
                 if len(lay) >= can:
                     break
             da_lay |= co
-            nhan = f"{LOAI_TEN[loai]} {yc['dang']} mức {yc.get('muc') or '*'}"
+            nhan = f"{LOAI_TEN[loai]} {ten_dang_yc(yc['dang'])} mức {yc.get('muc') or '*'}"
             bu = collections.Counter(gc for _, gc in lay if gc)
             if bu:
                 ghi_chu.append(f"{nhan}: thiếu câu đúng mức → đã bù " + ", ".join(f"{v} câu {g}" for g, v in bu.items()))
@@ -199,6 +218,8 @@ def lap_ke_hoach(so_ma, khac_cau):
             con = list(dong)                      # câu chưa chia (theo thứ tự ưu tiên)
             dem_dang = collections.Counter()
             rieng = [set() for _ in range(so_ma)]; dang_de = [collections.Counter() for _ in range(so_ma)]
+            bai_de = [collections.Counter() for _ in range(so_ma)]     # dòng gộp bài: mỗi mã chia đều các bài
+            gop = len(tach_gop(yc["dang"])) > 1
             for _ in range(min(k, len(dong))):
                 for s_ in range(so_ma):
                     nguon = con                     # ưu tiên câu chưa chia cho mã nào
@@ -209,8 +230,10 @@ def lap_ke_hoach(so_ma, khac_cau):
                     if not ung:
                         continue
                     thu_tu = {id(c): i for i, c in enumerate(nguon)}
-                    c = min(ung, key=lambda c: (dang_de[s_][c["dang_key"]], dem_dang[c["dang_key"]], thu_tu[id(c)]))
+                    c = min(ung, key=lambda c: (bai_de[s_][c["dang_key"].split("-")[0]] if gop else 0,
+                                                 dang_de[s_][c["dang_key"]], dem_dang[c["dang_key"]], thu_tu[id(c)]))
                     rieng[s_].add(c["ma"]); dang_de[s_][c["dang_key"]] += 1; dem_dang[c["dang_key"]] += 1
+                    bai_de[s_][c["dang_key"].split("-")[0]] += 1
                     bo[s_][loai].append(c)
                     if c in con:
                         con.remove(c)
