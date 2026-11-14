@@ -62,6 +62,41 @@ def thuoc(c, pham_vi):
             return True
     return False
 
+# số câu kho còn thiếu của lần tạo phiếu gần nhất → để soạn prompt AI bổ sung: [(dạng|None, loại, mức "N|H|V|C", số câu)]
+THIEU_CAU = []
+MUC_SO = {"N": 0, "H": 1, "V": 2, "C": 3}
+
+
+def goi_y_bo_sung(cac_dang, id_map):
+    """THIEU_CAU → tham số cho tao_prompt.tao_prompt_soan: dạng, so_cau {loại:[N,H,V,C]}, ghi chú phân bổ theo dạng."""
+    if not THIEU_CAU:
+        return None
+    theo = collections.defaultdict(lambda: collections.defaultdict(lambda: [0, 0, 0, 0]))
+    vong = 0
+    ds_dang = list(cac_dang)
+    for d, loai, muc, n in THIEU_CAU:
+        for _ in range(n):
+            dd = d or (ds_dang[vong % len(ds_dang)] if ds_dang else None)
+            vong += 0 if d else 1
+            if dd:
+                theo[dd][loai][MUC_SO[muc]] += 1
+    if not theo:
+        return None
+    so_cau = collections.defaultdict(lambda: [0, 0, 0, 0])
+    dong = []
+    for dd, m in theo.items():
+        ct = []
+        for loai, v in m.items():
+            so_cau[loai] = [a + b for a, b in zip(so_cau[loai], v)]
+            ct += [f"{loai} {'NHVC'[i]}×{x}" for i, x in enumerate(v) if x]
+        dong.append(f"- `{dd}` {(id_map.get(dd, {}).get('type_name') or '').strip()}: " + ", ".join(ct))
+    ghi = ("PHÂN BỔ BẮT BUỘC theo từng dạng (ngân hàng đang thiếu đúng các câu này; mã dạng của mỗi câu phải đúng dạng ghi bên dưới):\n"
+           + "\n".join(dong))
+    if any(l == "TL" for m in theo.values() for l in m):
+        ghi += "\nCâu tự luận (TL) phải có lời giải chi tiết đầy đủ từng bước (dùng làm ví dụ mẫu và bài tự luyện)."
+    return {"dang": list(theo), "so_cau": dict(so_cau), "ghi_chu": ghi}
+
+
 def khoa_noi_dung(c):
     """Khoá nội dung đề (bỏ mã, khoảng trắng, lời giải, phương án) — để không lấy 2 câu trùng đề vào cùng một phiếu."""
     t = c.get("noi_dung") or ""
@@ -122,6 +157,7 @@ def chon_cau(cau_hinh_phieu, rng):
                 lay(c); lay_duoc.append(dict(c, _muc_nc=ten_muc))
             if len(lay_duoc) < can:
                 thieu.append(f"{ten_phan} – {ten_muc}: cần {can}, kho chỉ có {len(lay_duoc)} câu phù hợp")
+                THIEU_CAU.append((None, "TLN", muc_cau, can - len(lay_duoc)))
             kq[muc_phan]["VD"] += sorted(lay_duoc, key=lambda c: (CAC_LOAI.index(c["loai"]), cac_dang.index(c["dang_key"])))
     for loai in CAC_LOAI:
         dang_co = [d for d in cac_dang if theo.get((loai, d))]
@@ -154,9 +190,11 @@ def chon_cau(cau_hinh_phieu, rng):
             can = int(so["LT" if phan == "Luyện tập" else "BTVN"].get(loai) or 0)
             if len(v) < can:
                 thieu.append(f"{phan} – {TEN_PHAN[loai]}: cần {can}, kho chỉ có {len(v)} câu phù hợp")
+                THIEU_CAU.append((None, loai, "H", can - len(v)))
     return cac_dang, kq, thieu
 
 def tao(cfg, in_ra=print):
+    THIEU_CAU.clear()
     CH = cau_hinh()
     tt = {**CH.get("thong_tin_de", {}), **{k: v for k, v in cfg.items() if v not in (None, "")}}
     id_map = tai_id_map()
@@ -174,7 +212,10 @@ def tao(cfg, in_ra=print):
             m = re.match(r"(\d)([A-Z])(\d+)\?(\d+)-(\d+)", k or "")
             return tuple(int(x) if x.isdigit() else x for x in m.groups()) if m else (k or "",)
         cac_dang = sorted({c["dang_key"] for c in ds if c.get("dang_key")}, key=khoa_dang)
-        kq_tl, thieu = phieu_tu_luan.chon(ds, cac_dang, cfg, rng, khoa_noi_dung)
+        # dạng được tích nhưng kho chưa có câu nào cũng cần đưa vào để báo thiếu / soạn prompt bổ sung
+        cac_dang = sorted(set(cac_dang) | set(cfg.get("dang") or []), key=khoa_dang)
+        kq_tl, thieu = phieu_tu_luan.chon(ds, cac_dang, cfg, rng, khoa_noi_dung, THIEU_CAU)
+        cac_dang_chon = list(cac_dang)
         cac_dang = [d for d in cac_dang if d in kq_tl]
         if not kq_tl:
             raise RuntimeError("Không tìm thấy câu tự luận nào (có lời giải) trong phạm vi đã chọn.")

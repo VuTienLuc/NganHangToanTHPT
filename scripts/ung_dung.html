@@ -1149,6 +1149,15 @@ Yêu cầu:
 };
 document.querySelectorAll('input[name="ph-kieu"]').forEach(x=>x.onchange=()=>{const tl=document.querySelector('input[name="ph-kieu"]:checked').value==="tu_luan";
   $("#ph-tl-tuychon").style.display=tl?"flex":"none";$("#ph-tn-so").style.display=tl?"none":"";$("#ph-nc").closest("div").style.display=tl?"none":"flex"});
+async function promptBoSung(bs){
+  const r=await api("/api/prompt-soan",{dang:bs.dang,so_cau:bs.so_cau,ghi_chu:bs.ghi_chu,cach:"ket_hop"});
+  if(!r.ok){alert(r.loi);return}
+  const tong=Object.values(bs.so_cau).flat().reduce((a,b)=>a+b,0);
+  hopThoai(`Prompt AI bổ sung ${tong} câu còn thiếu`,
+    `1) Chép prompt, dán vào ChatGPT / Gemini / Claude (đính kèm SGK hoặc tài liệu của bài nếu có).\n2) Lưu kết quả AI trả về thành file .tex / .txt / .json.\n3) Bấm “Nhập câu AI trả về…” chọn file đó → câu được thêm vào ngân hàng.\n4) Mở lại Phiếu bài học và bấm Tạo phiếu.\n${"─".repeat(60)}\n\n`+r.noi_dung,
+    [["Chép prompt",async e=>{try{await navigator.clipboard.writeText(r.noi_dung);e.target.textContent="Đã chép ✓"}catch(_){alert("Bôi đen rồi Cmd+C.")}},true],
+     ["Nhập câu AI trả về…",()=>{$("#hop-thoai").style.display="none";$("#tep-nhap").click()}]]);
+}
 $("#ph-nc").onchange=e=>{$("#ph-vd").disabled=$("#ph-vdc").disabled=!e.target.checked};
 $("#ph-tao").onclick=async()=>{
   const bai=phBaiChon(); if(!bai.length){alert("Chọn ít nhất một bài.");return}
@@ -1161,9 +1170,12 @@ $("#ph-tao").onclick=async()=>{
     nam_hoc:$("#nam_hoc").value.trim(),so_gd:$("#so_gd").value.trim()};
   const b=$("#ph-tao");b.disabled=true;b.textContent="Đang tạo…";
   try{const r=await api("/api/phieu",{cau_hinh:cfg,bien_dich:$("#bien_dich").checked});
-    if(!r.ok){alert(r.nhat_ky);return}
+    const nutBS=r.bo_sung?[["Prompt AI bổ sung câu thiếu…",()=>promptBoSung(r.bo_sung),!r.ok]]:[];
+    if(!r.ok){hopThoai("Chưa tạo được phiếu",r.nhat_ky+(r.bo_sung?"\n\nNgân hàng chưa đủ câu: bấm “Prompt AI bổ sung câu thiếu…” để AI soạn, rồi nhập vào ngân hàng và tạo lại phiếu.":""),nutBS);return}
     $("#hop-phieu").style.display="none";
-    hopThoai(`Đã tạo phiếu: ${r.thu_muc}`,r.nhat_ky+(r.bien_dich?"\nĐang biên dịch PDF…":""),[["Mở thư mục",()=>api("/api/mo",{duong_dan:r.thu_muc}),true]]);
+    hopThoai(`Đã tạo phiếu: ${r.thu_muc}`,r.nhat_ky+(r.bien_dich?"\nĐang biên dịch PDF…":"")+
+      (r.bo_sung?"\n\nNgân hàng còn thiếu câu cho phiếu này → bấm “Prompt AI bổ sung câu thiếu…”, nhập câu AI trả về, rồi tạo lại phiếu.":""),
+      [["Mở thư mục",()=>api("/api/mo",{duong_dan:r.thu_muc}),!r.bo_sung],...nutBS]);
     if(r.bien_dich) theoDoi(r.nhat_ky);}
   finally{b.disabled=false;b.textContent="Tạo phiếu"}
 };

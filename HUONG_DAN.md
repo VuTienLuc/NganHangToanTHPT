@@ -332,6 +332,11 @@ Nguồn câu: tự luận → trả lời ngắn → trắc nghiệm đổi sang
 Xuất: `<tên>.pdf` (phiếu học sinh), `<tên> - Lời giải.pdf` (lời giải các bài tự luyện, 2 cột), `<tên> - Trình chiếu.pdf`
 (Beamer cùng loại phiếu: phương pháp → ví dụ mẫu → từng bài tự luyện: đề chiếm 2/3 trên, bấm tiếp hiện đáp số, rồi lời giải).
 
+**Ngân hàng chưa đủ câu?** Khi tạo phiếu bị thiếu câu (hoặc dạng chưa có câu nào), hộp kết quả có nút
+**Prompt AI bổ sung câu thiếu…**: ứng dụng soạn sẵn prompt đúng số câu còn thiếu theo từng dạng × loại × mức
+(phiếu tự luận: câu TL có lời giải chi tiết). Chép prompt → dán vào ChatGPT/Gemini/Claude (kèm SGK nếu có) → lưu kết quả thành file
+→ bấm **Nhập câu AI trả về…** (chính là chức năng Nhập câu hỏi) → tạo lại phiếu.
+
 Không có hai câu trùng đề (khác mã nhưng cùng nội dung) trong cùng một phiếu.
 Câu được lấy xoay vòng qua các dạng, ưu tiên câu chưa dùng; thiếu câu sẽ được báo.
 Dòng lệnh: `python3 scripts/phieu_bai_hoc.py cau_hinh.json --bien-dich`.

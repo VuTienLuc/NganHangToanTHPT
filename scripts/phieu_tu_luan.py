@@ -48,7 +48,7 @@ def doi_tu_luan(c):
     return None
 
 
-def chon(ds, cac_dang, cfg, rng, khoa_noi_dung):
+def chon(ds, cac_dang, cfg, rng, khoa_noi_dung, ghi_thieu=None):
     """ds: câu đã lọc phạm vi. → ({dạng: {"vd": câu, "tu_luyen": [câu…]}}, thiếu)."""
     so_tt = int(cfg.get("so_tuong_tu") or 2)
     so_vd = int(cfg.get("so_van_dung") or 1)
@@ -70,8 +70,9 @@ def chon(ds, cac_dang, cfg, rng, khoa_noi_dung):
         # ví dụ mẫu: mức thấp, có lời giải
         ung = [c for c in v if moi(c) and c["_tl"]["lg"]]
         if not ung:
-            if v:
-                thieu.append(f"{d}: không có câu tự luận có lời giải để làm ví dụ mẫu")
+            thieu.append(f"{d}: không có câu tự luận có lời giải để làm ví dụ mẫu")
+            if ghi_thieu is not None:
+                ghi_thieu += [(d, "TL", "H", 1 + so_tt), (d, "TL", "V", so_vd)]
             continue
         vd = min(ung, key=muc)
         da_k.add(vd["_k"])
@@ -93,8 +94,16 @@ def chon(ds, cac_dang, cfg, rng, khoa_noi_dung):
             da_k.add(c["_k"]); tl.append(dict(c, _vai="van_dung" if muc(c) >= 2 else "nang_cao"))
         if len(tl) < so_tt + so_vd:
             thieu.append(f"{d}: tự luyện cần {so_tt + so_vd} câu, kho có {len(tl)}")
+            if ghi_thieu is not None:
+                co_tt = sum(c["_vai"] == "tuong_tu" for c in tl); co_vd = len(tl) - co_tt
+                if so_tt - co_tt > 0:
+                    ghi_thieu.append((d, "TL", "H", so_tt - co_tt))
+                if so_vd - co_vd > 0:
+                    ghi_thieu.append((d, "TL", "V", so_vd - co_vd))
         elif any(c["_vai"] == "nang_cao" for c in tl):
             thieu.append(f"{d}: kho chưa có câu vận dụng, đã lấy câu mức cao nhất hiện có")
+            if ghi_thieu is not None:
+                ghi_thieu.append((d, "TL", "V", sum(c["_vai"] == "nang_cao" for c in tl)))
         kq[d] = {"vd": vd, "tu_luyen": tl}
     return kq, thieu
 
