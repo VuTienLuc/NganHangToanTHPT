@@ -252,3 +252,293 @@
 		\end{enumerate}
 	} 
 \end{bt}
+
+% nguồn: TuLuan_Lop10_daduyet (nhập 14/11/2026)
+\begin{bt}%[0H5H1-5]%[Dự án đề kiểm tra Toán 10 GHKI NH23-24- Mui Doan]%[THPT ]%[ma:54c22419]
+	Cho hình chữ nhật $ABCD$ tâm $O$, cạnh $AB=5$, $AD=12$. Tính độ dài vectơ $\overrightarrow{OB}$, $\overrightarrow{OC}$.
+	\loigiai{
+	\immini{
+	Ta có $\left| \overrightarrow{OB}\right|=OB=\dfrac{1}{2}BD=\dfrac{1}{2}\cdot\sqrt{5^2+12^2}=\dfrac{13}{2}$.\\
+	$\left| \overrightarrow{OC}\right|=OC=\dfrac{1}{2}AC=\dfrac{1}{2}\cdot\sqrt{5^2+12^2}=\dfrac{13}{2}$.
+	}
+	{
+	\begin{tikzpicture}
+	\path (0,0) coordinate (A)--+(3,0) coordinate (D)--++(3,-2) coordinate (C)
+	($(A)+(C)-(D)$) coordinate (B)
+	($(A)!.5!(C)$) coordinate (O)
+	;
+	\draw (A)--(D)node[above,pos=0.5]{$12$}--(C)--(B)--cycle (A)node[left,pos=0.5]{$5$}--(C) (B)--(D);
+	\foreach \t/\g in {A/90,B/-90,C/-90,D/90,O/-90}{
+		\draw[fill=white] (\t) circle (1pt) node[shift={(\g:7pt)},font=\scriptsize]{$ \t $};
+	}
+	\end{tikzpicture}
+		}
+	}
+\end{bt}
+
+% nguồn: TuLuan_Lop10_Dot2 (nhập 14/11/2026)
+\begin{bt}%[0H5H1-5]%[ma:f9430d4b]
+	Cho hình thang vuông tại $A$ và $D$ có $AB=AD=a$, $\widehat{C}=45^\circ$.
+	\begin{multicols}{2}
+		\begin{enumerate}
+			\item Tính $\left|\overrightarrow{CD}\right|$.
+			\item Tính $\left|\overrightarrow{BD}\right|$.
+		\end{enumerate}
+	\end{multicols}
+	\loigiai{\begin{center}
+			\begin{tikzpicture}[scale=0.7,>=stealth, font=\footnotesize, line join=round, line cap=round]
+				\coordinate (D) at (0,0);
+				\coordinate[label=above left:\tiny{$45^\circ$}] (C) at (6,0);
+				\coordinate (A) at (0,3);
+				\coordinate (B) at (3,3);
+				\coordinate (I) at ($(D)!0.5!(C)$);
+				\draw (A)--(B)--(C)--(D)--cycle;
+				\draw (B)--(I);
+				\foreach 	\x/ \goc in {A/180,D/180,C/0,B/0,I/-60} 
+				\fill (\x) circle (1pt)	($(\x)+(\goc:3mm)$) node {$\x$};
+				\pic[draw,angle radius=2mm]{right angle=B--A--D};
+				\pic[draw,angle radius=2mm]{ angle=B--C--D};
+				\pic[draw,angle radius=2mm]{right angle=I--D--A};
+			\end{tikzpicture}
+		\end{center}
+		Gọi $I$ là trung điểm của $CD$. Khi đó $ABDI$ là hình vuông có cạnh là $a$ và tam giác $BCI$ vuông cân tại $I$.
+		\begin{multicols}{2}
+			\begin{enumerate}
+				\item $\left|\overrightarrow{CD}\right|=CD=2a$.
+				\item $\left|\overrightarrow{BD}\right|=BD=a\sqrt{2}$.
+			\end{enumerate}
+	\end{multicols}}
+\end{bt}
+
+% nguồn: TuLuan_Lop10_Dot2 (nhập 14/11/2026)
+\begin{bt}%[0H5H1-5]%[ma:43820977]
+	Cho hình vuông $ABCD$ cạnh $a$. Gọi $M$ là trung điểm của $AB$, $N$ là điểm đối xứng với $C$ qua $D$. Hãy tính độ dài của véc-tơ $\overrightarrow{MD}$ và $\overrightarrow{MN}$.
+	\loigiai{
+		\immini{
+			Áp dụng định lý Pythagoras trong tam giác vuông $MAD$ ta có
+			\[
+			DM^2=AM^2+AD^2=\left (\dfrac{a}{2} \right )^2+a^2=\dfrac{5a^2}{4}\Rightarrow DM=\dfrac{a\sqrt{5}}{2}
+			\]
+			Suy ra $\left |\overrightarrow{MD}\right |=MD=\dfrac{a\sqrt{5}}{2}$.\\
+			Qua $N$ kẻ đường thẳng song song với $AD$ cắt $AB$ tại $P$.\\
+			Khi đó tứ giác $ADNP$ là hình vuông và $PM=PA+AM=a+\dfrac{a}{2}=\dfrac{3a}{2}$.\\
+			Áp dụng định lý Pythagoras trong tam giác vuông $NPM$ ta có
+			\[
+			MN^2=NP^2+PM^2=a^2+\left (\dfrac{3a}{2} \right )^2=\dfrac{13a^2}{4}\Rightarrow MN=\dfrac{a\sqrt{13}}{2}
+			\]
+			Suy ra $\left |\overrightarrow{MN}\right |=MN=\dfrac{a\sqrt{13}}{2}$.
+		}{
+			\begin{tikzpicture}[scale=3]
+				\draw(1.,1.)-- (1.,0.);
+				\draw(1.,0.)-- (2.,0.);
+				\draw(2.,0.)-- (2.,1.);
+				\draw(2.,1.)-- (1.,1.);
+				\draw(2.,1.)-- (2.,2.);
+				\draw(2.,2.)-- (1.,2.);
+				\draw(1.,2.)-- (1.,1.);
+				\draw(1,0.5)-- (2.,1.);
+				\draw(1,0.5)-- (2.,2.);
+				\draw(1,1) node [left]{$A$};
+				\draw(1,0) node [left]{$B$};
+				\draw(2,0) node [right]{$C$};
+				\draw(2,1) node [right]{$D$};
+				\draw(2,2) node [right]{$N$};
+				\draw(1,2) node [left]{$P$};
+				\draw(1,0.5) node  [left]{$M$};
+			\end{tikzpicture}
+		}
+		
+	}
+\end{bt}
+
+% nguồn: TuLuan_Lop10_Dot2 (nhập 14/11/2026)
+\begin{bt}%[0H5H1-5]%[Trong Nguyen]%[ma:1df42dcc]
+	Cho hình vuông $ ABCD $ có độ dài cạnh bằng $ 3 $ cm. Tính độ dài các vectơ 
+	$ \vec{AB} $, $ \vec{AC} $.
+	\loigiai{
+		\immini
+		{
+			Ta có $ AB=3 $ cm $ \Rightarrow \left|\vec{AB}\right| = 3$ cm. \\
+			$ AC $ là đường chéo hình vuông cạnh $ 3 $ cm nên $ AC=3 \sqrt{2} $ cm.
+			Suy ra $ \left|\vec{AC}\right| = AC = 3\sqrt{2}$ cm.
+		}
+		{
+			\begin{tikzpicture}[>=stealth,scale=1, line join = round, line cap 
+				= round]
+				\coordinate (A) at (0,0);
+				\coordinate (B) at (3,0);
+				\coordinate (C) at (3,3);
+				\coordinate (D) at ($(A)+(C)-(B)$);
+				\draw (A) node[left] {$ A $}--(B)node[right] {$ B $}--
+				(C)node[right] {$ C $}--(D)node[left] {$ D $}--cycle;
+				\draw[->] (A)--(C);
+				\draw[->] (A)--(B);
+			\end{tikzpicture}
+		}
+	}	
+\end{bt}
+
+% nguồn: TuLuan_Lop10_Dot2 (nhập 14/11/2026)
+\begin{bt}%[0H5H1-5]%[ma:493b8fb5]
+	\immini{Cho tam giác đều $ABC$ với cạnh có độ dài bằng $a$. Hãy chỉ ra các véc-tơ có độ dài bằng $a$ và có điểm đầu, điểm cuối là các đỉnh của tam giác $ABC$.
+	}
+	{\begin{tikzpicture}[scale=0.7, font=\footnotesize, line join=round, line cap=round, >=stealth]
+			\def\bc{4} % cạnh BC
+			\def\ba{4} % cạnh BA
+			\def\h{4} % đường cao
+			\def\gocB{60} % góc B của đáy
+			\coordinate[label=below left:$B$] (B) at (0,0);
+			\coordinate[label=above:$A$] (A) at (\gocB:\ba);
+			\coordinate[label=below:$C$] (C) at (\bc,0);
+			\draw (A)--(B)--(C)--(A);
+			\foreach \diem in {A,B,C}	\fill (\diem)circle(1.5pt);
+	\end{tikzpicture}}
+	\loigiai{
+		$\left|\overrightarrow{AB}\right|=\left|\overrightarrow{BA}\right|=\left|\overrightarrow{AC}\right|=\left|\overrightarrow{CA}\right|=\left|\overrightarrow{BC}\right|=\left|\overrightarrow{CB}\right|=a$.
+	}
+\end{bt}
+
+% nguồn: TuLuan_Lop10_Dot2 (nhập 14/11/2026)
+\begin{bt}%[0H5H1-5]%[ma:6fefcb1c]
+	Cho hình vuông $ABCD$ cạnh $a$. Gọi $M$ là trung điểm của $AB$, $N$ là điểm đối xứng với $C$ qua $D$. Hãy tính độ dài của véc-tơ $\vec{MD}$ và $\vec{MN}$.
+	\loigiai{
+		\immini{
+			Áp dụng định lý Pythagoras trong tam giác vuông $MAD$ ta có
+			\[
+			DM^2=AM^2+AD^2=\left (\dfrac{a}{2} \right )^2+a^2=\dfrac{5a^2}{4}\Rightarrow DM=\dfrac{a\sqrt{5}}{2}
+			\]
+			Suy ra $\left |\vec{MD}\right |=MD=\dfrac{a\sqrt{5}}{2}$.\\
+			Qua $N$ kẻ đường thẳng song song với $AD$ cắt $AB$ tại $P$.\\
+			Khi đó tứ giác $ADNP$ là hình vuông và $PM=PA+AM=a+\dfrac{a}{2}=\dfrac{3a}{2}$.\\
+			Áp dụng định lý Pythagoras trong tam giác vuông $NPM$ ta có
+			\[
+			MN^2=NP^2+PM^2=a^2+\left (\dfrac{3a}{2} \right )^2=\dfrac{13a^2}{4}\Rightarrow MN=\dfrac{a\sqrt{13}}{2}
+			\]
+			Suy ra $\left |\vec{MN}\right |=MN=\dfrac{a\sqrt{13}}{2}$.
+		}{
+			\begin{tikzpicture}[scale=3]
+				\draw(1.,1.)-- (1.,0.);
+				\draw(1.,0.)-- (2.,0.);
+				\draw(2.,0.)-- (2.,1.);
+				\draw(2.,1.)-- (1.,1.);
+				\draw(2.,1.)-- (2.,2.);
+				\draw(2.,2.)-- (1.,2.);
+				\draw(1.,2.)-- (1.,1.);
+				\draw(1,0.5)-- (2.,1.);
+				\draw(1,0.5)-- (2.,2.);
+				\draw(1,1) node [left]{$A$};
+				\draw(1,0) node [left]{$B$};
+				\draw(2,0) node [right]{$C$};
+				\draw(2,1) node [right]{$D$};
+				\draw(2,2) node [right]{$N$};
+				\draw(1,2) node [left]{$P$};
+				\draw(1,0.5) node  [left]{$M$};
+			\end{tikzpicture}
+		}
+		
+	}
+\end{bt}
+
+% nguồn: TuLuan_Lop10_Dot2 (nhập 14/11/2026)
+\begin{bt}%[0H5H1-5]%[ma:ed57ff80]
+	Cho hình vuông $ABCD$ với cạnh có độ dài bằng $1$. Tính độ dài các véc-tơ $\overrightarrow{AC}$, $\overrightarrow{CA}$, $\overrightarrow{BD}$.
+	\loigiai{
+	Vì cạnh của hình vuông $ABCD$ có độ dài bằng $1$ nên các đường chéo của hình vuông này có độ dài bằng $\sqrt{2}$.\\
+	Vậy $\left|\overrightarrow{AC}\right|=AC=\sqrt{2}$, $\left|\overrightarrow{CA}\right|=CA=\sqrt{2}$, $\left|\overrightarrow{BD}\right|=BD=\sqrt{2}$.
+}
+\end{bt}
+
+% nguồn: TuLuan_Lop10_Dot2 (nhập 14/11/2026)
+\begin{bt}%[0H5H1-5]%[ma:aaa77096]
+	Cho tam giác đều $ABC$ với cạnh có độ dài bằng $a$. Hãy chỉ ra các véc-tơ có độ dài bằng $a$ và có điểm đầu, điểm cuối là các đỉnh của tam giác $ABC$.
+	\loigiai{
+	Các véc-tơ có độ dài bằng $a$ và có điểm đầu, điểm cuối là các đỉnh của tam giác $ABC$ là
+	$$\overrightarrow{AB},\ \overrightarrow{BA},\ \overrightarrow{AC},\ \overrightarrow{CA},\ \overrightarrow{BC},\ \overrightarrow{CB}.$$
+}
+\end{bt}
+
+% nguồn: TuLuan_Lop10_Dot2 (nhập 14/11/2026)
+\begin{bt}%[0H5H1-5]%[ma:f86fcaaa]
+	\immini{
+		Tính độ dài của các véc-tơ $\overrightarrow{AB}$, $\overrightarrow{CD}$ và $\overrightarrow{MN}$ ở hình bên, biết rằng độ dài cạnh của ô vuông bằng $1$ cm.
+	}{
+		\begin{tikzpicture}[scale=0.6, line join=round, line cap=round,font=\footnotesize,>=stealth]
+			\draw[step=1cm,gray!50,very thin] (0,0) grid (12,7);
+			\draw[->,line width= 1pt] (1,1)node[below left]{$M$}--(4,4) node[above right]{$N$};
+			\draw[->,line width= 1pt] (2,6)node[above]{$A$}--(6,6) node[above]{$B$};
+			\draw[<-,line width= 1pt] (7,4.5)node[below]{$D$}--(11,4.5) node[below]{$C$};
+			\fill[color=red] (1,1) circle(2pt) (4.05,4.05) circle(2pt) (6.95,4.5) circle(2pt) (11,4.5) circle(2pt) (2,6) circle(2pt) (6.05,6) circle(2pt);
+		\end{tikzpicture}
+	}
+	\loigiai{
+		\begin{align*}
+			&\left|\overrightarrow{AB} \right| = AB = 4 \textrm{ cm}, \left|\overrightarrow{CD} \right| = CD = 4 \textrm{ cm},\\
+			&\left|\overrightarrow{MN} \right| = MN = \sqrt{3^2 + 4^2} = 5 \textrm{ cm.}   
+		\end{align*}
+	}
+\end{bt}
+
+% nguồn: TuLuan_Lop10_Dot2 (nhập 14/11/2026)
+\begin{bt}%[0H5H1-5]%Bài 4.14%[ma:b9fb269f]
+	Cho tam giác $OAB$ vuông cân, với $OA=OB=a$. Hãy xác định độ dài của các vectơ sau 
+	$\overrightarrow{OA}+\overrightarrow{OB}$, $\overrightarrow{OA}-\overrightarrow{OB}$, $\overrightarrow{OA}+2\overrightarrow{OB}$, $2\overrightarrow{OA}-3\overrightarrow{OB}$.
+	\loigiai{
+		\immini{Theo quy tắc hình bình hành, $\overrightarrow{OA}+\overrightarrow{OB}=\overrightarrow{OC}$ với $C$ là đỉnh thứ tư của hình bình hành $OACB$ dựng trên hai cạnh $OA, OB$. \\
+			Do tam giác $OAB$ vuông cân tại $O$, nên $OACB$ là hình vuông. Khi đó 
+			$$\left|\overrightarrow{OC}\right|=OC=\sqrt{OA^2+OB^2}=a\sqrt2.$$
+			Theo quy tắc ba điểm, $\overrightarrow{OA}-\overrightarrow{OB}=\overrightarrow{BA}$. Từ đó, do tam giác $OAB$ vuông cân tại $O$, nên $\left|\overrightarrow{BA}\right|=AB=a\sqrt2$.
+		}
+		{\begin{tikzpicture}[scale=1, font=\footnotesize, line join=round, line cap=round, >=stealth]
+			\path
+			(0{,}0) coordinate (O)
+			(4{,}0) coordinate (A)
+			(4{,}4) coordinate (C)
+			(0{,}4) coordinate (B);
+			\draw (B)--(C)--(A)--(B);
+			\path[->] (O) edge (B) (O) edge (C) (O) edge (A);
+			\foreach \x/ \g in
+			{O/-90, A/-90, C/90, B/90}
+			\fill[black](\x) circle(1pt) ($(\x)+(\g:3mm)$) node{\x};
+			\tkzMarkRightAngle(B,O,A)
+			\end{tikzpicture}}
+		
+		\immini{Lấy điểm $D$ đối xứng với $O$ qua $B$. Khi đó $\overrightarrow{OD}=2\overrightarrow{OB}$. Theo quy tắc hình bình hành, ta có $\overrightarrow{OA}+2\overrightarrow{OB}=\overrightarrow{OA}+\overrightarrow{OD}=\overrightarrow{OE}$ với $E$ là đỉnh thứ tư của hình bình hành $OAED$ dựng trên hai cạnh $OA$, $OD$. Do tam giác $OAB$ vuông cân tại $O$ nên $OAED$ là hình chữ nhật, với $OA=a$, $OD=2a$. Suy ra
+			$$\left|\overrightarrow{OE}\right|=OE=\sqrt{OA^2+OD^2}=a\sqrt5.$$
+		}
+		{\begin{tikzpicture}[scale=1, font=\footnotesize, line join=round, line cap=round, >=stealth]
+			\draw[line width=.01pt] (-.6,-.6) grid (4.6{,}8.6);
+			\path
+			(0{,}0) coordinate (O)
+			(4{,}0) coordinate (A)
+			(0{,}8) coordinate (D)
+			(4{,}8) coordinate (E)
+			(0{,}4) coordinate (B);
+			\draw[thick] (A)--(B);
+			\draw[thick,dashed] (B)--(D)--(E)--(A);
+			\path[->,thick] (O) edge (B) (O) edge (A) (O) edge (E);
+			\foreach \x/ \g in
+			{O/-120, A/-60, D/120, B/120, E/60}
+			\fill[black](\x) circle(1pt) ($(\x)+(\g:3mm)$) node{\x};
+			\tkzMarkRightAngle(B,O,A)
+			\end{tikzpicture}}
+		\immini{Lấy điểm $F$ đối xứng với $B$ qua $D$ và lấy $G$ đối xứng với $O$ qua $A$. Khi đó $\overrightarrow{OG}=2\overrightarrow{OA}$, $\overrightarrow{OF}=3\overrightarrow{OB}$. \\
+			Suy ra $2\overrightarrow{OA}-3\overrightarrow{OB}=\overrightarrow{OG}-\overrightarrow{OF}=\overrightarrow{FG}$. \\ 
+			Do cách dựng các điểm $F, G$, tam giác $OFG$ vuông tại $O$, $OG=2OA=2a$, $OF=3OB=3a$. Từ đó suy ra
+			$$\left|2\overrightarrow{OA}-3\overrightarrow{OB}\right|=\left|FG\right|=FG=\sqrt{OF^2+OG^2}=a\sqrt{13}.$$
+		}
+		{\begin{tikzpicture}[scale=1, font=\footnotesize, line join=round, line cap=round, >=stealth]
+			\path
+			(0{,}0) coordinate (O)
+			(0{,}2) coordinate (A)
+			(2{,}0) coordinate (B)
+			(4{,}0) coordinate (D)
+			(6{,}0) coordinate (F)
+			(0{,}4) coordinate (G);
+			\path[->,thick] (O) edge (G) (O) edge (F) (F) edge (G);
+			\foreach \x/ \g in
+			{O/-90, A/180, D/-90, B/-90, F/-90, G/90}
+			\fill[black](\x) circle(1pt) ($(\x)+(\g:3mm)$) node{\x};
+			\tkzMarkRightAngle(B,O,A)
+			\end{tikzpicture}}
+	}  
+\end{bt}

@@ -889,3 +889,1586 @@
 		\end{enumerate}
 	 }
 \end{bt}
+
+% nguồn: TuLuan_Lop10_daduyet (nhập 14/11/2026)
+\begin{bt}%[0H4H2-2]%[Dự án đề kiểm tra giữa kì khối 10 HKI NH24-25-Dot 4-TheHung Nguyen]%[THPT Tân Bình-TpHCM]%[ma:d0b13ae7]
+	Cho $\triangle ABC$ có $AB=8$, $AC=5$, $\widehat{BAC}=60^{\circ}$. Tính chiều cao $AH$ của tam giác $ABC$ (kết quả làm tròn đến $1$ chữ số thập phân).
+	\loigiai{
+		\immini{Theo định lý hàm số cos ta có			
+		\begin{eqnarray*}
+			BC&= & \sqrt{AB^2+AC^2-2AB\cdot AC\cos \widehat{BAC}}\\
+			&= & \sqrt{8^2+5^2-2\cdot 8\cdot 5\cos 60^\circ}\\
+			&= & 2\sqrt{5}.
+		\end{eqnarray*}	
+		Ta có $S_{\triangle ABC}=\dfrac{1}{2}AB\cdot AC\sin \widehat{BAC}=\dfrac{1}{2}\cdot 8\cdot5\sin 60^\circ=10\sqrt{3}$.\\
+		Ta có $ S_{\triangle ABC}=\dfrac{1}{2}AH\cdot BC\Rightarrow AH=\dfrac{2\cdot S_{\triangle ABC}}{BC}=\dfrac{2\cdot 10\sqrt{3}}{2\sqrt{5}}\approx7{,}4$.
+	}{\begin{tikzpicture}[line join = round, line cap=round,>=stealth,font=\footnotesize,scale=.65]
+				\path  (0,0)coordinate (A)--(0:5)coordinate (C)
+				(60:8)coordinate (B)				
+				($(B)!(A)!(C)$)coordinate (H);
+				\draw (A)--(B)--(C)--(A)--(H);
+				\foreach \y/\g in {A/180,B/90,C/0,H/10}  \fill (\y) circle (1pt)+(\g:.5)node {$\y$};
+				\draw pic [draw,angle radius=.35cm]  {right angle = B--H--A}
+				pic [draw,angle radius=.35cm]  {angle = C--A--B}
+				;
+		\end{tikzpicture}}		
+	}
+\end{bt}
+
+% nguồn: TuLuan_Lop10_daduyet (nhập 14/11/2026)
+\begin{bt}[Mức độ 1]%[BG - 10 New - 4in1,Nguyễn Văn Sang]%[0H4N2-2]%[ma:582cf320]
+	Cho tam giác với ba cạnh $ a=13$, $b=14$, $c=15$. Tính diện tích $S$ của tam giác và độ dài đường cao $h_c$.
+	\loigiai{
+		Ta có $ p=\dfrac{a+b+c}{2}=\dfrac{13+14+15}{2}=21$ là nửa chu vi tam giác.\\
+		Ta có $ S=\sqrt{p(p-a)(p-b)(p-c)}=\sqrt{21(21-13)(21-14)(21-15)}=84$.\\
+		Lại có 
+		$ S=\dfrac{1}{2}\cdot h_c \cdot c \Rightarrow h_c=\dfrac{2S}{c}=\dfrac{2\cdot 84}{15}=\dfrac{56}{5}$.	
+	}
+	
+\end{bt}
+
+% nguồn: TuLuan_Lop10_daduyet (nhập 14/11/2026)
+\begin{bt}[Mức độ 1]%[BG - 10 New - 4in1,Phú Thạch]%[0H4N2-2]%[ma:674b4add]
+	Cho tam giác $ABC$ có $AB=6$, $AC=8$  và $\widehat{A}=60^\circ$. Tính diện tích tam giác $ABC$.
+	\loigiai{
+		\begin{center}
+			\begin{tikzpicture}[>=stealth,line join=round,line cap=round,font=\footnotesize,scale=1]
+				\def\R{1.5}
+				\path
+				(0,0)coordinate (I)
+				+(-30:\R)coordinate (C)
+				+(100:\R)coordinate (A)
+				+(210:\R)coordinate (B)
+				;
+				\draw (A)--(B)--(C)--cycle
+				(I) circle(\R)
+				(B)--(I)--(C)
+				;
+				\foreach \x/\g in {A/90,B/210,C/-30,I/90} \fill (\x)circle(0.03)+(\g:0.3)node{$\x$};
+				%				\begin{scope}[on background layer]\path[white]node{MDD-169};\end{scope}
+			\end{tikzpicture}
+		\end{center}
+		Diện tích tam giác $ABC$ là 
+		$$S=\dfrac{1}{2}\cdot AB\cdot AC\cdot \sin A=\dfrac{1}{2}\cdot 6\cdot 8\cdot \sin 60^\circ=12\sqrt{3}\approx20{,}8.$$
+	}
+\end{bt}
+
+% nguồn: TuLuan_Lop10_daduyet (nhập 14/11/2026)
+\begin{bt}%[0H4H2-2]%[Dự án đề kiểm tra Toán 10 GHKI NH23-24- Tư Đô Nguyên]%[THPT Nguyễn Du- Tp HCM]%[ma:33349022]
+	\immini{
+		Từ công thức diện tích $S=\dfrac{1}{2}a\cdot h_a$ của tam giác $ABC$ (tham khảo hình vẽ bên), hãy chứng minh diện tích tam giác $ABC$ còn được tính theo công thức $S=\dfrac{1}{2}ab\sin C$.%Điền câu hỏi
+	}
+	{
+\begin{tikzpicture}[scale=1,nodes={scale=1}]
+	\path (0,0) coordinate (B) 
+	(4,0) coordinate (C) (1,2) coordinate (A) 
+	($(B)!(A)!(C)$) coordinate (H);
+	\draw (A)--(B)node[pos=.5,above left]{$c$};
+	\draw (B)--(C)node[pos=.7,below]{$a$};
+	\draw (C)--(A)node[pos=.5,above]{$b$};
+	\draw (A)--(H)node[pos=.5,right]{$h_a$};
+	\draw pic[draw,angle radius=3mm]{right angle=C--H--A};
+	\foreach \x/\g in {A/90,B/180,C/-45,H/-90}
+			\fill[black] 	(\x) circle (1pt)
+			($(\g:3mm)+(\x)$) node {$\x$};
+	\draw pic[draw,,angle radius=5mm]{angle=A--C--B};%Theo chiều dương, tùy chọn double,fill=yellow!50,-stealth,dashed
+
+	
+\end{tikzpicture}
+	}
+		\loigiai{
+		Xét $\triangle AHC$ vuông tại $H$ ta có $\sin C=\dfrac{AH}{AC}=\dfrac{h_a}{b} \Leftrightarrow h_a=b\sin C$. \\
+		Khi đó $S=\dfrac{1}{2}a\cdot h_a=\dfrac{1}{2}a \cdot \left(b \sin C\right)=\dfrac{1}{2}ab\sin C$.
+	}
+\end{bt}
+
+% nguồn: TuLuan_Lop10_daduyet (nhập 14/11/2026)
+\begin{bt}%[0H4H2-2]%[0H4H2-1]%[Dự án đề kiểm tra Toán 10 GHKI NH23-24- Thinh Ngo]%[THPT Nam Kì Khởi Nghĩa]%[ma:a6f9f84a]
+	Cho tam giác $ABC$ có $AB = 10$, $AC = 12$, $\widehat{BAC} = 60^\circ$.
+	\begin{enumerate}
+		\item Tính diện tích tam giác $ABC$.
+		\item Tính độ dài cạnh $BC$, bán kính đường tròn ngoại tiếp và bán kính đường tròn nội tiếp của tam giác $ABC$.
+	\end{enumerate}
+	\loigiai{
+	\begin{enumerate}
+		\item $S_{ABC}=\dfrac{1}{2}\cdot AB\cdot AC \cdot \sin A = \dfrac{1}{2} \cdot 10 \cdot 12 \cdot \dfrac{\sqrt{3}}{2}=30\sqrt{3}$.
+		\item 
+		\begin{itemize}
+			\item $BC^2 = AB^2 + AC^2 - 2AB\cdot AC \cdot \cos A = 10^2 + 12^2 - 2\cdot 10 \cdot 12 \cdot \dfrac{1}{2}= 124\\ \Rightarrow BC = 2\sqrt{31}$.
+			\item $\dfrac{BC}{\sin A} = 2R \Rightarrow R = \dfrac{2\sqrt{31}}{2\sin 60^\circ}= \dfrac{2\sqrt{93}}{3}$.
+			\item Ta có $p = \dfrac{AB+BC+AC}{2}=11+\sqrt{31} \Rightarrow r = \dfrac{S_{ABC}}{p}= \dfrac{30\sqrt{3}}{11+\sqrt{31}}$. 
+			
+		\end{itemize}
+		
+	\end{enumerate}
+	}
+\end{bt}
+
+% nguồn: TuLuan_Lop10_daduyet (nhập 14/11/2026)
+\begin{bt}%[0H4H2-2]%[Dự án đề kiểm tra Toán 10 GHKI NH23-24- Lâm Chính]%[THPT An Lạc- Tp HCM]%[ma:87402a8f]
+	Cho tam giác $ABC$ biết $AB=7$ cm, $AC=10$ cm, góc $\widehat{BAC}=60^\circ$.
+	\begin{enumerate}
+		\item Tính độ dài cạnh $BC$ và diện tích tam giác $ABC$.
+		\item Gọi $BH$ là đường cao của tam giác $ABC$. Tính độ dài đoạn $AH$, $BH$.
+	\end{enumerate}
+	\loigiai{
+		\begin{center}
+			\begin{tikzpicture}[scale=0.8, font=\footnotesize,line join=round, line cap=round, >=stealth]
+				\coordinate (A) at (0,0);
+				\coordinate (C) at (5,0);
+				\coordinate (B) at ($(A) + (60:3.5)$);
+				\coordinate (H) at ($(A)!(B)!(C)$);
+				\draw(A)--(B)--(C)--cycle (B)--(H);
+%				\pic[draw,thin,angle radius=6mm] {angle = C--A--B};
+				\pic[draw,thin,angle radius=2mm] {right angle = B--H--C};
+				\draw  pic["\tiny $60^\circ$", draw=black, angle eccentricity=1.6,angle radius=.4cm]
+				{angle=C--A--B};
+				%		\draw (0.5,0.5) node[right]{$60^\circ$};
+				\foreach \i/\g in {A/-90,B/90,C/-90,H/-90}{\draw[fill=black](\i) circle (1.5pt) ($(\i)+(\g:3mm)$) node[scale=1]{$\i$};}
+			\end{tikzpicture}
+		\end{center}
+		\begin{enumerate}
+			\item Áp dụng định lý hàm số cô-sin ta có
+			\allowdisplaybreaks
+			\begin{eqnarray*}
+				BC^2&=&AB^2+AC^2-2AB\cdot AC\cdot\cos A\\
+				&=&7^2+10^2-2\cdot7\cdot10\cdot\cos 60^\circ\\
+				&=&79.\\
+				\Rightarrow BC &=& \sqrt{79}.
+			\end{eqnarray*}
+			Diện tích tam giác $ABC$ bằng $S_{\triangle ABC} =\dfrac{1}{2}AB\cdot AC\cdot\sin A =\dfrac{1}{2}\cdot 7\cdot 10\cdot\sin60 ^\circ  = \dfrac{35\sqrt3}{2}$.
+			\item Tam giác $ABH$ vuông tại $H$, ta có \\
+			$\cos \widehat{BAH} = \dfrac {AH}{AB} \Rightarrow AH = AB\cdot \cos \widehat{BAH} = 7 \cdot \cos 60 ^\circ =\dfrac{7}{2} $.\\
+			$\sin \widehat{BAH} = \dfrac {BH}{AB} \Rightarrow BH = AB\cdot \sin \widehat{BAH} = 7 \cdot \sin 60 ^\circ = \dfrac{7\sqrt3}{2}$.
+		\end{enumerate}
+	}
+\end{bt}
+
+% nguồn: TuLuan_Lop10_daduyet (nhập 14/11/2026)
+\begin{bt}%[0H4H2-2]%[Dự án đề kiểm tra Toán 11 GHKI NH23-24- Quang Vinh NT]%[THPT - Tp HCM]%[ma:25f2b242]
+	Cho tam giác $ABC$ có $AC=\sqrt{17}$, $AB=7$, $\cos A=\dfrac{\sqrt{17}}{17}$.
+	\begin{enumerate}
+		\item  Tính độ dài cạnh $BC$, bán kính đường tròn ngoại tiếp, chiều cao kẻ từ đỉnh $C$ của tam giác $ABC$.
+		\item Gọi $N$ là chân đường cao hạ từ đỉnh $C$ và điểm $L$ trên cạnh $BC$ sao cho $CL=2LB$. Tính diện tích tam giác $CLN$. \\
+		\textbf{(Lưu ý: các số liệu trong câu phải được tính bằng số đúng.)}
+	\end{enumerate}
+	\loigiai{
+		\begin{center}
+			\begin{tikzpicture}[scale=1, font=\footnotesize, line join=round, line cap=round, >=stealth] 
+				\path (0,0) coordinate (B)
+				--++(6,0) coordinate (A)
+				--++ (-2,3) coordinate (C)
+				($(B)!(C)!(A)$) coordinate (N)
+				(C)--(B) coordinate[pos=2/3](L)
+				;		
+				\draw pic[draw, angle eccentricity=1.5,angle radius = 0.3cm] {right angle = C--N--A}; 
+				\draw (A)--(B)--(C)--cycle (C)--(N) (L)--(N);
+				\foreach \x/\i in {A/0,B/180,C/90,N/-90,L/150}{
+					\path ($(\x)+(\i:3mm)$) node{$\x$};
+					\fill[black] (\x) circle (1pt);
+				}
+			\end{tikzpicture}	
+		\end{center}
+		\begin{enumerate}	
+			\item  Ta có 
+			$$BC=\sqrt{AB^2+AC^2-2AB\cdot AC\cdot \cos A}=\sqrt{49+17-2\cdot 7 \cdot \sqrt{17}\cdot \dfrac{\sqrt{17}}{17} }= 2\sqrt{13}.$$
+			Và $p=\dfrac{7+\sqrt{17}+2\sqrt{13}}{2}$ nên
+			$S_{\triangle ABC}=\sqrt{p(p-\sqrt{17})(p-7)(p-2\sqrt{13})}=14.$\\
+			Mà
+			$S_{\triangle ABC}=\dfrac{abc}{4R}\Rightarrow R=\dfrac{abc}{4S}=\dfrac{\sqrt{17}\cdot 7 \cdot 2\sqrt{13}}{4\cdot 14}=\dfrac{\sqrt{221}}{4}$.\\
+			Ta có $S_{\triangle ABC}=\dfrac{1}{2}\cdot CN\cdot AB\Rightarrow CN = \dfrac{2S_{\triangle ABC}}{AB}=\dfrac{2\cdot 14}{7}= 4$.\\
+			\item Xét tam giác $CNB$ vuông tại $N$, ta có
+			$$BN=\sqrt{BC^2-CN^2}=\sqrt{52-16}=6.$$
+			Do đó 
+			\begin{eqnarray*}
+				S_{\triangle CLN}&=& \dfrac{1}{2}\cdot CL \cdot CN \sin \widehat{LCN}\\
+				&= & \dfrac{1}{2}\cdot \dfrac{2}{3}\cdot CB \cdot CN \sin \widehat{LCN}\\
+				&= & \dfrac{2}{3}\cdot S_{\triangle CBN}\\
+				&= & \dfrac{2}{3} \cdot \dfrac{1}{2}\cdot CN \cdot BN\\
+				&= & \dfrac{1}{3} \cdot 4\cdot 6 = 8.
+			\end{eqnarray*}
+		\end{enumerate}
+	}
+\end{bt}
+
+% nguồn: TuLuan_Lop10_daduyet (nhập 14/11/2026)
+\begin{bt}%[Dự án đề kiểm tra Toán 10 GHKI NH23-24- Hieu Phan]%[THPT PHAM PHÚ THỨ - Tp HCM]%[0H4V2-2]%[ma:528f95f5]
+    Cho tam giác $MNP$ có $MN=3, NP=5$ và $MP=7$.
+    \begin{enumerate}
+        \item Tính số đo các góc của tam giác $MNP$ và diện tích tam giác $M N P$.
+        \item Tính bán kính đường tròn ngoại tiếp tam giác $MNP$.
+        \item Tính độ dài đường trung tuyến $MI$ của tam giác $MNP$.
+    \end{enumerate}
+    \loigiai
+    {        \begin{center}           
+\begin{tikzpicture}
+    	\def\a{7}
+	\def\b{3}
+	\def\c{5}
+	\path 	(0:0) coordinate (P)
+			++(0:\a) coordinate (M);
+	\path[name path=c1]  (P) circle (\c);
+	\path[name path=c2]  (M) circle (\b);
+	\path[name intersections={of=c1 and c2,by={N,D}}];
+	\pgfresetboundingbox %Co khung hình 
+    \coordinate (I) at ($(N)!0.5!(P)$);
+	\draw (M)--(P)--(N)--cycle (M)--(I);
+	\foreach \x/ \goc in {N/135,P/-135,M/-45, I/135} 
+			\fill (\x) circle (1pt)
+			($(\x)+(\goc:3mm)$) node {$\x$};	
+\end{tikzpicture}
+        \end{center}
+          \begin{enumerate}
+            \item Ta có
+            \begin{itemize}
+                \item $\cos N=\dfrac{NM^2+NP^2-MP^2}{2\cdot NM\cdot NP}=\dfrac{9+25-49}{30}=-\dfrac{1}{2}\Rightarrow \widehat{N}=120^\circ$.
+                \item $\cos M=\dfrac{NM^2+MP^2-NP^2}{2\cdot NM\cdot MP}=\dfrac{9+49-25}{42}=\dfrac{33}{42}\Rightarrow \widehat{M}\approx 38^\circ13'$.
+                \item $\widehat{P}\approx180^\circ - 120^\circ-38^\circ13'=21^\circ47'$.
+                \item $S_{\triangle MNP}=\dfrac{1}{2}\cdot NP\cdot NM\cdot \sin N =\dfrac{1}{2}\cdot 5\cdot 3\cdot \sin 120^\circ=\dfrac{15\sqrt{3}}{4}$.
+            \end{itemize}
+            
+            \item Ta có $2R=\dfrac{MP}{\sin N}\Rightarrow R=\dfrac{7}{2\cdot \dfrac{\sqrt{3}}{2}}=\dfrac{7\sqrt{3}}{3}$.
+            \item $MI^2=\dfrac{2\left(MN^2+MP^2\right)-NP^2}{4}=\dfrac{2(9+49)-25}{4}=\dfrac{\sqrt{91}}{2}$.
+        \end{enumerate}
+    }
+\end{bt}
+
+% nguồn: TuLuan_Lop10_daduyet (nhập 14/11/2026)
+\begin{bt}%[0H4H2-2]%[Dự án đề kiểm tra Toán 10 GHKI NH23-24 - Đặng Tân Hoài]%[THPT VÕ VĂN KIỆT - Tp Hồ Chí Minh]%[ma:db5383d7]
+	Cho tam giác $ABC$ có $a=8$, $b=6$, $\widehat{C}=150^\circ$. Tính diện tích tam giác $ABC$.
+	\loigiai{
+		Diện tích tam giác $ABC$ là $S=\dfrac{1}{2}ab\sin C = \dfrac{1}{2}\cdot 8 \cdot 6 \cdot \sin 150^\circ=12$
+	}
+\end{bt}
+
+% nguồn: TuLuan_Lop10_daduyet (nhập 14/11/2026)
+\begin{bt}%[0H4V2-2]%[Dự án đề kiểm tra Toán 10 GHKI NH23-24- Đỗ Đường Hiếu]%[THPT ]%[ma:92febc2f]
+	\immini{Cho tam giác $ABC$ có $AB=4$, $BC=6$, $\widehat{ABC}=120^\circ$ (tham khảo hình vẽ). Tính độ dài cạnh $AC$ và độ dài đường cao $BH$ của tham giác $ABC$.}
+	{\begin{tikzpicture}[scale=1, line cap=round,line join=round,font=\footnotesize]
+			\path
+			(0:0) coordinate (A)
+			(0:4) coordinate (C)
+			(46.5:2) coordinate (B)
+			($(A)!(B)!(C)$) coordinate (H)
+			;
+			\draw (A)--(B)--(C)--cycle (B)--(H)
+			;
+			\pic [draw, angle eccentricity=1.5] {angle = A--B--C};
+			\foreach \x/\g in {A/180,B/90,C/0,H/-90} \draw[fill=black] (\x) circle (.05) +(\g:.3) node {$\x$}
+			;
+	\end{tikzpicture}
+}
+	\loigiai{
+	\begin{itemize}
+		\item $AC^2=AB^2+BC^2-2\cdot AB\cdot BC \cos \widehat{ABC}=4^2+6^2-2\cdot 4\cdot 6\cdot \cos 120^\circ=76$.\\
+		Suy ra $AC=2\sqrt{19}$.
+		\item $S_{\triangle ABC}=\dfrac{1}{2}AB\cdot BC\cdot\sin \widehat{ABC}=120^\circ=\dfrac{1}{2}\cdot 4\cdot 6\cdot \sin 120^\circ=6\sqrt{3}$.\\
+		Do đó, độ dài đường cao $BH$ là $BH=\dfrac{2S_{\triangle ABC}}{AC}=\dfrac{2\cdot 6\sqrt{3}}{2\sqrt{19}}=\dfrac{6\sqrt{57}}{19}$.
+	\end{itemize}
+	}
+\end{bt}
+
+% nguồn: TuLuan_Lop10_daduyet (nhập 14/11/2026)
+\begin{bt}	%[0H4H2-2]%[ma:8d7f3abb]
+	Cho $\triangle A B C$ có $a=7, b=10, c=13$. Tính diện tích $\triangle A B C$.
+	\loigiai{
+		$p=15$ \\
+		$S=\sqrt{15(15-7)(15-10)(15-13)}=20 \sqrt{3}$
+		
+	}
+\end{bt}
+
+% nguồn: TuLuan_Lop10_Dot2 (nhập 14/11/2026)
+\begin{bt}%[0H4H2-2]%[ma:06cabf8f]
+    Cho tam giác $ABC$ có $a=10$, $b=11$, $c=13$. Tính diện tích $S$ của tam giác $ABC$.
+    \loigiai{
+        Tam giác $ABC$ có nửa chu vi là: $p=\dfrac{10+11+13}{2}=17$.\\
+        Khi đó
+        \allowdisplaybreaks
+        \begin{eqnarray*}
+            S_{ABC}=\sqrt{p(p-a)(p-b)(p-c)}&=&\sqrt{17\cdot (17-10)\cdot (17-11)\cdot (17-13)}\\
+            &=&\sqrt{17\cdot 7\cdot 6\cdot 4}\\
+            &=&2\sqrt{714}.
+        \end{eqnarray*}
+    }
+\end{bt}
+
+% nguồn: TuLuan_Lop10_Dot2 (nhập 14/11/2026)
+\begin{bt}%[0H4H2-2]%[ma:c14b76f6]
+    Tính diện tích $S$ của tam giác $ABC$ có $c=3$, $b=5$, $\widehat{A}=120^{\circ}$.
+    \loigiai{
+        Ta có $S=\dfrac{1}{2}bc\sin A=\dfrac{1}{2}\cdot 3\cdot 5\cdot\sin 120^{\circ}=\dfrac{15\sqrt{3}}{4}$.
+    }
+\end{bt}
+
+% nguồn: TuLuan_Lop10_Dot2 (nhập 14/11/2026)
+\begin{bt}%[0H4N2-2]%[Tex hóa BTN1]%[Nhật Thiện - pb Pham Anh]%[ma:01446fc2]
+    Tính diện tích $S$ của tam giác $ABC$ có $c=4$, $b=6$, $\widehat{A}=150^\circ$.
+    \loigiai{
+        \immini{Ta có $S=\dfrac{1}{2}bc\sin A=\dfrac{1}{2}\cdot 6\cdot 4\sin 150^\circ=6$.}
+        {
+            \begin{tikzpicture}[scale=1, font=\footnotesize, line join=round, line cap=round, >=stealth]
+                \path 
+                (1,2) coordinate (A)
+                (0,0) coordinate (B)
+                (6,0) coordinate (C)
+                ;
+                \node at ($(A)+(-70:0.5)$) {$150^\circ$};
+                \draw (A)--(B)--(C)--cycle;
+                \path
+                (A)--(B) node[above left,midway] {$c=4$}
+                (A)--(C) node[above right,midway] {$b=6$}
+                ;
+                \foreach \p/\r in {A/90,B/-120,C/-60}
+                \fill (\p) circle (1.5pt) node[shift={(\r:3mm)}]{$\p$};
+            \end{tikzpicture}
+        }
+    }
+\end{bt}
+
+% nguồn: TuLuan_Lop10_Dot2 (nhập 14/11/2026)
+\begin{bt}%[0H4H2-2]%Câu 2%[Dự án đề kiểm tra HK1 NH22-2-Lê Hùng Thắng]%[THPT Hai Bà Trưng - Huế]%[ma:ae134074]
+	Cho tam giác $ABC$ có $b=8$, $c=5$, $\widehat{A}=60^{\circ}$. Tính bán kính của đường tròn nội tiếp tam giác $A B C$.
+		\loigiai{
+	Ta có $a^2=b^2+c^2=2\cdot b\cdot c\cos A = 64+25-2\cdot 8 \cdot 5 \cdot \cos 60^\circ = 49$.\\
+	Suy ra $a=7$.\\
+	Lại có $\dfrac{a}{\sin A}=2R  \Rightarrow R=\dfrac{a}{2 \sin A}=\dfrac{7}{2 \sin 60^\circ} = \dfrac{7 \sqrt{3}}{3}$.	
+	}
+\end{bt}
+
+% nguồn: TuLuan_Lop10_Dot2 (nhập 14/11/2026)
+\begin{bt}%[0H4H2-2][1 điểm]%[Dự án đề kiểm tra HK1 22-23-Nhật Thiện]%[Trường Tân Bình]%[ma:93f593e0]
+Cho tam giác $ABC$ có cạnh $a=2\sqrt{3}$\,cm, $b=2$\,cm, $\widehat{C}=30^\circ$. Tính diện tích tam giác $ABC$ và đường kính đường tròn ngoại tiếp tam giác $ABC$.
+\loigiai{ 
+\immini{Diện tích tam giác $ABC$ là \\
+	$S=\dfrac{1}{2}ab\cdot\sin C=\dfrac{1}{2}\cdot 2\sqrt{3}\cdot 2\cdot\sin 30^\circ=\sqrt{3}$\,cm$^2$.\\
+Áp dụng định lí cô-sin cho tam giác $ABC$, ta có
+\allowdisplaybreaks
+\begin{eqnarray*}
+	c=AB&=& \sqrt{AC^2+BC^2-2\cdot AC\cdot BC\cdot\cos C} \\
+	&=& \sqrt{2^2+(2\sqrt{3})^2-2\cdot 2\cdot 2\sqrt{3}\cdot\cos 30^\circ}= 2\,\text{cm}.
+\end{eqnarray*}
+Ta có $S=\dfrac{abc}{4R}\Rightarrow R=\dfrac{abc}{4S}=\dfrac{2\sqrt{2}\cdot 2\cdot 2}{4\cdot \sqrt{3}}=\dfrac{2\sqrt{6}}{3}$\,cm.}
+{\begin{tikzpicture}[>=stealth,x=1cm,y=1cm,scale=1, font=\footnotesize] 
+	\coordinate[label=below:$A$] (A) at (0,0);
+	\pgfmathsetmacro\b{sqrt(3)}
+	\coordinate[label=below:$C$] (C) at (2,0);
+	\coordinate[label=above:$B$] (B) at ($(C)!\b!-30:(A)$);
+	\draw (A)--(B)--(C)node[pos=0.5,above right]{$2\sqrt{3}$\,cm}--(A)node[pos=0.5,below]{$2$\,cm};
+	\foreach \diem in {A,B,C}	\fill (\diem)circle(1pt);
+	\draw pic["$30^{\circ}$", draw=blue, angle eccentricity=1.6, angle radius=0.5cm]{angle=B--C--A};
+\end{tikzpicture}}
+}
+\end{bt}
+
+% nguồn: TuLuan_Lop10_Dot2 (nhập 14/11/2026)
+\begin{bt}%[0H4H2-2]%[Dự án đề kiểm tra HKI NH22-23- Nguyễn Văn Sơn]%[THPT Tây Thạnh]%[ma:032954ca]
+	Cho tam giác $ABC$ có $BC=10$,$AB=5$, $\widehat{B}=60^\circ$. Tính diện tích và bán kính đường tròn ngoại tiếp tam giác $ABC$.
+\loigiai{
+	\begin{itemize}
+	\item Diện tích $S_{\triangle ABC}=\dfrac{1} {2}BC\cdot AB\cdot \sin B=\dfrac{1}{2} 10\cdot 5\cdot \sin 60^\circ=\dfrac{25\sqrt{3}} {2}$\\
+	+ Ta có $AC^2=BC^2+AB^2-2BC\cdot AB\cdot cosB = 10^2+5^2-2\cdot 10\cdot 5\cdot cos60^\circ=75$. Suy ra $AC=\sqrt{75}=5\sqrt{3}$
+	\item Bán kính đường tròn ngoại tiếp: $R=\dfrac{AC}{2 \cdot  \sin B}=\dfrac{5\sqrt{3}}{2 \cdot  \sin 60^\circ}=5$
+	\end{itemize}
+}
+\end{bt}
+
+% nguồn: TuLuan_Lop10_Dot2 (nhập 14/11/2026)
+\begin{bt}%[0H4H2-2]%[Dự Án Đề Thi HK1-K10-2022-2023]%[TheHung Nguyen]%[ma:e139338f]
+Cho tam giác $ABC$ có $A$ là góc nhọn và $AB=7; AC=8$ và diện tích $S=14 \sqrt{3}$. Tính số đo góc $A$ và độ dài cạnh $BC$.
+	\loigiai{
+\begin{enumerate}[•]
+		\item	Ta có $S=\dfrac 12A B\cdot A C\cdot\sin A\Rightarrow \sin A=\dfrac{2S}{A B\cdot A C}=\dfrac{\sqrt 3}2\Rightarrow\hat{A}=60^{\circ}$.
+		\item Ta có $BC^2=AB^2+AC^2-2\cdot AB\cdot AC\cdot\cos A\Rightarrow BC=\sqrt{57}$.
+	\end{enumerate}		
+	}
+\end{bt}
+
+% nguồn: TuLuan_Lop10_Dot2 (nhập 14/11/2026)
+\begin{bt}%[0H4V2-2]%[Dự án đề kiểm tra GHKI NH22-23- Nguyen Huynh]%[ma:7c097351]
+	Cho tam giác $A B C$ có $\widehat{B A C}=60^{\circ}$, đường cao $C M=2 \sqrt{3}$ và bán kính đường tròn ngoại tiếp của tam giác $A B C$ là $R=6$.
+	\begin{listEX}[1]
+		\item Tính độ dài các cạnh của tam giác $A B C$.
+		\item  Tính diện tích và bán kính đường tròn nội tiếp tam giác $A B C$.
+		\item  Gọi $N$ là điểm nằm trên cạnh $BC$ sao cho $BC=3BN$. Tính độ dài đoạn $AN$.
+	\end{listEX}
+	
+	\loigiai{
+		\begin{center}
+			\begin{tikzpicture}[line join = round, line cap = round,>=stealth,font=\footnotesize,scale=1]
+				\coordinate (B) at (0,0);
+				\coordinate (C) at ($(B)+(4{,}0)$);
+				\coordinate (A) at ($(B)!.85!70:(C)$);
+				\coordinate (I) at ($(B)!1/2!(C)$); 
+				\coordinate (J) at ($(A)!1/2!(B)$); 
+				\coordinate (C1) at ($(I)!2!90:(C)$); 
+				\coordinate (B1) at ($(J)!2!90:(B)$); 
+				\draw (A)--(B)--(C)--cycle;
+				\path[name path=tt1] (I)--(C1); 
+				\path[name path=tt2] (J)--(B1); 
+				\path[name intersections={of= tt1 and tt2,by=O}]; 
+				\draw let \p1=($(A)-(O)$) in (O) circle ({veclen(\x1,\y1)}); 
+				%\tkzDrawCircle[circum](A,B,C)	\tkzGetPoint{O}
+				\coordinate (M) at ($(A)!(C)!(B)$);
+				\coordinate (N) at ($(B)!1/3!(C)$); 
+				\draw[line width=0.4pt,black] (C)--(M); 
+				\draw[fill = gray!50] ($(M)!5pt!(C)$)--($(M)!5pt!(C)+(M)!5pt!(A)-(M)$)--($(M)!5pt!(A)$)--(M)--cycle; 
+				\fill[black] (A)node[above] {$A$} circle (1.5pt) (B) node[below left]{$ B $} circle (1.5pt) (C)node[below right] {$C$} circle (1.5pt) (N) node[below] {$N$} circle (1.5pt) (M) node[above left] {$M$} circle (1.5pt) (O) node[above] {$O$} circle (1.5pt); 
+				
+				%\tkzDrawPoints[fill=black](A,B,C,O,M,N)
+				%\tkzLabelPoints[below left](B)
+				%\tkzLabelPoints[below right](C)
+				%\tkzLabelPoints[below](N)
+				%\tkzLabelPoints[above left](M)
+				%\tkzLabelPoints[above](A,O)
+			\end{tikzpicture}
+		\end{center}
+		\begin{listEX}[1]
+			\item Xét tam giác $ ACM $ vuông tại $ M $, ta có
+			\[ AC= \dfrac{CM }{\sin \widehat{BAC}}=\dfrac{2\sqrt{3}}{\sin 60^\circ}=4. \]
+			Áp dụng định lý  sin  trong tam giác $ ABC $, ta có
+			\[ BC=2R\sin{\widehat{BAC}}=2R\sin 60^\circ=6\sqrt{3}. \]
+			Ta có 
+			\[ AB=AM+MB=\sqrt{AC^2-CM^2}+\sqrt{BC^2-CM^2}=2+4\sqrt{6}. \]
+			\item Diện tích tam giác $ ABC $ là 
+			$$ S=\dfrac{1}{2} CM \cdot AB = 2\sqrt{3}+12\sqrt{2} .$$
+			Bán kính đường tròn nội tiếp $ ABC $ là 
+			\[ r=\dfrac{S}{p}=\dfrac{S}{\dfrac{AB+BC+CA}{2}} \approx 1{,}56. \]
+			\item $ BN=\dfrac{1}{3}BC=\dfrac{1}{3}\cdot 6\sqrt{3}=2\sqrt{3}$.\\
+			$\cos \widehat{ABC} = \dfrac{AB^2 + BC^2 - AC^2}{2 AB \cdot BC} \approx 0,94 $\\
+			Áp dụng định lí Cô-sin trong tam giác $ANB$
+			\[ AN = \sqrt{AB^2 + BN^2 - 2AB\cdot BN\cdot\cos \widehat{ABN}} \approx 8,61. \]
+		\end{listEX}
+	}
+\end{bt}
+
+% nguồn: TuLuan_Lop10_Dot2 (nhập 14/11/2026)
+\begin{bt}%[0H4H2-2]%[Dự án đề kiểm tra GHKI NH22-23- Nguyễn Văn Sơn]%[ma:b9f20c69]
+	Cho tam giác $ABC$ có $AB=2$, $AC=2\sqrt{7}$, $BC=4$.
+	\begin{enumerate}
+		\item Tính góc $B$, diện tích tam giác $ABC$.
+		\item Tìm bán kính đường tròn ngoại tiếp và độ dài đường cao kẻ từ $A$ của tam giác $ABC$.
+	\end{enumerate}
+\loigiai{
+\begin{enumerate}
+	\item Ta có 
+	$$\cos B=\dfrac{AB^2+BC^2-AC^2}{2AB\cdot BC}=\dfrac{(2)^2+(4)^2-(2\sqrt{7})^2}{2\cdot 2\cdot 4}=-\dfrac{1}{2}.$$
+	Suy ra $\widehat{B}=120^\circ$.\\
+	$S_{\triangle ABC}=\dfrac{1}{2}\cdot AB\cdot BC\cdot \sin B = \dfrac{1}{2} \cdot 2\cdot 4 \cdot \sin 120^\circ =2\sqrt{3}$.\\
+
+\end{enumerate}
+}
+\end{bt}
+
+% nguồn: TuLuan_Lop10_Dot2 (nhập 14/11/2026)
+\begin{bt}%[0H4H2-2]%0H1K2-2%[Dự án đề kiểm tra Toán 11 GHKI NH23-24- NguyenHuuDuc]%[THPT - Tp HCM]%[ma:1e8632e1]
+($2$ điểm) Cho $\triangle ABC$ có $ AB=26 $, $ AC=28 $, $ BC=30 $. Tính diện tích $\triangle ABC$, chiều cao $ CH $, bán kính đường tròn ngoại tiếp và bán kính đường tròn nội tiếp $\triangle ABC$.
+\loigiai{
+Ta có: $\triangle ABC$ có $ AB=26=c $, $ AC=28=b $, $ BC=30=a $.%Cho tam giác $ ABC $ không phải là tam giác vuông.
+\begin{itemize}
+	\item Tính diện tích $\triangle ABC$.\\
+	Áp dụng công thức He-ron trong $\triangle ABC$, ta có $S_{\triangle ABC}=\sqrt{p(p-a)(p-b)(p-c)}$.\\
+	Với  $a$, $b$, $c$ lần lượt ba cạnh $\triangle ABC$ và $ p$ là nữa chu vi $ p=\dfrac{a+b+c}{2}=\dfrac{26+28+30}{2}=42 $.\\
+	Vậy $S_{\triangle ABC}=\sqrt{42(42-26)(42-28)(42-30)}=336$(đvdt).
+	\item Bán kính đường tròn ngoại tiếp $\triangle ABC$.\\
+	Áp dụng công thức $S_{\triangle ABC}=\dfrac{abc}{4R} \Rightarrow R=\dfrac{abc}{4S_{\triangle ABC}}=\dfrac{26\cdot28\cdot30}{4\cdot336}=\dfrac{65}{4}$.
+	\item Bán kính đường tròn nội tiếp $\triangle ABC$.\\
+	Áp dụng công thức $S_{\triangle ABC}=pr\Rightarrow r=\dfrac{S_{\triangle ABC}}{p}=\dfrac{336}{42}=8$.
+\end{itemize}}
+\end{bt}
+
+% nguồn: TuLuan_Lop10_Dot2 (nhập 14/11/2026)
+\begin{bt}%[0H4H2-2]%0H1K2-2%[Dự án đề kiểm tra Toán 11 GHKI NH23-24- NguyenHuuDuc]%[THPT - Tp HCM]%[ma:367ee84a]
+	($1$ điểm) Tính diện tích tứ giác $ABCD$, biết $ AB=50$m, $AD=70$m, $\widehat{ABD}=60^{\circ}$, $ BC=60 $m, $\widehat{CBD}=45^{\circ}$.
+	\loigiai{
+	\immini
+	{Xét $\triangle ABD$ và $\triangle BCD$, hiển nhiên\\
+		 $S_{ACBD}=S_{\triangle ABD}+S_{\triangle BCD}$.
+		\begin{itemize}
+		\item Áp dụng định lí côsin cho $\triangle ABD$ đối với góc $\widehat{B}$, ta có\\
+		$ AD^2=BA^2+BD^2-2BA.BD\cos \widehat{ABD} $ hay\\
+		$70^2=50^2+BD^2-2.50.BD\cos \widehat{60^{\circ}} $.\\
+		$\Rightarrow BD^2-50BD-2400=0$\\
+		$\Leftrightarrow BD=80$m (nhận), $ BD=-30 $m (loại).
+		\end{itemize}
+	}
+	{
+	\begin{tikzpicture}
+		\pgfmathsetmacro \a{3*sqrt(3)};
+		\def \b{3}
+		\path (0,0) coordinate (A) (60:\b) coordinate (D);
+		\coordinate (B) at ($(D)+(-30:\a)$);
+		\coordinate (C) at ($(D)+(20:\b)$);
+		\draw (A)--(B)--(C)--(D)--cycle;
+		\draw (D)--(B);
+		%\path ($(A)!(C)!(B)$) coordinate (H);% ($(H)!1!90:(A)$) coordinate (M);
+%		\draw (C)--(A)--(H)--(C);
+		\foreach \t/\g in {A/180,C/90,B/-10,D/100} \draw[fill=white] (\t) circle (1.5pt) ($(\t)+(\g:3mm)$)node{$\t$};
+	%	\path (A)--(H) node[midway,above]{$x$}
+	%	(A)--(B) node[midway,below]{$c$}
+	%	(A)--(C) node[midway,above]{$b$}
+	%	(C)--(B) node[midway,above]{$a$}
+	%	(C)--(H) node[midway,right]{$d$}
+	%	(B)--(H) node[midway,above]{$c-x$};
+	%	\foreach \x/\y/\z in {C/H/B}\pic[draw,angle radius=1.5mm]{right angle=\x--\y--\z}; % Đánh dấu góc vuông
+	%	\draw (2.6,-0.5) node[below] {\textit{Hình 2.01}};
+	\end{tikzpicture}
+	}\begin{itemize}
+	\item Xét $\triangle ABD$, ta có $S_{\triangle ABD}=\dfrac{1}{2}BA\cdot BD\cdot\sin \widehat{ABD}=\dfrac{1}{2}50\cdot 80\cdot\sin \widehat{60^{\circ}}=1000\sqrt{3}$(m$^2$).
+	\tagEX{1}
+	Mặc khác $S_{\triangle BCD}=\dfrac{1}{2}BC\cdot BD\cdot\sin \widehat{DBC}=\dfrac{1}{2}60\cdot 80\cdot\sin \widehat{45^{\circ}}=1200\sqrt{2}$(m$^2$).
+	\tagEX{2}
+	Từ $(1)$ và $(2)$ suy ra $S_{ACBD}=S_{\triangle ABD}+S_{\triangle BCD}=1000\sqrt{3}+1200\sqrt{2}\approx 3429{,}1 $(m$^2$).	
+\end{itemize}}
+\end{bt}
+
+% nguồn: TuLuan_Lop10_Dot2 (nhập 14/11/2026)
+\begin{bt}%[0H4H2-2]%[Dự án đề kiểm tra HK1 NH22-23]%[Tạ Quang Bửu]%Lê Hùng Thắng%[ma:1c63872d]
+Tính diện tích một lá cờ hình tam giác cân. Biết lá cờ đó có chiều dài cạnh bên là $32$ cm và góc ở đáy có số đo là $48^{\circ}$ (làm tròn kết quả đến hàng phần nghìn).
+\dapso{$509{,}195$ cm$^2$ }
+\loigiai{
+\immini{
+Xét lá cờ có dạng tam giác cân $ABC$. Gọi $H$ là trung điểm của $BC$.\\
+Ta có $\cos \widehat{HCA} = \dfrac{HC}{AC} \Rightarrow HC =AC \cdot \cos 48^\circ$.\\
+Diện tích tam giác $ABC$ là\\
+\allowdisplaybreaks
+$\begin{aligned}[t]
+	S_{\triangle ABC}=2 S_{\triangle AHC} & = CH \cdot CA \sin 48^\circ \\
+	 & =AC \cdot \cos 48^\circ \cdot CA \sin 48^\circ \approx 509{,}195 \mathrm{cm}^2.
+\end{aligned}
+$
+}
+{\begin{tikzpicture}[scale=0.71,>=stealth, font=\footnotesize, line join=round, line cap=round]
+\path (0,0) coordinate (H)
+(0,5) coordinate (A)
+(-2,0) coordinate (B)
+(2,0) coordinate (C);
+\draw (H) node [below] {$H$}-
+-(A) node [above left] {$A$}--(B) node [left] {$B$}--(C) node [right] {$C$}--(A);
+%\tkzMarkAngles[size=0.7cm](A,C,B)
+\tkzMarkAngles[size=0.5cm,arc=l,mark=](A,C,B)
+\tkzLabelAngles[pos=0.91,rotate=60](A,C,B){$48^\circ$}
+\tkzMarkRightAngles[size=0.25](C,H,A)
+\end{tikzpicture}
+}
+}
+\end{bt}
+
+% nguồn: TuLuan_Lop10_Dot2 (nhập 14/11/2026)
+\begin{bt}%[0H4V2-2]%[Dự án đề kiểm tra HKI NH22-23- Nguyễn Ngọc Nguyên]%[THPT Trưng Vương]%[ma:58cf7193]
+	Cho tam giác $ABC$ có diện tích là $10$, $AB=5$ và $AC=8$. Tính số đo góc $A$ và độ dài cạnh $BC$ của tam giác $ABC$ biết góc $A$ là góc tù.
+	\loigiai{
+		Ta có $S_{ABC}=10\Leftrightarrow \dfrac{1}{2}\cdot AB\cdot AC\cdot\sin A=10\Leftrightarrow \sin A=\dfrac{1}{2}\Leftrightarrow\cos A=\pm\dfrac{\sqrt{3}}{2}$.\\
+		Do góc $A$ tù suy ra $\cos A=-\dfrac{\sqrt{3}}{2}\Rightarrow\widehat{A}=150^\circ$.\\ 
+		Áp dụng định lý cô-sin ta có\\
+		$BC^2=AB^2+AC^2-2AB\cdot AC\cdot\cos A\Leftarrow BC^2=5^2+8^2-2\cdot5\cdot8\cdot \left(-\dfrac{\sqrt{3}}{2}\right) \Leftrightarrow BC\approx 12{,}6$.\\
+		Vậy $BC\approx 12{,}6$ và $\widehat{A}=150^\circ$.
+	}
+\end{bt}
+
+% nguồn: TuLuan_Lop10_Dot2 (nhập 14/11/2026)
+\begin{bt}%[0H4H2-2]%[Dự án đề kiểm tra GHKI NH22-23- Nguyễn Tài Tuệ]%[ma:10cb0bfa]
+Cho tam giác $ ABC $	có $ AB=5 $, $ AC=8 $, $ \widehat{A}=60^\circ $. Tính độ dài $ BC $, góc $ B $, đường cao kẻ từ đỉnh $ A $ và bán kính đường tròn ngoại tiếp tam giác $ ABC $.
+	\loigiai{
+	Áp dụng định lí cosin, ta có \\
+	$ BC^2=AB^2+AC^2-2\cdot AB\cdot AC\cos A=5^2+8^2-2\cdot 5\cdot 8\cdot \cos 60^\circ=49 $.\\
+	Suy ra $ BC=7 $.\\
+	Theo hệ quả định lí cosin, ta có $ \cos B=\dfrac{AB^2+BC^2-AC^2}{2\cdot AB\cdot BC}= \dfrac{5^2+7^2-8^2}{2\cdot 5\cdot 7}=\dfrac{1}{7}$.\\
+	Suy ra $ \widehat{B}\approx 81^\circ47' $.\\
+	$ S=\dfrac{1}{2}\cdot AB\cdot AC\cdot \sin A= \dfrac{1}{2}\cdot 5\cdot 8\cdot \sin 60^\circ=10\sqrt{3}$.\\
+	$ h_a=\dfrac{2S}{a}=\dfrac{2\cdot 10\sqrt{3}}{7}=\dfrac{20\sqrt{3}}{7} $.\\
+	Bán kính đường tròn ngoại tiếp là $ R=\dfrac{a}{2\sin A}=\dfrac{7}{\sqrt{3}} $.	
+	}
+\end{bt}
+
+% nguồn: TuLuan_Lop10_Dot2 (nhập 14/11/2026)
+\begin{bt}%[0H4H2-2]%[Dự Án Đề Kiểm Tra HKI NH22-23-Trương Đăng Khoa]%[THPT Gò Vấp]%Câu 8%[ma:8f9c826d]
+	Cho tam giác $ABC$ có $a=6$, $b=5$, $c=8$. Tính $\cos A$ và diện tích của tam giác $ABC$.
+	\loigiai{
+		Xét tam giác $ABC$, ta có
+		\begin{eqnarray*}
+			&&a^2=b^2+c^2-2bc\cos A\\
+			&\Leftrightarrow& 6^2=5^2+8^2-2\cdot 5\cdot 8\cdot \cos A\\
+			&\Leftrightarrow& \cos A=\dfrac{53}{80}.
+		\end{eqnarray*}
+		Ta có $p=\dfrac{a+b+c}{2}=\dfrac{6+5+8}{2}=\dfrac{19}{2}$.\\
+		Vậy $S_{ABC}=\sqrt{p(p-a)(p-b)(p-c)}=\sqrt{\dfrac{19}{2}\cdot\left(\dfrac{19}{2}-6\right)\cdot\left(\dfrac{19}{2}-5\right)\cdot\left(\dfrac{19}{2}-8\right)}=\dfrac{3\sqrt{399}}{4}$.}
+\end{bt}
+
+% nguồn: TuLuan_Lop10_Dot2 (nhập 14/11/2026)
+\begin{bt}%[0H4H2-2]%[Dự án đề kiểm tra HKI NH22-23- Võ Thị Thùy Trang]%[Trường Chinh]%[ma:b0aea5f4]
+		Cho tam giác $ABC$ có $AB=9$, $AC=8$, $BC=7$. Tính diện tích tam giác $ABC$, đường cao $AH$, bán kính đường tròn ngoại tiếp và bán kính đường tròn nội tiếp của tam giác $ABC$.
+		%\dapso{$S_{ABC}=12\sqrt{5}$; $AH=\dfrac{24\sqrt{5}}{7}$; $R=\dfrac{21\sqrt{5}}{10}$; $r=\sqrt{5}$}
+		\loigiai{
+			\begin{itemize}
+				\item Ta có $p=\dfrac{AB+AC+BC}{2}=\dfrac{9+8+7}{2}=12$.
+				\item Diện tích tam giác $ABC$ là $$S_{ABC}=\sqrt{p(p-AB)(p-AC)(p-BC)}=\sqrt{12\cdot 3\cdot 4\cdot 5}=12\sqrt{5}$$.
+				\item $AH=\dfrac{2S_{ABC}}{BC}=\dfrac{24\sqrt{5}}{7}$.
+				\item $R=\dfrac{AB\cdot AC\cdot BC}{4S_{ABC}}=\dfrac{9\cdot 8\cdot 7}{4\cdot 12\sqrt{5}}=\dfrac{21\sqrt{5}}{10}$.
+				\item $r=\dfrac{S_{ABC}}{p}=\dfrac{12\sqrt{5}}{12}=\sqrt{5}$.
+			\end{itemize}
+		}
+	\end{bt}
+
+% nguồn: TuLuan_Lop10_Dot2 (nhập 14/11/2026)
+\begin{bt}%[0H4H2-2]%[ma:f03a3cfe]
+	Cho tam giác $ABC$ có $a=6$, $b=5$, $c=8$. 
+\begin{enumerate}
+	\item Tính góc $\widehat{BAC}$.
+	\item  Tính diện tích tam giác $ABC$.
+\end{enumerate}
+\loigiai{ 
+	\begin{enumerate}
+		\item Tính góc $\widehat{BAC}$.\\
+		 Ta có $\cos A= \dfrac{b^2+c^2-a^2}{2bc}=\dfrac{5^2+8^2-6^2}{2\cdot 5 \cdot 8}=\dfrac{53}{80}$. Suy ra $\widehat{A}\simeq 48^\circ 30'$.
+		\item  Tính diện tích tam giác $ABC$.\\
+		Nửa chu vi tam giác $ABC$ là $p=\dfrac{6+5+8 }{2 }=\dfrac{19}{2}$.\\
+		Diện tích tam giác $ABC$ 
+		\[S=\sqrt{\dfrac{19}{2}\left(\dfrac{19}{2}-6\right)\left(\dfrac{19}{2}-5\right)\left(\dfrac{19}{2}-8\right)}=\dfrac{3\sqrt{399}}{4}.\]
+	\end{enumerate}
+}
+\end{bt}
+
+% nguồn: TuLuan_Lop10_Dot2 (nhập 14/11/2026)
+\begin{bt}%[0H4H2-2]%[Dự án đề kiểm tra GHKI NH22-23- Ngô Quang Anh]%[ma:a6b999b2]
+Cho tam giác $ABC$ có $a=15$, $b=13$ và $c=14$. Tính:
+	\begin{enumerate}[a)]
+		\item Diện tích tam giác $ABC$.
+		\item Bán kính đường tròn ngoại tiếp tam giác $ABC$.
+	\end{enumerate}
+\loigiai{
+\begin{enumerate}[a)]
+				\item Ta có $p=\dfrac{1}{2}(15+13+14)=21$.\\
+				Áp dụng công thức Heron, ta có \[S=\sqrt{p(p-a)(p-b)(p-c)}=\sqrt{21(21-15)(21-13)(21-14)}=84.\]
+				\item Ta có $S=\dfrac{abc}{4R}$, suy ra $R=\dfrac{abc}{4S}=\dfrac{15\cdot 13\cdot 14}{4\cdot 84}=\dfrac{65}{8}$.
+			\end{enumerate}
+}
+\end{bt}
+
+% nguồn: TuLuan_Lop10_Dot2 (nhập 14/11/2026)
+\begin{bt}%[0H4C2-2]%[Dự án đề kiểm tra HKI NH22-23- NGUYỄN VĂN SƠN %[SGD HÀ NAM]%[ma:80ab0122]
+	Anh Việt có một mảnh đất hình từ giác $ABCD$ với $AB=4{,}2$ m, $BC=15{,}3$ m, $CD=5{,}4$ m và $DA=16{,}8$ m. Để tính diện tích mảnh đất, anh Việt lấy các điểm $M$, $N$ lần lượt trên cạnh $AB, AD$ sao cho $AM=1$ m và $AN=1$ m. Anh việt đo được $MN=1{,}7$ m. Tính diện tích mảnh đất (làm tròn kết quả đến hàng phần trăm).
+	
+	\loigiai{
+		\begin{center}
+			\begin{tikzpicture}[scale=0.7, font=\footnotesize,>=stealth]
+				%Định nghĩa điểm.
+				\coordinate (A) at (1,4);
+				\coordinate (B) at (0,0);
+				\coordinate (C) at (13,0);
+				\coordinate (D) at (14,6);
+				%Vẽ tứ giác ABCD.
+				\draw (A)--(B)--(C)--(D)--cycle;
+				\coordinate (M) at ($(A)!0.1!(D)$);
+				\coordinate (N) at ($(A)!0.3!(B)$);
+				\draw (D)--(B) (M)--(N);
+				%Hiển thị các điểm.
+				\foreach \x/\y in {A/150,B/180,C/0,D/90,M/90, N/150}{\fill (\x) circle(2pt) ($(\x)+(\y:0.3cm)$) node{$\x$};}
+			\end{tikzpicture}
+		\end{center}
+		\begin{itemize}
+			\item Xét tam giác $AMN$, ta có
+			\begin{eqnarray*}
+				&&MN^2=AM^2+AN^2-2\cdot AM \cdot AN \cdot \cos A\\
+				&\Leftrightarrow& (1{,}7)^2=1^2+1^2-2\cdot 5\cdot 1\cdot \cos A\\
+				&\Leftrightarrow& \cos A=-\dfrac{89}{200}.
+			\end{eqnarray*}
+			\item Xét tam giác $ABD$, ta có
+			\begin{eqnarray*}
+				&&BD^2=AD^2+AB^2-2\cdot AB \cdot AD \cdot \cos A\\
+				&\Leftrightarrow& BD^2=(4{,}2)^2+(16{,}8)^2-2\cdot (4{,}2)^2\cdot (16{,}8)^2\cdot\dfrac{-89}{200} \\
+				&\Leftrightarrow& BD \approx 19{,}05.
+			\end{eqnarray*}
+			\item Tính diện tích tam giác $ABD$, ta có
+			$p=\dfrac{AB+AD+BD}{2}$.\\
+			Suy ra
+			\begin{eqnarray*}
+				S_{\triangle ABD}&=&\sqrt{p(p-AB)(p-AD)(p-BD)}\\
+				&=&\sqrt{p(p-4{,}2)(p-16{,}8)(p-19{,}05)}\approx 31{,}59\, \text{m}^2.
+			\end{eqnarray*}
+			
+			\item Tương tự, tính diện tích tam giác $BCD$, ta có
+			$p=\dfrac{BC+BD+CD}{2}$.\\
+			Suy ra 
+			\begin{eqnarray*}
+				S_{\triangle BCD}&=&\sqrt{p(p-BC)(p-CD)(p-BD)}\\
+				&=&\sqrt{p(p-15{,}3)(p-5{,}4)(p-19{,}05)}\approx 32{,}99\, \text{m}^2.
+			\end{eqnarray*}
+			
+			\item Vậy $S_{ABCD}=S_{\triangle ABD}+S_{\triangle BCD}\approx 64{,}58$ m$^2$.
+		\end{itemize}
+	}
+\end{bt}
+
+% nguồn: TuLuan_Lop10_Dot2 (nhập 14/11/2026)
+\begin{bt}%[0H4H2-2]%[Dự án đề kiểm tra HKII NH22-23- Mui Doan]%[THPT Trương Vĩnh Ký Bến Tre]%[ma:51d897fe]
+	Cho tam giác ABC có $a = 13$ cm, $b=14$ cm, $c=15$ cm.
+	\begin{enumerate}
+		\item Tính số đo góc $A$.
+		\item Tính diện tích của tam giác $ABC$.
+	\end{enumerate}
+		\loigiai{
+		\begin{enumerate}
+			\item Theo hệ quả định lí Cô-sin, ta có 
+			\allowdisplaybreaks
+			\begin{align*}
+			\cos A&=\dfrac{b^2+c^2-a^2}{2bc}
+			\\
+			&=\dfrac{14^2+15^2-13^2}{2\cdot 14\cdot 15}
+			\\
+			&=\dfrac{3}{5}.
+			\end{align*}
+			Suy ra $A\approx 53^\circ$.
+			\item Ta có $p=\dfrac{a+b+c}{2}=21$.\\
+			$S=\sqrt{p(p-a)(p-b)(p-c)}=\sqrt{21(21-13)(21-14)(21-15)}=84$ cm$^2$.
+		\end{enumerate}
+		}
+\end{bt}
+
+% nguồn: TuLuan_Lop10_Dot2 (nhập 14/11/2026)
+\begin{bt}%[0H4H2-2]%[Dự án đề kiểm tra HKI NH22-23- Phan Trung Hiếu]%[THPT Ten-Lo-Man]%[ma:691e89c2]
+ Cho tam giác $ABC$ có $a=13 ; b=14 ; c=15$. Tính diện tích tam giác $ABC$.
+ \loigiai{
+ 	Ta có $p=\dfrac{13+14+15}{2}=21$.\\
+ 	Áp dụng công thức Hê-rông ta có diện tích tam giác $ABC$ là $$S_{\triangle ABC} = \sqrt{p(p-a)(p-b)(p-c) }= \sqrt{21\cdot (21-13)\cdot(421-14)\cdot(21-15)} = 84.$$
+}
+\end{bt}
+
+% nguồn: TuLuan_Lop10_Dot2 (nhập 14/11/2026)
+\begin{bt}%[0H4N2-2]%[Dự án đề kiểm tra Toán 10 GHKI NH23-24- Võ Xuân Cường Thịnh]%[THPT HOÀNG HOA THÁM - Tp HCM]%[ma:1717fa0f]
+	Cho tam giác ABC có AB = 4, AC = 5, và $\cos A = \dfrac{3}{5}$.\\
+		\begin{enumerate}
+			\item Tính độ dài cạnh BC
+			\item Tính độ dài đường cao kẻ từ A của tam giác ABC 
+		\end{enumerate}
+	\loigiai{
+	\begin{enumerate}
+		\item 	Theo định lý cosin: 
+		\begin{align*}
+			BC^2 & = AB^2 + AC^2 - 2\cdot AB\cdot AC\cdot\cos A \\
+			BC&  = \sqrt{4^2 + 5^2 - 2\cdot4\cdot5\cdot \dfrac{3}{5}} = \sqrt{17}.
+			\end{align*} 
+			\item  Ta có $\cos^2A + \sin^2A =1  \Rightarrow \sin A = \sqrt{1-\cos^2 A}=\dfrac{4}{5}$.\\
+			$S_{\triangle ABC} = \dfrac{1}{2}AB.AC.\sin A = \dfrac{1}{2}\cdot4\cdot5\cdot\dfrac{4}{5} = 8$.\\
+			$S_{\triangle ABC} = \dfrac{1}{2}.h.BC   \Rightarrow h = \dfrac{16}{\sqrt{17}} $.
+			
+	\end{enumerate}
+		}
+\end{bt}
+
+% nguồn: TuLuan_Lop10_Dot2 (nhập 14/11/2026)
+\begin{bt}%[0H4H2-2]%[Dự án đề kiểm tra HKI NH22-23 - Quan Ón]%[Trường Chinh - Đề 3]%[ma:faea4323]
+	Cho tam giác $ABC$ có $AB=5, AC=6, BC=8$. Tính góc $A$, diện tích tam giác $ABC$, độ dài đường cao $BK$, bán kính đường tròn nội tiếp tam giác $ABC$.\\ \dapso{$\widehat{A}\approx 92^\circ 52'$; $S=\dfrac{3\sqrt{399}}{4}$; $BK=\dfrac{\sqrt{399}}{4}$; $ r=\dfrac{3\sqrt{399}}{38}$.}
+	\loigiai{
+	\begin{center}
+		\begin{tikzpicture}[>=stealth,line join=round,line cap=round,font=\footnotesize,scale=1]
+			\path
+			(1.7,2) coordinate (A)
+			(0,0) coordinate (B)
+			(5,0) coordinate (C);
+			\draw (A)--(B)--(C)--(A);
+			\fill ($(A)!0.5!(B)$) node[shift={(120:3mm)}]{$5$};
+			\fill ($(A)!0.5!(C)$) node[shift={(60:3mm)}]{$6$};
+			\fill ($(B)!0.5!(C)$) node[shift={(-90:3mm)}]{$8$};
+			\foreach \p/\r in {A/90,B/-135,C/-45}
+			\fill (\p) circle (1.2pt) node[shift={(\r:3mm)}]{$\p$};
+		\end{tikzpicture}
+	\end{center}
+	Xét tam giác $ABC$, áp dụng hệ quả của định lí cosin, ta có
+	$$ \cos A = \dfrac{b^2 + c^2 - a^2}{2bc} = \dfrac{6^2 + 5^2 - 8^2}{2\cdot 6\cdot 5} = -\dfrac{1}{20} \Rightarrow \widehat{A} \approx 92^\circ52'. $$
+	Vì $\widehat{A} \approx 92^\circ52'$ là góc lẻ nên ta sẽ dùng công thức Hê - rông để tính diện tích.\\
+	Nửa chu vi của tam giác $ABC$ là $p = \dfrac{a + b +c}{2} = \dfrac{8 + 6 + 5}{2} = 9{,}5$.\\
+	Do đó, diện tích tam giác $ABC$ là
+	$$ S_{\triangle ABC} = \sqrt{p(p-a)(p-b)(p-c)} = \sqrt{9{,}5(9{,}5 - 8)(9{,}5 - 6)(9{,}5 - 5)} = \dfrac{3\sqrt{399}}{4}. $$
+	Mặt khác, ta có $S_{\triangle ABC} = \dfrac{1}{2}BK\cdot AC \Rightarrow BK = \dfrac{2S_{\triangle ABC}}{AC} = \dfrac{2\cdot \dfrac{3\sqrt{399}}{4}}{6} = \dfrac{\sqrt{399}}{4}$.\\
+	Ta cũng có $S_{\triangle ABC} = pr \Rightarrow r = \dfrac{S_{\triangle ABC}}{p} = \dfrac{\dfrac{3\sqrt{399}}{4}}{9{,}5} = \dfrac{3\sqrt{399}}{38}$.
+}
+\end{bt}
+
+% nguồn: TuLuan_Lop10_Dot2 (nhập 14/11/2026)
+\begin{bt}%[0H4H2-2]%[Dự án đề kiểm tra HKI NH22-23 - Quang Anh]%[Trường Chinh - Đề 4]%[ma:8726fd7a]
+	Cho tam giác $ABC$ có $AB=2, BC=3, AC=4$. Tính số đo góc $B$, tính diện tích, bán kính đường tròn ngoại tiếp và đường cao $AH$ của tam giác $ABC$.
+	\dapso{$\widehat{B}\approx 104^\circ 29', S=\dfrac{3\sqrt{15}}{4}, R=\dfrac{8\sqrt{15}}{15}, AH=\dfrac{3\sqrt{15}}{8}$}
+	\loigiai{
+			\begin{center}
+				\begin{tikzpicture}[>=stealth,line join=round,line cap=round,font=\footnotesize,scale=1]
+					\path
+					(1.7,2) coordinate (B)
+					(0,0) coordinate (A)
+					(5,0) coordinate (C);
+					\draw (A)--(B)--(C)--(A);
+					\fill ($(A)!0.5!(B)$) node[shift={(120:3mm)}]{$2$};
+					\fill ($(A)!0.5!(C)$) node[shift={(-60:3mm)}]{$4$};
+					\fill ($(B)!0.5!(C)$) node[shift={(90:3mm)}]{$3$};
+					\foreach \p/\r in {B/90,A/-135,C/-45}
+					\fill (\p) circle (1.2pt) node[shift={(\r:3mm)}]{$\p$};
+				\end{tikzpicture}
+			\end{center}
+			Xét tam giác $ABC$, áp dụng hệ quả của định lí cosin, ta có
+			$$ \cos B = \dfrac{a^2 + c^2 - b^2}{2ac} = \dfrac{2^2 + 3^2 - 4^2}{2\cdot 2\cdot 3} = -\dfrac{1}{4} \Rightarrow \widehat{B} \approx 104^\circ 29'. $$
+			Vì $\widehat{B} \approx 104^\circ29'$ là góc lẻ nên ta sẽ dùng công thức Hê - rông để tính diện tích.\\
+			Nửa chu vi của tam giác $ABC$ là $p = \dfrac{a + b +c}{2} = \dfrac{2 + 4 + 3}{2} = 4{,}5$.\\
+			Do đó, diện tích tam giác $ABC$ là
+			$$ S_{\triangle ABC} = \sqrt{p(p-a)(p-b)(p-c)} = \dfrac{3\sqrt{15}}{4}. $$
+			Mặt khác, ta có $S_{\triangle ABC} = \dfrac{1}{2}AH\cdot BC \Rightarrow AH = \dfrac{2S_{\triangle ABC}}{BC} = \dfrac{\sqrt{15}}{2}$.\\
+			Ta cũng có $S_{\triangle ABC} = \dfrac{abc}{4R} \Rightarrow  R = \dfrac{abc}{4S_{\triangle ABC}} =\dfrac{8\sqrt{15}}{15}$.
+		}
+\end{bt}
+
+% nguồn: TuLuan_Lop10_Dot2 (nhập 14/11/2026)
+\begin{bt}%[0H4V2-2]%[Dự án đề kiểm tra GHKI NH22-23- Mui Doan]%[ma:60c857ad]
+	Cho tam giác $ABC$ có $BC=8$, $AC=6$, $\widehat{C}=60^\circ$.
+	\begin{enumerate}
+		\item Tính độ dài cạnh $AB$.
+		\item Tính diện tích tam giác $ABC$.
+		\item Tính các góc chưa biết của tam giác $ABC$.
+		\item Tính độ dài $CK$ là đường phân giác trong của tam giác $ABC$.
+	\end{enumerate}
+	\loigiai{
+		\begin{center}
+			\begin{tikzpicture}[scale=0.6, font=\footnotesize,>=stealth]
+			\def\canhAB{7.21};\def\canhBC{8};\def\gocABC{46.1};
+			%Định nghĩa điểm.
+			\coordinate (B) at (0,0);
+			\coordinate (A) at ($(B)+(\gocABC:\canhAB)$);
+			\coordinate (C) at ($(B)+(0:\canhBC)$);
+			%Vẽ tam giác ABC.
+			\draw (A)--(B)--(C)--cycle;
+			%Vẽ Phân giác trong CK
+			\path[name path=cc] (C)--($(C)!6cm!($($(C)!5pt!(A)$)!.5!($(C)!5pt!(B)$)$)$);
+			\draw[name path=ab] (A)--(B);
+			\path[name intersections={of= cc and ab,by=K}];
+			\draw (C)--(K);
+			%Kí hiệu góc
+			\draw[thin] pic[draw,angle radius=5mm] {angle = K--C--B} pic[draw,angle radius=6mm] {angle = A--C--K};
+			%Hiển thị các điểm.
+			\foreach \x/\y in {A/90, B/180, C/0, K/145}{\fill (\x) circle(1pt) ($(\x)+(\y:0.3cm)$) node{$\x$};}
+			\end{tikzpicture}
+		\end{center}
+		\begin{enumerate}
+			\item %cau a
+			Áp dụng định lí Côsin, ta có\\
+			$\begin{aligned}
+			&AB^2=AC^2  + BC^2- 2AC\cdot BC \cdot \cos \widehat{C}\\
+			\Rightarrow &AB = 6^2 + 8^2- 2\cdot 6\cdot 8\cdot \cos 60^\circ=52\\
+			\Rightarrow &AB=2\sqrt{13}.
+			\end{aligned}$
+			\item %cau b
+			Diện tích tam giác $ABC$ là\\
+			$S_{ABC}=\dfrac{1}{2}\cdot BC\cdot AC \cdot \sin \widehat{C}=\dfrac{1}{2}\cdot 8\cdot 6 \cdot \sin 60^\circ = 12\sqrt{3}$ (đvdt).
+			\item %cau c
+			Theo hệ quả định lí Côsin, ta có\\
+			$$
+			\cos \widehat{A} =\dfrac{AB^2 + AC^2 - BC^2}{2AC\cdot AB}
+			=\dfrac{(2\sqrt{13})^2+6^2-8^2}{2\cdot 2\sqrt{13}\cdot 6}=\dfrac{\sqrt{13}}{13}\\
+			\Rightarrow \widehat{A} \approx 73^\circ 54'.
+			$$
+			Xét tam giác $ABC$, ta có\\
+			$$\widehat{B}=180^\circ - \widehat{A} - \widehat{C} \approx 180^\circ - 73^\circ 54' - 60^\circ = 46^\circ 6'.$$
+			\item %cau d
+			Vì $CK$ là đường phân giác trong của tam giác $ABC$ nên $\widehat{ACK}=\widehat{BCK}=\dfrac{\widehat{C}}{2}=\dfrac{60^\circ}{2}=30^\circ$.\\
+			Xét tam giác $ACK$ có\\
+			$\widehat{AKC}=180^\circ - \widehat{A}-\widehat{ACK} \approx 180^\circ - 73^\circ 54'-30^\circ=76^\circ 6'$.\\
+			Áp dụng định lí Sin trong tam giác $ACK$, ta được\\
+			$\dfrac{CK}{\sin \widehat{A}}=\dfrac{AC}{\sin \widehat{AKC}} \Rightarrow CK \approx \sin 73^\circ 54'\cdot \dfrac{6}{\sin 76^\circ 6'} \approx 5,939$.
+		\end{enumerate}
+	}
+\end{bt}
+
+% nguồn: TuLuan_Lop10_Dot2 (nhập 14/11/2026)
+\begin{bt}%[0H4C2-2][Dự án đề kiểm tra HKI NH22-23- Nguyen Huynh]%[Lê Hồng Phong]%[ma:ada716d4]
+	Cho tam giác $ ABC $ nội tiếp đường tròn $ (O,R) $, phân giác trong góc $ A $ cắt đường tròn tại $ D $ ($ D $ khác $ A $). Biết $ \widehat{A}=75^\circ $, $ \widehat{B}=45^\circ $, tính tỉ số diện tích tam giác $ ABD $ và tam giác $ ACD $.
+	%\dapso{$ \dfrac{\sqrt{3}}{\sqrt{2}} $ }
+	\loigiai{\begin{center}
+			\begin{tikzpicture}
+				\tkzDefPoints{0/0/B,4/0/C}
+				\tkzDefShiftPoint[B](45:3.6){A}
+				\tkzDefLine[bisector](B,A,C)
+				\tkzGetPoint{i}
+				\tkzInterLL(A,i)(C,B) \tkzGetPoint{I}
+				\tkzDefCircle[circum](A,B,C)
+				\tkzGetPoint{O}
+				\tkzDrawCircle(O,A)
+				\tkzInterLC(A,I)(O,A)
+				\tkzGetFirstPoint{D}
+				\tkzDrawPoints(A,B,C,D,I,O)
+				\tkzDrawSegments(A,D B,D C,D)
+				\tkzDrawPolygon(A,B,C)
+				\tkzLabelPoint[above](A) {$ A $}
+				\tkzLabelPoint[left](B) {$ B $}
+				\tkzLabelPoint[left](O) {$ O $}
+				\tkzLabelPoints(I,C,D)
+				\tkzMarkAngle[size=0.7](B,A,D)
+				\tkzMarkAngle[size=0.6](D,A,C)
+			\end{tikzpicture}
+		\end{center}
+		Ta có $\widehat{A}+\widehat{B}+\widehat{C}=180^{\circ}\Rightarrow \widehat{C}=60^{\circ}$.\\
+		Áp dụng định lí sin cho tam giác $ABC$, ta có
+		$$\dfrac{AB}{\sin C}=\dfrac{AC}{\sin B}\Rightarrow \dfrac{AB}{AC}=\dfrac{\sin C}{\sin B}=\dfrac{\sqrt{6}}{2}$$
+		Mặt khác: $\dfrac{S_{\Delta ABD}}{S_{\Delta ACD}}=\dfrac{\dfrac{1}{2}AB\cdot AD\cdot\sin \widehat{BAD}}{\dfrac{1}{2}AC\cdot AD\cdot\sin \widehat{CAD}}=\dfrac{AB}{AC}=\dfrac{\sqrt{6}}{2}$.}
+\end{bt}
+
+% nguồn: TuLuan_Lop10_Dot2 (nhập 14/11/2026)
+\begin{bt}%[0H4H2-2]%[Dự án đề kiểm tra Toán 10 GHKI NH23-24- Thy Nguyen Vo Diem]%[THPT Gia Định]%[ma:50bcfc04]
+	Cho hình bình hành $ABCD$ có $AB=5$, $AD=8$, $\widehat{BAD}=60^{\circ}$.
+	\begin{enumerate}
+		\item Tính độ dài $BD$ và diện tích $\triangle ABD$.
+		\item Tính bán kính $R$, $r$ của các đường tròn ngoại tiếp và nội tiếp $\triangle ABD$.
+		\item  Tính độ dài vectơ sau $\vec{u}=\left(\overrightarrow{CB}-\overrightarrow{CB}\right)+\overrightarrow{AD}$.
+	\end{enumerate}
+	\loigiai{
+		\begin{enumerate}
+			\item Xét $\triangle ABD$, ta có \allowdisplaybreaks{\begin{eqnarray*}
+				BD^2	&=& AB^2+AD^2-2AB\cdot AD \cdot \cos \widehat{BAD} \\
+					&=&5^2+8^2-2\cdot 5 \cdot 8 \cdot \cos 60^{\circ}=49  \\
+			\Rightarrow	BD	&=& 7.
+			\end{eqnarray*}}
+		$S_{ABD}=\dfrac{1}{2}AB \cdot AD \sin \widehat{BAD}=\dfrac{1}{2}\cdot 5 \cdot 8 \cdot \sin 60^{\circ}=10\sqrt{3}$.
+			\item Ta có $2R=\dfrac{BD}{\sin \widehat{BAD}} \Rightarrow R=\dfrac{BD}{2\sin \widehat{BAD}}=\dfrac{7}{2\sin 60^{\circ}}=\dfrac{7\sqrt{3}}{3}$.\\
+			Nửa chu vi $p=\dfrac{5+8+7}{2}=10$.\\
+			Diện tích $S=pr \Rightarrow r=\dfrac{S}{p}=\dfrac{10\sqrt{3}}{10}=\sqrt{3}$.
+			\item   $\vec{u}=\left(\overrightarrow{CB}-\overrightarrow{CB}\right)+\overrightarrow{AD}=\overrightarrow{AB}+\overrightarrow{AD}=\overrightarrow{AC}$.\\
+			Suy ra $\left| \vec{u}\right|=\left|\overrightarrow{AC} \right|=AC$.\\
+			Ta có $\widehat{ABC}=120^{\circ}$, $BC=AD=8$.\\
+			Xét $\triangle ABC$ có \allowdisplaybreaks{\begin{eqnarray*}
+				AC^2	&=& AB^2+BC^2-2AB\cdot BC \cdot \cos \widehat{ABC} \\
+					&=&5^2+8^2-2\cdot 5 \cdot 8 \cdot \cos 120^{\circ}=129  \\
+				\Rightarrow AC	&=& \sqrt{129}.
+			\end{eqnarray*}}
+		Suy ra $\left| \vec{u} \right|=\left| \overrightarrow{AC}\right|=AC=\sqrt{129}$.
+		\end{enumerate}
+	}
+\end{bt}
+
+% nguồn: TuLuan_Lop10_Dot2 (nhập 14/11/2026)
+\begin{bt}%[0H4H2-2]%[Dự án đề kiểm tra HKI NH22-23 - Nguyễn Ngọc Dũng]%[THPT Hùng Vương]%[ma:cc676aa0]
+Cho tam giác $ABC$ có $AB=10$ cm, $BC=8$ cm, $AC=12$ cm.
+\begin{enumerate}
+\item Tính diện tích $S$ của tam giác $ABC$.
+\item Tính bán kính đường tròn nội tiếp $r$ của tam giác $ABC$.
+\end{enumerate}
+%\dapso{\textbf{a)} $S=15\sqrt{7}$ cm$^2$; \textbf{b)} $r=\sqrt{7}$ cm.}
+\loigiai{
+\begin{enumerate}
+\item \begin{itemize}
+\item Đặt $a=BC=8$ cm, $b=AC=12$ cm, $c=AB=10$ cm.
+\item Nửa chu vi tam giác $ABC$ là $p=\dfrac{a+b+c}{2} = \dfrac{8+12+10}{2}=15$ (cm).
+\item Diện tích tam giác $ABC$ là 
+$$S=\sqrt{p(p-a)(p-b)(p-c)} = \sqrt{15(15-8)(15-12)(15-10)}=15\sqrt{7} \text{ (cm}^2).$$
+\end{itemize}
+\item Ta có $r = \dfrac{S}{p} =\dfrac{15\sqrt{7}}{15}=\sqrt{7}$ (cm).
+\end{enumerate}
+}
+\end{bt}
+
+% nguồn: TuLuan_Lop10_Dot2 (nhập 14/11/2026)
+\begin{bt}%[0H4H2-2]%[Câu 8]%[ma:40a0d18d]
+	(2 điểm) Cho $\triangle ABC$ có $AB=16$, $AC=18$ và $BC=20$.
+	\begin{enumerate}
+		\item Tính số đo góc $A$.
+		\item Tính diện tích $\triangle ABC$ và bán kính $R$ của đường tròn ngoại tiếp $\triangle ABC$.
+	\end{enumerate}
+	\loigiai{
+	\immini{
+		\begin{enumerate}
+			\item Áp dụng định lí cosin cho $\triangle ABC$, ta có 
+			\begin{eqnarray*}
+				\cos{A} &=& \dfrac{AB^2+AC^2-BC^2}{2\cdot AB\cdot AC}\\
+				&=& \dfrac{16^2+18^2-20^2}{2\cdot16\cdot18}=\dfrac{5}{16}.\\
+				 \Rightarrow \widehat{A} &=& 71^{\circ}47'24".
+			\end{eqnarray*}
+			\item Áp dụng công thức Heron cho $\triangle ABC$, ta có nửa chu vi $p=\dfrac{1}{2}\left(16+18+20\right)=27$
+			\begin{eqnarray*}
+				S=\sqrt{27(27-16)(27-18)(27-20)}=9\sqrt{231} \text{ (đvdt)}.
+			\end{eqnarray*}
+			Bán kính đường tròn ngoại tiếp $\triangle ABC$, ta có
+			\begin{eqnarray*}
+				S=\dfrac{abc}{4R}  \Rightarrow R=\dfrac{abc}{4S}=\dfrac{16\cdot18\cdot20}{4\cdot9\sqrt{231}}=\dfrac{160}{\sqrt{231}}\approx 10{,}52 \text{ (đvđd)}.
+			\end{eqnarray*}
+		\end{enumerate}
+	}{
+	\begin{tikzpicture}[blue,thick,font=\footnotesize, line cap=round, line join=round]
+		\def\a{2}
+		\path 	
+		(0:0) coordinate (A)
+		(0:1.6*\a) coordinate (B)
+		(71.79:1.8*\a) coordinate (C)
+		;
+		\draw (B)--(A)--(C)--cycle ;
+		\pic[draw,angle radius=4mm,angle eccentricity=1.5,"$?$"] { angle=B--A--C};
+		\path 
+		(A)--(B) node[pos=.5,below]{$16$}
+		(A)--(C) node[pos=.5,above,sloped]{$18$}
+		(B)--(C) node[pos=.5,above,sloped]{$20$}
+		;
+		\foreach \x/\g in {A/210,B/-30,C/90}
+		\fill[black] (\x) circle (1pt) ($(\g:3mm)+(\x)$) node {$\x$};
+	\end{tikzpicture}
+	}	
+	}
+\end{bt}
+
+% nguồn: TuLuan_Lop10_Dot2 (nhập 14/11/2026)
+\begin{bt}%[0H4V2-2]%[Dự án đề kiểm tra toán khối 10-11 GHKI NH23-24-ThaiBao]%[Trường THPT Trường Trinh - TPHCM%[ma:0e57a821]
+Cho tam giác $ABC$ có độ dài ba cạnh là $AB=2, BC=5, CA=6$
+	\begin{enumerate}
+		\item  Tính diện tích tam giác $ABC$ và độ dài đường cao kẻ từ $B$
+		\item  Tính số đo góc B
+	\end{enumerate}
+	\loigiai{
+	\begin{tikzpicture}[declare function={a=5;c=2;b=6;}]
+	\path (0,0) coordinate (B)
+	(5,0) coordinate (C);
+	
+	\path[name path=ca](B)circle(c);
+	\path[name path=cb](C)circle(b);
+	\path [name intersections={of= ca and cb, by={A,A'}}];
+	\pgfresetboundingbox
+		\path ($(A)!(B)!(C)$) coordinate (H);
+	\draw (A)--(B)--(C)--cycle;\draw (B)--($(A)!(B)!(C)$);
+	\foreach \t/\g in {A/90,B/180,C/90,H/90}{
+		\draw[fill=white] (\t) circle (1pt) node[shift={(\g:7pt)},font=\normalsize]{$ \t $};
+	}
+		\path pic[draw,angle radius=5pt]{right angle= B--H--C};
+	\path ($(A)!0.5!(B)$)coordinate(A')node[left,font=\normalsize]{$2$};
+	\path ($(C)!0.5!(B)$)coordinate(B')node[below,font=\normalsize]{$5$};;
+	\path ($(A)!0.5!(C)$)coordinate(C')node[above right,font=\normalsize]{$6$};;
+	\end{tikzpicture}
+\begin{enumerate}
+	\item $p=\dfrac{2+6+5}{2}=\dfrac{13}{2}$\\
+	$S_{ABC}=\sqrt{\dfrac{13}{2}.\left(\dfrac{13}{2}-2\right).\left(\dfrac{13}{2}-5\right).\left(\dfrac{13}{2}-6\right)}=\dfrac{3\sqrt{39}}{4}$.\\
+	Gọi $H$ là hình chiếu vuông góc của $B$ lên $AC$. Khi này\\
+	$S_{ABC}=\dfrac{1}{2}.BH.AC$\\
+	$BH=\dfrac{2S_{ABC}}{AC}=\dfrac{2.\dfrac{3\sqrt{39}}{4}}{6}=\dfrac{\sqrt{39}}{4}$
+	\item $\cos B=\dfrac{a^2+c^2-b^2}{2ac}=\dfrac{5^2+2^2-6^2}{2.5.2}=\dfrac{-7}{20}$
+	$\Rightarrow \widehat{B}\approx110^\circ 29'$
+\end{enumerate}
+}
+	
+\end{bt}
+
+% nguồn: TuLuan_Lop10_Dot2 (nhập 14/11/2026)
+\begin{bt}%[0H4H2-2]%[Dự án đề kiểm tra HKI NH22-23- Thầy Hóa]%[THPT Bà Điểm]%[ma:3a18f9bc]
+	Cho tam giác $A B C$ có $A B=8, \,A C=10,\, \cos A=-\dfrac{1}{5}$. Tính $B C,\, S, h_c,\, R$.\\
+	\dapso{$B C=14,\,S=16\sqrt{6}, h_c=4\sqrt{6},\, R=\dfrac{35\sqrt{6}}{12}$}.
+	\loigiai{
+	\begin{enumerate}
+		\item Áp dụng định lý cô-sin, ta có
+		\allowdisplaybreaks
+		\begin{eqnarray*}
+			BC^2&=&AB^2+AC^2-2\cdot AB\cdot AC\cdot \cos A\\
+			&=&8^2+10^2-2\cdot 8\cdot 10\cdot \dfrac{-1}{5}\\
+			&=&196\\
+			\Rightarrow BC&=&\sqrt{196}=14.
+		\end{eqnarray*}
+		\item Ta có $p=\dfrac{AB+AC+BC}{2}=\dfrac{8+10+14}{2}=16$.\\
+		Áp dụng công thức Hê-rông, ta được
+		\[S=\sqrt{16\cdot (16-8)\cdot (16-10)\cdot (16-14)}=16\sqrt{6}. \]
+		\item Ta có $S=\dfrac{1}{2}ch_c\Rightarrow 16\sqrt{6}=\dfrac{1}{2}\cdot 8\cdot h_c\Rightarrow h_c=4\sqrt{6}$.
+		\item Ta có $S=\dfrac{abc}{4R}\Rightarrow R=\dfrac{abc}{4S}=\dfrac{8\cdot 10\cdot 14}{2\cdot 16\sqrt{6}}=\dfrac{35\sqrt{6}}{12}$.
+	\end{enumerate}
+	}
+\end{bt}
+
+% nguồn: TuLuan_Lop10_Dot2 (nhập 14/11/2026)
+\begin{bt}%[0H4H2-2]%[Dự án đề kiểm tra NH22-23 - Huỳnh Quy]%[THPT Phú Nhuận]%[ma:e4d94ec5]
+	Cho $\triangle{ABC}$ có $AB=6$, $AC=10$ và $\widehat{A}=120^\circ$. Tính độ dài cạnh $BC$ và đường cao kẻ từ $A$ của $\triangle{ABC}$.
+	\dapso{$BC=14$; $h_{a}=\dfrac{15\sqrt{3}}{7}$.}
+	\loigiai{ 
+	Ta có 
+	\begin{eqnarray*}
+		BC^2&=&AB^2+AC^2-2\cdot AB\cdot AC\cdot \cos \widehat{A}\\
+		&=&6^2+10^2-2\cdot 6\cdot 10\cdot \cos 120^{\circ}\\
+		&=&196.\\
+		\Rightarrow BC&=&14.
+	\end{eqnarray*}
+		Lại có
+		\begin{eqnarray*}
+			S_{\triangle ABC}&=&\dfrac{1}{2}AB\cdot AC\cdot\sin\widehat{A}\\
+			&=&\dfrac{1}{2}\cdot 6\cdot 10\cdot \sin120^{\circ}\\
+			&=&15\sqrt{3}.
+		\end{eqnarray*}
+	Mà $S_{\triangle ABC}=\dfrac{1}{2}AH\cdot BC \Rightarrow AH=\dfrac{2S_{\triangle ABC}}{BC}=\dfrac{2\cdot 15\sqrt{3}}{14}=\dfrac{15\sqrt{3}}{7}$.}
+\end{bt}
+
+% nguồn: TuLuan_Lop10_Dot2 (nhập 14/11/2026)
+\begin{bt}%[0H4N2-2]%[Dự án đề kiểm tra HKII NH22-23- Phan Trung Hiếu]%[THPT Hùng Vương - Quảng Nam]%[ma:34e221ef]
+	Cho tam giác $ABC$ có các cạnh $b=6$ (cm), $c=7$ (cm) và $\cos A=\dfrac{3}{4}$.
+	\begin{enumerate}
+		\item Tính $\sin A$.
+		\item Tính diện tích tam giác $ABC$.
+	\end{enumerate}
+	\loigiai{
+	\begin{enumerate}
+		\item Ta có $\sin^2A+\cos^2A=1\Rightarrow\sin A=\sqrt{1-\cos^2 A} = \sqrt{1-\dfrac{9}{16}}=\sqrt{\dfrac{7}{16}}=\dfrac{\sqrt{7}}{4}$.
+		\item $S_{\triangle ABC}=\dfrac{1}{2}\cdot b\cdot c\cdot\sin A=\dfrac{1}{2}\cdot6\cdot7\cdot\dfrac{\sqrt{7}}{4}=\dfrac{21\sqrt{7}}{4}$ $(\textrm{cm}^2)$.
+	\end{enumerate}
+	}
+\end{bt}
+
+% nguồn: TuLuan_Lop10_Dot2 (nhập 14/11/2026)
+\begin{bt}%[0H4H2-2]%[ma:7303ced1]
+	Tam giác $ ABC$ có $ a=21$, $b=17$, $c=10$. Tính diện tích của tam giác $ ABC$.
+	\loigiai
+	{Ta có $ p=\dfrac{21+17+10}{2}=24$.\\
+		Do đó $ S=\sqrt{p(p-a )(p-b )(p-c )}=\sqrt{24(24-21 )(24-17 )(24-10 )}=84$.}
+\end{bt}
+
+% nguồn: TuLuan_Lop10_Dot2 (nhập 14/11/2026)
+\begin{bt}%[0H4V2-2]%[ma:960c9dac]
+Cho tam giác $A B C$ có $A B=3~(\mathrm{cm})$, $A C=5~(\mathrm{cm})$,  $\widehat{A}=60^{\circ}$. Hãy tính:
+\begin{enumerate}
+	\item Độ dài cạnh $B C$ và số đo $\widehat{ABC}$ và $\widehat{ACB}$ (làm tròn đến phút).
+	\item Diện tích tam giác $A B C$.
+\end{enumerate}
+	\loigiai{
+	\begin{enumerate}
+		\item +) Áp dụng định lý cos trong $\triangle A B C$ ta có:
+		$$
+		\begin{aligned}
+			& B C^2=A B^2+A C^2-2 A B \cdot A C \cdot \cos A=3^2+5^2-2 \cdot 3 \cdot 5 \cdot \cos 60^{\circ}=19 \\
+			& \Rightarrow B C=\sqrt{19} \mathrm{~cm} .
+		\end{aligned}
+		$$
+		+) Áp dụng định lý Sin trong $\triangle A B C$ ta có:
+		$$
+		\begin{aligned}
+			& \dfrac{B C}{\sin A}=\dfrac{A C}{\sin B} \Leftrightarrow \sin B=\dfrac{A C \cdot \sin A}{B C}=\dfrac{5 \cdot \sin 60^{\circ}}{\sqrt{19}}=\dfrac{5 \sqrt{57}}{38} \\
+			& \Rightarrow B \approx 83^{\circ} 25^{\prime} \\
+			& \Rightarrow C=180^{\circ}-(A+B) \approx 180^{\circ}-\left(60^{\circ}+83^{\circ} 25^{\prime}\right)=36^{\circ} 35^{\prime} .
+		\end{aligned}
+		$$
+		\item Diện tích tam giác $A B C$ là:
+		$$
+		S_{\triangle A B C}=\dfrac{1}{2} A B \cdot A C \cdot \sin A=\dfrac{1}{2} \cdot 3 \cdot 5 \cdot \sin 60^{\circ}=\dfrac{15 \sqrt{3}}{14}\left(\mathrm{cm}^2\right) .
+		$$
+	\end{enumerate}
+	}
+\end{bt}
+
+% nguồn: TuLuan_Lop10_Dot2 (nhập 14/11/2026)
+\begin{bt}%[0H4H2-2]%[ma:d6a04261]
+	Cho tam giác $ABC$ có $a=8, b=9, c=6$.
+	\begin{enumerate}
+		\item Tính số đo các góc của tam giác.
+		\item Tính diện tích, bán kính đường tròn ngoại tiếp, bán kinh đường tròn nội tiếp, độ dài các đường cao của tam giác.
+	\end{enumerate}
+	\loigiai{
+	\begin{enumerate}
+		\item Áp dụng định lí côsin, ta có
+		$$\cos A=\dfrac{b^2+c^2-a^2}{2b c}=\dfrac{81+36-64}{2\cdot 9\cdot 6}=\dfrac{53}{108}.$$
+		Suy ra $\widehat{A}\approx 60^\circ36'39''$.\\
+		Hoàn toàn tương tự, tính được $\widehat{B}\approx 78^\circ35'5''$, $\widehat{C}\approx 40^\circ48'16''$.
+		\item Do $a=8, b=9, c=6$ nên tam giác $ABC$ có nửa chu vi $p=\dfrac{8+9+6}{2}=\dfrac{23}{2}$.\\
+		Suy ra $p-a=\dfrac{7}{2}, p-b=\dfrac{5}{2}$ và $p-c=\dfrac{11}{2}$. Từ đó, theo công thức Heron ta được diện tích của tam giác là $$S=\sqrt{\dfrac{23}{2}\cdot\dfrac{7}{2}\cdot\dfrac{5}{2}\cdot\dfrac{11}{2}}=\dfrac{\sqrt{8855}}{4}.$$
+		Suy ra bán kính đường tròn nội tiếp $r=\dfrac{S}{p}=\dfrac{\sqrt{8855}}{46}$ và bán kính đường tròn ngoại tiếp $R=\dfrac{abc}{4S}=\dfrac{432}{\sqrt{8855}}$.
+	\end{enumerate}
+	\textbf{Nhận xét:}
+	\begin{itemize}
+		\item Định lí côsin giúp ta giải tam giác trong trường hợp biết ba cạnh của tam giác hoặc biết hai cạnh và góc xen giữa hai cạnh đó.
+		\item Từ $\cos A=\dfrac{53}{108}$, sử dụng hệ thức cơ bản, tính được $\sin A=\dfrac{\sqrt{8855}}{108}$. Từ đó, sử dụng công thức $S=\dfrac{1}{2}bc\sin A$ ta cũng thu được $S=\dfrac{\sqrt{8855}}{4}$.
+	\end{itemize}
+%	\begin{nx}
+%		\begin{itemize}
+%			\item Định lí côsin giúp ta giải tam giác trong trường hợp biết ba cạnh của tam giác hoặc biết hai cạnh và góc xen giữa hai cạnh đó.
+%			\item Từ $\cos A=\dfrac{53}{108}$, sử dụng hệ thức cơ bản, tính được $\sin A=\dfrac{\sqrt{8855}}{108}$. Từ đó, sử dụng công thức $S=\dfrac{1}{2}bc\sin A$ ta cũng thu được $S=\dfrac{\sqrt{8855}}{4}$.
+%		\end{itemize}
+%	\end{nx}	
+	}
+\end{bt}
+
+% nguồn: TuLuan_Lop10_Dot2 (nhập 14/11/2026)
+\begin{bt}%[0H4H2-2]%[ma:791bb959]
+	Tam giác $ABC$ có $a=19, b=6$ và $c=15$.
+	\begin{enumerate}
+		\item Tính $\cos A$.
+		\item Tính diện tích tam giác.
+		\item Tính độ dài đường cao $h_c$.
+		\item Tính độ dài bán kinh đường tròn nội tiếp của tam giác.
+	\end{enumerate}
+	\loigiai
+	{
+	\begin{enumerate}
+		\item Đáp số: $\cos A=-\dfrac{5}{9}$.
+		\item Có thể tính diện tích theo công thức Heron hoặc công thức $S=\dfrac{1}{2}b c\sin A$.\\
+		Đáp số: $S=10\sqrt{14}$.
+		\item Đáp số: $h_c=\dfrac{4\sqrt{14}}{3}$.
+		\item Sử dụng công thức $S=p\cdot r$. Đáp số: $r=\dfrac{\sqrt{14}}{2}$.
+	\end{enumerate}
+	}
+\end{bt}
+
+% nguồn: TuLuan_Lop10_Dot2 (nhập 14/11/2026)
+\begin{bt}%[0H4H2-2]%[Tex hóa SGK CD-CT,T7/22, Lương Như Quỳnh]%[ma:b8e35af7]
+	Cho $ABC$ có $\widehat{A}=99^{\circ},b=6,c=10$. 
+	\begin{enumerate}[a)]
+		\item  Tính diện tích tam giác $ABC$;
+		\item  Tính bán kính đường tròn ngoại tiếp và bán kính đường tròn nội tiếp tam giác $ABC$.
+	\end{enumerate}
+	\loigiai{
+		\begin{enumerate}[a)]
+			\item Diện tích tam giác $ABC$ là  $$S=\dfrac{1}{2}\cdot b\cdot c \cdot \sin A \approx 29{,}63.$$
+			\item  Áp dụng định lí côsin, ta có $$a^2=b^2+c^2-2\cdot b \cdot c\cos A \Rightarrow a \approx 12{,}44. $$
+			Áp dụng định lí sin, ta có 
+			$$R=\dfrac{a}{2 \cdot \sin A} \approx \dfrac{12{,}44}{2 \cdot \sin 99^{\circ}} \approx 6{,}30;\;
+			r=\dfrac{S}{p}=\dfrac{2S}{a+b+c} \approx \dfrac{2 \cdot 29{,}63}{6+10+12{,}44} \approx 2{,}08.$$
+	\end{enumerate}}
+\end{bt}
+
+% nguồn: TuLuan_Lop10_Dot2 (nhập 14/11/2026)
+\begin{bt}%[0H4V2-2]%[Đề kiểm tra GK1 môn Toán 10 trường THPT Đoàn Thượng]%[Mui Doan, 10EX-GK1-2223]%[ma:f73004a4]
+	Cho tam giác $ABC$ có $\widehat{A}=60^\circ$, bán kính đường tròn ngoại tiếp, nội tiếp $\triangle ABC$ lần lượt là $R=\dfrac{7}{\sqrt{3}}$, $r=\sqrt{3}$. Tính diện tích tam giác $ABC$.
+	\loigiai{
+	\immini{
+	Độ dài cạnh $BC=2R\sin A=2\cdot  \dfrac{7}{\sqrt{3}}\cdot \dfrac{\sqrt{3}}{2}=7$.\\
+	Gọi $I$ là tâm đường tròn nội tiếp tam giác $ABC$, khi đó $FI=r=\sqrt{3}$.\\
+	Ta có $\tan \widehat{FAI}=\dfrac{FI}{FA}\Rightarrow FA=\dfrac{FI}{\tan 30^\circ}=3$.\\
+	Mặt khác, $AB+AC-BC=2AF=6\Rightarrow AB+AC=13$.\\
+	Nửa chu vi của tam giác $ABC$ là $p=\dfrac{AB+AC+BC}{2}=10$.\\
+	Diện tích của tam giác $ABC$ là $S=pr=10\sqrt{3}$.
+	}	
+	{
+	\begin{tikzpicture}[declare function={r=3;},font=\footnotesize, line join=round, line cap=round, >=stealth]
+	\path (120:r) coordinate (A)
+	(200:r) coordinate (B)
+	(-20:r) coordinate (x)
+	($(A)!1!60:(B)$) coordinate (y)
+	(intersection of B--x and A--y) coordinate (C)
+	($ (A)!1cm!(B) $) coordinate (Nt)
+	($ (A)!1cm!(C) $) coordinate (Mt)
+	($ (Mt)!0.5!(Nt) $) coordinate (Xt)
+	($ (B)!1cm!(C) $) coordinate (Kt)
+	($ (B)!1cm!(A) $) coordinate (Lt)
+	($ (Kt)!0.5!(Lt) $) coordinate (Yt)
+	(intersection of A--Xt and B--Yt) coordinate (I)
+	($ (A)!(I)!(B) $) coordinate (F)
+	($ (B)!(I)!(C) $) coordinate (D)
+	($ (C)!(I)!(A) $) coordinate (E);
+	\tkzMarkAngles(F,A,I)
+	\tkzMarkRightAngles(I,F,B I,D,C I,E,C)
+	\draw[dashed] (I)--(E) (I)--(D) (I)--(F);
+	\draw let \p1=($  (I) -  (D) $) in  (I)  circle ({veclen(\x1,\y1)});
+		
+	\draw (A)--(B)--(C)--cycle (A)--(I)--(B) (I)--(C)
+	;
+	\foreach \t/\g in {A/90,B/180,C/0,D/-90,E/30,F/180,I/70}{
+		\draw[fill=white] (\t) circle (1pt) node[shift={(\g:7pt)},font=\scriptsize]{$ \t $};
+	}
+	\end{tikzpicture}
+		}
+	}
+\end{bt}
+
+% nguồn: TuLuan_Lop10_Dot2 (nhập 14/11/2026)
+\begin{bt}%[0H4H2-2]%[Đề kiểm tra HK1 môn Toán 11 trường THPT Trương Vĩnh Ký]%[Nguyễn Kiều Nhã Tú, 10EX-HK1-2223]%[ma:5db621ab]
+    [1,0 điểm] Cho tam giác $ABC$ có $AB=52$, $BC=56$, $AC=60$. Tính diện tích tam giác $ABC$.
+    \loigiai{
+        Ta có $p=\dfrac{52+56+60}{2}=84$.\\
+        Áp dụng hệ thức Heron Ta có $S=\sqrt{84(84-52)(84-56)(84-60)}=1344$.\\
+    }
+\end{bt}
+
+% nguồn: TuLuan_Lop10_Dot2 (nhập 14/11/2026)
+\begin{bt}%[0H4N2-2]%[Tex hóa SGK CD-CT,T7/22, Phạm Tiến Long]%[ma:831b2924]
+	\immini
+	{
+		Tính diện tích tam giác $ABC$ trong hình bên.
+	}
+	{
+		\begin{tikzpicture}[scale=1, font=\footnotesize, line join=round, line cap=round, >=stealth]
+			
+			\path
+			(0,3) coordinate (C)
+			(4,1) coordinate (B)
+			($(C)!2/3!-115:(B)$) coordinate (A)
+			;
+			\draw (A)--(C)node[pos=.5,rotate=41,above]{$8 $ cm}
+			(B)--(C)node[pos=.5,rotate=-28,above]{$12 $ cm}
+			(A)--(B) (0.3,2)node{$115^\circ$};
+			\foreach \x/\g in {A/180,B/0,C/90} \fill[black] (\x) circle (1pt)+(\g:0.3) node{$\x$};
+			\tkzMarkAngle[mark=,size =0.7](A,C,B)
+		
+\end{tikzpicture}
+	}
+	
+	\loigiai{
+		Diện tích tam giác $ABC$ là
+		$$S=\dfrac{1}{2}ab\sin C=\dfrac{1}{2} \cdot 12 \cdot 8 \cdot \sin 115^\circ \approx 43{,}5\text{ cm}^2.$$}
+\end{bt}
+
+% nguồn: TuLuan_Lop10_Dot2 (nhập 14/11/2026)
+\begin{bt}%[0H4N2-2]%[Tex hóa SGK CD-CT,T7/22, Phạm Tiến Long]%[ma:30166b26]
+	Cho tam giác $ABC$ có cạnh $a=2\sqrt{3}$ cm, $b=2$ cm và $\widehat{C}=30^\circ$.
+	\begin{enumerate}[a)]
+		\item Tính diện tích tam giác $ABC$.
+		\item Tính bán kính đường tròn ngoại tiếp tam giác $ABC$.
+		\item Tính bán kính đường tròn nội tiếp tam giác $ABC$.
+	\end{enumerate}
+	\loigiai{
+		\begin{enumerate}[a)]
+			\item Diện tích tam giác $ABC$ là
+			$$S=\dfrac{1}{2}ab\sin C=\dfrac{1}{2} \cdot 2\sqrt{3} \cdot 2 \cdot \sin 30^\circ=\dfrac{1}{2} \cdot 2\sqrt{3} \cdot 2 \cdot \dfrac{1}{2}=\sqrt{3}\text{ cm}^2.$$
+			\item Áp dụng định lí cô-sin, ta có
+			$$c^2=a^2+b^2-2ab\cos C=12+4-2 \cdot 2\sqrt{3} \cdot 2 \cdot \dfrac{\sqrt{3}}{2}=4.$$
+			Suy ra $c=2$ cm.\\
+			Áp dụng đinh lí sin, ta có
+			$R=\dfrac{c}{2 \cdot \sin C}=\dfrac{2}{2 \cdot \sin 30^\circ}=\dfrac{2}{2 \cdot \dfrac{1}{2}}=2$ cm.
+			\item Ta có $S=p \cdot r$.\\
+			Suy ra $r=\dfrac{S}{p}=\dfrac{2S}{a+b+c}=\dfrac{2\sqrt{3}}{2\sqrt{3}+2+2} \approx 0{,}46$ cm.
+		\end{enumerate}
+	}
+\end{bt}
+
+% nguồn: TuLuan_Lop10_Dot2 (nhập 14/11/2026)
+\begin{bt}%[0H4N2-2]%[Tex hóa SGK CD-CT,T7/22, Phạm Tiến Long]%[ma:5bca33d2]
+	Cho tam giác $ABC$ có các cạnh $a=15$ cm, $b=13$ cm, $c=14$ cm.
+	\begin{enumerate}[a)]
+		\item Tính diện tích tam giác $ABC$.
+		\item Tính bán kính đường tròn ngoại tiếp tam giác $ABC$.
+		\item Tính bán kính đường tròn nội tiếp tam giác $ABC$.
+	\end{enumerate}
+	\loigiai{
+		\begin{enumerate}[a)]
+			\item Ta có $p=\dfrac{1}{2}(15+13+14)=21$ cm. Áp dụng công thức Hê-rông ta có\\
+			$S=\sqrt{p(p-a)(p-b)(p-c)}=84\text{ cm}^2$.
+			\item Ta có $S=\dfrac{abc}{R} \Rightarrow$ $R=\dfrac{abc}{4S}=\dfrac{15 \cdot 13 \cdot 14}{4 \cdot 84}=8{,}125$ cm.
+			\item Ta có công thức $S=p \cdot r$. Suy ra $r=\dfrac{S}{p}=\dfrac{84}{21}=4$ cm.
+		\end{enumerate}
+	}
+\end{bt}
+
+% nguồn: TuLuan_Lop10_Dot2 (nhập 14/11/2026)
+\begin{bt}%[0H4H2-2]%[Tex hóa SGK CD-CT,T7/22, Phạm Tiến Long]%[ma:3ac90540]
+	Tính diện tích một cánh buồm hình tam giác có chiều dài một cạnh là $3{,}2$ m và hai góc kề cạnh đó có số đo lần lượt là $48^\circ$ và $105^\circ$. (xem hình bên dưới).
+	\begin{center}
+		\begin{tikzpicture}[transform shape, scale=0.5]
+			\tikzset{Icon-mattroi/.pic={
+					\def\r{0.35}
+					\fill(0,0)circle(\r);
+					\draw[line width=2*\r pt](0,0)circle(\r);
+					\foreach \g in{1,...,10}{
+						\draw[line width=5 pt](\g*36:1.2*\r)++(\g*36:0.1*\r)--++(\g*36:\r*0.25);
+					}
+			}}
+			\tikzset{Icon-may/.pic={
+					\def\r{0.35}
+					\draw[line width=2.5*\r pt](-\r,0)--(\r,0)..controls++(0:\r) and ++(30:\r)..(0.8*\r,\r)..controls++(100:\r) and ++(80:\r)..(-0.75*\r,0.8*\r)..controls++(140:\r) and++(180:\r)..(-\r,0);
+			}}
+			\fill[green!80!cyan,opacity=0.2](-10,-4)rectangle(20,-5);
+			\tikzset{thuyen/.pic={
+					\fill[red](-0.36,3.8)--++(180:2)--(-0.36,4.5)--cycle;
+					\draw[orange,line width=2pt](-0.4,-3.2)--++(90:7.8);
+					\fill[ball color=orange!60!black](-3.9,-4.35)--(2.75,-4.35)--++(43:1.4)--++(182:8.1)--cycle;
+					\fill[ball color=yellow](-4.5,-3.55)--++(1.8:8.75)--++(65:0.7)--++(184.2:9.1)--cycle;
+					\fill[opacity=0.1](-4.2,-3.3)coordinate(A)--(-0.45,2.7)coordinate(C)--(-0.45,-2.6)coordinate(B)--cycle;
+					\fill[ball color=teal!50!green](-0.4,-2.6)..controls++(20:1) and++(160:2)..(3.75,-2.7)..controls++(105:3.25) and++(-35:2)..(-0.4,3.65)..controls++(-65:2) and++(65:2)..(-0.4,-2.6);
+			}}
+			\path(-3,0)pic[blue]{thuyen}(16,6)pic[yellow,scale=5]{Icon-mattroi}(2,6)pic[scale=5][blue]{Icon-may}(-5,-1)pic[scale=2][blue]{Icon-may}(17,-2)pic[scale=2][blue]{Icon-may};
+			\draw(A)--(C)--(B)--cycle (A)--(B)
+			node[pos=.5,above]{$3{,}2$ m};
+			\foreach \d/\g in{A/180,B/-20,C/180}
+			\draw[fill=black](\d)circle(1pt)node[shift={(\g:0.5)},scale=2]{$\d$};
+			\tkzMarkAngles[pos=0.5](B,A,C C,B,A)
+			\path(A)++(25:0.75)node{$45^\circ$}(B)++(150:0.5)node{$105^\circ$};
+		
+\end{tikzpicture}
+	\end{center}
+	\loigiai{
+		Gọi ba đỉnh của cánh buồm là $ABC$. Đặt $a=BC$; $b=AC$; $c=AB$.\\
+		Ta có $c=3{,}2$ m; $\widehat{C}=180^\circ-\left(105^\circ+48^\circ\right)=27^\circ$.\\
+		Áp dụng định lí sin, ta có  $\dfrac{a}{\sin A}=\dfrac{b}{\sin B}=\dfrac{c}{\sin C}=2R$.\\
+		Suy ra $AC=b=\dfrac{c\sin B}{\sin C}=\dfrac{3{,}2 \cdot \sin 105^\circ}{\sin 27^\circ} \approx 6{,}8$ m;\\
+		Ta có $S=\dfrac{1}{2}bc\sin A=\dfrac{1}{2} \cdot 6{,}8 \cdot 3{,}2 \cdot \sin 48^\circ \approx 8{,}1\text{ m}^2$.}
+\end{bt}
+
+% nguồn: TuLuan_Lop10_Dot2 (nhập 14/11/2026)
+\begin{bt}%[0H4N2-2]%[Tex hóa SGK CD-CT,T7/22, Phạm Tiến Long]%[ma:e4b0a3e6]
+	Cho tam giác $ABC$ có $a=24$ cm, $b=26$ cm, $c=30$ cm.
+	\begin{enumerate}[a)]
+		\item Tính diện tích tam giác $ABC$.
+		\item  Tính bán kính đường tròn nội tiếp tam giác $ABC$.
+	\end{enumerate}
+	\loigiai{
+		\begin{enumerate}[a)]
+			\item $p=\dfrac{1}{2}(a+b+c)=40$.\\
+			$S=\sqrt{p(p-a)(p-b)(p-c)}=\sqrt{40 \cdot 16 \cdot 14 \cdot 10}=80\sqrt{14}\text{ cm}^2$.\\
+			\item $r=\dfrac{S}{P}=\dfrac{80\sqrt{14}}{40}=2\sqrt{14}$ cm.
+		\end{enumerate}
+	}
+\end{bt}
+
+% nguồn: TuLuan_Lop10_Dot2 (nhập 14/11/2026)
+\begin{bt}%[0H4H2-2]%[Tex hóa SGK CD-CT,T7/22, Phạm Tiến Long]%[ma:d2ebac1b]
+	Cho tam giác $MNP$ có $MN=10$, $MP=20$ và $\widehat{M}=42^\circ$.
+	\begin{enumerate}[a)]
+		\item Tính diện tích tam giác $MNP$.
+		\item Gọi $O$ là tâm đường tròn ngoại tiếp tam giác $MNP$. Tính diện tích tam giác $ONP$.
+	\end{enumerate}
+	\loigiai{
+		\begin{enumerate}[a)]
+			\item $S=\dfrac{1}{2}MN \cdot MP \cdot \sin M=\dfrac{1}{2} \cdot 10 \cdot 20 \cdot \sin 42^\circ \approx 67$.
+			\item Ta có  $\widehat{NOP}=2\widehat{NMP}=84^\circ$.\\
+			$\begin{aligned}
+				& NP=\sqrt{MN^2+MP^2-2MN \cdot MP \cdot \cos M}=\sqrt{10^2+20^2-2 \cdot 10 \cdot 20 \cdot \cos 42^\circ} \approx 14{,}24.\\
+				& R=\dfrac{NP}{2\sin M} \approx \dfrac{14{,}24}{2 \cdot \sin 42^\circ} \approx 10{,}64 \Rightarrow ON=OP=R \approx 10{,}64.
+			\end{aligned}$\\
+			Vậy $S_{ONP}=\dfrac{1}{2}ON \cdot OP \cdot \sin 84^\circ \approx \dfrac{1}{2}(10{,}64)^2 \cdot \sin 84^\circ \approx 56{,}30$.
+		\end{enumerate}
+	}
+\end{bt}
+
+% nguồn: TuLuan_Lop10_Dot2 (nhập 14/11/2026)
+\begin{bt}%[0H4H2-2]%[Tex hóa SGK CD-CT,T7/22, Phạm Tiến Long]%[ma:be76686d]
+	Cho tam giác $ABC$ có trọng tâm $G$. Chứng minh các tam giác $GBC$, $GAB$,  $GAC$ có diện tích bằng nhau.
+	\loigiai{
+		\immini
+		{
+			Vẽ $AH$ và $GK$ vuông góc với $BC$.\\
+			Ta có $AH=3GK$, suy ra $S_{GBC}=\dfrac{1}{3}S_{ABC}$.\\ Chứng minh tương tự ta có  $S_{GBC}=S_{GAB}=S_{GAC}=\dfrac{1}{3}S_{ABC}$.
+		}
+		{
+			\begin{tikzpicture}[scale=0.8, font=\footnotesize, line join=round, line cap=round, >=stealth]
+				\path
+				(0,3) coordinate (A)
+				(3,0) coordinate (C)
+				(-1,0) coordinate (B)
+				(0,0) coordinate (H)
+				(2/3,0) coordinate (K)
+				($(B)!1/2!(C)$) coordinate (M)
+				($(A)!2/3!(M)$) coordinate (G)
+				;
+				\draw (A)--(B)--(C)--(A) (G)--(K) (A)--(H);
+				
+				\foreach \x/\g in {A/90,B/180,C/0,H/270,K/270,G/90} \fill[black] (\x) circle (1pt)+(\g:0.3) node{$\x$};
+				\tkzMarkRightAngles(C,H,A C,K,G)
+			
+\end{tikzpicture}
+		}
+	}
+\end{bt}
+
+% nguồn: TuLuan_Lop10_Dot2 (nhập 14/11/2026)
+\begin{bt}%[0H4H2-2]%[Tex hóa SGK CD-CT,T7/22, Phạm Tiến Long]%[ma:85496382]
+	Cho tam giác $ABC$ và cho các điểm $B'$, $C'$ trên cạnh $AB$ và $AC$.\\
+	Chứng minh $\dfrac{S_{ABC}}{S_{AB'C'}}=\dfrac{AB \cdot AC}{AB' \cdot AC'}$.
+	\loigiai{
+		Ta có  $\dfrac{S_{ABC}}{S_{AB'C'}}=\dfrac{\dfrac{1}{2}AB \cdot AC \cdot \sin A}{\dfrac{1}{2}AB' \cdot AC' \cdot \sin A}=\dfrac{AB \cdot AC}{AB' \cdot AC'}$.}
+\end{bt}
+
+% nguồn: TuLuan_Lop10_Dot2 (nhập 14/11/2026)
+\begin{bt}%[0H4N2-2]%[Tex hóa SGK CD-CT,T7/22, Phạm Tiến Long]%[ma:2434daca]
+	Tính diện tích bề mặt của một miếng bánh mì kebab hình tam giác có hai cạnh lần lượt là $10$ cm, $12$ cm và góc tạo bởi hai cạnh đó là $35^\circ$.
+	\loigiai{
+		Diện tích miếng bánh mì kebab là  $S=\dfrac{1}{2} \cdot 10 \cdot 12 \cdot \sin 35^\circ \approx 34{,}4\text{ cm}^2$.}
+\end{bt}
+
+% nguồn: TuLuan_Lop10_Dot2 (nhập 14/11/2026)
+\begin{bt}%[0H4H2-2]%[ma:cde2ff3c]
+	Cho tam giác $ABC$ có $a=7$, $b=10$, $c=11$. Tính diện tích tam giác $ABC$.
+	\loigiai{
+Ta có $p=\dfrac{7+10+11}{2}=14\Rightarrow S_{\triangle ABC}=\sqrt{p(p-a)(p-b)(p-c)}=14\sqrt{6}$.	
+	}
+\end{bt}
+
+% nguồn: TuLuan_Lop10_Dot2 (nhập 14/11/2026)
+\begin{bt}%[0H4V2-2] % KIEM_TRA%[Đề kiểm tra GHK1 môn Toán 10 trường THPT Nguyễn Huệ]%[Tổng Nguyễn, 10EX-HK1-2223]%[ma:a0fcf268]
+	Cho tam giác ABC có diện tích $72$ cm$^2$, hai đường trung tuyến $AM$ và $BN$ có độ dài lần lượt là $12$ cm và $9$ cm.
+	\begin{enumerate}
+		\item  Tính độ dài véctơ $\overrightarrow{MN}$.
+		\item Tìm tập hợp điểm $K$ sao cho $\left|\overrightarrow{AB}+\overrightarrow{CA}-\overrightarrow{KB}\right|=\left|\overrightarrow{KN}+\overrightarrow{MK}\right|$.
+	\end{enumerate}
+\loigiai{ 
+	\begin{center}
+		\begin{tikzpicture}[scale=0.8, font=\footnotesize, line join=round, line cap=round, >=stealth]
+			\coordinate [label=below left:$B$] (B) at (0,0);
+			\coordinate [label=above:$A$](A) at (1,3);
+			\coordinate [label=below :$C$] (C) at (4,0);
+			\coordinate [label=below :$M$] (M) at ($(B)!0.5!(C)$);
+			\coordinate [label=above right :$N$] (N) at ($(A)!0.5!(C)$);
+			\coordinate [label=below right:$G$] (G) at ($(A)!2/3!(M)$);
+			\draw (A)--(B)--(C)--(A)--(M) (B)--(N) ;
+			\foreach \diem in {A,B,C, M,N,G} \fill (\diem) circle(1.5pt);
+		\end{tikzpicture}
+	\end{center}
+\begin{enumerate}
+	\item  Tính độ dài véctơ $\overrightarrow{MN}$.\\
+	Gọi $G$ là trọng tâm tam giác $ABC$. Suy ra $GA=8$ cm, $GB=6$ cm. \\
+	Diện tích tam giác $ABG$ là $S'=\dfrac{1}{3} S_{ABC}=24$ cm$^2$.\\
+	Trong tam giác $ABG$ có \[S'=\dfrac{1}{2}\cdot GA\cdot GB \cdot \sin G\Leftrightarrow 24=\dfrac{1}{2}\cdot 8\cdot 6 \cdot  \sin G\Leftrightarrow \sin G=1\Rightarrow \widehat{G}=90^\circ.\]
+	Do đó tam giác $ABG$ vuông tại $G$.\\
+	Khi đó $\left|\overrightarrow{MN}\right|=MN=\dfrac{1}{2}AB=\dfrac{1}{2}\sqrt{GA^2+GB^2}=\dfrac{1}{2}\sqrt{8^2+6^2}=5$ cm.
+	\item Ta có $\left|\overrightarrow{AB}+\overrightarrow{CA}-\overrightarrow{KB}\right|=\left|\overrightarrow{KN}+\overrightarrow{MK}\right|\Leftrightarrow \left|\overrightarrow{CK}\right|=\left|\overrightarrow{MN}\right|\Leftrightarrow CK=MN=5$ cm.\\
+	Vậy tập hợp điểm $K$ là đường tròn tâm $C$ bán kính  bằng $5$ cm.
+\end{enumerate}}
+\end{bt}
+
+% nguồn: TuLuan_Lop10_Dot2 (nhập 14/11/2026)
+\begin{bt}%[0H4H2-2]%[ma:b92b1246]
+	Cho tam giác $ABC$ có $AB=2$, $AC=3$, $BC=4$.
+	\begin{enumerate}
+		\item Tính diện tích $S$ của tam giác.
+		\item Tính bán kính đường tròn ngoại tiếp của tam giác.
+	\end{enumerate}
+	\loigiai{
+		\begin{enumerate}
+			\item 
+			Ta có $p=\dfrac{a+b+c}{2}=\dfrac{4+3+2}{2}=\dfrac{9}{2}$. Suy ra
+			$$
+			\begin{aligned}
+				S &=\sqrt{p(p-a)(p-b)(p-c)} \\
+				&=\sqrt{\dfrac{9}{2}\left(\dfrac{9}{2}-4\right) \cdot\left(\dfrac{9}{2}-3\right) \cdot\left(\dfrac{9}{2}-2\right)}=\dfrac{3 \sqrt{15}}{4} .
+			\end{aligned}
+			$$
+			\item  Gọi $R$ là bán kính đường tròn ngoại tiếp của tam giác $ABC$. Ta có
+			$$
+			S=\dfrac{abc}{4R} \Rightarrow R=\dfrac{abc}{4S}=\dfrac{4 \cdot 3 \cdot 2}{4 \cdot \frac{3 \sqrt{15}}{4}}=\dfrac{8 \sqrt{15}}{15}.
+			$$
+		\end{enumerate}
+	}
+\end{bt}
+
+% nguồn: TuLuan_Lop10_Dot2 (nhập 14/11/2026)
+\begin{bt}%[0H4H2-2]%[HK1, Sở GD-ĐT tỉnh Quảng Nam, 2022-2023]%[Tran Quoc, 10EX-HK1-2223]%[ma:3495c623]
+Cho tam giác $ABC$ có $BC=6$, $BA=7$, $\widehat{ABC}=60^{\circ}$.
+\begin{listEX}[2]
+\item Tính độ dài cạnh $AC$.
+\item Tính diện tích của tam giác $ABC$.
+\end{listEX}
+\loigiai{
+\immini{
+\begin{listEX}
+\item Áp dụng định lý Cô-sin trong $\triangle ABC$, ta có
+\begin{align*}
+AC^2&=BA^2+BC^2-2\cdot BA\cdot BC\cdot \cos \widehat{ABC}\\
+&=7^2+6^2-2\cdot 7\cdot 6\cdot \cos 60^\circ\\
+&=43.
+\end{align*}
+Suy ra $AC=\sqrt{43}$.
+\item Ta có diện tích $\triangle ABC$ là
+$$ S_{\triangle ABC}=\dfrac{1}{2}\cdot BA\cdot BC\cdot \sin \widehat{ABC}=\dfrac{1}{2}\cdot 7\cdot 6\cdot \sin 60^\circ= \dfrac{21\sqrt{3}}{2} \, \text{(đ.v.d.t).}$$
+\end{listEX}}
+{
+\begin{tikzpicture}[font=\footnotesize,line join=round, line cap=round, >=stealth,scale=0.8] 
+\path (7{,}0) coordinate (A) (0{,}0) coordinate (B)  (60:6) coordinate (C);
+\draw (A)--(B) node[pos=0.5, below]{$7$}--(C)node[pos=0.5, rotate=60, above]{$6$}--(A);
+\foreach \x/\pos in {A/-30, B/-150, C/90} \fill (\x) circle(1pt) node[{shift=(\pos:0.25)}]{$\x$}; 
+\draw pic["$60^\circ$",draw,angle radius=8mm] {angle = A--B--C}; 
+\end{tikzpicture}}
+}
+\end{bt}
+
+% nguồn: TuLuan_Lop10_Dot2 (nhập 14/11/2026)
+\begin{bt}%[0H4H2-2]%[ma:c77eab80]
+	Cho tam giác $ABC$ có $AB=8$, $BC=10$, $AC=12$. Tính diện tích tam giác $ABC$.
+	\loigiai{
+Ta có $p=\dfrac{8+10+12}{2}\Rightarrow S_{\triangle ABC}=\sqrt{p(p-8)(p-10)(p-12)}=15\sqrt{7}$.	
+	}
+\end{bt}
+
+% nguồn: TuLuan_Lop10_Dot2 (nhập 14/11/2026)
+\begin{bt}%[0H4H2-2]%[ma:7cc47e13]
+	Cho tam giác $ABC$ có $a=15$, $b=20$, $c=25$. Tính diện tích tam giác $ABC$.
+	\loigiai{
+Ta có $p=\dfrac{15+20+25}{2}=30\Rightarrow S_{\triangle ABC}=\sqrt{p(p-a)(p-b)(p-c)}=150$.
+}
+\end{bt}

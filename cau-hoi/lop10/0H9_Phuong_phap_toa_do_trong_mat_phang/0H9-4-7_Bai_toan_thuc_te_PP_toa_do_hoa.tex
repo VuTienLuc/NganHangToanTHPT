@@ -62,3 +62,823 @@
 		 }
 	} 
 \end{bt}
+
+% nguồn: TuLuan_Lop10_Dot2 (nhập 14/11/2026)
+\begin{bt}%[0H9H4-7]%[ma:9d8f1f50]
+	\immini{
+		Hình $ 46 $ mô phỏng một trạm thu phát sóng điện thoại di động đặt ở vị trí $ I $ có tọa độ $ (-2;1) $ trong mặt phẳng tọa độ (đơn vị trên hai trục là ki-lô-mét).
+		\begin{enumerate}
+			\item Lập phương trình đường tròn mô phỏng ranh giới bên ngoài của vùng phủ sóng, biết rằng trạm thu phát sóng đó được thiết kế với bán kính phủ sóng $ 3 $ km.
+			\item Nếu người dùng điện thoại ở vị trí có tọa độ $ (-1;3) $ thì có thể sử dụng dịch vụ của trạm này không? Giải thích.
+			\item Tính theo đường chim bay, xác định khoảng cách ngắn nhất để một người ở vị trí có tọa độ $ (-3;4) $ di chuyển được tới vùng phủ sóng theo đơn vị ki-lô-mét (làm tròn kết quả đến hàng phần mười).
+		\end{enumerate}
+	}
+	{
+		\begin{tikzpicture}[scale=.7, font=\footnotesize, line join=round, line cap=round, >=stealth]
+			\path
+			(-2,1) coordinate (I)
+			(0,0) coordinate (O)
+			;
+			\draw[->] (-6,0)--(2.5,0) node[below]{$x$};
+			\draw[->] (0,-2.5)--(0,5) node[left]{$y$};
+			\def\r{3};
+			\draw (I) circle (\r);
+			\draw[fill=black] (0,0) node[below left]{$O$} circle(1pt)
+			(2,0) node[below]{$$}  (2{,}0) circle(1pt) (0{,}2) circle(1pt)
+			(0{,}2)node[left]{$$} circle(1pt) (-2{,}0) circle(1pt) (-2{,}0)node[below]{$-2$} circle(1pt)
+			(-3{,}0) circle(1pt)
+			(-4{,}0) circle(1pt)
+			(-5{,}0) circle(1pt)
+			(0{,}3) circle(1pt)
+			(0{,}4) circle(1pt)
+			(0,-2) circle(1pt) (0,-2)node[left]{$$}
+			circle(1pt) 
+			(1{,}0)node[below]{$1$}circle(1pt) (-1{,}0)node[below]{$-1$} circle(1pt)
+			(0{,}1)node[left]{$$}circle(1pt) (0,-1)node[left]{$$} circle(1pt)
+			;
+			\draw[dashed] (-2{,}0)--(-2{,}1)node[left]{$ I $}--(0{,}1)node[right]{$ 1 $};
+			\node at (-3{,}3) {\text{Trạm}};
+			\node at (-3{,}2.5) {\text{phát sóng}};
+			\node[below] at (current bounding box.south){\it Hình $46$};  
+		\end{tikzpicture}
+	}
+	\loigiai{
+		\begin{enumerate}
+			\item Phương trình đường tròn mô phỏng ranh giới bên ngoài của vùng phủ sóng là 
+			$$(C)\colon (x+2)^2+(y-1)^2=9.$$
+			\item Nếu người dùng điện thoại ở vị trí có tọa độ $ (-1;3) $ thì có thể sử dụng dịch vụ của trạm này không? Giải thích.\\
+			Gọi $ M(-1;3) $. Ta có $ IM=\sqrt{(-1+2)^2+(3-1)^2}=\sqrt{5}<R=3 $.\\
+			Vậy người dùng điện thoại sử dụng được dịch vụ của trạm.
+			\item Tính theo đường chim bay, xác định khoảng cách ngắn nhất để một người ở vị trí có tọa độ $ (-3;4) $ di chuyển được tới vùng phủ sóng theo đơn vị ki-lô-mét (làm tròn kết quả đến hàng phần mười).\\
+			Gọi $ A(-3;4) $; $ B $ là giao điểm của $ IA $ với đường tròn $ (C) $.\\
+			Khoảng cách ngắn nhất mà một người ở vị trí $ A $ đi tới vùng phủ sóng là 
+			\allowdisplaybreaks
+			\begin{eqnarray*}
+				AB&=&IA-IB \\
+				&=&\sqrt{(-3+2)^2+(4-1)^2}-R\\
+				&=&\sqrt{10}-3\\
+				&\approx&0{,}2.
+			\end{eqnarray*}
+		\end{enumerate}	
+	}
+\end{bt}
+
+% nguồn: TuLuan_Lop10_Dot2 (nhập 14/11/2026)
+\begin{bt}%[0H9V4-7]%[Dự án đề kiểm tra GHKII NH22-23- Hiếu Mai]%Câu 9%[ma:e5adbe24]
+\immini [thm]{Trong mặt phẳng $Oxy$, một vật chuyển động tròn đều ngược chiều kim đồng hồ trên đường tròn tâm	$I(2;2)$ bán kính $R=5$. Dưới tác dụng của lực căng tác dụng lên sợi dây $IM$. Khi vật chuyển động tới điểm $M(5; 6)$ thì dây căng bị đứt (tham khảo hình vẽ). Viết phương trình quỹ đạo $Mt$ chuyển động của vật sau khi dây bị đứt (biết vật chỉ chịu tác động duy nhất lực căng dây).
+}
+{\begin{tikzpicture}[scale=0.3,>=stealth, font=\footnotesize, line join=round, line cap=round]
+		\def\a{1} \def\b{-4} \def\c{3} % Hệ số
+		\def\xmin{-4} \def\xmax{8}
+		\def\ymin{-4} \def\ymax{9}
+		\draw[color=gray!30,dashed] (\xmin,\ymin) grid (\xmax,\ymax);	
+		\draw[->] (\xmin,0)--(\xmax,0) node [below]{$x$};
+		\draw[->] (0,\ymin)--(0,\ymax) node [left]{$y$};
+		\node at (0,0) [below left]{$O$};
+%		\clip (\xmin+0.1,\ymin+0.1) rectangle (\xmax-0.1,\ymax-0.1);
+		\draw (2,2) circle (5 cm) node[right] {$I$} (2,2)--(5,6);
+		\draw[->] (5,6) node [above right]{$M$}--++(-3,2.5) node [above]{$t$};
+		\draw[dotted] (5,0) node[below] {$5$}|-(0,6)node[below left] {$6$}  (2,0)node[below] {$2$}|-(0,2)node[left] {$2$};
+	\end{tikzpicture}
+}
+	\loigiai{
+Ta có $\vec{IM}=(3;4)$.\\
+Theo đề bài, quỹ đạo chuyển động của vật là tia $Mt$ nằm trên tiếp tuyến tại $M$ của đường tròn (theo phương có hoành độ âm).\\
+Tia $Mt$ có một véc-tơ chỉ phương là $\vec{u}=(-4;3)$.\\
+Phương trình quỹ đạo $Mt$ là $\heva{&x=5-4t\\&y=6+3t}$ với $t>0$.	
+	}
+\end{bt}
+
+% nguồn: TuLuan_Lop10_Dot2 (nhập 14/11/2026)
+\begin{bt}%[0H9V4-7]%[Hiếu Mai]%[ma:9fecbfd9]
+Một cái cổng hình bán nguyệt rộng $ 6{,}8 \, \text{m} $, cao $ 3{,}4 \, \text{m} $. Mặt đường dưới cổng được chia thành hai làn cho xe ra vào.
+\begin{center}
+\begin{tikzpicture}[line join=round, line cap=round,scale=1,transform shape]
+\definecolor{burlywood}{rgb}{0.87, 0.72, 0.53}
+\definecolor{cadetblue}{rgb}{0.37, 0.62, 0.63}
+\definecolor{honeydew}{rgb}{0.94, 1.0, 0.94}
+\definecolor{darklava}{rgb}{0.28, 0.24, 0.2}
+\clip (-8,-4) rectangle (7,3);
+
+\tikzset{chen/.pic={
+
+\def\C{ 
+(4.4,-1)..controls +(105:3.2) and +(57:3.2) ..(-1.4,.4)
+..controls +(35:1.9) and +(105:3) ..(3.4,-2)--cycle
+;}
+\draw\C;
+\fill[burlywood!80] \C;
+
+\def\B{  (-2.8,-2)
+..controls +(75:3.8) and +(105:3.8) ..(3.2,-2)--(3.4,-2)
+..controls +(105:4) and +(75:4) ..(-3,-2)--cycle;
+}
+\draw\B;
+\fill[burlywood] \B;
+
+\def\D{ 
+(-1.26,.3)
+..controls +(-120:.45) and +(75:.5) ..(-1.8,-1)--
+(-2.8,-2)
+..controls +(75:1) and +(-145:1) ..cycle
+;}
+\draw\D;
+\fill[burlywood!80] \D;
+
+\draw[dashed](-2,-1)--(-1.8,-1)
+%..controls +(77:3.8) and +(105:3.8) ..(4.2,-1)--(4.4,-1)
+(-1.4,.4)
+..controls +(-120:.5) and +(75:.5) ..(-2,-1)
+(-1.25,.3)..controls +(60:2.85) and +(105:3) ..(4.2,-1)
+(4.2,-1)--(3.2,-2)
+(-3,-2)--(-2,-1)
+;
+\def\ThanXe{ 
+(-7.1,-.2)--(-4,-.3)--(-3.9,-.9)
+..controls +(170:.2) and +(10:.2) ..(-5,-.9)
+..controls +(-110:.2) and +(110:.2) ..(-4.9,-2)--(-5,-2.1)--(-6.9,-1.7)--cycle
+
+;}
+\draw\ThanXe;
+\fill[cadetblue] \ThanXe;
+\draw (-5,-2.1)--(-5.3,-.25) (-6.95,-1.2)--(-5.1,-1.6);
+\def\DauXe{ 
+(-3.9,-.9)
+..controls +(170:.2) and +(10:.2) ..(-5,-.9)
+..controls +(-110:.2) and +(110:.2) ..(-4.9,-2)
+..controls +(10:.2) and +(100:.5) ..(-4.2,-2.6)--(-4,-2.7)--(-2.9,-2.5)--(-3,-1.7)--(-3.4,-1)
+..controls +(170:.2) and +(-10:.2) ..cycle
+;}
+\draw\DauXe;
+\fill[honeydew] \DauXe;
+\draw (-5,-2.1)--(-5.3,-.25) (-6.95,-1.2)--(-5.1,-1.6)
+(-3.4,-1)--(-4.3,-1.05)--(-4,-1.7)--(-3.05,-1.6)
+(-3.9,-1.54)--(-3.2,-1.55)--(-3.2,-1.56)--(-3.9,-1.6)--cycle
+(-4.9,-1)--(-4.4,-1.1)--(-4.3,-1.3)--(-4.45,-1.3)--(-4.45,-1.6)--(-4.85,-1.55)--cycle
+(-4.3,-1.3)--(-4.45,-1.3)--(-4.45,-1.6)
+..controls +(-60:.15) and +(-120:.15) ..(-4.15,-1.6)--(-4.25,-1.3)--cycle
+(-4.3,-1.5)
+..controls +(-110:.15) and +(160:.15) ..(-4.1,-1.8)
+(-4.15,-1.75)
+..controls +(-70:.15) and +(70:.15) ..(-4.1,-2.65)
+(-4.3,-2.3)
+..controls +(-70:.15) and +(-10:.15) ..(-2.95,-2.2)
+(-3.85,-2.35)--(-3.9,-2)--(-3,-1.9)
+(-3.9,-2.6)--(-3.9,-2.4)--(-3.6,-2.4)--(-3.6,-2.55)--cycle
+(-3.18,-2.5)--(-3.2,-2.32)--(-2.97,-2.25)--(-2.95,-2.48)--cycle
+;
+\def\BanhXe{ 
+(-3.6,-2.63)
+..controls +(-60:.2) and +(-120:.2) ..(-3.1,-2.55)--cycle
+
+(-4.36,-2.55)--(-4.15,-2.65)
+..controls +(-120:.2) and +(-10:.2) ..(-4.6,-2.79)
+..controls +(5:.15) and +(-120:.2) ..cycle
+%-------------------
+(-5.8,-2.1)--(-5.6,-2.1)
+..controls +(-120:.3) and +(-10:.2) ..(-6.1,-2.4)
+..controls +(5:.15) and +(-120:.2) ..cycle
+;}
+\draw\BanhXe;
+\fill[darklava] \BanhXe;
+\draw (-4.9,-2.45)
+..controls +(-80:.4) and +(-110:.4) ..(-4.36,-2.55)
+(-4.9,-2.45)
+..controls +(85:.55) and +(110:.4) ..(-4.36,-2.55)
+(-4.8,-2.45)
+..controls +(-85:.2) and +(-110:.2) ..(-4.47,-2.55)
+(-4.8,-2.45)
+..controls +(85:.3) and +(85:.3) ..(-4.47,-2.55)
+(-6.2,-2.1)
+..controls +(-85:.15) and +(-110:.15) ..(-6,-2.1)
+(-6.2,-2.1)
+..controls +(80:.25) and +(85:.15) ..(-6,-2.1)
+(-4.9,-2.4)--(-5,-2.4)--(-4.93,-2.05)
+(-5.1,-2.1)--(-5,-2.3)
+..controls +(-120:.15) and +(-25:.15) ..(-5.45,-2.3)
+..controls +(110:.1) and +(-80:.1) ..(-5.5,-2)
+(-5.7,-1.95)--(-5.55,-2.15)--(-5.9,-2.15)--(-6.1,-1.87)
+(-6.3,-1.85)
+..controls +(-110:.2) and +(-100:.2) ..(-6.4,-1.83)
+(-6.5,-1.8)
+..controls +(-110:.1) and +(-100:.1) ..(-6.6,-1.78)
+(-6.4,-2.1)--(-6.7,-2.1)--(-6.7,-1.85)--(-6.4,-1.84)
+(-4.8,-1.7)
+..controls +(-110:.1) and +(-100:.05) ..(-4.6,-1.7)
+..controls +(110:.05) and +(100:.1) ..cycle
+(-3.3,-1.2)
+..controls +(-20:.15) and +(80:.2) ..(-3.1,-1.5)
+%-----------
+(-6.4,-2)
+..controls +(-80:.4) and +(-110:.5) ..(-5.8,-2.1)
+;
+}}
+
+\path
+(0,0)pic[scale=1]{chen};
+\draw (-1.8,-1)--(2.7,-1) (-3,-2)--(3.4,-2);
+\draw[dashed] (2.7,-1)--(4.2,-1)
+(3.4,-2)--(6.4,-2) (3.3,1)--(6.4,1) (0,-2)--(1,-1);
+\draw[<->] (6.4,-2)--(6.4,1);
+\draw[<->] (-3,-3)--(3.4,-3);
+\node at (6,-.5) [left]{$3{,}4$ m};
+\node at (.7,-2.5) [left]{$6{,}8$ m};
+\end{tikzpicture}
+\end{center}
+
+\begin{enumerate}
+	\item Viết phương trình mô phỏng cái cổng.
+	\item Một chiếc xe tải rộng $ 2{,}4 \, \text{m} $ và cao $ 2{,}5 \, \text{m} $ đi đúng làn đường quy định có thể đi qua cổng được hay không?
+\end{enumerate}
+\loigiai{
+\begin{center}
+\begin{tikzpicture}[>=stealth, scale=1.4, declare function={r=3.4; w=2.4; h=2.5;}]
+	\draw[->] (-5,0) -- (5,0) node[above] {$ x $};
+	\draw[->] (0,-1) -- (0,5) node[right] {$ y $};
+	\draw[very thick, brown] (r,0) arc [start angle=0, end angle=180,radius=r];
+	\node at (60:r+1) {$ (C) \colon x^2 + y^2 = r^2 $};
+	\draw[dashed, <->] (0,0) -- (135:r) node[pos=.5, sloped, above] {$ r=3{,}4\,\text{m} $};
+	\draw[very thick, red] (0,0) rectangle (w,h);
+	\foreach \x/\y/\n/\a in {0/0/O/-135, w/0/A/-90, 0/h/C/180}{
+		\fill[black] (\x,\y) circle (1.5pt) + (\a:.3) node {$ \n $};
+	}
+	\fill[black] (2.4,2.5) circle (1.5pt) node[anchor=south west] {$ B(2{,}4;2{,}5) $};
+\end{tikzpicture}
+\begin{enumerate}
+	\item Viết phương trình mô phỏng cái cổng.
+	\\
+	Đặt trục của cổng đi qua tâm $ (O) $ và vuông góc với mặt phẳng $ (Oxy) $ của hệ trục tọa độ $ Oxy $ như hình vẽ. Cái cổng có bán kính $ r = 3{,}4 \, \text{m} $ nên phương trình của nửa đường tròn mô tả cổng là
+	$$
+		(C) \colon x^2+y^2 = 1\,156 \quad (y \ge 0)
+	$$
+	\item Một chiếc xe tải rộng $ 2{,}4 \, \text{m} $ và cao $ 2{,}5 \, \text{m} $ đi đúng làn đường quy định có thể đi qua cổng được hay không?
+	\\
+	Xe tải được mô phỏng bằng hình chữ nhật $ OABC $.
+	Xe có thể đi qua hay không ta cần xét xem điểm $ B(2{,}4;2{,}5) $ nằm trong hay ngoài nửa đường tròn $ (C) $. Ta thấy
+	$$
+		OB = \sqrt{(2{,}4)^2+(2{,}5)^2} = 3{,}5 > r \quad (3{,}5 > 3{,}4)
+	$$
+	nên điểm $ B $ nằm ngoài nửa đường tròn $ (C) $. Do vậy xe tải không thể đi qua cổng.
+\end{enumerate}
+\end{center}
+}
+\end{bt}
+
+% nguồn: TuLuan_Lop10_Dot2 (nhập 14/11/2026)
+\begin{bt}%[0H9V4-7]%[Dự án đề kiểm tra HKII NH22-23- Lê Hùng Thắng]%[THPT Nguyễn Thượng Hiền]%Câu 8%[ma:30667d3b]
+\immini [thm]{Hình bên dưới mô phỏng một trạm thu phát sóng điện thoại di động đặt ở vị trí $I$ có toạ độ $(-2;1)$ trong mặt phẳng toạ độ (đơn vị trên hai trục là ki-lô-mét).
+\begin{listEX}[1]
+	\item Lập phương trình đường tròn mô tả ranh giới bên ngoài của vùng phủ sóng, biết rằng trạm thu phát sóng đó được thiết kế với bán kính phủ sóng $3$ km.
+	\item Tính theo đường chim bay, xác định khoảng cách ngắn nhất để một người ở vị trí $B$ có toạ độ $(-3;4)$ di chuyển được tới vùng phủ sóng theo đơn vị ki-lô-mét.
+\end{listEX}
+}
+{\begin{tikzpicture}[scale=0.6,>=stealth, font=\footnotesize, line join=round, line cap=round]
+		\def\xmin{-6} \def\xmax{2}
+		\def\ymin{-3} \def\ymax{5}
+		\draw[color=gray!30,dashed] (\xmin,\ymin) grid (\xmax,\ymax);
+		\draw[->] (\xmin,0)--(\xmax,0) node [below]{$x$};
+		\draw[->] (0,\ymin)--(0,\ymax) node [left]{$y$};
+		\node at (0,0) [below left]{$O$};
+		\clip (\xmin+0.1,\ymin+0.1) rectangle (\xmax-0.1,\ymax-0.1);
+		\draw (-2,1)node [left] {$I$} circle (3) (-3,4)node [above] {$B$}--(-2,1);
+		\draw[dotted](-2,0) node [below] {$-2$}|-(0,1) node [right]{$1$};
+		\fill (-2,1) circle (1pt) 
+		(-2,1) circle (1pt);
+	\end{tikzpicture}
+}
+	\loigiai{
+	\begin{listEX}[1]
+	\item Đường tròn mô tả ranh giới có tâm là $I(-2;1)$ và có bán kính $R=3$ nên phương trình của đường tròn là $(x+2)^2+(y-1)^2=9$.
+	\item Ta có $\vec{BI}=(1;-3) \Rightarrow BI=\sqrt{10}>3=R$.\\
+	Từ vị trí $B$ để đường đi đến vùng phủ sóng ngắn nhất thì phải đi theo hướng $\vec{BI}$.\\
+	Quãng đường đi ngắn nhất là $d=BI-R=\sqrt{10}-3 \approx 0{,}162$ km.	
+	\end{listEX}	
+	}
+\end{bt}
+
+% nguồn: TuLuan_Lop10_Dot2 (nhập 14/11/2026)
+\begin{bt}%[0H9V4-7]%Thầy Hoá%THPT Nguyễn Thượng Hiền 10TH2%[ma:5ed74158]
+Một cái cổng hình bán nguyệt rộng $8{,}4$ m, cao $4{,}2$ m như hình vẽ. Mặt đường dưới cổng được chia làm hai làn cho xe ra vào
+\begin{center}
+	\begin{tikzpicture}[scale=.8, font=\footnotesize, line join=round, line cap=round,>=stealth]
+		\definecolor{capri}{rgb}{0.0, 0.75, 1.0}
+		\definecolor{orange(colorwheel)}{rgb}{1.0, 0.5, 0.0}
+		\definecolor{kellygreen}{rgb}{0.3, 0.73, 0.09}
+		\fill[color=capri] (-5,2)--(-5,5)--(5,5)--(5,2);
+		\fill[color=gray!40!white] (-3.5,0)--(-3.5,3.05)--(3.5,3.05)--(3.5,0);
+		\def\Q{  (3.5,3)..controls +(120:1) and +(60:1) .. (-3.5,3);}
+		\draw[color=white, line width=5] \Q;
+		\fill[color=kellygreen] (-5,-1.5)--(-5,2)--(5,2)--(5,-1.5);
+		\fill[color=orange(colorwheel)] (-5,0)--(-5,3)--(5,3)--(5,0);
+		\pattern[pattern color=white, pattern=bricks] (-5,0)--(-5,3)--(5,3)--(5,0);
+		\fill[gray!50!white] (3.5,0)--(3.5,3)..controls +(120:1) and +(60:1) .. (-3.5,3)--(-3.5,0)--cycle;
+		\fill[white] (1,4.5)..controls +(120:.8) and +(30:1) .. (2.5,4.4)
+		..controls +(80:.5) and +(120:1) .. (4.8,4.3)
+		..controls +(-60:1) and +(-120:.6) .. (3.5,4)
+		..controls +(-60:.7) and +(-120:.6) .. (2,4.1)
+		..controls +(-60:.6) and +(-120:.6) .. (-1,4.3)
+		..controls +(60:.4) and +(30:.2)  .. (1,4.5);
+		\draw[color=white, line width=2.5] (-5,3)--(-3.5,3)--(-3.5,0) (3.5,0)--(3.5,3)--(5,3);
+		\fill[color=gray!80!white, line width=2] (3,0) arc (0:180:3 cm and 3cm)--cycle;
+		\draw[color=cyan, line width=2] (3,0) arc (0:180:3 cm and 3cm)--cycle;
+		\fill[color=kellygreen, line width=2,yshift=.4cm] (2.5,0) arc (0:180:2.5 cm and 2.5cm)--cycle;
+		\draw[color=gray, line width=2,yshift=.4cm] (2.5,0) arc (0:180:2.5 cm and 2.5cm)--cycle;
+		\fill[color=capri, line width=2,yshift=1.93cm] (1.914,0) arc (40:140:2.5 cm and 2.6cm)--cycle;
+		\fill[color=white] (-.6,2)--(-5.4,-2)--(5.4,-2)--(.6,2)--cycle;
+		\fill[color=gray!80!white] (-.4,2)--(-4.2,-1.5)--(4.2,-1.5)--(.4,2)--cycle;
+		\fill[color=white](-.2,-1.1)--(.2,-1.1)--(.3,-1.5)--(-.3,-1.5)--cycle (-.15,.7)--(.15,.7)--(.25,0)--(-.25,0)--cycle (-.1,2)--(.1,2)--(.2,1.5)--(-.2,1.5)--cycle;
+		\draw[color=red, line width=1.5,->] (0,0)--(3,0);
+		\draw[color=red, line width=1.5,->] (0,0)--(-3,0);
+		\node[color=red] at (0,-.5){$8{,}4$ m};
+		\node[color=red] at (0,1.2){$4{,}2$ m};
+		\draw[color=cyan, line width=1.5,->] (0,0.9)--(0,0);
+		\draw[color=cyan, line width=1.5,->] (0,1.5)--(0,3);
+	\end{tikzpicture}
+\end{center}
+\begin{enumerate}
+	\item Viết phương trình mô phỏng cái cổng.
+	\item Một chiếc xe tải rộng $2{,}2$ m, cao $2{,}6$ m đi đúng làn đường quy định có thể đi qua cổng mà không làm hư hỏng cổng hay không?
+\end{enumerate}
+\loigiai{
+\immini{
+\begin{enumerate}
+	\item Chọn hệ trục tọa độ có gốc tọa độ $O(0{,}0)$ là tâm của hình bán nguyệt.\\
+	Hình bán nguyệt có dạng nửa đường tròn tâm $O$, bán kính $R=4{,}2$ m.\\
+	Phương trình mô phỏng cái cổng:
+	\[\heva{&x^2+y^2=\left(4{,}2\right)^2\\&y\geq 0}\Leftrightarrow \heva{&x^2+y^2=17{,}64\\&y\geq 0.} \]
+\end{enumerate}
+}{
+\begin{tikzpicture}[>=stealth,line join=round,line cap=round,font=\footnotesize,scale=0.7]
+	\def\r{4.2};
+	\path
+	(0,0) coordinate (O)
+	(0:\r) coordinate (C)
+	(180:\r) coordinate (B)
+	(90:\r) coordinate (A)
+	(0:2.2) coordinate (M)
+	(90:2.6) coordinate (N)
+	($(M)+(N)-(O)$) coordinate (D)
+	({atan(13/11)}:\r) coordinate (E)
+	;
+	\draw[->] (-\r-1,0)--(\r+1,0)node[below right]{\scriptsize $x$};
+	\draw[->] (0,-1)--(0,\r+1)node[above right]{\scriptsize $y$};
+	\draw (C) arc(0:180:\r)
+	(B)--(C) (M)--(D)--(N) (O)--(E)
+	;
+	\foreach \x/\g in {B/-135,O/-135,C/-45,A/45,M/-90,N/180,E/45,D/-45}\fill[black](\x) circle (1pt) +(\g:3mm) node {$\x$};
+\end{tikzpicture}
+}
+\begin{enumerate}
+	\item[b)] Giả sử xe tải đi làn đường bên phải, vị trí xe thể hiện ở hình chữ nhật $OMDN$ (như hình vẽ). Khi đó ta có
+	\[OD=\sqrt{OM^2+ON^2}=\sqrt{2{,}2^2+2{,}6^2}\approx 3{,}4\ (\mathrm{m}). \]
+	Vì $OD<OE=R$ nên xe tải có thể đi qua mà không làm hư hỏng cổng.
+\end{enumerate}
+}
+\end{bt}
+
+% nguồn: TuLuan_Lop10_Dot2 (nhập 14/11/2026)
+\begin{bt}%[0H9N4-7]%[Dự án đề kiểm tra HKII NH22-23-Nguyen Huynh]%[THPT Trần Quang Khải]%[ma:ccf1968e]
+	Một vận động viên ném đĩa đã vung đĩa theo một đường tròn $(C)$ có phương trình $x^2+y^2-2x-4y-20=0$. Khi người đó vung đĩa đến vị trí điểm $M(4;6)$ thì buông đĩa. Viết phương trình tiếp tuyến của đường tròn $(C)$ tại điểm $M$.
+	\loigiai{
+		Đường tròn $(C) \colon x^2+y^2-2x-4y-20=0$ có tâm $I(1;2)$.\\
+		Véc-tơ $\overrightarrow{IM} = (3;4)$.\\
+		Phương trình tiếp tuyến $\Delta$ của đường tròn $(C)$ qua điểm $M(4;6)$ và nhận véc-tơ $\overrightarrow{IM} = (3;4)$ làm véc-tơ pháp tuyến.
+		$$\Delta \colon 3(x-4)+4(y-6)=0 
+		\Leftrightarrow 3x+4y-36=0.
+		$$
+		Vậy phương trình tiếp tuyến của đường tròn $(C)$ tại điểm $M$ là $3x+4y-36=0$.
+	}
+\end{bt}
+
+% nguồn: TuLuan_Lop10_Dot2 (nhập 14/11/2026)
+\begin{bt}%[0H9H4-7]%[10EX- Tex hóa CD -CT-hk2-Thầy Trịnh Xuân]%[ma:3e5e62fb]
+	\immini{
+		Một nông trại tưới nước theo phương pháp vòi phun xoay vòng trung tâm như hình bên. Cho biết tâm một vòi phun được đặt tại tọa độ $(12;-9)$ và vòi có thể phun xa tối đa $36\mathrm{m}$. Hãy viết phương trình đường tròn biểu diễn tập hợp các điểm xa nhất mà vòi nước có thể phun tới.
+	}{
+		\begin{tikzpicture}[line join = round, line cap = round,>=stealth,thick,scale=1]
+			\draw[dashed](0,0)node[circle,below]{$I$}--(1.5,0)node[circle, right]{$M$};
+			\draw(0,0) circle (1.5cm);
+		\end{tikzpicture}
+	}
+	\loigiai{
+		Tập hợp các điểm xa nhất mà vòi nước có thể phun tới là đường tròn có tâm $I(12;-9)$ và bán kính $R=36$ nên có phương trình $$(x-12)^2+(y+9)^2=36^2.$$
+	}
+\end{bt}
+
+% nguồn: TuLuan_Lop10_Dot2 (nhập 14/11/2026)
+\begin{bt}%[0H9H4-7]%[10EX- Tex hóa CD -CT-hk2-Thầy Trịnh Xuân]%[ma:bc626d1d]
+	Một cái cổng hình bán nguyệt rộng $6{,}8(\mathrm{m})$, cao $3{,}4(\mathrm{m})$. Mặt đường dưới cổng được chia thành hai làn cho xe ra vào.
+	\begin{listEX}[1]%số cột
+		\item Viết phương trình mô phỏng cái cổng;
+		\item Một chiếc xe tải rộng $2{,}4(\mathrm{m})$ và cao $2{,}5(\mathrm{m})$ đi đúng làn đường quy định có thể đi qua cổng hay không?
+	\end{listEX}
+	\loigiai{
+		\begin{listEX}[]%số cột
+			\item \immini{
+				Chọn hệ toạ độ sao cho tâm của cái cổng hình bán nguyệt có tọa độ $(0;0)$ và đỉnh của cổng có toạ độ $M(0;3{,}4)$.\\
+				Ta có phương trình mô phỏng của cổng là\\
+				$x^2+y^2=3{,}4^2(y>0)$.
+				
+			}{
+				\begin{tikzpicture}[domain=0:4,line join = round, line cap = round,>=stealth,thick,scale=0.7]
+					\draw[->] (-4,0) -- (4,0) node[right] {$x$};
+					\draw[->] (0,0) -- (0,4.2) node[above] {$y$};
+					\draw(-3.4,0) arc(-180:-360:3.4);
+					\draw (0,0)node[above left]{$O$};
+					\draw (0,3.4)node[above right]{$M(0;3{,}4)$};
+				\end{tikzpicture}
+			}
+			\item \immini{
+				Gọi $OABC$ là thiết diện của xe tải (Hình bên).\\
+				Ta có\\
+				$OB=\sqrt{OA^2+OC^2}=\sqrt{2{,}4^2+2{,}5^2} \approx 3{,}5(\mathrm{m})>R=3{,}4(\mathrm{m})$.\\
+				Vậy nếu đi đúng làn đường quy định thì xe tải không thể đi qua cổng.
+			}{
+				\begin{tikzpicture}[domain=0:4,line join = round, line cap = round,>=stealth,thick,scale=0.7]
+					\draw[->] (-4,0) -- (4,0) node[right] {$x$};
+					\draw[->] (0,0) -- (0,4.2) node[above] {$y$};
+					\draw(-3.4,0) arc(-180:-360:3.4);
+					\draw (0,0) node[below left]{$O$} -- (2.4,0) node[below right]{$A$}--(2.4,2.5)node[right]{$B$} --(0, 2.5)node[left]{$C$}--(0,0);
+					\draw (1.2,0) node[below]{$2{,}4 \mathrm{m}$};
+					\draw (2.4, 1.3) node[left]{$2{,}5\mathrm{m}$};
+				\end{tikzpicture}
+			}
+		\end{listEX}
+	}
+\end{bt}
+
+% nguồn: TuLuan_Lop10_Dot2 (nhập 14/11/2026)
+\begin{bt}%[0H9V4-7]%6.32.%[ma:c1f0f1c2]
+	\immini{
+		Mặt cắt đứng của cột cây số trên quốc lộ có dạng nửa hình tròn ở phía trên và phía dưới có dạng hình chữ nhật (xem hình bên). Biết rằng đường kính của nửa hình tròn cũng là cạnh phía trên của hình chữ nhật và đường chéo của hình chữ nhật có độ dài $66$cm. Tìm kích thước của hình chữ nhật, biết rằng diện tích của phần nửa hình tròn bằng $0{,}3$ lần diện tích của phần hình chữ nhật. Lấy $\pi=3{,}14$ và làm tròn kết quả đến chữ' số thập phân thứ hai.
+	}{
+		\begin{tikzpicture}[>=stealth,line join=round,line cap=round,font=\footnotesize,scale=1]
+			\path
+			(0,4) coordinate (A)
+			(3,4) coordinate (B)
+			(3,0) coordinate (C)
+			(0,0) coordinate (D)
+			;
+			\draw
+			(A)--(B)--(C)--(D)--(A) (B)--(D)
+			;
+			\draw (0,4) arc (180:0:1.5cm);
+			\path
+			(1.5,0) coordinate[label=below:Mặt cắt của cột cây số](c)
+			($(B)!0.5!(A)$) coordinate[label=above:$x$](d)
+			($(B)!0.5!(D)$) coordinate[label=right:$66\mathrm{cm}$](d)
+			;
+		\end{tikzpicture}
+	}
+	\loigiai{
+		Gọi $x$(cm) là chiều ngang của hình chữ nhật ($x>0$).\\
+		Chiều dài của hình chữ nhật là $\sqrt{66^2-x^2}$ cm.\\
+		Diện tích của hình chữ nhật là $x\sqrt{66^2-x^2}$ cm$^2$.\\
+		Nửa diện tích hình tròn là $\dfrac{\pi x^2}{2}$ cm$^2$.\\
+		Diện tích của phần nửa hình tròn bằng $0{,}3$ lần diện tích của phần hình chữ nhật nên: 
+		\begin{eqnarray*}
+			\dfrac{\pi x^2}{2}&=&0{,}3\cdot x\sqrt{66^2-x^2}\\
+			\dfrac{\pi x^2}{2}&=&\dfrac{3}{10}\cdot x\sqrt{4356-x^2}\\
+			5\pi x^2&=&3\cdot x\sqrt{4356-x^2}\\
+			\dfrac{5\pi}{3} x&=&\sqrt{4356-x^2}\\
+			\dfrac{25\pi^2}{9} x^2&=&4356-x^2\\
+			x^2 \left( \dfrac{25\pi^2}{9} +1 \right) &=&4356\\
+			x^2  &=&4356: \left( \dfrac{25\pi^2}{9} +1 \right)\\
+			x  &=&\sqrt{4356: \left( \dfrac{25\pi^2}{9} +1 \right)}\\
+			x  &\approx &12{,}38\mathrm{cm}.\\
+		\end{eqnarray*}
+		
+	}
+\end{bt}
+
+% nguồn: TuLuan_Lop10_Dot2 (nhập 14/11/2026)
+\begin{bt}%[0H9H4-7]%[Tex hóa SGK CD-CT,T7/22, Đoàn Minh Tân]%[ma:1096920c]
+	Trong mặt phẳng tọa độ $Oxy$, một vật chuyển động tròn đều ngược chiều kim đồng hồ trên đường tròn tâm $I(3;2)$, bán kính $5$ dưới tác dụng của lực căng dây. Khi vật chuyển động đến điểm $M(6;6)$ thì dây căng bị đứt.
+	\begin{enumerate}
+		\item Viết phương trình quỹ đạo chuyển động của vật sau khi dây bị đứt, biết rằng vật chỉ chịu tác động của duy nhất lực căng dây trong bài toán này.
+		\item Một vật khác chuyển động thẳng đều trên đường thẳng có phương trình $\Delta\colon 3x+4y+23=0$. Chứng minh hai vật này không gặp nhau tại bất kì điểm nào.
+	\end{enumerate}
+	\loigiai{
+		\begin{enumerate}
+			\item 
+			\immini{Quỹ đạo chuyển động của vật thứ nhất trước khi dây bị đứt là đường tròn $(C)$ (như hình vẽ) có phương trình $(x-3)^2+(y-2)^2=5^2$.\\
+				Khi dây bị đứt, do vật thứ nhất chỉ chịu tác động của duy nhất lực căng dây nên vật đó tiếp tục chuyển động theo tiếp tuyến $Mt$ tại điểm $M(6;6)$ thuộc đường tròn $(C)$. Phương trình tiếp tuyến $Mt$ là \allowdisplaybreaks
+				\begin{eqnarray*}
+					&&	(6-3)(x-6)+(6-2)(y-6)=0\\
+					&\Leftrightarrow & 3(x-6)+4(y-6)=0\Leftrightarrow 3x+4y-42=0.
+				\end{eqnarray*}
+				Vậy quỹ đạo chuyển động của vật sau khi dây bị đứt là đường thẳng $3x+4y-12=0$.
+			}
+			{
+				\begin{tikzpicture}[>=stealth,line join=round,line cap=round,font=\footnotesize,scale=0.7,xscale=0.5, yscale=0.5]
+					\draw[->] (-3,0)--(9,0) node[below]{$x$};
+					\draw[->] (0,-3)--(0,12) node[left]{$y$};
+					\coordinate (O) at (0,0);
+					\coordinate (I) at (3,2);
+					\coordinate (M) at (6,6);
+					\coordinate (H) at ($(I)!1.3!(M)$);
+					\coordinate (a) at ($(M)!1!-90:(I)$);
+					\coordinate (b) at ($(H)!0.8!-90:(I)$);
+					\coordinate (c) at ($(H)!0.2!90:(I)$);
+					\draw (I) circle(5cm) (M)--(a) (b)--(c) (I)--(H);
+					\draw[fill=black] (O) circle(1pt) node[below left]{$O$}
+					(I) circle(1pt) node[below left]{$I$}
+					(3,0) circle(1pt) node[below]{$3$}
+					(6,0) circle(1pt) node[below]{$6$}
+					(0,2) circle(1pt) node[left]{$2$}
+					(0,6) circle(1pt) node[left]{$6$}
+					(a) node[above]{$t$}
+					(M) circle(1pt) node[right]{$M$}
+					(H) circle(1pt) node[above right]{$H$}
+					(c) node[above]{$\Delta$}
+					(-2.2,5) node[below]{$(C)$}
+					;
+					\draw[dashed] (3,0)|-(0,2) (6,0)|-(0,6);
+				\end{tikzpicture}
+			}
+			\item Khoảng cách từ tâm đường tròn $(C)$ đến đường thẳng $\Delta\colon 3x+4y+23=0$ là
+			$$IH=\dfrac{|3\cdot 3+4\cdot 2+23}{\sqrt{3^2+4^2}}=8>5.$$
+			Vì khoảng cách từ tâm đường tròn $(C)$ đến đường thẳng $\Delta$ lớn hơn bán kính của đường tròn $(C)$ nên đường tròn $(C)$ và đường thẳng $\Delta$ không có điểm chung, tức là vật thứ hai không gặp vật thứ nhất khi dây chưa đứt.\\
+			Mặt khác, vì $\Delta \parallel Mt$ nên vật thứ hai không gặp vật thứ nhất sau khi dây bị đứt.\\
+			Vậy hai vậy không bao giờ gặp nhau.
+		\end{enumerate}
+	}
+\end{bt}
+
+% nguồn: TuLuan_Lop10_Dot2 (nhập 14/11/2026)
+\begin{bt}%[0H9H4-7]%[Tex hóa SGK CD-CT,T7/22, Đoàn Minh Tân]%[ma:ba504dfa]
+	\immini{Hình bên mô phỏng một trạm thu phát sóng điện thoại di động đặt ở vị trí $I$ có tọa độ $I(-2;1)$ trong mặt phẳng tọa độ (đơn vị trên hai trục là ki-lô-mét).
+		\begin{enumerate}
+			\item Lập phương trình đường tròn mô tả ranh giới bên ngoài của vùng phủ sóng, biết rằng trạm thu phát sóng đó đươc thiết kế với bán kính phủ sóng $3$ km.
+			\item Nếu người sử dụng điện thoại ở vị trí có tọa độ $(-1;3)$ thì có thể sử dụng dịch vụ của trạm này không?
+			\item Tính theo đường chim bay, xác định khoảng cách ngắn nhất để một người ở vị trí có tọa độ $(-3;4)$ di chuyển được tới vùng phủ sóng theo đơn vị ki-lô-mét (làm tròn kết quả đến hàng phần mười).
+		\end{enumerate}
+	}
+	{
+		\begin{tikzpicture}[>=stealth,line join=round,line cap=round,font=\footnotesize,scale=0.8,xscale=0.8, yscale=0.8]
+			\draw[->] (-7,0)--(3,0) node[below]{$x$};
+			\draw[->] (0,-3)--(0,5) node[left]{$y$};
+			\coordinate (O) at (0,0);
+			\coordinate (I) at (-2,1);
+			\draw (I) circle(3cm);
+			\draw[dashed] (-2,0)|-(0,1);
+			\draw[fill=black] 
+			(I) circle(1pt) node[left]{$I$}
+			(-2,2) node[above]{Trạm phát sóng}
+			(0,1) circle(1pt) node[above left]{$1$}
+			(-2,0) circle(1pt) node[below]{$-2$}
+			(0,0) circle(1pt) node[below left]{$O$}
+			(1,0) circle(1pt) node[below]{$1$}
+			;
+		\end{tikzpicture}
+	}
+	\loigiai{
+		\begin{enumerate}
+			\item Đường tròn ranh giới có tâm $I(-2;1)$, bán kính $R=3$ có phương trình là $(C)\colon (x+2)^2+(y-1)^2=9$.
+			\item Xét vị trí $A(-1;3)$, ta có $IA=\sqrt{(-1+2)^2+(3-1)^2}=\sqrt{5}<3$.\\
+			Vậy người sử dụng điện thoại ở vị trí $(-1;3)$ có thể sử dụng dịch vụ của trạm này.
+			\item Xét điểm $B(-3;4)$, ta có $IB=\sqrt{(-3+2)^2+(4-1)^2}=\sqrt{10}>3$.\\
+			Nên điểm $B$ nằm ngoài đường tròn $(C)$.\\
+			Vậy khoảng cách ngắn nhất để người đó đi đến vùng phủ sóng là $\sqrt{10}-3\approx 0{,}2$ km.
+		\end{enumerate}
+	}
+\end{bt}
+
+% nguồn: ThucTe_Lop10_TLN_DS (nhập 14/11/2026)
+\begin{bt}%[0H9V4-7] % KIEM_TRA%[ID]%[Dự án đề kiểm tra GKII lớp 10 năm học 2024 - 2025 - Nguyễn Hoàng Anh]%[THPT Sầm Sơn - Tỉnh Thanh Hóa]%[ma:fcdea4ae]
+	Người ta muốn xây một cây cầu nằm ngang bắc qua một hồ nước hình tròn (hai đầu cầu là hai điểm phân biệt nằm trên đường tròn). Biết khoảng cách từ cây cầu đến tâm của hồ nước là $50$\,m. Gắn một hệ trục tọa độ $Oxy$ (đơn vị: mét) trên bản đồ thì hồ nước là một đường tròn đi qua các điểm $A(0;0)$, $B(0;600)$, $C(800;0)$. Tính chiều dài của cây cầu (đơn vị tính là mét, làm tròn kết quả đến hàng đơn vị).
+	
+	\shortans{$995$}
+	\loigiai{
+	Phương trình đường tròn $(C)$ có dạng $x^2+y^2-2ax-2by+c=0$ ($a^2+b^2-c>0$).\\
+	Do ba điểm $A(0;0)$, $B(0;600)$, $C(800;0)$ nằm trên đường tròn $(C)$ nên ta có hệ phương trình
+	\begin{center}
+		$\heva{&c=0\\&-1200b+c=-360000\\&-1600a+c=-640000}\Leftrightarrow \heva{&a=400\\&b=300\\&c=0.}$
+	\end{center}
+Suy ra bán kính của đường tròn $(C)$ là $R=\sqrt{400^2+300^2}=500$.\\
+\begin{center}
+\begin{tikzpicture}[line cap=round,line join=round, font=\footnotesize,scale=.6]
+	\path 
+	(0,0) coordinate (I) node[below]{$I$}
+	($(I)!1!-10:(-5{,}0)$) coordinate (M) node[left]{$M$}
+	($(I)!1!10:(5{,}0)$) coordinate (N) node[right]{$N$}
+	($(M)!0.5!(N)$) coordinate (H) node[above]{$H$}
+	;
+	\draw (0,0) circle (5);
+	\draw (M)--(N) (I)--(H);
+	\pic[draw, angle radius=0.2cm, angle eccentricity=1.2]  {right angle=I--H--M};
+	\foreach \i in{I,M,N,H} \fill (\i) circle (2pt);
+\end{tikzpicture}
+\end{center}
+Gọi chiều dài cây cầu là $MN$, khoảng cách từ tâm hồ đến cầu là $IH$.\\
+Ta có $MN=2MH=2\sqrt{IM^2-IH^2}=2\sqrt{500^2-50^2}\approx 995$\,m.\\
+Vậy độ dài cây cầu là khoảng $995$\,m.
+	}
+\end{bt}
+
+% nguồn: ThucTe_Lop10_TLN_DS (nhập 14/11/2026)
+\begin{bt}%[0H9V4-7]%[ma:b2ddd244]
+	\immini{Bên trong một hồ bơi, người ta dự định thiết kế hai bể sục nửa hình tròn bằng nhau và một bể sục hình tròn (hình vẽ bên) để người bơi có thể ngồi tựa lưng vào thành các bể sục thư giãn. Để tổng chu 	vi của ba bể là $32$ m mà tổng diện tích (chiếm hồ bơi) là nhỏ nhất thì bán kính lớn nhất của các bể sục hình tròn bằng bao nhiêu mét (làm tròn tới hàng phần trăm, trong tính toán lấy $\pi =3{,}14$).}
+	{\begin{tikzpicture}[scale=0.7, font=\footnotesize, line join=round, line cap=round, >=stealth]
+			\path (0,0) coordinate (A)
+			(10,0) coordinate (B)
+			(10,6) coordinate (C)
+			(0,6) coordinate (D)
+			; 
+			\draw[fill=yellow!50,color=yellow!50]($(A)+(-0.5,-0.5)$)--($(B)+(0.5,-0.5)$)--($(C)+(0.5{,}0.5)$)--($(D)+(-0.5{,}0.5)$)--cycle;
+			\draw[fill=cyan](A)--(B)--(C)--(D)--cycle;
+			\draw (10,2.5) arc (90:270:1)(10,5.5) arc (90:270:1);
+			\draw (2,3)circle (1);
+	\end{tikzpicture}}
+	\shortans{$1{,}45$}
+	\loigiai
+	{
+		Gọi bán kính của bể hình tròn và bể nửa hình tròn tương ứng là $x,y$ (m) ($x,y>0$). \\
+		Chu vi của bể hình tròn là $2\pi x=2\cdot 3{,}14\cdot x=6{,}28x$ (m).\\
+		Vì hai bể còn lại là hai bể có dạng nửa hình tròn bằng nhau nên tổng chu vi của hai bể này bằng tổng chu vi của đường tròn bán kính $y$ (m) với $2$ lần độ dài đường kính của đường tròn đó, do đó chu vi của hai bể nửa hình tròn là 
+		$2\pi y+2\cdot2y=10{,}28y$ (m).\\
+		Tổng chu vi của ba bể là $32$ m nên ta có 
+		$$6{,}28x+10{,}28y=32 \Leftrightarrow 1{,}57x+2{,}57y-8=0.$$
+		Diện tích của bể hình tròn là $\pi x^2=3{,}14x^2$ m$^2$. \\
+		Diện tích của hai bể nửa hình tròn là $\pi y^2=3{,}14y^2$ m$^2$. \\
+		Gọi tổng diện tích của ba bể sục là $S$ m$^2$. Khi đó ta có 
+		$$3{,}14 x^2+3{,}14y^2=S\Leftrightarrow x^2+y^2=\dfrac{S}{3{,}14}.$$
+		Trong mặt phẳng tọa độ $Oxy$, xét đường tròn $(C)\colon x^2+y^2=\dfrac{S}{3{,}14}$ có tâm $O(0;0)$, bán kính $R=\sqrt{\dfrac{S}{3{,}14}}$ và đường thẳng $\Delta :1{,}57x+2{,}57y-8=0$. \\
+		Khi đó bài toán được chuyển thành: Tìm $R$ nhỏ nhất để $(C)$ và $\Delta $ có ít nhất một điểm chung, với hoành độ và tung độ đều là các số dương.
+		\begin{center}
+			\begin{tikzpicture}[scale=0.7, font=\footnotesize, line join=round, line cap=round, >=stealth]
+				\def\a{3};
+				\def\b{2};
+				\path (0{,}0) coordinate (O)
+				(0{,}2.2) coordinate (B)
+				(3{,}0) coordinate (A)
+				($(A)!(O)!(B)$) coordinate (H)
+				; 
+				\draw[->] ($(-{\a},0)$)--($({\a},0)+(1.5,0)$) node[above]{$x$};
+				\draw[->] ($(0,-{\b})-(0,0.5)$)--($(0,{\b})+(0,1)$) node[left]{$y$};
+				\draw (O) circle(2);
+				\draw ($(A)!1.5!(B)$)node[below left]{$\Delta$}--($(B)!1.5!(A)$) (O)--(H);
+				\foreach \d/\g in{O/-135,H/-80}\draw[fill=black](\d)circle(1pt)node[shift={(\g:0.3)}]{$\d$};
+				\draw (1.5,-2) node{$(C)$};	
+				\draw pic[angle radius=2mm,draw=blue,angle eccentricity=2] {right angle = O--H--B};
+			\end{tikzpicture}
+		\end{center}
+		Để $(C) $ và $\Delta $ có ít nhất một điểm chung thì khoảng cách từ tâm $O$ của $(C)$ tới $\Delta $ phải nhỏ hơn hoặc bằng bán kính $R$ nên ta có d$(O;\Delta)\le R$.\\
+		$\Leftrightarrow \dfrac{\left| 1{,}57.0+2{,}57.0-8 \right|}{\sqrt{(1{,}57)^2+(2{,}57)^2}}\le \sqrt{\dfrac{S}{3{,}14}} \\ 
+		\Leftrightarrow S\ge 22{,}22.$\\
+		Giá trị nhỏ nhất của $S$ là $22{,}22\text{ m}^2$, khi đó $x^2+y^2=7{,}0756$ (*). \\
+		Từ $1{,}57x+2{,}57y-8=0\Rightarrow x=\dfrac{8-2{,}57y}{1{,}57}$ thay vào (*) ta được
+		\begin{eqnarray*}
+			&& \left(\dfrac{8-2{,}57y}{1{,}57} \right)^2+y^2=7{,}0756 \\ 
+			& \Leftrightarrow& 9{,}0698y^2-41{,}12y+46{,}56=0 \\ 
+			& \Leftrightarrow& \hoac{&y=2{,}34\Rightarrow x\approx 1{,}27 \\ 
+				& y=2{,}2\Rightarrow x\approx 1{,}45.}
+		\end{eqnarray*}
+		Suy ra bán kính bể sục hình tròn là $1{,}27$ m hoặc $1{,}45$ m thì thỏa mãn yêu cầu bài toán.\\
+		Vậy bán kính lớn nhất là $1{,}45$ m. 
+	}
+\end{bt}
+
+% nguồn: ThucTe_Lop10_TLN_DS (nhập 14/11/2026)
+\begin{bt}%[0H9V4-7]%[ma:8333347e]
+
+		Ngày 6/2/2023, một trận động đất $7{,}8$ độ richter có tâm chấn tại Thổ Nhĩ Kì. Biết rằng đường tròn tác động đi qua $2$ thành phố Kahramamaras và Nurdagi có toạ độ lần lượt là $K(-3 ; 10)$ và $N(8 ; 0)$. Mặt khác, tâm chấn cách đều hai thành phố nói trên. Bán kính tác động (km) tính từ tâm chấn (Tâm $I$) bằng bao nhiêu? Kết quả làm tròn đến hàng phần trăm.
+		\shortans{$8{,}31$}
+	\loigiai{
+		Phương trình đường tròn tác động có dạng $(C)\colon x^2+y^2-2 a x-2 b y+c=0$ có tâm $I(a ; b)$.\\
+		Vì $K(-3 ; 10)$, $ N(8 ; 0) \in (C)$ nên ta có hệ phương trình $$\heva{&6 a-20 b+c=-109 \\& -16 a+c=-64.}\quad  (1)$$
+		Tâm $I$ cách đều $K$ và $N$ nên
+		\allowdisplaybreaks
+\begin{eqnarray*}
+		I K=I N &\Leftrightarrow& \sqrt{(-3-a)^2+(10-b)^2}=\sqrt{(8-a)^2+(0-b)^2}\\&\Leftrightarrow&-10 a-20 b=-45 .\quad(2)
+		\end{eqnarray*}
+		Từ $(1)$ và $(2)$ suy ra $\heva{&a=0 \\& b=\dfrac{9}{4}\\& c=-64.}$\\
+		Vậy bán kính tác động tính từ tâm chấn là $$R=\sqrt{0^2+\left(\dfrac{9}{4}\right)^2-(-64)}=8{,}31\mathrm{~km}.$$
+	}
+\end{bt}
+
+% nguồn: ThucTe_Lop10_TLN_DS (nhập 14/11/2026)
+\begin{bt}%[0H9V4-7]%[Làm đề GHK, HK, 4 phần - 2025]%[Huỳnh Xuân Tín]%[ma:c9577a0e]
+	\immini[thm]{Hình mô phỏng một trạm thu phát sóng điện thoại di động đặt ở vị trí $I$ có tọa độ $(-2;1)$ trong mặt phẳng toạ độ (đơn vị trên hai trục là ki-lô-mét). Bán kính phủ sóng là $3$ km. Tính theo đường chim bay, xác định khoảng cách ngắn nhất để một người ở vị trí có tọa độ $(-3;4)$ di chuyển được tới vùng phủ sóng theo đơn vị ki-lô-mét (làm tròn kết quả đến hàng phần mười).
+	}{
+		\begin{tikzpicture}[line join=round,font=\footnotesize,scale=.6,>=stealth]
+			\path (0,0) coordinate (O) (-3,4) coordinate (M) (-2,1) coordinate (I) 
+			node[shift={(120:1.2)},text width=2cm,align=center]{\scriptsize Trạm phát sóng};
+			\draw[-stealth] (-5.5,0)--(2.5,0) node[below] {$x$};
+			\draw[-stealth] (0,-2)--(0,4.5) node[left] {$y$};
+			\draw (I) circle (3);
+			\draw[dashed] (-2,0)node[below]{$-2$}|-(0,1) node[right]{$1$};
+			\foreach \i/\j in {I/135,O/-135,M/90}
+			\fill (\i) circle (1.3pt) node[shift={(\j:3mm)}]{$\i$};
+		\end{tikzpicture}\vspace{2mm}
+	}
+	\shortans[]{$0{,}2$}
+	\loigiai{
+		Ta có $IM=\sqrt{(-3+2)^2+(4-1)^2}=\sqrt{10}$ km.\\
+		Vì $IM>R$ nên $M$ đang ở ngoài vùng phủ sóng.\\
+		Do đó người ở vị trí $M$ cần di chuyển ít nhất một khoảng bằng $IM-R=\sqrt{10}-3 \approx 0{,}2$ km.
+	}
+\end{bt}
+
+% nguồn: ThucTe_Lop10_TLN_DS (nhập 14/11/2026)
+\begin{bt}%[0H9V4-7]%[Dự án đề 4 phần]$[Tex hóa: Lê Thị Thúy Hằng]%[ma:a24eb929]
+Trên mặt phẳng $Oxy$, một vật chuyển động nhanh trên đường tròn có phương trình $x^2+y^2=25$. Khi tới vị trí $M(1;2)$ thì vật bị văng khỏi quỹ đạo tròn và ngay sau đó, trong một khoảng thời gian ngắn bay theo hướng tiếp tuyến của đường tròn có phương trình $d\cdot ax+by+c=0$. Hỏi trong khoảng thời gian ngắn ngay sau khi văng, vật chuyển động trên đường thẳng $d$ có tổng $a+b+c$ là bao nhiêu?
+\shortans[]{$-2$}
+\loigiai{
+	Khi tới vị trí $M(1;2)$, vật bị văng khỏi quỹ đạo tròn và ngay sau đó bay theo hướng tiếp tuyến $d$ của đường tròn tại $M$.\\
+	Ta được $d$ đi qua điểm $M$ và nhận vectơ $\overrightarrow{OM}=(1;2)$ làm véc-tơ pháp tuyến.\\
+	Phương trình của $d$ là $x+2y-5=0$.
+	Suy ra, $a+b+c=1+2-5=-2$.
+	}
+\end{bt}
+
+% nguồn: ThucTe_Lop10_TLN_DS (nhập 14/11/2026)
+\begin{bt}%[0H9V4-7]%[ma:1ea77dac]
+	\immini[thm]{Hình vẽ bên mô phỏng một trạm thu phát sóng điện thoại di động đặt ở vị trí $I$ có tọa độ $(-2;1)$ trong mặt phẳng toạ độ (đơn vị trên hai trục là ki-lô-mét). Tính theo đường chim bay, xác định khoảng cách ngắn nhất để một người ở vị trí có tọa độ $(-3;4)$ di chuyển được tới vùng phủ sóng theo đơn vị
+		ki-lô-mét (làm tròn kết quả đến hàng phần trăm). Biết rằng trạm thu phát sóng đó được thiết kế với bán kính phủ sóng $3$ km.
+		}
+	{
+	\begin{tikzpicture}[line join=round, line cap=round,>=stealth,thick,scale=0.7]
+		\def\xmax{2} \def\xmin{-6} \def\ymax{5} \def\ymin{-2}
+		\def \R{3} % bán kính
+		\draw[->] (\xmin,0) -- (\xmax,0)node[above]{\footnotesize  $x$};
+		\draw[->] (0,\ymin) -- (0,\ymax) node[left] {\footnotesize  $y$};
+		\draw (0,0)node[below right]{\footnotesize  $O$};\fill (0,0)circle(1.5pt);
+		\foreach \x in{-2}
+		\draw[shift={(\x,0)}] (0,-2pt)--(0,2pt)node[below=1pt]{\footnotesize $\x$};
+		\foreach \y in{1}
+		\draw[shift={(0,\y)}] (-2pt,0)--(2pt,0)node[right=1pt]{\footnotesize $\y$};
+		\path (-2,1) coordinate (I) node[above] {\text{Trạm phát sóng}};
+		\draw (I) circle (\R);
+		\foreach \i/\x/\y/\g in{I/-2/1/-60}
+		{\fill (\x,\y)circle(1.5pt) ($(\x,\y) + (\g:3mm)$)node{$\i$};   
+			\draw[dashed,thin](\x,0)--(\x,\y)--(0,\y);}
+	\end{tikzpicture}	
+	}
+	\shortans[]{$-6$}
+	\loigiai{
+		\begin{center}
+			\begin{tikzpicture}[line join=round, line cap=round,>=stealth,thick,scale=0.8]
+				\def\xmax{2} \def\xmin{-6} \def\ymax{5} \def\ymin{-2}
+				\def \R{3} % bán kính
+							\draw[->] (\xmin,0) -- (\xmax,0)node[above]{\footnotesize  $x$};
+				\draw[->] (0,\ymin) -- (0,\ymax) node[left] {\footnotesize  $y$};
+				\draw (0,0)node[below right]{\footnotesize  $O$};\fill (0,0)circle(1.5pt);
+				\foreach \x in{-2}
+				\draw[shift={(\x,0)}] (0,-2pt)--(0,2pt)node[below=1pt]{\footnotesize $\x$};
+				\foreach \y in{4,1}
+				\draw[shift={(0,\y)}] (-2pt,0)--(2pt,0)node[right=1pt]{\footnotesize $\y$};
+				\coordinate (B) at (-3,4);
+				\coordinate (I) at (-2,1);
+				\path (-2,1) coordinate (I) node[above] {\text{Trạm phát sóng}};
+				%\draw (I) circle (\R);
+				\draw[name path=C,red] (I) circle (\R cm);
+				\draw[name path=BI,dashed] (B)--(I);
+				\path [name intersections={of=BI and C,by={M}}];
+				%\clip (\xmin,\ymin)rectangle(\xmax,\ymax);
+				\foreach \d/\g in {I/-80,B/90,M/-40} \draw[fill=white](\d)circle(1pt)+(\g:.4)node{\footnotesize $\d$};
+				\foreach \x/\y in{-2/1,-3/4}\draw[dashed,thin](\x,0)--(\x,\y)--(0,\y);
+			\end{tikzpicture}
+		\end{center}
+	Đường tròn màu đỏ mô tả ranh giới bên ngoài của vùng phủ sóng có tâm $I(-2;1)$ và bán kính phủ sóng $3$ km nên phương trình đường tròn đó là $(x+2)^2+(y-1)^2=9$.\\
+	Giả sử vị trí đứng của người đó là $B(-3;4)$.\\
+	Gọi $M$ (như trên hình vẽ) là giao điểm thứ nhất của đường tròn tâm $I$ và $BI$\\
+	$\Rightarrow$ Khoảng cách ngắn nhất để người đó di chuyển được từ vị trí $B(-3;4)$ tới vùng phủ sóng là $BM$.\\
+	Ta có $IB=\sqrt{(-3+2)^2+(4-1)^2}=\sqrt{10}$, suy ra $BM=IB-IM=\sqrt{10}-3=0{,}16$.
+	}
+\end{bt}
+
+% nguồn: ThucTe_Lop10_TLN_DS (nhập 14/11/2026)
+\begin{bt}%[0H9V4-7]%[ma:fdfc6b8f]
+	\immini[thm]{Ném đĩa là một môn thể thao thi đấu trong Thế vận hội Olympic mùa hè. Khi thực hiện cú ném, vận động viên thường quay lưng lại với hướng ném, sau đó xoay ngược chiều kim đồng hồ một vòng rưỡi của đường tròn để lấy đà rồi thả tay ra khỏi đĩa. Giả sử đĩa chuyển động trên một đường tròn tâm $I\left(0;\dfrac{3}{2}\right)$ bán kính $0{,}8$ trong mặt phẳng tọa độ $Oxy$ (đơn vị trên hai trục là mét). Đến điểm $M\left(\dfrac{\sqrt{39}}{10};2\right)$, đĩa được ném đi (hình bên). Trong những giây đầu tiên ngay sau khi được ném đi, quỹ đạo chuyển động của chiếc đĩa là phương trình có dạng $ax+by+\dfrac{261}{100}=0$. Tính $10a+2b$. (Làm tròn đến hàng phần trăm)
+	}
+	{
+		\begin{tikzpicture}[>=stealth,line join=round,line cap=round,font=\footnotesize,scale=.7,xscale=0.8, yscale=0.8]
+			\draw[->] (-3,0)--(3,0) node[below]{$x$};
+			\draw[->] (0,-1)--(0,7) node[left]{$y$};
+			\coordinate (O) at (0,0);
+			\coordinate (I) at (0,1.5);
+			\coordinate (M) at (0.624,2);
+			\coordinate (a) at ($(M)!4!-90:(I)$);
+			\draw (I) circle(0.8 cm) (M)--(a);
+			\draw[fill=black] 
+			(I) circle(1pt) node[left,scale=0.8]{$I$}
+			(0,2) circle(1pt) node[left,scale=0.8]{$2$}
+			(M) circle(1pt) node[right,scale=0.8]{$M$}
+			(a) circle(1pt)
+			($(a)+(-0.3{,}0.2)$) circle(1pt)
+			($(a)+(-0.6{,}0.4)$) circle(1pt)
+			($(a)+(-0.8{,}0.5)$) circle(1pt)
+			;
+		\end{tikzpicture}
+	}
+\shortans{$7{,}24$}
+	\loigiai{
+		Xét đường tròn $(C)$ tâm $I\left(0;\dfrac{3}{2}\right)$, bán kính $R=0{,}8$.\\
+		Ta có $IM=\sqrt{\left(\dfrac{\sqrt{39}}{10}-0\right)^2+\left(2-\dfrac{3}{2}\right)^2}=0{,}8$.\\
+		Suy ra điểm $M$ thuộc đường tròn tâm $I$, bán kính $R=0{,}8$.\\
+		Trong những giây đầu tiên sau khi ném đi, quỹ đạo chuyển động của chiếc đĩa là một đường thẳng có phương trình là phương trình tiếp tuyến của đường tròn tại điểm $M\left(\dfrac{\sqrt{39}}{10};2\right)$
+		$$\left(\dfrac{\sqrt{39}}{10}-0\right)\left(x-\dfrac{\sqrt{39}}{10}\right)+\left(2-\dfrac{3}{2}\right)(y-2)=0\Leftrightarrow\dfrac{\sqrt{39}}{10}x+\dfrac{1}{2}y+\dfrac{261}{100}=0.$$
+		Ta có $a=dfrac{\sqrt{39}}{10}$ và $b=\dfrac{1}{2}$ nên $10a+2b=10\cdot dfrac{\sqrt{39}}{10}+2\cdot \dfrac{1}{2}\approx 7{,}24$.
+	}
+\end{bt}

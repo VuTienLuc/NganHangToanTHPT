@@ -266,3 +266,269 @@
 		Suy ra $\overrightarrow{AI}=\overrightarrow{IM}$. 
 	 }
 \end{bt}
+
+% nguồn: TuLuan_Lop10_Dot2 (nhập 14/11/2026)
+\begin{bt}%[0H5H1-3]%[Trong Nguyen]%[ma:a2e9ec29]
+	Chứng minh rằng tứ giác $ ABCD $ là hình bình  khi và chỉ khi $ \vec{BC} = 
+	\vec{AD} $.
+	\loigiai{
+		\immini
+		{
+			\begin{itemize}
+				\item Giả sử $ ABCD $ là hình bình hành. \\
+				Khi đó $ BC \parallel AD \Rightarrow \vec{BC} $ cùng phương 
+				$ \vec{AD} $.\\
+				Lại có $ BC=AD $ nên độ lớn của $ 2 $ vec tơ $ 
+				\vec{BC} $ và $ \vec{AD} $ bằng nhau. Vậy  $ \vec{BC} = 
+				\vec{AD} $.
+				\item Giả sử $ \vec{BC} = \vec{AD} $. \\
+				Khi đó $ BC \parallel AD $ và $ BC=AD $ nên tứ giác $ ABCD $ là 
+				hình bình hành.
+			\end{itemize}
+		}
+		{
+			\begin{tikzpicture}[>=stealth,scale=1, line join = round, line cap 
+				= round]
+				\coordinate (A) at (0,0);
+				\coordinate (B) at (3,0);
+				\coordinate (C) at (4,2);
+				\coordinate (D) at ($(A)+(C)-(B)$);
+				\draw (A) node[left] {$ A $}--(B)node[right] {$ B $}
+				(C)node[right] {$ C $}--(D)node[left] {$ D $};
+				\draw[->] (B)--(C);
+				\draw[->] (A)--(D);
+			\end{tikzpicture}
+		}
+	}
+	
+\end{bt}
+
+% nguồn: TuLuan_Lop10_Dot2 (nhập 14/11/2026)
+\begin{bt}%[0H5H1-3]%[ma:fac574a6]
+	Cho tam giác $ABC$. Vẽ điểm $D$ thỏa mãn $\overrightarrow{AD}=\overrightarrow{BC}$. Tứ giác $ABCD$ là hình gì?
+	\loigiai
+	{\begin{center}
+			\begin{tikzpicture}[scale=0.8,>=stealth, font=\footnotesize, line join=round, line cap=round]
+				\def\l{3}
+				\def\n{5}
+				\path 	(0:0) coordinate (D)
+				++(0:\n) coordinate (C)
+				++(50:\l) coordinate (B)
+				($(B)+(D)-(C)$) coordinate (At)
+				($(B)+(180:\n)$) coordinate (A);
+				\draw (A)--(B)--(C)--(D)--cycle;
+				\foreach 	\x/ \goc in {A/180,D/180,C/0,B/0} 
+				\fill (\x) circle (1pt)	($(\x)+(\goc:3mm)$) node {$\x$};
+			\end{tikzpicture}
+		\end{center}
+		Do  $ABC$ là tam giác nên $\overrightarrow{AD}=\overrightarrow{BC} \Leftrightarrow \heva{& AD=BC\\& AD\parallel BC} \Leftrightarrow ABCD$ là hình bình hành. }
+\end{bt}
+
+% nguồn: TuLuan_Lop10_Dot2 (nhập 14/11/2026)
+\begin{bt}%[0H5H1-3]%[ma:62d330ba]
+		Cho hình bình hành $ABCD$. Gọi $E, F, M$ và $N$ lần lượt là trung điểm của cạnh $AB, BC, CD$ và $DA$.
+		\begin{enumerate}
+			\item 	Chứng tỏ rằng 3 vectơ $\overrightarrow{EF},\overrightarrow{AC},\overrightarrow{MN}$ cùng phương;
+			\item Chứng tỏ rằng $\overrightarrow{EF}=\overrightarrow{NM}$. Suy ra tứ giác $EFMN$ là hình bình hành.
+		\end{enumerate}
+		\loigiai{
+			\immini{\begin{enumerate}
+					\item 	Dựa vào tính chất đường trung bình, ta suy ra được $EF\parallel AC\parallel MN\Rightarrow\overrightarrow{EF},\overrightarrow{AC},\overrightarrow{MN}$ cùng phương;
+					\item Dựa vào tính chất đường trung bình, ta suy ra được $EF=MN=\dfrac{1}{2}AC$ kết hợp với câu a) $\Rightarrow\overrightarrow{EF}=\overrightarrow{NM}$. Suy ra tứ giác $EFMN$ là hình bình hành.
+			\end{enumerate}}{
+				\begin{tikzpicture}[>=stealth,line cap=round,line join=round, scale=.6]
+					%Định nghĩa các điểm
+					\tkzDefPoints{0/0/B, 2/5/A, 7/0/C}
+					\coordinate(D) at ($(A)+(C)$);
+					%\coordinate(M) at ($(A)-(B)+(A)$);
+					%\coordinate(P) at ($(A)-(D)+(A)$);
+					%\coordinate(N) at ($(A)-(B)+(P)$);
+					%Gán tên các điểm
+					\tkzDefMidPoint(A,B)\tkzGetPoint{E}
+					\tkzDefMidPoint(B,C)\tkzGetPoint{F}
+					\tkzDefMidPoint(C,D)\tkzGetPoint{M}
+					\tkzDefMidPoint(D,A)\tkzGetPoint{N}
+					\tkzLabelPoints[below](B,C,F)
+					\tkzLabelPoints[left](E)
+					\tkzLabelPoints[right](M)
+					\tkzLabelPoints[above](A,D,N)
+					%Nối các đường
+					\tkzDrawPolygon(A,B,C,D)
+					\tkzDrawPolygon(E,F,M,N)
+					\tkzDrawSegments(A,C)
+			\end{tikzpicture}}
+		}
+	\end{bt}
+
+% nguồn: TuLuan_Lop10_Dot2 (nhập 14/11/2026)
+\begin{bt}%[0H5H1-3]%[ma:b9c01c0b]
+	\immini{Cho hình bình hành $ABCD$ như hình vẽ.}
+	{\begin{tikzpicture}[scale=0.8,>=stealth, font=\footnotesize, line join=round, line cap=round]
+			\def\l{3}
+			\def\n{5}
+			\path 	(0:0) coordinate (D)
+			++(0:\n) coordinate (C)
+			++(50:\l) coordinate (B)
+			($(B)+(D)-(C)$) coordinate (At)
+			($(B)+(180:\n)$) coordinate (A);
+			\draw (A)--(B)--(C)--(D)--cycle;
+			\foreach 	\x/ \goc in {A/180,D/180,C/0,B/0} 
+			\fill (\x) circle (1pt)	($(\x)+(\goc:3mm)$) node {$\x$};
+	\end{tikzpicture}}
+	\begin{multicols}{2}
+		\begin{enumerate}
+			\item Véc-tơ nào bằng véc-tơ $\overrightarrow{AB}$?
+			\item Véc-tơ nào bằng véc-tơ $\overrightarrow{AD}$?
+		\end{enumerate}
+	\end{multicols}
+	\loigiai{\begin{multicols}{2}
+			\begin{enumerate}
+				\item $\overrightarrow{AB}=\overrightarrow{DC}$.
+				\item $\overrightarrow{AD}=\overrightarrow{BC}$.
+			\end{enumerate}
+	\end{multicols}}
+\end{bt}
+
+% nguồn: TuLuan_Lop10_Dot2 (nhập 14/11/2026)
+\begin{bt}%[0H5N1-3]%[Câu 6]%[ma:5771bad5]
+	(1 điểm) Cho tam giác $ABC$ đều cạnh bằng $3$. Gọi $H$ là trung điểm của $BC$. Tìm vectơ bằng vectơ $\overrightarrow{BH}$ và tính độ dài của vectơ $\overrightarrow{AH}$.
+	\loigiai{
+		\immini{
+			\begin{itemize}
+				\item Vectơ bằng $\overrightarrow{BH}$ là vectơ $\overrightarrow{HC}$.
+				\item Xét $\triangle HAC$ vuông tại $H$, có góc $\widehat{C}=60^{\circ}$.\\
+				Ta có $\sin C=\dfrac{AH}{AC}  \Rightarrow $
+				$\begin{aligned}[t]
+					AH &= AC\cdot\sin C\\
+					& = 3\cdot\sin60^{\circ}\\
+					& = \dfrac{3\sqrt{3}}{2}.
+				\end{aligned}$\\
+			Vậy $\left|\overrightarrow{AH}\right|=AH=\dfrac{3\sqrt{3}}{2}$.
+			\end{itemize}
+		}{
+		\begin{tikzpicture}[blue,thick,font=\footnotesize, line cap=round, line join=round]
+			\def\a{3}
+			\path 	
+			(0:0) coordinate (A)
+			(0:\a) coordinate (B)
+			(60:\a) coordinate (C)
+			($(B)!1/2!(C)$) coordinate (H)
+			;
+			\draw (B)--(A)--(C) (A)--(H);
+			\pic[draw,angle radius=2mm,angle eccentricity=1.5] {right angle=A--H--C};
+			\pic[draw,angle radius=4mm,angle eccentricity=1.5,"$60^\circ$"] { angle=A--C--H};
+			\path 
+			(A)--(B) node[pos=.5,below]{$a=3$}
+			(A)--(C) node[pos=.5,above,sloped]{$a=3$}
+			(A)--(H) node[pos=.6,above,sloped]{$h=?$}
+			(B)--(H) node[pos=.6,sloped]{$||$}
+			(C)--(H) node[pos=.6,sloped]{$||$}
+			;
+			\draw[-latex,red] (B)--(H); \draw[-latex,orange] (H)--(C);
+			\foreach \x/\g in {A/210,B/-30,C/90,H/60}
+				\fill[black] (\x) circle (1pt) ($(\g:3mm)+(\x)$) node {$\x$};
+		\end{tikzpicture}
+		}
+		}
+\end{bt}
+
+% nguồn: TuLuan_Lop10_Dot2 (nhập 14/11/2026)
+\begin{bt}%[0H5H1-3] % KIEM_TRA%[Tex hóa SBT CT,T7/22, Phạm Doãn Lê Bình]%[ma:9397c921]
+	Tứ giác $ABCD$ là tứ giác gì nếu nó thỏa mãn một trong các điều kiện sau đây?
+	\begin{enumerate}
+		\item $\overrightarrow{AC}-\overrightarrow{BC}=\overrightarrow{DC}$;
+		\item $\overrightarrow{DB}=k \overrightarrow{DC}+\overrightarrow{DA}$.
+	\end{enumerate}
+	\loigiai{
+		\begin{enumerate}
+			\item $\overrightarrow{AC}-\overrightarrow{BC}=\overrightarrow{DC}\Rightarrow \overrightarrow{AB}=\overrightarrow{DC} \Rightarrow ABCD$ là hình bình hành.
+			\item \begin{eqnarray*}
+				& \overrightarrow{DB}=k\overrightarrow{DC}+\overrightarrow{DA} & \Rightarrow \overrightarrow{DB}-\overrightarrow{DA}=k\overrightarrow{DC}\\
+				& & \Rightarrow \overrightarrow{AB}=k\overrightarrow{DC}\\
+				& & \Rightarrow AB \parallel DC\\
+				& & \Rightarrow ABCD \text{ là hình thang}.
+			\end{eqnarray*}
+		\end{enumerate}
+	}
+\end{bt}
+
+% nguồn: TuLuan_Lop10_Dot2 (nhập 14/11/2026)
+\begin{bt}%[0H5H1-3]%[ma:0fcb6096]
+	Chứng minh rằng tứ giác $ABCD$ là hình bình hành khi và chỉ khi $\overrightarrow{BC}=\overrightarrow{AD}$.
+	\loigiai{
+		\immini{Giả sử tứ giác $ABCD$ là hình bình hành. Khi đó $BC\parallel AD$ và $BC=AD$. Suy ra hai véc-tơ $\overrightarrow{BC}$ và $\overrightarrow{AD}$ có cùng độ dài và cùng hương. Do đó $\overrightarrow{BC}=\overrightarrow{AD}$.\\
+			Ngược lại, giả sử tứ giác $ABCD$ có $\overrightarrow{BC}=\overrightarrow{AD}$. Khi đó $BC=AD$ và hai đường thẳng $BC$, $AD$ song song hoặc trùng nhau.}{
+			\begin{tikzpicture}[scale=1, font=\footnotesize, line join=round, line cap=round, >=stealth]
+				\path 
+				(0,0) coordinate (A)
+				(1,2) coordinate (B)
+				(4,0) coordinate (D)
+				($(B)+(D)-(A)$) coordinate (C)
+				;
+				
+				\draw (A)--(B) (C)--(D);
+				\draw[->] (B)--(C);
+				\draw[->] (A)--(D);
+				
+				\foreach \p/\r in {A/-120,B/120,C/60,D/-60}
+				\fill (\p) circle (1.5pt) node[shift={(\r:3mm)}]{$\p$};
+			\end{tikzpicture}
+		}
+		Nếu hai đường thẳng $BC$, $AD$ trùng nhau thì bốn điểm $A$, $B$, $C$, $D$ cùng nằm trên một đường thẳng, điều này không xảy ra vì $ABCD$ là một hình tứ giác. Vậy $BC\parallel AD$.\\
+		Khi đó $BC\parallel AD$ và $BC=AD$ suy ra tứ giác $ABCD$ là một hình bình hành.
+	}
+\end{bt}
+
+% nguồn: TuLuan_Lop10_Dot2 (nhập 14/11/2026)
+\begin{bt}%[0H5N1-3]%[Lê Quân - dự án Latex hóa 10]%[ma:622ba9da]
+Chứng minh rằng $\overrightarrow{AB}=\overrightarrow{CD}$ khi và chỉ khi trung điểm của hai đoạn thẳng $AD$ và $BC$ trùng nhau.
+\loigiai{
+Gọi $I$, $J$ lần lượt là trung điểm của $AD$ và $BC$ suy ra $\overrightarrow{AI}=\overrightarrow{ID};\overrightarrow{CJ}=\overrightarrow{JB}.$ 
+\\
+Do đó $$\overrightarrow{AB}=\overrightarrow{CD} \Leftrightarrow \overrightarrow{AI}+\overrightarrow{IJ}+\overrightarrow{JB}=\overrightarrow{CJ}+\overrightarrow{JI}+\overrightarrow{ID} \Leftrightarrow \overrightarrow{IJ}=\overrightarrow{JI} \Leftrightarrow \overrightarrow{IJ}=\overrightarrow{0},$$ 
+hay $I$ trùng với $J$.
+}
+\end{bt}
+
+% nguồn: TuLuan_Lop10_Dot2 (nhập 14/11/2026)
+\begin{bt}%[0H5N1-3]%[Dự án bài tập sách CTST]%[Phan Anh]%[ma:78bff445]
+	\immini{Cho hình chữ nhật $ABCD$ (tham khảo hình vẽ).
+		\begin{enumerate}
+			\item Tìm véc-tơ bằng véc-tơ $\overrightarrow{AD}$.
+			\item Tìm các véc-tơ đối của véc-tơ $\overrightarrow{AB}$.
+			\item Tìm các véc-tơ có độ dài bằng độ dài của véc-tơ $\overrightarrow{AC}$.
+	\end{enumerate}}
+	{\begin{tikzpicture}[>=stealth,line join=round,line cap=round,font=\footnotesize,scale=0.8]
+			\path (0,3) coordinate (A)
+			(5,3) coordinate (B)
+			(5,0) coordinate (C)
+			(0,0) coordinate (D)
+			;
+			\draw (B)--(C)--(D);
+			\draw[->] (A)--(C);
+			\draw[->] (A)--(B);
+			\draw[->] (A)--(D);
+			\foreach \p / \r in {A/135,B/45,C/-45,D/-135}
+			\fill (\p) circle (1.2pt) node[shift={(\r:3mm)}]{$\p$};
+	\end{tikzpicture}}
+	\loigiai{\begin{enumerate}
+			\item Véc-tơ bằng véc-tơ $\overrightarrow{AD}$ là $\overrightarrow{BC}$.
+			\item Véc-tơ đối của véc-tơ $\overrightarrow{AB}$ là $\overrightarrow{BA},\overrightarrow{CD}$.
+			\item Véc-tơ có độ dài bằng độ dài của véc-tơ $\overrightarrow{AC}$ là $\overrightarrow{CA}$, $\overrightarrow{DB}$, $\overline{BD}$.
+	\end{enumerate}}
+\end{bt}
+
+% nguồn: TuLuan_Lop10_Dot2 (nhập 14/11/2026)
+\begin{bt}%[0H5N1-3]%[Dự án bài tập sách CTST]%[Phan Anh]%[ma:973c3273]
+	Cho hình thoi $ABCD$ cạnh bằng $a$ có tâm $O$ và có $\widehat{BAD}=60^{\circ}$.
+	\begin{enumerate}
+		\item Tìm trong hình hai véc-tơ bằng nhau và có độ dài bằng $\dfrac{a\sqrt{3}}{2}$.
+		\item Tìm trong hình hai véc-tơ đối nhau và có độ dài bằng $a\sqrt{3}$.
+	\end{enumerate}
+	\loigiai{
+		\begin{enumerate}
+			\item Hai véc-tơ $\overrightarrow{AO},\overrightarrow{OC}$ bằng nhau và có độ dài bằng $\dfrac{a\sqrt{3}}{2}$.
+			\item Hai véc-tơ $\overrightarrow{AC},\overrightarrow{CA}$ đối nhau và có độ dài bằng $a\sqrt{3}$.
+		\end{enumerate}
+	}
+\end{bt}

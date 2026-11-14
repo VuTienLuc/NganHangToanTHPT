@@ -21,3 +21,145 @@
 	Vậy tập hợp các điểm $M$ là đường tròn tâm $G$ bán  kính $R=\sqrt{2}\approx 1{,}41$.
 } 
 \end{bt}
+
+% nguồn: TuLuan_Lop10_Dot2 (nhập 14/11/2026)
+\begin{bt}%[0H5H4-5]%[0H2G2]%[ma:b471a88c]
+	Cho hình vuông $ABCD$ tâm $O$. Tìm tập hợp các điểm $M$ thỏa mãn $$ MA^2+MB^2+MC^2=3MD^2.$$
+	\loigiai{
+		\immini{Ta có\\
+			$MA^2 + MB^2 + MC^2 = 3MD^2 $\\
+			$\Leftrightarrow \vec{MA}^2+\vec{MB}^2+\vec{MC}^2=3\vec{MD}^2$\\
+			$\Leftrightarrow \left(\vec{MO}+\vec{OA}\right)^2~+~\left(\vec{MO}+\vec{OB}\right)^2~+~\left({\vec{MO}+\vec{OC}}\right)^2~=~3~{\left(\vec{MO}+\vec{OD}\right)^2}$\\
+			$ \Leftrightarrow \vec{MO}\cdot \left(\vec{OA}+\vec{OB}+\vec{OC}-3\vec{OD}\right)=0 $\\
+			$\Leftrightarrow \vec{MO}\cdot\left(\vec{DA}+\vec{DB}+\vec{DC}\right) = 0$\\ 
+			$ \Leftrightarrow \vec{MO} \cdot\vec{DB}  = 0$ (vì $\vec{DA}+\vec{DC}=\vec{DB}$).\\
+			$ \Leftrightarrow \hoac{&\vec{MO}= \vec{0} 
+				\\&MO \perp DB.}$
+			\\ Vậy tập hợp các điểm $M$ là đường thẳng $AC.$
+		}
+		{
+			
+	\begin{tikzpicture}[>=stealth, line join=round, line cap=round, font=\footnotesize, scale=0.7]
+% 
+		\coordinate[label=below left:$A$](A) at (0{,}0);
+		\coordinate[label=below right:$B$](B) at (3{,}0);
+		\coordinate[label=above right:$C$](C) at (3{,}3);
+		\coordinate[label=above left:$D$](D) at (0{,}3);
+		\coordinate[label=left:$O$] (O) at ($(A)!0.5!(C)$);
+		\draw (A)--(B)--(C)--(D)--cycle (A)--(C) (B)--(D);
+ \foreach \x/\y/\z in {A/O/B} {
+ 	\path
+ 	($(\y)!5pt!(\z)$) coordinate (1)
+ 	($(\y)!5pt!(\x)$) coordinate (2)
+ 	($(1)+(2)-(\y)$) coordinate (3)
+ 	
+ 	;
+ 	\draw (1)--(3)--(2); }
+ 
+		
+		 \foreach \x in {A,B,C,D,O}
+		\draw[fill=black] (\x) circle (1pt);
+		
+			\end{tikzpicture}
+		}
+
+
+	}
+\end{bt}
+
+% nguồn: TuLuan_Lop10_Dot2 (nhập 14/11/2026)
+\begin{bt}%[0H5C4-5]%[ma:c8e41a48]
+	Cho tam giác $ABC$. Tìm tập hợp điểm $M$ thỏa $\left(\overrightarrow{MA}+2\overrightarrow{MB}+3\overrightarrow{CB}\right)\cdot\overrightarrow{BC}=~0$.
+\loigiai{
+		\immini{
+			Gọi $I$ là điểm xác định bởi $\overrightarrow{IA}+2\overrightarrow{IB}=\overrightarrow{0}$.\\
+			Khi đó ta có 
+			\begin{eqnarray*}
+				&&\left(\overrightarrow{MA}+2\overrightarrow{MB}+3\overrightarrow{CB}\right)\cdot\overrightarrow{BC}=0\\
+				&\Leftrightarrow&\left[\left(\overrightarrow{MI}+\overrightarrow{IA}\right)+2\left(\overrightarrow{MI}+\overrightarrow{IB}\right)\right]\cdot\overrightarrow{BC}=3BC^2\\
+				&\Leftrightarrow&\overrightarrow{MI}\cdot\overrightarrow{BC}=BC^2.
+			\end{eqnarray*}
+			}
+		{
+			\begin{tikzpicture}[>=stealth,line join=round,line cap=round,font=\footnotesize,scale=1]
+				\path 
+					(0,0) coordinate (B) (0:4) coordinate (C) (35:3) coordinate (A)
+					($(B)!1/3!(A)$) coordinate (I) ($(B)!(I)!(C)$) coordinate (I')
+					($(B)!-2!(I')$) coordinate (M')
+					($(M')+(0{,}2)$) coordinate (M)
+				;
+				
+				\draw (A)--(B)--(C)--cycle
+				(M)--(M')--(B) (I)--(I');
+				\foreach \a/\b in {A/90,B/-90,C/-30,M/90,I/120,I'/-90,M'/200}
+				\fill (\a) circle (.7pt) ($(\a)+(\b:2.5mm)$)node[scale=.7]{$\a$};
+			\end{tikzpicture}
+		}
+	\noindent Gọi $M',I'$ lần lượt là hình chiếu của $M,I$ lên đường thẳng $BC$.\\
+	Theo công thức hình chiếu ta có $\overrightarrow{MI}\cdot\overrightarrow{BC}=\overrightarrow{M'I'}\cdot\overrightarrow{BC}\Rightarrow\overrightarrow{M'I'}\cdot\overrightarrow{BC}=BC^2$.\\
+	Vì $BC^2>0$ nên $\overrightarrow{M'I'},\overrightarrow{BC}$ cùng hướng nên suy ra
+	$$\overrightarrow{M'I'}\cdot\overrightarrow{BC}=BC^2\Leftrightarrow M'I'\cdot BC=BC^2\Leftrightarrow M'I'=BC.$$
+	Do $I$ cố định nên $I'$ cố định suy ra $M'$ cố định.\\
+	Vậy tập hợp điểm $M$ là đường thẳng đi qua $M'$ và vuông góc với $BC$.
+	}
+\end{bt}
+
+% nguồn: TuLuan_Lop10_Dot2 (nhập 14/11/2026)
+\begin{bt}%[0H5V4-5]%[0H4KA-4]%[ma:e55de05d]
+	Cho hai điểm $B$, $C$ phân biệt. Tìm tâp hợp những điểm $M$ thỏa mãn $\overrightarrow{CM}\cdot\overrightarrow{CB}=\overrightarrow{CM}^2$.
+	\loigiai{
+		Ta có
+		\allowdisplaybreaks
+		\begin{eqnarray*}
+			\overrightarrow{CM} \cdot \overrightarrow{CB}=\overrightarrow{CM}^2 &\Leftrightarrow& \overrightarrow{CM} \cdot \left(\overrightarrow{CM}+\overrightarrow{MB}\right) = \overrightarrow{CM}^2\\
+			&\Leftrightarrow& \overrightarrow{CM}^2+\overrightarrow{CM}\cdot\overrightarrow{MB}=\overrightarrow{CM}^2\\
+			&\Leftrightarrow& \overrightarrow{CM}\cdot\overrightarrow{MB}=0\\
+			&\Leftrightarrow& \overrightarrow{CM}\perp\overrightarrow{MB} \text{ hay } CM \perp MB.
+		\end{eqnarray*}
+		Vậy tâp hợp những điểm $M$ thuộc đường tròn đường kính $BC$.}
+\end{bt}
+
+% nguồn: TuLuan_Lop10_Dot2 (nhập 14/11/2026)
+\begin{bt}%[0H5V4-5]%[ma:69708215]
+	Cho hai điểm $A$, $B$ cố định có độ dài bằng $a$, vectơ $\vec{a}$ khác $\vec{0}$. 
+	Tìm tập hợp điểm $M$ sao cho
+	\begin{enumEX}{2}
+		\item  $\vec{MA}\cdot \vec{MB}=\dfrac{3{{a}^{2}}}{4}$
+		\item $\vec{MA}\cdot \vec{MB}=MA^2$
+	\end{enumEX}
+	\loigiai{
+		\begin{enumerate}
+			\item Gọi $I$ là trung điểm của $AB$ ta có
+			$$\begin{aligned} \vec{MA}\cdot \vec{MB}=\dfrac{3a^2}{4}&\Leftrightarrow \left( \vec{MI}+\vec{IA} \right)\left( \vec{MI}+\vec{IB} \right)=\dfrac{3a^2}{4}\\
+				&\Leftrightarrow M{{I}^{2}}-IA^2=\dfrac{3a^2}{4}\ (\text{Do}\  \vec{IB}=-\vec{IA})\\
+				& \Leftrightarrow M{{I}^{2}}=\dfrac{a^2}{4}+\dfrac{3a^2}{4} 
+				\Leftrightarrow MI=a.
+			\end{aligned}$$
+			Vậy tập hợp điểm $M$ là đường tròn tâm $I$ bán kính $R=a$.
+			\item Ta có  $$\begin{aligned} \vec{MA}\cdot \vec{MB}=MA^2&\Leftrightarrow \vec{MA}\cdot \vec{MB}=\vec{MA}^2\\
+				&\Leftrightarrow \vec{MA}\cdot \left( \vec{MA}-\vec{MB} \right)=0\\ &\Leftrightarrow \vec{MA}\cdot \vec{BA}=0
+				\Leftrightarrow \vec{MA}\bot \vec{BA}.\end{aligned}$$
+			Vậy tập hợp điểm $M$ là đường thẳng vuông góc với đường thẳng $AB$ tại $A$.
+			
+		\end{enumerate}
+	}
+\end{bt}
+
+% nguồn: TuLuan_Lop10_Dot2 (nhập 14/11/2026)
+\begin{bt}%[0H5C4-5]%[ma:62cb84cc]
+	Cho tam giác $ABC$. Tìm tập hợp điểm $M$ sao cho $\left( \vec{MA}+2\vec{MB}+3\vec{CB} \right)\vec{BC}=0.$
+	\loigiai{
+		Gọi $I$ là điểm xác định bởi $$\vec{IA}+2\vec{IB}=\vec{0}.$$
+		Khi đó $$\begin{aligned}
+			& \left( \vec{MA}+2\vec{MB}+3\vec{CB} \right)\vec{BC}=0\\
+			\Leftrightarrow &\ \left[ \left( \vec{MI}+\vec{IA} \right)+2\left( \vec{MI}+\vec{IB} \right) \right]\cdot \vec{BC}=3BC^2 \\ 
+			\Leftrightarrow &\ \vec{MI}\cdot \vec{BC}=BC^2 
+		\end{aligned}$$
+		Gọi $M'$, $I'$ lần lượt là hình chiếu của $M$, $I$ lên đường thẳng $BC$. \\
+		Theo công thức hình chiếu ta có $$\vec{MI}\cdot \vec{BC}=\vec{M'I'}\cdot \vec{BC}.$$ Do đó $$\vec{M'I'}\cdot \vec{BC}=BC^2.$$
+		Vì $BC^2>0$ nên $\vec{M'I'},\ \vec{BC}$ cùng hướng suy ra 
+		$$\vec{M'I'}\cdot \vec{BC}=BC^2\Leftrightarrow M'I'\cdot BC=BC^2\Leftrightarrow M'I'=BC.$$
+		Do $I$ cố định nên $I'$ cố định suy ra $M'$ cố định.\\
+		Vậy tập hợp điểm $M$ là đường thẳng đi qua $M'$ và vuông góc với $BC$.
+	}
+\end{bt}

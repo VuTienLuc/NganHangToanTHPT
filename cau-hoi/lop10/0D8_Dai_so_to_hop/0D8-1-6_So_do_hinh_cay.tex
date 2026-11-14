@@ -1,0 +1,111 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Lớp 10 | Đại số tổ hợp | Quy tắc cộng-quy tắc nhân
+% Dạng 0D8?1-6: Sơ đồ hình cây
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+% nguồn: TuLuan_Lop10_Dot2 (nhập 14/11/2026)
+\begin{bt}%[0D8H1-6]%[Dự án đề kiểm tra HKII NH22-23-BCTuan]%[THPT Thực Hành Sài Gòn]%[ma:0fee19fb]
+	\begin{enumerate}
+		\item Có ba cái hộp, hộp thứ nhất chứa $2$ quả cầu dán nhãn $A$, $B$; hộp thứ hai chứa $3$ quả cầu dán nhãn $a$, $b$, $c$; hộp thứ ba có $2$ quả cầu dán nhãn $1$, $2$. Lấy ngẫu nhiên một quả cầu trong mỗi hộp trên. Hãy vẽ sơ đồ hình cây để thể hiện tất cả các kết quả có thể xảy ra.
+		\item Từ các chữ số $1; 2; 3; 4; 5; 6$ có thể lập được bao nhiêu số tự nhiên có bốn chữ số khác nhau và lớn hơn $4500$?
+	\end{enumerate}
+\loigiai{
+\begin{enumerate}
+	\item Sơ đồ hình cây
+		\begin{center}
+		\begin{tikzpicture}[->,>=stealth]
+			\tikzstyle{hollow node}=[circle,draw,inner sep=1.5]
+			\tikzstyle{solid node}=[circle,draw,inner sep=1.5,fill=black]
+			\tikzset{
+				red node/.style={circle,draw=blue,inner sep=2.5},
+				blue node/.style={circle,draw=blue,inner sep=2.5}
+			}
+			\tikzstyle{level 1}=[sibling distance=80mm]
+			\tikzstyle{level 2}=[sibling distance=25mm]
+			\tikzstyle{level 3}=[sibling distance=10mm]
+			\node[hollow node]{Gốc}
+			child{node[blue node]{A}
+				child{node[red node]{a}child{node[blue node]{1}}child{node[blue node]{2}}}
+				child{node[red node]{b}child{node[blue node]{1}}child{node[blue node]{2}}}
+				child{node[red node]{c}child{node[blue node]{1}}child{node[blue node]{2}}}
+			}
+			child{node[blue node]{B}
+				child{node[red node]{a}child{node[blue node]{1}}child{node[blue node]{2}}}
+				child{node[red node]{b}child{node[blue node]{1}}child{node[blue node]{2}}}
+				child{node[red node]{c}child{node[blue node]{1}}child{node[blue node]{2}}}
+			}
+			;
+			\path (-8.5,-1.5) node{Hộp I}
+			(-8.5,-2.8) node{Hộp II}
+			(-8.5,-4.5) node{Hộp III};
+		\end{tikzpicture}
+	\end{center}
+\item Giả sử số cần tìm có dạng $\overline{abcd}$ ($a\ne 0$).\\
+Vì số lớn hơn $4500$ nên có các trường hợp sau:\\
+{\bf TH1:} $a>4$, khi đó số cách chọn chữ số $a$ là $2$ cách.\\
+Số cách chọn $\overline{bcd}$: $\mathrm{A}_5^3$ cách.\\
+Vậy trường hợp này có $2\cdot \mathrm{A}_5^3=120$ (cách).\\
+{\bf TH2:} $a=4$, khi đó chữ số $b$ có 2 cách chọn ($5$ hoặc $6$).\\
+Số cách chọn $\overline{cd}$ là $\mathrm{A}_4^2$ cách.\\
+Vậy trường hợp này có $2\cdot \mathrm{A}_4^2=24$ (cách).\\
+Theo quy tắc cộng, có $120+24=144$ (số).
+\end{enumerate}
+}
+\end{bt}
+
+% nguồn: TuLuan_Lop10_Dot2 (nhập 14/11/2026)
+\begin{bt}%[0D8H1-6]%[Tex hóa SGK CD-CT,T8/22, Le Vu Hai]%[ma:d583f476]
+	Bốn bạn Ánh, Bình, Cường, Hoa cùng thi vào trường trung học phổ thông chất lượng cao Bình Minh. Kết quả thi cho bởi bảng thống kê sau$\colon$
+	\begin{center}
+		\begin{tabular}{|c|c|c|c|}
+			\hline Học sinh & Điểm Toán & Điểm Ngữ văn & Điểm Tiếng Anh \\
+			\hline Ánh & $10$ & $8$ & $10$ \\
+			\hline Bình & $6$ & $7$ & $5$ \\
+			\hline Cường & $9$ & $8$ & $9$ \\
+			\hline Hoa & $8$ & $6$ & $9$ \\
+			\hline
+		\end{tabular}
+	\end{center}
+	Quy định$\colon$
+	\begin{itemize}
+		\item Điểm trung bình viết tắt là ĐTB và tính theo công thức$\colon$
+		$$ \text{ĐTB} = (\text{Điểm Toán} + \text{Điểm Ngữ văn} + \text{Điểm Tiếng Anh}) \colon 3.$$
+		\item Điểm trung bình Toán viết tắt là ĐTB $\mathrm{T}$ và tính theo công thức$\colon$
+		$$ \text{ĐTB T}=(2 \times \text{Điểm Toán} + \text{Điểm Ngữ văn} + \text{Điểm Tiếng Anh})\colon 4.$$
+		\item Điểm trung bình Ngữ văn viết tắt là ĐTB V và tính theo công thức$\colon$
+		$$ \text{ĐTB V} = ( \text{Điểm Toán} +2 \times  \text{Điểm Ngữ văn} + \text{Điểm Tiếng Anh}) \colon 4.$$
+		\item Điểm trung bình Tiếng Anh viết tắt là ĐTB A và tính theo công thức$\colon$
+		$$ \text{ĐTB A}= (\text{Điểm Toán} + \text{Điểm Ngữ văn} +2 \times  \text{Điểm Tiếng Anh}) \colon4.$$
+	\end{itemize}
+	Cách xét tuyển như sau:
+	\begin{itemize}
+		\item Trúng tuyển: $\text{ĐTB}>7,5$;
+		\item Trúng tuyển lớp Toán: $\text{ĐTB T}>9$;
+		\item Trúng tuyển lớp Văn: $\text{ĐTB V} > 8$ ;
+		\item Trúng tuyển lớp Tiếng Anh: $\text{ĐTB A}>8,5$.
+	\end{itemize}
+	Hãy lập bảng kết quả theo mẫu dưới đây và xem mỗi bạn có những cơ hội nào (làm tròn kết quả đến hàng phần trăm).
+	\begin{center}
+		\begin{tabular}{|c|c|c|c|c|c|}
+			\hline Học sinh & ĐTB & ĐTB T & ĐTB V & ĐTB A & Kết quả \\
+			\hline Ánh & $?$ & $?$ & $?$ & $?$ & $?$ \\
+			\hline Bình & $?$ & $?$ & $?$ & $?$ & $?$ \\
+			\hline Cường & $?$ & $?$ & $?$ & $?$ & $?$ \\
+			\hline Hoa & $?$ & $?$ & $?$ & $?$ & $?$ \\
+			\hline
+		\end{tabular}
+	\end{center}
+	\loigiai{
+		\begin{center}
+			\begin{tabular}{|c|c|c|c|c|c|}
+				\hline Học sinh & ĐTB & ĐTB T & ĐTB V & ĐTB A & Kết quả \\
+				\hline Ánh & $9{,}33$ & $9{,}5$ & $9$ & $9{,}5$ & Đậu tất cả các lớp\\
+				\hline Bình & $6$ & $6$ & $6{,}25$ & $5{,}75$ & Không đậu \\
+				\hline Cường & $8{,}67$ & $8{,}75$ & $8{,}5$ & $8{,}75$ & Đậu lớp V, A \\
+				\hline Hoa & $7{,}67$ & $7{,}75$ & $7{,}25$ & $8$ & Đủ điểm trung bình nhưng không đậu lớp T, V, A \\
+				\hline
+			\end{tabular}
+		\end{center}	
+	}
+\end{bt}

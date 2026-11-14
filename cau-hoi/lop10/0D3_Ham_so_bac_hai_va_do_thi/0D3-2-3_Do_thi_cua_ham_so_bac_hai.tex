@@ -1099,3 +1099,1364 @@
 		\end{listEX}
 	} 
 \end{bt}
+
+% nguồn: TuLuan_Lop10_daduyet (nhập 14/11/2026)
+\begin{bt}%[0D3H2-3]%[Dự án đề kiểm tra Toán 10 GHKI NH23-24- Huỳnh Quy]%[THPT Tây Thạnh]%[ma:70548a09]
+	Hãy tìm tập xác định, tọa độ đỉnh, trục đối xứng và vẽ đồ thị hàm số $y=x^2-4x+2$.
+	\loigiai{
+		Tập xác định là $\mathscr{D}=\mathbb{R}$.\\
+		Tọa độ đỉnh $I\left(2;-2\right)$.\\
+		Trục đối xứng là đường thẳng $x=-2$.\\
+		Hệ số $a=1>0$ nên bề lõm quay lên.\\
+		Bảng giá trị:
+		\begin{center}
+			\begin{tabular}{|c|c|c|c|c|c|}\hline
+				{$x$}&{$0$}&{$1$}&{$2$}&{$3$}&{$4$}\\\hline
+				{$y$}&{$2$}&{$-1$}&{$-2$}&{$-1$}&{$2$}\\\hline	
+			\end{tabular}	
+		\end{center}
+		Đồ thị:
+		\begin{center}
+			\begin{tikzpicture}[font=\footnotesize,line join=round, line cap=round, >=stealth,scale=0.8] 
+				\def \xmin{-1}\def \xmax{5}\def \ymin{-2.5}\def \ymax{3} 
+				\draw[->] (\xmin,0)--(\xmax,0) node[shift=(-90:0.25)] {$x$};
+				\draw[->] (0,\ymin)--(0,\ymax) node[shift=(0:0.25)] {$y$};
+				\fill (0,0) circle(1pt) node[shift=(45:0.25)]{$O$}
+				(1,0) circle(1pt) node[shift=(90:0.2)]{$1$}
+				(2,0) circle(1pt) node[shift=(45:0.3)]{$2$}
+				(3,0) circle(1pt) node[shift=(90:0.2)]{$3$}
+				(4,0) circle(1pt) node[shift=(-90:0.2)]{$4$}
+				(0,2) circle(1pt) node[shift=(180:0.2)]{$2$}
+				(0,-2) circle(1pt) node[shift=(180:0.3)]{$-2$}
+				(0,-1) circle(1pt) node[shift=(180:0.3)]{$-1$};
+				\begin{scope}
+					\clip (\xmin,\ymin) rectangle (\xmax,\ymax); 
+					\draw[smooth,samples=100,domain=\xmin:\xmax] plot(\x,{(\x)^2-4*(\x)+2});
+				\end{scope}
+				\draw[dashed] (1,0)--(1,-1)--(0,-1) (2,0)--(2,-2)--(0,-2) (3,0)--(3,-1)--(1,-1) (4,0)--(4,2)--(0,2);
+				\draw (2,\ymax)--(2,\ymin);
+			\end{tikzpicture}
+		\end{center}
+	}
+\end{bt}
+
+% nguồn: TuLuan_Lop10_Dot2 (nhập 14/11/2026)
+\begin{bt}%[0D3H2-3]%[Dự án Tex hóa toán 10 Cánh diều và Kết nối- GV10: Lê Văn Lý]%[ma:905e20eb]
+	Quan sát đồ thị hàm số bậc hai $y=ax^2+bx+c$ ở hình bên dưới rồi nêu:
+	\begin{center}
+		\begin{tikzpicture}[>=stealth,x=1cm,y=1cm,scale=0.7]
+			\draw[color=gray,dash pattern=on 1pt off 1pt,xstep=1.0cm,ystep=1.0cm] (-2,-2) grid (4,5);
+			\draw[->] (-2,0) -- (4,0) node[below] {\scriptsize $x$};
+			\draw[->] (0,-2) -- (0,5) node[left] {\scriptsize $y$};
+			\draw (0,0)node[below left]{\scriptsize $O$} (1, 0)node[above]{\scriptsize $1$};
+			\draw[dashed] (1, 0)node[above]{\scriptsize $1$}--(1,-1)--(0,-1)node[left]{\scriptsize $-1$} (2,0)node[below right]{\scriptsize $2$} (0,1)node[right]{\scriptsize $1$} (0,-2.5) node[below] {\scriptsize \textbf{Hình a.}};
+			\clip (-2,-2)rectangle(4,5);
+			\draw[thick,samples=150,smooth,domain=-5:5] plot(\x,{(\x)^2-2*\x});
+			\foreach \x/\y in{0/0, 1/0, 1/-1,0/-1, 2/0, 0/1 }
+			\fill[black](\x,\y) circle (1.5pt);
+		\end{tikzpicture}
+		\begin{tikzpicture}[>=stealth,x=1cm,y=1cm,scale=0.7]	
+			\draw[color=gray,dash pattern=on 1pt off 1pt,xstep=1.0cm,ystep=1.0cm] (-2,-2) grid (4,5);
+			\draw[->] (-2,0) -- (4,0) node[below] {\scriptsize $x$};
+			\draw[->] (0,-2) -- (0,5) node[left] {\scriptsize $y$};
+			\draw[dashed](0,0) node[below left] {\scriptsize $O$} (0,3) node[left] {\scriptsize $3$} (0,4) node[left] {\scriptsize $4$}--(1,4)--(1,0) node[below] {\scriptsize $1$} (3, 0) node[below left] {\scriptsize $3$} (-1,0) node[below left] {\scriptsize $-1$} (0,-2.5) node[below] {\scriptsize \textbf{Hình b.}};
+			\clip (-2,-2)rectangle(4,5);
+			\draw[thick,samples=150,smooth,domain=-5:5] plot(\x,{-1*(\x)^2+2*(\x)+3});
+			\foreach \x/\y in{0/0, -1/0, 0/3, 4/0, 1/0, 3/0, 0/4 }
+			\fill[black](\x,\y) circle (1.5pt);
+		\end{tikzpicture}
+	\end{center}
+	\begin{enumEX}[a)]{2}
+		\item Dấu của hệ số $a$;
+		\item Tọa độ đỉnh và trục đối xứng;
+		\item Khoảng đồng biến;
+		\item Khoảng nghịch biến;
+		\item Khoảng giá trị $x$ mà $y>0$;
+		\item Khoảng giá trị $x$ mà $y\le 0$.
+	\end{enumEX}
+	\loigiai{
+		\begin{center}
+			\begin{tabular}{|l|l|l|}
+				\hline
+				\textbf{Tính chất}	&\textbf{Hình a} &\textbf{Hình b} \\
+				\hline
+				Dấu của hệ số $a$	& $a>0$ & $a<0$ \\
+				\hline
+				Tọa độ đỉnh và trục đối xứng	& $x=1$ & $x=1$ \\
+				\hline
+				Khoảng đồng biến	& $(1;+\infty)$ & $(-\infty; 1)$\\
+				\hline
+				Khoảng nghịch biến	& $(-\infty; 1)$ & $(1;+\infty)$ \\
+				\hline
+				Khoảng giá trị $x$ mà $y>0$	&$(-\infty; 0)$ và $(2;+\infty)$ & $(-1;3)$ \\
+				\hline
+				Khoảng giá trị $x$ mà $y\le 0$	&$[0;2]$ &$(-\infty; -1]$ và $[3;+\infty)$ \\
+				\hline
+			\end{tabular}
+		\end{center}
+	}
+\end{bt}
+
+% nguồn: TuLuan_Lop10_Dot2 (nhập 14/11/2026)
+\begin{bt}%[0D3H2-3]%[Dự án Tex hóa toán 10 Cánh diều và Kết nối- GV10: Lê Văn Lý]%[ma:2c32e2fa]
+	Vẽ đồ thị của mỗi hàm số sau:
+	\begin{enumEX}[a)]{3}
+		\item $y=x^2-3x-4$;
+		\item $y=x^2+2x+1$;
+		\item $y=-x^2+2x-2$.	
+	\end{enumEX}
+	\loigiai{
+		\begin{enumEX}[a)]{1}
+			\item \immini{Ta có $a=1, b=-3, c=-4, \Delta =(-3)^2-4\cdot 1\cdot(-4)=25.$
+				\begin{itemize}
+					\item Tọa độ đỉnh $I\left(\dfrac{3}{2};-\dfrac{25}{4}\right)$.
+					\item Trục đối xứng $x=\dfrac{2}{3}$.
+					\item Bảng giá trị
+					\begin{center}
+						\begin{tabular}{|c|c|c|c|c|c|}
+							\hline
+							$x$	&$-2$ &$-1$ &$0$ &$1$ \\
+							\hline
+							$y$	& $6$ & $0$ & $-4$ & $-6$ \\
+							\hline
+						\end{tabular}	
+					\end{center}
+				\end{itemize}
+				Vẽ parabol đi qua các điểm được xác định ở trên, ta nhận được đồ thị hàm số $y=x^2-3x-4$.}{	
+				\begin{tikzpicture}[>=stealth,x=1cm,y=1cm,scale=0.4]
+					\def\a{1} % Hệ số a phải khác 0
+					\def\b{-3}
+					\def\c{-4}
+					\draw[color=gray,dash pattern=on 1pt off 1pt,xstep=1.0cm,ystep=1.0cm] (-3,-7) grid (6,7);
+					\draw[->] (-3,0) -- (6,0) node[below] {\scriptsize $x$};
+					\draw[->] (0,-7) -- (0,7.1) node[left] {\scriptsize $y$};
+					\draw[dashed] (0,0)node[above left]{\scriptsize $O$} (-1,0)node[below left]{\scriptsize $-1$} (0,-6)node[left]{\scriptsize $-6$}(1.5,0)node[above]{\scriptsize $\dfrac{3}{2}$}(0,6)node[above right]{\scriptsize $6$}--(-2,6)--(-2, 0)node[below left]{\scriptsize $-2$} (0, -6)--(1, -6)--(1, 0)node[above]{\scriptsize $1$};
+					\pgfmathsetmacro\xdinh{-(\b)/2*(\a)}
+					\pgfmathsetmacro\ydinh{(4*(\a)*(\c)-(\b)^2)/(4*(\a))}
+					\fill[dashed] (\xdinh,\ydinh)circle(2pt) edge (\xdinh,0) edge (0,\ydinh);
+					\clip (-3,-7)rectangle(6,7);
+					\draw[thick,samples=150,smooth,domain=-4:6] plot(\x,{\a*(\x)^2+(\b)*\x+(\c)});
+					\foreach \x/\y in{0/0, -1/0, -2/6, 0/-4, 1/-6 }
+					\fill[black](\x,\y) circle (2pt);
+			\end{tikzpicture}}
+			\item 
+			\immini{Ta có $a=1, b=2, c=1, \Delta =(2)^2-4\cdot 1\cdot 1=0$.
+				\begin{itemize}
+					\item Tọa độ đỉnh $I\left(-1;0\right)$.
+					\item Trục đối xứng $x=-1$.
+					\item Bảng giá trị
+					\begin{center}
+						\begin{tabular}{|c|c|c|c|c|c|}
+							\hline
+							$x$	&$-3$ &$-2$ &$-1$ &$0$ &$1$ \\
+							\hline
+							$y$	& $4$ & $1$ & $0$ & $1$ &$4$ \\
+							\hline
+						\end{tabular}	
+					\end{center}
+				\end{itemize}
+				Vẽ parabol đi qua các điểm được xác định ở trên, ta nhận được đồ thị hàm số $y=x^2+2x+1$.}{	
+				\begin{tikzpicture}[>=stealth,x=1cm,y=1cm,scale=0.6]
+					\def\a{1} % Hệ số a phải khác 0
+					\def\b{2}
+					\def\c{1}
+					\draw[color=gray,dash pattern=on 1pt off 1pt,xstep=1.0cm,ystep=1.0cm] (-3.5,-1) grid (2,5);
+					\draw[->] (-4,0) -- (2,0) node[below] {\scriptsize $x$};
+					\draw[->] (0,-1) -- (0,5.2) node[left] {\scriptsize $y$};
+					\draw[dashed] (0,0)node[below right]{\scriptsize $O$} (-3, 0) node[below]{\scriptsize $-3$}--(-3,4)--(0, 4) node[above left]{\scriptsize $4$} (-2, 0) node[below]{\scriptsize $-2$}--(-2,1)--(0, 1) node[above left]{\scriptsize $1$} (-1, 0)node[below]{\scriptsize $-1$} (1, 0) node[below]{\scriptsize $1$}--(1,4)--(0, 4) ;
+					\pgfmathsetmacro\xdinh{-(\b)/2*(\a)}
+					\pgfmathsetmacro\ydinh{(4*(\a)*(\c)-(\b)^2)/(4*(\a))}
+					\fill[dashed] (\xdinh,\ydinh)circle(2pt) edge (\xdinh,0) edge (0,\ydinh);
+					\clip (-3.5,-1)rectangle(2,5);
+					\draw[thick,samples=150,smooth,domain=-3.5:1.5] plot(\x,{\a*(\x)^2+(\b)*\x+(\c)});
+					\foreach \x/\y in{0/0, -3/0, -3/4, -2/0, -2/1, 0/1, 1/0, 1/4, 0/4}
+					\fill[black](\x,\y) circle (1.5pt);
+			\end{tikzpicture}}
+			\item 
+			\immini{Ta có $a=-1, b=2, c=-2, \Delta =(2)^2-4\cdot (-1)\cdot (-2)=-4$.
+				\begin{itemize}
+					\item Tọa độ đỉnh $I\left(1;-1\right)$.
+					\item Trục đối xứng $x=1$.
+					\item Bảng giá trị
+					\begin{center}
+						\begin{tabular}{|c|c|c|c|c|c|}
+							\hline
+							$x$	&$-1$ &$0$ &$1$ &$2$ &$3$ \\
+							\hline
+							$y$	& $-5$ & $-2$ & $-1$ & $-2$ &$-5$ \\
+							\hline
+						\end{tabular}	
+					\end{center}
+				\end{itemize}
+				Vẽ parabol đi qua các điểm được xác định ở trên, ta nhận được đồ thị hàm số $y=-x^2+2x-2$.}{	
+				\begin{tikzpicture}[>=stealth,x=1cm,y=1cm,scale=0.6]
+					\def\a{-1} % Hệ số a phải khác 0
+					\def\b{2}
+					\def\c{-2}
+					\draw[color=gray,dash pattern=on 1pt off 1pt,xstep=1.0cm,ystep=1.0cm] (-2,-5.3) grid (3.5,1);
+					\draw[->] (-2,0) -- (3.5,0) node[below] {\scriptsize $x$};
+					\draw[->] (0,-5.3) -- (0,1.3) node[left] {\scriptsize $y$};
+					\draw[dashed] (0,0)node[below right]{\scriptsize $O$} (0, -5)node[below right]{$\scriptsize -5$}--(-1, -5)--(-1, 0)node[above]{\scriptsize $-1$} (0, -1)node[left]{\scriptsize $-1$}--(1, -1)--(1, 0)node[above]{\scriptsize $1$} (0, -2)node[left]{\scriptsize $-2$}--(2, -2)--(2, 0)node[above]{\scriptsize $2$} (0, -5)--(3, -5)--(3, 0)node[above]{\scriptsize $3$};
+					\pgfmathsetmacro\xdinh{-(\b)/2*(\a)}
+					\pgfmathsetmacro\ydinh{(4*(\a)*(\c)-(\b)^2)/(4*(\a))}
+					\fill[dashed] (\xdinh,\ydinh)circle(2pt) edge (\xdinh,0) edge (0,\ydinh);
+					\clip (-2.3,-5.3)rectangle(3.3,1);
+					\draw[thick,samples=150,smooth,domain=-2.3:3.3] plot(\x,{\a*(\x)^2+(\b)*\x+(\c)});
+					\foreach \x/\y in{0/0,0/-5, 0/-2, -1/0, 2/0, 3/0, 3/-5, -1/-5, 0/-1, 2/-2, 1/0}
+					\fill[black](\x,\y) circle (1.5pt);
+			\end{tikzpicture}}
+		\end{enumEX}
+	}	
+\end{bt}
+
+% nguồn: TuLuan_Lop10_Dot2 (nhập 14/11/2026)
+\begin{bt}%[0D3N2-3]%[6.7 sách kết nối]%[ma:ebdd503c]
+	Vẽ các đường parabol sau
+	\begin{multicols}{2}
+		\begin{enumerate}
+			\item $y=x^2-3x+2$
+			\item $y=-2x^2+2x+3$
+			\item $y=x^2+2x+1$
+			\item $y=-x^2+x-1$
+		\end{enumerate}
+	\end{multicols}
+	\loigiai{
+		\begin{enumerate}		
+			\item \immini{Tập xác định $\mathscr{D}=\mathbb{R}$.\\
+			Đỉnh $I\left(\dfrac{3}{2}\,;\,-\dfrac{1}{4}\right)$.\\
+			Trục đối xứng  $x=\dfrac{3}{2}$.\\
+			Đồ thị của hàm số cắt trục $Ox$ tại hai điểm
+			$A\left(1\,;\,0\right), B\left(2\,;\,0\right)$ và cắt trục $Oy$ tại một điểm $C\left(0\,;\,2\right)$.\\
+			Ta có đồ thị $\left(P\right)$ như hình vẽ.}
+			{
+				\begin{tikzpicture}[>=latex, scale=1,font=\footnotesize]
+					\draw[->,line width =1pt] (-2,0)--(0,0)node [above left]{$ O $}--(4,0) node[above]{$x$};
+					\draw[->,line width =1pt] (0,-1)--(0,3) node[right]{$y$};
+					\fill (0,0) circle (1.5pt);
+					\draw[ smooth, line width=1pt,samples=100] plot[domain=-0.2:3.2] (\x,{(\x)^2-3*\x+2});
+					\fill (1.5,0) node[above]{$\dfrac{3}{2}$} circle (1.5pt);
+					\fill (1,0) node[above]{$1$} circle (1.5pt);
+					\fill (2,0) node[above]{$2$} circle (1.5pt);
+					\fill (3,0) node[below]{$3$} circle (1.5pt);
+					\fill (0,-0.25) node[below left]{$-\dfrac{1}{4}$} circle (1.5pt);
+					\fill (0,2) node[left]{$2$} circle (1.5pt);
+					\draw[dashed,line width=1pt] (0,2)--(3,2)--(3,0) ;
+					\draw[dashed,line width=1pt] (0,-0.25)--(1.5,-0.25)--(1.5,0) ;
+					\fill (1.5,-0.25) circle (1.5pt);
+				\end{tikzpicture}
+			}
+			\item \immini{Tập xác định $\mathscr{D}=\mathbb{R}$.\\
+			Đỉnh $I\left(\dfrac{1}{2}\,;\,\dfrac{7}{2}\right)$.\\
+			Trục đối xứng  $x=\dfrac{1}{2}$.\\
+			Đồ thị của hàm số cắt trục $Ox$ tại hai điểm
+			$A\left(\dfrac{1+\sqrt{7}}{2}\,;\,0\right), B\left(\dfrac{1-\sqrt{7}}{2}\,;\,0\right)$ và cắt trục $Oy$ tại một điểm $C\left(0\,;\,3\right)$.\\
+			Ta có đồ thị $\left(P\right)$ như hình vẽ.}{
+				\begin{tikzpicture}[scale=1, font=\footnotesize, line join=round, line cap=round, >=stealth]
+					\def\xmin{-2}\def\xmax{2.5}\def\ymin{-2}\def\ymax{4}
+					\draw[->] (\xmin-0.2,0)--(\xmax+0.2,0) node[below] {\footnotesize $x$};
+					\draw[->] (0,\ymin-0.2)--(0,\ymax+0.2) node[right] {\footnotesize $y$};
+					\draw (0,0) node [below left] {\footnotesize $O$};
+					\foreach \x in {-2,-1,1,2}\draw (\x,0.1)--(\x,-0.1) node [below] {\footnotesize $\x$};
+					\foreach \y in {-2,-1,1,2,3}\draw (0.1,\y)--(-0.1,\y) node [left] {\footnotesize $\y$};
+					\clip (\xmin,\ymin) rectangle (\xmax,\ymax);
+					\draw[thick,smooth,samples=200,domain=\xmin:\xmax] plot (\x,{-2*((\x)^2)+2*\x+3});
+					\draw[dashed] (0.5,0)--(0.5,3.5)--(0,3.5);\fill (0.5,3.5) circle (1pt);
+					\draw (0.5,-1pt)--(0.5,1pt) node [below] {\footnotesize $\frac{1}{2}$};
+					\draw (-1pt,3.5)--(1pt,3.5) node [left] {\footnotesize $\frac{7}{2}$};
+					\draw[dashed] (-1,0)--(-1,-1)--(0,-1);\fill (-1,-1) circle (1pt);
+					\draw[dashed] (1,0)--(1,3)--(0,3);\fill (1,3) circle (1pt);
+					\draw[dashed] (2,0)--(2,-1)--(0,-1);\fill (2,-1) circle (1pt);
+				\end{tikzpicture}
+			}
+			\item \immini{Tập xác định $\mathscr{D}=\mathbb{R}$.\\
+			Đỉnh $I\left(-1\,;\,0\right)$.\\
+			Trục đối xứng  $x=-1$.\\
+			Đồ thị của hàm số cắt trục $Ox$ tại một điểm
+			$A\left(-1\,;\,0\right)$ và cắt trục $Oy$ tại một điểm $C\left(0\,;\,1\right)$.\\
+			Ta có đồ thị $\left(P\right)$ như hình vẽ.}{
+				\begin{tikzpicture}[scale=0.7, font=\footnotesize, line join=round, line cap=round, >=stealth]
+					\def\xmin{-4}\def\xmax{3}\def\ymin{-1}\def\ymax{6}
+					\draw[->] (\xmin-0.2,0)--(\xmax+0.2,0) node[below] {\footnotesize $x$};
+					\draw[->] (0,\ymin-0.2)--(0,\ymax+0.2) node[right] {\footnotesize $y$};
+					\draw (0,0) node [below left] {\footnotesize $O$};
+					\foreach \x in {-3,-2,-1,1,2}\draw (\x,0.1)--(\x,-0.1) node [below] {\footnotesize $\x$};
+					\foreach \y in {-1,1,2,3}\draw (0.1,\y)--(-0.1,\y) node [left] {\footnotesize $\y$};
+					\clip (\xmin,\ymin) rectangle (\xmax,\ymax);
+					\draw[thick,smooth,samples=200,domain=\xmin:\xmax] plot (\x,{1*((\x)^2)+2*\x+1});
+					\draw[dashed] (-1,0)--(-1,0)--(0,0);\fill (-1,0) circle (1pt);
+					\draw[dashed] (-3,0)--(-3,4)--(0,4);\fill (-3,4) circle (1pt);
+					\draw[dashed] (-2,0)--(-2,1)--(0,1);\fill (-2,1) circle (1pt);
+					\draw[dashed] (1,0)--(1,4)--(0,4);\fill (1,4) circle (1pt);
+				\end{tikzpicture}
+			}
+			\item \immini{Tập xác định $\mathscr{D}=\mathbb{R}$.\\
+			Đỉnh $I\left(\dfrac{1}{2}\,;\,-\dfrac{3}{4}\right)$.\\
+			Trục đối xứng  $x=\dfrac{1}{2}$.\\
+			Ta có đồ thị $\left(P\right)$ như hình vẽ.}{
+				\begin{tikzpicture}[scale=1, font=\footnotesize, line join=round, line cap=round, >=stealth]
+					\def\xmin{-2}\def\xmax{3}\def\ymin{-4}\def\ymax{1}
+					\draw[->] (\xmin-0.2,0)--(\xmax+0.2,0) node[below] {\footnotesize $x$};
+					\draw[->] (0,\ymin-0.2)--(0,\ymax+0.2) node[right] {\footnotesize $y$};
+					\draw (0,0) node [above left] {\footnotesize $O$};
+					\foreach \x in {-1,1,2}\draw (\x,0.1)--(\x,-0.1) node [below] {\footnotesize $\x$};
+					\foreach \y in {-3,-2,-1,1}\draw (0.1,\y)--(-0.1,\y) node [left] {\footnotesize $\y$};
+					\clip (\xmin,\ymin) rectangle (\xmax,\ymax);
+					\draw[thick,smooth,samples=200,domain=\xmin:\xmax] plot (\x,{-1*((\x)^2)+1*\x+-1});
+					\draw[dashed] (0.5,0)--(0.5,-0.75)--(0,-0.75);\fill (0.5,-0.75) circle (1pt);
+					\draw (0.5,1pt)--(0.5,-1pt) node [above] {\footnotesize $\frac{1}{2}$};
+					\draw (-1pt,-0.75)--(1pt,-0.75) node [left] {\footnotesize $-\frac{3}{4}$};
+					\draw[dashed] (-1,0)--(-1,-3)--(0,-3);\fill (-1,-3) circle (1pt);
+					\draw[dashed] (1,0)--(1,-1)--(0,-1);\fill (1,-1) circle (1pt);
+					\draw[dashed] (2,0)--(2,-3)--(0,-3);\fill (2,-3) circle (1pt);
+				\end{tikzpicture}
+			}
+		\end{enumerate}
+	}
+\end{bt}
+
+% nguồn: TuLuan_Lop10_Dot2 (nhập 14/11/2026)
+\begin{bt}%[0D3H2-3]%[6.11 sách kết nối]%[ma:934a8c5b]
+	Gọi $(P)$ là đồ thị hàm số bậc hai $y=ax^2+bx+c$. Hãy xác định dấu của hệ số a và biệt thức $\Delta$, trong mỗi trường hợp sau
+	\begin{enumerate}
+		\item $(P)$ nằm hoàn toàn phía trên trục hoành;
+		\item $(P)$ nằm hoàn toàn phía dưới trục hoành;
+		\item $(P)$ cắt trục hoành tại hai điểm phân biệt và có đỉnh nằm phía dưới trục hoành;
+		\item $(P)$ tiếp xúc với trục hoành và nằm phía trên trục hoành.
+	\end{enumerate}
+	\loigiai{
+		\begin{enumerate}
+			\item Do $(P)$ nằm hoàn toàn phía trên trục hoành nên bề lõm của parabol quay lên suy ra $a>0$.\\
+			Vì $(P)$ nằm hoàn toàn phía trên trục hoành nên phương trình hoành độ giao điểm của $(P)$ và trục $Ox$ vô nghiệm suy ra biệt thức $\Delta<0$.
+			\item Do $(P)$ nằm hoàn toàn phía dưới trục hoành nên bề lõm của parabol quay xuống suy ra $a<0$.\\
+			Vì $(P)$ nằm hoàn toàn phía dưới trục hoành nên phương trình hoành độ giao điểm của $(P)$ và trục $Ox$ vô nghiệm suy ra biệt thức $\Delta<0$.
+			\item Vì $(P)$ cắt trục hoành tại hai điểm phân biệt nên phương trình hoành độ giao điểm của $(P)$ và trục $Ox$ có 2 nghiệm phân biệt suy ra biệt thức $\Delta>0$.\\
+			Do $(P)$ cắt trục hoành tại hai điểm phân biệt và có đỉnh nằm phía dưới trục hoành nên bề lõm của parabol hải quay lên suy ra $a>0$.
+			\item Vì $(P)$ tiếp xúc với trục hoành nên phương trình hoành độ giao điểm của $(P)$ và trục $Ox$ có nghiệm kép suy ra biệt thức $\Delta=0$.\\
+			Do $(P)$ tiếp xúc với trục hoành và nằm phía trên trục hoành nên bề lõm của parabol phải quay lên suy ra $a>0$.
+		\end{enumerate}	
+	}
+\end{bt}
+
+% nguồn: TuLuan_Lop10_Dot2 (nhập 14/11/2026)
+\begin{bt}%[0D3H2-3]%[TeX hóa SBT CD]%[PT Sinh]%[ma:92049477]
+	\immini{
+		Cho hàm số $y=ax^2+bx+c$ có đồ thị ở \textit{Hình 11}. Xác định dấu $a$, $b$, $c$.	
+	}{
+		\begin{tikzpicture}[line join=round,>=stealth]
+			\def\hso{-2*\x*\x+2*\x+1}
+			\draw[thick,blue,samples=200,smooth]plot[domain=-.5:1.5](\x,{\hso});
+			\draw[->](-.75,0)--(2,0)node[below left,scale=.8]{$x$};
+			\draw[->](0,-.5)--(0,1.75)node[below left,scale=.8]{$y$};
+			\foreach \i in {1,...,1}{\draw (\i,.1)--(\i,-.1);}
+			\foreach \i in {1,...,1}{\draw (.1,\i)--(-.1,\i);}
+			\path (0,0) node[below left,scale=.8]{$O$};
+			\path (current bounding box.south) node[below=1mm]{\textit{Hình 11}};
+		\end{tikzpicture}
+	}
+	\loigiai{
+		Parabol có bề lõm quay xuống dưới nên $a<0$.\\
+		Hoành độ đỉnh parabol nằm bên phải trục tung nên $-\dfrac{b}{2a}>0 \Rightarrow b>0$.\\
+		Đồ thị cắt trục $Oy$ tại điểm có tung độ dương nên $c>0$.
+	}
+\end{bt}
+
+% nguồn: TuLuan_Lop10_Dot2 (nhập 14/11/2026)
+\begin{bt}%[0D3H2-3]%[Nguyễn Đức Tuệ]%[ma:bf17f9c8]
+	Hãy	xét sự biến thiên và vẽ đồ thị của các hàm số $y=x^2-2x$.
+	\loigiai{
+		Tập xác định $\mathscr{D}=\mathbb{R}$.\\
+		Hàm số đồng biến trên khoảng $\left(1;+\infty\right)$, hàm số nghịch biến trên khoảng $\left(-\infty;1\right)$.\\
+		Bảng biến thiên 
+		\begin{center}
+			\begin{tikzpicture}[>=latex,scale=1, line width =0.9pt]
+				\tkzTabInit[lw=1pt, lgt=1,espcl=4]{$x$/0.7 ,$y$/2}
+				{$-\infty$ , $1$ , $+\infty$}
+				\tkzTabVar{+/$+\infty$ , -/$-1$ , +/$+\infty$}
+			\end{tikzpicture}
+		\end{center}
+		Đỉnh $I\left(1\,;\,-1\right)$.\\
+		Trục đối xứng  $x=1$.\\
+		Đồ thị của hàm số đi qua hai điểm
+		$A\left(0\,;\,0\right), B\left(2\,;\,0\right)$, nên ta có đồ thị là
+		\begin{center}
+			\begin{tikzpicture}[>=latex, scale=1,font=\footnotesize]
+				\draw[->,line width =1pt] (-1.5,0)--(0,0)node [above right]{$ O $}--(3,0) node[above]{$x$};
+				\draw[->,line width =1pt] (0,-2)--(0,3) node[right]{$y$};
+				\fill (0,0) circle (1.5pt);
+				\draw[ smooth, line width=1,samples=100] plot[domain=-1:3] (\x,{(\x)^2-2*\x});
+				\fill (0,-1) node[left]{$-1$} circle (1.5pt);
+				\coordinate[label=below right:$2$] (B) at (2,0);
+				\fill (1,0) node[above]{$1$} circle (1.5pt);
+				\draw[dashed,line width=1pt] (1,0)--(1,-1)--(0,-1);
+				\foreach \diem in {B}	\fill (\diem)circle(1.5pt);
+			\end{tikzpicture}
+		\end{center}
+	}
+\end{bt}
+
+% nguồn: TuLuan_Lop10_Dot2 (nhập 14/11/2026)
+\begin{bt}%[0D3H2-3]%[Nguyễn Đức Tuệ]%[ma:82c447a3]
+	Hãy xét sự biến thiên và vẽ đồ thị của hàm số $y=x^2-2x-1$.
+	\loigiai{
+		Tập xác định $\mathscr{D}=\mathbb{R}$.\\ 
+		Ta có $a=1>0,b=-2,c=-1,-\dfrac{b}{2a}=1$.\\
+		Hàm số nghịch biến trên khoảng $\left(-\infty;1\right)$ và đồng biến trên khoảng $\left(1;+\infty\right)$.\\
+		Bảng biến thiên của hàm số như sau
+		\begin{center}
+			\begin{tikzpicture}[>=latex,scale=1, line width =0.9pt]
+				\tkzTabInit[lw=1pt, lgt=1,espcl=4]{$x$/0.7 ,$y$/2}
+				{$-\infty$ , $1$ , $+\infty$}
+				\tkzTabVar{+/$+\infty$ , -/$-2$ , +/$+\infty$}
+			\end{tikzpicture}
+		\end{center}
+		Đồ thị của hàm số $y=x^2-2x-1$ là parabol $\left(P\right)$ có trục đối xứng là đường thẳng $x=1$ và đỉnh là điểm $I\left(1;-2\right)$.\\
+		Để vẽ đồ thị $\left(P\right)$ ta lấy một số điểm theo bảng giá trị sau
+		\begin{center}
+			\begin{tabular}{|c|c|c|c|c|c|}
+				\hline
+				$x$&$-1$&$0$&$1$&$2$&$3$ \\ 
+				\hline
+				$y$&$2$&$-1$&$-2$&$-1$&$2$ \\
+				\hline
+			\end{tabular}
+		\end{center}
+		Ta có đồ thị $\left(P\right)$ như hình vẽ.
+		\begin{center}
+			\begin{tikzpicture}[>=latex, scale=1,font=\footnotesize]
+				\draw[->,line width =1pt] (-2,0)--(0,0)node [below right]{$ O $}--(4,0) node[above]{$x$};
+				\draw[->,line width =1pt] (0,-3)--(0,3) node[right]{$y$};
+				\fill (0,0) circle (1.5pt);
+				\draw[ smooth, line width=1pt,samples=100] plot[domain=-1.2:3.2] (\x,{(\x)^2-2*\x-1});
+				\fill (-1,0) node[below]{$-1$} circle (1.5pt);
+				\fill (1,0) node[above]{$1$} circle (1.5pt);
+				\fill (2,0) node[above]{$2$} circle (1.5pt);
+				\fill (3,0) node[below]{$3$} circle (1.5pt);
+				\fill (0,-2) node[left]{$-2$} circle (1.5pt);
+				\fill (0,-1) node[left]{$-1$} circle (1.5pt);
+				\fill (0,1) node[left]{$1$} circle (1.5pt);
+				\fill (0,2) node[above left]{$2$} circle (1.5pt);
+				\draw[dashed,line width=1pt] (-1,0)--(-1,2)--(3,2)--(3,0) (2,0)--(2,-1)--(0,-1) (1,0)--(1,-2)--(0,-2);
+				\fill (-1,2) circle (1.5pt);
+				\fill (3,2) circle (1.5pt);
+			\end{tikzpicture}
+		\end{center}
+	}
+\end{bt}
+
+% nguồn: TuLuan_Lop10_Dot2 (nhập 14/11/2026)
+\begin{bt}%[0D3H2-3]%[Nguyễn Đức Tuệ]%[ma:26719fe1]
+	Hãy xét sự biến thiên và vẽ đồ thị của hàm số $y=-x^2+3x-3$.
+	\loigiai{
+		Tập xác định $\mathscr{D}=\mathbb{R}$.\\ 
+		Ta có $a=-1<0,b=3,c=-3,-\dfrac{b}{2a}=\dfrac{3}{2}$.\\
+		Hàm số nghịch biến trên khoảng $\left(\dfrac{3}{2};+\infty\right)$ và đồng biến trên khoảng $\left(-\infty;\dfrac{3}{2}\right)$.\\
+		Bảng biến thiên của hàm số như sau
+		\begin{center}
+			\begin{tikzpicture}[>=latex,scale=0.85, line width =0.9pt,font=\footnotesize]
+				\tkzTabInit[lw=1pt, lgt=1,espcl=4]{$x$/0.7,$y$/2}
+				{$-\infty$ , $\dfrac{3}{2}$ , $+\infty$}
+				\tkzTabVar{-/$-\infty$ , +/$-\dfrac{3}{4}$ , -/$-\infty$}
+			\end{tikzpicture}
+		\end{center}
+		Đồ thị của hàm số $y=-x^2+3x-3$ là parabol $\left(P\right)$ có trục đối xứng là đường thẳng $x=\dfrac{3}{2}$ và đỉnh là điểm $I\left(\dfrac{3}{2};-\dfrac{3}{4}\right)$.\\
+		Để vẽ đồ thị $\left(P\right)$ ta lấy một số điểm theo bảng giá trị sau
+		\begin{center}
+			\begin{tabular}{|c|c|c|c|c|c|}
+				\hline
+				$x$&$0$&$1$&$\dfrac{3}{2}$&$2$&$3$ \\ 
+				\hline
+				$y$&$-3$&$-1$&$-\dfrac{3}{4}$&$-1$&$-3$ \\
+				\hline
+			\end{tabular}
+		\end{center}
+		Đồ thị $\left(P\right)$ như hình vẽ.
+		\begin{center}
+			\begin{tikzpicture}[>=latex, scale=1,font=\footnotesize]
+				\draw[->,line width =1pt] (-2,0)--(0,0)node [below right]{$ O $}--(4,0) node[above]{$x$};
+				\draw[->,line width =1pt] (0,-5)--(0,1) node[right]{$y$};
+				\fill (0,0) circle (1.5pt);
+				\draw[ smooth, line width=1,samples=100] plot[domain=-.5:3.5] (\x,{-1*(\x)^2+3*\x-3});
+				\fill (-1,0) node[below]{$-1$} circle (1.5pt);
+				\fill (1,0) node[above]{$1$} circle (1.5pt);
+				\fill (2,0) node[above]{$2$} circle (1.5pt);
+				\fill (3,0) node[above]{$3$} circle (1.5pt);
+				\fill (1.5,0) node[above]{$\dfrac{3}{2}$} circle (1.5pt);
+				
+				\fill (0,-4) node[right]{$-4$} circle (1.5pt);
+				\fill (0,-3) node[left]{$-3$} circle (1.5pt);
+				\fill (0,-2) node[left]{$-2$} circle (1.5pt);
+				\fill (0,-3/4) node[left]{$-\dfrac{3}{4}$} circle (1.5pt);
+				\fill (0,-1) node[below right]{$-1$} circle (1.5pt);
+				\draw[dashed,line width=1pt] (3/2,0)--(3/2,-3/4)--(0,-3/4) (2,0)--(2,-1)--(0,-1) (3,0)--(3,-3)--(0,-3);
+			\end{tikzpicture}
+		\end{center}
+	}
+\end{bt}
+
+% nguồn: TuLuan_Lop10_Dot2 (nhập 14/11/2026)
+\begin{bt}%[0D3V2-3]%[Dự án đề kiểm tra HKI NH22-23- Hieu Phan]%[THPT Tây Thạnh]%[ma:cfe93c06]
+Khảo sát sự biến thiên và vẽ đồ thị $(P)$ của hàm số $y=-x^2+2 x-1$.
+\loigiai{
+    Tập xác định $ \mathscr{D}=\mathbb{R} $.\\
+$y=-x^2+2x-1$ có đỉnh $I(1;0)$.\\
+Trục đối xứng $ x=1 $.\\
+Bảng biến thiên
+\begin{center}
+    \begin{tikzpicture}
+        [scale=.8, font=\footnotesize, line join=round, line cap=round, >=stealth]
+        \tkzTabInit
+        [lgt=2,espcl=3.3] % tùy chọn
+        {$x$/1, $y$/2} % cột đầu tiên
+        {$-\infty$, $1$, $+\infty$} % hàng 1 cột 2
+        \tkzTabVar{-/ $-\infty$, +/ $0$ , -/ $-\infty$} % hàng 3 cột 2
+    \end{tikzpicture}
+\end{center}
+Hàm số nghịch biến trên $ (1; +\infty) $ và đồng biến trên $ (-\infty;1) $.\\
+Đồ thị hàm số $y=-x^2+2x-1$\\
+\begin{center} 
+    % Đồ thị hàm y=ax^2+bx+c. Nếu hệ số lớn cần điều chỉnh hệ trục, vùng lưới, domain và lệnh \clip
+    \begin{tikzpicture}[>=stealth,x=1cm,y=1cm,scale=1]
+        \def\a{-1} % Hệ số a phải khác 0
+        \def\b{2}
+        \def\c{-1}
+        \draw[color=gray,dash pattern=on 1pt off 1pt,xstep=1.0cm,ystep=1.0cm] (-2.2,-5.2) grid (4.2,2.2);
+        \draw[->] (-2,0) -- (4,0) node[below] {\scriptsize $x$};
+        \draw[->] (0,-5) -- (0,2) node[left] {\scriptsize $y$};
+        \draw (0,0)node[below left]{\scriptsize $O$};
+        \draw (1,1) -- (1,-3.5);
+        \pgfmathsetmacro\xdinh{-(\b)/2*(\a)}
+        \pgfmathsetmacro\ydinh{(4*(\a)*(\c)-(\b)^2)/(4*(\a))}
+        \fill[dashed] (\xdinh,\ydinh)circle(2pt) edge (\xdinh,0) edge (0,\ydinh);
+        \clip (-3,-4)rectangle(4,2);
+        \draw[thick,samples=150,smooth,domain=-4:3] plot(\x,{\a*(\x)^2+(\b)*\x+(\c)});
+        \foreach \x in {-1,1,2,3}\fill (\x,0) node[above right]{$ \x $} circle (1.2pt);
+        \foreach \y in {-1,1,-2,-3}\fill (0,\y) node[right]{$ \y $} circle (1.2pt);
+    \end{tikzpicture}
+\end{center} 
+}
+\end{bt}
+
+% nguồn: TuLuan_Lop10_Dot2 (nhập 14/11/2026)
+\begin{bt}%[0D3H2-3]%[Dự án đề kiểm tra HKII-22-23-Nguyễn Tài Tuệ]%[ma:2d960e73]
+	Khảo sát sự biến thiên và vẽ đồ thị hàm số $(P)\colon y=x^2+6x+8$.
+	\loigiai{
+		\begin{enumerate}[$ \star $]
+			\item Tập xác định $\mathscr{D}=\mathbb{R}$.
+			\item Tọa độ đỉnh $I(-3;-1)$.
+			\item Trục đối xứng $x=-3$.				
+%			\item Hàm số đồng biến trên $\left(-3;+\infty\right)$, nghịch biến trên $\left(-\infty;-3\right)$.
+%			\item Hàm số đạt cực tiểu tại $x=-3$, $y_{\textrm{CT}}=-1$.
+			\item Bảng biến thiên
+			\begin{center}
+				\begin{tikzpicture}
+					\tkzTabInit[nocadre,lgt=1.2,espcl=2.5,deltacl=0.6]
+					{$x$/0.6,$y$/2}{$-\infty$,$-3$,$+\infty$}					
+					\tkzTabVar{+/$+\infty$,-/$-1$,+/$+\infty$}
+				\end{tikzpicture}
+			\end{center}
+		\item Bảng giá trị
+		\begin{center}
+			\begin{tabular}{|c|c|c|c|c|c|}
+				\hline
+				$x$& $-5$ & $-4$ & $-3$ & $-2$ & $-1$ \\ 
+				\hline
+			$y$	& $3$ & $0$ & $-1$ & $0$ & $3$ \\ 
+				\hline
+			\end{tabular}
+		\end{center}	
+			\item Đồ thị
+			\begin{center}
+				\begin{tikzpicture}[scale=1, font=\footnotesize, line join=round, line cap=round, >=stealth]
+					\def\xmin{-6}\def\xmax{1}\def\ymin{-2}\def\ymax{3}
+					\draw[->] (\xmin-0.2,0)--(\xmax+0.2,0) node[below] {\footnotesize $x$};
+					\draw[->] (0,\ymin-0.2)--(0,\ymax+0.2) node[right] {\footnotesize $y$};
+					\draw (0,0) node [below left] {\footnotesize $O$};
+					\foreach \x in {-6,-5,-4,-3,-2,-1,1}\draw (\x,0.1)--(\x,-0.1) node [below] {\footnotesize $\x$};
+					\foreach \y in {-2,-1,1,2,3}\draw (0.1,\y)--(-0.1,\y) node [left] {\footnotesize $\y$};
+					\clip (\xmin,\ymin) rectangle (\xmax,\ymax);
+					\draw[smooth,samples=200,domain=\xmin:\xmax] plot (\x,{1*((\x)^2)+6*\x+8});
+					\draw[dashed] (-3.0,0)--(-3.0,-1.0)--(0,-1.0);\fill (-3.0,-1.0) circle (1pt);
+				\end{tikzpicture}
+			\end{center}
+		\end{enumerate}
+		
+	}
+\end{bt}
+
+% nguồn: TuLuan_Lop10_Dot2 (nhập 14/11/2026)
+\begin{bt}%[0D3H2-3]%[Dự án đề kiểm tra HKI NH22-23- Phan Trung Hiếu]%[THPT Tạ Quang Bửu]%[ma:0c8d554d]
+	Cho hàm số $y=f(x)=-x^2+4 x-3$.
+	\begin{enumerate}
+		\item Lập bảng biến thiên của hàm số đã cho.
+		\item Vẽ đồ thị hàm số đã cho.
+	\end{enumerate}
+	\loigiai{
+		\begin{enumerate}
+			\item Đỉnh $S(2;1)$.
+			Bảng biến thiên
+			\begin{center}
+				\begin{tikzpicture}
+					\tkzTabInit[deltacl=0.5,espcl=2,lgt=2]
+					{$x$/1,$y$/1.5}
+					{$-\infty$,$2$,$+\infty$}
+					\tkzTabVar{-/,+/$1$,-/}
+				\end{tikzpicture}
+%			\begin{tikzpicture}
+%				\tkzTabInit[nocadre,lgt=1.2,espcl=2.5,deltacl=0.6]
+%				{$x$/0.6,$y'$/0.6,$y$/2}{$-\infty$,$2$,$+\infty$}
+%				\tkzTabLine{,+,0,-,}
+%				\tkzTabVar{-/$-\infty$,+/$1$,-/$-\infty$}
+%			\end{tikzpicture}
+			\end{center}
+			\item Bảng giá trị
+			\begin{center}
+				\begin{tabular}{|c|c|c|c|c|c|}
+					\hline
+					$x$&0&1&2&3&4\\
+					\hline
+					$f(x)$&$-3$&0&$1$&$0$&$-3$\\
+					\hline
+				\end{tabular}
+			\end{center}
+			Đồ thị của hàm số $y=f(x)$
+			\begin{center}
+				\begin{tikzpicture}[scale=0.8,line cap=round, line join=round, >=stealth, thick]
+					\def\xmin{-2}
+					\def\xmax{5}
+					\def\ymin{-4}
+					\def\ymax{2.5}
+					\path
+					(0,-3) coordinate (A)node[left]{$-3$}
+					(1,0) coordinate (B)node[above left]{$1$}
+					(2,1) coordinate (C)node[above]{$S$}
+					(3,0) coordinate (D)node[above right]{$3$}
+					(4,-3) coordinate (E)
+					;
+					\draw[-stealth] (\xmin,0)--(\xmax,0)node[above]{$x$};
+					\draw[-stealth] (0,\ymin)--(0,\ymax)node[left]{$y$};
+					\draw[dashed] (2,0)node[below]{$2$}--(2,1)--(0,1)node[left]{$1$} (4,0)node[above]{$4$}--(4,-3)--(0,-3);
+					\draw[blue, domain = \xmin+1.8:\xmax-0.8,smooth=200]plot(\x,{-(\x)^2+4*(\x)-3});
+				\end{tikzpicture}
+			\end{center}
+		\end{enumerate}
+	}
+\end{bt}
+
+% nguồn: TuLuan_Lop10_Dot2 (nhập 14/11/2026)
+\begin{bt}%[0D3H2-3]%[Dự Án Đề Thi HK1-K10-2022-2023-THPT Tân Bình]%[TheHung Nguyen]%[ma:4ad157dd]
+		Vẽ đồ thị hàm số $y=x^2-6 x+5$.
+	\loigiai{\begin{enumerate}[$ \star $]
+			\item Tập xác định $\mathscr{D}=\mathbb{R}$.
+			\item Trục đối xứng $x=-\dfrac{b}{2a}=3$. 
+			\item Tọa độ đỉnh $S(3;-4)$.
+			\item Giao với trục $Ox$ tại điểm $(1;0)$ và $(5;0)$.
+			\item Bảng giá trị
+			\begin{center}
+				\begin{tabular}{|c|l|l|l|l|}
+					\hline
+					$x$& $1$ & $2$ & $3$ & $5$ \\ 
+					\hline
+					$y=x^2-6x+5$& $0$ & $-3$ & $-4$ & $0$ \\ 
+					\hline
+				\end{tabular}
+			\end{center}
+			\item Đồ thị
+			\begin{center}
+				\begin{tikzpicture}[scale=1, font=\footnotesize, line join=round, line cap=round, >=stealth]
+					\def\xmin{-1}\def\xmax{6}\def\ymin{-5}\def\ymax{1}
+					\draw[->] (\xmin-0.2,0)--(\xmax+0.2,0) node[below] {\footnotesize $x$};
+					\draw[->] (0,\ymin-0.2)--(0,\ymax+0.2) node[right] {\footnotesize $y$};
+					\draw (0,0) node [below left] {\footnotesize $O$};
+					\foreach \x in {-1,1,4,5,6}\draw (\x,0.1)--(\x,-0.1) node [below] {\footnotesize $\x$};
+					\foreach \x in {3}\draw (\x,0.1)--(\x,-0.1) node [below left] {\footnotesize $\x$};
+					\foreach \x in {2,3}\draw (\x,0.1)--(\x,-0.1) node [below left] {\footnotesize $\x$};
+					\foreach \y in {-5,-4,-3,-2,-1,1}\draw (0.1,\y)--(-0.1,\y) node [left] {\footnotesize $\y$};
+					\clip (\xmin,\ymin) rectangle (\xmax,\ymax);
+					\draw[smooth,samples=200,domain=\xmin:\xmax] plot (\x,{1*((\x)^2)+-6*\x+5});
+					\draw[dashed] (3.0,0)--(3.0,-4.0)--(0,-4.0);\fill (3.0,-4.0) circle (1pt);
+					\draw[dashed] (2,0)--(2,-3.0)--(0,-3.0);\fill (2.0,-3.0) circle (1pt);
+				\end{tikzpicture}
+			\end{center}
+		\end{enumerate}		
+	}
+\end{bt}
+
+% nguồn: TuLuan_Lop10_Dot2 (nhập 14/11/2026)
+\begin{bt}%[0D3H2-3]%[ma:9a7af7e4]
+	Vẽ đồ thị hàm số bậc hai $y=x^2-2x-3$.
+	\loigiai{
+		\immini{Ta có $\Delta=(-2)^2-4\cdot1\cdot(-3)=16$.
+			\begin{itemize}
+				\item Tọa độ đỉnh $I(1;-4)$.
+				\item Trục đối xứng $x=1$.
+				\item Giao điểm của parabol với trục tung là $A(0;-3)$.
+				\item Giao điểm của parabol với trục hoành là $B(-1;0)$ và $C(3;0)$.
+				\item Điểm đối xứng với điểm $A(0;-3)$ qua trục đối xứng $x=1$ là $D(2;-3)$.
+			\end{itemize}
+			Vẽ parabol đi qua các điểm được xác định ở trên, ta nhận được đồ thị hàm số $y=x^2-2x-3$.
+		}{
+			\begin{tikzpicture}[scale=1, font=\footnotesize, line join=round, line cap=round, >=stealth]
+				\draw[->](-2,0)--(0,0)node[below left]{$O$}--(4,0)node[below]{$x$};
+				\draw[->](0,-5)--(0,2)node[left]{$y$};
+				\draw[smooth,blue, line width=1]
+				plot[domain=-1.4:3.4](\x,{(\x)^2-2*(\x)-3})
+				;
+				\draw[fill](-1,0)circle(1pt)node[below left]{$-1$}node[above right]{$B$};
+				\draw[fill](3,0)circle(1pt)node[below right]{$3$}node[above right]{$C$};
+				\draw[fill](0,-3)circle(1pt)node[below left]{$-3$}node[above right]{$A$};
+				\draw[dashed](0,-4)node[left]{$-4$}--(1,-4)node[below right]{$I$};
+				\draw(1,-5)--(1,2)node[right]{$x=1$};
+				\draw[dashed](0,-3)--(2,-3)node[below right]{$D$}--(2,0)node[below right]{$2$};
+				\draw(2.7,-3)node[above right,rotate=70]{$y=x^2-2x-3$};
+				\draw[fill](0,0)circle(1pt);
+				\draw[fill](1,-4)circle(1pt);
+				\draw[fill](2,-3)circle(1pt);
+		\end{tikzpicture}}
+	}
+\end{bt}
+
+% nguồn: TuLuan_Lop10_Dot2 (nhập 14/11/2026)
+\begin{bt}%[0D3H2-3]%[Dự án đề kiểm tra HKI NH22-23-Thầy Hóa]%[THPT Bình Hưng Hòa]%[ma:be100262]
+Lập bảng biến thiên và vẽ đồ thị hàm số $ y=x^2-4x+1 $.
+\loigiai{
+\immini{
+Ta có $\dfrac{-b}{2a}=\dfrac{4}{2}=2$;\\
+Với $x=2\Rightarrow y=2^2-4\cdot 2+1=-3$.\\
+Suy ra đỉnh $I(2;-3)$.\\
+Trục đối xứng $x=2$.\\
+Bảng giá trị
+\begin{center}
+	\begin{tabular}{|c|c|c|c|c|c|}
+		\hline $x$ &$0$ &$1$ &$2$ &$3$ &$4$\\
+		\hline $y=x^2-4x+1$ &$1$ &$-2$ &$-3$ &$-2$ &$1$\\
+		\hline
+	\end{tabular}
+\end{center}
+Vì $a=1>0$ nên đồ thị hàm số $y=x^2-4x+1$ là parabol có bề lõm quay lên.
+}{
+\begin{tikzpicture}[>=stealth,x=1cm,y=1cm,scale=1]
+	\def\a{1} % Hệ số a phải khác 0
+	\def\b{-4}
+	\def\c{1}
+	\draw[->] (-1,0) -- (5,0) node[below] {\scriptsize $x$};
+	\draw[->] (0,-4) -- (0,2) node[right] {\scriptsize $y$};
+	\draw (0,0)node[below left]{\scriptsize $O$};
+	\pgfmathsetmacro\xdinh{-(\b)/2*(\a)}
+	\pgfmathsetmacro\ydinh{(4*(\a)*(\c)-(\b)^2)/(4*(\a))}
+	\fill[dashed] (\xdinh,\ydinh)circle(2pt) edge (\xdinh,0) edge (0,\ydinh);
+	\clip (-1,-4)rectangle(5,2);
+	\draw[thick,samples=150,smooth,domain=-1:5] plot(\x,{\a*(\x)^2+(\b)*\x+(\c)})node[below left]{\scriptsize $y=x^2-4x+1$};
+	\foreach \x in {1,2,3,4}{\draw (\x,-0.1)--++(90:0.2)node[above]{\scriptsize $\x$};}
+	\foreach \y in {-2,-3,1}{\draw (0.1,\y)--++(180:0.2)node[left]{\scriptsize $\y$};}
+	\draw[dashed] (1,0)|-(0,-2) (3,0)|-(1,-2);
+	\node[left] at (4,1.2){\scriptsize $y=x^2-4x+1$};
+\end{tikzpicture}
+}	
+}
+\end{bt}
+
+% nguồn: TuLuan_Lop10_Dot2 (nhập 14/11/2026)
+\begin{bt}%[0D3H2-3][Dự án đề kiểm tra HKII NH22-23- Nguyễn Ngọc Nguyên]%[Trường Trung Học Thực Hành Sài Gòn]%[ma:55a4676a]
+	Lập bảng biến thiên và vẽ đồ thị của hàm số $y=f(x)=-x^2+5x-4$.
+	\loigiai{
+	Tập xác định của hàm số $f(x)$ là $\mathscr{D}=\mathbb{R}$.\\
+	Tọa độ đỉnh $I\left( \dfrac{5}{2};\dfrac{9}{4} \right)$.\\
+	Trục đối xứng $x=\dfrac{5}{2}$.\\
+	Hệ số $a=-1<0$ nên bề lõm của parabol hướng xuống dưới.\\
+	Cho $f(x)=0 \Leftrightarrow \hoac{&x=1 \\ &x=4}$. Suy ra đồ thị hàm số cắt trục $Ox$ tại hai điểm có tọa độ $(1;0)$ và $(4;0)$. \\
+	Cho $x=0 \Rightarrow f(0)=-4$. Suy ra đồ thị hàm số cắt trục $Oy$ tại điểm có tọa độ $(0;-4)$. \\
+	Ta có bảng biến thiên và đồ thị như hình vẽ.
+\begin{multicols}{2}
+	\begin{tikzpicture}[scale=1, font=\footnotesize,line join=round, line cap=round,>=stealth]
+		\tkzTabInit[nocadre=false,lgt=1.2,espcl=2.5,deltacl=0.6]{$x$/0.8,$f(x)$/2}
+		{$-\infty$,$\dfrac{5}{2}$,$+\infty$}
+		\tkzTabVar{-/$-\infty$,+/$\dfrac{9}{4}$,-/$-\infty$}
+	\end{tikzpicture}	
+\begin{tikzpicture}[scale=0.85,>=stealth, font=\footnotesize, line join=round, line cap=round]
+	\draw[->] (-1,0)--(6,0) node [below]{$x$};
+	\draw[->] (0,-5)--(0,3) node [left]{$y$};
+	\node at (0,0) [below left]{$O$};
+	\clip (-1,-4.2) rectangle (6,3);
+	\draw[smooth,samples=300,domain=-0.5:5] plot(\x,{-1*(\x)^2 +5*(\x) -4});
+	\draw (1,0) node[below right] {$1$} (4,0) node[below left] {$4$} (0,-4) node[left] {$-4$}; 
+	\draw[dashed] (2.5,0) node[below] {$\dfrac{5}{2}$} -- (2.5,2.25) --(0,2.25) node[left] {$\dfrac{9}{4}$};
+\end{tikzpicture}
+\end{multicols}
+	}
+\end{bt}
+
+% nguồn: TuLuan_Lop10_Dot2 (nhập 14/11/2026)
+\begin{bt}%[0D3H2-3]%[ma:d2717f1f]
+	Cho hàm số $f(x)=ax^2+2x+c$ với $a\neq 0$ có đồ thị $(P)$ như hình vẽ bên.
+	\immini{
+		\begin{listEX}
+			\item Xác định dấu của $a$.
+			\item Xác định trục đối xứng của đồ thị $(P)$.
+			\item Tìm giao điểm của $(P)$ với hai trục tọa độ.
+			\item Lập bảng biến thiên của hàm số.
+			\item Tính giá trị $T=f(2)-f(-4)$.
+		\end{listEX}
+	}{
+		\begin{tikzpicture}[>=stealth,x=1cm,y=1cm,scale=0.7]
+			\draw[->](-4,0)--(-3,0)node[below left]{$-3$}--(-1,0)node[above left]{$-1$}--(1,0)node[below right]{$1$}--(2.5,0)node[above]{$x$};
+			\draw[->] (0,-5)--(0,-4)node[right]{$-4$}--(0,-3)node[right]{$-3$}--(0,2.5)node[right]{$y$};
+			\draw (0,0)node[below left]{$O$};
+			\fill[dashed] (-1,-4) circle(2pt) edge (-1,2) edge (0,-4);
+			\clip (-4,-5)rectangle(2.5,2.5);
+			\draw[thick,samples=150,smooth,domain=-3.5:1.5] plot(\x,{(\x)^2+2*(\x)-3});
+		\end{tikzpicture}
+	}
+	\loigiai{
+		\begin{enumerate}
+			\item Vì đồ thị $f(x)$ có bề lõm hướng lên trên nên $a>0$.
+			\item $x=-1$.
+			\item $A(0,-3)$, $B(-3{,}0)$ và $C(1{,}0)$.
+			\item Bảng biến thiên
+			\begin{center}
+				\begin{tikzpicture}[yscale=.8,xscale=1.2]
+					\def\a{6} % số cột nhãn
+					\def\b{2} % số hàng nhãn
+					%\pagecolor{yellow!30}
+					\draw[shift={(-.5,.5)}]
+					%	(-1.5,0.25) rectangle (\a,-\b-.25)
+					(-1.5,-1)--+(0:\a+1)
+					%	(-1,-2)--+(0:\a+1)
+					%	(-1,-3)--+(0:\a+1)
+					(1,0)--+(-90:\b)
+					;
+					\path
+					(-.75,0) node {$x$}
+					(-.85,-1) node {$ax^2 + 2x +c$}
+					(1.25,-1) node {$-$}
+					%(1,-2) node {$+$}
+					%(1,-3) node {$-$}
+					%(2,0.1) node {$\dfrac{3}{7}$}
+					%(2,-1) node {$0$}
+					(2.5,0) node {$-1$}
+					(2.5,-1) node {$0$}
+					%(3,-2) node {$+$}
+					%(3,-3) node {$+$}
+					%(4,0) node {$1$}
+					%(4,-1) node {$0$}
+					%(4,-3) node {$0$}
+					(4,-1) node {$+$}
+					%(5,-2) node {$-$}
+					%(5,-3) node {$-$}
+					;
+				\end{tikzpicture}
+			\end{center}
+			\item Thay $x=-3$ và $y=0$ vào $f(x)$, ta có $9a-6+c=0\Leftrightarrow9a+c=6$.\hfill$(1)$\\
+			Thay $x=1$ và $y=0$ vào $f(x)$, ta có $a+2+c=0\Leftrightarrow a+c=-2$.\hfill$(2)$\\
+			Từ $(1)$ và $(2)$ ta có hệ phương trình $\heva{& 9a+c=6 \\ & a+c=-2}\Leftrightarrow\heva{& a=1 \\ & c=-3.}$\\
+			Vậy $f(x)=x^2+2x-3$, ta có
+			\[
+			T=f(2)-f(-4)=2^2+2\cdot2-3-(-4)^2-2\cdot(-4)+3=4+4-3-16+8+3=0.
+			\]
+		\end{enumerate}
+	}
+\end{bt}
+
+% nguồn: TuLuan_Lop10_Dot2 (nhập 14/11/2026)
+\begin{bt}%[0D3H2-3]%[Dự án đề kiểm tra GHKI NH22-23- Quan Ổn]%Câu 6:%[ma:9a9ebf67]
+	Khảo sát sự biến thiên và vẽ đồ thị của hàm số $y=x^2+4x-1$.
+	\loigiai{
+		\immini{
+			\begin{itemize}
+				\item Đỉnh $I(-2;-5)$.
+				\item Trục đối xứng $x=-2$.
+				\item Bảng biến thiên:
+				\begin{center}
+					\begin{tikzpicture}
+						\tkzTabInit[nocadre=false,lgt=1.2,espcl=2,deltacl=0.6]
+						{$x$/0.6,$y$/2}{$-\infty$,$-2$,$+\infty$}
+						\tkzTabVar{+/$+\infty$,-/$-5$,+/$+\infty$}
+					\end{tikzpicture}
+				\end{center}
+				\item Hàm số đồng biến trên $(-2;+\infty)$, hàm số nghịch biến trên $(-\infty;-2)$.
+				\item Bảng giá trị
+				\begin{tabular}{c|c|c|c|c|c}
+					$x$ & $-4$ & $-3$ & $-2$ & $-1$ & $0$ \\
+					\hline
+					$y$ & $-1$ & $-4$ & $-5$ & $-4$ & $-1$\\
+				\end{tabular}
+				\item Đồ thị
+			\end{itemize}
+		}{
+			\begin{tikzpicture}[scale=1, line join=round, line cap=round, >=stealth]
+				\tikzset{every node/.style={scale=1}}
+				\def\xmin{-5}\def\xmax{1.7}\def\ymin{-5.5}\def\ymax{1}
+				\draw[->] (\xmin-0.2,0)--(\xmax+0.2,0) node[below] {$x$};
+				\draw[->] (0,\ymin-0.2)--(0,\ymax+0.2) node[right] {$y$};
+				\draw (0,0) node [below left] {$O$};
+				\foreach \x in {-4,-3,-2,-1,1}\draw (\x,-0.1)--(\x,0.1) node [above] {$\x$};
+				\foreach \y in {-1,-4,-5}\draw (-0.1,\y)--(0.1,\y) node [right] {$\y$};
+				\clip (\xmin,\ymin) rectangle (\xmax,\ymax);
+				\draw[thick,smooth,samples=200,domain=\xmin:\xmax] plot (\x,{1*((\x)^2)+4*\x-1});
+				\draw[dashed] (-4,0)--(-4,-1)--(0,-1);\fill (-4,-1) circle (1.5pt);
+				\draw[dashed] (-3,0)--(-3,-4)--(0,-4);\fill (-3,-4) circle (1.5pt);
+				\draw[dashed] (-2,0)--(-2,-5)--(0,-5);\fill (-2,-5) circle (1.5pt);
+				\draw[dashed] (-1,0)--(-1,-4);\fill (-1,-4) circle (1.5pt);
+				\fill (0,-1) circle (1.5pt);
+			\end{tikzpicture}
+		}
+	}
+\end{bt}
+
+% nguồn: TuLuan_Lop10_Dot2 (nhập 14/11/2026)
+\begin{bt}%[0D3H2-3]%[Dự án đề kiểm tra HKI NH22-23- Hiếu Mai]%[THPT Lê Hồng Phong]%[ma:a95a23ad]
+	Cho hàm số $ f(x)=\heva{&x^2-4x+3&\text{khi}\,x\leq 3 \\&-x^2+10x-21&\text{khi}\,x>3.} $
+	\begin{enumerate}
+		\item Vẽ đồ thị hàm số $ f(x) $.
+		\item Tìm tất cả các giá trị của tham số $ m $ sao cho phương trình $ f(x)=m $ có $ 2 $ phân biệt.
+	\end{enumerate}
+\loigiai{
+\begin{enumerate}
+\item Với $ x \le 3 $ thì đồ thị của hàm số $ f(x) $ có dạng parabol $ (P_{1}) \colon y=x^2-4x+3 $.
+\\
+Với $ x > 3 $ thì đồ thị của hàm số $ f(x) $ có dạng parabol $ (P_{2}) \colon y=-x^2+10x-21 $.
+\\
+Vẽ $ (P_{1}) $ với $ x\le 3 $ và $ (P_{2}) $ với $ x>3 $ trên cùng một hệ trục tọa độ, ta được đồ thị sau
+\begin{center}
+	\begin{tikzpicture}[line cap=butt,line join=miter,>=stealth]
+	\tikzset{declare function={xmin=-1;xmax=8;ymin=-1.5;ymax=5;
+					f(\x)=1*(\x)^2-4*(\x)+3; g(\x)=-1*(\x)^2+10*(\x)-21;
+				},
+				smooth,samples=450
+			}
+			\draw[->] (xmin,0)--(xmax,0) node[shift={(90:7pt)},font=\normalsize]{$ x $};
+			\draw[->] (0,ymin)--(0,ymax) node[shift={(0:7pt)},font=\normalsize]{$ y $};
+			\fill (0,0) node[below left,font=\normalsize]{$ O $};
+			
+			\clip (xmin,ymin) rectangle (xmax,ymax);
+			\draw[dashed] (2,0)--(2,-1)--(0,-1) (5,0)--(5,4)--(0,4)
+			;
+			\draw[thin] (1,1pt)--(1,-1pt) node [below] {$1$};
+			\draw[thin] (2,1pt)--(2,-1pt) node [above] {$2$};
+			\draw[thin] (3,1pt)--(3,-1pt) node [below] {$3$};
+			\draw[thin] (5,1pt)--(5,-1pt) node [below] {$5$};
+			\draw[thin] (7,1pt)--(7,-1pt) node [below left] {$7$};
+			\draw[thin] (1pt,-1)--(-1pt,-1) node [below left] {$-1$};
+			\draw[thin] (1pt,3)--(-1pt,3) node [left] {$3$};
+			\draw[thin] (1pt,4)--(-1pt,4) node [above right] {$4$};
+			\draw[thick]  plot[domain=-1:3] (\x, {f(\x)});
+			\draw[thick]  plot[domain=3:7.5] (\x, {g(\x)});
+	\end{tikzpicture}
+\end{center}
+	\item $ f(x)=m $ là phương trình hoành độ giao điểm của đồ thị hàm số $ (C):y=f(x) $ và đường thẳng $ \Delta \colon y=m $. Để phương trình $ f(x)=m $ có $ 2 $ nghiệm phân biệt thì $ (C) $ cắt $ \Delta $ tại $ 2 $ điểm phân biệt. Dựa vào hình vẽ ta thấy $ m=-1 $ hoặc $ m=4 $ thỏa yêu cầu bài toán.
+	\begin{center}
+	\begin{tikzpicture}[line cap=butt,line join=miter,>=stealth]
+	\tikzset{declare function={xmin=-1;xmax=8;ymin=-1.5;ymax=5;
+					f(\x)=1*(\x)^2-4*(\x)+3; g(\x)=-1*(\x)^2+10*(\x)-21;
+				},
+				smooth,samples=450
+			}
+			\draw[->] (xmin,0)--(xmax,0) node[shift={(90:7pt)},font=\normalsize]{$ x $};
+			\draw[->] (0,ymin)--(0,ymax) node[shift={(0:7pt)},font=\normalsize]{$ y $};
+			\fill (0,0) node[below left,font=\normalsize]{$ O $};
+			
+			\clip (xmin,ymin) rectangle (xmax,ymax);
+			\draw[dashed] (2,0)--(2,-1)--(0,-1) (5,0)--(5,4)--(0,4)
+			;
+			\draw[thin] (1,1pt)--(1,-1pt) node [below] {$1$};
+			\draw[thin] (2,1pt)--(2,-1pt) node [above] {$2$};
+			\draw[thin] (3,1pt)--(3,-1pt) node [below] {$3$};
+			\draw[thin] (5,1pt)--(5,-1pt) node [below] {$5$};
+			\draw[thin] (7,1pt)--(7,-1pt) node [below left] {$7$};
+			\draw[thin] (1pt,-1)--(-1pt,-1) node [below left] {$-1$};
+			\draw[thin] (1pt,3)--(-1pt,3) node [left] {$3$};
+			\draw[thin] (1pt,4)--(-1pt,4) node [above right] {$4$};
+			\draw[thick]  plot[domain=-1:3] (\x, {f(\x)});
+			\draw[thick]  plot[domain=3:7.5] (\x, {g(\x)});
+			\draw[blue, thick] (-1,2)--(8,2) node[pos=.3, shift={(90:.3)}] {$ \Delta \colon y=m$};
+			\draw[red, thick] (-1,-1)--(8,-1);
+			\draw[red, thick] (-1,4)--(8,4);
+	\end{tikzpicture}
+\end{center}
+\end{enumerate}
+}
+\end{bt}
+
+% nguồn: TuLuan_Lop10_Dot2 (nhập 14/11/2026)
+\begin{bt}%[0D3N2-3]%[Dự án đề kiểm tra HKI NH22-23- Nguyễn Văn Sang]%[THPT Chuyên Lương Thế Vinh - Đồng Nai]%[ma:15917ae3]
+	Vẽ đồ thị hàm số $y=2x^2-4x-1$.
+	\loigiai{
+		Trong mặt phẳng tọa độ $Oxy$, đồ thị hàm số bậc hai $y=2x^2-4x-1$ là một parabol $(P)$:
+		\immini{
+			\begin{itemize}
+				\item Có đỉnh $S(1;-3)$;
+				\item Có trục đối xứng là đường thẳng $x=1$ (đường thẳng này đi qua đỉnh $S$ và song song với trục $Oy$);
+				\item Bề lõm quay lên trên vì $a>0$;
+				\item Cắt trục tung tại điểm có tung độ bằng $-1$, tức là đồ thị đi qua điểm có tọa độ $(0;-1)$.\\
+				Ta vẽ được đồ thị như hình bên.
+			\end{itemize}
+		}{
+			\begin{tikzpicture}[scale=0.8, font=\footnotesize, line join=round, line cap=round, >=stealth]
+				\draw [->] (-3,0)--(4,0) node[below]{$x$};
+				\draw [->] (0,-4)--(0,2.5) node[left]{$y$};
+				\draw[fill=black] (0,0) circle(1pt) node[below right]{$O$};
+				\draw[smooth, samples=300, domain=-.5:2.5] plot (\x,{2*(\x)^2-4*(\x)-1});
+				\draw[fill=black] (1,-3) circle(1pt)node[below right]{$S(1;-3)$};
+				\draw (1,2.5) node[right]{$x=1$};
+				\draw[dashed] (1,-4)--(1,2.5);
+				\draw[fill=black] (-1,0) circle(1pt) node[below]{$-1$};
+				\draw[fill=black] (0,-1) circle(1pt) node[left]{$-1$};
+				\draw[fill=black] (0,-3) circle(1pt) node[left]{$-3$};
+				\draw[dashed](0,-3)--(1,-3);
+				\draw[fill=black] (1,0) circle(1pt) node[below right]{$1$};
+				\draw[fill=black] (2,0) circle(1pt) node[below]{$2$};				
+				\draw (1.5,1.5) node[right]{$(P)$};
+			\end{tikzpicture}
+		}
+	}
+\end{bt}
+
+% nguồn: TuLuan_Lop10_Dot2 (nhập 14/11/2026)
+\begin{bt}%[0D3H2-3]%[Dự án đề kiểm tra HKII NH22-23- PHẠM VĂN LONG]%[PHẠM PHÚ THỨ]%[ma:91b52029]
+	Khảo sát sự biến thiên và vẽ đồ thị hàm số $y=x^2-6x+5$.\\
+	\loigiai{
+		\begin{itemize}
+			\item Khảo sát sự biến thiên:\\
+			Đỉnh $S$ có tọa độ $ x_S=-\dfrac{b}{2a}=-\dfrac{-6}{2\cdot 1}=3$; $ y_S=-4$.\\
+			Vì hàm số bậc hai có $ a=1>0 $ nên ta có bảng biến thiên sau
+			\begin{center}
+				\begin{tikzpicture}
+					\tkzTabInit[espcl=2.5,lgt=1.5,nocadre=false]
+					{$x$/1,$f(x)$/2.1}
+					{$-\infty$,$3$,$+\infty$}
+					\tkzTabVar{+/$+\infty$,-/$-4$,+/$+\infty$}
+				\end{tikzpicture}
+			\end{center}
+			Hàm số đồng biến trên $ \left(3;+\infty\right) $, nghịch biến trên $ \left(-\infty;3\right) $.\\
+			Hàm số đạt giá trị nhỏ nhất bằng $ -4$ khi $ x=3$.
+			\item Vẽ đồ thị:
+			\immini{
+				Trong mặt phẳng tọa độ $ Oxy $, đồ thị hàm số bậc hai $ y=f(x)=x^2-6x+5$ là một parabol $ (P)\colon $
+				\begin{itemize}
+					\item Có đỉnh $ S $ với hoành độ $ x_S=3$, tung độ $ y_S=-4 $;
+					\item Có trục đối xứng là đường thẳng $ x=3$ (đường thẳng này đi qua đỉnh $ S $ và song song với trục $ Oy $);
+					\item Bề lõm quay lên vì $ a>0 $;
+					\item Cắt trục tung tại điểm có tung độ bằng $5$, cắt trục hoành tại hai điểm có tọa độ $(1;0)$ và $(5;0)$.
+				\end{itemize}
+			}
+			{
+				\begin{tikzpicture}[scale=0.5, font=\footnotesize,line join=round, line cap=round, >=stealth];
+					\draw[->] (-1,0)--(7,0) node[below left ] {$x$};
+					\draw[->] (0,-5)--(0,7) node[below right] {$y$};
+					\draw (0,0) node [below left] {$O$} (1,0) node [below left] {$1$} (3,0) node [below right ] {$3$} (0,3) node [left] {$3$};
+					\draw[dashed] (3,-4)node[below right]{$ S(3;-4) $}--(0,-4)node[left]{$-4 $} 
+					(3,-5)--(3,6)node[right]{$ x=3 $}
+					;
+					\fill (1,0) circle (1pt) (5,0) circle (1pt); 
+					\fill (3,0) circle (1pt); \fill (3,-4) circle (1pt);  \fill (0,5) circle (1pt);
+					\foreach \x in {}
+					\draw[thin] (\x,1pt)--(\x,-1pt) node [below] {$\x$};
+					\foreach \y in {}
+					\draw[thin] (1pt,\y)--(-1pt,\y) node [left] {$\y$};
+					\begin{scope}
+						\clip (-1.5,-6) rectangle (7,6);
+						\draw[samples=200,domain=-1:7,smooth,variable=\x] plot (\x,{1*(\x)^2-6*(\x)+5});
+					\end{scope}
+				\draw (5.2,0) node [below] {$5$} (0,5) node [left] {$5$};
+			\end{tikzpicture}	}
+		\end{itemize}}
+\end{bt}
+
+% nguồn: TuLuan_Lop10_Dot2 (nhập 14/11/2026)
+\begin{bt}%[0D3H2-3]%[Dự án đề kiểm tra GHKI NH22-23- Nguyễn Sĩ Đạt]%Câu 6:%[ma:0f346ccc]
+Khảo sát sự biến thiên và vẽ đồ thị của hàm số $y=x^2+2x-5$.
+\loigiai{
+	\immini{
+		\begin{itemize}
+			\item Đỉnh $S(-1;-6)$.
+			\item Trục đối xứng $x=-1$.
+			\item Bảng biến thiên:
+			\begin{center}
+				\begin{tikzpicture}
+					\tkzTabInit[nocadre=false,lgt=1.2,espcl=2,deltacl=0.6]
+					{$x$/0.6,$y$/2}{$-\infty$,$-1$,$+\infty$}
+					\tkzTabVar{+/$+\infty$,-/$-6$,+/$+\infty$}
+				\end{tikzpicture}
+			\end{center}
+			\item Hàm số đồng biến trên $(-1;+\infty)$, hàm số nghịch biến trên $(-\infty;-1)$.
+			\item Bảng giá trị
+				\begin{tabular}{c|c|c|c|c|c}
+					$x$ & $-3$ & $-2$ & $-1$ & $0$ & $1$ \\
+					\hline
+					$y$ & $-2$ & $-5$ & $-6$ & $-5$ & $-2$\\
+				\end{tabular}
+			\item Đồ thị
+		\end{itemize}
+	}{
+		\begin{tikzpicture}[scale=1, line join=round, line cap=round, >=stealth]
+			\tikzset{every node/.style={scale=1}}
+			\def\xmin{-4}\def\xmax{2}\def\ymin{-6.5}\def\ymax{1}
+			\draw[->] (\xmin-0.2,0)--(\xmax+0.2,0) node[below] {$x$};
+			\draw[->] (0,\ymin-0.2)--(0,\ymax+0.2) node[right] {$y$};
+			\draw (0,0) node [below left] {$O$};
+			\foreach \x in {-3,-2,-1,1}\draw (\x,-0.1)--(\x,0.1) node [above] {$\x$};
+			\foreach \y in {-5,-6}\draw (-0.1,\y)--(0.1,\y) node [right] {$\y$};
+			\foreach \y in {-2}\draw (-0.1,\y)--(0.1,\y) node [above right] {$\y$};
+			\clip (\xmin,\ymin) rectangle (\xmax,\ymax);
+			\draw[thick,smooth,samples=200,domain=\xmin:\xmax] plot (\x,{1*((\x)^2)+2*\x+-5});
+			\draw[dashed] (-3,0)--(-3,-2)--(0,-2);\fill (-3,-2) circle (1.5pt);
+			\draw[dashed] (-2,0)--(-2,-5)--(0,-5);\fill (-2,-5) circle (1.5pt);
+			\draw[dashed] (-1,0)--(-1,-6)--(0,-6);\fill (-1,-6) circle (1.5pt);
+			\draw[dashed] (1,0)--(1,-2)--(0,-2);\fill (1,-2) circle (1.5pt);\fill (0,-5) circle (1.5pt);
+		\end{tikzpicture}
+	}
+}
+\end{bt}
+
+% nguồn: TuLuan_Lop10_Dot2 (nhập 14/11/2026)
+\begin{bt}%[0D3H2-3]%[Dự án đề kiểm tra HKI NH22-23- Tên Huỳnh Quy]%[THPT Lạc Long Quân - Bến Tre]%[ma:1ba3685f]
+	Lập bảng biến thiên và vẽ đồ thị hàm số $y=-x^2+4x-3$.
+	\loigiai{
+		Tọa độ đỉnh $S(2;1)$.\\
+		Trục đối xứng: $x=2$.\\
+		Hệ số $a=-1<0$ nên bề lõm quay xuống.\\
+		Bảng biến thiên:
+		\begin{center}
+			\begin{tikzpicture}
+				\tkzTabInit[lgt=1.2,espcl=4]
+				{$x$/1,$f(x)$/2}
+				{$-\infty$,$2$,$+\infty$}
+				\tkzTabVar{-/$-\infty$,+/$1$,-/$-\infty$}
+			\end{tikzpicture}
+		\end{center}
+	Bảng giá trị:
+	\begin{center}
+		\begin{tabular}{|c|c|c|c|c|c|}\hline
+			{$x$}&{$0$}&{$1$}&{$2$}&{$3$}&{$4$}\\\hline
+			{$y$}&{$-3$}&{$0$}&{$1$}&{$0$}&{$-3$}\\ \hline
+		\end{tabular}
+	\end{center}
+	Đồ thị:
+		\begin{center}
+			\begin{tikzpicture}[line join=round, line cap=round,>=stealth,thick]
+				\tikzset{label style/.style={font=\footnotesize}}
+				%%Nhập giới hạn đồ thị và hàm số cần vẽ
+				\def \xmin{-1}
+				\def \xmax{5}
+				\def \ymin{-4}
+				\def \ymax{2}
+				\def \hamso{-(\x)^2+4*(\x)-3}
+				%\def \tiemcanxien{\x+1}
+				%%Tự động
+				\draw[->] (\xmin,0)--(\xmax,0) node[below left] {$x$};
+				\draw[->] (0,\ymin)--(0,\ymax) node[below left] {$y$};
+				\draw (0,0) node [below left] {$O$};
+				%%Vẽ các điểm trên 2 hệ trục
+				\foreach \x in {1,3,4}
+				\draw[thin] (\x,1pt)--(\x,-1pt) node [below] {$\x$};
+				\foreach \x in {2}
+				\draw[thin] (\x,1pt)--(\x,-1pt) node [below left] {$\x$};
+				\foreach \y in {-3,-2,-1,1}
+				\draw[thin] (1pt,\y)--(-1pt,\y) node [left] {$\y$};
+				%%Vẽ thêm mấy cái râu ria
+				\draw[dashed,thin](0,1)--(2,1);
+				\draw[dashed,thin](4,0)--(4,-3)--(0,-3);
+				%%Tự động
+				\begin{scope}
+					\clip (\xmin+0.01,\ymin+0.01) rectangle (\xmax-0.01,\ymax-0.01);
+					\draw[samples=350,domain=\xmin+0.01:\xmax-0.01,smooth,variable=\x] plot (\x,{\hamso});
+				\end{scope}
+				\draw[dashed](2,\ymin)--(2,\ymax);
+			\end{tikzpicture}
+		\end{center}
+
+	}
+\end{bt}
+
+% nguồn: TuLuan_Lop10_Dot2 (nhập 14/11/2026)
+\begin{bt}%[0D3H2-3]%[ma:803ca18f]
+	Vẽ các đường parabol sau:
+	\begin{listEX}[2]
+		\item $y = 2x^2 +4x-6$;
+		\item $y = -x^2 -2$.
+	\end{listEX}
+	\loigiai
+	{
+		\hfill
+		\begin{minipage}[c]{0.45\textwidth}
+			\begin{tikzpicture}[join=round, cap=round,>=stealth,thick, font = \footnotesize, scale = .7]
+				\def \xmin{-3.5} 		\def \xmax{2}
+				\def \ymin{-9}	\def \ymax{1}
+				\def \hamso{2*(\x)^2 + 4*(\x) - 6}
+				\draw[->] (\xmin,0)--(\xmax,0) node[below] {$x$}; 
+				\draw[->] (0,\ymin)--(0,\ymax) node[left] {$y$}; 
+				\fill (0,0) circle (1pt) node [below left] {$O$}; 
+				\foreach \x in {-3,-2,-1,1} 
+				\draw(\x,1pt)--(\x,-1pt) node [below left] {$\x$}; 
+				\foreach \y in {-8,-7,...,-1} 
+				\draw(1pt,\y)--(-1pt,\y);
+				\path (0,-6) node[above left]{$-6$}
+				(0,-8) node[below left]{$-8$}; 
+				\draw[dashed,thin](-2,0) |- (0,-6);
+				\draw[dashed,thin](-1,0) |- (0,-8);
+				\begin{scope}
+					\clip (\xmin+0.01,\ymin+0.01) rectangle (\xmax-0.01,\ymax-0.01); 
+					\draw plot[samples=350,domain=\xmin+0.01:\xmax-0.01,smooth,variable=\x] (\x,{\hamso});
+				\end{scope}
+				\path (current bounding box.south) node[below]{Hình a)};
+			\end{tikzpicture}
+		\end{minipage}
+		\begin{minipage}[c]{0.45\textwidth}
+			\begin{tikzpicture}[join=round, cap=round,>=stealth,thick, font = \footnotesize, scale = .7]
+				\def \xmin{-3} 		\def \xmax{3}
+				\def \ymin{-7}	\def \ymax{1.5}
+				\def \hamso{-(\x)^2 - 2}
+				\draw[->] (\xmin,0)--(\xmax,0) node[below] {$x$}; 
+				\draw[->] (0,\ymin)--(0,\ymax) node[right] {$y$}; 
+				\fill (0,0) circle (1pt) node [above left] {$O$}; 
+				\foreach \x in {-2,-1,1,2} 
+				\draw(\x,1pt)--(\x,-1pt); 
+				\foreach \y in {-6,-5,-4,-3,-2,-1,1} 
+				\draw(1pt,\y)--(-1pt,\y); 
+				\path
+				(-2,0) node[above]{$-2$}
+				(1,0) node[above]{$1$}
+				(2,0) node[above]{$2$}
+				(0,-2) node[above left]{$-2$}
+				(0,-6) node[above left]{$-6$}
+				;
+				\draw[dashed,thin](-2,0) |- (0,-6) -| (2,0);
+				\begin{scope}
+					\clip (\xmin+0.01,\ymin+0.01) rectangle (\xmax-0.01,\ymax-0.01); 
+					\draw plot[samples=350,domain=\xmin+0.01:\xmax-0.01,smooth,variable=\x] (\x,{\hamso});
+				\end{scope}
+				\path (current bounding box.south) node[below = 1cm]{Hình b)};
+			\end{tikzpicture}
+		\end{minipage}
+		\begin{enumerate}
+			\item Ta có $a=2>0$ nên parabol quay bề lõm lên trên. Đỉnh $I(-1;-8)$. Trục đối xứng $x=-1$. Giao điểm với $O y$ là $(0;-6)$. Điểm đối xứng với điểm $(0;-6)$ qua trục đối xứng $x=-1$ là $(-2;-6)$. Giao điểm với $O x$ là $(-3; 0)$ và $(1; 0).$
+			\item Ta có $a=-1<0$ nên parabol quay bề lõm xuống dưới. Đỉnh $I(0;-2)$. Trục đối xứng $x=0$. Giao điểm với $O y$ là $(0;-2)$. Đồ thị hàm số không có giao điểm với trục $O x$. Lấy điểm $(2;-6)$ thuộc đồ thị hàm số, điểm đối xứng với điểm đó qua trục đối xứng $x=0$ là $(-2;-6).$
+		\end{enumerate}
+	}
+\end{bt}
+
+% nguồn: TuLuan_Lop10_Dot2 (nhập 14/11/2026)
+\begin{bt}%[0D3H2-3]%[ma:2e0ae82e]
+	\immini
+	{
+		Xác định dấu của các hệ số $a, b, c$ và dấu của biệt thức $\Delta=b^2-4 a c$ của hàm số bậc hai $y=a x^2+b x+c$, biết đồ thị của nó có dạng như hình bên.
+	}
+	{
+		\begin{tikzpicture}[join=round, cap=round,>=stealth,thick, font = \footnotesize, scale = .5]
+			\def \xmin{-2} 		\def \xmax{5}
+			\def \ymin{-2.5}	\def \ymax{6}
+			\def \hamso{(12/5)*(\x)^2 - (36/5)*(\x) + 3}
+			\draw[->] (\xmin,0)--(\xmax,0) node[below] {$x$}; 
+			\draw[->] (0,\ymin)--(0,\ymax) node[right] {$y$}; 
+			\fill (0,0) circle (2pt) node [above left] {$O$}; 
+			\foreach \x in {-1,1,2,3,4} 
+			\draw(\x,1pt)--(\x,-1pt); 
+			\foreach \y in {-2,-1,1,2,3,4,5} 
+			\draw(1pt,\y)--(-1pt,\y);
+			\path (1,0) node[above]{$1$} 
+			(0,-1) node[left]{$-1$};
+			\begin{scope}
+				\clip (\xmin+0.01,\ymin+0.01) rectangle (\xmax-0.01,\ymax-0.01); 
+				\draw plot[samples=350,domain=\xmin+0.01:\xmax-0.01,smooth,variable=\x] (\x,{\hamso});
+			\end{scope}
+		\end{tikzpicture}
+	}
+	\loigiai
+	{
+		Từ đồ thị của hàm số ta thấy:
+		\begin{itemize}
+			\item Đồ thị quay bề lõm lên trên nên $a>0$.
+			\item Đồ thị cắt trục tung tại điểm có tung độ dương nên $c>0$.
+			\item Hoành độ đỉnh $x=-\dfrac{b}{2 a}$ có giá trị dương nên $a$ và $b$ trái dấu. Vì $a>0$ nên $b<0$.
+		\end{itemize}
+		Mặt khác, vì đồ thị hàm số cắt trục hoành $O x$ tại hai điểm phân biệt, tức là phương trình $a x^2+b x+c=0$ có hai nghiệm phân biệt nên $\Delta=b^2-4 a c>0$. \\
+		Vậy $a>0, b<0, c>0$ và $\Delta=b^2-4 a c>0.$
+	}
+\end{bt}
+
+% nguồn: TuLuan_Lop10_Dot2 (nhập 14/11/2026)
+\begin{bt}%[0D3N2-3]%[Tex hóa SGK CD-CT,T7/22, Nguyễn Tài Tuệ]%[ma:45a4f906]
+	Vẽ đồ thị các hàm số sau 
+	\begin{enumerate}[\bf a.]
+		\item $y=f(x)=-2x^2-3x+5$.
+		\item $y=f(x)=(x+2)(x-3)$.
+		\item $y=f(x)=(x+3)^2-4$.
+	\end{enumerate}
+	\loigiai{
+		\begin{enumerate}[\bf a.]
+			\item Trong mặt phẳng toạ độ $Oxy$, đồ thị hàm số bậc hai $y=-2x^2-3x+5$ là parabol $(P)$ 
+			\immini{\begin{itemize}
+					\item Có đỉnh $S$ với $x_S=-\dfrac{3}{4};y_S=\dfrac{49}{8}$. $S\left(-\dfrac{3}{4};\dfrac{49}{8}\right).$
+					\item Có trục đối xứng là đường thẳng $x=-\dfrac{3}{4}$ (đường thẳng này đi qua đỉnh $S$ và song song với trục $Oy$).
+					\item Có bề lõm quay xuống dưới vì $a<0$.
+					\item Cắt trục tung tại điểm có tung độ bằng $ 5 $, tức là đồ thị đi qua điểm có tọa độ $ (0; 5) $.\\
+					\item Ngoài ra phương trình $-2x^2-3x+5=0$ có hai nghiệm phân biệt $x_1=1$ và $x_2=-\dfrac{5}{2}$ nên đồ thị hàm số cắt trục hoành tại hai điểm có toạ độ $(1;0)$ và $\left(-\dfrac{5}{2};0\right)$.\\
+					Ta vẽ đồ thị như hình bên.
+			\end{itemize}}{\begin{tikzpicture}[line join=round, line cap=round,>=stealth,thick,scale=0.8]
+					\tikzset{label style/.style={font=\footnotesize}}
+					\draw[->] (-3.1,0)--(3.1,0) node[below left] {$x$};
+					\draw[->] (0,-2.1)--(0,7.1) node[below left] {$y$};
+					\draw (0,0) node [below left] {$O$};
+					\foreach \x in {-3,-2,1,2}
+					\draw[thin] (\x,1pt)--(\x,-1pt) node [below] {$\x$};
+					\foreach \y in {5,6}
+					\draw[thin] (1pt,\y)--(-1pt,\y) node [left] {$\y$};
+					\draw[dashed] (-3/4,-2)--(-3/4,7)node[left]{$ x=-\dfrac{3}{4} $};
+					\draw[fill=black] (-5/2,0) circle (1pt)node[above left]{$ -\dfrac{5}{2} $};
+					\begin{scope}
+						\clip (-3,-2) rectangle (3,7);
+						\draw[samples=200,domain=-3:1.8,smooth,variable=\x] plot (\x,{-2*(\x)^2-3*(\x)+5});
+					\end{scope}
+			\end{tikzpicture}}
+			\item Ta có 
+			$f(x)=(x+2)(x-3)=x^2-x-6$.\\
+			Trong mặt phẳng toạ độ $Oxy$, đồ thị hàm số bậc hai $y=x^2-x-6$ là parabol $(P)$.
+			\immini{\begin{itemize}
+					\item Có đỉnh $S$ với $x_S=\dfrac{1}{2}$; $y_S=\dfrac{-25}{4}$.\\
+					\item  Có trục đối xứng là đường thẳng $x=\dfrac{1}{2}$ (đường thẳng này đi qua đỉnh $S$ và song song với trục $Oy)$.\\
+					\item  Có bề lõm quay lên vì $a>0$.\\
+					\item  Cắt trục tung tại điểm có tung độ bằng $-6$, tức là đồ thị đi qua điểm có toạ độ $(0;-6)$.\\
+					\item  Ngoài ra, phương trình $x^2-x-6=0$ có hai nghiệm phân biệt $x_1=3$ và $x_2=-2$ nên đồ thị hàm số cắt trục hoành tại hai điểm có toạ độ $(3;0)$ và $(-2;0)$.\\
+					\item Ta vẽ đồ thị như hình bên.
+			\end{itemize}}{\begin{tikzpicture}[line join=round, line cap=round,>=stealth,thick,scale=0.8]
+					\tikzset{label style/.style={font=\footnotesize}}
+					\draw[->] (-3.1,0)--(4.1,0) node[below left] {$x$};
+					\draw[->] (0,-7.1)--(0,2.8) node[below left] {$y$};
+					\draw (0,0) node [below left] {$O$};
+					\foreach \x in {-2,1,3}
+					\draw[thin] (\x,1pt)--(\x,-1pt) node [below] {$\x$};
+					\foreach \y in {-6,1,2}
+					\draw[thin] (1pt,\y)--(-1pt,\y) node [left] {$\y$};
+					\draw[dashed] (0.5,-7)--(0.5,2.5) node[right]{$ x=\dfrac{1}{2} $};
+					\begin{scope}
+						\clip (-3,-7) rectangle (4,2);
+						\draw[samples=200,domain=-2.4:3.4,smooth,variable=\x] plot (\x,{1*(\x)^2+-1*(\x)+-6});
+					\end{scope}
+			\end{tikzpicture}}
+			
+			\item Ta có: $y=f(x)=(x+3)^2-4=x^2+6x+5$.\\
+			Trong mặt phẳng tọa độ $Oxy$, đồ thị hàm số bậc hai $y=x^2+6x+5$ là parabol $(P)$
+			\immini{\begin{itemize}
+					\item Có đỉnh $S$ với $x_S=-3;y_S=-4$.\\
+					\item  Có trục đối xứng là đường thẳng $x=-3$ (đường thẳng này đi qua đỉnh $S$ và song song với trục $Oy$).\\
+					\item  Có bề lõm quay lên trên $a>0$.\\
+					\item  Cắt trục tung tại điểm có tung độ bằng $5$, tức là đồ thị đi qua điểm có tọa độ $ (0; 5) $.\\
+					\item  Ngoài ra phương trình $x^2+6x+5=0$ có hai nghiệm phân biệt $x_1=-1$ và $x_2=-5$ nên đồ thị hàm số cắt trục hoành tại hai điểm có toạ độ $(-1;0)$ và $(-5;0)$.\\
+					\item Ta vẽ đồ thị như hình bên.
+			\end{itemize}}{\begin{tikzpicture}[line join=round, line cap=round,>=stealth,thick]
+					\tikzset{label style/.style={font=\footnotesize}}
+					\draw[->] (-6.1,0)--(1.1,0) node[below left] {$x$};
+					\draw[->] (0,-5.1)--(0,3.1) node[below left] {$y$};
+					\draw (0,0) node [below left] {$O$};
+					\foreach \x in {-6,-5,-3,-1}
+					\draw[thin] (\x,1pt)--(\x,-1pt) node [below left] {$\x$};
+					\foreach \y in {-4}
+					\draw[thin] (1pt,\y)--(-1pt,\y) node [right] {$\y$};
+					\draw[dashed] (-3,-4.5)--(-3,2.8) node[right]{$ x=-3$} (-3,-4)--(0,-4);
+					\begin{scope}
+						\clip (-6,-5) rectangle (1,3);
+						\draw[samples=200,domain=-5.7:0.2,smooth,variable=\x] plot (\x,{1*(\x)^2+6*(\x)+5});
+					\end{scope}
+			\end{tikzpicture}}
+		\end{enumerate}
+	}
+\end{bt}
