@@ -387,7 +387,8 @@ def bien_dich_thu_muc(thu_muc_de, in_ra=print):
             ten_p = "Phieu bai hoc"
         for f, duoi in (("PhieuBaiHoc.tex", ""), ("PhieuBaiHoc_LoiGiai.tex", " - Lời giải"),
                         ("PhieuTrenLop.tex", " - Trên lớp"), ("PhieuTrenLop_LoiGiai.tex", " - Trên lớp - Lời giải"),
-                        ("PhieuVeNha.tex", " - Về nhà"), ("PhieuVeNha_LoiGiai.tex", " - Về nhà - Lời giải")):
+                        ("PhieuVeNha.tex", " - Về nhà"), ("PhieuVeNha_LoiGiai.tex", " - Về nhà - Lời giải"),
+                        ("PhieuBeamer.tex", " - Trình chiếu")):
             if not os.path.exists(os.path.join(tex, f)):
                 continue
             in_ra(f"Biên dịch {ten_p}{duoi}…")

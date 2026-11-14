@@ -308,6 +308,15 @@ Kết quả ở `de-da-ra/Phiếu … - <tên> - <ngày>/` — mỗi phiếu có
 | `<tên> - Trên lớp.pdf` – I + II | `PhieuTrenLop.tex` | `PhieuTrenLop_LoiGiai.tex` |
 | `<tên> - Về nhà.pdf` – bài tập về nhà | `PhieuVeNha.tex` | `PhieuVeNha_LoiGiai.tex` |
 
+| `<tên> - Trình chiếu.pdf` – Beamer 16:9 | `PhieuBeamer.tex` | |
+
+**Beamer trình chiếu** (tích ô *Beamer trình chiếu*): bìa → nội dung các dạng → kiến thức trọng tâm → mỗi dạng một màu:
+slide mở dạng → slide **PHƯƠNG PHÁP GIẢI** (các bước đánh số tròn màu) → **Câu 1 – Ví dụ mẫu** (bấm tiếp hiện đáp án, rồi lời giải)
+→ **Câu 2 – Học sinh tự làm** (đề chiếm 2/3 trên, chừa chỗ viết; bấm tiếp hiện đáp án, rồi lời giải) → slide giao bài về nhà.
+Câu 1, 2 lấy từ phần Luyện tập của phiếu (đúng câu học sinh có trên phiếu).
+Phương pháp từng dạng lấy từ ô Kiến thức trọng tâm: dòng `%% DANG <mã dạng>` (prompt AI đã hướng dẫn) hoặc mục `\textbf{Dạng n. …}`;
+được lưu ở `du-lieu/phuong_phap/` để dùng lại cho phiếu sau. Chưa có thì slide phương pháp để các bước trống cho thầy ghi bảng.
+
 Không có hai câu trùng đề (khác mã nhưng cùng nội dung) trong cùng một phiếu.
 Câu được lấy xoay vòng qua các dạng, ưu tiên câu chưa dùng; thiếu câu sẽ được báo.
 Dòng lệnh: `python3 scripts/phieu_bai_hoc.py cau_hinh.json --bien-dich`.

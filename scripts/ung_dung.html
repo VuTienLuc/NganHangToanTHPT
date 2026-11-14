@@ -389,8 +389,9 @@ footer .gian{flex:1}
       <div style="display:flex;gap:8px;flex-wrap:wrap"><button id="ph-prompt-kt">Prompt AI soạn kiến thức trọng tâm…</button></div>
       <div style="display:flex;gap:14px;flex-wrap:wrap;align-items:center"><b>In ấn</b>
         <label class="hop">Cỡ chữ <select id="ph-co" style="width:auto"><option value="10">10</option><option value="11" selected>11</option><option value="12">12</option></select></label>
-        <label class="hop"><input type="checkbox" id="ph-hai-cot" checked> 2 cột (tiết kiệm giấy)</label></div>
-      <p class="nho" style="margin:0">Chân trang: GV (ô Giáo viên ở khung chính) · tên phiếu · Trang x/y. Xuất PDF + TeX: phiếu đầy đủ, phiếu trên lớp, phiếu về nhà — mỗi phiếu có file câu hỏi và file lời giải riêng.</p>
+        <label class="hop"><input type="checkbox" id="ph-hai-cot" checked> 2 cột (tiết kiệm giấy)</label>
+        <label class="hop"><input type="checkbox" id="ph-beamer" checked> Beamer trình chiếu (phương pháp từng dạng, câu 1 ví dụ, câu 2 HS tự làm)</label></div>
+      <p class="nho" style="margin:0">Chân trang: GV (ô Giáo viên ở khung chính) · tên phiếu · Trang x/y. Xuất PDF + TeX: phiếu đầy đủ, phiếu trên lớp, phiếu về nhà (mỗi phiếu có file câu hỏi và file lời giải riêng) + Beamer trình chiếu.</p>
     </div>
   </div>
   <div class="chan"><span id="ph-tt" class="nho"></span><button id="ph-tao" class="chinh" style="margin-left:auto">Tạo phiếu</button><button id="ph-dong">Đóng</button></div>
@@ -1110,16 +1111,20 @@ $("#ph-bo-bai").onclick=e=>{e.preventDefault();document.querySelectorAll("#ph-ba
 $("#ph-het-dang").onclick=e=>{e.preventDefault();document.querySelectorAll("#ph-dang input").forEach(x=>x.checked=true)};
 $("#ph-bo-dang").onclick=e=>{e.preventDefault();document.querySelectorAll("#ph-dang input").forEach(x=>x.checked=false)};
 $("#ph-prompt-kt").onclick=()=>{
-  const dang=[...document.querySelectorAll("#ph-dang input:checked")].map(x=>x.parentNode.textContent.trim().replace(/\s+\d[A-Z]\d+\?\d+-\d+.*$/,""));
+  const dang=[...document.querySelectorAll("#ph-dang input:checked")].map(x=>({k:x.value,t:x.parentNode.textContent.trim().replace(/\s+\d[A-Z]\d+\?\d+-\d+.*$/,"")}));
   const p=`Bạn là giáo viên Toán THPT giỏi (chương trình GDPT 2018, sách Kết nối tri thức). Hãy soạn phần "KIẾN THỨC TRỌNG TÂM" cho phiếu học tập: ${$("#ph-ten").value} (Toán ${$("#ph-lop").value}).
 Yêu cầu:
 - Ngắn gọn, đủ ý để học sinh làm bài: định nghĩa, định lí, công thức cần nhớ; sau đó PHƯƠNG PHÁP GIẢI từng dạng dưới đây (2–4 bước, có lưu ý sai lầm hay gặp).
-- Các dạng: ${dang.map((d,i)=>`\n  Dạng ${i+1}. ${d}`).join("")}
+- Các dạng (giữ đúng thứ tự, mã dạng trong ngoặc): ${dang.map((d,i)=>`\n  Dạng ${i+1}. ${d.t}  (mã ${d.k})`).join("")}
 - Trả về DUY NHẤT mã LaTeX (không \\documentclass, không \\begin{document}), dùng:
   \\textbf{1. Kiến thức cần nhớ}
   \\begin{itemize} \\item … \\end{itemize}
   \\textbf{2. Phương pháp giải các dạng}
-  \\begin{itemize} \\item \\textbf{Dạng 1. …} … \\end{itemize}
+  rồi với MỖI dạng: một dòng chú thích riêng "%% DANG <mã dạng>" (ví dụ: %% DANG ${dang[0]?dang[0].k:"0H5?4-1"}), ngay sau đó:
+  \\textbf{Dạng n. <tên dạng>}
+  \\begin{enumerate} \\item <bước 1> \\item <bước 2> … \\end{enumerate}
+  Lưu ý: <sai lầm hay gặp> (nếu có)
+  (Phần phương pháp này được chiếu lên slide Beamer, mỗi dạng 1 slide: mỗi bước ngắn gọn 1–2 dòng, tối đa 4 bước.)
 - Công thức trong $…$; số thập phân viết $0{,}5$; công thức quan trọng có thể đóng khung \\boxed{…}.
 - Tổng độ dài khoảng nửa trang A4 (in chữ 11).`;
   hopThoai("Prompt AI soạn kiến thức trọng tâm",`Chép prompt, dán vào ChatGPT/Gemini/Claude, rồi dán mã LaTeX AI trả về vào ô "Kiến thức trọng tâm".\n${"─".repeat(60)}\n\n`+p,
@@ -1131,7 +1136,7 @@ $("#ph-tao").onclick=async()=>{
   const loai=$("#ph-loai").dataset.loai, tl=+document.querySelector('input[name="ph-tl"]:checked').value;
   const cfg={pham_vi:loai==="on_tap_chuong"?[$("#ph-chuong").value]:bai,dang,loai_phieu:loai,ten:$("#ph-ten").value.trim(),thoi_luong:tl,
     so_cau:{TN:+$("#ph-tn").value||0,DS:+$("#ph-ds").value||0,TLN:+$("#ph-tln").value||0},kien_thuc:$("#ph-kt").value,
-    co_chu:+$("#ph-co").value,hai_cot:$("#ph-hai-cot").checked,giao_vien:$("#giao_vien").value.trim(),truong:$("#truong").value.trim(),
+    co_chu:+$("#ph-co").value,hai_cot:$("#ph-hai-cot").checked,beamer:$("#ph-beamer").checked,giao_vien:$("#giao_vien").value.trim(),truong:$("#truong").value.trim(),
     nam_hoc:$("#nam_hoc").value.trim(),so_gd:$("#so_gd").value.trim()};
   const b=$("#ph-tao");b.disabled=true;b.textContent="Đang tạo…";
   try{const r=await api("/api/phieu",{cau_hinh:cfg,bien_dich:$("#bien_dich").checked});

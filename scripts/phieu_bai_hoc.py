@@ -273,6 +273,11 @@ def tao(cfg, in_ra=print):
     viet("PhieuTrenLop", nhan + " – TRÊN LỚP", f"{nhan.title()} (trên lớp): {ten}", lt, ("II. LUYỆN TẬP",), True)
     btvn_rieng = btvn.replace(r"\phanPhieu{III. BÀI TẬP VỀ NHÀ}", r"\phanPhieu{BÀI TẬP VỀ NHÀ}", 1)
     viet("PhieuVeNha", "BÀI TẬP VỀ NHÀ", f"Bài tập về nhà: {ten}", btvn_rieng, ("III. BÀI TẬP VỀ NHÀ",), False)
+    # Beamer trình chiếu kèm phiếu: phương pháp từng dạng + câu 1 (ví dụ) + câu 2 (HS tự làm) + lời giải
+    if cfg.get("beamer", True):
+        import beamer_phieu
+        beamer_phieu.tao(out, ten, nhan, dict(tt, giao_vien=gv), lop, tl, cac_dang,
+                         {d: (id_map.get(d, {}).get("type_name") or d).strip() for d in cac_dang}, kq, kt)
     ghi(os.path.join(out, "_ten_phieu.txt"), ten_tep(f"{nhan.title()} - {ten}", 90))
     json.dump(cfg, open(os.path.join(out, "cau_hinh_phieu.json"), "w", encoding="utf-8"), ensure_ascii=False, indent=1)
     so_lt = {l: len(kq["LT"][l]) for l in CAC_LOAI}; so_bt = {l: len(kq["BTVN"][l]) for l in CAC_LOAI}
