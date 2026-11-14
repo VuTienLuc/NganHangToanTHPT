@@ -101,6 +101,20 @@ footer .gian{flex:1}
 #hop-tron label.hop{flex-direction:row;align-items:center;gap:6px}
 #hop-tron select,#hop-tron input[type=number]{width:100%;box-sizing:border-box;padding:6px 8px;border:1px solid var(--vien);border-radius:8px;font:inherit}
 #hop-tron .nut{display:flex;gap:8px;justify-content:flex-end;padding:12px 18px;border-top:1px solid var(--vien)}
+#hop-ma{position:fixed;inset:0;background:rgba(17,24,39,.35);display:none;align-items:center;justify-content:center;z-index:12}
+#hop-ma .noi{background:#fff;border-radius:14px;width:min(980px,95vw);height:min(86vh,820px);display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.25)}
+#hop-ma h2{margin:0;padding:12px 18px;font-size:16px;border-bottom:1px solid var(--vien);display:flex;gap:10px;align-items:center}
+#hop-ma .loc{display:flex;gap:8px;padding:10px 18px;border-bottom:1px solid var(--vien)}
+#hop-ma .loc input,#hop-ma .loc select{padding:7px 9px;border:1px solid var(--vien);border-radius:8px;font:inherit}
+#hop-ma .loc input{flex:1}
+#ma-ds{overflow:auto;flex:1;padding:4px 18px 12px;font-size:13px}
+#ma-ds .ch{font-weight:700;margin:10px 0 2px;color:#1f3a8a}
+#ma-ds .bai{font-weight:600;margin:6px 0 2px 8px;color:#374151}
+#ma-ds .d{display:flex;gap:10px;align-items:baseline;padding:3px 8px 3px 20px;border-radius:6px;cursor:pointer}
+#ma-ds .d:hover{background:#eef2ff}
+#ma-ds .d code{font:12px ui-monospace,Menlo,monospace;background:#f3f4f6;padding:1px 6px;border-radius:4px;min-width:76px}
+#ma-ds .d .so{margin-left:auto;color:#6b7280;font-size:12px;white-space:nowrap}
+#hop-ma .chan{padding:10px 18px;border-top:1px solid var(--vien);display:flex;gap:10px;align-items:center;font-size:13px;color:#555}
 </style>
 </head>
 <body>
@@ -112,6 +126,7 @@ footer .gian{flex:1}
   <button id="nut-prompt" title="Sinh prompt cho AI: gõ lại đề thi, hoặc soạn câu hỏi mới theo bài học từ tài liệu">Prompt cho AI</button>
   <button id="nut-tron-file" title="Trộn một đề có sẵn (file .tex/.txt/.json đúng cấu trúc, vd đề AI gõ lại) thành nhiều mã đề, xuất PDF / Word / đáp án Excel">Trộn đề từ file</button>
   <input type="file" id="tep-tron" accept=".tex,.txt,.md,.json" hidden>
+  <button id="nut-bang-ma" title="Tra cứu mã dạng %[..] theo lớp – chương – bài – dạng">Bảng mã dạng</button>
   <button id="nut-nhap" title="Thêm câu từ file .tex / .txt / .json (đúng cấu trúc \\begin{ex}…, hoặc JSON các trường Nội dung, Lựa chọn, Đáp án, Lời giải) vào ngân hàng">Nhập câu hỏi</button>
   <input type="file" id="tep-nhap" accept=".tex,.txt,.md,.json" multiple hidden>
   <button id="nut-lich-su" title="Các đề đã ra và số câu đã dùng">Lịch sử đã dùng</button>
@@ -228,6 +243,14 @@ footer .gian{flex:1}
     </div>
   </div>
   <div class="nut"><button id="tron-chay" class="chinh">Trộn đề</button><button id="tron-dong">Đóng</button></div>
+</div></div>
+<div id="hop-ma"><div class="noi">
+  <h2>Bảng mã dạng — tra cứu nhanh</h2>
+  <div class="loc"><select id="ma-lop"><option value="">Mọi lớp</option><option>10</option><option>11</option><option>12</option></select>
+    <input id="ma-tim" placeholder="Gõ tên chương, bài, dạng hoặc mã (vd: trung vị, tích vô hướng, 0D6?3)…">
+    <select id="ma-muc" title="Mức độ điền vào chỗ ?"><option value="?">Mức: ? (theo câu)</option><option value="N">N – Nhận biết</option><option value="H">H – Thông hiểu</option><option value="V">V – Vận dụng</option><option value="C">C – Vận dụng cao</option></select></div>
+  <div id="ma-ds"></div>
+  <div class="chan"><span id="ma-goi-y">Bấm vào một dạng để điền mã (đang mở ô gán mã) hoặc chép mã.</span><span style="margin-left:auto"></span><button id="ma-dong">Đóng</button></div>
 </div></div>
 <div id="hop-thoai"><div class="noi"><h2 id="ht-tieu">…</h2><pre id="ht-noi"></pre><div class="nut" id="ht-nut"></div></div></div>
 
@@ -554,9 +577,10 @@ async function xemNhap(tep,ma_dang){
     const o=$("#ht-nut"); if(o.querySelector("#o-ma-dang")) return;
     const w=document.createElement("span");w.id="o-ma-dang";w.style.cssText="display:flex;gap:6px;align-items:center;margin-right:auto";
     w.innerHTML=`<input id="nhap-ma-dang" placeholder="vd 0D3?1-7" style="width:130px;padding:6px 8px;border:1px solid var(--vien);border-radius:8px" value="${ma_dang||""}">
-      <button class="chinh" id="nhap-ap-dung">Áp dụng và xem lại</button>`;
+      <button id="nhap-tra-ma" title="Mở bảng mã dạng để chọn">Tra mã…</button><button class="chinh" id="nhap-ap-dung">Áp dụng và xem lại</button>`;
     o.prepend(w);
     $("#nhap-ap-dung").onclick=()=>xemNhap(tep,$("#nhap-ma-dang").value.trim());
+    $("#nhap-tra-ma").onclick=()=>moBangMa();
     $("#nhap-ma-dang").focus();
   }]);
   hopThoai(`Xem trước: ${r.so_cau} câu mới`+(chuaMa?` — ${chuaMa} câu chưa có mã dạng (sẽ vào mục chưa phân loại)`:""),
@@ -593,6 +617,39 @@ $("#tron-chay").onclick=async()=>{
     hopThoai(`Đã trộn: ${r.thu_muc}`,r.nhat_ky+(r.bien_dich?"\nĐang biên dịch PDF…":""),[["Mở thư mục đề",()=>api("/api/mo",{duong_dan:r.thu_muc}),true]]);
     if(r.bien_dich) theoDoi(r.nhat_ky);
   }finally{b.disabled=false;b.textContent="Trộn đề"}
+};
+
+// ---------------- BẢNG MÃ DẠNG
+async function moBangMa(){
+  if(!DM_DANG){const r=await api("/api/danh-muc-dang",{});DM_DANG=r.dang}
+  $("#hop-ma").style.display="flex"; veBangMa(); $("#ma-tim").focus();
+}
+function veBangMa(){
+  const lop=$("#ma-lop").value, tu=boDau($("#ma-tim").value.trim()), muc=$("#ma-muc").value;
+  const kho={};for(const d of (DL?.dang||[]))kho[d.k]=LOAI.reduce((s,l)=>s+d.kho[l].reduce((a,b)=>a+b,0),0);
+  const cacTu=tu.split(/\s+/).filter(Boolean);
+  const ds=DM_DANG.filter(d=>(!lop||d.lop==+lop)&&cacTu.every(t=>boDau(`${d.k} ${d.ten_chuong} ${d.ten_bai} ${d.ten_dang} lop ${d.lop}`).includes(t)));
+  let h="",cu="",cuBai="";
+  for(const d of ds.slice(0,600)){
+    const ch=`${d.lop}|${d.mon}|${d.chuong}`;
+    if(ch!==cu){cu=ch;cuBai="";h+=`<div class="ch">Lớp ${d.lop} · ${d.mon==="H"?"Hình học":d.mon==="D"?"Đại số – Giải tích":"Chuyên đề"} · Chương ${d.chuong}: ${esc(d.ten_chuong)}</div>`}
+    if(d.bai!==cuBai){cuBai=d.bai;h+=`<div class="bai">Bài ${d.bai}. ${esc(d.ten_bai)}</div>`}
+    const ma=d.k.replace("?",muc);
+    h+=`<div class="d" data-ma="${ma}"><code>${ma}</code><span>${esc(d.ten_dang)}</span><span class="so">kho ${kho[d.k]||0} câu</span></div>`;
+  }
+  $("#ma-ds").innerHTML=h||'<p style="color:#888">Không tìm thấy dạng phù hợp.</p>';
+  $("#ma-goi-y").textContent=`${ds.length} dạng`+(ds.length>600?" (hiện 600 đầu — gõ thêm từ khoá)":"")+" · bấm một dòng để điền / chép mã.";
+}
+function boDau(s){return (s||"").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"").replace(/đ/g,"d")}
+$("#nut-bang-ma").onclick=moBangMa;
+$("#ma-dong").onclick=()=>$("#hop-ma").style.display="none";
+$("#ma-tim").oninput=veBangMa; $("#ma-lop").onchange=veBangMa; $("#ma-muc").onchange=veBangMa;
+$("#ma-ds").onclick=async e=>{
+  const d=e.target.closest(".d"); if(!d) return;
+  const ma=d.dataset.ma, o=$("#nhap-ma-dang");
+  if(o && $("#hop-thoai").style.display==="flex"){o.value=ma;$("#hop-ma").style.display="none";o.focus();return}
+  try{await navigator.clipboard.writeText(`%[${ma}]`);$("#ma-goi-y").textContent=`Đã chép %[${ma}] — dán vào dòng \\begin{ex} của câu.`}
+  catch(_){prompt("Chép mã này:",`%[${ma}]`)}
 };
 tai();
 </script>

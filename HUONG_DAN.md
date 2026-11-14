@@ -95,6 +95,11 @@ Câu chưa có mã dạng vào `cau-hoi/_chua_phan_loai/<tên file>.tex`; gắn 
    lời giải chi tiết, đúng định dạng kho và tự kiểm tra trước khi trả.
 5. Lưu kết quả thành `.txt`/`.tex` → **Nhập câu hỏi** → xem trước → nhập.
 
+**Bảng mã dạng (tra cứu nhanh):** nút **Bảng mã dạng** trên thanh đầu, hoặc nút **Tra mã…** cạnh ô gán mã khi nhập câu.
+Lọc theo lớp, gõ từ khoá không cần dấu (vd `trung vi`, `tich vo huong`, `0D6?3`), chọn mức N/H/V/C hoặc giữ `?`;
+bấm một dòng: đang gán mã thì điền thẳng vào ô, không thì chép `%[mã]` để dán vào dòng `\begin{ex}` của câu.
+Bản đầy đủ dạng bảng tính: `du-lieu/danh_muc_ma_dang.csv`.
+
 **Quy ước để câu được nhận đúng loại:**
 - Trắc nghiệm: `\begin{ex}` + `\choice{…}{…}{…}{…}`, đúng **một** `\True`
 - Đúng/Sai: `\begin{ex}` + `\choiceTF{…}{…}{…}{…}`, ý đúng có `\True`
