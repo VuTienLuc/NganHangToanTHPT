@@ -248,6 +248,24 @@ class XuLy(BaseHTTPRequestHandler):
                 except ValueError as e:
                     return self.gui(200, {"ok": False, "nhat_ky": str(e)})
                 return self.gui(200, {"ok": True, "so": so, "nhat_ky": "\n".join(dong)})
+            if u.path == "/api/kien-thuc":
+                import phieu_bai_hoc
+                return self.gui(200, {"ok": True, "noi_dung": phieu_bai_hoc.doc_kien_thuc(d.get("pham_vi") or [])})
+            if u.path == "/api/phieu":
+                import phieu_bai_hoc
+                dong = []
+                cfg = d.get("cau_hinh") or {}
+                try:
+                    out_goc = phieu_bai_hoc.tao(cfg, dong.append)
+                except Exception as e:
+                    return self.gui(200, {"ok": False, "nhat_ky": f"Chưa tạo được phiếu: {e}"})
+                rel = os.path.relpath(out_goc, GOC)
+                dang_bd = False
+                if d.get("bien_dich") and tim_pdflatex():
+                    dang_bd = True
+                    threading.Thread(target=bien_dich_nen, args=(rel,), daemon=True).start()
+                log = "\n".join(x for x in dong if not x.startswith("THU_MUC:"))
+                return self.gui(200, {"ok": True, "nhat_ky": log, "thu_muc": rel, "bien_dich": dang_bd})
             if u.path == "/api/danh-muc-dang":
                 import tao_prompt
                 return self.gui(200, {"ok": True, "dang": tao_prompt.danh_sach_dang()})

@@ -285,3 +285,20 @@ Chữ ở đầu/chân trang sửa trong `khung/DeThi/Khaibao/HeaderAndFooter.te
 ## Tra cứu nhanh
 `du-lieu/thong_ke_theo_dang.csv` (mở bằng Excel/Numbers): số câu theo dạng × loại × mức.
 `du-lieu/nganhang.sqlite`: mở bằng "DB Browser for SQLite" để lọc câu.
+
+## Phiếu bài học · chuyên đề · ôn tập chương
+
+Nút **Phiếu bài học** trên thanh đầu ứng dụng.
+
+1. Chọn **Lớp → Chương**, tích **bài**:
+   - 1 bài → *Phiếu bài học*; vài bài → *Phiếu chuyên đề*; bấm **cả chương** → *Phiếu ôn tập chương*.
+2. Tích/bỏ **dạng toán** (bên cạnh là số câu trong kho TN/ĐS/TLN).
+3. **Thời lượng** 45 phút (mặc định 8 TN · 2 ĐS · 2 TLN) hoặc 90 phút (12 · 4 · 6) — sửa được số câu.
+   Bài tập về nhà có **cùng số câu, cùng dạng, cùng mức** nhưng là câu khác.
+4. **I. Kiến thức trọng tâm**: dán mã LaTeX (có nút *Prompt AI soạn kiến thức trọng tâm*).
+   Để trống thì phiếu in khung có dòng kẻ ghi phương pháp từng dạng. Nội dung được lưu ở `du-lieu/kien_thuc/` và tự nạp lại lần sau.
+5. In ấn: cỡ chữ 10/11/12, 2 cột tiết kiệm giấy. Chân trang: **GV** (ô Giáo viên ở khung chính) · tên phiếu · Trang x/y.
+
+Kết quả ở `de-da-ra/Phiếu … - <tên> - <ngày>/`: PDF phiếu học sinh và PDF lời giải + bảng đáp án.
+Câu được lấy xoay vòng qua các dạng, ưu tiên câu chưa dùng; thiếu câu sẽ được báo.
+Dòng lệnh: `python3 scripts/phieu_bai_hoc.py cau_hinh.json --bien-dich`.

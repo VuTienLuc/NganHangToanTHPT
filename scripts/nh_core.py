@@ -349,7 +349,8 @@ def bien_dich_thu_muc(thu_muc_de, in_ra=print):
         return False
     tex = os.path.join(thu_muc_de, "tex")
     tep = sorted(f for f in os.listdir(tex) if f.startswith("De_") and f.endswith(".tex"))
-    in_ra(f"Biên dịch {len(tep)} file PDF…")
+    if tep:
+        in_ra(f"Biên dịch {len(tep)} file PDF…")
     ok_het = True
     for f in tep:
         bat_dau = _t.time()
@@ -378,6 +379,24 @@ def bien_dich_thu_muc(thu_muc_de, in_ra=print):
             _sh.copyfile(pdf, os.path.join(thu_muc_de, f[:-4] + ".pdf"))
         ok_het &= ok
         in_ra(f"  {'✓' if ok else '✗ lỗi (xem tex/' + f[:-4] + '.log)'} {f[:-4]}")
+    # phiếu bài học / chuyên đề / ôn tập chương (3 lần cho đúng "Trang x/y")
+    if os.path.exists(os.path.join(tex, "PhieuBaiHoc.tex")):
+        try:
+            ten_p = open(os.path.join(tex, "_ten_phieu.txt"), encoding="utf-8").read().strip() or "Phieu bai hoc"
+        except OSError:
+            ten_p = "Phieu bai hoc"
+        for f, duoi in (("PhieuBaiHoc.tex", ""), ("PhieuBaiHoc_LoiGiai.tex", " - Lời giải")):
+            in_ra(f"Biên dịch {ten_p}{duoi}…")
+            bat_dau = _t.time()
+            for _ in range(3):
+                subprocess.run([pdfl, "-interaction=nonstopmode", f], cwd=tex, stdout=subprocess.DEVNULL,
+                               stderr=subprocess.DEVNULL, timeout=1800)
+            pdf = os.path.join(tex, f[:-4] + ".pdf")
+            ok = os.path.exists(pdf) and os.path.getmtime(pdf) >= bat_dau - 1
+            if ok:
+                _sh.copyfile(pdf, os.path.join(thu_muc_de, f"{ten_p}{duoi}.pdf"))
+            ok_het &= ok
+            in_ra(f"  {'✓' if ok else '✗ lỗi (xem tex/' + f[:-4] + '.log)'} {ten_p}{duoi}.pdf")
     # quyển đề cương ôn tập: 2 file riêng (Câu hỏi / Lời giải) — biên dịch 3 lần cho đúng mục lục, số trang
     ten = "De cuong on tap"
     try:

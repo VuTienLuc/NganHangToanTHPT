@@ -167,6 +167,20 @@ footer .gian{flex:1}
 #hk-bang textarea{resize:vertical;min-height:32px}
 #hk-bang .nho{display:flex;gap:10px;font-size:11.5px;margin-top:3px}
 #hop-hk .chan{padding:10px 18px;border-top:1px solid var(--vien);display:flex;gap:8px;align-items:center;flex-wrap:wrap;font-size:13px}
+#hop-phieu{position:fixed;inset:0;background:rgba(17,24,39,.35);display:none;align-items:center;justify-content:center;z-index:11}
+#hop-phieu .noi{background:#fff;border-radius:14px;width:min(1150px,96vw);height:min(92vh,920px);display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.25)}
+#hop-phieu h2{margin:0;padding:12px 18px;font-size:16px;border-bottom:1px solid var(--vien)}
+#hop-phieu .than{flex:1;overflow:auto;padding:12px 18px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:14px;font-size:13px}
+#hop-phieu .cot{display:flex;flex-direction:column;gap:10px;min-width:0}
+#hop-phieu label{display:flex;flex-direction:column;gap:3px}
+#hop-phieu label.hop{flex-direction:row;align-items:center;gap:6px}
+#hop-phieu select,#hop-phieu input[type=text],#hop-phieu input[type=number],#hop-phieu textarea{padding:6px 8px;border:1px solid var(--vien);border-radius:8px;font:inherit;box-sizing:border-box;width:100%}
+#hop-phieu .ds{border:1px solid var(--vien);border-radius:10px;padding:6px 10px;max-height:190px;overflow:auto;display:grid;gap:2px}
+#hop-phieu .ds .ma{font:11.5px ui-monospace,Menlo,monospace;color:#666}
+#hop-phieu .so{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+#hop-phieu textarea{min-height:170px;font:12px ui-monospace,Menlo,monospace}
+#hop-phieu .nho{font-size:12px;color:#666}
+#hop-phieu .chan{padding:10px 18px;border-top:1px solid var(--vien);display:flex;gap:8px;align-items:center}
 </style>
 </head>
 <body>
@@ -178,6 +192,7 @@ footer .gian{flex:1}
   <button id="nut-prompt" title="Sinh prompt cho AI: gõ lại đề thi, hoặc soạn câu hỏi mới theo bài học từ tài liệu">Prompt cho AI</button>
   <button id="nut-tron-file" title="Trộn một đề có sẵn (file .tex/.txt/.json đúng cấu trúc, vd đề AI gõ lại) thành nhiều mã đề, xuất PDF / Word / đáp án Excel">Trộn đề từ file</button>
   <input type="file" id="tep-tron" accept=".tex,.txt,.md,.json" hidden>
+  <button id="nut-phieu" title="Phiếu bài học / chuyên đề / ôn tập chương: kiến thức trọng tâm, luyện tập, bài tập về nhà — tự lấy câu theo dạng">Phiếu bài học</button>
   <button id="nut-on-thi" title="Ma trận đề ôn thi học kì 12–4–6: lấy câu từ ngân hàng hoặc sinh prompt cho AI tạo đề">Ôn thi học kì</button>
   <button id="nut-lac" title="Tìm câu có nội dung không khớp bài/dạng đang gắn; chuyển sang đúng dạng hoặc xoá">Câu lạc bài</button>
   <button id="nut-trung" title="Dò câu trùng / gần giống trong ngân hàng và xoá bản thừa">Câu trùng</button>
@@ -345,6 +360,40 @@ footer .gian{flex:1}
     <button id="hk-ngan-hang" class="chinh" style="margin-left:auto" title="Lấy đúng 22 câu từ ngân hàng theo bài + mức từng dòng, xuất đủ mã đề, PDF, Word, đáp án như nút Xuất đề">Ra đề từ ngân hàng</button>
     <button id="hk-prompt" title="Sinh prompt cho ChatGPT/Gemini/Claude tạo đề mới dạng JSON (nhập lại được vào ứng dụng)">Tạo prompt AI (nguồn ngoài)</button>
     <button id="hk-dong">Đóng</button></div>
+</div></div>
+<div id="hop-phieu"><div class="noi">
+  <h2>Phiếu bài học · chuyên đề · ôn tập chương</h2>
+  <div class="than">
+    <div class="cot">
+      <div style="display:grid;grid-template-columns:90px minmax(0,1fr);gap:8px">
+        <label>Lớp<select id="ph-lop"><option>10</option><option>11</option><option selected>12</option></select></label>
+        <label>Chương<select id="ph-chuong"></select></label></div>
+      <div><b>Bài học</b> <span class="nho">— tích 1 bài: phiếu bài học · vài bài: chuyên đề · cả chương: ôn tập chương</span>
+        <span style="float:right"><a href="#" id="ph-ca-chuong">cả chương</a> · <a href="#" id="ph-bo-bai">bỏ hết</a></span>
+        <div class="ds" id="ph-bai"></div></div>
+      <div><b>Dạng toán</b> <span class="nho">(số câu trong kho TN/ĐS/TLN)</span>
+        <span style="float:right"><a href="#" id="ph-het-dang">chọn hết</a> · <a href="#" id="ph-bo-dang">bỏ hết</a></span>
+        <div class="ds" id="ph-dang"></div></div>
+    </div>
+    <div class="cot">
+      <label>Tên phiếu<input type="text" id="ph-ten"></label>
+      <div style="display:flex;gap:16px;align-items:center"><b>Thời lượng</b>
+        <label class="hop"><input type="radio" name="ph-tl" value="45" checked> 45 phút</label>
+        <label class="hop"><input type="radio" name="ph-tl" value="90"> 90 phút</label>
+        <span class="nho" id="ph-loai"></span></div>
+      <div><b>Số câu luyện tập</b> <span class="nho">— bài tập về nhà cùng số câu, cùng dạng, cùng mức (câu khác)</span>
+        <div class="so"><label>Trắc nghiệm<input type="number" id="ph-tn" min="0" max="40"></label>
+          <label>Đúng/Sai<input type="number" id="ph-ds" min="0" max="20"></label><label>Trả lời ngắn<input type="number" id="ph-tln" min="0" max="20"></label></div></div>
+      <label>I. Kiến thức trọng tâm (LaTeX; để trống → khung có dòng kẻ ghi phương pháp từng dạng; nội dung được lưu để dùng lại)
+        <textarea id="ph-kt" placeholder="\begin{itemize}&#10;\item ...&#10;\end{itemize}"></textarea></label>
+      <div style="display:flex;gap:8px;flex-wrap:wrap"><button id="ph-prompt-kt">Prompt AI soạn kiến thức trọng tâm…</button></div>
+      <div style="display:flex;gap:14px;flex-wrap:wrap;align-items:center"><b>In ấn</b>
+        <label class="hop">Cỡ chữ <select id="ph-co" style="width:auto"><option value="10">10</option><option value="11" selected>11</option><option value="12">12</option></select></label>
+        <label class="hop"><input type="checkbox" id="ph-hai-cot" checked> 2 cột (tiết kiệm giấy)</label></div>
+      <p class="nho" style="margin:0">Chân trang: GV (ô Giáo viên ở khung chính) · tên phiếu · Trang x/y. Xuất 2 PDF: phiếu học sinh và bản lời giải + đáp án.</p>
+    </div>
+  </div>
+  <div class="chan"><span id="ph-tt" class="nho"></span><button id="ph-tao" class="chinh" style="margin-left:auto">Tạo phiếu</button><button id="ph-dong">Đóng</button></div>
 </div></div>
 <div id="hop-thoai"><div class="noi"><h2 id="ht-tieu">…</h2><pre id="ht-noi"></pre><div class="nut" id="ht-nut"></div></div></div>
 
@@ -1015,6 +1064,82 @@ $("#hk-prompt").onclick=()=>{
   hopThoai(`Prompt đề ôn thi ${$("#hk-ky").value} – Toán ${HK_LOP} (${p.length.toLocaleString("vi-VN")} ký tự)`,hd+p,[
     ["Chép prompt",async e=>{try{await navigator.clipboard.writeText(p);e.target.textContent="Đã chép ✓"}catch(_){alert("Không chép tự động được — bôi đen rồi Cmd+C.")}},true],
     ["Lưu file .txt",()=>{const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([p],{type:"text/plain"}));a.download=`Prompt_Toan${HK_LOP}_${$("#hk-ky").value.replace(/\s+/g,"_")}.txt`;a.click()}]]);
+};
+
+// ---------------- PHIẾU BÀI HỌC
+async function moPhieu(){
+  if(!DM_DANG){const r=await api("/api/danh-muc-dang",{});DM_DANG=r.dang}
+  $("#hop-phieu").style.display="flex"; phChuong(); phSoCau();
+}
+function phChuong(){
+  const lop=+$("#ph-lop").value, m=new Map();
+  for(const d of DM_DANG) if(d.lop===lop){const k=d.k.slice(0,3); if(!m.has(k)) m.set(k,`Ch.${d.chuong} ${d.ten_chuong}`)}
+  $("#ph-chuong").innerHTML=[...m].map(([k,t])=>`<option value="${k}">${esc(t)}</option>`).join(""); phBai();
+}
+function phBai(){
+  const ch=$("#ph-chuong").value, m=new Map();
+  for(const d of DM_DANG) if(d.k.startsWith(ch+"?")){const k=d.k.split("-")[0]; if(!m.has(k)) m.set(k,`Bài ${d.bai}. ${d.ten_bai}`)}
+  $("#ph-bai").innerHTML=[...m].map(([k,t],i)=>`<label class="hop"><input type="checkbox" value="${k}" ${i===0?"checked":""}> ${esc(t)}</label>`).join("");
+  phDang();
+}
+function phBaiChon(){return [...document.querySelectorAll("#ph-bai input:checked")].map(x=>x.value)}
+async function phDang(){
+  const bai=phBaiChon(), kho={};
+  for(const d of (DL?.dang||[])) kho[d.k]=["TN","DS","TLN"].map(l=>d.kho[l].reduce((a,b)=>a+b,0));
+  $("#ph-dang").innerHTML=DM_DANG.filter(d=>bai.includes(d.k.split("-")[0])).map(d=>{const k=kho[d.k]||[0,0,0];
+    return `<label class="hop"><input type="checkbox" value="${d.k}" ${k.some(x=>x)?"checked":""}> ${esc(d.ten_dang)} <span class="ma">${d.k} · ${k.join("/")}</span></label>`}).join("")
+    ||'<span class="nho">Chưa chọn bài.</span>';
+  const tatCa=document.querySelectorAll("#ph-bai input").length, n=bai.length;
+  const loai=n&&n===tatCa?"on_tap_chuong":n===1?"bai_hoc":"chuyen_de";
+  $("#ph-loai").textContent={on_tap_chuong:"→ Phiếu ôn tập chương",bai_hoc:"→ Phiếu bài học",chuyen_de:"→ Phiếu chuyên đề"}[loai];
+  $("#ph-loai").dataset.loai=loai;
+  const ten=loai==="on_tap_chuong"?$("#ph-chuong").selectedOptions[0]?.textContent.replace(/^Ch\.\d+\s*/,""):
+    bai.map(k=>document.querySelector(`#ph-bai input[value="${k}"]`).parentNode.textContent.trim().replace(/^Bài \d+\.\s*/,"")).join(" – ");
+  $("#ph-ten").value=ten||"";
+  const pv=loai==="on_tap_chuong"?[$("#ph-chuong").value]:bai;
+  const r=await api("/api/kien-thuc",{pham_vi:pv}); $("#ph-kt").value=r.noi_dung||"";
+}
+function phSoCau(){const tl=document.querySelector('input[name="ph-tl"]:checked').value;
+  const m=tl==="90"?[12,4,6]:[8,2,2]; $("#ph-tn").value=m[0];$("#ph-ds").value=m[1];$("#ph-tln").value=m[2]}
+$("#nut-phieu").onclick=moPhieu;
+$("#ph-dong").onclick=()=>$("#hop-phieu").style.display="none";
+$("#ph-lop").onchange=phChuong; $("#ph-chuong").onchange=phBai; $("#ph-bai").onchange=phDang;
+document.querySelectorAll('input[name="ph-tl"]').forEach(x=>x.onchange=phSoCau);
+$("#ph-ca-chuong").onclick=e=>{e.preventDefault();document.querySelectorAll("#ph-bai input").forEach(x=>x.checked=true);phDang()};
+$("#ph-bo-bai").onclick=e=>{e.preventDefault();document.querySelectorAll("#ph-bai input").forEach(x=>x.checked=false);phDang()};
+$("#ph-het-dang").onclick=e=>{e.preventDefault();document.querySelectorAll("#ph-dang input").forEach(x=>x.checked=true)};
+$("#ph-bo-dang").onclick=e=>{e.preventDefault();document.querySelectorAll("#ph-dang input").forEach(x=>x.checked=false)};
+$("#ph-prompt-kt").onclick=()=>{
+  const dang=[...document.querySelectorAll("#ph-dang input:checked")].map(x=>x.parentNode.textContent.trim().replace(/\s+\d[A-Z]\d+\?\d+-\d+.*$/,""));
+  const p=`Bạn là giáo viên Toán THPT giỏi (chương trình GDPT 2018, sách Kết nối tri thức). Hãy soạn phần "KIẾN THỨC TRỌNG TÂM" cho phiếu học tập: ${$("#ph-ten").value} (Toán ${$("#ph-lop").value}).
+Yêu cầu:
+- Ngắn gọn, đủ ý để học sinh làm bài: định nghĩa, định lí, công thức cần nhớ; sau đó PHƯƠNG PHÁP GIẢI từng dạng dưới đây (2–4 bước, có lưu ý sai lầm hay gặp).
+- Các dạng: ${dang.map((d,i)=>`\n  Dạng ${i+1}. ${d}`).join("")}
+- Trả về DUY NHẤT mã LaTeX (không \\documentclass, không \\begin{document}), dùng:
+  \\textbf{1. Kiến thức cần nhớ}
+  \\begin{itemize} \\item … \\end{itemize}
+  \\textbf{2. Phương pháp giải các dạng}
+  \\begin{itemize} \\item \\textbf{Dạng 1. …} … \\end{itemize}
+- Công thức trong $…$; số thập phân viết $0{,}5$; công thức quan trọng có thể đóng khung \\boxed{…}.
+- Tổng độ dài khoảng nửa trang A4 (in chữ 11).`;
+  hopThoai("Prompt AI soạn kiến thức trọng tâm",`Chép prompt, dán vào ChatGPT/Gemini/Claude, rồi dán mã LaTeX AI trả về vào ô "Kiến thức trọng tâm".\n${"─".repeat(60)}\n\n`+p,
+    [["Chép prompt",async e=>{try{await navigator.clipboard.writeText(p);e.target.textContent="Đã chép ✓"}catch(_){alert("Bôi đen rồi Cmd+C.")}},true]]);
+};
+$("#ph-tao").onclick=async()=>{
+  const bai=phBaiChon(); if(!bai.length){alert("Chọn ít nhất một bài.");return}
+  const dang=[...document.querySelectorAll("#ph-dang input:checked")].map(x=>x.value); if(!dang.length){alert("Chọn ít nhất một dạng.");return}
+  const loai=$("#ph-loai").dataset.loai, tl=+document.querySelector('input[name="ph-tl"]:checked').value;
+  const cfg={pham_vi:loai==="on_tap_chuong"?[$("#ph-chuong").value]:bai,dang,loai_phieu:loai,ten:$("#ph-ten").value.trim(),thoi_luong:tl,
+    so_cau:{TN:+$("#ph-tn").value||0,DS:+$("#ph-ds").value||0,TLN:+$("#ph-tln").value||0},kien_thuc:$("#ph-kt").value,
+    co_chu:+$("#ph-co").value,hai_cot:$("#ph-hai-cot").checked,giao_vien:$("#giao_vien").value.trim(),truong:$("#truong").value.trim(),
+    nam_hoc:$("#nam_hoc").value.trim(),so_gd:$("#so_gd").value.trim()};
+  const b=$("#ph-tao");b.disabled=true;b.textContent="Đang tạo…";
+  try{const r=await api("/api/phieu",{cau_hinh:cfg,bien_dich:$("#bien_dich").checked});
+    if(!r.ok){alert(r.nhat_ky);return}
+    $("#hop-phieu").style.display="none";
+    hopThoai(`Đã tạo phiếu: ${r.thu_muc}`,r.nhat_ky+(r.bien_dich?"\nĐang biên dịch PDF…":""),[["Mở thư mục",()=>api("/api/mo",{duong_dan:r.thu_muc}),true]]);
+    if(r.bien_dich) theoDoi(r.nhat_ky);}
+  finally{b.disabled=false;b.textContent="Tạo phiếu"}
 };
 tai();
 </script>
