@@ -196,6 +196,15 @@ footer .gian{flex:1}
 #kt-ds .tt{margin-left:auto;font-size:11px;white-space:nowrap}
 #kt-ds .co{color:#15803d}#kt-ds .chua{color:#b45309}
 #hop-kt .cot{display:flex;flex-direction:column;gap:8px;min-width:0;min-height:0}
+#hop-gop{position:fixed;inset:0;background:rgba(17,24,39,.35);display:none;align-items:center;justify-content:center;z-index:15}
+#hop-gop .noi{background:#fff;border-radius:14px;width:min(760px,96vw);max-height:90vh;display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.25)}
+#hop-gop h2{margin:0;padding:12px 18px;font-size:16px;border-bottom:1px solid var(--vien)}
+#gop-than{overflow:auto;padding:8px 18px;flex:1}#gop-than .ch{font-weight:700;margin:10px 0 4px;color:#374151}
+#gop-than label{display:flex;gap:8px;align-items:center;padding:3px 6px;border-radius:6px;font-size:13px;cursor:pointer}#gop-than label:hover{background:#f5f7ff}
+#gop-than label .k{margin-left:auto;color:#6b7280;font-size:11.5px;white-space:nowrap}
+#hop-gop .chan{display:flex;gap:8px;align-items:center;padding:10px 18px;border-top:1px solid var(--vien)}
+tr.gop td{background:#eef6ff}tr.gop td.ten{font-weight:600;color:#1e3a8a}tr.gop .bo-gop{margin-left:6px;border:none;background:none;color:#b91c1c;cursor:pointer;font-size:14px;padding:0 4px}
+tr.gop-h td{background:#dbeafe;text-align:left;font-weight:700;padding:8px 12px;color:#1e3a8a}
 #hop-xt{position:fixed;inset:0;background:rgba(17,24,39,.35);display:none;align-items:center;justify-content:center;z-index:15}
 #hop-xt .noi{background:#fff;border-radius:14px;width:min(1100px,96vw);height:min(92vh,960px);display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.25)}
 #hop-xt h2{margin:0;padding:12px 18px;font-size:16px;border-bottom:1px solid var(--vien);display:flex;gap:10px;align-items:center}
@@ -308,6 +317,7 @@ footer .gian{flex:1}
     <div class="thanh">
       <button id="nut-tu-dong" class="chinh" style="background:#334155;border-color:#334155">Tự động điền</button>
       <select id="dien-theo" title="Tự động điền vào hàng dạng hay hàng bài"><option value="dang">theo từng dạng</option><option value="bai">theo bài (ngẫu nhiên các dạng)</option></select>
+      <button id="nut-gop" title="Gộp nhiều bài thành một dòng ma trận: điền số câu theo mức, hệ thống lấy ngẫu nhiên và rải đều câu giữa các bài đã gộp">⊕ Gộp bài…</button>
       <span class="muctieu" id="muc-tieu"></span>
       <span class="gian" style="flex:1"></span>
       <button id="nut-xoa">Xoá số đã điền</button>
@@ -501,6 +511,12 @@ footer .gian{flex:1}
   </div>
   <div class="chan"><span style="font-size:12px;color:#666">Lưu ở du-lieu/kien_thuc/ (phương pháp từng dạng tách sang du-lieu/phuong_phap/ cho Beamer)</span><button id="kt-dong" style="margin-left:auto">Đóng</button></div>
 </div></div>
+<div id="hop-gop"><div class="noi">
+  <h2>Gộp bài — một dòng ma trận lấy ngẫu nhiên câu từ nhiều bài</h2>
+  <div id="gop-than"></div>
+  <div class="chan"><span id="gop-dem" style="font-size:12px;color:#666">Tích từ 2 bài trở lên (chỉ hiện bài thuộc các chương đã tích ở cột trái).</span>
+    <button id="gop-ok" class="chinh" style="margin-left:auto">Thêm dòng gộp</button><button id="gop-dong">Đóng</button></div>
+</div></div>
 <div id="hop-xt"><div class="noi">
   <h2>Xem trước câu được chọn <span id="xt-tom" style="font-weight:400;font-size:12px;color:#666"></span><span id="xt-tab" style="margin-left:auto"></span></h2>
   <div id="xt-than"></div>
@@ -551,7 +567,7 @@ const LOAI=["TN","DS","TLN","TL"], MUC=["N","H","V","C"];
 const TEN_LOAI={TN:"Trắc nghiệm",DS:"Đúng/Sai",TLN:"Trả lời ngắn",TL:"Tự luận"};
 const CHUAN={TN:12,DS:4,TLN:6};
 const MUC_TIEU_MAC_DINH={TN:[6,4,2,0],DS:[0,2,2,0],TLN:[0,2,3,1],TL:[0,0,0,0]};
-let DL=null, chon={}, chuongChon=new Set(), mucTieu=JSON.parse(JSON.stringify(MUC_TIEU_MAC_DINH));
+let DL=null, chon={}, GOP=[], chuongChon=new Set(), mucTieu=JSON.parse(JSON.stringify(MUC_TIEU_MAC_DINH));
 const $=s=>document.querySelector(s);
 const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const khoaChuong=d=>`${d.lop}|${d.mon}|${d.chuong}`;
@@ -595,6 +611,35 @@ function tinhKhoBai(){
     for(const l of LOAI){b.kho[l]??=[0,0,0,0];b.moi[l]??=[0,0,0,0];
       for(let i=0;i<4;i++){b.kho[l][i]+=d.kho[l][i];b.moi[l][i]+=(d.moi?d.moi[l][i]:d.kho[l][i])}}}
 }
+// ---- dòng GỘP BÀI: khoá "0D1?1+0D1?2+0H5?3" → tron_de.py lấy ngẫu nhiên, rải đều giữa các bài
+const tachGop=k=>String(k).split("+").map(x=>x.trim()).filter(Boolean);
+function khoGop(gk){const o={kho:{},moi:{}};
+  for(const l of LOAI){o.kho[l]=[0,0,0,0];o.moi[l]=[0,0,0,0];
+    for(const bk of tachGop(gk)){const b=KHO_BAI[bk];if(!b)continue;for(let i=0;i<4;i++){o.kho[l][i]+=b.kho[l][i];o.moi[l][i]+=b.moi[l][i]}}}
+  return o}
+function tenGop(gk){const ds=tachGop(gk).map(bk=>DL.dang.find(x=>khoaBai(x)===bk)).filter(Boolean);
+  const nhieuLop=new Set(ds.map(d=>d.lop)).size>1;
+  return "Gộp: "+ds.map(d=>`${nhieuLop?"L"+d.lop+" ":""}Bài ${d.bai}. ${d.ten_bai}`).join(" + ")}
+function moGop(){
+  const ch=[...chuongChon]; if(!ch.length){alert("Thầy tích các chương ở cột trái trước, rồi chọn bài để gộp.");return}
+  let h="",cur="";
+  for(const d of DL.dang){ if(!chuongChon.has(khoaChuong(d))) continue; const bk=khoaBai(d);
+    if(h.includes(`value="${bk}"`)) continue;
+    if(khoaChuong(d)!==cur){cur=khoaChuong(d);h+=`<div class="ch">Lớp ${d.lop} · ${esc(d.ten_chuong)}</div>`}
+    const kb=KHO_BAI[bk], t=l=>kb.kho[l].reduce((a,b)=>a+b,0);
+    h+=`<label><input type="checkbox" value="${bk}"> Bài ${d.bai}. ${esc(d.ten_bai)}<span class="k">TN ${t("TN")} · ĐS ${t("DS")} · TLN ${t("TLN")}</span></label>`;}
+  $("#gop-than").innerHTML=h; $("#hop-gop").style.display="flex";
+}
+$("#nut-gop").onclick=moGop;
+$("#gop-dong").onclick=()=>$("#hop-gop").style.display="none";
+$("#gop-ok").onclick=()=>{
+  const ds=[...$("#gop-than").querySelectorAll("input:checked")].map(i=>i.value);
+  if(ds.length<2){alert("Chọn ít nhất 2 bài để gộp.");return}
+  const gk=ds.sort((a,b)=>thuTuDang(a)-thuTuDang(b)).join("+");
+  if(!GOP.includes(gk)) GOP.push(gk);
+  $("#hop-gop").style.display="none"; veBang();
+  $("#bang-boc").scrollTop=0;
+};
 function oNhap(k,l,i,kho,moi){
   const v=chon[k]?.[l]?.[i]||"", nhanKho=kho?(moi<kho?`${moi}/${kho}`:`${kho}`):"";
   return `<td class="o g-${l} cot-${l}" style="color:var(--${l.toLowerCase()})"><input type="number" min="0" max="${kho}" data-k="${k}" data-l="${l}" data-i="${i}" value="${v}" ${kho?"":"disabled"} title="Kho có ${kho} câu ${TEN_LOAI[l]} mức ${MUC[i]}, ${moi} câu chưa dùng ở đề nào" class="${v?"co":""} ${v>kho?"qua":""}"><span class="k">${nhanKho}</span></td>`;
@@ -603,11 +648,18 @@ function dangHienThi(){return DL.dang.filter(d=>chuongChon.has(khoaChuong(d)))}
 
 function veBang(){
   const ds=dangHienThi();
-  if(!ds.length){$("#bang-boc").innerHTML='<div class="rong">Tích ít nhất một chương ở cột bên trái.</div>';capNhatDem();return}
+  if(!ds.length&&!GOP.length){$("#bang-boc").innerHTML='<div class="rong">Tích ít nhất một chương ở cột bên trái.</div>';capNhatDem();return}
   let h=`<table class="${$("#hien_tl").checked?"":"an-TL"}"><thead><tr><th class="ten" rowspan="2">Dạng toán</th>`;
   for(const l of LOAI) h+=`<th colspan="4" class="g-${l} cot-${l}">${TEN_LOAI[l]}</th>`;
   h+="</tr><tr>"; for(const l of LOAI) for(const m of MUC) h+=`<th class="g-${l} cot-${l}">${m}</th>`;
   h+="</tr></thead><tbody>";
+  if(GOP.length){
+    h+=`<tr class="gop-h"><td colspan="17">Dòng gộp bài — câu lấy ngẫu nhiên, rải đều giữa các bài đã gộp</td></tr>`;
+    for(const gk of GOP){const kb=khoGop(gk);
+      h+=`<tr class="gop"><td class="ten">${esc(tenGop(gk))}<span class="ma">${esc(gk)}</span><button class="bo-gop" data-g="${esc(gk)}" title="Bỏ dòng gộp này">✕</button></td>`;
+      for(const l of LOAI) for(let i=0;i<4;i++) h+=oNhap(gk,l,i,kb.kho[l][i],kb.moi[l][i]);
+      h+="</tr>";}
+  }
   let ch="",bai="";
   for(const d of ds){
     const kc=khoaChuong(d);
@@ -622,6 +674,7 @@ function veBang(){
     h+="</tr>";
   }
   $("#bang-boc").innerHTML=h+"</tbody></table>";
+  $("#bang-boc").querySelectorAll(".bo-gop").forEach(b=>b.onclick=()=>{const g=b.dataset.g;GOP=GOP.filter(x=>x!==g);delete chon[g];veBang()});
   $("#bang-boc").querySelectorAll("input").forEach(i=>i.oninput=()=>{
     const v=Math.max(0,parseInt(i.value)||0),{k,l}=i.dataset,idx=+i.dataset.i;
     ((chon[k]??={})[l]??=[0,0,0,0])[idx]=v;
@@ -678,7 +731,7 @@ function tuDong(){
 }
 
 // thứ tự dạng/bài như trên bảng (theo chương trình: lớp → chương → bài → dạng) để câu xếp đúng thứ tự đã chọn
-function thuTuDang(k){const i=(DL?.dang||[]).findIndex(d=>d.k===k||d.k.startsWith(k+"-"));return i<0?1e9:i}
+function thuTuDang(k){k=String(k).split("+")[0];const i=(DL?.dang||[]).findIndex(d=>d.k===k||d.k.startsWith(k+"-"));return i<0?1e9:i}
 function maTran(){
   const phan=[];
   for(const l of LOAI){const yc=[];
@@ -726,7 +779,7 @@ async function theoDoi(dau){
 }
 
 $("#nut-tu-dong").onclick=tuDong;
-$("#nut-xoa").onclick=()=>{chon={};veBang()};
+$("#nut-xoa").onclick=()=>{chon={};GOP=[];veBang()};
 $("#nut-xem").onclick=()=>xuat(true);
 $("#nut-xuat").onclick=()=>xuat(false);
 $("#hien_tl").onchange=()=>{veBang()};
@@ -752,8 +805,15 @@ function napMaTran(mt){
   $("#kho_in").value=String(mt.tiet_kiem?(mt.co_chu||11):12); $("#hai_cot").checked=!!mt.hai_cot; $("#xuat_word_k12").checked=!!mt.xuat_word_k12; if(mt.k12_thu_tu) $("#k12_thu_tu").value=mt.k12_thu_tu; $("#xuat_word_de").checked=!!mt.xuat_word_de; if(mt.word_cong_thuc) $("#word_cong_thuc").value=mt.word_cong_thuc;
   chon={}; const khongKhop=[]; const biet=new Map(DL.dang.map(d=>[d.k,d]));
   for(const d of DL.dang) if(!biet.has(khoaBai(d))) biet.set(khoaBai(d),d);
+  GOP=[];
   for(const p of mt.phan||[]) for(const y of p.yeu_cau){
     const muc=Array.isArray(y.muc)?y.muc:[y.muc];
+    const phanGop=Array.isArray(y.dang)?y.dang:tachGop(y.dang);
+    if(phanGop.length>1&&y.muc&&muc.length===1&&phanGop.every(x=>biet.has(x))){
+      const gk=phanGop.join("+"); if(!GOP.includes(gk)) GOP.push(gk);
+      ((chon[gk]??={})[p.loai]??=[0,0,0,0])[MUC.indexOf(muc[0])]+=y.so;
+      for(const x of phanGop) chuongChon.add(khoaChuong(biet.get(x)));
+      continue}
     if(!biet.has(y.dang)||muc.length!==1||!y.muc){khongKhop.push(`${p.loai} ${y.dang} ${y.muc||"*"} ×${y.so}`);continue}
     ((chon[y.dang]??={})[p.loai]??=[0,0,0,0])[MUC.indexOf(muc[0])]+=y.so;
     const d=biet.get(y.dang); chuongChon.add(khoaChuong(d));

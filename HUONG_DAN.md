@@ -174,6 +174,12 @@ Nạp đáp án: Chấm Phiếu AI → ô **Đáp án** → **Nhập từ file E
 Khung đề chính thức nằm ở `khung/DeThiChinhThuc/mau_de.tex` (in đen trắng). Muốn dạng ôn tập có màu
 như phần mềm cũ thì ghi `"khung": "DeThi"` trong file JSON.
 
+## Gộp bài trong ma trận (lấy ngẫu nhiên các bài gộp lại)
+- Tích chương ở cột trái → bấm **⊕ Gộp bài…** → tích 2 bài trở lên → **Thêm dòng gộp**.
+- Dòng gộp hiện ở đầu bảng (nền xanh), điền số câu theo loại và mức như dòng thường. Có thể tạo nhiều dòng gộp; bấm ✕ để bỏ.
+- Khi ra đề: câu lấy ngẫu nhiên trong các bài đã gộp, **rải đều giữa các bài** (6 câu gộp 3 bài → mỗi bài khoảng 2 câu); nhiều mã đề khác câu thì mỗi mã cũng chia đều các bài.
+- Trong file ma trận: `"dang": "0D1?1+0D1?2+0H5?3"` (CSV: cột `ma_dang` ghi y như vậy). Lưu ma trận, mở lại, Bộ đề nhiều lần đều giữ dòng gộp.
+
 ## Ôn thi học kì (ma trận từng câu 12 TN · 4 Đúng/Sai · 6 Trả lời ngắn)
 
 Nút **Ôn thi học kì** trên thanh đầu. Chọn **Lớp 9/10/11/12** và **Kỳ** (giữa/cuối HK I, II); bảng có sẵn ma trận mặc định
