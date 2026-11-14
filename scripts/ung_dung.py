@@ -118,6 +118,18 @@ def bien_dich_nen(rel):
     ghi_log("Xong.")
     cong_viec.update(dang_chay=False, xong=True)
 
+def chay_bo_de(cfg, bd):
+    import bo_de
+    cong_viec.update(dang_chay=True, xong=False, nhat_ky="")
+    def ghi_log(x):
+        cong_viec["nhat_ky"] += x + "\n"
+    try:
+        bo_de.chay(cfg, ghi_log, bien_dich=bd)
+    except Exception as e:
+        ghi_log(f"Lỗi: {e}")
+    ghi_log("Xong.")
+    cong_viec.update(dang_chay=False, xong=True)
+
 def bien_dich_ts10(out):
     import ts10
     cong_viec.update(dang_chay=True, xong=False, nhat_ky="")
@@ -277,6 +289,12 @@ class XuLy(BaseHTTPRequestHandler):
                 except ValueError as e:
                     return self.gui(200, {"ok": False, "nhat_ky": str(e)})
                 return self.gui(200, {"ok": True, "so": so, "nhat_ky": "\n".join(dong)})
+            if u.path == "/api/bo-de":
+                if cong_viec.get("dang_chay"):
+                    return self.gui(200, {"ok": False, "loi": "Đang có việc chạy (biên dịch…), đợi xong rồi bấm lại."})
+                bd = bool(d.get("bien_dich")) and bool(tim_pdflatex())
+                threading.Thread(target=chay_bo_de, args=(d.get("cau_hinh") or {}, bd), daemon=True).start()
+                return self.gui(200, {"ok": True, "bien_dich": bd})
             if u.path.startswith("/api/ts10/"):
                 import ts10
                 viec = u.path.rsplit("/", 1)[1]

@@ -222,6 +222,21 @@ footer .gian{flex:1}
 #ts-xem .the-bai{border:1px solid var(--vien);border-radius:10px;padding:8px 12px;margin:6px 0;display:grid;grid-template-columns:1fr auto;gap:4px 12px;line-height:1.5;font-size:14px}
 #ts-xem .the-bai .dau{font-size:12px;color:#555}#ts-xem .the-bai.moi{animation:nhay 1.2s}
 #hop-ts .chan{padding:10px 18px;border-top:1px solid var(--vien);display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+#thanh-bo{display:none;align-items:center;gap:6px;padding:3px 10px;border-radius:999px;background:#eef2ff;font-size:12.5px}
+#thanh-bo b{color:#1e3a8a}
+#hop-bo{position:fixed;inset:0;background:rgba(17,24,39,.35);display:none;align-items:center;justify-content:center;z-index:12}
+#hop-bo .noi{background:#fff;border-radius:14px;width:min(1050px,96vw);max-height:92vh;display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.25)}
+#hop-bo h2{margin:0;padding:12px 18px;font-size:16px;border-bottom:1px solid var(--vien)}
+#hop-bo .than{overflow:auto;padding:12px 18px;font-size:13px}
+#bo-ds{border-collapse:collapse;width:100%}#bo-ds td,#bo-ds th{border-bottom:1px solid var(--vien);padding:6px;vertical-align:middle;text-align:left}
+#bo-ds th{background:#f3f6ff;font-size:12px}#bo-ds tr.dang-sua{background:#fffbeb}
+#bo-ds input[type=text]{width:100%;box-sizing:border-box;padding:4px 6px;border:1px solid var(--vien);border-radius:6px}
+#bo-ds input[type=number]{width:54px;padding:4px;border:1px solid var(--vien);border-radius:6px}
+#bo-ds .khac{font-size:11.5px;color:#555}#bo-ds .khac .them{color:#15803d}#bo-ds .khac .bot{color:#b91c1c}
+#bo-ds button{padding:3px 7px;font-size:12px}
+#bo-tuy{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin:12px 0 4px}
+#bo-tuy input[type=text],#bo-tuy input[type=number]{padding:5px 7px;border:1px solid var(--vien);border-radius:7px}
+#hop-bo .chan{padding:10px 18px;border-top:1px solid var(--vien);display:flex;gap:8px;align-items:center;flex-wrap:wrap}
 </style>
 </head>
 <body>
@@ -305,6 +320,8 @@ footer .gian{flex:1}
   <div class="dem" id="dem"></div>
   <span class="goiy" id="goi-y-cau-truc"></span>
   <span class="gian"></span>
+  <span id="thanh-bo"><span id="thanh-bo-chu"></span><button id="tb-luu" class="chinh" style="padding:2px 8px">Lưu vào lần này</button><button id="tb-thoat" style="padding:2px 8px">✕</button></span>
+  <button id="nut-bo" title="Bộ đề ôn tập nhiều lần: thêm ma trận hiện tại thành Lần 1, 2, 3…, sửa từng lần, xuất cả bộ mã đề nối tiếp">＋ Bộ đề nhiều lần <span id="nut-bo-so"></span></button>
   <button id="nut-xem">Xem trước câu được chọn</button>
   <button id="nut-xuat" class="chinh">Xuất đề</button>
 </footer>
@@ -510,6 +527,23 @@ footer .gian{flex:1}
     <button id="ts-xemtruoc" style="margin-left:auto">Xem trước &amp; đổi bài</button><button id="ts-tao" class="chinh">Tạo đề ngẫu nhiên</button><button id="ts-dong">Đóng</button>
   </div>
 </div></div>
+<div id="hop-bo"><div class="noi">
+  <h2>Bộ đề ôn tập nhiều lần <span style="font-weight:400;font-size:12px;color:#666">— mỗi lần một ma trận (thêm, bớt, sửa so với Lần 1); xuất một lượt, mã đề nối tiếp</span></h2>
+  <div class="than">
+    <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:8px">
+      <button id="bo-them" class="chinh">＋ Thêm ma trận đang có trên bảng thành lần mới</button>
+      <span style="font-size:12px;color:#666">Cách nhanh: tạo Lần 1 → <b>Nhân bản</b> → <b>Sửa</b> (nạp lên bảng, chỉnh số câu) → <b>Lưu vào lần này</b> ở thanh dưới.</span></div>
+    <table id="bo-ds"><thead><tr><th style="width:34px">#</th><th style="width:22%">Tên lần</th><th>Số câu · so với Lần 1</th><th style="width:70px">Số mã</th><th style="width:300px"></th></tr></thead><tbody></tbody></table>
+    <div id="bo-tuy">
+      <label>Tên bộ đề <input type="text" id="bo-ten" value="Bộ đề ôn tập" style="width:230px"></label>
+      <label>Tên kỳ thi in trên đề <input type="text" id="bo-kythi" placeholder="(để trống: theo từng lần)" style="width:220px" title="Điền vd: ĐỀ ÔN TẬP GIỮA KÌ I → đề in “ĐỀ ÔN TẬP GIỮA KÌ I – LẦN 1”"></label>
+      <label>Mã đề bắt đầu <input type="number" id="bo-ma" value="101" style="width:70px"></label>
+      <label class="hop"><input type="checkbox" id="bo-khong-lap" checked> Không lặp câu giữa các lần</label>
+    </div>
+    <div style="font-size:12px;color:#666">Xuất ra 1 thư mục: mỗi lần một thư mục con (đề, lời giải, đáp án Excel…) + 2 quyển gộp <b>Câu hỏi</b> và <b>Lời giải</b> (bìa + mục lục bấm được) khi có biên dịch PDF.</div>
+  </div>
+  <div class="chan"><button id="bo-xoa-het">Xoá cả bộ</button><span id="bo-tong" style="margin-left:auto;font-size:13px"></span><button id="bo-xuat" class="chinh">Xuất cả bộ</button><button id="bo-dong">Đóng</button></div>
+</div></div>
 <div id="hop-thoai"><div class="noi"><h2 id="ht-tieu">…</h2><pre id="ht-noi"></pre><div class="nut" id="ht-nut"></div></div></div>
 
 <script>
@@ -704,6 +738,9 @@ $("#nut-thoat").onclick=async()=>{await api("/api/thoat",{});document.body.inner
 $("#ds-ma-tran").onchange=async e=>{
   const ten=e.target.value; if(!ten) return;
   const mt=await api("/api/ma-tran?ten="+encodeURIComponent(ten));
+  napMaTran(mt); e.target.value="";
+};
+function napMaTran(mt){
   for(const k of ["ten","ten_ky_thi","mon","thoi_gian","so_gd","truong","nam_hoc","giao_vien","khung","sap_xep"]) if(mt[k]!=null&&$("#"+k)) $("#"+k).value=mt[k];
   if(mt.de_cuong!=null) $("#de_cuong").checked=!!mt.de_cuong;
   if(mt.xuat_leftnote!=null) $("#xuat_leftnote").checked=!!mt.xuat_leftnote;
@@ -721,9 +758,9 @@ $("#ds-ma-tran").onchange=async e=>{
     ((chon[y.dang]??={})[p.loai]??=[0,0,0,0])[MUC.indexOf(muc[0])]+=y.so;
     const d=biet.get(y.dang); chuongChon.add(khoaChuong(d));
   }
-  veCay(); veBang(); e.target.value="";
+  veCay(); veBang();
   if(khongKhop.length) alert("Các dòng ma trận viết theo chương (không theo dạng/bài) không hiện được trên bảng:\n"+khongKhop.join("\n"));
-};
+}
 async function moLichSu(){
   const r=await api("/api/lich-su");
   const noi=r.de.length?`${r.so_cau} câu đã được dùng.\n\nCác đề đã ra:\n`+r.de.map(d=>`  • ${d.ten}: ${d.so_cau} câu`).join("\n")
@@ -1511,6 +1548,65 @@ $("#ts-mtr").onclick=()=>{
     TS.dang.filter(d=>d.bai===b.bai).map(d=>`   · ${d.ma.padEnd(5)} ${String(Math.round(d.ti_le*100)).padStart(3)}% đề · kho ${d.so_kho} · ${d.ten}${d.da_ra?" ["+d.da_ra+"]":""}`).join("\n")).join("\n\n");
   hopThoai("Ma trận đề tuyển sinh 10 & tỉ lệ dạng (135 đề 2025–2027)","Tỉ lệ cấp độ: NB 30% · TH 37,5% · VD 32,5%\n\n"+t);
 };
+
+// ---------------- BỘ ĐỀ ÔN TẬP NHIỀU LẦN
+let BO=[], BO_SUA=-1;
+try{BO=JSON.parse(localStorage.getItem("bo_de_nhieu_lan")||"[]")}catch(_){BO=[]}
+function boLuu(){try{localStorage.setItem("bo_de_nhieu_lan",JSON.stringify(BO))}catch(_){} boThanh()}
+function demLoai(mt){const o={TN:0,DS:0,TLN:0};for(const p of mt.phan||[])for(const y of p.yeu_cau)o[p.loai]=(o[p.loai]||0)+y.so;return o}
+function khoaYc(mt){const m={};for(const p of mt.phan||[])for(const y of p.yeu_cau){const k=`${p.loai}|${y.dang}|${y.muc}`;m[k]=(m[k]||0)+y.so}return m}
+function soVoiLan1(mt){
+  if(!BO.length) return "";
+  const a=khoaYc(BO[0].ma_tran), b=khoaYc(mt); let them=0,bot=0,doi=0;
+  for(const k of new Set([...Object.keys(a),...Object.keys(b)])){const d=(b[k]||0)-(a[k]||0); if(d>0)them+=d; if(d<0)bot-=d; if(d&&a[k]&&b[k])doi++}
+  return them||bot?`<span class="them">+${them}</span> / <span class="bot">−${bot}</span> câu`:"giống Lần 1";
+}
+function boVe(){
+  const tb=$("#bo-ds tbody");
+  tb.innerHTML=BO.map((l,i)=>{const d=demLoai(l.ma_tran),t=d.TN+d.DS+d.TLN;
+    return `<tr class="${i===BO_SUA?"dang-sua":""}"><td><b>${i+1}</b></td><td><input type="text" data-i="${i}" class="bo-ten" value="${esc(l.ten)}"></td>
+      <td>${t} câu (TN ${d.TN} · ĐS ${d.DS} · TLN ${d.TLN})<div class="khac">${i?soVoiLan1(l.ma_tran):"gốc"}${i===BO_SUA?" · <b>đang sửa trên bảng</b>":""}</div></td>
+      <td><input type="number" min="1" max="24" data-i="${i}" class="bo-so" value="${l.ma_tran.so_ma_de||1}"></td>
+      <td><button data-i="${i}" class="bo-sua">✎ Sửa</button> <button data-i="${i}" class="bo-nb">⧉ Nhân bản</button>
+        <button data-i="${i}" class="bo-len" ${i?"":"disabled"}>↑</button><button data-i="${i}" class="bo-xuong" ${i<BO.length-1?"":"disabled"}>↓</button>
+        <button data-i="${i}" class="bo-xoa">✕</button></td></tr>`}).join("")||`<tr><td colspan="5" style="color:#666">Chưa có lần nào. Lập ma trận trên bảng rồi bấm “＋ Thêm…”.</td></tr>`;
+  const so=BO.reduce((a,l)=>a+(+l.ma_tran.so_ma_de||1),0), ma=+$("#bo-ma").value||101;
+  $("#bo-tong").textContent=BO.length?`${BO.length} lần · ${so} mã đề (${ma}–${ma+so-1})`:"";
+  tb.querySelectorAll(".bo-ten").forEach(x=>x.onchange=()=>{BO[+x.dataset.i].ten=x.value.trim()||`Lần ${+x.dataset.i+1}`;boLuu()});
+  tb.querySelectorAll(".bo-so").forEach(x=>x.onchange=()=>{BO[+x.dataset.i].ma_tran.so_ma_de=Math.max(1,+x.value||1);boLuu();boVe()});
+  tb.querySelectorAll(".bo-sua").forEach(x=>x.onclick=()=>{const i=+x.dataset.i;napMaTran(BO[i].ma_tran);BO_SUA=i;boThanh();$("#hop-bo").style.display="none"});
+  tb.querySelectorAll(".bo-nb").forEach(x=>x.onclick=()=>{const i=+x.dataset.i;BO.splice(i+1,0,{ten:`Lần ${BO.length+1}`,ma_tran:JSON.parse(JSON.stringify(BO[i].ma_tran))});danhSoLai();boLuu();boVe()});
+  tb.querySelectorAll(".bo-len").forEach(x=>x.onclick=()=>{const i=+x.dataset.i;[BO[i-1],BO[i]]=[BO[i],BO[i-1]];boLuu();boVe()});
+  tb.querySelectorAll(".bo-xuong").forEach(x=>x.onclick=()=>{const i=+x.dataset.i;[BO[i+1],BO[i]]=[BO[i],BO[i+1]];boLuu();boVe()});
+  tb.querySelectorAll(".bo-xoa").forEach(x=>x.onclick=()=>{const i=+x.dataset.i;if(!confirm(`Xoá “${BO[i].ten}”?`))return;BO.splice(i,1);if(BO_SUA===i)BO_SUA=-1;boLuu();boVe()});
+}
+function danhSoLai(){BO.forEach((l,i)=>{if(/^Lần \d+$/.test(l.ten)) l.ten=`Lần ${i+1}`})}
+function boThanh(){
+  $("#nut-bo-so").textContent=BO.length?`(${BO.length})`:"";
+  const t=$("#thanh-bo"); if(BO_SUA>=0&&BO[BO_SUA]){t.style.display="inline-flex";$("#thanh-bo-chu").innerHTML=`Đang sửa <b>${esc(BO[BO_SUA].ten)}</b> của bộ đề`}else t.style.display="none";
+}
+$("#nut-bo").onclick=()=>{$("#hop-bo").style.display="flex";boVe()};
+$("#bo-dong").onclick=()=>$("#hop-bo").style.display="none";
+$("#bo-ma").onchange=boVe;
+$("#bo-them").onclick=()=>{const mt=maTran(); if(!mt.phan.length){alert("Bảng ma trận đang trống — chọn số câu trước.");return}
+  BO.push({ten:`Lần ${BO.length+1}`,ma_tran:mt}); BO_SUA=-1; boLuu(); boVe()};
+$("#tb-luu").onclick=()=>{ if(BO_SUA<0)return; const mt=maTran(); if(!mt.phan.length){alert("Bảng ma trận đang trống.");return}
+  const so=BO[BO_SUA].ma_tran.so_ma_de; BO[BO_SUA].ma_tran={...mt,so_ma_de:so}; const ten=BO[BO_SUA].ten; boLuu();
+  $("#tb-luu").textContent="Đã lưu ✓"; setTimeout(()=>$("#tb-luu").textContent="Lưu vào lần này",1500);
+  hopThoai(`Đã lưu ${ten}`,`${demLoai(mt).TN+demLoai(mt).DS+demLoai(mt).TLN} câu · ${BO_SUA?soVoiLan1(mt).replace(/<[^>]+>/g,""):"(lần gốc)"}`,[["Mở bộ đề",()=>{$("#hop-thoai").style.display="none";$("#hop-bo").style.display="flex";boVe()},true]]);};
+$("#tb-thoat").onclick=()=>{BO_SUA=-1;boThanh()};
+$("#bo-xoa-het").onclick=()=>{if(BO.length&&confirm("Xoá cả bộ đề (mọi lần)?")){BO=[];BO_SUA=-1;boLuu();boVe()}};
+$("#bo-xuat").onclick=async()=>{
+  if(!BO.length){alert("Bộ đề chưa có lần nào.");return}
+  const cfg={ten:$("#bo-ten").value.trim()||"Bộ đề ôn tập",ten_ky_thi_chung:$("#bo-kythi").value.trim(),ma_de_bat_dau:+$("#bo-ma").value||101,
+    khong_lap:$("#bo-khong-lap").checked,cac_lan:BO};
+  const r=await api("/api/bo-de",{cau_hinh:cfg,bien_dich:$("#bien_dich").checked}); if(!r.ok){alert(r.loi);return}
+  $("#hop-bo").style.display="none";
+  hopThoai(`Đang xuất bộ đề: ${cfg.ten}`,"Đang chọn câu từng lần…"+(r.bien_dich?" (sau đó biên dịch PDF và gộp quyển — có thể mất vài phút)":""),
+    [["Mở thư mục",async()=>{const s=await api("/api/trang-thai");const m=s.nhat_ky.match(/THU_MUC:(.+)/);if(m)api("/api/mo",{duong_dan:m[1].trim()});else alert("Chưa xong.")},true]]);
+  theoDoi(`Bộ đề: ${cfg.ten} — ${BO.length} lần`);
+};
+boThanh();
 tai();
 </script>
 </body>
