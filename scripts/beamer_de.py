@@ -100,8 +100,10 @@ def dau_beamer(thu_muc_tex, kieu, tt, ma_de, khung_de="2/3"):
 \providecommand{\True}{}\providecommand{\loigiai}[1]{}\providecommand{\dapso}[1]{}
 % ---------- co nội dung vừa khung: quá cao thì thu nhỏ
 \newsavebox\hopCau
-% phóng chữ lớn nhất có thể: soạn nội dung ở khổ hẹp (bề rộng / k) rồi phóng k lần cho đầy bề ngang,
-% chọn k lớn nhất (1,9 → 1,0) mà chiều cao vẫn vừa khung; vẫn không vừa thì thu nhỏ cho vừa chiều cao
+% cỡ chữ cân đối cho máy chiếu: soạn ở khổ hẹp (bề rộng / k) rồi phóng k lần cho đầy bề ngang,
+% k tối đa 1,3 (≈ 8–10 dòng/slide, đọc rõ từ cuối lớp); không vừa thì thu nhỏ dần tới 1,0 rồi thu theo chiều cao
+% chữ hơi đậm (viền nét 0,25pt) để nhìn rõ trên máy chiếu: \damNhe … \heDam
+\providecommand{\damNhe}{\pdfliteral direct{2 Tr 0.25 w}}\providecommand{\heDam}{\pdfliteral direct{0 Tr 1 w}}
 \newlength\rongTam\newlength\caoToiDa\setlength\caoToiDa{0.865\textheight}
 % phần ĐỀ BÀI chỉ chiếm phần trên màn hình (1/2, 2/3…) — phía dưới để trống cho giáo viên viết, vẽ khi giảng
 \newlength\caoDe\setlength\caoDe{TI_LE_DE\textheight}
@@ -110,9 +112,9 @@ def dau_beamer(thu_muc_tex, kieu, tt, ma_de, khung_de="2/3"):
 \newif\ifvuaKhung
 \newcommand{\vuaKhung}[1]{\vuaKhungfalse
   \def\thuCo##1{\ifvuaKhung\else\setlength\rongTam{\dimexpr\linewidth*100/##1\relax}%
-    \sbox\hopCau{\begin{minipage}[t]{\rongTam}\vspace{0pt}\coChu\raggedright\parindent=0pt #1\end{minipage}}%
+    \sbox\hopCau{\begin{minipage}[t]{\rongTam}\vspace{0pt}\coChu\damNhe\raggedright\parindent=0pt #1\heDam\end{minipage}}%
     \ifdim\dimexpr(\ht\hopCau+\dp\hopCau)*##1/100\relax<\caoToiDa\vuaKhungtrue\fi\fi}%
-  \thuCo{190}\thuCo{170}\thuCo{155}\thuCo{140}\thuCo{128}\thuCo{116}\thuCo{106}\thuCo{100}%
+  \thuCo{130}\thuCo{122}\thuCo{114}\thuCo{107}\thuCo{100}%
   \ifvuaKhung\resizebox{\linewidth}{!}{\usebox\hopCau}\else\resizebox*{!}{\caoToiDa}{\usebox\hopCau}\fi}
 % hình/bảng rộng hơn khung chữ thì thu cho vừa bề ngang
 \newsavebox\hopHinh
@@ -120,15 +122,15 @@ def dau_beamer(thu_muc_tex, kieu, tt, ma_de, khung_de="2/3"):
 % câu hỏi: thử 1 cột (phóng to nhất có thể); quá cao thì đề bên trái – phương án bên phải
 \newcommand{\vuaKhungCau}[2]{\vuaKhungfalse
   \def\thuCo##1{\ifvuaKhung\else\setlength\rongTam{\dimexpr\linewidth*100/##1\relax}%
-    \sbox\hopCau{\begin{minipage}[t]{\rongTam}\vspace{0pt}\coChu\raggedright\parindent=0pt #1\par #2\end{minipage}}%
+    \sbox\hopCau{\begin{minipage}[t]{\rongTam}\vspace{0pt}\coChu\damNhe\raggedright\parindent=0pt #1\par #2\heDam\end{minipage}}%
     \ifdim\dimexpr(\ht\hopCau+\dp\hopCau)*##1/100\relax<\caoDe\vuaKhungtrue\fi\fi}%
-  \thuCo{190}\thuCo{170}\thuCo{155}\thuCo{140}\thuCo{128}\thuCo{116}\thuCo{106}\thuCo{100}%
+  \thuCo{130}\thuCo{122}\thuCo{114}\thuCo{107}\thuCo{100}%
   \def\thuCo##1{\ifvuaKhung\else\setlength\rongTam{\dimexpr\linewidth*100/##1\relax}%
-    \sbox\hopCau{\begin{minipage}[t]{\rongTam}\vspace{0pt}\coChu\raggedright\parindent=0pt
+    \sbox\hopCau{\begin{minipage}[t]{\rongTam}\vspace{0pt}\coChu\damNhe\raggedright\parindent=0pt
       \begin{minipage}[t]{0.56\linewidth}\vspace{0pt}#1\end{minipage}\hfill
-      \begin{minipage}[t]{0.41\linewidth}\vspace{0pt}\let\phuongAn\phuongAnDoc #2\end{minipage}\end{minipage}}%
+      \begin{minipage}[t]{0.41\linewidth}\vspace{0pt}\let\phuongAn\phuongAnDoc #2\end{minipage}\heDam\end{minipage}}%
     \ifdim\dimexpr(\ht\hopCau+\dp\hopCau)*##1/100\relax<\caoDe\vuaKhungtrue\fi\fi}%
-  \thuCo{150}\thuCo{130}\thuCo{115}\thuCo{100}%
+  \thuCo{125}\thuCo{112}\thuCo{100}%
   \ifvuaKhung\resizebox{\linewidth}{!}{\usebox\hopCau}\else\resizebox*{!}{\caoDe}{\usebox\hopCau}\fi}
 % ---------- phương án: tự xếp 4 / 2 / 1 cột; slide 2 tô đáp án đúng
 \newlength\rongPA\newlength\tamPA
