@@ -51,12 +51,13 @@ def du_lieu_cay():
         if not m:
             continue
         t = id_map.get(k, {})
-        ds.append({"k": k, "lop": 10 + int(m.group(1)), "mon": m.group(2), "chuong": int(m.group(3)),
+        ds.append({"k": k, "lop": lop_tu_so(m.group(1)), "mon": m.group(2), "chuong": int(m.group(3)),
                    "bai": int(m.group(4)), "dang": int(m.group(5)),
                    "ten_chuong": t.get("chap_name") or f"Chương {m.group(3)} ({k[:3]})",
                    "ten_bai": t.get("lesson_name") or f"Bài {m.group(4)}",
                    "ten_dang": t.get("type_name") or f"Dạng {m.group(5)}", "kho": v, "moi": moi[k]})
-    ds.sort(key=lambda d: (d["lop"], "DHC".find(d["mon"]), d["chuong"], d["bai"], d["dang"]))
+    ds.sort(key=lambda d: (d["lop"], 0, 0, d["bai"], d["dang"]) if d["lop"] == 9 else   # lớp 9: theo thứ tự bài SGK
+                          (d["lop"], "DHC".find(d["mon"]), d["chuong"], d["bai"], d["dang"]))
     ch = cau_hinh()
     mac_dinh = {"so_gd": "SỞ GD&ĐT TP. HỒ CHÍ MINH", "truong": "TRƯỜNG THPT NGUYỄN HỮU CẢNH",
                 "nam_hoc": "NĂM HỌC 2026 -- 2027", "thoi_gian": "90 phút", "giao_vien": "Vũ Tiến Lực"}
@@ -251,6 +252,15 @@ class XuLy(BaseHTTPRequestHandler):
             if u.path == "/api/kien-thuc":
                 import phieu_bai_hoc
                 return self.gui(200, {"ok": True, "noi_dung": phieu_bai_hoc.doc_kien_thuc(d.get("pham_vi") or [])})
+            if u.path == "/api/phieu-thieu":
+                import phieu_bai_hoc
+                cfg = d.get("cau_hinh") or {}
+                try:
+                    thieu = phieu_bai_hoc.tao(cfg, lambda x: None, chi_tinh=True)
+                except Exception as e:
+                    return self.gui(200, {"ok": False, "loi": str(e)})
+                return self.gui(200, {"ok": True, "thieu": thieu,
+                                      "bo_sung": phieu_bai_hoc.goi_y_bo_sung(cfg.get("dang") or [], phieu_bai_hoc.tai_id_map())})
             if u.path == "/api/phieu":
                 import phieu_bai_hoc
                 dong = []

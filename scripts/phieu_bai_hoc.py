@@ -193,7 +193,8 @@ def chon_cau(cau_hinh_phieu, rng):
                 THIEU_CAU.append((None, loai, "H", can - len(v)))
     return cac_dang, kq, thieu
 
-def tao(cfg, in_ra=print):
+def tao(cfg, in_ra=print, chi_tinh=False):
+    """chi_tinh=True: chỉ chọn thử câu để tính số câu kho còn thiếu (THIEU_CAU), không ghi file."""
     THIEU_CAU.clear()
     CH = cau_hinh()
     tt = {**CH.get("thong_tin_de", {}), **{k: v for k, v in cfg.items() if v not in (None, "")}}
@@ -217,11 +218,13 @@ def tao(cfg, in_ra=print):
         kq_tl, thieu = phieu_tu_luan.chon(ds, cac_dang, cfg, rng, khoa_noi_dung, THIEU_CAU)
         cac_dang_chon = list(cac_dang)
         cac_dang = [d for d in cac_dang if d in kq_tl]
-        if not kq_tl:
+        if not kq_tl and not chi_tinh:
             raise RuntimeError("Không tìm thấy câu tự luận nào (có lời giải) trong phạm vi đã chọn.")
         kq = {"LT": {l: [] for l in CAC_LOAI}, "BTVN": {l: [] for l in CAC_LOAI}}
     else:
         cac_dang, kq, thieu = chon_cau(cfg, rng)
+    if chi_tinh:
+        return thieu
     if not tu_luan and not any(kq["LT"][l] for l in CAC_LOAI):
         raise RuntimeError("Không tìm thấy câu nào trong phạm vi đã chọn.")
     loai_phieu = cfg.get("loai_phieu") or ("on_tap_chuong" if all("?" not in p for p in cfg["pham_vi"])
@@ -229,7 +232,7 @@ def tao(cfg, in_ra=print):
     nhan = {"bai_hoc": "PHIẾU BÀI HỌC", "chuyen_de": "PHIẾU CHUYÊN ĐỀ", "on_tap_chuong": "PHIẾU ÔN TẬP CHƯƠNG"}[loai_phieu]
     vd = id_map.get(cac_dang[0], {}) if cac_dang else {}
     ten = cfg.get("ten") or (vd.get("chap_name") if loai_phieu == "on_tap_chuong" else vd.get("lesson_name")) or "Bài học"
-    lop = 10 + int(cac_dang[0][0]) if cac_dang else ""
+    lop = lop_tu_so(cac_dang[0][0]) if cac_dang else ""
     gv = tt.get("giao_vien") or "Vũ Tiến Lực"
     # ---------- thư mục ra
     ngay = time.strftime("%d-%m-%Y")

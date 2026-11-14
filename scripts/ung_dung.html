@@ -269,7 +269,7 @@ footer .gian{flex:1}
   <h2>Prompt cho AI — soạn câu hỏi theo bài học từ tài liệu</h2>
   <div class="than">
     <div class="hang">
-      <label>Lớp<select id="soan-lop"><option>10</option><option>11</option><option selected>12</option></select></label>
+      <label>Lớp<select id="soan-lop"><option>9</option><option>10</option><option>11</option><option selected>12</option></select></label>
       <label>Chương<select id="soan-chuong"></select></label>
       <label>Bài học<select id="soan-bai"></select></label>
     </div>
@@ -317,7 +317,7 @@ footer .gian{flex:1}
 </div></div>
 <div id="hop-ma"><div class="noi">
   <h2>Bảng mã dạng — tra cứu nhanh</h2>
-  <div class="loc"><select id="ma-lop"><option value="">Mọi lớp</option><option>10</option><option>11</option><option>12</option></select>
+  <div class="loc"><select id="ma-lop"><option value="">Mọi lớp</option><option>9</option><option>10</option><option>11</option><option>12</option></select>
     <input id="ma-tim" placeholder="Gõ tên chương, bài, dạng hoặc mã (vd: trung vị, tích vô hướng, 0D6?3)…">
     <select id="ma-muc" title="Mức độ điền vào chỗ ?"><option value="?">Mức: ? (theo câu)</option><option value="N">N – Nhận biết</option><option value="H">H – Thông hiểu</option><option value="V">V – Vận dụng</option><option value="C">C – Vận dụng cao</option></select></div>
   <div id="ma-ds"></div>
@@ -366,7 +366,7 @@ footer .gian{flex:1}
   <div class="than">
     <div class="cot">
       <div style="display:grid;grid-template-columns:90px minmax(0,1fr);gap:8px">
-        <label>Lớp<select id="ph-lop"><option>10</option><option>11</option><option selected>12</option></select></label>
+        <label>Lớp<select id="ph-lop"><option value="9">9 (THCS – KNTT)</option><option>10</option><option>11</option><option selected>12</option></select></label>
         <label>Chương<select id="ph-chuong"></select></label></div>
       <div><b>Bài học</b> <span class="nho">— tích 1 bài: phiếu bài học · vài bài: chuyên đề · cả chương: ôn tập chương</span>
         <span style="float:right"><a href="#" id="ph-ca-chuong">cả chương</a> · <a href="#" id="ph-bo-bai">bỏ hết</a></span>
@@ -411,7 +411,7 @@ footer .gian{flex:1}
       <p class="nho" style="margin:0">Chân trang: GV (ô Giáo viên ở khung chính) · tên phiếu · Trang x/y. Xuất PDF + TeX: phiếu đầy đủ, phiếu trên lớp, phiếu về nhà (mỗi phiếu có file câu hỏi và file lời giải riêng) + Beamer trình chiếu.</p>
     </div>
   </div>
-  <div class="chan"><span id="ph-tt" class="nho"></span><button id="ph-tao" class="chinh" style="margin-left:auto">Tạo phiếu</button><button id="ph-dong">Đóng</button></div>
+  <div class="chan"><span id="ph-tt" class="nho"></span><button id="ph-thieu" style="margin-left:auto" title="Kiểm tra ngân hàng đủ câu cho phiếu này chưa; thiếu thì soạn prompt cho AI sinh câu, rồi nhập vào ngân hàng">Kiểm tra kho / Prompt AI soạn câu…</button><button id="ph-tao" class="chinh">Tạo phiếu</button><button id="ph-dong">Đóng</button></div>
 </div></div>
 <div id="hop-thoai"><div class="noi"><h2 id="ht-tieu">…</h2><pre id="ht-noi"></pre><div class="nut" id="ht-nut"></div></div></div>
 
@@ -662,7 +662,7 @@ async function moSoan(){
 }
 function dienChuong(cc){
   const lop=+$("#soan-lop").value, seen=new Map();
-  for(const d of DM_DANG) if(d.lop===lop){const k=`${d.lop}|${d.mon}|${d.chuong}`;if(!seen.has(k))seen.set(k,`${d.mon==="H"?"Hình":d.mon==="D"?"Đại số":"Chuyên đề"} – Ch.${d.chuong}: ${d.ten_chuong}`)}
+  for(const d of DM_DANG) if(d.lop===lop){const k=`${d.lop}|${d.mon}|${d.chuong}`;if(!seen.has(k))seen.set(k,/^Chương/.test(d.ten_chuong)?d.ten_chuong:`${d.mon==="H"?"Hình":d.mon==="D"?"Đại số":"Chuyên đề"} – Ch.${d.chuong}: ${d.ten_chuong}`)}
   $("#soan-chuong").innerHTML=[...seen].map(([k,t])=>`<option value="${k}">${esc(t)}</option>`).join("");
   if(cc&&seen.has(cc))$("#soan-chuong").value=cc;
   dienBai();
@@ -1091,7 +1091,7 @@ async function moPhieu(){
 }
 function phChuong(){
   const lop=+$("#ph-lop").value, m=new Map();
-  for(const d of DM_DANG) if(d.lop===lop){const k=d.k.slice(0,3); if(!m.has(k)) m.set(k,`Ch.${d.chuong} ${d.ten_chuong}`)}
+  for(const d of DM_DANG) if(d.lop===lop){const k=d.k.slice(0,3); if(!m.has(k)) m.set(k,/^Chương/.test(d.ten_chuong)?d.ten_chuong:`Ch.${d.chuong} ${d.ten_chuong}`)}
   $("#ph-chuong").innerHTML=[...m].map(([k,t])=>`<option value="${k}">${esc(t)}</option>`).join(""); phBai();
 }
 function phBai(){
@@ -1104,14 +1104,15 @@ function phBaiChon(){return [...document.querySelectorAll("#ph-bai input:checked
 async function phDang(){
   const bai=phBaiChon(), kho={};
   for(const d of (DL?.dang||[])) kho[d.k]=["TN","DS","TLN"].map(l=>d.kho[l].reduce((a,b)=>a+b,0));
+  const coKho=DM_DANG.some(d=>bai.includes(d.k.split("-")[0])&&(kho[d.k]||[0,0,0]).some(x=>x));
   $("#ph-dang").innerHTML=DM_DANG.filter(d=>bai.includes(d.k.split("-")[0])).map(d=>{const k=kho[d.k]||[0,0,0];
-    return `<label class="hop"><input type="checkbox" value="${d.k}" ${k.some(x=>x)?"checked":""}> ${esc(d.ten_dang)} <span class="ma">${d.k} · ${k.join("/")}</span></label>`}).join("")
+    return `<label class="hop"><input type="checkbox" value="${d.k}" ${k.some(x=>x)||!coKho?"checked":""}> ${esc(d.ten_dang)} <span class="ma">${d.k} · ${k.join("/")}</span></label>`}).join("")
     ||'<span class="nho">Chưa chọn bài.</span>';
   const tatCa=document.querySelectorAll("#ph-bai input").length, n=bai.length;
   const loai=n&&n===tatCa?"on_tap_chuong":n===1?"bai_hoc":"chuyen_de";
   $("#ph-loai").textContent={on_tap_chuong:"→ Phiếu ôn tập chương",bai_hoc:"→ Phiếu bài học",chuyen_de:"→ Phiếu chuyên đề"}[loai];
   $("#ph-loai").dataset.loai=loai;
-  const ten=loai==="on_tap_chuong"?$("#ph-chuong").selectedOptions[0]?.textContent.replace(/^Ch\.\d+\s*/,""):
+  const ten=loai==="on_tap_chuong"?$("#ph-chuong").selectedOptions[0]?.textContent.replace(/^Ch\.\d+\s*/,"").replace(/^Chương [IVXLC]+\.\s*/,""):
     bai.map(k=>document.querySelector(`#ph-bai input[value="${k}"]`).parentNode.textContent.trim().replace(/^Bài \d+\.\s*/,"")).join(" – ");
   $("#ph-ten").value=ten||"";
   const pv=loai==="on_tap_chuong"?[$("#ph-chuong").value]:bai;
@@ -1159,15 +1160,29 @@ async function promptBoSung(bs){
      ["Nhập câu AI trả về…",()=>{$("#hop-thoai").style.display="none";$("#tep-nhap").click()}]]);
 }
 $("#ph-nc").onchange=e=>{$("#ph-vd").disabled=$("#ph-vdc").disabled=!e.target.checked};
-$("#ph-tao").onclick=async()=>{
-  const bai=phBaiChon(); if(!bai.length){alert("Chọn ít nhất một bài.");return}
-  const dang=[...document.querySelectorAll("#ph-dang input:checked")].map(x=>x.value); if(!dang.length){alert("Chọn ít nhất một dạng.");return}
+function phCfg(){
+  const bai=phBaiChon(); if(!bai.length){alert("Chọn ít nhất một bài.");return null}
+  const dang=[...document.querySelectorAll("#ph-dang input:checked")].map(x=>x.value); if(!dang.length){alert("Chọn ít nhất một dạng.");return null}
   const loai=$("#ph-loai").dataset.loai, tl=+document.querySelector('input[name="ph-tl"]:checked').value;
   const cfg={pham_vi:loai==="on_tap_chuong"?[$("#ph-chuong").value]:bai,dang,loai_phieu:loai,ten:$("#ph-ten").value.trim(),thoi_luong:tl,
     so_cau:{TN:+$("#ph-tn").value||0,DS:+$("#ph-ds").value||0,TLN:+$("#ph-tln").value||0},kien_thuc:$("#ph-kt").value,
     co_chu:+$("#ph-co").value,hai_cot:$("#ph-hai-cot").checked,beamer:$("#ph-beamer").checked,kieu_cau:document.querySelector('input[name="ph-kieu"]:checked').value,so_tuong_tu:+$("#ph-tt").value,
     so_van_dung:+$("#ph-vdtl").value,so_dong_lam_bai:+$("#ph-dong").value,nang_cao:$("#ph-nc").checked?{V:+$("#ph-vd").value||0,C:+$("#ph-vdc").value||0}:{},kien_thuc_in:document.querySelector('input[name="ph-kt-in"]:checked').value,giao_vien:$("#giao_vien").value.trim(),truong:$("#truong").value.trim(),
     nam_hoc:$("#nam_hoc").value.trim(),so_gd:$("#so_gd").value.trim()};
+  return cfg;
+}
+$("#ph-thieu").onclick=async()=>{
+  const cfg=phCfg(); if(!cfg)return;
+  const b=$("#ph-thieu");b.disabled=true;
+  try{const r=await api("/api/phieu-thieu",{cau_hinh:cfg});
+    if(!r.ok){alert(r.loi);return}
+    if(!r.bo_sung){hopThoai("Ngân hàng đã đủ câu","Kho đã đủ câu cho phiếu này — bấm Tạo phiếu.");return}
+    hopThoai("Ngân hàng chưa đủ câu cho phiếu này",r.thieu.map(t=>"⚠ "+t).join("\n")+"\n\nBấm “Prompt AI bổ sung câu thiếu…” để AI soạn đúng số câu còn thiếu theo từng dạng.",
+      [["Prompt AI bổ sung câu thiếu…",()=>promptBoSung(r.bo_sung),true]]);}
+  finally{b.disabled=false}
+};
+$("#ph-tao").onclick=async()=>{
+  const cfg=phCfg(); if(!cfg)return;
   const b=$("#ph-tao");b.disabled=true;b.textContent="Đang tạo…";
   try{const r=await api("/api/phieu",{cau_hinh:cfg,bien_dich:$("#bien_dich").checked});
     const nutBS=r.bo_sung?[["Prompt AI bổ sung câu thiếu…",()=>promptBoSung(r.bo_sung),!r.ok]]:[];

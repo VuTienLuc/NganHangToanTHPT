@@ -155,6 +155,11 @@ def tim_lenh(text, ten):
     m = re.search(r"\\" + ten + r"(?![A-Za-z])", text)
     return m
 
+def lop_tu_so(l):
+    """Chữ số lớp trong mã dạng → lớp: 0→10, 1→11, 2→12, 9→9 (Toán 9 KNTT)."""
+    l = int(l)
+    return 9 if l == 9 else 10 + l
+
 def phan_tich_cau(khoi_text):
     """khoi_text: toàn bộ '\\begin{ex}...\\end{ex}'. Trả dict thông tin."""
     m = re.match(r"\\begin\{(ex|bt)\}", khoi_text)
@@ -165,7 +170,7 @@ def phan_tich_cau(khoi_text):
     md = MA_DANG.search(dong_dau)
     if md:
         l, mon, ch, muc, bai, dg = md.groups()
-        info.update(id=f"{l}{mon}{ch}{muc}{bai}-{dg}", lop=10 + int(l), mon=mon, chuong=int(ch), muc=muc,
+        info.update(id=f"{l}{mon}{ch}{muc}{bai}-{dg}", lop=lop_tu_so(l), mon=mon, chuong=int(ch), muc=muc,
                     bai=int(bai), dang=int(dg), dang_key=f"{l}{mon}{ch}?{bai}-{dg}")
     mc = MA_CAU.search(dong_dau)
     if mc:

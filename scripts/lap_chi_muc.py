@@ -98,7 +98,7 @@ with open(os.path.join(dl, "danh_muc_ma_dang.csv"), "w", encoding="utf-8-sig", n
     w = csv.writer(fo); w.writerow(["ma_dang", "lop", "chuong", "bai", "dang", "so_cau_trong_kho"])
     for k in sorted(id_map, key=lambda k: (k[0], "DHC".find(k[1]), k)):
         t = id_map[k]
-        w.writerow([k, 10 + int(k[0]), t["chap_name"], t["lesson_name"], t["type_name"], sum(bang.get(k, {}).values())])
+        w.writerow([k, lop_tu_so(k[0]), t["chap_name"], t["lesson_name"], t["type_name"], sum(bang.get(k, {}).values())])
 
 # ---- báo cáo
 tk_loai = collections.Counter(c["loai"] for c in ds_cau)
