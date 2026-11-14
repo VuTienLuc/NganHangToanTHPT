@@ -230,13 +230,16 @@ def danh_sach_dang():
             ra.append({"k": k, "lop": lop_tu_so(m.group(1)), "mon": m.group(2), "chuong": int(m.group(3)),
                        "bai": int(m.group(4)), "dang": int(m.group(5)), "ten_chuong": t.get("chap_name", "").strip(),
                        "ten_bai": t.get("lesson_name", "").strip(), "ten_dang": t.get("type_name", "").strip()})
-    ra.sort(key=lambda d: (d["lop"], 0, 0, d["bai"], d["dang"]) if d["lop"] == 9 else   # lớp 9: theo thứ tự bài SGK
+    ra.sort(key=lambda d: (d["lop"], 0, 0, d["bai"], d["dang"]) if d["lop"] <= 9 else   # THCS: theo thứ tự bài SGK
                           (d["lop"], "DHC".find(d["mon"]), d["chuong"], d["bai"], d["dang"]))
     return ra
 
-LOP9 = """- Lớp 9 (THCS): bám SGK Toán 9 Kết nối tri thức và đề tuyển sinh vào lớp 10 (TP.HCM): ngôn ngữ, kí hiệu, mức độ phù hợp học sinh lớp 9;
-  không dùng kiến thức THPT (đạo hàm, vectơ, lượng giác góc bất kì, logarit…). Hình học dùng lập luận tổng hợp, có hình vẽ TikZ khi cần.
-- Bài tự luận (TL) lớp 9 viết như đề thi vào 10: có thể nhiều ý a), b), c) tăng dần; lời giải trình bày đầy đủ như bài làm mẫu của học sinh."""
+def lop_thcs(lop):
+    """Hướng dẫn riêng cho Toán THCS (lớp 6–9, KNTT)."""
+    nen = ("đề tuyển sinh vào lớp 10 (TP.HCM)" if lop == 9 else f"đề kiểm tra giữa kì, cuối kì Toán {lop}")
+    return (f"- Lớp {lop} (THCS): bám SGK Toán {lop} Kết nối tri thức và {nen}: ngôn ngữ, kí hiệu, mức độ phù hợp học sinh lớp {lop};\n"
+            f"  chỉ dùng kiến thức đến lớp {lop} (không dùng kiến thức các lớp trên). Hình học dùng lập luận tổng hợp, có hình vẽ TikZ khi cần.\n"
+            f"- Bài tự luận (TL) viết như đề kiểm tra: có thể nhiều ý a), b), c) tăng dần; lời giải trình bày đầy đủ như bài làm mẫu của học sinh.")
 
 def tao_prompt_soan(cac_dang, so_cau, tai_lieu="", cach="ket_hop", thuc_te=False, ghi_chu=""):
     """cac_dang: danh sách mã '2D1?1-2'; so_cau: {"TN":[N,H,V,C], ...}."""
@@ -266,7 +269,7 @@ def tao_prompt_soan(cac_dang, so_cau, tai_lieu="", cach="ket_hop", thuc_te=False
         chung = chung[:i] + chung[j:]
     chung = chung.replace("Đủ số câu như đề", "Đủ số câu theo loại × mức như bảng")
     p = f"""# NHIỆM VỤ
-Thầy là giáo viên Toán {"THCS – Toán 9, sách Kết nối tri thức với cuộc sống" if lop == 9 else "THPT"} (chương trình GDPT 2018). Đính kèm là **tài liệu học tập**{(': ' + tai_lieu) if tai_lieu else ''}.
+Thầy là giáo viên Toán {f"THCS – Toán {lop}, sách Kết nối tri thức với cuộc sống" if lop <= 9 else "THPT"} (chương trình GDPT 2018). Đính kèm là **tài liệu học tập**{(': ' + tai_lieu) if tai_lieu else ''}.
 Hãy **đọc kỹ tài liệu** (lý thuyết, định nghĩa, công thức, ví dụ, luyện tập, bài tập) rồi **SOẠN CÂU HỎI MỚI** cho:
 **Lớp {lop} — {ten_bai}** ({bai[0][0]}).
 Câu hỏi phải đúng phạm vi bài học: chỉ dùng kiến thức có trong tài liệu và các bài trước, KHÔNG dùng kiến thức của bài sau.
@@ -280,7 +283,7 @@ Câu hỏi phải đúng phạm vi bài học: chỉ dùng kiến thức có tro
 - Đúng/Sai: 4 ý **tăng dần độ khó** a → d (ý d khó nhất); các câu có số ý đúng khác nhau (không phải lúc nào cũng 2 Đúng 2 Sai).
 - Trả lời ngắn: đáp số là một số, tối đa 4 ký tự (kể cả `-` và `,`); nếu cần làm tròn thì nói rõ trong đề ("làm tròn đến hàng phần mười").
 - Mọi câu có **lời giải chi tiết**, tính toán đã được kiểm tra lại; số liệu đẹp, đáp án duy nhất.
-{LOP9 if lop == 9 else ''}
+{lop_thcs(lop) if lop <= 9 else ''}
 {('- Yêu cầu thêm của thầy: ' + ghi_chu) if ghi_chu else ''}
 
 ## Số lượng câu cần soạn (tổng {tong} câu)

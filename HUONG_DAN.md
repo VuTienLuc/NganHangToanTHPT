@@ -342,15 +342,18 @@ Câu được lấy xoay vòng qua các dạng, ưu tiên câu chưa dùng; thi�
 Dòng lệnh: `python3 scripts/phieu_bai_hoc.py cau_hinh.json --bien-dich`.
 
 
-## Toán 9 (Kết nối tri thức)
+## Toán 8, Toán 9 (Kết nối tri thức)
 
-Danh mục Toán 9 theo mục lục SGK KNTT: 10 chương, 32 bài, 99 dạng (file `du-lieu/toan9_kntt.json`, nạp vào `id_map.json`
-bằng `python3 scripts/them_lop9.py` — sửa/thêm dạng trong file json rồi chạy lại).
-Mã dạng: `9` + `D`/`H` + số chương SGK (chương X ghi `0`) + `?` + **số bài SGK** + `-` + dạng. Ví dụ `9D6?20-4` = Bài 20 Định lí Viète, dạng 4.
+Danh mục theo mục lục SGK KNTT:
+- Toán 8: 10 chương, 39 bài, 112 dạng — `du-lieu/toan8_kntt.json`
+- Toán 9: 10 chương, 32 bài, 99 dạng — `du-lieu/toan9_kntt.json`
+Nạp vào `id_map.json` bằng `python3 scripts/them_thcs.py` (sửa/thêm dạng trong file json rồi chạy lại; thêm lớp 6, 7 chỉ cần tạo `toan6_kntt.json`, `toan7_kntt.json` cùng cấu trúc).
+Mã dạng: số lớp (`8`/`9`) + `D`/`H` + số chương SGK (chương X ghi `0`) + `?` + **số bài SGK** + `-` + dạng.
+Ví dụ `8D2?9-1` = Toán 8 Bài 9 Phân tích đa thức thành nhân tử, dạng 1; `9D6?20-4` = Toán 9 Bài 20 Định lí Viète, dạng 4.
 
-Ngân hàng ban đầu chưa có câu lớp 9. Cách làm phiếu:
-1. **Phiếu bài học** → Lớp **9** → chương → tích bài → chọn kiểu phiếu (tự luận rất hợp với ôn thi vào 10).
+Ngân hàng ban đầu chưa có câu lớp 8, 9. Cách làm phiếu:
+1. **Phiếu bài học** → Lớp **8** hoặc **9** → chương → tích bài → chọn kiểu phiếu (tự luận rất hợp với ôn thi vào 10).
 2. Bấm **Kiểm tra kho / Prompt AI soạn câu…** → ứng dụng tính đúng số câu cần cho phiếu theo từng dạng × loại × mức
-   → **Prompt AI bổ sung câu thiếu…** (prompt riêng cho THCS: bám SGK KNTT, đề vào 10 TP.HCM, không dùng kiến thức THPT).
-3. Dán prompt vào AI (kèm file SGK bài đó), lưu kết quả → **Nhập câu AI trả về…** → câu vào `cau-hoi/lop9/…`.
+   → **Prompt AI bổ sung câu thiếu…** (prompt riêng cho THCS: bám SGK KNTT; lớp 9 theo đề vào 10 TP.HCM, lớp 8 theo đề kiểm tra; không dùng kiến thức lớp trên).
+3. Dán prompt vào AI (kèm file SGK bài đó), lưu kết quả → **Nhập câu AI trả về…** → câu vào `cau-hoi/lop8/…`, `cau-hoi/lop9/…`.
 4. Bấm **Tạo phiếu**. Câu đã nhập dùng lại được cho các phiếu, đề sau.

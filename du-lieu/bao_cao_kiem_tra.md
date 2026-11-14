@@ -4,7 +4,7 @@
 - Theo lớp: lớp 10: 4,053, lớp 11: 11,968, lớp 12: 4,478, chưa mã: 198
 - Theo loại: Trắc nghiệm 4 phương án: 10,594, Đúng/Sai: 3,210, Trả lời ngắn: 3,907, Tự luận: 2,986
 - Câu mới vừa được gắn mã: 0
-- Dạng trong id_map có dưới 5 câu: 232
+- Dạng trong id_map có dưới 5 câu: 344
 
 ## Thiếu mã dạng %[..]: 198
 
@@ -377,3 +377,115 @@
 - 9H0?31-3: Bài toán thực tế về hình trụ, hình nón — 0 câu
 - 9H0?32-1: Diện tích mặt cầu, thể tích hình cầu — 0 câu
 - 9H0?32-2: Bài toán thực tế về hình cầu — 0 câu
+- 8D1?1-1: Nhận biết đơn thức, đơn thức thu gọn, bậc của đơn thức — 0 câu
+- 8D1?1-2: Đơn thức đồng dạng; cộng, trừ đơn thức đồng dạng — 0 câu
+- 8D1?1-3: Tính giá trị của đơn thức — 0 câu
+- 8D1?2-1: Nhận biết đa thức, thu gọn đa thức — 0 câu
+- 8D1?2-2: Bậc của đa thức — 0 câu
+- 8D1?2-3: Tính giá trị của đa thức — 0 câu
+- 8D1?3-1: Cộng, trừ hai đa thức — 0 câu
+- 8D1?3-2: Tìm đa thức thỏa đẳng thức cho trước — 0 câu
+- 8D1?3-3: Bài toán thực tế dùng cộng, trừ đa thức — 0 câu
+- 8D1?4-1: Nhân đơn thức với đa thức — 0 câu
+- 8D1?4-2: Nhân đa thức với đa thức — 0 câu
+- 8D1?4-3: Rút gọn, chứng minh biểu thức không phụ thuộc biến — 0 câu
+- 8D1?4-4: Tìm x, bài toán thực tế (diện tích, thể tích) — 0 câu
+- 8D1?5-1: Chia đơn thức cho đơn thức — 0 câu
+- 8D1?5-2: Chia đa thức cho đơn thức — 0 câu
+- 8D1?5-3: Xét tính chia hết, tìm điều kiện để phép chia hết — 0 câu
+- 8D2?6-1: Khai triển hằng đẳng thức — 0 câu
+- 8D2?6-2: Viết biểu thức dưới dạng bình phương, hiệu hai bình phương — 0 câu
+- 8D2?6-3: Tính nhanh, tính giá trị biểu thức — 0 câu
+- 8D2?6-4: Chứng minh đẳng thức, tìm giá trị nhỏ nhất, lớn nhất — 0 câu
+- 8D2?7-1: Khai triển lập phương của một tổng, một hiệu — 0 câu
+- 8D2?7-2: Viết biểu thức dưới dạng lập phương — 0 câu
+- 8D2?7-3: Tính nhanh, rút gọn biểu thức — 0 câu
+- 8D2?8-1: Khai triển, viết dưới dạng tích — 0 câu
+- 8D2?8-2: Rút gọn, tính giá trị biểu thức — 0 câu
+- 8D2?9-1: Đặt nhân tử chung — 0 câu
+- 8D2?9-2: Dùng hằng đẳng thức — 0 câu
+- 8D2?9-3: Nhóm hạng tử, phối hợp nhiều phương pháp — 0 câu
+- 8D2?9-4: Ứng dụng: tìm x, tính nhanh, chứng minh chia hết — 0 câu
+- 8H3?10-1: Nhận biết tứ giác, các yếu tố của tứ giác — 0 câu
+- 8H3?10-2: Tính góc dựa vào tổng các góc của tứ giác — 0 câu
+- 8H3?11-1: Tính chất hình thang, hình thang cân — 0 câu
+- 8H3?11-2: Dấu hiệu nhận biết hình thang cân — 0 câu
+- 8H3?11-3: Tính độ dài, số đo góc — 0 câu
+- 8H3?12-1: Tính chất hình bình hành — 0 câu
+- 8H3?12-2: Dấu hiệu nhận biết hình bình hành — 0 câu
+- 8H3?12-3: Chứng minh đoạn thẳng, góc bằng nhau, ba điểm thẳng hàng — 0 câu
+- 8H3?13-1: Tính chất hình chữ nhật, áp dụng vào tam giác vuông — 0 câu
+- 8H3?13-2: Dấu hiệu nhận biết hình chữ nhật — 0 câu
+- 8H3?13-3: Tính độ dài, bài toán thực tế — 0 câu
+- 8H3?14-1: Tính chất, dấu hiệu nhận biết hình thoi — 0 câu
+- 8H3?14-2: Tính chất, dấu hiệu nhận biết hình vuông — 0 câu
+- 8H3?14-3: Bài toán tổng hợp về tứ giác đặc biệt — 0 câu
+- 8H4?15-1: Tỉ số của hai đoạn thẳng, đoạn thẳng tỉ lệ — 0 câu
+- 8H4?15-2: Định lí Thalès thuận: tính độ dài — 0 câu
+- 8H4?15-3: Định lí Thalès đảo: chứng minh song song — 0 câu
+- 8H4?15-4: Ứng dụng thực tế (đo chiều cao, khoảng cách) — 0 câu
+- 8H4?16-1: Tính độ dài nhờ đường trung bình — 0 câu
+- 8H4?16-2: Chứng minh trung điểm, song song nhờ đường trung bình — 0 câu
+- 8H4?17-1: Tính độ dài đoạn thẳng nhờ tính chất phân giác — 0 câu
+- 8H4?17-2: Chứng minh tỉ lệ thức, bài toán tổng hợp — 0 câu
+- 8D5?18-1: Phân loại dữ liệu (định tính, định lượng; rời rạc, liên tục) — 0 câu
+- 8D5?18-2: Thu thập dữ liệu, nhận biết dữ liệu không hợp lí — 0 câu
+- 8D5?19-1: Đọc, lập bảng thống kê — 0 câu
+- 8D5?19-2: Chọn và vẽ biểu đồ phù hợp (cột, cột kép, quạt tròn, đoạn thẳng) — 0 câu
+- 8D5?19-3: Chuyển dữ liệu giữa các dạng biểu diễn — 0 câu
+- 8D5?20-1: Đọc và phân tích số liệu từ biểu đồ — 0 câu
+- 8D5?20-2: Phát hiện biểu đồ, số liệu sai lệch — 0 câu
+- 8D5?20-3: Rút ra kết luận, giải quyết vấn đề thực tế — 0 câu
+- 8D6?21-1: Điều kiện xác định của phân thức — 0 câu
+- 8D6?21-2: Tính giá trị của phân thức — 0 câu
+- 8D6?21-3: Hai phân thức bằng nhau — 0 câu
+- 8D6?22-1: Rút gọn phân thức — 0 câu
+- 8D6?22-2: Quy đồng mẫu thức nhiều phân thức — 0 câu
+- 8D6?23-1: Cộng, trừ phân thức cùng mẫu — 0 câu
+- 8D6?23-2: Cộng, trừ phân thức khác mẫu — 0 câu
+- 8D6?23-3: Rút gọn biểu thức, bài toán thực tế — 0 câu
+- 8D6?24-1: Nhân, chia phân thức — 0 câu
+- 8D6?24-2: Biến đổi biểu thức hữu tỉ — 0 câu
+- 8D6?24-3: Bài toán tổng hợp: rút gọn, tính giá trị, tìm x nguyên — 0 câu
+- 8D7?25-1: Nhận biết phương trình bậc nhất một ẩn, kiểm tra nghiệm — 0 câu
+- 8D7?25-2: Giải phương trình bậc nhất một ẩn — 0 câu
+- 8D7?25-3: Phương trình đưa được về dạng ax + b = 0 — 0 câu
+- 8D7?26-1: Toán chuyển động — 0 câu
+- 8D7?26-2: Toán năng suất, công việc — 0 câu
+- 8D7?26-3: Toán số, phần trăm, tỉ lệ — 0 câu
+- 8D7?26-4: Toán thực tế khác (hình học, kinh tế) — 0 câu
+- 8D7?27-1: Nhận biết hàm số, tính giá trị hàm số — 0 câu
+- 8D7?27-2: Mặt phẳng tọa độ, tọa độ điểm — 0 câu
+- 8D7?27-3: Điểm thuộc đồ thị hàm số — 0 câu
+- 8D7?28-1: Nhận biết hàm số bậc nhất, tính giá trị — 0 câu
+- 8D7?28-2: Vẽ đồ thị hàm số bậc nhất — 0 câu
+- 8D7?28-3: Xác định hàm số bậc nhất, bài toán thực tế — 0 câu
+- 8D7?29-1: Hệ số góc, góc tạo bởi đường thẳng và trục Ox — 0 câu
+- 8D7?29-2: Vị trí tương đối của hai đường thẳng (song song, cắt nhau, trùng nhau) — 0 câu
+- 8D7?29-3: Xác định đường thẳng theo điều kiện cho trước — 0 câu
+- 8D8?30-1: Liệt kê các kết quả có thể — 0 câu
+- 8D8?30-2: Xác định kết quả thuận lợi cho biến cố — 0 câu
+- 8D8?31-1: Tính xác suất trong trò chơi gieo xúc xắc, tung đồng xu, rút thẻ — 0 câu
+- 8D8?31-2: Tính xác suất bài toán thực tế — 0 câu
+- 8D8?32-1: Tính xác suất thực nghiệm — 0 câu
+- 8D8?32-2: Ước lượng xác suất, số lần xuất hiện nhờ xác suất thực nghiệm — 0 câu
+- 8H9?33-1: Nhận biết, viết kí hiệu hai tam giác đồng dạng, tỉ số đồng dạng — 0 câu
+- 8H9?33-2: Định lí tam giác đồng dạng (đường thẳng song song một cạnh) — 0 câu
+- 8H9?34-1: Trường hợp cạnh – cạnh – cạnh — 0 câu
+- 8H9?34-2: Trường hợp cạnh – góc – cạnh — 0 câu
+- 8H9?34-3: Trường hợp góc – góc — 0 câu
+- 8H9?34-4: Chứng minh hệ thức, tính độ dài nhờ tam giác đồng dạng — 0 câu
+- 8H9?35-1: Tính độ dài cạnh tam giác vuông — 0 câu
+- 8H9?35-2: Định lí Pythagore đảo: nhận biết tam giác vuông — 0 câu
+- 8H9?35-3: Bài toán thực tế dùng định lí Pythagore — 0 câu
+- 8H9?36-1: Nhận biết hai tam giác vuông đồng dạng — 0 câu
+- 8H9?36-2: Tính độ dài, chứng minh hệ thức — 0 câu
+- 8H9?36-3: Ứng dụng thực tế (đo chiều cao, khoảng cách) — 0 câu
+- 8H9?37-1: Nhận biết hình đồng dạng, hình đồng dạng phối cảnh — 0 câu
+- 8H9?37-2: Hình đồng dạng trong thực tế — 0 câu
+- 8H0?38-1: Nhận biết các yếu tố của hình chóp tam giác đều — 0 câu
+- 8H0?38-2: Diện tích xung quanh, thể tích hình chóp tam giác đều — 0 câu
+- 8H0?38-3: Bài toán thực tế — 0 câu
+- 8H0?39-1: Nhận biết các yếu tố của hình chóp tứ giác đều — 0 câu
+- 8H0?39-2: Diện tích xung quanh, diện tích toàn phần, thể tích — 0 câu
+- 8H0?39-3: Bài toán thực tế — 0 câu

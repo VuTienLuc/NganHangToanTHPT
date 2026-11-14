@@ -74,12 +74,16 @@ def goi_y_bo_sung(cac_dang, id_map):
     theo = collections.defaultdict(lambda: collections.defaultdict(lambda: [0, 0, 0, 0]))
     vong = 0
     ds_dang = list(cac_dang)
+    xoay = collections.Counter()                    # câu thiếu chung (phiếu trắc nghiệm): rải mức N, H, V, H…
     for d, loai, muc, n in THIEU_CAU:
         for _ in range(n):
             dd = d or (ds_dang[vong % len(ds_dang)] if ds_dang else None)
             vong += 0 if d else 1
+            m = muc
+            if not d and muc == "H":
+                m = {"TN": "HNVH", "DS": "HVHN", "TLN": "VHVH"}.get(loai, "HNVH")[xoay[(loai, dd)] % 4]; xoay[(loai, dd)] += 1
             if dd:
-                theo[dd][loai][MUC_SO[muc]] += 1
+                theo[dd][loai][MUC_SO[m]] += 1
     if not theo:
         return None
     so_cau = collections.defaultdict(lambda: [0, 0, 0, 0])

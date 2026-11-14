@@ -56,7 +56,7 @@ def du_lieu_cay():
                    "ten_chuong": t.get("chap_name") or f"Chương {m.group(3)} ({k[:3]})",
                    "ten_bai": t.get("lesson_name") or f"Bài {m.group(4)}",
                    "ten_dang": t.get("type_name") or f"Dạng {m.group(5)}", "kho": v, "moi": moi[k]})
-    ds.sort(key=lambda d: (d["lop"], 0, 0, d["bai"], d["dang"]) if d["lop"] == 9 else   # lớp 9: theo thứ tự bài SGK
+    ds.sort(key=lambda d: (d["lop"], 0, 0, d["bai"], d["dang"]) if d["lop"] <= 9 else   # THCS: theo thứ tự bài SGK
                           (d["lop"], "DHC".find(d["mon"]), d["chuong"], d["bai"], d["dang"]))
     ch = cau_hinh()
     mac_dinh = {"so_gd": "SỞ GD&ĐT TP. HỒ CHÍ MINH", "truong": "TRƯỜNG THPT NGUYỄN HỮU CẢNH",
