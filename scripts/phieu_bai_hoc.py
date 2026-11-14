@@ -19,7 +19,7 @@ cau_hinh_phieu.json: {"pham_vi": ["0D1?1", "0D1?2"] (bài) hoặc ["0D1"] (cả 
 """
 import os, sys, re, json, time, random, shutil, collections, unicodedata
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from nh_core import GOC, doc, ghi, cau_hinh, tai_id_map
+from nh_core import GOC, doc, ghi, cau_hinh, tai_id_map, lop_tu_so
 
 CAC_LOAI = ["TN", "DS", "TLN"]
 TEN_PHAN = {"TN": "Trắc nghiệm nhiều phương án lựa chọn", "DS": "Trắc nghiệm đúng sai", "TLN": "Trả lời ngắn"}

@@ -4,7 +4,7 @@
 - Theo lớp: lớp 10: 4,053, lớp 11: 11,968, lớp 12: 4,478, chưa mã: 198
 - Theo loại: Trắc nghiệm 4 phương án: 10,594, Đúng/Sai: 3,210, Trả lời ngắn: 3,907, Tự luận: 2,986
 - Câu mới vừa được gắn mã: 0
-- Dạng trong id_map có dưới 5 câu: 133
+- Dạng trong id_map có dưới 5 câu: 232
 
 ## Thiếu mã dạng %[..]: 198
 
@@ -278,3 +278,102 @@
 - 2D3?2-1: Công thức lý thuyết — 4 câu
 - 2D4?1-5: Phương pháp đổi biến số cơ bản — 0 câu
 - 2H2?2-1: Công thức lý thuyết — 4 câu
+- 9D1?1-1: Nhận biết phương trình bậc nhất hai ẩn, nghiệm của phương trình — 0 câu
+- 9D1?1-2: Biểu diễn tập nghiệm trên mặt phẳng tọa độ — 0 câu
+- 9D1?1-3: Nhận biết hệ hai phương trình bậc nhất hai ẩn, kiểm tra nghiệm của hệ — 0 câu
+- 9D1?2-1: Giải hệ bằng phương pháp thế — 0 câu
+- 9D1?2-2: Giải hệ bằng phương pháp cộng đại số — 0 câu
+- 9D1?2-3: Hệ phương trình chứa tham số, xác định hệ số — 0 câu
+- 9D1?2-4: Hệ quy về hệ bậc nhất hai ẩn (đặt ẩn phụ) — 0 câu
+- 9D1?3-1: Toán chuyển động — 0 câu
+- 9D1?3-2: Toán năng suất, làm chung – làm riêng — 0 câu
+- 9D1?3-3: Toán về số, chữ số, tỉ lệ, phần trăm — 0 câu
+- 9D1?3-4: Toán thực tế (hóa học, vật lí, kinh tế) — 0 câu
+- 9D2?4-1: Phương trình tích — 0 câu
+- 9D2?4-2: Phương trình chứa ẩn ở mẫu — 0 câu
+- 9D2?4-3: Giải bài toán bằng cách lập phương trình quy về bậc nhất — 0 câu
+- 9D2?5-1: Nhận biết, so sánh, viết bất đẳng thức — 0 câu
+- 9D2?5-2: Liên hệ giữa thứ tự với phép cộng, phép nhân — 0 câu
+- 9D2?5-3: Chứng minh bất đẳng thức đơn giản — 0 câu
+- 9D2?6-1: Nhận biết bất phương trình bậc nhất một ẩn, kiểm tra nghiệm — 0 câu
+- 9D2?6-2: Giải bất phương trình bậc nhất một ẩn — 0 câu
+- 9D2?6-3: Bất phương trình quy về bậc nhất một ẩn — 0 câu
+- 9D2?6-4: Bài toán thực tế dẫn đến bất phương trình — 0 câu
+- 9D3?7-1: Tìm căn bậc hai, căn bậc hai số học — 0 câu
+- 9D3?7-2: Điều kiện xác định của căn thức bậc hai — 0 câu
+- 9D3?7-3: Hằng đẳng thức căn của A bình phương bằng giá trị tuyệt đối của A — 0 câu
+- 9D3?7-4: Tính giá trị, so sánh căn bậc hai — 0 câu
+- 9D3?8-1: Khai căn một tích, nhân các căn bậc hai — 0 câu
+- 9D3?8-2: Khai căn một thương, chia các căn bậc hai — 0 câu
+- 9D3?8-3: Tính giá trị, rút gọn biểu thức — 0 câu
+- 9D3?9-1: Đưa thừa số ra ngoài, vào trong dấu căn — 0 câu
+- 9D3?9-2: Khử mẫu của biểu thức lấy căn, trục căn thức ở mẫu — 0 câu
+- 9D3?9-3: Rút gọn biểu thức chứa căn thức bậc hai — 0 câu
+- 9D3?9-4: Bài toán tổng hợp: rút gọn, tính giá trị, tìm x — 0 câu
+- 9D3?10-1: Tính căn bậc ba, so sánh — 0 câu
+- 9D3?10-2: Biến đổi, rút gọn biểu thức chứa căn bậc ba — 0 câu
+- 9D3?10-3: Phương trình chứa căn bậc ba đơn giản — 0 câu
+- 9H4?11-1: Tính tỉ số lượng giác của góc nhọn — 0 câu
+- 9H4?11-2: Tỉ số lượng giác của hai góc phụ nhau — 0 câu
+- 9H4?11-3: Tìm góc khi biết tỉ số lượng giác, so sánh — 0 câu
+- 9H4?11-4: Rút gọn, chứng minh biểu thức lượng giác — 0 câu
+- 9H4?12-1: Giải tam giác vuông — 0 câu
+- 9H4?12-2: Tính độ dài, số đo góc trong hình — 0 câu
+- 9H4?12-3: Ứng dụng thực tế (đo chiều cao, khoảng cách) — 0 câu
+- 9H5?13-1: Vị trí của điểm đối với đường tròn — 0 câu
+- 9H5?13-2: Tâm đối xứng, trục đối xứng của đường tròn — 0 câu
+- 9H5?13-3: Chứng minh các điểm cùng thuộc một đường tròn — 0 câu
+- 9H5?14-1: Quan hệ giữa đường kính và dây — 0 câu
+- 9H5?14-2: Góc ở tâm, số đo cung — 0 câu
+- 9H5?14-3: Liên hệ giữa dây và khoảng cách đến tâm — 0 câu
+- 9H5?15-1: Độ dài đường tròn, cung tròn — 0 câu
+- 9H5?15-2: Diện tích hình tròn, hình quạt tròn — 0 câu
+- 9H5?15-3: Diện tích hình vành khuyên, bài toán thực tế — 0 câu
+- 9H5?16-1: Xác định vị trí tương đối của đường thẳng và đường tròn — 0 câu
+- 9H5?16-2: Tiếp tuyến: dấu hiệu nhận biết, chứng minh tiếp tuyến — 0 câu
+- 9H5?16-3: Tính chất hai tiếp tuyến cắt nhau — 0 câu
+- 9H5?17-1: Xác định vị trí tương đối của hai đường tròn — 0 câu
+- 9H5?17-2: Tiếp tuyến chung, bài toán tổng hợp — 0 câu
+- 9D6?18-1: Tính giá trị hàm số, xác định hệ số a — 0 câu
+- 9D6?18-2: Vẽ đồ thị, đọc đồ thị — 0 câu
+- 9D6?18-3: Tương giao giữa parabol và đường thẳng — 0 câu
+- 9D6?18-4: Bài toán thực tế về hàm số y = ax² — 0 câu
+- 9D6?19-1: Giải phương trình bậc hai khuyết — 0 câu
+- 9D6?19-2: Giải bằng công thức nghiệm, công thức nghiệm thu gọn — 0 câu
+- 9D6?19-3: Số nghiệm của phương trình bậc hai chứa tham số — 0 câu
+- 9D6?20-1: Tính tổng, tích hai nghiệm; nhẩm nghiệm — 0 câu
+- 9D6?20-2: Tính giá trị biểu thức đối xứng của hai nghiệm — 0 câu
+- 9D6?20-3: Tìm hai số biết tổng và tích — 0 câu
+- 9D6?20-4: Tìm tham số thỏa điều kiện về nghiệm — 0 câu
+- 9D6?21-1: Toán chuyển động — 0 câu
+- 9D6?21-2: Toán năng suất, làm chung – làm riêng — 0 câu
+- 9D6?21-3: Toán hình học (diện tích, kích thước) — 0 câu
+- 9D6?21-4: Toán thực tế khác (tăng trưởng, kinh tế) — 0 câu
+- 9D7?22-1: Lập bảng tần số — 0 câu
+- 9D7?22-2: Vẽ và đọc biểu đồ tần số — 0 câu
+- 9D7?23-1: Lập bảng tần số tương đối — 0 câu
+- 9D7?23-2: Vẽ và đọc biểu đồ tần số tương đối (cột, hình quạt tròn) — 0 câu
+- 9D7?24-1: Lập bảng tần số ghép nhóm — 0 câu
+- 9D7?24-2: Lập bảng tần số tương đối ghép nhóm — 0 câu
+- 9D7?24-3: Vẽ và đọc biểu đồ tần số (tương đối) ghép nhóm — 0 câu
+- 9D8?25-1: Mô tả phép thử, xác định không gian mẫu — 0 câu
+- 9D8?25-2: Liệt kê kết quả bằng bảng, sơ đồ cây — 0 câu
+- 9D8?26-1: Xác định các kết quả thuận lợi cho biến cố — 0 câu
+- 9D8?26-2: Tính xác suất của biến cố — 0 câu
+- 9D8?26-3: Bài toán xác suất thực tế — 0 câu
+- 9H9?27-1: Tính số đo góc nội tiếp — 0 câu
+- 9H9?27-2: Chứng minh góc bằng nhau, hệ thức nhờ góc nội tiếp — 0 câu
+- 9H9?28-1: Tâm, bán kính đường tròn ngoại tiếp tam giác — 0 câu
+- 9H9?28-2: Tâm, bán kính đường tròn nội tiếp tam giác — 0 câu
+- 9H9?28-3: Tam giác đều, tam giác vuông và đường tròn — 0 câu
+- 9H9?29-1: Chứng minh tứ giác nội tiếp — 0 câu
+- 9H9?29-2: Tính góc trong tứ giác nội tiếp — 0 câu
+- 9H9?29-3: Bài toán tổng hợp về tứ giác nội tiếp — 0 câu
+- 9H9?30-1: Nhận biết đa giác đều, tính góc — 0 câu
+- 9H9?30-2: Phép quay giữ nguyên hình đa giác đều — 0 câu
+- 9H9?30-3: Đa giác đều trong thực tế — 0 câu
+- 9H0?31-1: Diện tích xung quanh, thể tích hình trụ — 0 câu
+- 9H0?31-2: Diện tích xung quanh, thể tích hình nón — 0 câu
+- 9H0?31-3: Bài toán thực tế về hình trụ, hình nón — 0 câu
+- 9H0?32-1: Diện tích mặt cầu, thể tích hình cầu — 0 câu
+- 9H0?32-2: Bài toán thực tế về hình cầu — 0 câu
