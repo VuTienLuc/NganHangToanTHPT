@@ -62,6 +62,15 @@ def thuoc(c, pham_vi):
             return True
     return False
 
+def khoa_noi_dung(c):
+    """Khoá nội dung đề (bỏ mã, khoảng trắng, lời giải, phương án) — để không lấy 2 câu trùng đề vào cùng một phiếu."""
+    t = c.get("noi_dung") or ""
+    t = re.sub(r"%[^\n]*", "", t)
+    t = re.split(r"\\(?:choice|choiceTF|loigiai|shortans)\b", t)[0]
+    t = re.sub(r"\\begin\{(?:ex|bt)\}", "", t)
+    return re.sub(r"[\s{}\\$~.,;:]+", "", t).lower()
+
+
 def chon_cau(cau_hinh_phieu, rng):
     """→ (dạng theo thứ tự, {LT|BTVN: {loai: [câu…]}}, thiếu)."""
     pv, chon_dang = cau_hinh_phieu["pham_vi"], set(cau_hinh_phieu.get("dang") or [])
@@ -81,32 +90,38 @@ def chon_cau(cau_hinh_phieu, rng):
         rng.shuffle(v)
         v.sort(key=lambda c: ((c.get("so_lan_dung") or 0) > 0, THU_TU_MUC.get(c.get("muc_chuan") or "", 1)))
     da_lay, kq, thieu = set(), {"LT": {}, "BTVN": {}}, []
+    for c in ds:
+        c["_k"] = khoa_noi_dung(c)
+    da_nd = set()
+    moi = lambda c: c["ma"] not in da_lay and c["_k"] not in da_nd
+    def lay(c):
+        da_lay.add(c["ma"]); da_nd.add(c["_k"])
     so = {"LT": cau_hinh_phieu["so_cau"], "BTVN": cau_hinh_phieu.get("so_cau_btvn") or cau_hinh_phieu["so_cau"]}
     for loai in CAC_LOAI:
         dang_co = [d for d in cac_dang if theo.get((loai, d))]
         # 1) luyện tập: rải đều các dạng (vòng tròn), mỗi dạng lấy dần từ mức thấp đến cao
         lt, vong = [], 0
         while len(lt) < int(so["LT"].get(loai) or 0) and dang_co:
-            con = [d for d in dang_co if any(c["ma"] not in da_lay for c in theo[(loai, d)])]
+            con = [d for d in dang_co if any(moi(c) for c in theo[(loai, d)])]
             if not con:
                 break
             d = con[vong % len(con)]; vong += 1
-            c = next(c for c in theo[(loai, d)] if c["ma"] not in da_lay)
-            da_lay.add(c["ma"]); lt.append(c)
+            c = next(c for c in theo[(loai, d)] if moi(c))
+            lay(c); lt.append(c)
         # 2) bài tập về nhà: cùng dạng, gần cùng mức với từng câu luyện tập (câu khác)
         btvn = []
         mau = lt * (1 + int(so["BTVN"].get(loai) or 0) // max(1, len(lt))) if lt else []
         for m in mau:
             if len(btvn) >= int(so["BTVN"].get(loai) or 0):
                 break
-            ung = [c for c in theo[(loai, m["dang_key"])] if c["ma"] not in da_lay]
+            ung = [c for c in theo[(loai, m["dang_key"])] if moi(c)]
             if not ung:
-                ung = [c for d in dang_co for c in theo[(loai, d)] if c["ma"] not in da_lay]
+                ung = [c for d in dang_co for c in theo[(loai, d)] if moi(c)]
             if not ung:
                 break
             muc = THU_TU_MUC.get(m.get("muc_chuan") or "", 1)
             c = min(ung, key=lambda x: abs(THU_TU_MUC.get(x.get("muc_chuan") or "", 1) - muc))
-            da_lay.add(c["ma"]); btvn.append(c)
+            lay(c); btvn.append(c)
         sap = lambda v: sorted(v, key=lambda c: (cac_dang.index(c["dang_key"]), THU_TU_MUC.get(c.get("muc_chuan") or "", 1)))
         kq["LT"][loai], kq["BTVN"][loai] = sap(lt), sap(btvn)
         for phan, v in (("Luyện tập", lt), ("Bài tập về nhà", btvn)):
@@ -225,21 +240,39 @@ def tao(cfg, in_ra=print):
     bat, tat = ("\\begin{multicols}{2}\n", "\n\\end{multicols}") if hai_cot else ("", "")
     than = (dau + "\n" + r"\phanPhieu{I. KIẾN THỨC TRỌNG TÂM}" + "\n" + kien + "\n" + bat + lt + "\n\n" + btvn + tat)
     # File lời giải riêng: đầu "LỜI GIẢI", bảng đáp án ngay đầu, rồi lời giải chi tiết II, III (không có phần I, không dòng kẻ)
-    dap = [r"\phanPhieu{BẢNG ĐÁP ÁN}"]
-    cu = None
-    for nhan_muc, so_phan, tp, tm, tep in bang:
-        if nhan_muc != cu:
-            cu = nhan_muc; dap.append(r"\phanCon{" + nhan_muc + "}")
-        dap.append(f"\\par\\noindent\\textbf{{{so_phan}. {tp}}}\\par\n\\begin{{flushleft}}\n"
-                   f"\\IfFileExists{{{tm}/{tep}.tex}}{{\\input{{{tm}/{tep}}}}}{{(biên dịch lại để hiện đáp án)}}\n\\end{{flushleft}}")
     het = "\n\\par\\bigskip\\begin{center}{\\small\\itshape --- Hết ---}\\end{center}\\label{trangCuoiPhieu}\n"
-    lg = (dau_phieu("LỜI GIẢI " + nhan, ho_ten=False) + "\n" + "\n".join(dap) + "\n" +
-          r"\phanPhieu{LỜI GIẢI CHI TIẾT}" + "\n" + bat + lt + "\n\n" + btvn + tat)
-    ghi(os.path.join(out, "PhieuBaiHoc.tex"),
-        mau.replace("<<CHE_DO_LOI_GIAI>>", "\\anloigiai").replace("<<NOI_DUNG>>", than + het))
-    mau_lg = mau.replace(thoat(f"{nhan.title()}: {ten}"), thoat(f"Lời giải {nhan.lower()}: {ten}"))
-    ghi(os.path.join(out, "PhieuBaiHoc_LoiGiai.tex"),
-        mau_lg.replace("<<CHE_DO_LOI_GIAI>>", "\\hienthiloigiai").replace("<<NOI_DUNG>>", lg + het))
+    chan_goc = thoat(f"{nhan.title()}: {ten}")
+
+    def bang_dap_an(cac_muc):
+        d = [r"\phanPhieu{BẢNG ĐÁP ÁN}"]
+        cu = None
+        for nhan_muc, so_phan, tp, tm, tep in bang:
+            if nhan_muc not in cac_muc:
+                continue
+            if nhan_muc != cu:
+                cu = nhan_muc; d.append(r"\phanCon{" + nhan_muc + "}")
+            d.append(f"\\par\\noindent\\textbf{{{so_phan}. {tp}}}\\par\n\\begin{{flushleft}}\n"
+                     f"\\IfFileExists{{{tm}/{tep}.tex}}{{\\input{{{tm}/{tep}}}}}{{(biên dịch lại để hiện đáp án)}}\n\\end{{flushleft}}")
+        return "\n".join(d)
+
+    def viet(tep, tieu_de, chan, noi, cac_muc, co_kien_thuc):
+        """Ghi 1 cặp file: <tep>.tex (câu hỏi, phát HS) và <tep>_LoiGiai.tex (bảng đáp án + lời giải chi tiết)."""
+        m = mau.replace(chan_goc, thoat(chan))
+        hs = dau_phieu(tieu_de) + "\n"
+        if co_kien_thuc:
+            hs += r"\phanPhieu{I. KIẾN THỨC TRỌNG TÂM}" + "\n" + kien + "\n"
+        hs += bat + noi + tat
+        ghi(os.path.join(out, tep + ".tex"), m.replace("<<CHE_DO_LOI_GIAI>>", "\\anloigiai").replace("<<NOI_DUNG>>", hs + het))
+        m2 = mau.replace(chan_goc, thoat("Lời giải " + chan[:1].lower() + chan[1:]))
+        lg = (dau_phieu("LỜI GIẢI " + tieu_de, ho_ten=False) + "\n" + bang_dap_an(cac_muc) + "\n" +
+              r"\phanPhieu{LỜI GIẢI CHI TIẾT}" + "\n" + bat + noi + tat)
+        ghi(os.path.join(out, tep + "_LoiGiai.tex"), m2.replace("<<CHE_DO_LOI_GIAI>>", "\\hienthiloigiai").replace("<<NOI_DUNG>>", lg + het))
+
+    # 1) Phiếu đầy đủ (I + II + III); 2) Phiếu trên lớp (I + II); 3) Phiếu về nhà (III) — mỗi phiếu có file lời giải riêng
+    viet("PhieuBaiHoc", nhan, f"{nhan.title()}: {ten}", lt + "\n\n" + btvn, ("II. LUYỆN TẬP", "III. BÀI TẬP VỀ NHÀ"), True)
+    viet("PhieuTrenLop", nhan + " – TRÊN LỚP", f"{nhan.title()} (trên lớp): {ten}", lt, ("II. LUYỆN TẬP",), True)
+    btvn_rieng = btvn.replace(r"\phanPhieu{III. BÀI TẬP VỀ NHÀ}", r"\phanPhieu{BÀI TẬP VỀ NHÀ}", 1)
+    viet("PhieuVeNha", "BÀI TẬP VỀ NHÀ", f"Bài tập về nhà: {ten}", btvn_rieng, ("III. BÀI TẬP VỀ NHÀ",), False)
     ghi(os.path.join(out, "_ten_phieu.txt"), ten_tep(f"{nhan.title()} - {ten}", 90))
     json.dump(cfg, open(os.path.join(out, "cau_hinh_phieu.json"), "w", encoding="utf-8"), ensure_ascii=False, indent=1)
     so_lt = {l: len(kq["LT"][l]) for l in CAC_LOAI}; so_bt = {l: len(kq["BTVN"][l]) for l in CAC_LOAI}

@@ -385,7 +385,11 @@ def bien_dich_thu_muc(thu_muc_de, in_ra=print):
             ten_p = open(os.path.join(tex, "_ten_phieu.txt"), encoding="utf-8").read().strip() or "Phieu bai hoc"
         except OSError:
             ten_p = "Phieu bai hoc"
-        for f, duoi in (("PhieuBaiHoc.tex", ""), ("PhieuBaiHoc_LoiGiai.tex", " - Lời giải")):
+        for f, duoi in (("PhieuBaiHoc.tex", ""), ("PhieuBaiHoc_LoiGiai.tex", " - Lời giải"),
+                        ("PhieuTrenLop.tex", " - Trên lớp"), ("PhieuTrenLop_LoiGiai.tex", " - Trên lớp - Lời giải"),
+                        ("PhieuVeNha.tex", " - Về nhà"), ("PhieuVeNha_LoiGiai.tex", " - Về nhà - Lời giải")):
+            if not os.path.exists(os.path.join(tex, f)):
+                continue
             in_ra(f"Biên dịch {ten_p}{duoi}…")
             bat_dau = _t.time()
             for _ in range(3):
