@@ -104,6 +104,8 @@ def dau_beamer(thu_muc_tex, kieu, tt, ma_de, khung_de="2/3"):
 \newlength\rongTam\newlength\caoToiDa\setlength\caoToiDa{0.865\textheight}
 % phần ĐỀ BÀI chỉ chiếm phần trên màn hình (1/2, 2/3…) — phía dưới để trống cho giáo viên viết, vẽ khi giảng
 \newlength\caoDe\setlength\caoDe{TI_LE_DE\textheight}
+% kéo đề bài sát ngay dưới thanh tiêu đề (bỏ khoảng trống mặc định của beamer)
+\newcommand{\satTren}{\vspace*{-0.56cm}}
 \newif\ifvuaKhung
 \newcommand{\vuaKhung}[1]{\vuaKhungfalse
   \def\thuCo##1{\ifvuaKhung\else\setlength\rongTam{\dimexpr\linewidth*100/##1\relax}%
@@ -179,7 +181,7 @@ def khung_cau(so, loai, tieu_phan, p, dap_an, xanh):
         than += f"\\par\\medskip\\only<2->{{\\textbf{{\\textcolor{{mauDung}}{{Đáp số: {tho(dap_an)}}}}}}}"
     hai_slide = "<1-2>" if loai in ("TN", "DS", "TLN") else ""
     hu = "\\hieuung" if xanh else ""
-    fr = (f"\\begin{{frame}}{hai_slide}[t]{{Câu {so}}}{{{tieu_phan}}}{hu}\n\\vuaKhungCau{{{de}}}{{{than}}}\n\\end{{frame}}\n")
+    fr = (f"\\begin{{frame}}{hai_slide}[t]{{Câu {so}}}{{{tieu_phan}}}{hu}\n\\satTren\\vuaKhungCau{{{de}}}{{{than}}}\n\\end{{frame}}\n")
     # lời giải
     if p["y_giai"]:
         dau, ys, cuoi = p["y_giai"]
