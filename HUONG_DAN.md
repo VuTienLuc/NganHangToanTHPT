@@ -174,6 +174,17 @@ Nạp đáp án: Chấm Phiếu AI → ô **Đáp án** → **Nhập từ file E
 Khung đề chính thức nằm ở `khung/DeThiChinhThuc/mau_de.tex` (in đen trắng). Muốn dạng ôn tập có màu
 như phần mềm cũ thì ghi `"khung": "DeThi"` trong file JSON.
 
+## Câu hỏi trùng — dò và xoá
+
+Nút **Câu trùng** trên thanh đầu dò toàn bộ ngân hàng (khoảng 10 giây), chia 3 thẻ:
+- **Trùng hoàn toàn**: cùng đề bài và cùng bộ phương án/đáp số (chỉ khác cách gõ, khoảng trắng, thứ tự phương án, lời giải).
+  Mặc định đã **chọn sẵn các bản thừa**, giữ 1 bản "nên giữ" (đã phân loại dạng, lời giải dài hơn, có hình).
+- **Cùng đề, khác phương án**: cùng lời dẫn nhưng khác phương án/đáp án — thường là câu khác nhau, chỉ xoá khi chắc chắn.
+- **Gần giống (≥ 90%)**: khác vài chữ, vài số — xem kỹ trước khi xoá.
+Mỗi câu hiện mã dạng, loại, đáp án, độ dài lời giải, số lần đã dùng, file chứa, nội dung; mở "Mã LaTeX" để xem đầy đủ.
+Tích/bỏ tích rồi **Xoá câu đã chọn** (không cho xoá hết cả một nhóm). Câu bị xoá được lưu bản sao trong
+`du-lieu/da_xoa/xoa_trung_<thời điểm>.tex` để khôi phục; chỉ mục tự lập lại. Dòng lệnh: `python3 scripts/cau_trung.py`.
+
 ## Trộn đề có sẵn từ file (đề AI gõ lại, đề tự soạn…)
 
 Bấm **Trộn đề từ file** → chọn file `.tex` / `.txt` / `.json` đúng cấu trúc `\begin{ex}…\end{ex}` (ví dụ đề AI gõ lại bằng

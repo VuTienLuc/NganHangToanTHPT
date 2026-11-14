@@ -115,6 +115,22 @@ footer .gian{flex:1}
 #ma-ds .d code{font:12px ui-monospace,Menlo,monospace;background:#f3f4f6;padding:1px 6px;border-radius:4px;min-width:76px}
 #ma-ds .d .so{margin-left:auto;color:#6b7280;font-size:12px;white-space:nowrap}
 #hop-ma .chan{padding:10px 18px;border-top:1px solid var(--vien);display:flex;gap:10px;align-items:center;font-size:13px;color:#555}
+#hop-trung{position:fixed;inset:0;background:rgba(17,24,39,.35);display:none;align-items:center;justify-content:center;z-index:11}
+#hop-trung .noi{background:#fff;border-radius:14px;width:min(1100px,96vw);height:min(90vh,900px);display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.25)}
+#hop-trung h2{margin:0;padding:12px 18px;font-size:16px;border-bottom:1px solid var(--vien)}
+#hop-trung .tab{display:flex;gap:6px;padding:10px 18px;border-bottom:1px solid var(--vien);flex-wrap:wrap;align-items:center}
+#hop-trung .tab button.on{background:#1f3a8a;color:#fff;border-color:#1f3a8a}
+#trung-ds{overflow:auto;flex:1;padding:8px 18px;font-size:13px}
+.nhom-trung{border:1px solid var(--vien);border-radius:10px;margin:8px 0;padding:6px 10px}
+.nhom-trung .cau{display:grid;grid-template-columns:24px 1fr;gap:6px;padding:6px 0;border-top:1px dashed #e5e7eb}
+.nhom-trung .cau:first-of-type{border-top:0}
+.nhom-trung .meta{color:#555;font-size:12px;margin-bottom:2px}
+.nhom-trung .meta b{color:#111}
+.nhom-trung .xem{font-size:13px;line-height:1.45;color:#111}
+.nhom-trung details{font-size:12px;color:#555}
+.nhom-trung pre{white-space:pre-wrap;background:#f9fafb;padding:6px;border-radius:6px;max-height:260px;overflow:auto}
+.nhan-giu{background:#dcfce7;color:#166534;border-radius:6px;padding:0 6px;font-size:11px;margin-left:6px}
+#hop-trung .chan{padding:10px 18px;border-top:1px solid var(--vien);display:flex;gap:10px;align-items:center;font-size:13px}
 </style>
 </head>
 <body>
@@ -126,6 +142,7 @@ footer .gian{flex:1}
   <button id="nut-prompt" title="Sinh prompt cho AI: gõ lại đề thi, hoặc soạn câu hỏi mới theo bài học từ tài liệu">Prompt cho AI</button>
   <button id="nut-tron-file" title="Trộn một đề có sẵn (file .tex/.txt/.json đúng cấu trúc, vd đề AI gõ lại) thành nhiều mã đề, xuất PDF / Word / đáp án Excel">Trộn đề từ file</button>
   <input type="file" id="tep-tron" accept=".tex,.txt,.md,.json" hidden>
+  <button id="nut-trung" title="Dò câu trùng / gần giống trong ngân hàng và xoá bản thừa">Câu trùng</button>
   <button id="nut-bang-ma" title="Tra cứu mã dạng %[..] theo lớp – chương – bài – dạng">Bảng mã dạng</button>
   <button id="nut-nhap" title="Thêm câu từ file .tex / .txt / .json (đúng cấu trúc \\begin{ex}…, hoặc JSON các trường Nội dung, Lựa chọn, Đáp án, Lời giải) vào ngân hàng">Nhập câu hỏi</button>
   <input type="file" id="tep-nhap" accept=".tex,.txt,.md,.json" multiple hidden>
@@ -251,6 +268,15 @@ footer .gian{flex:1}
     <select id="ma-muc" title="Mức độ điền vào chỗ ?"><option value="?">Mức: ? (theo câu)</option><option value="N">N – Nhận biết</option><option value="H">H – Thông hiểu</option><option value="V">V – Vận dụng</option><option value="C">C – Vận dụng cao</option></select></div>
   <div id="ma-ds"></div>
   <div class="chan"><span id="ma-goi-y">Bấm vào một dạng để điền mã (đang mở ô gán mã) hoặc chép mã.</span><span style="margin-left:auto"></span><button id="ma-dong">Đóng</button></div>
+</div></div>
+<div id="hop-trung"><div class="noi">
+  <h2>Câu hỏi trùng trong ngân hàng</h2>
+  <div class="tab"><button data-k="trung" class="on">Trùng hoàn toàn</button><button data-k="cung_de">Cùng đề, khác phương án</button><button data-k="gan_giong">Gần giống (≥ 90%)</button>
+    <span style="margin-left:auto;font-size:12px;color:#555" id="trung-tk"></span></div>
+  <div id="trung-ds"><p>Đang dò câu trùng…</p></div>
+  <div class="chan"><span id="trung-chon">0 câu được chọn để xoá</span>
+    <button id="trung-bo-chon" style="margin-left:auto">Bỏ chọn tất cả</button><button id="trung-chon-goi-y">Chọn theo gợi ý (giữ 1 bản tốt nhất)</button>
+    <button id="trung-xoa" class="chinh">Xoá câu đã chọn</button><button id="trung-dong">Đóng</button></div>
 </div></div>
 <div id="hop-thoai"><div class="noi"><h2 id="ht-tieu">…</h2><pre id="ht-noi"></pre><div class="nut" id="ht-nut"></div></div></div>
 
@@ -650,6 +676,50 @@ $("#ma-ds").onclick=async e=>{
   if(o && $("#hop-thoai").style.display==="flex"){o.value=ma;$("#hop-ma").style.display="none";o.focus();return}
   try{await navigator.clipboard.writeText(`%[${ma}]`);$("#ma-goi-y").textContent=`Đã chép %[${ma}] — dán vào dòng \\begin{ex} của câu.`}
   catch(_){prompt("Chép mã này:",`%[${ma}]`)}
+};
+
+// ---------------- CÂU TRÙNG
+let NHOM_TRUNG=[],TAB_TRUNG="trung",CHON_XOA=new Set();
+const TEN_LOAI_NGAN={TN:"Trắc nghiệm",DS:"Đúng/Sai",TLN:"Trả lời ngắn",TL:"Tự luận"};
+async function moTrung(){
+  $("#hop-trung").style.display="flex"; $("#trung-ds").innerHTML="<p>Đang dò câu trùng trong toàn bộ ngân hàng (khoảng 10 giây)…</p>";
+  const r=await api("/api/cau-trung",{}); NHOM_TRUNG=r.nhom||[];
+  CHON_XOA=new Set(NHOM_TRUNG.flatMap(g=>g.xoa));
+  veTrung();
+}
+function veTrung(){
+  const dem=k=>NHOM_TRUNG.filter(g=>g.kieu===k).length;
+  document.querySelectorAll("#hop-trung .tab button").forEach(b=>{b.classList.toggle("on",b.dataset.k===TAB_TRUNG);
+    b.textContent=b.textContent.replace(/ \(\d+\)$/,"")+` (${dem(b.dataset.k)})`});
+  const ds=NHOM_TRUNG.filter(g=>g.kieu===TAB_TRUNG);
+  $("#trung-tk").textContent={trung:"Gợi ý: giữ bản đầu (đã phân loại, lời giải dài hơn), xoá các bản còn lại.",
+    cung_de:"Cùng lời dẫn nhưng khác phương án/đáp án — thường là câu khác nhau, chỉ xoá khi chắc chắn.",
+    gan_giong:"Khác vài chữ, vài số — xem kỹ trước khi xoá."}[TAB_TRUNG];
+  $("#trung-ds").innerHTML=ds.slice(0,300).map((g,gi)=>`<div class="nhom-trung"><div class="meta">Nhóm ${gi+1} · ${g.cau.length} câu</div>`+
+    g.cau.map((c,ci)=>`<div class="cau"><input type="checkbox" data-ma="${c.ma}" ${CHON_XOA.has(c.ma)?"checked":""}>
+      <div><div class="meta"><b>${c.id||"chưa có mã dạng"}</b> · ${TEN_LOAI_NGAN[c.loai]||c.loai} · đáp án ${esc(c.dap_an)} · lời giải ${c.lg} ký tự${c.hinh?" · có hình":""}${c.dung?` · đã dùng ${c.dung} lần`:""}
+        ${ci===0?'<span class="nhan-giu">nên giữ</span>':""}<br>${esc(c.file.replace(/^cau-hoi\//,""))}</div>
+      <div class="xem">${esc(c.xem)}</div><details><summary>Mã LaTeX</summary><pre>${esc(c.tex)}</pre></details></div></div>`).join("")+`</div>`).join("")
+    +(ds.length>300?`<p>… còn ${ds.length-300} nhóm — xoá bớt rồi mở lại để xem tiếp.</p>`:"")
+    +(ds.length?"":"<p>Không có nhóm nào.</p>");
+  demChon();
+}
+function demChon(){$("#trung-chon").textContent=`${CHON_XOA.size} câu được chọn để xoá`}
+$("#nut-trung").onclick=moTrung;
+$("#trung-dong").onclick=()=>$("#hop-trung").style.display="none";
+document.querySelectorAll("#hop-trung .tab button").forEach(b=>b.onclick=()=>{TAB_TRUNG=b.dataset.k;veTrung()});
+$("#trung-ds").onchange=e=>{const m=e.target.dataset.ma;if(!m)return;e.target.checked?CHON_XOA.add(m):CHON_XOA.delete(m);demChon()};
+$("#trung-bo-chon").onclick=()=>{CHON_XOA.clear();veTrung()};
+$("#trung-chon-goi-y").onclick=()=>{CHON_XOA=new Set(NHOM_TRUNG.flatMap(g=>g.xoa));veTrung()};
+$("#trung-xoa").onclick=async()=>{
+  if(!CHON_XOA.size){alert("Chưa chọn câu nào.");return}
+  // không cho xoá hết một nhóm
+  for(const g of NHOM_TRUNG) if(g.cau.every(c=>CHON_XOA.has(c.ma))){alert(`Có nhóm đang chọn xoá cả ${g.cau.length} câu — hãy giữ lại ít nhất 1 câu mỗi nhóm.`);return}
+  if(!confirm(`Xoá ${CHON_XOA.size} câu khỏi ngân hàng?\nBản sao các câu này được lưu trong du-lieu/da_xoa/ để khôi phục khi cần.`))return;
+  const b=$("#trung-xoa");b.disabled=true;b.textContent="Đang xoá…";
+  try{const r=await api("/api/xoa-trung",{ma:[...CHON_XOA]});
+    $("#hop-trung").style.display="none"; hopThoai(`Đã xoá ${r.so} câu trùng`,r.nhat_ky); tai();}
+  finally{b.disabled=false;b.textContent="Xoá câu đã chọn"}
 };
 tai();
 </script>

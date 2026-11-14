@@ -221,6 +221,14 @@ class XuLy(BaseHTTPRequestHandler):
                 except ValueError as e:
                     return self.gui(200, {"ok": False, "loi": str(e)})
                 return self.gui(200, {"ok": True, "noi_dung": nd})
+            if u.path == "/api/cau-trung":
+                import cau_trung
+                return self.gui(200, {"ok": True, "nhom": cau_trung.tim(float(d.get("nguong") or 0.9))})
+            if u.path == "/api/xoa-trung":
+                import cau_trung
+                dong = []
+                so = cau_trung.xoa(d.get("ma") or [], dong.append)
+                return self.gui(200, {"ok": True, "so": so, "nhat_ky": "\n".join(dong)})
             if u.path == "/api/danh-muc-dang":
                 import tao_prompt
                 return self.gui(200, {"ok": True, "dang": tao_prompt.danh_sach_dang()})
