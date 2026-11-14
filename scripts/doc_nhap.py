@@ -58,11 +58,11 @@ def gan_ma(khoi, ma_dang, muc=None):
 
 # ---------------------------------------------------------------- JSON → tex
 TRUONG = {
-    "noi_dung": ["noi dung", "noidung", "noi_dung", "de", "de bai", "cau hoi", "cauhoi", "cau_hoi", "question",
+    "noi_dung": ["noi dung", "noidung", "noi_dung", "de", "de bai", "cau hoi", "cauhoi", "cau_hoi", "question", "cau",
                  "content", "stem", "text", "problem"],
     "loai": ["loai", "loai cau", "type", "kieu", "dang cau"],
     "dap_an": ["dap an dung", "dap an", "dap_an", "dapan", "answer", "correct", "correct answer", "key", "ket qua"],
-    "loi_giai": ["loi giai", "loi_giai", "loigiai", "huong dan giai", "huong dan", "solution", "giai", "explanation"],
+    "loi_giai": ["loi giai", "loi_giai", "loigiai", "huong dan giai", "huong dan", "solution", "giai", "explanation", "giai thich", "giai_thich"],
     "muc": ["muc do nhan thuc", "muc do", "muc_do", "muc", "level", "difficulty", "do kho"],
     "ma_dang": ["ma dang", "ma_dang", "madang", "id dang", "dang", "code", "id", "ma"],
     "phuong_an": ["phuong an", "phuong_an", "lua chon", "options", "choices", "cac phuong an", "menh de", "y"],
@@ -77,6 +77,8 @@ def lay(d, ten):
 
 def phuong_an(d):
     pa = lay(d, "phuong_an")
+    if isinstance(pa, list) and pa and isinstance(pa[0], dict):      # "y": [{"noi_dung": "...", "dung": true}, …]
+        return [str(lay(x, "noi_dung") if lay(x, "noi_dung") is not None else (x.get("text") or "")) for x in pa][:4]
     if isinstance(pa, list):
         return [str(x) for x in pa][:4]
     if isinstance(pa, dict):
@@ -133,6 +135,18 @@ def dap_an_ds(da):
 
 DUNG = "\\True "
 
+def xuong_dong(t):
+    """Lời giải nhiều dòng (\\n trong JSON) → thêm \\\\ cuối dòng để LaTeX xuống dòng (trừ dòng môi trường)."""
+    dong = [x.rstrip() for x in (t or "").split("\n")]
+    if len(dong) < 2:
+        return t
+    ra = []
+    for i, x in enumerate(dong):
+        sau = dong[i + 1].lstrip() if i + 1 < len(dong) else ""
+        moi_truong = re.search(r"\\(begin|end)\{|\\item|\\\\$", x) or sau.startswith(("\\begin", "\\end", "\\item"))
+        ra.append(x + ("" if (i == len(dong) - 1 or moi_truong or not x.strip()) else " \\\\"))
+    return "\n".join(ra)
+
 def don(s):
     s = "" if s is None else str(s)
     return s.replace("\r", "").strip()
@@ -147,7 +161,14 @@ def json_cau_sang_tex(d, ma_dang=None):
         return [gan_ma(k.group(0), ma_dang, muc_tu_chu(lay(d, "muc") or "")) for k in KHOI.finditer(nd)]
     if nd is None:
         return []
-    pa, da, lg = phuong_an(d), lay(d, "dap_an"), don(lay(d, "loi_giai"))
+    lg_tho = don(lay(d, "loi_giai"))
+    pa, da, lg = phuong_an(d), lay(d, "dap_an"), xuong_dong(lg_tho)
+    y = lay(d, "phuong_an")
+    if isinstance(y, list) and y and isinstance(y[0], dict) and da in (None, ""):   # đáp án Đ/S nằm trong từng ý
+        da = ["Đ" if (x.get("dung") is True or khong_dau(x.get("dung", "")) in ("dung", "true", "d")) else "S" for x in y]
+    hinh = [f for f in (d.get("figures") or d.get("hinh") or []) if isinstance(f, str) and "\\begin{tikzpicture}" in f]
+    if hinh:
+        nd = str(nd) + "".join(f"\n\t\\begin{{center}}\n{f}\n\t\\end{{center}}" for f in hinh)
     loai = loai_cau(d, pa, da)
     muc = muc_tu_chu(lay(d, "muc") or "")
     md = chuan_ma_dang(lay(d, "ma_dang")) or ma_dang
@@ -159,6 +180,12 @@ def json_cau_sang_tex(d, ma_dang=None):
         dong.append("\t\\choice")
         dong += ["\t{" + (DUNG if j == i else "") + don(x) + "}" for j, x in enumerate((pa or [""] * 4)[:4])]
     elif loai == "DS":
+        # lời giải "a) …\nb) …\nc) …\nd) …" → itemchoice như ngân hàng
+        phan = re.split(r"(?m)^\s*\(?([a-dA-D])\)\s*", lg_tho)
+        if len(phan) == 9 and [x.lower() for x in phan[1::2]] == list("abcd"):
+            dau = phan[0].strip()
+            lg = ((xuong_dong(dau) + "\n\t\t") if dau else "") + "\\begin{itemchoice}\n" + "\n".join(
+                "\t\t\t\\itemch " + xuong_dong(x.strip()) for x in phan[2::2]) + "\n\t\t\\end{itemchoice}"
         dung = dap_an_ds(da) or [False] * 4
         dong.append("\t\\choiceTF")
         dong += ["\t{" + (DUNG if dung[j] else "") + don(x) + "}" for j, x in enumerate((pa or [""] * 4)[:4])]
@@ -176,6 +203,15 @@ def duyet(obj, ma_dang, ra):
         for x in obj:
             duyet(x, ma_dang, ra)
     elif isinstance(obj, dict):
+        nhom = {"trac_nghiem": "TN", "dung_sai": "DS", "tra_loi_ngan": "TLN", "tu_luan": "TL"}
+        if any(isinstance(obj.get(k), list) for k in nhom):              # JSON đề: trac_nghiem / dung_sai / tra_loi_ngan
+            for k, l in nhom.items():
+                for x in obj.get(k) or []:
+                    if isinstance(x, dict):
+                        duyet(x if lay(x, "loai") else {**x, "loai": l}, ma_dang, ra)
+                    else:
+                        duyet(x, ma_dang, ra)
+            return
         if isinstance(lay(obj, "noi_dung"), str) or isinstance(lay(obj, "tex"), str):
             ra += json_cau_sang_tex(obj, ma_dang)
         else:

@@ -174,6 +174,17 @@ Nạp đáp án: Chấm Phiếu AI → ô **Đáp án** → **Nhập từ file E
 Khung đề chính thức nằm ở `khung/DeThiChinhThuc/mau_de.tex` (in đen trắng). Muốn dạng ôn tập có màu
 như phần mềm cũ thì ghi `"khung": "DeThi"` trong file JSON.
 
+## Ôn thi học kì (ma trận từng câu 12 TN · 4 Đúng/Sai · 6 Trả lời ngắn)
+
+Nút **Ôn thi học kì** trên thanh đầu. Chọn **Lớp 9/10/11/12** và **Kỳ** (giữa/cuối HK I, II); bảng có sẵn ma trận mặc định
+22 câu (theo KNTT), mỗi câu một dòng — sửa được **Chủ đề**, **Bài trong ngân hàng**, **Mức** (NB/TH/VD/VDC),
+**Ngữ cảnh thực tế**, **Câu mẫu** (+ "Form mẫu": tạo câu mới cùng dạng; "Phân loại 9–10": câu khó). Bảng tự lưu theo lớp.
+- **Ra đề từ ngân hàng**: mỗi dòng lấy đúng 1 câu theo bài + mức (thiếu mức thì bù mức cùng nhóm, rồi dạng khác cùng bài),
+  xuất như nút Xuất đề (số mã đề, PDF, Word, Leftnote, Beamer, đáp án Excel… theo các ô ở khung chính). Lớp 9 chưa có trong kho.
+- **Tạo prompt AI (nguồn ngoài)**: prompt cho ChatGPT/Gemini/Claude sinh đề **JSON** (`trac_nghiem`, `dung_sai`, `tra_loi_ngan`,
+  kèm `ma_dang` chọn từ danh sách dạng của bài, `figures` là mã TikZ); tuỳ chọn số mã đề AI, giải thích bẫy sai lầm, tự phản biện.
+  JSON AI trả về: **Trộn đề từ file** (ra mã đề, PDF, Word, đáp án) hoặc **Nhập câu hỏi** (đưa vào ngân hàng đúng dạng).
+
 ## Câu lạc bài — chuyển đúng dạng hoặc xoá
 
 Nút **Câu lạc bài** trên thanh đầu, 2 thẻ:
