@@ -400,3 +400,38 @@ Dạng toán + tỉ lệ ra đề lấy từ file Excel ma trận 135 đề (`du
 - **Xem trước & đổi bài**: xem 7 bài của từng đề, **↻ Đổi bài** (cùng kiểu lấy, ưu tiên bài chưa dùng) → **Xác nhận & tạo đề**; hoặc **Tạo đề ngẫu nhiên** luôn.
 - Nhiều đề một lượt không trùng bài (kho hết mới dùng lại). Xuất `de-da-ra/Tuyển sinh 10 - <tên> - <ngày>/`: `Đề 01.pdf`, `Đề 01 - Lời giải.pdf`… + thư mục `tex/`.
 - Lịch sử dùng: `du-lieu/ts10_lich_su.json`. **Ma trận & tỉ lệ dạng**: xem nhanh ma trận đề, tỉ lệ từng dạng, số bài trong kho.
+
+## Antigravity (bộ não) + NotebookLM (kho tài liệu)
+
+Mở thư mục này trong **Antigravity**: agent tự đọc `AGENTS.md` và luật `.agents/rules/`, lấy nguồn từ NotebookLM qua MCP,
+tự gắn mã dạng, giải lại để kiểm đáp án, kiểm tra chặt rồi nhập bằng chính `nhap_cau.py`.
+Cài một lần: nhấp đúp **`Cai dat NotebookLM cho Antigravity.command`**. Lệnh tắt: `/nlm-soan-cau`, `/nlm-go-de`, `/nhap-kho`.
+File chờ nhập ở `ai-nhap/`. Công cụ mới: `scripts/kiem_tra_ai.py` (kiểm tra chặt), `scripts/tra_dang.py` (tra mã dạng).
+Chi tiết: `notebooklm/HUONG_DAN_NOTEBOOKLM.md`.
+
+
+## Bộ đề ôn tập nhiều lần (nút **＋ Bộ đề nhiều lần** ở chân trang)
+
+Nhập liên tiếp nhiều ma trận (Lần 1, Lần 2, …), lần sau thêm / bớt / sửa so với Lần 1, rồi xuất một lượt:
+1. Lập ma trận trên bảng như bình thường → **＋ Thêm ma trận đang có trên bảng thành lần mới** (Lần 1).
+2. **⧉ Nhân bản** → **✎ Sửa** (ma trận của lần đó nạp lên bảng, chân trang hiện “Đang sửa Lần 2”) → chỉnh số câu → **Lưu vào lần này**.
+   Bảng bộ đề hiện số câu từng lần và chênh lệch so với Lần 1 (+ thêm / − bớt). Đổi tên lần, số mã đề, thứ tự (↑ ↓), xoá ngay trên bảng.
+3. Tuỳ chọn: tên bộ đề, *Tên kỳ thi in trên đề* (vd ĐỀ ÔN TẬP GIỮA KÌ I → in “ĐỀ ÔN TẬP GIỮA KÌ I – LẦN 1”), mã đề bắt đầu,
+   **Không lặp câu giữa các lần**.
+4. **Xuất cả bộ**: `de-da-ra/<Tên bộ> - <ngày>/` gồm thư mục con `01. Lần 1`, `02. Lần 2`… (đủ đề, lời giải, DapAn.xlsx, tex/ như xuất thường),
+   mã đề nối tiếp (101–104, 105–108…), và khi bật biên dịch PDF: 2 quyển gộp **<Tên bộ> - Câu hỏi.pdf**, **<Tên bộ> - Lời giải.pdf**
+   (trang bìa + bảng lần/mã đề bấm được để nhảy tới đề).
+Bộ đề lưu trong trình duyệt (đóng mở ứng dụng vẫn còn). Dòng lệnh: `python3 scripts/bo_de.py bo.json --bien-dich`.
+
+
+## Câu lỗi không vào kho
+
+**Nhập câu hỏi** (giao diện hay `nhap_cau.py`) giờ kiểm tra từng câu trước khi nhập: ngoặc/dấu $ cân, trắc nghiệm đúng 1 `\True`,
+đáp số trả lời ngắn là số ≤ 4 kí tự, và **biên dịch thử** bằng khung đề thật. Câu lỗi bị loại, ghi riêng ở `ai-nhap/_loi/cau_loi_<ngày giờ>.tex`
+(kèm lý do; thư mục này không đồng bộ GitHub) — sửa xong nhập lại file đó. Kiểm tra riêng: `python3 scripts/kiem_bien_dich.py file.tex`.
+
+### Dấu `% LOI_BIEN_DICH` (an toàn thêm)
+
+Câu có dòng đầu chứa `% LOI_BIEN_DICH: <lý do>` bị **tạm loại khỏi chỉ mục** (không vào đề, phiếu, thống kê) — báo cáo kiểm tra liệt kê riêng.
+Sửa câu xong thì xoá đoạn `% LOI_BIEN_DICH: …` và bấm **Cập nhật kho**. Danh sách câu nhập từ Archive cần sửa: `cau-hoi/_CAU_CAN_SUA.md`.
+Nhập kho không còn đổi dấu phẩy trong hình TikZ thành `{,}` (lỗi cũ làm hỏng tọa độ `(1,2)`).

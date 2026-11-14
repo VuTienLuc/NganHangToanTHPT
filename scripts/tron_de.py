@@ -85,6 +85,9 @@ p_cm = os.path.join(GOC, "du-lieu", "chi_muc.jsonl")
 if not os.path.exists(p_cm):
     sys.exit("Chưa có chỉ mục. Chạy: python3 scripts/lap_chi_muc.py")
 tat_ca = [c for c in map(json.loads, open(p_cm, encoding="utf-8")) if c["dang_key"]]
+TRANH_MA = set(mt.get("tranh_ma") or [])          # bộ đề nhiều lần: câu đã dùng ở các lần trước → không lấy lại
+if TRANH_MA:
+    tat_ca = [c for c in tat_ca if c["ma"] not in TRANH_MA]
 p_ls = os.path.join(GOC, "du-lieu", "lich_su_dung.json")
 lich_su = json.load(open(p_ls, encoding="utf-8")) if os.path.exists(p_ls) else {}
 
@@ -446,6 +449,8 @@ import unicodedata
 ngay = time.strftime("%d-%m-%Y")
 goc_ten = ten_thu_muc(f"{mt['ten_ky_thi']} - {ngay}")
 out_goc, i = os.path.join(GOC, "de-da-ra", goc_ten), 2
+if mt.get("thu_muc_ra"):                               # bộ đề nhiều lần: mỗi lần một thư mục con định sẵn
+    out_goc = os.path.join(GOC, mt["thu_muc_ra"]); goc_ten = os.path.basename(out_goc)
 while os.path.exists(out_goc):
     out_goc = os.path.join(GOC, "de-da-ra", f"{goc_ten} ({i})"); i += 1
 out = os.path.join(out_goc, "tex")                        # mã nguồn LaTeX + khung
@@ -603,6 +608,7 @@ if not TU_FILE:                      # đề trộn từ file ngoài: không ghi
     for ma in ds_cau_dung:
         lich_su.setdefault(ma, []).append(os.path.basename(out_goc))
     json.dump(lich_su, open(p_ls, "w", encoding="utf-8"), ensure_ascii=False)
+json.dump(sorted(set(ds_cau_dung)), open(os.path.join(out_goc, "_ma_cau_dung.json"), "w", encoding="utf-8"))
 rel = os.path.relpath(out_goc, GOC)
 print(f"Đã tạo {so_ma} mã đề ({', '.join(cac_ma)}) trong {rel}/: DapAn.xlsx + thư mục tex/."
       + ("" if TU_FILE else " Lịch sử dùng câu đã cập nhật."))

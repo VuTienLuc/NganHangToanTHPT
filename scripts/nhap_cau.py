@@ -23,8 +23,11 @@ def sua_thap_phan(k):
             dem[0] += 1
             return x.group(1) + "{,}" + x.group(2)
         return re.sub(r"(?<![\d,])(\d+),(\d+)(?!\d*,\d)", thay, m.group(0))
-    k2 = re.sub(r"(?<!\\)\$(?!\$)(.+?)(?<!\\)\$", trong_toan, k, flags=re.S)
-    return k2, dem[0]
+    # không đụng vào hình TikZ: dấu phẩy ở đó là dấu phân cách tọa độ (1,2), không phải số thập phân
+    phan = re.split(r"(\\begin\{tikzpicture\}.*?\\end\{tikzpicture\})", k, flags=re.S)
+    for i in range(0, len(phan), 2):
+        phan[i] = re.sub(r"(?<!\\)\$(?!\$)(.+?)(?<!\\)\$", trong_toan, phan[i], flags=re.S)
+    return "".join(phan), dem[0]
 
 def kiem_tra_cau(k, info):
     """Cảnh báo định dạng hay gặp ở câu do AI gõ (không chặn nhập)."""
@@ -51,7 +54,7 @@ def kiem_tra_cau(k, info):
         canh_bao.append("lời giải nhắc 'Chọn/Đáp án A..D' (sẽ sai khi đảo phương án)")
     return canh_bao
 
-def nhap(cac_file, thu=False, in_ra=print, ma_dang=None):
+def nhap(cac_file, thu=False, in_ra=print, ma_dang=None, bien_dich=True):
     id_map = tai_id_map()
     # 1. băm toàn bộ câu đang có để chống trùng
     da_co = {}
@@ -119,6 +122,27 @@ def nhap(cac_file, thu=False, in_ra=print, ma_dang=None):
                        + (f"; tự sửa {tk['sua_tp']} số thập phân 15,25 → 15{{,}}25" if tk['sua_tp'] else "")
                        + (f"\n   (đã gỡ cả các tên trùng lệnh LaTeX, nếu đề lỗi thì kiểm tra: {', '.join(nghi_ngo[:20])})" if nghi_ngo else ""))
         bao_cao += canh_bao_tep[:30] + ([f"   … và {len(canh_bao_tep) - 30} cảnh báo khác"] if len(canh_bao_tep) > 30 else [])
+    # 2b. CÂU LỖI KHÔNG NHẬP: kiểm tra tĩnh + biên dịch thử → câu lỗi để riêng ở ai-nhap/_loi/ (không vào kho, không lên GitHub)
+    bi_loai = []
+    if them:
+        import kiem_bien_dich
+        tat_ca = [k for ds in them.values() for _, k, _ in ds]
+        in_ra(f"Kiểm tra {len(tat_ca)} câu trước khi nhập (biên dịch thử)…")
+        loi = kiem_bien_dich.kiem(tat_ca, in_ra, bien_dich=bien_dich)
+        if loi:
+            for p in list(them):
+                giu = []
+                for x in them[p]:
+                    ma = x[0].get("ma")
+                    (bi_loai.append((x, loi[ma])) if ma in loi else giu.append(x))
+                if giu:
+                    them[p] = giu
+                else:
+                    del them[p]
+            bao_cao.append(f"✗ LOẠI {len(bi_loai)} câu lỗi (không nhập kho):")
+            bao_cao += [f"   ✗ {x[0].get('ma')} {x[0].get('id') or ''} — {'; '.join(l)}" for x, l in bi_loai[:25]]
+            if len(bi_loai) > 25:
+                bao_cao.append(f"   … và {len(bi_loai) - 25} câu khác")
     for d in bao_cao:
         in_ra(d)
     moi = sum(len(v) for v in them.values())
@@ -128,6 +152,12 @@ def nhap(cac_file, thu=False, in_ra=print, ma_dang=None):
         in_ra(f"   + {len(them[p]):3d} câu → cau-hoi/{p}")
     if len(them) > 15:
         in_ra(f"   … và {len(them) - 15} file khác")
+    if bi_loai and not thu:
+        os.makedirs(os.path.join(GOC, "ai-nhap", "_loi"), exist_ok=True)
+        p_loi = os.path.join(GOC, "ai-nhap", "_loi", time.strftime("cau_loi_%Y%m%d_%H%M%S.tex"))
+        ghi(p_loi, "% CÂU LỖI — KHÔNG NHẬP KHO. Sửa xong thì nhập lại file này (Nhập câu hỏi).\n\n" +
+            "".join(f"% LỖI: {'; '.join(l)}\n% nguồn: {x[2]}\n{x[1]}\n\n" for x, l in bi_loai))
+        in_ra(f"→ {len(bi_loai)} câu lỗi để riêng ở {os.path.relpath(p_loi, GOC)} (sửa xong nhập lại).")
     if thu or not moi:
         if thu: in_ra("(Chế độ xem trước: chưa ghi gì.)")
         return moi
@@ -158,9 +188,10 @@ if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("files", nargs="+")
     ap.add_argument("--thu", action="store_true")
+    ap.add_argument("--khong-bien-dich", action="store_true", help="bỏ bước biên dịch thử (chỉ kiểm tra tĩnh)")
     ap.add_argument("--ma-dang", help="gán mã dạng cho câu chưa có mã, vd 2D1?1-2 (? = theo mức độ câu)")
     a = ap.parse_args()
     fs = [f for f in a.files if os.path.isfile(f)]
     if not fs:
         sys.exit("Không thấy file nào.")
-    nhap(fs, a.thu, ma_dang=a.ma_dang)
+    nhap(fs, a.thu, ma_dang=a.ma_dang, bien_dich=not a.khong_bien_dich)
