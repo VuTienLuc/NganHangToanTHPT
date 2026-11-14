@@ -8,7 +8,7 @@ BẢN TRÌNH CHIẾU SỬA BÀI (Beamer 16:9) và BẢN LEFTNOTE (chừa lề gh
 Biên dịch bằng nh_core.bien_dich_thu_muc (cùng lúc với De_*.tex).
 """
 import os, re, json
-from k12word import tach_cau
+from k12word import tach_cau, BoChuyen
 
 PHAN = [("TN", "PHẦN I. Trắc nghiệm nhiều phương án lựa chọn"), ("DS", "PHẦN II. Trắc nghiệm đúng sai"),
         ("TLN", "PHẦN III. Trả lời ngắn"), ("TL", "PHẦN IV. Tự luận")]
@@ -46,13 +46,13 @@ def dau_beamer(thu_muc_tex, kieu, tt, ma_de):
 \definecolor{xanhDam}{RGB}{13,71,161}\definecolor{xanhNhat}{RGB}{232,242,253}
 \setbeamertemplate{background canvas}{\begin{tikzpicture}[remember picture,overlay]
   \shade[top color=xanhNhat,bottom color=white] (current page.south west) rectangle (current page.north east);
-  \fill[xanhDam!12] (current page.south west) rectangle ([yshift=0.45cm]current page.south east);\end{tikzpicture}}
+  \fill[xanhDam!10] (current page.south west) rectangle ([yshift=0.28cm]current page.south east);\end{tikzpicture}}
 \setbeamercolor{frametitle}{fg=white,bg=xanhDam}
-\setbeamertemplate{frametitle}{\nointerlineskip\begin{beamercolorbox}[wd=\paperwidth,ht=0.95cm,dp=0.3cm,leftskip=0.5cm]{frametitle}%
-  \usebeamerfont{frametitle}\insertframetitle\hfill{\small\insertframesubtitle}\hspace*{0.5cm}\end{beamercolorbox}}
+\setbeamertemplate{frametitle}{\nointerlineskip\begin{beamercolorbox}[wd=\paperwidth,ht=0.42cm,dp=0.14cm,leftskip=0.3cm]{frametitle}%
+  {\small\bfseries\insertframetitle}\hfill{\scriptsize\insertframesubtitle}\hspace*{0.3cm}\end{beamercolorbox}\vspace*{0.05cm}}
 \setbeamercolor{normal text}{fg=black!90}
-\setbeamertemplate{footline}{\hspace*{0.5cm}{\scriptsize\color{xanhDam}\TENKY\ -- Mã đề \MADE}\hfill
-  {\scriptsize\color{xanhDam}\insertframenumber/\inserttotalframenumber}\hspace*{0.5cm}\vspace*{0.12cm}}
+\setbeamertemplate{footline}{\hspace*{0.3cm}{\fontsize{5}{6}\selectfont\color{xanhDam}\TENKY\ -- Mã đề \MADE}\hfill
+  {\fontsize{5}{6}\selectfont\color{xanhDam}\insertframenumber/\inserttotalframenumber}\hspace*{0.3cm}\vspace*{0.06cm}}
 \newcommand{\hieuung}{\transfade[duration=0.3]}
 \newcommand{\coChu}{\normalsize}
 \colorlet{mauDung}{red!80!black}
@@ -60,13 +60,13 @@ def dau_beamer(thu_muc_tex, kieu, tt, ma_de):
     else:
         giao_dien = r"""
 \setbeamercolor{frametitle}{fg=black,bg=white}
-\setbeamertemplate{frametitle}{\nointerlineskip\vspace*{0.15cm}\hspace*{0.1cm}{\bfseries\insertframetitle}\hfill
-  {\small\insertframesubtitle}\hspace*{0.1cm}\par\vspace*{-0.1cm}\rule{\textwidth}{0.6pt}}
+\setbeamertemplate{frametitle}{\nointerlineskip\vspace*{0.06cm}{\small\bfseries\insertframetitle}\hfill
+  {\scriptsize\insertframesubtitle}\par\vspace*{-0.18cm}\rule{\textwidth}{0.4pt}\vspace*{-0.05cm}}
 \setbeamercolor{normal text}{fg=black}
-\setbeamertemplate{footline}{\hspace*{0.4cm}{\scriptsize\color{black!60}\TENKY\ -- Mã đề \MADE}\hfill
-  {\scriptsize\color{black!60}\insertframenumber/\inserttotalframenumber}\hspace*{0.4cm}\vspace*{0.1cm}}
+\setbeamertemplate{footline}{\hspace*{0.3cm}{\fontsize{5}{6}\selectfont\color{black!50}\TENKY\ -- Mã đề \MADE}\hfill
+  {\fontsize{5}{6}\selectfont\color{black!50}\insertframenumber/\inserttotalframenumber}\hspace*{0.3cm}\vspace*{0.04cm}}
 \newcommand{\hieuung}{}
-\newcommand{\coChu}{\large}
+\newcommand{\coChu}{\normalsize}
 \colorlet{mauDung}{red!80!black}
 """
     return (r"\documentclass[aspectratio=169,12pt,noamsthm]{beamer}" + "\n" + pre + r"""
@@ -75,7 +75,8 @@ def dau_beamer(thu_muc_tex, kieu, tt, ma_de):
 \usepackage{multicol}
 \setbeamertemplate{navigation symbols}{}
 \setbeamertemplate{frametitle continuation}{}
-\setbeamersize{text margin left=0.6cm,text margin right=0.6cm}
+\setbeamersize{text margin left=0.3cm,text margin right=0.3cm}
+\setbeamertemplate{headline}{}
 \def\TENKY{""" + ten + "}\\def\\MADE{" + ma_de + "}\\def\\MON{" + mon + r"""}
 """ + giao_dien + r"""
 % ---------- macro thay cho ex_test (đề trong kho dùng các lệnh này)
@@ -97,8 +98,32 @@ def dau_beamer(thu_muc_tex, kieu, tt, ma_de):
 \providecommand{\True}{}\providecommand{\loigiai}[1]{}\providecommand{\dapso}[1]{}
 % ---------- co nội dung vừa khung: quá cao thì thu nhỏ
 \newsavebox\hopCau
-\newcommand{\vuaKhung}[2][0.74]{\sbox\hopCau{\begin{minipage}[t]{\linewidth}\vspace{0pt}\coChu #2\end{minipage}}%
-  \ifdim\dimexpr\ht\hopCau+\dp\hopCau\relax>#1\textheight\relax\resizebox*{!}{#1\textheight}{\usebox\hopCau}\else\usebox\hopCau\fi}
+% phóng chữ lớn nhất có thể: soạn nội dung ở khổ hẹp (bề rộng / k) rồi phóng k lần cho đầy bề ngang,
+% chọn k lớn nhất (1,9 → 1,0) mà chiều cao vẫn vừa khung; vẫn không vừa thì thu nhỏ cho vừa chiều cao
+\newlength\rongTam\newlength\caoToiDa\setlength\caoToiDa{0.865\textheight}
+\newif\ifvuaKhung
+\newcommand{\vuaKhung}[1]{\vuaKhungfalse
+  \def\thuCo##1{\ifvuaKhung\else\setlength\rongTam{\dimexpr\linewidth*100/##1\relax}%
+    \sbox\hopCau{\begin{minipage}[t]{\rongTam}\vspace{0pt}\coChu\raggedright\parindent=0pt #1\end{minipage}}%
+    \ifdim\dimexpr(\ht\hopCau+\dp\hopCau)*##1/100\relax<\caoToiDa\vuaKhungtrue\fi\fi}%
+  \thuCo{190}\thuCo{170}\thuCo{155}\thuCo{140}\thuCo{128}\thuCo{116}\thuCo{106}\thuCo{100}%
+  \ifvuaKhung\resizebox{\linewidth}{!}{\usebox\hopCau}\else\resizebox*{!}{\caoToiDa}{\usebox\hopCau}\fi}
+% hình/bảng rộng hơn khung chữ thì thu cho vừa bề ngang
+\newsavebox\hopHinh
+\newcommand{\vuaRong}[1]{\sbox\hopHinh{#1}\ifdim\wd\hopHinh>\linewidth\resizebox{\linewidth}{!}{\usebox\hopHinh}\else\usebox\hopHinh\fi}
+% câu hỏi: thử 1 cột (phóng to nhất có thể); quá cao thì đề bên trái – phương án bên phải
+\newcommand{\vuaKhungCau}[2]{\vuaKhungfalse
+  \def\thuCo##1{\ifvuaKhung\else\setlength\rongTam{\dimexpr\linewidth*100/##1\relax}%
+    \sbox\hopCau{\begin{minipage}[t]{\rongTam}\vspace{0pt}\coChu\raggedright\parindent=0pt #1\par #2\end{minipage}}%
+    \ifdim\dimexpr(\ht\hopCau+\dp\hopCau)*##1/100\relax<\caoToiDa\vuaKhungtrue\fi\fi}%
+  \thuCo{190}\thuCo{170}\thuCo{155}\thuCo{140}\thuCo{128}\thuCo{116}\thuCo{106}\thuCo{100}%
+  \def\thuCo##1{\ifvuaKhung\else\setlength\rongTam{\dimexpr\linewidth*100/##1\relax}%
+    \sbox\hopCau{\begin{minipage}[t]{\rongTam}\vspace{0pt}\coChu\raggedright\parindent=0pt
+      \begin{minipage}[t]{0.56\linewidth}\vspace{0pt}#1\end{minipage}\hfill
+      \begin{minipage}[t]{0.41\linewidth}\vspace{0pt}\let\phuongAn\phuongAnDoc #2\end{minipage}\end{minipage}}%
+    \ifdim\dimexpr(\ht\hopCau+\dp\hopCau)*##1/100\relax<\caoToiDa\vuaKhungtrue\fi\fi}%
+  \thuCo{150}\thuCo{130}\thuCo{115}\thuCo{100}%
+  \ifvuaKhung\resizebox{\linewidth}{!}{\usebox\hopCau}\else\resizebox*{!}{\caoToiDa}{\usebox\hopCau}\fi}
 % ---------- phương án: tự xếp 4 / 2 / 1 cột; slide 2 tô đáp án đúng
 \newlength\rongPA\newlength\tamPA
 \newcommand{\nhanPA}[2]{\alt<2->{\ifnum#2=1 \tikz[baseline=(n.base)]\node[circle,fill=mauDung,text=white,inner sep=1.2pt,font=\bfseries\small](n){#1};\else\textbf{#1.}\fi}{\textbf{#1.}}}
@@ -115,25 +140,43 @@ def dau_beamer(thu_muc_tex, kieu, tt, ma_de):
     \begin{itemize}[leftmargin=1.6em,label={},itemsep=2pt]\item[\nhanPA{A}{#2}] #1\item[\nhanPA{B}{#4}] #3
     \item[\nhanPA{C}{#6}] #5\item[\nhanPA{D}{#8}] #7\end{itemize}
   \fi\fi}
+\newcommand{\phuongAnDoc}[8]{\begin{itemize}[leftmargin=1.6em,label={},itemsep=3pt,topsep=0pt]\item[\nhanPA{A}{#2}] #1\item[\nhanPA{B}{#4}] #3
+    \item[\nhanPA{C}{#6}] #5\item[\nhanPA{D}{#8}] #7\end{itemize}}
 \newcommand{\yDS}[3]{\item[\textbf{#1)}] #3\only<2->{\hfill\textbf{\textcolor{mauDung}{#2}}}}
 \begin{document}
 """)
 
+def boc_hinh(t):
+    """Bọc tikzpicture / tabular ở mức ngoài cùng bằng \\vuaRong{…} để không tràn khung khi chữ được phóng to."""
+    ra, i = [], 0
+    while True:
+        m = re.search(r"\\begin\{(tikzpicture|tabular|tabularx|longtable)\}", t[i:])
+        if not m:
+            ra.append(t[i:]); break
+        a = i + m.start(); env = m.group(1)
+        b = BoChuyen.tim_end(t, env, i + m.end())
+        b = min(len(t), b + len(f"\\end{{{env}}}"))
+        ra.append(t[i:a] + "\\vuaRong{" + t[a:b] + "}")
+        i = b
+    return "".join(ra)
+
 def khung_cau(so, loai, tieu_phan, p, dap_an, xanh):
+    p = dict(p, de=boc_hinh(p["de"]), lg=boc_hinh(p["lg"] or ""),
+             y_giai=tuple(boc_hinh(x) if isinstance(x, str) else [boc_hinh(y) for y in x] for x in p["y_giai"]) if p["y_giai"] else None)
     de = p["de"].strip()
-    than = de
+    than = ""
     if loai == "TN" and p["pa"] and len(p["pa"]) == 4:
         args = "".join(f"{{{x}}}{{{1 if 'ABCD'[j] == dap_an else 0}}}" for j, x in enumerate(p["pa"]))
-        than += "\n\\phuongAn" + args
+        than += "\\phuongAn" + args
     elif loai == "DS" and p["pa"] and len(p["pa"]) == 4:
-        than += "\n\\begin{itemize}[leftmargin=1.8em,label={},itemsep=3pt]\n" + "\n".join(
+        than += "\\begin{itemize}[leftmargin=1.8em,label={},itemsep=3pt]\n" + "\n".join(
             f"\\yDS{{{'abcd'[j]}}}{{{'Đúng' if j < len(dap_an) and dap_an[j] == 'Đ' else 'Sai'}}}{{{x}}}"
             for j, x in enumerate(p["pa"])) + "\n\\end{itemize}"
     elif loai == "TLN":
-        than += f"\n\\par\\medskip\\only<2->{{\\textbf{{\\textcolor{{mauDung}}{{Đáp số: {tho(dap_an)}}}}}}}"
+        than += f"\\par\\medskip\\only<2->{{\\textbf{{\\textcolor{{mauDung}}{{Đáp số: {tho(dap_an)}}}}}}}"
     hai_slide = "<1-2>" if loai in ("TN", "DS", "TLN") else ""
     hu = "\\hieuung" if xanh else ""
-    fr = (f"\\begin{{frame}}{hai_slide}[t]{{Câu {so}}}{{{tieu_phan}}}{hu}\n\\vuaKhung{{{than}}}\n\\end{{frame}}\n")
+    fr = (f"\\begin{{frame}}{hai_slide}[t]{{Câu {so}}}{{{tieu_phan}}}{hu}\n\\vuaKhungCau{{{de}}}{{{than}}}\n\\end{{frame}}\n")
     # lời giải
     if p["y_giai"]:
         dau, ys, cuoi = p["y_giai"]
@@ -144,7 +187,17 @@ def khung_cau(so, loai, tieu_phan, p, dap_an, xanh):
         dap = (f"Đáp án: {dap_an}" if loai == "TN" else
                "Đáp án: " + " ".join(f"{'abcd'[j]}) {x}" for j, x in enumerate(dap_an[:4])) if loai == "DS" else
                f"Đáp số: {tho(dap_an)}" if loai == "TLN" else "")
-        fr += (f"\\begin{{frame}}[t,allowframebreaks]{{Lời giải câu {so}}}{{{dap}}}{hu}\n\\coChu\n{lg}\n\\end{{frame}}\n")
+        if p["y_giai"]:                      # Đúng/Sai: mỗi ý một slide lời giải → chữ to
+            dau, ys, cuoi = p["y_giai"]
+            for j, y in enumerate(ys):
+                nd = ((dau.strip() + "\n\\par\\medskip\n") if j == 0 and dau.strip() else "") + \
+                     f"\\textbf{{{'abcd'[j]})}} {y}" + (("\n\\par\\medskip\n" + cuoi) if j == 3 and cuoi.strip() else "")
+                fr += (f"\\begin{{frame}}[t]{{Lời giải câu {so} -- ý {'abcd'[j]})}}{{{dap}}}{hu}\n"
+                       f"\\vuaKhung{{{nd}}}\n\\end{{frame}}\n")
+        elif len(lg) <= 1400:
+            fr += (f"\\begin{{frame}}[t]{{Lời giải câu {so}}}{{{dap}}}{hu}\n\\vuaKhung{{{lg}}}\n\\end{{frame}}\n")
+        else:                                # lời giải rất dài: tự sang nhiều slide, chữ lớn
+            fr += (f"\\begin{{frame}}[t,allowframebreaks]{{Lời giải câu {so}}}{{{dap}}}{hu}\n\\large\n{lg}\n\\end{{frame}}\n")
     return fr
 
 def tao_beamer(thu_muc_de, kieu="trang"):
