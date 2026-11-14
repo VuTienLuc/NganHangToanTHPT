@@ -209,6 +209,19 @@ footer .gian{flex:1}
 .the-cau .muc{display:inline-block;padding:0 6px;border-radius:6px;background:#eef2ff;font-weight:600}
 @keyframes nhay{from{background:#fef9c3}to{background:#fff}}
 #hop-xt .chan{padding:10px 18px;border-top:1px solid var(--vien);display:flex;gap:8px;align-items:center}
+#hop-ts{position:fixed;inset:0;background:rgba(17,24,39,.35);display:none;align-items:center;justify-content:center;z-index:12}
+#hop-ts .noi{background:#fff;border-radius:14px;width:min(1250px,97vw);height:min(94vh,980px);display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.25)}
+#hop-ts h2{margin:0;padding:12px 18px;font-size:16px;border-bottom:1px solid var(--vien);display:flex;gap:10px;align-items:center}
+#ts-than{flex:1;overflow:auto;padding:10px 18px;font-size:13px}
+#ts-bang{width:100%;border-collapse:collapse}#ts-bang th,#ts-bang td{border-bottom:1px solid var(--vien);padding:6px;text-align:left;vertical-align:top}
+#ts-bang th{background:#f3f6ff;font-size:12px}#ts-bang select{width:100%;padding:4px;border:1px solid var(--vien);border-radius:6px}
+#ts-bang .cau{font-size:11.5px;color:#555}#ts-bang .kho0{color:#b91c1c;font-weight:600}
+#ts-tuy{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin:10px 0}
+#ts-tuy input[type=text],#ts-tuy input[type=number]{padding:5px 7px;border:1px solid var(--vien);border-radius:7px}
+#ts-xem .de{font-weight:700;color:#1e3a8a;margin:12px 0 4px;font-size:14px}
+#ts-xem .the-bai{border:1px solid var(--vien);border-radius:10px;padding:8px 12px;margin:6px 0;display:grid;grid-template-columns:1fr auto;gap:4px 12px;line-height:1.5;font-size:14px}
+#ts-xem .the-bai .dau{font-size:12px;color:#555}#ts-xem .the-bai.moi{animation:nhay 1.2s}
+#hop-ts .chan{padding:10px 18px;border-top:1px solid var(--vien);display:flex;gap:8px;align-items:center;flex-wrap:wrap}
 </style>
 </head>
 <body>
@@ -220,6 +233,7 @@ footer .gian{flex:1}
   <button id="nut-prompt" title="Sinh prompt cho AI: gõ lại đề thi, hoặc soạn câu hỏi mới theo bài học từ tài liệu">Prompt cho AI</button>
   <button id="nut-tron-file" title="Trộn một đề có sẵn (file .tex/.txt/.json đúng cấu trúc, vd đề AI gõ lại) thành nhiều mã đề, xuất PDF / Word / đáp án Excel">Trộn đề từ file</button>
   <input type="file" id="tep-tron" accept=".tex,.txt,.md,.json" hidden>
+  <button id="nut-ts10" title="Ngân hàng đề tuyển sinh 10 Toán TP.HCM: 7 bài theo bảng dạng 135 đề, tạo đề ngẫu nhiên tự luận + lời giải">Tuyển sinh 10</button>
   <button id="nut-kt" title="Kho kiến thức trọng tâm từng bài (lớp 6 – 12): xem, sửa, soạn bằng AI, nhập nhiều bài một lần">Kho kiến thức</button>
   <button id="nut-phieu" title="Phiếu bài học / chuyên đề / ôn tập chương: kiến thức trọng tâm, luyện tập, bài tập về nhà — tự lấy câu theo dạng">Phiếu bài học</button>
   <button id="nut-on-thi" title="Ma trận đề ôn thi học kì 12–4–6: lấy câu từ ngân hàng hoặc sinh prompt cho AI tạo đề">Ôn thi học kì</button>
@@ -476,6 +490,25 @@ footer .gian{flex:1}
   <div class="chan"><span style="font-size:12px;color:#666">“Đổi câu” lấy ngẫu nhiên câu khác cùng dạng, cùng mức (ưu tiên câu chưa dùng). Hài lòng thì bấm Xác nhận.</span>
     <button id="xt-random" style="margin-left:auto">↻ Random lại tất cả</button><button id="xt-nhatky">Nhật ký chọn câu</button>
     <button id="xt-ok" class="chinh">Xác nhận &amp; xuất đề</button><button id="xt-dong">Đóng</button></div>
+</div></div>
+<div id="hop-ts"><div class="noi">
+  <h2>Ngân hàng tuyển sinh 10 – Toán TP.HCM <span style="font-weight:400;font-size:12px;color:#666">7 bài · 10 điểm · 120 phút (cấu trúc đề Sở 2025–26, 2026–27)</span>
+    <span id="ts-tong" style="margin-left:auto;font-size:12px;font-weight:400"></span></h2>
+  <div id="ts-than">
+    <table id="ts-bang"><thead><tr><th style="width:60px">Bài</th><th style="width:22%">Chủ đề · các câu</th><th style="width:90px">Kho</th><th>Dạng lấy (bảng dạng 135 đề)</th><th style="width:120px"></th></tr></thead><tbody></tbody></table>
+    <div id="ts-tuy">
+      <label>Số đề <input type="number" id="ts-so" min="1" max="40" value="1" style="width:60px"></label>
+      <label>Tên đợt <input type="text" id="ts-ten" value="Đề luyện tuyển sinh 10" style="width:220px"></label>
+      <label>Nhãn đề <input type="text" id="ts-nhan" value="ĐỀ LUYỆN TẬP" style="width:150px"></label>
+      <label>Năm học <input type="text" id="ts-nam" value="NĂM HỌC 2027 – 2028" style="width:170px"></label>
+      <label class="hop"><input type="checkbox" id="ts-tranh" checked> ưu tiên bài chưa dùng</label>
+    </div>
+    <div id="ts-xem"></div>
+  </div>
+  <div class="chan">
+    <button id="ts-nhap">Nhập kho (dán kết quả AI)…</button><button id="ts-mtr">Ma trận &amp; tỉ lệ dạng</button>
+    <button id="ts-xemtruoc" style="margin-left:auto">Xem trước &amp; đổi bài</button><button id="ts-tao" class="chinh">Tạo đề ngẫu nhiên</button><button id="ts-dong">Đóng</button>
+  </div>
 </div></div>
 <div id="hop-thoai"><div class="noi"><h2 id="ht-tieu">…</h2><pre id="ht-noi"></pre><div class="nut" id="ht-nut"></div></div></div>
 
@@ -1386,6 +1419,97 @@ $("#xt-random").onclick=async()=>{$("#xt-random").disabled=true;$("#xt-random").
 $("#xt-ok").onclick=async()=>{
   const cs=XT.bo.map(b=>Object.fromEntries(Object.entries(b).map(([l,ds])=>[l,ds.filter(c=>!c.mat).map(c=>c.ma)])));
   $("#hop-xt").style.display="none"; await xuat(false,cs);
+};
+
+// ---------------- NGÂN HÀNG TUYỂN SINH 10
+let TS=null, TSX=null;
+async function moTS(){ $("#hop-ts").style.display="flex"; await tsTai(); }
+async function tsTai(){
+  const r=await api("/api/ts10/thong-ke",{}); TS=r;
+  $("#ts-tong").textContent=`Kho: ${r.tong} bài`;
+  const cu=tsKieu();
+  $("#ts-bang tbody").innerHTML=r.bai.map(b=>{
+    const dg=r.dang.filter(d=>d.bai===b.bai);
+    const opt=`<option value="ti_le">Ngẫu nhiên theo tỉ lệ đề thật</option><option value="hay_nhat">Dạng hay ra nhất (đề Sở)</option>`+
+      dg.map(d=>`<option value="${d.ma}">${d.ma} · ${esc(d.ten)} — ${Math.round(d.ti_le*100)}% đề · kho ${d.so_kho}</option>`).join("");
+    return `<tr data-b="${b.bai}"><td><b>Bài ${b.bai}</b><br>${String(b.diem).replace(".",",")} đ</td>
+      <td>${esc(b.chu_de)}<div class="cau">${b.cau.map(c=>`${c.cau}) ${esc(c.yeu_cau)} (${String(c.diem).replace(".",",")}đ, ${c.muc})`).join("<br>")}</div></td>
+      <td class="${b.so_kho?"":"kho0"}">${b.so_kho} bài<br><span style="font-size:11px;color:#666">${b.chua_dung} chưa dùng</span></td>
+      <td><select class="ts-dang">${opt}</select></td>
+      <td><button class="ts-prompt">Prompt AI soạn Bài ${b.bai}…</button></td></tr>`}).join("");
+  document.querySelectorAll("#ts-bang tr[data-b]").forEach(tr=>{const v=cu[tr.dataset.b]; if(v) tr.querySelector("select").value=v;
+    tr.querySelector(".ts-prompt").onclick=()=>tsPrompt(+tr.dataset.b)});
+}
+function tsKieu(){const o={};document.querySelectorAll("#ts-bang tr[data-b]").forEach(tr=>o[tr.dataset.b]=tr.querySelector("select").value);return o}
+function tsCfg(){return {so_de:+$("#ts-so").value||1,ten:$("#ts-ten").value.trim(),nhan_de:$("#ts-nhan").value.trim(),nam_hoc:$("#ts-nam").value.trim(),
+  giao_vien:$("#giao_vien").value.trim(),tranh_da_dung:$("#ts-tranh").checked,dang:tsKieu()}}
+function tsPrompt(bai){
+  const dg=TS.dang.filter(d=>d.bai===bai), sel=tsKieu()[bai];
+  hopThoai(`Prompt AI soạn Bài ${bai}`,"Tích các dạng muốn AI soạn (mặc định: dạng đang chọn, hoặc mọi dạng), nhập số bài, rồi bấm Tạo prompt.",
+    [["Tạo prompt",async()=>{
+      const dang=[...document.querySelectorAll("#ts-pd input:checked")].map(x=>x.value), n=+$("#ts-pn").value||5;
+      const r=await api("/api/ts10/prompt",{bai,dang,so_luong:n}); if(!r.ok){alert(r.loi);return}
+      hopThoai(`Prompt AI soạn ${n} Bài ${bai}`,`1) Chép prompt, dán vào ChatGPT / Gemini / Claude (đính kèm đề tham khảo nếu có).\n2) Chép kết quả AI trả về.\n3) Bấm “Nhập kho…” → dán → Nhập vào kho.\n${"─".repeat(60)}\n\n`+r.noi_dung,
+        [["Chép prompt",async e=>{try{await navigator.clipboard.writeText(r.noi_dung);e.target.textContent="Đã chép ✓"}catch(_){alert("Bôi đen rồi Cmd+C.")}},true],["Nhập kho…",()=>tsNhap()]]);
+    },true]]);
+  const o=document.createElement("div");o.id="ts-pd";o.style.cssText="margin-top:10px;display:grid;gap:3px;font:13px system-ui";
+  o.innerHTML=dg.map(d=>`<label style="display:flex;gap:6px"><input type="checkbox" value="${d.ma}" ${(sel===d.ma||(!/^\d/.test(sel)&&d.ti_le>=0.1))?"checked":""}> <b>${d.ma}</b> ${esc(d.ten)} <span style="color:#666">(${Math.round(d.ti_le*100)}% đề, kho ${d.so_kho})</span></label>`).join("")+
+    `<label style="margin-top:6px">Số bài cần soạn <input type="number" id="ts-pn" value="5" min="1" max="20" style="width:60px"></label>`;
+  $("#ht-noi").appendChild(o);
+}
+function tsNhap(){
+  hopThoai("Nhập kho tuyển sinh 10","Dán kết quả AI (các khối \\begin{bt}%[TS10 …] … \\end{bt}, cả khối ```latex``` cũng được) rồi bấm Kiểm tra hoặc Nhập vào kho.",
+    [["Kiểm tra",async()=>{const r=await api("/api/ts10/nhap",{van_ban:$("#ts-no").value,thu:true});
+        $("#ts-nkq").textContent=r.ok?`Nhận ${r.so} bài: ${Object.entries(r.theo_bai).map(([b,n])=>`Bài ${b}: ${n}`).join(", ")||"—"}\n`+r.canh_bao.map(x=>"⚠ "+x).join("\n"):r.loi}],
+     ["Nhập vào kho",async()=>{const r=await api("/api/ts10/nhap",{van_ban:$("#ts-no").value});
+        if(!r.ok){alert(r.loi);return}
+        hopThoai(`Đã nhập ${r.so} bài vào kho tuyển sinh 10`,Object.entries(r.theo_bai).map(([b,n])=>`✓ Bài ${b}: ${n} bài`).join("\n")+(r.canh_bao.length?"\n\n"+r.canh_bao.map(x=>"⚠ "+x).join("\n"):""));
+        tsTai();},true]]);
+  const o=document.createElement("textarea");o.id="ts-no";o.style.cssText="width:100%;height:44vh;box-sizing:border-box;margin-top:8px;font:12px ui-monospace,Menlo,monospace;padding:8px;border:1px solid var(--vien);border-radius:8px";
+  const k=document.createElement("pre");k.id="ts-nkq";k.style.cssText="white-space:pre-wrap;font-size:12px;color:#444";
+  $("#ht-noi").appendChild(o);$("#ht-noi").appendChild(k);o.focus();
+}
+function tsThe(x,de){
+  return `<div class="the-bai" data-de="${de}" data-b="${x.bai}" data-ma="${x.ma}"><div class="dau"><b>Bài ${x.bai}</b> · ${x.cac_dang.join(" ")} · mã ${x.ma}${x.da_dung?` · <span style="color:#b45309">đã dùng ${x.da_dung} lần</span>`:""}</div>
+    <div>${x.de}</div><div style="grid-column:2;grid-row:1/span 2"><button class="ts-doi">↻ Đổi bài</button></div></div>`;
+}
+function tsVeXem(){
+  let h=`<div style="display:flex;gap:8px;align-items:center;margin-top:8px"><b>XEM TRƯỚC ${TSX.bo.length} ĐỀ</b>${TSX.thieu.length?`<span style="color:#b91c1c">⚠ kho chưa có: ${TSX.thieu.join(", ")}</span>`:""}
+    <button id="ts-ok" class="chinh" style="margin-left:auto">✓ Xác nhận &amp; tạo đề</button><button id="ts-bo">Bỏ xem trước</button></div>`;
+  TSX.bo.forEach((de,i)=>{h+=`<div class="de">Đề ${i+1}</div>`+Object.values(de).sort((a,b)=>a.bai-b.bai).map(x=>tsThe(x,i)).join("")});
+  $("#ts-xem").innerHTML=h; gan();
+  function gan(){ $("#ts-xem").querySelectorAll(".ts-doi").forEach(n=>n.onclick=()=>tsDoi(n.closest(".the-bai")));
+    $("#ts-ok").onclick=()=>tsTao(TSX.bo.map(de=>Object.fromEntries(Object.values(de).map(x=>[x.bai,x.ma]))));
+    $("#ts-bo").onclick=()=>{TSX=null;$("#ts-xem").innerHTML=""}; }
+  veCong($("#ts-xem"));
+}
+async function tsDoi(el){
+  const de=+el.dataset.de,b=+el.dataset.b,ma=el.dataset.ma,n=el.querySelector(".ts-doi");n.disabled=true;n.textContent="Đang đổi…";
+  const tranh=TSX.bo.flatMap(d=>Object.values(d).map(x=>x.ma));
+  const r=await api("/api/ts10/doi",{bai:b,kieu:tsKieu()[b],tranh,ma});
+  if(!r.ok){n.textContent="Hết bài thay";alert(`Kho Bài ${b} không còn bài khác để đổi — bấm Prompt AI soạn thêm.`);return}
+  TSX.bo[de][b]=r.bai; const tmp=document.createElement("div");tmp.innerHTML=tsThe(r.bai,de);const moi=tmp.firstElementChild;moi.classList.add("moi");
+  el.replaceWith(moi); moi.querySelector(".ts-doi").onclick=()=>tsDoi(moi); veCong(moi);
+}
+async function tsTao(chon_san){
+  const b=$("#ts-tao");b.disabled=true;b.textContent="Đang tạo…";
+  try{const r=await api("/api/ts10/tao",{cau_hinh:tsCfg(),chon_san,bien_dich:$("#bien_dich").checked});
+    if(!r.ok){alert(r.loi);return}
+    TSX=null;$("#ts-xem").innerHTML=""; tsTai();
+    hopThoai(`Đã tạo: ${r.thu_muc}`,r.nhat_ky+(r.bien_dich?"\nĐang biên dịch PDF…":""),[["Mở thư mục",()=>api("/api/mo",{duong_dan:r.thu_muc}),true]]);
+    if(r.bien_dich) theoDoi(r.nhat_ky);}
+  finally{b.disabled=false;b.textContent="Tạo đề ngẫu nhiên"}
+}
+$("#nut-ts10").onclick=moTS;
+$("#ts-dong").onclick=()=>$("#hop-ts").style.display="none";
+$("#ts-nhap").onclick=tsNhap;
+$("#ts-tao").onclick=()=>tsTao(null);
+$("#ts-xemtruoc").onclick=async()=>{const r=await api("/api/ts10/xem",{cau_hinh:tsCfg()}); if(!r.ok){alert(r.loi);return}
+  TSX={bo:r.bo,thieu:r.thieu}; tsVeXem(); $("#ts-xem").scrollIntoView({behavior:"smooth"});};
+$("#ts-mtr").onclick=()=>{
+  const t=TS.bai.map(b=>`BÀI ${b.bai} (${String(b.diem).replace(".",",")} đ) – ${b.chu_de}\n`+b.cau.map(c=>`   ${c.cau}) ${c.diem}đ · ${c.muc} · ${c.yeu_cau} · dạng chính ${c.dang_chinh}${c.dang_thay.length?" (thay: "+c.dang_thay.join(", ")+")":""}`).join("\n")+"\n"+
+    TS.dang.filter(d=>d.bai===b.bai).map(d=>`   · ${d.ma.padEnd(5)} ${String(Math.round(d.ti_le*100)).padStart(3)}% đề · kho ${d.so_kho} · ${d.ten}${d.da_ra?" ["+d.da_ra+"]":""}`).join("\n")).join("\n\n");
+  hopThoai("Ma trận đề tuyển sinh 10 & tỉ lệ dạng (135 đề 2025–2027)","Tỉ lệ cấp độ: NB 30% · TH 37,5% · VD 32,5%\n\n"+t);
 };
 tai();
 </script>

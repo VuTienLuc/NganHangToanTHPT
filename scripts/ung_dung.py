@@ -118,6 +118,18 @@ def bien_dich_nen(rel):
     ghi_log("Xong.")
     cong_viec.update(dang_chay=False, xong=True)
 
+def bien_dich_ts10(out):
+    import ts10
+    cong_viec.update(dang_chay=True, xong=False, nhat_ky="")
+    def ghi_log(x):
+        cong_viec["nhat_ky"] += x + "\n"
+    try:
+        ghi_log("Biên dịch PDF…"); ts10.bien_dich(out, ghi_log)
+    except Exception as e:
+        ghi_log(f"Lỗi biên dịch: {e}")
+    ghi_log("Xong.")
+    cong_viec.update(dang_chay=False, xong=True)
+
 class XuLy(BaseHTTPRequestHandler):
     def log_message(self, *a):
         pass
@@ -265,6 +277,33 @@ class XuLy(BaseHTTPRequestHandler):
                 except ValueError as e:
                     return self.gui(200, {"ok": False, "nhat_ky": str(e)})
                 return self.gui(200, {"ok": True, "so": so, "nhat_ky": "\n".join(dong)})
+            if u.path.startswith("/api/ts10/"):
+                import ts10
+                viec = u.path.rsplit("/", 1)[1]
+                try:
+                    if viec == "thong-ke":
+                        return self.gui(200, {"ok": True, **ts10.thong_ke()})
+                    if viec == "nhap":
+                        return self.gui(200, {"ok": True, **ts10.nhap(d.get("van_ban") or "", bool(d.get("thu")))})
+                    if viec == "prompt":
+                        return self.gui(200, {"ok": True, "noi_dung": ts10.prompt(d["bai"], d.get("dang") or [], int(d.get("so_luong") or 5))})
+                    if viec == "xem":
+                        bo, thieu = ts10.chon_bo(d.get("cau_hinh") or {})
+                        return self.gui(200, {"ok": True, "thieu": thieu,
+                                              "bo": [{b: ts10.the_xem(x) for b, x in de.items()} for de in bo]})
+                    if viec == "doi":
+                        x = ts10.doi(d["bai"], d.get("kieu"), d.get("tranh") or [], d.get("ma"))
+                        return self.gui(200, {"ok": bool(x), "bai": ts10.the_xem(x) if x else None})
+                    if viec == "tao":
+                        dong = []
+                        out = ts10.tao(d.get("cau_hinh") or {}, dong.append, d.get("chon_san"))
+                        bd = bool(d.get("bien_dich")) and bool(tim_pdflatex())
+                        if bd:
+                            threading.Thread(target=bien_dich_ts10, args=(out,), daemon=True).start()
+                        return self.gui(200, {"ok": True, "thu_muc": os.path.relpath(out, GOC), "bien_dich": bd,
+                                              "nhat_ky": "\n".join(x for x in dong if not x.startswith("THU_MUC:"))})
+                except Exception as e:
+                    return self.gui(200, {"ok": False, "loi": str(e)})
             if u.path.startswith("/api/kho-kt/"):
                 import kho_kien_thuc as K
                 viec = u.path.rsplit("/", 1)[1]

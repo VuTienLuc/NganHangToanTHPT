@@ -385,3 +385,18 @@ số lần đã dùng; công thức vẽ bằng MathJax (cần mạng; không c�
 - **↻ Random lại tất cả**: chọn lại cả bộ.
 - Chế độ "mỗi mã đề câu khác nhau": có các thẻ *Bộ 1, Bộ 2…* để xem/đổi từng mã đề.
 - **Xác nhận & xuất đề**: xuất đúng bộ câu đang xem (vẫn xáo thứ tự câu/phương án theo cài đặt). Ma trận lưu lại không kèm danh sách câu.
+
+
+## Ngân hàng tuyển sinh 10 – Toán TP.HCM (nút **Tuyển sinh 10**)
+
+Cấu trúc đề Sở 2025–26, 2026–27: **7 bài, 10 điểm, 120 phút** — Bài 1 hàm số y = ax² (1,5đ) · Bài 2 Viète (1đ) · Bài 3 thống kê – xác suất (1,5đ)
+· Bài 4 thực tế biểu thức/phương trình (1đ) · Bài 5 hình khối thực tế (1đ) · Bài 6 lập hệ phương trình (1đ) · Bài 7 hình học đường tròn (3đ).
+Dạng toán + tỉ lệ ra đề lấy từ file Excel ma trận 135 đề (`du-lieu/ts10_ma_tran_dang.xlsx` → `du-lieu/ts10_dang.json`).
+
+- Kho: `cau-hoi-ts10/Bai1.tex … Bai7.tex`, mỗi mục là **một bài hoàn chỉnh** (đủ ý a, b, c + lời giải, điểm từng ý), dòng đầu `%[TS10 <mã dạng>]`.
+- **Prompt AI soạn Bài N…** (mỗi dòng của bảng): tích dạng, số bài → prompt có sẵn yêu cầu riêng từng bài (Bài 1 vẽ (P) TikZ, Bài 3 biểu đồ pgfplots,
+  Bài 5 cho sẵn công thức, Bài 7 đủ 3 câu cùng cấu hình + hình vẽ…). Dán vào AI → **Nhập kho (dán kết quả AI)…** → *Kiểm tra* → *Nhập vào kho*.
+- Mỗi bài chọn kiểu lấy: *Ngẫu nhiên theo tỉ lệ đề thật* (trọng số = số đề có dạng), *Dạng hay ra nhất (đề Sở)*, hoặc một dạng cụ thể.
+- **Xem trước & đổi bài**: xem 7 bài của từng đề, **↻ Đổi bài** (cùng kiểu lấy, ưu tiên bài chưa dùng) → **Xác nhận & tạo đề**; hoặc **Tạo đề ngẫu nhiên** luôn.
+- Nhiều đề một lượt không trùng bài (kho hết mới dùng lại). Xuất `de-da-ra/Tuyển sinh 10 - <tên> - <ngày>/`: `Đề 01.pdf`, `Đề 01 - Lời giải.pdf`… + thư mục `tex/`.
+- Lịch sử dùng: `du-lieu/ts10_lich_su.json`. **Ma trận & tỉ lệ dạng**: xem nhanh ma trận đề, tỉ lệ từng dạng, số bài trong kho.
