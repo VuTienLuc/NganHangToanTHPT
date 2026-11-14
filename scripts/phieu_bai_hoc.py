@@ -40,8 +40,9 @@ def khoa_kien_thuc(pham_vi):
     return re.sub(r"[^0-9A-Za-z]+", "_", "+".join(sorted(pham_vi)))
 
 def doc_kien_thuc(pham_vi):
-    p = os.path.join(P_KIEN_THUC, khoa_kien_thuc(pham_vi) + ".tex")
-    return open(p, encoding="utf-8").read() if os.path.exists(p) else ""
+    """Kho kiến thức: đúng tổ hợp đã lưu, nếu không thì ghép kiến thức từng bài trong phạm vi."""
+    import kho_kien_thuc
+    return kho_kien_thuc.doc_pham_vi(pham_vi)
 
 def luu_kien_thuc(pham_vi, noi_dung):
     os.makedirs(P_KIEN_THUC, exist_ok=True)

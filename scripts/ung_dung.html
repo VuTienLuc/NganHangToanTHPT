@@ -181,6 +181,21 @@ footer .gian{flex:1}
 #hop-phieu textarea{min-height:170px;font:12px ui-monospace,Menlo,monospace}
 #hop-phieu .nho{font-size:12px;color:#666}
 #hop-phieu .chan{padding:10px 18px;border-top:1px solid var(--vien);display:flex;gap:8px;align-items:center}
+#hop-nk,#hop-kt{position:fixed;inset:0;background:rgba(17,24,39,.35);display:none;align-items:center;justify-content:center;z-index:18}
+#hop-nk .noi,#hop-kt .noi{background:#fff;border-radius:14px;width:min(1100px,96vw);height:min(90vh,880px);display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.25)}
+#hop-nk .noi{width:min(820px,96vw);height:min(80vh,720px)}
+#hop-nk h2,#hop-kt h2{margin:0;padding:12px 18px;font-size:16px;border-bottom:1px solid var(--vien)}
+#hop-nk .than,#hop-kt .than{flex:1;overflow:auto;padding:12px 18px;display:flex;flex-direction:column;gap:10px;font-size:13px}
+#hop-kt .than{display:grid;grid-template-columns:minmax(0,0.9fr) minmax(0,1.3fr);gap:14px}
+#hop-nk textarea,#hop-kt textarea{flex:1;min-height:200px;width:100%;box-sizing:border-box;padding:8px;border:1px solid var(--vien);border-radius:8px;font:12px ui-monospace,Menlo,monospace}
+#hop-nk .chan,#hop-kt .chan{padding:10px 18px;border-top:1px solid var(--vien);display:flex;gap:8px;align-items:center}
+#kt-ds{border:1px solid var(--vien);border-radius:10px;overflow:auto;flex:1;padding:4px 8px}
+#kt-ds .ch{font-weight:600;margin:8px 0 2px;color:#334}
+#kt-ds label{display:flex;gap:6px;align-items:center;padding:2px 4px;border-radius:6px;cursor:pointer}
+#kt-ds label.dang-xem{background:#eef4ff}
+#kt-ds .tt{margin-left:auto;font-size:11px;white-space:nowrap}
+#kt-ds .co{color:#15803d}#kt-ds .chua{color:#b45309}
+#hop-kt .cot{display:flex;flex-direction:column;gap:8px;min-width:0;min-height:0}
 </style>
 </head>
 <body>
@@ -192,6 +207,7 @@ footer .gian{flex:1}
   <button id="nut-prompt" title="Sinh prompt cho AI: gõ lại đề thi, hoặc soạn câu hỏi mới theo bài học từ tài liệu">Prompt cho AI</button>
   <button id="nut-tron-file" title="Trộn một đề có sẵn (file .tex/.txt/.json đúng cấu trúc, vd đề AI gõ lại) thành nhiều mã đề, xuất PDF / Word / đáp án Excel">Trộn đề từ file</button>
   <input type="file" id="tep-tron" accept=".tex,.txt,.md,.json" hidden>
+  <button id="nut-kt" title="Kho kiến thức trọng tâm từng bài (lớp 6 – 12): xem, sửa, soạn bằng AI, nhập nhiều bài một lần">Kho kiến thức</button>
   <button id="nut-phieu" title="Phiếu bài học / chuyên đề / ôn tập chương: kiến thức trọng tâm, luyện tập, bài tập về nhà — tự lấy câu theo dạng">Phiếu bài học</button>
   <button id="nut-on-thi" title="Ma trận đề ôn thi học kì 12–4–6: lấy câu từ ngân hàng hoặc sinh prompt cho AI tạo đề">Ôn thi học kì</button>
   <button id="nut-lac" title="Tìm câu có nội dung không khớp bài/dạng đang gắn; chuyển sang đúng dạng hoặc xoá">Câu lạc bài</button>
@@ -403,7 +419,7 @@ footer .gian{flex:1}
         <label class="hop"><input type="radio" name="ph-kt-in" value="khong"> Không in (tiết kiệm giấy)</label></div>
       <label>Nội dung kiến thức trọng tâm (LaTeX; để trống → phiếu có dòng kẻ; nội dung luôn được lưu và dùng cho Beamer)
         <textarea id="ph-kt" placeholder="\begin{itemize}&#10;\item ...&#10;\end{itemize}"></textarea></label>
-      <div style="display:flex;gap:8px;flex-wrap:wrap"><button id="ph-prompt-kt">Prompt AI soạn kiến thức trọng tâm…</button></div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap"><button id="ph-prompt-kt">Prompt AI soạn kiến thức trọng tâm…</button><button id="ph-kho-kt">Kho kiến thức…</button><button id="ph-nhap-kho">Nhập kho câu hỏi…</button></div>
       <div style="display:flex;gap:14px;flex-wrap:wrap;align-items:center"><b>In ấn</b>
         <label class="hop">Cỡ chữ <select id="ph-co" style="width:auto"><option value="10">10</option><option value="11" selected>11</option><option value="12">12</option></select></label>
         <label class="hop"><input type="checkbox" id="ph-hai-cot" checked> 2 cột (tiết kiệm giấy)</label>
@@ -412,6 +428,34 @@ footer .gian{flex:1}
     </div>
   </div>
   <div class="chan"><span id="ph-tt" class="nho"></span><button id="ph-thieu" style="margin-left:auto" title="Kiểm tra ngân hàng đủ câu cho phiếu này chưa; thiếu thì soạn prompt cho AI sinh câu, rồi nhập vào ngân hàng">Kiểm tra kho / Prompt AI soạn câu…</button><button id="ph-tao" class="chinh">Tạo phiếu</button><button id="ph-dong">Đóng</button></div>
+</div></div>
+<div id="hop-nk"><div class="noi">
+  <h2>Nhập kho câu hỏi</h2>
+  <div class="than">
+    <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap"><button id="nk-chon">Chọn file .tex / .txt / .json…</button>
+      <span class="nho" style="font-size:12px;color:#666">hoặc dán thẳng kết quả AI trả về vào ô dưới (cả khối ```latex … ``` cũng được)</span></div>
+    <textarea id="nk-van" placeholder="Dán các câu \begin{ex}…\end{ex} / \begin{bt}…\end{bt} hoặc JSON ở đây"></textarea>
+    <span id="nk-tt" style="font-size:12px;color:#666"></span>
+  </div>
+  <div class="chan"><button id="nk-nhap" class="chinh" style="margin-left:auto">Xem trước &amp; nhập vào kho</button><button id="nk-dong">Đóng</button></div>
+</div></div>
+<div id="hop-kt"><div class="noi">
+  <h2>Kho kiến thức trọng tâm <span style="font-weight:400;font-size:12px;color:#666">— mỗi bài một bản; phiếu bài học và Beamer tự lấy</span></h2>
+  <div class="than">
+    <div class="cot">
+      <div style="display:flex;gap:8px;align-items:center"><label>Lớp <select id="kt-lop"><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option><option>11</option><option selected>12</option></select></label>
+        <span id="kt-dem" style="font-size:12px;color:#666"></span>
+        <span style="margin-left:auto;font-size:12px"><a href="#" id="kt-chua">tích bài chưa có</a> · <a href="#" id="kt-bo">bỏ tích</a></span></div>
+      <div id="kt-ds"></div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap"><button id="kt-prompt">Prompt AI soạn kiến thức (bài đã tích)…</button><button id="kt-dan">Dán kết quả AI nhiều bài…</button></div>
+    </div>
+    <div class="cot">
+      <div style="display:flex;gap:8px;align-items:center"><b id="kt-ten">Chọn một bài ở bên trái</b><span id="kt-tt2" style="margin-left:auto;font-size:12px;color:#666"></span></div>
+      <textarea id="kt-nd" placeholder="Nội dung LaTeX: \textbf{1. Kiến thức cần nhớ} … \textbf{2. Phương pháp giải các dạng} — trước mỗi dạng một dòng %% DANG <mã dạng>"></textarea>
+      <div style="display:flex;gap:8px;flex-wrap:wrap"><button id="kt-luu" class="chinh">Lưu bài này</button><button id="kt-prompt1">Prompt AI cho bài này…</button><button id="kt-xoa">Xoá nội dung</button></div>
+    </div>
+  </div>
+  <div class="chan"><span style="font-size:12px;color:#666">Lưu ở du-lieu/kien_thuc/ (phương pháp từng dạng tách sang du-lieu/phuong_phap/ cho Beamer)</span><button id="kt-dong" style="margin-left:auto">Đóng</button></div>
 </div></div>
 <div id="hop-thoai"><div class="noi"><h2 id="ht-tieu">…</h2><pre id="ht-noi"></pre><div class="nut" id="ht-nut"></div></div></div>
 
@@ -717,7 +761,14 @@ async function promptGoDe(){
     ["Lưu file .md",()=>{const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([r.noi_dung],{type:"text/markdown"}));
       a.download=`prompt_go_de_${pv.join("_")||"tat_ca"}.md`;a.click();}]]);
 };
-$("#nut-nhap").onclick=()=>$("#tep-nhap").click();
+$("#nut-nhap").onclick=()=>moNhapKho();
+function moNhapKho(){$("#nk-van").value="";$("#nk-tt").textContent="";$("#hop-nk").style.display="flex";$("#nk-van").focus()}
+$("#nk-chon").onclick=()=>{$("#hop-nk").style.display="none";$("#tep-nhap").click()};
+$("#nk-dong").onclick=()=>$("#hop-nk").style.display="none";
+$("#nk-nhap").onclick=()=>{let t=$("#nk-van").value.trim(); if(!t){alert("Dán nội dung hoặc chọn file.");return}
+  const m=t.match(/```(?:latex|tex|json)?\s*\n([\s\S]*?)```/); if(m) t=m[1];
+  const ten=/^\s*[\[{]/.test(t)?"dan_tu_AI.json":"dan_tu_AI.tex";
+  $("#hop-nk").style.display="none"; xemNhap([{ten,noi_dung:t}],"");};
 $("#tep-nhap").onchange=async e=>{
   const fs=[...e.target.files]; if(!fs.length) return;
   const tep=await Promise.all(fs.map(async f=>({ten:f.name,noi_dung:await f.text()})));
@@ -733,7 +784,8 @@ async function xemNhap(tep,ma_dang){
   const nut=[["Nhập vào ngân hàng",async()=>{
     $("#ht-noi").textContent="Đang nhập…";
     const r2=await api("/api/nhap",{tep,thu:false,ma_dang});
-    hopThoai(`Đã nhập ${r2.so_cau} câu`,r2.nhat_ky); tai();
+    hopThoai(`Đã nhập ${r2.so_cau} câu`,r2.nhat_ky+($("#hop-phieu").style.display==="flex"?"\n\nĐã cập nhật số câu trong hộp Phiếu bài học — bấm Tạo phiếu.":"")); await tai();
+    if($("#hop-phieu").style.display==="flex") phDang();
   },true]];
   if(chuaMa) nut.push(["Gán mã dạng cho câu chưa có mã…",()=>{
     const o=$("#ht-nut"); if(o.querySelector("#o-ma-dang")) return;
@@ -1155,9 +1207,9 @@ async function promptBoSung(bs){
   if(!r.ok){alert(r.loi);return}
   const tong=Object.values(bs.so_cau).flat().reduce((a,b)=>a+b,0);
   hopThoai(`Prompt AI bổ sung ${tong} câu còn thiếu`,
-    `1) Chép prompt, dán vào ChatGPT / Gemini / Claude (đính kèm SGK hoặc tài liệu của bài nếu có).\n2) Lưu kết quả AI trả về thành file .tex / .txt / .json.\n3) Bấm “Nhập câu AI trả về…” chọn file đó → câu được thêm vào ngân hàng.\n4) Mở lại Phiếu bài học và bấm Tạo phiếu.\n${"─".repeat(60)}\n\n`+r.noi_dung,
+    `1) Chép prompt, dán vào ChatGPT / Gemini / Claude (đính kèm SGK hoặc tài liệu của bài nếu có).\n2) Chép kết quả AI trả về (hoặc lưu thành file .tex / .txt / .json).\n3) Bấm “Nhập câu AI trả về…” → dán vào ô (hoặc chọn file) → Xem trước & nhập vào kho.\n4) Mở lại Phiếu bài học và bấm Tạo phiếu.\n${"─".repeat(60)}\n\n`+r.noi_dung,
     [["Chép prompt",async e=>{try{await navigator.clipboard.writeText(r.noi_dung);e.target.textContent="Đã chép ✓"}catch(_){alert("Bôi đen rồi Cmd+C.")}},true],
-     ["Nhập câu AI trả về…",()=>{$("#hop-thoai").style.display="none";$("#tep-nhap").click()}]]);
+     ["Nhập câu AI trả về (dán / chọn file)…",()=>{$("#hop-thoai").style.display="none";moNhapKho()}]]);
 }
 $("#ph-nc").onchange=e=>{$("#ph-vd").disabled=$("#ph-vdc").disabled=!e.target.checked};
 function phCfg(){
@@ -1194,6 +1246,69 @@ $("#ph-tao").onclick=async()=>{
     if(r.bien_dich) theoDoi(r.nhat_ky);}
   finally{b.disabled=false;b.textContent="Tạo phiếu"}
 };
+
+// ---------------- KHO KIẾN THỨC TRỌNG TÂM
+let KT_DS=[], KT_BAI=null;
+async function moKhoKT(lop,bai){
+  $("#hop-kt").style.display="flex";
+  if(lop) $("#kt-lop").value=String(lop);
+  await ktTai(); if(bai) ktChon(bai);
+}
+async function ktTai(){
+  const r=await api("/api/kho-kt/ds",{lop:+$("#kt-lop").value}); KT_DS=r.bai||[];
+  let h="",ch="";
+  for(const b of KT_DS){ if(b.ten_chuong!==ch){ch=b.ten_chuong;h+=`<div class="ch">${esc(ch)}</div>`}
+    h+=`<label data-b="${b.bai}" class="${b.bai===KT_BAI?"dang-xem":""}"><input type="checkbox" value="${b.bai}"> Bài ${b.so_bai}. ${esc(b.ten_bai)}
+      <span class="tt ${b.co_kt?"co":"chua"}">${b.co_kt?"✓ có":"chưa có"} · PP ${b.so_pp}/${b.so_dang}</span></label>`}
+  $("#kt-ds").innerHTML=h||"<i>Không có bài.</i>";
+  const co=KT_DS.filter(b=>b.co_kt).length; $("#kt-dem").textContent=`${co}/${KT_DS.length} bài đã có`;
+  $("#kt-ds").querySelectorAll("label").forEach(l=>l.onclick=e=>{if(e.target.tagName!=="INPUT")ktChon(l.dataset.b)});
+}
+async function ktChon(bai){
+  KT_BAI=bai; const b=KT_DS.find(x=>x.bai===bai)||{};
+  $("#kt-ten").textContent=`Bài ${b.so_bai||""}. ${b.ten_bai||bai}`; $("#kt-tt2").textContent=bai;
+  $("#kt-ds").querySelectorAll("label").forEach(l=>l.classList.toggle("dang-xem",l.dataset.b===bai));
+  const r=await api("/api/kho-kt/doc",{bai}); $("#kt-nd").value=r.noi_dung||"";
+}
+function ktTich(){return [...document.querySelectorAll("#kt-ds input:checked")].map(x=>x.value)}
+async function ktPrompt(ds){
+  if(!ds.length){alert("Tích ít nhất một bài (hoặc chọn một bài).");return}
+  const r=await api("/api/kho-kt/prompt",{bai:ds}); if(!r.ok){alert(r.loi);return}
+  hopThoai(`Prompt AI soạn kiến thức trọng tâm (${ds.length} bài)`,
+    `1) Chép prompt, dán vào ChatGPT / Gemini / Claude (đính kèm SGK nếu có).\n2) Chép kết quả AI trả về.\n3) ${ds.length>1?"Bấm “Dán kết quả AI nhiều bài…” → dán → Nhập kho kiến thức (tự tách từng bài theo dòng %%% BAI).":"Dán vào ô nội dung của bài rồi bấm Lưu bài này."}\n${"─".repeat(60)}\n\n`+r.noi_dung,
+    [["Chép prompt",async e=>{try{await navigator.clipboard.writeText(r.noi_dung);e.target.textContent="Đã chép ✓"}catch(_){alert("Bôi đen rồi Cmd+C.")}},true]]);
+}
+$("#nut-kt").onclick=()=>moKhoKT();
+$("#kt-dong").onclick=()=>$("#hop-kt").style.display="none";
+$("#kt-lop").onchange=()=>{KT_BAI=null;$("#kt-nd").value="";$("#kt-ten").textContent="Chọn một bài ở bên trái";ktTai()};
+$("#kt-chua").onclick=e=>{e.preventDefault();document.querySelectorAll("#kt-ds input").forEach(x=>x.checked=!KT_DS.find(b=>b.bai===x.value).co_kt)};
+$("#kt-bo").onclick=e=>{e.preventDefault();document.querySelectorAll("#kt-ds input").forEach(x=>x.checked=false)};
+$("#kt-prompt").onclick=()=>ktPrompt(ktTich());
+$("#kt-prompt1").onclick=()=>ktPrompt(KT_BAI?[KT_BAI]:[]);
+$("#kt-luu").onclick=async()=>{ if(!KT_BAI){alert("Chọn một bài.");return}
+  let t=$("#kt-nd").value; const m=t.match(/```(?:latex|tex)?\s*\n([\s\S]*?)```/); if(m){t=m[1];$("#kt-nd").value=t}
+  const r=await api("/api/kho-kt/luu",{bai:KT_BAI,noi_dung:t}); if(!r.ok){alert(r.loi);return}
+  await ktTai(); $("#kt-tt2").textContent=`${KT_BAI} · đã lưu ✓ · phương pháp ${r.so_pp} dạng`;
+  if($("#hop-phieu").style.display==="flex") phDang();
+};
+$("#kt-xoa").onclick=async()=>{ if(!KT_BAI||!confirm("Xoá kiến thức của bài này?"))return;
+  await api("/api/kho-kt/luu",{bai:KT_BAI,noi_dung:""}); $("#kt-nd").value=""; ktTai()};
+$("#kt-dan").onclick=()=>{
+  hopThoai("Dán kết quả AI (nhiều bài)","Dán toàn bộ kết quả AI trả về (có các dòng %%% BAI <mã bài>) vào ô dưới rồi bấm “Nhập kho kiến thức”.",
+    [["Nhập kho kiến thức",async()=>{
+      const v=$("#kt-dan-o").value; if(!v.trim()){alert("Chưa dán nội dung.");return}
+      const r=await api("/api/kho-kt/nhap",{van_ban:v,bai:KT_BAI}); if(!r.ok){alert(r.loi);return}
+      const ok=r.ket_qua.filter(x=>x[1]>=0), loi=r.ket_qua.filter(x=>x[1]<0);
+      hopThoai(`Đã nhập kiến thức ${ok.length} bài`,ok.map(x=>`✓ ${x[0]} — phương pháp ${x[1]} dạng`).join("\n")+
+        (loi.length?`\n\nKhông nhận ra mã bài: ${loi.map(x=>x[0]).join(", ")}`:"")+(!r.ket_qua.length?"Không thấy dòng %%% BAI nào (và chưa chọn bài).":""));
+      ktTai();
+    },true]]);
+  const o=document.createElement("textarea");o.id="kt-dan-o";o.style.cssText="width:100%;height:46vh;box-sizing:border-box;margin-top:8px;font:12px ui-monospace,Menlo,monospace;padding:8px;border:1px solid var(--vien);border-radius:8px";
+  $("#ht-noi").appendChild(o); o.focus();
+};
+$("#ph-kho-kt").onclick=()=>{const b=phBaiChon(); moKhoKT($("#ph-lop").value,b[0])};
+$("#ph-nhap-kho").onclick=()=>moNhapKho();
+$("#ph-prompt-kt").onclick=()=>ktPrompt(phBaiChon());   // dùng prompt của kho kiến thức (có %% DANG để Beamer tách phương pháp)
 tai();
 </script>
 </body>

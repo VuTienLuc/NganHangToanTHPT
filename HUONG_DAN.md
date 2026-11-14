@@ -359,3 +359,19 @@ Ngân hàng ban đầu chưa có câu lớp 6 – 9. Cách làm phiếu:
    → **Prompt AI bổ sung câu thiếu…** (prompt riêng cho THCS: bám SGK KNTT; lớp 9 theo đề vào 10 TP.HCM, lớp 6 – 8 theo đề kiểm tra; không dùng kiến thức lớp trên).
 3. Dán prompt vào AI (kèm file SGK bài đó), lưu kết quả → **Nhập câu AI trả về…** → câu vào `cau-hoi/lop6/…` … `cau-hoi/lop9/…`.
 4. Bấm **Tạo phiếu**. Câu đã nhập dùng lại được cho các phiếu, đề sau.
+
+
+## Nhập kho câu hỏi (dán kết quả AI)
+
+Nút **Nhập câu hỏi** (và nút *Nhập kho câu hỏi…* trong Phiếu bài học, *Nhập câu AI trả về…* trong prompt bổ sung) mở hộp **Nhập kho**:
+dán thẳng kết quả AI (cả khối ```latex … ``` cũng được) hoặc chọn file .tex/.txt/.json → **Xem trước & nhập vào kho** → xem số câu, file dạng
+sẽ ghi → **Nhập vào ngân hàng**. Nếu hộp Phiếu bài học đang mở, số câu từng dạng tự cập nhật — bấm Tạo phiếu luôn.
+
+## Kho kiến thức trọng tâm
+
+Nút **Kho kiến thức** (hoặc *Kho kiến thức…* trong Phiếu bài học): lớp 6 – 12, mỗi bài một bản kiến thức trọng tâm
+(`du-lieu/kien_thuc/<mã bài>.tex`), danh sách hiện ✓ có / chưa có và số dạng đã có phương pháp.
+- Bấm tên bài → xem, sửa, **Lưu bài này**. Phương pháp từng dạng (sau dòng `%% DANG <mã dạng>`) tự tách sang `du-lieu/phuong_phap/` để Beamer chiếu.
+- **Soạn hàng loạt bằng AI**: tích nhiều bài (có nút *tích bài chưa có*) → **Prompt AI soạn kiến thức** → dán vào AI →
+  chép kết quả → **Dán kết quả AI nhiều bài…** → *Nhập kho kiến thức* (tự tách từng bài theo dòng `%%% BAI <mã bài>`).
+- Phiếu bài học tự lấy kiến thức: 1 bài → bản của bài đó; nhiều bài / cả chương → ghép bản của từng bài (có tên bài). Sửa trong phiếu thì lưu thành bản riêng cho tổ hợp đó.

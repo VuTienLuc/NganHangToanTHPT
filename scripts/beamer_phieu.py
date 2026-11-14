@@ -114,6 +114,7 @@ GIAO_DIEN = r"""
 %==================== GIAO DIỆN PHIẾU BÀI HỌC (màu theo dạng) ====================
 \tcbuselibrary{skins}
 \definecolor{mauHT}{HTML}{1565C0}\definecolor{mauNhat}{HTML}{E3F2FD}
+\providecolor{mauPhieu}{HTML}{15438C}
 \newcommand{\datMau}[2]{\definecolor{mauHT}{HTML}{#1}\definecolor{mauNhat}{HTML}{#2}}
 \setbeamertemplate{background canvas}{\begin{tikzpicture}[remember picture,overlay]
   \shade[top color=mauNhat,bottom color=white] (current page.south west) rectangle (current page.north east);

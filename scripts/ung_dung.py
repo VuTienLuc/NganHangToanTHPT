@@ -249,6 +249,22 @@ class XuLy(BaseHTTPRequestHandler):
                 except ValueError as e:
                     return self.gui(200, {"ok": False, "nhat_ky": str(e)})
                 return self.gui(200, {"ok": True, "so": so, "nhat_ky": "\n".join(dong)})
+            if u.path.startswith("/api/kho-kt/"):
+                import kho_kien_thuc as K
+                viec = u.path.rsplit("/", 1)[1]
+                try:
+                    if viec == "ds":
+                        return self.gui(200, {"ok": True, "bai": K.danh_sach(d.get("lop") or 12)})
+                    if viec == "doc":
+                        return self.gui(200, {"ok": True, "noi_dung": K.doc(d["bai"])})
+                    if viec == "luu":
+                        return self.gui(200, {"ok": True, "so_pp": K.luu(d["bai"], d.get("noi_dung") or "")})
+                    if viec == "nhap":
+                        return self.gui(200, {"ok": True, "ket_qua": K.nhap(d.get("van_ban") or "", d.get("bai"))})
+                    if viec == "prompt":
+                        return self.gui(200, {"ok": True, "noi_dung": K.prompt(d.get("bai") or [])})
+                except Exception as e:
+                    return self.gui(200, {"ok": False, "loi": str(e)})
             if u.path == "/api/kien-thuc":
                 import phieu_bai_hoc
                 return self.gui(200, {"ok": True, "noi_dung": phieu_bai_hoc.doc_kien_thuc(d.get("pham_vi") or [])})
