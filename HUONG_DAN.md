@@ -424,7 +424,13 @@ Nhập liên tiếp nhiều ma trận (Lần 1, Lần 2, …), lần sau thêm /
 Bộ đề lưu trong trình duyệt (đóng mở ứng dụng vẫn còn). Dòng lệnh: `python3 scripts/bo_de.py bo.json --bien-dich`.
 
 
-## Câu lỗi biên dịch: dấu `% LOI_BIEN_DICH`
+## Câu lỗi không vào kho
+
+**Nhập câu hỏi** (giao diện hay `nhap_cau.py`) giờ kiểm tra từng câu trước khi nhập: ngoặc/dấu $ cân, trắc nghiệm đúng 1 `\True`,
+đáp số trả lời ngắn là số ≤ 4 kí tự, và **biên dịch thử** bằng khung đề thật. Câu lỗi bị loại, ghi riêng ở `ai-nhap/_loi/cau_loi_<ngày giờ>.tex`
+(kèm lý do; thư mục này không đồng bộ GitHub) — sửa xong nhập lại file đó. Kiểm tra riêng: `python3 scripts/kiem_bien_dich.py file.tex`.
+
+### Dấu `% LOI_BIEN_DICH` (an toàn thêm)
 
 Câu có dòng đầu chứa `% LOI_BIEN_DICH: <lý do>` bị **tạm loại khỏi chỉ mục** (không vào đề, phiếu, thống kê) — báo cáo kiểm tra liệt kê riêng.
 Sửa câu xong thì xoá đoạn `% LOI_BIEN_DICH: …` và bấm **Cập nhật kho**. Danh sách câu nhập từ Archive cần sửa: `cau-hoi/_CAU_CAN_SUA.md`.
