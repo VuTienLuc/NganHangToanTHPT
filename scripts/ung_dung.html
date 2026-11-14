@@ -384,7 +384,10 @@ footer .gian{flex:1}
       <div><b>Số câu luyện tập</b> <span class="nho">— bài tập về nhà cùng số câu, cùng dạng, cùng mức (câu khác)</span>
         <div class="so"><label>Trắc nghiệm<input type="number" id="ph-tn" min="0" max="40"></label>
           <label>Đúng/Sai<input type="number" id="ph-ds" min="0" max="20"></label><label>Trả lời ngắn<input type="number" id="ph-tln" min="0" max="20"></label></div></div>
-      <label>I. Kiến thức trọng tâm (LaTeX; để trống → khung có dòng kẻ ghi phương pháp từng dạng; nội dung được lưu để dùng lại)
+      <div style="display:flex;gap:14px;flex-wrap:wrap;align-items:center"><b>I. Kiến thức trọng tâm trên phiếu</b>
+        <label class="hop"><input type="radio" name="ph-kt-in" value="in_san" checked> In sẵn nội dung</label>
+        <label class="hop"><input type="radio" name="ph-kt-in" value="dong_trong"> Dòng trống để học sinh tự ghi</label></div>
+      <label>Nội dung kiến thức trọng tâm (LaTeX; để trống → phiếu có dòng kẻ; nội dung luôn được lưu và dùng cho Beamer)
         <textarea id="ph-kt" placeholder="\begin{itemize}&#10;\item ...&#10;\end{itemize}"></textarea></label>
       <div style="display:flex;gap:8px;flex-wrap:wrap"><button id="ph-prompt-kt">Prompt AI soạn kiến thức trọng tâm…</button></div>
       <div style="display:flex;gap:14px;flex-wrap:wrap;align-items:center"><b>In ấn</b>
@@ -1136,7 +1139,7 @@ $("#ph-tao").onclick=async()=>{
   const loai=$("#ph-loai").dataset.loai, tl=+document.querySelector('input[name="ph-tl"]:checked').value;
   const cfg={pham_vi:loai==="on_tap_chuong"?[$("#ph-chuong").value]:bai,dang,loai_phieu:loai,ten:$("#ph-ten").value.trim(),thoi_luong:tl,
     so_cau:{TN:+$("#ph-tn").value||0,DS:+$("#ph-ds").value||0,TLN:+$("#ph-tln").value||0},kien_thuc:$("#ph-kt").value,
-    co_chu:+$("#ph-co").value,hai_cot:$("#ph-hai-cot").checked,beamer:$("#ph-beamer").checked,giao_vien:$("#giao_vien").value.trim(),truong:$("#truong").value.trim(),
+    co_chu:+$("#ph-co").value,hai_cot:$("#ph-hai-cot").checked,beamer:$("#ph-beamer").checked,kien_thuc_in:document.querySelector('input[name="ph-kt-in"]:checked').value,giao_vien:$("#giao_vien").value.trim(),truong:$("#truong").value.trim(),
     nam_hoc:$("#nam_hoc").value.trim(),so_gd:$("#so_gd").value.trim()};
   const b=$("#ph-tao");b.disabled=true;b.textContent="Đang tạo…";
   try{const r=await api("/api/phieu",{cau_hinh:cfg,bien_dich:$("#bien_dich").checked});

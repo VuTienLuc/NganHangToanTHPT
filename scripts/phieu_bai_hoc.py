@@ -202,14 +202,18 @@ def tao(cfg, in_ra=print):
     kt = (cfg.get("kien_thuc") or "").strip()
     if kt:
         luu_kien_thuc(cfg["pham_vi"], kt)
+    # in_san: in sẵn nội dung đã soạn; dong_trong: khung dòng kẻ để học sinh tự ghi (nội dung soạn vẫn dùng cho Beamer)
+    in_san = (cfg.get("kien_thuc_in") or "in_san") != "dong_trong"
+    if kt and in_san:
         kien = r"\begin{tcolorbox}[colback=white,colframe=mauPhieu!60,boxrule=0.5pt,arc=1mm,left=2mm,right=2mm,top=1mm,bottom=1mm,breakable]" + "\n" + kt + "\n\\end{tcolorbox}"
     else:
-        dong = []
+        dong = [r"\par\smallskip{\small\bfseries Kiến thức cần nhớ (định nghĩa, tính chất, công thức):}\dongKe{" + ("6" if tl >= 90 else "4") + "}"]
+        so_ke = "3" if tl >= 90 else "2"
         for j, d in enumerate(cac_dang, 1):
             dong.append(r"\dangPhieu{" + str(j) + "}{" + thoat((id_map.get(d, {}).get("type_name") or d).strip()) + r"}" "\n"
-                        r"{\small Phương pháp:}\dongKe{2}")
+                        r"{\small Phương pháp:}\dongKe{" + so_ke + "}")
         kien = (r"\begin{tcolorbox}[colback=white,colframe=mauPhieu!60,boxrule=0.5pt,arc=1mm,left=2mm,right=2mm,top=1mm,bottom=1mm,breakable]"
-                "\n{\\small\\itshape Ghi tóm tắt định nghĩa, công thức, phương pháp giải từng dạng:}\n" + "\n".join(dong) + "\n\\end{tcolorbox}")
+                "\n{\\small\\itshape Học sinh tự ghi: tóm tắt kiến thức và phương pháp giải từng dạng.}\n" + "\n".join(dong) + "\n\\end{tcolorbox}")
     # ---------- II, III: câu hỏi theo phần, chia dạng
     so_dang = {d: j for j, d in enumerate(cac_dang, 1)}
     bang = []

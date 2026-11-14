@@ -295,8 +295,11 @@ Nút **Phiếu bài học** trên thanh đầu ứng dụng.
 2. Tích/bỏ **dạng toán** (bên cạnh là số câu trong kho TN/ĐS/TLN).
 3. **Thời lượng** 45 phút (mặc định 8 TN · 2 ĐS · 2 TLN) hoặc 90 phút (12 · 4 · 6) — sửa được số câu.
    Bài tập về nhà có **cùng số câu, cùng dạng, cùng mức** nhưng là câu khác.
-4. **I. Kiến thức trọng tâm**: dán mã LaTeX (có nút *Prompt AI soạn kiến thức trọng tâm*).
-   Để trống thì phiếu in khung có dòng kẻ ghi phương pháp từng dạng. Nội dung được lưu ở `du-lieu/kien_thuc/` và tự nạp lại lần sau.
+4. **I. Kiến thức trọng tâm** — chọn cách in trên phiếu:
+   - *In sẵn nội dung*: in nội dung LaTeX thầy dán (có nút *Prompt AI soạn kiến thức trọng tâm*);
+   - *Dòng trống để học sinh tự ghi*: khung "Kiến thức cần nhớ" (4 dòng; 6 dòng với 90 phút) + "Phương pháp" từng dạng (2 dòng; 3 dòng với 90 phút).
+   Nội dung đã soạn vẫn được lưu ở `du-lieu/kien_thuc/` và vẫn dùng cho Beamer (chiếu phương pháp để học sinh chép vào phiếu).
+   Ô nội dung để trống thì phiếu luôn có dòng kẻ.
 5. In ấn: cỡ chữ 10/11/12, 2 cột tiết kiệm giấy. Chân trang: **GV** (ô Giáo viên ở khung chính) · tên phiếu · Trang x/y.
 
 Kết quả ở `de-da-ra/Phiếu … - <tên> - <ngày>/` — mỗi phiếu có **file câu hỏi** (phát học sinh) và **file lời giải** riêng
