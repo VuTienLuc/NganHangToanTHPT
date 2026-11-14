@@ -27,3 +27,117 @@
 		Khi đó giá trị $T$ nhỏ nhất là $T_{\min}=3IA^2+2 IB^2=3 \cdot 8^2+2 \cdot 12^2=480$. 
 	} 
 \end{bt}
+
+% nguồn: TuLuan_Lop10_daduyet (nhập 14/11/2026)
+\begin{bt}%[0H5C4-6]%[ma:665468d8]
+	Cho góc $\widehat{xOy}=60^\circ$. Trên hai cạnh của góc ta lấy các điểm $A$, $B$ sao cho $OA+OB=2$. Xác định độ dài nhỏ nhất của đoạn $AB$.
+	\loigiai
+	{
+		\immini
+		{
+			Ta có
+			\begin{eqnarray*}
+				AB^2= \vec{AB}^2 &=& \left( \vec{OB}-\vec{OA}\right)^2\\
+				&=& \vec{OB}^2+ \vec{OA}^2 - 2 \cdot \vec{OB}\cdot \vec{OA}\\
+				&=& OB^2+OA^2- 2 \cdot OB \cdot OA \cdot \cos 60^\circ\\
+				&=& (OA+OB)^2- 3 \cdot OA \cdot OB= 4- 3 \cdot OA \cdot OB
+			\end{eqnarray*}			
+		}
+		{
+			\begin{tikzpicture}[>=stealth,line join=round,line cap=round,font=\footnotesize,scale=1]
+	\path 
+	(0,0) coordinate (O)
+	($(O)+(0:4)$) coordinate (x)
+	($(O)+(0:2.5)$) coordinate (A)
+	($(O)+(60:3)$) coordinate (y)
+	($(O)+(60:1.5)$) coordinate (B)
+	;
+	\draw (x)--(O)--(y) (A)--(B);
+	\draw[fill=black] 
+	(O) circle (1pt) node[below left] {$O$}
+	(A) circle (1pt) node[below] {$A$}
+	(B) circle (1pt) node[above left] {$B$}
+	;
+	\draw (x) node[below] {$x$} (y) node[above] {$y$};
+	\begin{scope}
+		\clip (A)--(O)--(B);
+		\draw (O) circle (12pt);
+		\draw ($(O)+(45:12pt)$) node[right] {$60^\circ$};
+	\end{scope}
+\end{tikzpicture}
+		}
+		\vspace*{12pt}
+		\noindent Theo bất đẳng thức AM-GM ta được $OA+OB \ge 2\sqrt{OA \cdot OB} \Rightarrow OA\cdot OB \le 1$.\\
+		Dấu \lq\lq=\rq\rq\ xảy ra khi $OA=OB=1$.\\
+		Do đó $AB \ge 1$. Vậy độ dài nhỏ nhất của $AB$ là $1$.
+	}
+\end{bt}
+
+% nguồn: TuLuan_Lop10_Dot2 (nhập 14/11/2026)
+\begin{bt}%[0H5C4-6] % KIEM_TRA%Câu 5%[Dự án đề kiểm tra HK1 NH22-2-Lê Hùng Thắng]%[THPT Hai Bà Trưng - Huế]%[ma:3a98d05f]
+	Cho hình chữ nhật $ABCD$ có $AB=12$ và $AD=4$. Khi điểm $M$ thay đổi trên cạnh $CD$, tìm giá trị nhỏ nhất của biểu thức $T=\left| \vec{MA}+2 \vec{MB}+3 \vec{MC}\right|$.
+	\loigiai{
+\immini{
+	Gọi $I$, $K$ lần lượt là trung điểm của $AC$, $BC$ và $G$ là trọng tâm tam giác $IBC$. Khi đó $G\in IK$.\\
+	Ta có 
+	\allowdisplaybreaks 
+	$\begin{aligned}[t]
+		&\, \vec{MA}+2 \vec{MB}+3 \vec{MC}\\
+		= &\, \vec{MA}+\vec{MC}+2 \vec{MB}+2 \vec{MC} \\
+		= &\, 2\vec{MI}+2 \vec{MB}+2 \vec{MC} \\
+		= &\, 2(\vec{MI}+\vec{MB}+\vec{MC})\\
+		= &\, 6\vec{MG}.
+	\end{aligned}$\\
+}
+{\begin{tikzpicture}[scale=1,>=stealth, font=\footnotesize, line join=round, line cap=round]
+		\path (0,0) coordinate (D)
+		(0,2) coordinate (A)
+		(6,2) coordinate (B)
+		(6,0) coordinate (C)
+		(2.5,0) coordinate (M)
+		($(A)!0.5!(C)$) coordinate (I)
+		($(B)!0.5!(C)$) coordinate (K)
+		($(I)!2/3!(K)$) coordinate (G)
+		($(C)!(G)!(D)$) coordinate (H);
+\draw (A)--(B)--(C)--(D)--(A)--(C) (B)--(I)--(K)
+(M)--(G)--(H);
+\foreach \d/\g in {A/150,B/30,C/0,D/180,I/90,K/0,G/90,M/-90,H/-90} \fill (\d) circle (1pt) ++(\g:2.5mm) node {$\d$}; 
+	\end{tikzpicture}
+}	
+\noindent 
+$T=\left|\vec{MA}+2 \vec{MB}+3 \vec{MC}\right|=6\left|\vec{MG}\right|=6MG \ge 6HG =6CK$.\\
+Với $H$ là hình chiếu của $G$ lên $CD$.\\
+Do đó giá trị nhỏ nhất của $T$ là $T_0=6CK=3BC=12$.\\
+}
+\end{bt}
+
+% nguồn: TuLuan_Lop10_Dot2 (nhập 14/11/2026)
+\begin{bt}%[0H5C4-6]%[Dương Công Tạo, KNTT10]%[ma:567d3f62]
+    Cho đoạn thẳng $AB=4a$. Với điểm $M$ tùy ý, tìm giá trị nhỏ nhất của tổng $3MA^2~+~MB^2$.
+    \loigiai{
+        Gọi $I$ là điểm thuộc $AB$ sao cho $3\vec{IA}+\vec{IB}=\vec{0}$ (tức là $I$ thuộc $AB$ thỏa mãn $AI=\dfrac{1}{4}AB$).\\
+        Ta có: $p=3MA^2+MB^2=3\vec{MA}^2+3\vec{MB}^2=3\left(\vec{MI}+\vec{IA}\right)^2+\left(\vec{MI}+\vec{IB}\right)^2\\
+        =4MI^2+2\vec{MI}\left(3\vec{IA}+\vec{IB}\right)+3IA^2+IB^2=4MI^2+3IA^2+IB^2$\\
+        Vì $I, A, B$ cố định nên $p\geq 3IA^2+IB^2$; Đẳng thức xảy ra $\Leftrightarrow MI=0 \Leftrightarrow M \equiv I$.\\
+        Suy ra $\min p=3IA^2+IB^2=12a^2$ đạt được khi $M \equiv I$ (vì theo cách dựng thì $IA=a.IB=3a$).
+    }
+\end{bt}
+
+% nguồn: TuLuan_Lop10_Dot2 (nhập 14/11/2026)
+\begin{bt}%[0H5H4-6]%[Câu 15]%[ma:47732aad]
+	Cho tam giác $ABC$, $M$ là điểm tùy ý trong mặt phẳng tam giác. Tìm giá trị nhỏ nhất của biểu thức $\left| 2\overrightarrow{MA}+\overrightarrow{MB}+\overrightarrow{MC}\right| +\left|\overrightarrow{MB}+\overrightarrow{MC}\right|$.
+	\loigiai{
+		Gọi $P$ là trung điểm đoạn $BC$ và $Q$ là trung điểm đoạn $AP$.\\
+		Khi đó
+		\begin{eqnarray*}
+			& &\left| 2\overrightarrow{MA}+\overrightarrow{MB}+\overrightarrow{MC}\right| +\left|\overrightarrow{MB}+\overrightarrow{MC}\right|\\
+			&=& \left|2\overrightarrow{MA}+2\overrightarrow{MP}\right| +2\left|\overrightarrow{MP}\right| \\
+			&=&4\left|\overrightarrow{MQ}\right| +2\left|\overrightarrow{MP}\right|=4MQ+2MP
+		\end{eqnarray*}
+		Ta có $2MQ+2MP\geq 2PQ$ (dấu đẳng thức xảy ra khi và chỉ khi $M$ thuộc đoạn $PQ$) và $2MQ\geq 0$
+		(dấu đẳng thức xảy ra khi và chỉ khi $M\equiv Q$). \\
+		Suy ra $2MQ+2MQ+2MP\geq 2PQ=AP$ (dấu đẳng thức xảy ra khi và chỉ khi $M\equiv Q$).\\
+		Vậy giá trị nhỏ nhất của biểu thức
+		\[\left| 2\overrightarrow{MA}+\overrightarrow{MB}+\overrightarrow{MC}\right| +\left|\overrightarrow{MB}+\overrightarrow{MC}\right| \text{ là } AP.\]
+	}
+\end{bt}

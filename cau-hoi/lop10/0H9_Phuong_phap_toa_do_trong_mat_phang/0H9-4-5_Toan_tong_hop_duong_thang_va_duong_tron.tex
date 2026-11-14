@@ -460,3 +460,190 @@
 		} 
 	 }
 \end{bt}
+
+% nguồn: TuLuan_Lop10_daduyet (nhập 14/11/2026)
+\begin{bt}%[0H9V4-5]%[Dự án đề kiểm tra Toán 10 GHKI NH23-24- Nguyễn Ngọc Duy]%[THPT Ngô Thị Nhậm-Hà Nội]%[ma:d2fb1314]
+	Trong hệ trục toạ độ Oxy cho hai điểm $M(4;-3)$, $N(4;1)$ và đường thẳng\\
+	$d\colon x+6y=0$. Viết phương trình đường tròn $(C)$ đi qua $M$ và $N$ biết rằng các tiếp tuyến của $(C)$ tại $M$ và $N$ cắt nhau tại điểm $Q$ thuộc $d$.
+	\loigiai{
+		\begin{center}
+			\begin{tikzpicture}[scale=1, font=\footnotesize, line join=round, line cap=round, >=stealth]
+				\def \xmin{-3}
+				\def \xmax{7}
+				\def \ymin{-4}
+				\def \ymax{2.5}
+				\draw[->] (\xmin,0)--(\xmax,0) node[shift=(-110:0.3)] {$x$};
+				\draw[->] (0,\ymin)--(0,\ymax) node[shift=(-150:0.3)] {$y$};
+				\foreach \x in {-2,-1,1,2,3,4,5,6} 
+				\draw (\x,0.08) -- (\x,-0.08) node[below] {};
+				\foreach \y in {-3,-2,-1,1,2}
+				\draw (0.08,\y) -- (-0.08,\y) node[left] {}; 
+				\fill (0,0) circle(1pt) node[shift=(-135:0.25)]{$O$}
+				(4,0) circle(1pt) node[shift=(-135:0.3)]{$4$}
+				(0,-3) circle(1pt) node[shift=(-145:0.4)]{$-3$}
+				(0,-1) circle(1pt) node[shift=(-145:0.4)]{$-1$}
+				(0,1) circle(1pt) node[shift=(135:0.3)]{$1$};
+				\coordinate (M) at (4,1);
+				\coordinate (N) at (4,-3);
+				\coordinate (H) at (4,-1);
+				\coordinate (Q) at (6,-1);
+				\coordinate (I) at (2,-1);
+				\path let \p1=(I),\p2=(M),\n1={veclen(\x2-\x1,\y2-\y1)} in \pgfextra{\xdef\Temp{\n1}};
+				\draw[name path=C,dashed] (I) circle (\Temp);
+				\draw[smooth,samples=100,domain=\xmin:\xmax] plot(\x,{-1});
+				\draw[smooth,samples=100,domain=\xmin:\xmax] plot(\x,{-(\x)/6}) node[right] {$x+6y=0$}; 
+				\draw(I)--(M)--(Q)--(N)--(M);
+				\draw pic [draw,angle radius=2mm]{right angle=I--M--Q};
+				\draw pic [draw,angle radius=2mm]{right angle=N--H--Q};
+				\foreach \x/\g in {I/-90,M/45,Q/45,N/-45,H/-135}\fill (\x) circle (1pt)+(\g:.3)node{$\x$};
+				\draw[dashed] (M)--(0,1) (N)--(0,-3);
+			\end{tikzpicture}
+		\end{center}
+		Gọi $I$ là tâm đường tròn $(C)$, $H$ là trung điểm của $MN$.\\
+		Khi đó $I$ và $Q$ thuộc đường trung trực của $MN$ và $H(4;-1)$.\\
+		Đường thẳng $IQ\colon \heva{&\text{đi qua } H(4;-1) \\&\text{VTPT }\overrightarrow{n}=\overrightarrow{MN}=(0;4).}$\\
+		Suy ra $IQ\colon 4(y+1)=0\Leftrightarrow y+1=0$.\\
+		Ta có $Q=IQ \cap d \Rightarrow \heva{&x_Q+6y_Q=0\\& y_Q+1=0} \Rightarrow \heva{&x_Q=6 \\&y_Q=-1.}$\\
+		Do đó $Q(6;-1)$.\\
+		Vì $MQ$ là tiếp tuyến của tại $M$ của $(C)$ nên $MQ \perp IM$ suy ra VTPT $\overrightarrow{n}_{IM}=\overrightarrow{MQ}=(2;2)$.\\
+		Đường thẳng $IM\colon \heva{&\text{đi qua } M(4;-3) \\&\text{VTPT }\overrightarrow{n}=(2;2).}$\\
+		Suy ra $IM\colon 2(x-4)+2(y+3)=0 \Leftrightarrow x+y-1=0$.\\
+		Tâm $I=IM \cap IQ \Rightarrow \heva{&x_I+y_I-1=0\\& y_I+1=0} \Rightarrow \heva{&x_I=2 \\&y_I=-1.}$\\
+		Hay $I(2;-1)$.\\
+		Từ đây ra có $(C)\colon \heva{&\text{Tâm } I(2;-1) \\&\text{Bán kính } R=IM=\sqrt{(4-2)^2+(-3+1)^2}=2\sqrt{2}.}$\\
+		Do đó $(C)\colon (x-2)^2+(y+1)^2=8$.
+	}
+\end{bt}
+
+% nguồn: TuLuan_Lop10_Dot2 (nhập 14/11/2026)
+\begin{bt}%[0H9V4-5]%[Tex_Toan10, Lương Như Quỳnh]%[ma:6f592697]
+	Trong mặt phẳng tọa độ $Oxy$, cho điểm $M$ nằm trên đường tròn \[(C)\colon x^2+y^2+8x-6y+16=0.\] Tính độ dài nhỏ nhất của $OM$.
+	\loigiai{
+		Đường tròn $(C)$ có tâm $I(-4;3)$, bán kính $R=3$.\\
+		Ta có $\overrightarrow{OI}=(-4;3)$, suy ra phương trình đường thẳng $OI$ là $\heva{
+			&x=-4t\\
+			&y=3t.}$\\
+		$OI\cap (C)=\{M\}$. Tọa độ $(x;y)$ của $M$ là nghiệm hệ
+		\[\heva{
+			&x^2+y^2+8x-6y+16=0\\
+			&x=-4t\\
+			&y=3t} \Leftrightarrow \heva{
+			&25t^2-50t+16=0\\
+			&x=-4t\\
+			&y=3t} \Leftrightarrow \heva{
+			&t=\dfrac{8}{5}\\
+			&x=\dfrac{-32}{5}\\
+			&y=\dfrac{24}{5}} \text{ hoặc} \heva{
+			&t=\dfrac{2}{5}\\
+			&x=\dfrac{-8}{5}\\
+			&y=\dfrac{6}{5}.}\]
+		Suy ra $M_1\left(-\dfrac{32}{5};\dfrac{24}{5}\right)$, $M_2\left(-\dfrac{8}{5};\dfrac{6}{5}\right)$.\\
+		Ta có $OM_1=\sqrt{\left(-\dfrac{32}{5}\right)^2+\left(\dfrac{24}{5}\right)^2}=8$, $OM_2=\sqrt{\left(-\dfrac{8}{5}\right)^2+\left(\dfrac{6}{5}\right)^2}=2$.\\
+		Vậy $OM_{\min}=OM_2=2$.
+	}
+\end{bt}
+
+% nguồn: TuLuan_Lop10_Dot2 (nhập 14/11/2026)
+\begin{bt}%[0H9H4-5]%[ma:7e5730cd]
+	Cho điểm $ A(-7;7) $, đường thẳng $ (d)\colon 3x+4y-6=0 $ và đường tròn \break$ (C)\colon x^2+y^2-4x-6y-12=0 $.
+	\begin{enumerate}
+		\item Chứng tỏ $ A $ ở ngoài $ (C) $.
+		\item Viết phương trình tiếp tuyến của $ (C) $ vẽ từ $ A $.
+		\item Viết phương trình tiếp tuyến của $ (C) $ song song với $ (d) $.
+		\item Viết phương trình tiếp tuyến của $ (C) $ vuông góc với $ (d) $.
+	\end{enumerate}
+	\loigiai{
+		\begin{enumerate}
+			\item Chứng tỏ $ A $ ở ngoài $ (C) $.\\
+			$(C)$ có tâm $ I(2;3) $, bán kính $ R=\sqrt{2^2+3^2+12}=5 $.\\
+			$ IA=\sqrt{(2+7)^2+(3-7)^2}=\sqrt{97}>R $.\\
+			Suy ra $ A $ ở ngoài $ (C) $.
+			\item Viết phương trình tiếp tuyến của $ (C) $ vẽ từ $ A $.
+			\begin{itemize}
+				\item Xét tiếp tuyến qua $ A $ và cùng phương $ Oy $ là $ \Delta \colon x+7=0 $.\\
+				Ta có $ \mathrm{d}\left(I,(\Delta)\right)=\dfrac{\vert 2+7\vert}{\sqrt{1^2+0^2}}=9\neq R\Rightarrow \Delta $ không là tiếp tuyến của $ (C) $.
+				\item Xét tiếp tuyến qua $ A $ và có hệ số góc $ k $ là $$\Delta\colon  y=k(x+7)+7\Leftrightarrow kx-y+7k+7=0 .$$
+				Ta có 
+				\begin{eqnarray*}
+					&&\mathrm{d}\left(I,(\Delta)\right)=R\\
+					&\Leftrightarrow& \dfrac{\vert 2k-3+7k+7\vert}{\sqrt{k^2+)(-1)^2}}=5\\
+					&\Leftrightarrow& \vert 9k+4 \vert=5\sqrt{k^2+1}\\
+					&\Leftrightarrow& 81k^2+72k+16=25(k^2+1)\\
+					&\Leftrightarrow& 56k^2+72k-9=0\\
+					&\Leftrightarrow& \hoac{&k=\dfrac{-18+15\sqrt{2}}{26}\\&k=\dfrac{-18-15\sqrt{2}}{26}.}
+				\end{eqnarray*}
+				\begin{itemize}
+					\item Với $k=\dfrac{-18+15\sqrt{2}}{26}$ ta có phương trình tiếp tuyến là $$ \dfrac{-18+15\sqrt{2}}{26} x-y+\dfrac{56+105\sqrt{2}}{26}=0.$$
+					\item Với $k=\dfrac{-18-15\sqrt{2}}{26}$ ta có phương trình tiếp tuyến là $$ \dfrac{-18-15\sqrt{2}}{26} x-y+\dfrac{56-105\sqrt{2}}{26}=0.$$
+				\end{itemize}
+			\end{itemize}
+			\item Gọi tiếp tuyến song song với $ (d) $ là $ \Delta \colon 3x+4y+m=0\,(m\neq -6) $.\\
+			Ta có 
+			\begin{eqnarray*}
+				&&\mathrm{d}\left(I,(\Delta)\right)=R\\
+				&\Leftrightarrow& \dfrac{\vert 3\cdot 2+4\cdot 3+m\vert}{\sqrt{3^2+4^2}}=5\\
+				&\Leftrightarrow& \vert 18+m \vert=25\\
+				&\Leftrightarrow& \hoac{&18+m=25\\&18+m=-25}\\
+				&\Leftrightarrow&\hoac{&m=7\\&m=-43} \text{(thỏa mãn)}.
+			\end{eqnarray*}
+			Suy ra có $ 2 $ tiếp tuyến là $ \hoac{&\Delta\colon 3x+4y+7=0\\&\Delta\colon 3x+4y-43=0.} $
+			\item Gọi tiếp tuyến vuông góc với $ (d) $ là $ \Delta \colon 4x-3y+m=0$.\\
+			Ta có 
+			\begin{eqnarray*}
+				&&\mathrm{d}\left(I,(\Delta)\right)=R\\
+				&\Leftrightarrow& \dfrac{\vert 4\cdot 2-3\cdot 3+m\vert}{\sqrt{4^2+(-3)^2}}=5\\
+				&\Leftrightarrow& \vert m-1 \vert=25\\
+				&\Leftrightarrow& \hoac{&m-1=25\\&m-1=-25}\\
+				&\Leftrightarrow&\hoac{&m=26\\&m=-24.}
+			\end{eqnarray*}
+			Suy ra có $ 2 $ tiếp tuyến là $ \hoac{&\Delta\colon 4x-3y+26=0\\&\Delta\colon 4x-3y-24=0.} $
+		\end{enumerate}
+	}
+\end{bt}
+
+% nguồn: TuLuan_Lop10_Dot2 (nhập 14/11/2026)
+\begin{bt}%[0H9V4-5]%[ma:ce70160f]
+	Trong mặt phẳng $ Oxy $ cho đường thẳng $ (d)\colon x-y-1=0 $ và đường tròn\break $ (C)\colon (x-1)^2+(y-2)^2=4 $. Viết phương trình đường tròn $ (C') $ đối xứng với $ (C) $ qua đường thẳng $ (d) $. Tìm tọa độ giao điểm của $ (C) $ và $ (C') $.
+	\loigiai{
+		$ (C) $ có tậm $ I(1;2) $, bán kính $ R=2 $.\\
+		Vì $ (C') $ đối xứng với $ (C) $ qua đường thẳng $ (d) $ nên $ (C') $ có tâm $ I' $ và bán kính $ R'=R=2 $. $ I' $ là điểm đối xứng của $ I $ qua $ (d) $.\\
+		Gọi $ (d') $ là đường thẳng qua $ I $ và vuông góc với $ (d) $.\\
+		Ta có $ (d')\colon x+y-3=0 $.\\
+		$ I'=(d)\cap (d') $.\\
+		Tọa độ $ I' $ là nghiệm của hệ $ \heva{&x-y-1=0\\&x+y-3=0}\Leftrightarrow \heva{&x=2\\&y=1}\Rightarrow I'(2;1) $.\\
+		Vậy $ (C')\colon (x-2)^2+(y-1)^2=4 $.
+	}
+\end{bt}
+
+% nguồn: TuLuan_Lop10_Dot2 (nhập 14/11/2026)
+\begin{bt}%[0H9H4-5]%[Dự án đề kiểm tra HKII NH22-23- Ngô Quang Anh]%[Ngô Quyền]%[ma:eef21d7d]
+	Trong mặt phẳng tọa độ $Oxy$, cho điểm $M(1; 3)$, đường thẳng $d\colon 2x-y+3=0$ và đường tròn $(C)\colon (x-3)^2+(y+2)^2=8$.
+	\begin{enumerate}
+		\item Viết phương trình đường thẳng $\Delta_1$ qua $M$ và song song với đường thẳng $d$;
+		\item Tìm tham số $m$ để $d$ vuông góc với $d^{\prime}\colon 2mx+5y-5=0$;
+		\item Viết phương trình tiếp tuyến $\Delta_2$ của đường tròn $(C)$ tại điểm $N(1;-4) \in(C)$.		
+	\end{enumerate}
+	\loigiai{	\begin{enumerate}
+			\item Vì $\Delta_1\parallel d$ nên $\Delta_1\colon 2x-y+d=0$ ($d\ne3$).\\
+			$\Delta_1$ qua $M$ nên $2-3+d=0\Rightarrow d=1$ (thỏa).\\
+			Vậy $\Delta_1\colon 2x-y+1=0$.
+			\item Ta có $d$ và $d^{\prime}$ có véc-tơ pháp tuyến lần lươt là $\vec n_{d}=(2;-1); \vec n_{d'}=(2m;5)$
+			 \allowdisplaybreaks
+			\begin{eqnarray*}
+				d \perp d^{\prime} 
+				&\Leftrightarrow& 2m\cdot 2+5\cdot (-1)=0 \\
+				&\Leftrightarrow& 4m-5=0 \\
+				&\Leftrightarrow& m=\dfrac{5}{4}.
+			\end{eqnarray*}
+			\item Đường tròn $(C)$ có tâm $I(3;-2)$.\\
+			Phương trình tiếp tuyến tại điểm $N(1; -4)$ có dạng:
+			\allowdisplaybreaks
+			\begin{eqnarray*}
+				&&(a-x_0)(x-x_0)+(b-y_0)(y-y_0)=0\\
+				&\Leftrightarrow& (3-1)(x-1)+(-2+4)(y+4)=0\\
+				&\Leftrightarrow& x+y+3=0.
+			\end{eqnarray*}
+			Vậy phương trình tiếp tuyến là $x+y+3=0$.		
+	\end{enumerate}}
+\end{bt}
+

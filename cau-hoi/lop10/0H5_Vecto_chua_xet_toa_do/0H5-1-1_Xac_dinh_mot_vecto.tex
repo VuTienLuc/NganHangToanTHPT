@@ -70,3 +70,277 @@
 		Chọn điểm đầu có $4$ cách, sau đó ta chọn điểm cuối trong $3$ điểm khác  điểm đầu nên ta tạo được $3\cdot 4 = 12$ vectơ.
 	 }
 \end{bt}
+
+% nguồn: TuLuan_Lop10_Dot2 (nhập 14/11/2026)
+\begin{bt}%[0H5H1-1]%[ma:37628e29]
+	Cho bốn điểm phân biệt không thẳng hàng $A,~B,~C,~D$. Có bao nhiêu véc-tơ khác véc-tơ không có điểm đầu và điểm cuối là hai trong bốn điểm đã cho?
+	\loigiai
+	{Có $4$ điểm tạo thành $6$ đoạn thẳng. Mỗi đường thẳng có $2$ véc-tơ. Vậy có $12$ véc-tơ}
+\end{bt}
+
+% nguồn: TuLuan_Lop10_Dot2 (nhập 14/11/2026)
+\begin{bt}%[0H5H1-1]%[ma:56615b42]
+	Cho tam giác $ABC$. Gọi $M$, $N$, $P$ lần lượt là trung điểm của $BC$, $CA$, $AB$.
+	\begin{enumerate}
+		\item Liệt kê tất cả các véc-tơ khác véc-tơ $\overrightarrow{0}$, cùng phương với $\overrightarrow{MN}$ và có điểm đầu, điểm cuối lấy trong các điểm đã cho.
+		\item Liệt kê các véc-tơ khác véc-tơ $\overrightarrow{0}$, cùng hướng với $\overrightarrow{AB}$ và có điểm đầu, điểm cuối lấy trong các điểm đã cho.
+	\end{enumerate}
+	\loigiai{
+		\begin{center}
+			\begin{tikzpicture}[scale=0.8,>=stealth, font=\footnotesize, line join=round, line cap=round]
+				\coordinate (A) at (3,5);
+				\coordinate (B) at (0,0);
+				\coordinate (C) at (10,0);
+				\coordinate (M) at ($(C)!0.5!(B)$);
+				\coordinate (N) at ($(A)!0.5!(C)$);
+				\coordinate (P) at ($(A)!0.5!(B)$);
+				%					\coordinate(A') at ($(A)+(-5,0)$);
+				%				\coordinate(B') at ($(B)+(-5,0)$);
+				\draw (A)--(B)--(C)--(A);
+				\draw (M)--(N)--(P)--(M);
+				\foreach 	\x/ \goc in {A/90,M/-90,C/0,B/-90,N/0,P/150} 
+				\fill (\x) circle (1pt)	($(\x)+(\goc:3mm)$) node {$\x$};
+			\end{tikzpicture}
+		\end{center}
+		\begin{enumerate}
+			\item Các véc-tơ khác véc-tơ $\overrightarrow{0}$, cùng phương với $\overrightarrow{MN}$ là $\overrightarrow{NM}, \overrightarrow{AB}, \overrightarrow{BA}, \overrightarrow{AP}, \overrightarrow{PA}, \overrightarrow{BP}, \overrightarrow{PB}$.
+			\item Các véc-tơ khác véc-tơ $\overrightarrow{0}$, cùng hướng với $\overrightarrow{AB}$ là $\overrightarrow{AP}, \overrightarrow{PB}, \overrightarrow{NM}$.	
+		\end{enumerate}		
+	}
+\end{bt}
+
+% nguồn: TuLuan_Lop10_Dot2 (nhập 14/11/2026)
+\begin{bt}%[0H5N1-1]%[Trong Nguyen]%[ma:6992654d]
+	Cho hình vuông $ ABCD $ có hai đường chéo cắt nhau tại $ O $. Hãy chỉ ra 
+	tập hợp $ S $ gồm tất cả các vectơ khác $ \vec{0} $, có điểm đầu và điểm 
+	cuối thuộc tập hợp \{$ A $; $ B $; $ C $; $ D $; $ O $\}. Hãy chia tập hợp 
+	$ S $ thành các nhóm sao cho hai vectơ thuộc cùng một nhóm khi và chỉ khi 
+	chúng bằng nhau.
+	\loigiai{
+		\immini
+		{
+			Ta có 
+			\allowdisplaybreaks
+			\begin{align}
+				S =
+				& \{ \vec{AB}, \vec{AC},\vec{AD}, \vec{AO}, \vec{BA},\vec{BC}, 
+				\vec{BD},\vec{BO}, \vec{CA},\vec{CB}, \nonumber\\
+				&\vec{CD}, \vec{CO}, \vec{DA}, \vec{DB}, \vec{DC},\vec{DO}, \vec{OA}, 
+				\vec{OB}, \vec{OC}, \vec{OD} \nonumber\} 
+			\end{align}
+		}
+		{
+			\begin{tikzpicture}[>=stealth,scale=1, line join = round, line cap 
+				= round]
+				\coordinate (A) at (0,0);
+				\coordinate (B) at (3,0);
+				\coordinate (C) at (3,3);
+				\coordinate (D) at ($(A)+(C)-(B)$);
+				\draw (A) node[left] {$ A $}--(B)node[right] {$ B $}--
+				(C)node[right] {$ C $}--(D)node[left] {$ D $}--cycle;
+				\draw (A)--(C) (B)--(D) node[midway,above]{$ O $};
+			\end{tikzpicture}
+		}
+		Các nhóm gồm các vectơ bằng nhau của tập $ S $ là 
+		\begin{itemize}
+			\begin{multicols}{4}
+				\item $ S_1=\left\{\vec{AB}, \vec{DC} \right\}$. 
+				\item $ S_2=\left\{\vec{BA}, \vec{CD} \right\}$. 
+				\item $ S_3=\left\{\vec{AD}, \vec{BC} \right\}$. 
+				\item $ S_4=\left\{\vec{DA}, \vec{CB} \right\}$. 
+				\item $ S_5=\left\{\vec{OA}, \vec{CO} \right\}$. 
+				\item $ S_6=\left\{\vec{AO}, \vec{OC} \right\}$. 
+				\item $ S_7=\left\{\vec{DO}, \vec{OB} \right\}$. 
+				\item $ S_8=\left\{\vec{OD}, \vec{BO} \right\}$. 
+			\end{multicols}
+			
+		\end{itemize}
+		
+	}	
+\end{bt}
+
+% nguồn: TuLuan_Lop10_Dot2 (nhập 14/11/2026)
+\begin{bt}%[0H5N1-1]%[Trong Nguyen]%[ma:eb654505]
+	Cho đoạn thẳng $ MN $ có trung điểm là $ I $.
+	\begin{enumerate}
+		\item Viết các vec-tơ khác vec-tơ không có điểm đầu và điểm cuối là một 
+		trong 
+		ba điểm $ M $, $ N $, $ I $.
+		\item Vectơ nào bằng $ \vec{MI} $ ? bằng $ \vec{NI} $ ?.
+	\end{enumerate}
+	\loigiai{
+		\immini
+		{
+			\begin{enumerate}
+				\item Các vec-tơ khác vec-tơ không có điểm đầu và điểm cuối là một 
+				trong ba điểm $ M $, $ N $, $ I $: $ \vec{MN} $, $ \vec{NM} $, $ 
+				\vec{MI} $, $ \vec{IM} $, $ \vec{NI} $, $ \vec{IN} $.
+				\item 
+				Các vectơ bằng $ \vec{MI} $: $ \vec{IN} $.\\
+				Các vectơ bằng $ \vec{NI} $: $ \vec{IM} $.
+			\end{enumerate}	
+		}
+		{
+			\begin{tikzpicture}[>=stealth,scale=1, line join = round, line cap 
+				= round]
+				\coordinate (M) at (0,0);
+				\coordinate (N) at (4,0);
+				\coordinate (I) at ($(M)!0.5!(N)$);
+				\draw (M) node[below] {$ M $}--(I)node[below] {$ I $}--
+				(N)node[below] {$ N $};
+				\foreach \diem in {M,N,I}
+				\draw[fill=black] (\diem) circle(1pt);
+			\end{tikzpicture}
+		}
+		
+	}	
+\end{bt}
+
+% nguồn: TuLuan_Lop10_Dot2 (nhập 14/11/2026)
+\begin{bt}%[0H5H1-1]%[ma:2b16993e]
+		Cho hình bình hành $ABCD$. Hãy chỉ ra các véc-tơ (khác $\overrightarrow{0}$) có điểm đầu và điểm cuối là một trong bốn đỉnh của hình bình hành $ABCD$. Trong số các véc-tơ trên, hãy chỉ ra
+		\begin{enumerate}
+			\item Các véc-tơ cùng phương.
+			\item Các cặp véc-tơ cùng phương nhưng ngược hướng.
+			\item Các cặp véc-tơ bằng nhau.
+		\end{enumerate}
+		\loigiai
+		{
+			\immini
+			{
+				Các véc-tơ (khác $\overrightarrow{0}$) có điểm đầu và điểm cuối là một trong bốn đỉnh của hình bình hành $ABCD$ là $\overrightarrow{AB}$, $\overrightarrow{BA}$, $\overrightarrow{AC}$, $\overrightarrow{CA}$, $\overrightarrow{AD}$, $\overrightarrow{DA}$, $\overrightarrow{BC}$, $\overrightarrow{CB}$, $\overrightarrow{BD}$, $\overrightarrow{DB}$, $\overrightarrow{CD}$, $\overrightarrow{DC}$.
+			}
+			{
+				\begin{tikzpicture}
+					\tkzDefPoints{0/0/A, 3/0/B, 4/1/C}
+					\tkzDefPointBy[translation=from B to A](C)\tkzGetPoint{D}
+					\tkzDrawPoints[fill=black](A,B,D,C)
+					\tkzDrawPolygon(A,B,C,D)
+					\tkzLabelPoints[left](A,D)
+					\tkzLabelPoints[right](B,C)
+				\end{tikzpicture}
+			}
+			\noindent
+			\begin{enumerate}
+				\item Các véc-tơ cùng phương với nhau là
+				\begin{itemize}
+					\item $\overrightarrow{AB}$, $\overrightarrow{BA}$, $\overrightarrow{CD}$, $\overrightarrow{DC}$.
+					\item $\overrightarrow{AD}$, $\overrightarrow{DA}$, $\overrightarrow{BC}$, $\overrightarrow{CB}$.
+					\item $\overrightarrow{AC}$ và $\overrightarrow{CA}$.
+					\item $\overrightarrow{BD}$ và $\overrightarrow{DB}$.
+				\end{itemize}
+				\item Các cặp véc-tơ cùng phương nhưng ngược hướng là $\overrightarrow{AB}$ và $\overrightarrow{BA}$; $\overrightarrow{BC}$ và $\overrightarrow{CB}$; $\overrightarrow{CD}$ và $\overrightarrow{DC}$; $\overrightarrow{DA}$ và $\overrightarrow{AD}$; $\overrightarrow{AC}$ và $\overrightarrow{CA}$; $\overrightarrow{BD}$ và $\overrightarrow{DB}$; $\overrightarrow{AB}$ và $\overrightarrow{CD}$; $\overrightarrow{BA}$ và $\overrightarrow{DC}$; $\overrightarrow{AD}$ và $\overrightarrow{CB}$; $\overrightarrow{DA}$ và $\overrightarrow{BC}$.
+				\item Các cặp véc-tơ bằng nhau là $\overrightarrow{AB}$ và $\overrightarrow{DC}$; $\overrightarrow{BA}$ và $\overrightarrow{CD}$; $\overrightarrow{AD}$ và $\overrightarrow{BC}$; $\overrightarrow{DA}$ và $\overrightarrow{CB}$.
+			\end{enumerate}
+		}
+	\end{bt}
+
+% nguồn: TuLuan_Lop10_Dot2 (nhập 14/11/2026)
+\begin{bt}%[0H5N1-1]%[ma:e298ca30]
+	Cho hai điểm phân biệt $A,~B$. Tìm số véc-tơ được tạo thành từ hai điểm này?
+	\loigiai{
+	
+	Véc-tơ là đoạn thẳng được định hướng. Như vậy từ hai điểm $A,B$ ta được hai véc-tơ là $\overrightarrow{AB}$ và $\overrightarrow{BA}$.
+}
+\end{bt}
+
+% nguồn: TuLuan_Lop10_Dot2 (nhập 14/11/2026)
+\begin{bt}%[0H5N1-1]%[ma:ce8c9fc6]
+	Cho tam giác $ABC$. Viết tất cả các véc-tơ mà điểm đầu và điểm cuối là $A$, $B$ hoặc $C$.
+	\loigiai{
+		Ta có $\overrightarrow{AB}$, $\overrightarrow{BA}$, $\overrightarrow{AC}$, $\overrightarrow{CA}$, $\overrightarrow{CB}$, $\overrightarrow{BC}$.
+	}
+	\end{bt}
+
+% nguồn: TuLuan_Lop10_Dot2 (nhập 14/11/2026)
+\begin{bt}%[0H5H1-1]%[Dự án đề kiểm tra HKII NH22-23-BCTuan]%[THPT Thực Hành Sài Gòn]%[ma:c9233228]
+	\immini
+	{
+		Cho $6$ điểm cùng nằm trên một đường tròn như hình bên.
+		\begin{enumerate}
+			\item Có bao nhiêu véc-tơ có điểm đầu và điểm cuối thuộc các điểm đã cho?
+			\item Có bao nhiêu tam giác có đỉnh thuộc các điểm đã cho?
+		\end{enumerate}
+	}
+	{
+	\begin{tikzpicture}[line join=round, line cap=round,>=stealth,font=\footnotesize,scale=0.5]
+\def\r{4}
+\coordinate (O) at (0,0);
+\draw (O) circle (\r);
+\foreach \i/\j/\k in {0/E/0,1/F/90,2/A/90,3/B/180,4/C/-90,5/D/-90}
+\draw ($(O)+(60*\i:4)$) circle (1pt) +(\k:0.5cm) node {$\j$};
+\end{tikzpicture}
+	}
+\loigiai{
+\begin{enumerate}
+	\item Số véc-tơ có điểm đầu và điểm cuối thuộc các điểm đã cho là $\mathrm{A}_6^2=30$.
+	\item Số tam giác có các đỉnh thuộc các điểm đã cho là $\mathrm{C}_6^3=20$.
+\end{enumerate}
+}
+\end{bt}
+
+% nguồn: TuLuan_Lop10_Dot2 (nhập 14/11/2026)
+\begin{bt}%[0H5H1-1]%[ma:5ce53114]
+		Cho hai điểm phân biệt $H$, $K$. Viết hai véc-tơ mà điểm đầu và điểm cuối là $H$ hoặc $K$.
+	\loigiai{
+		Hai véc-tơ thỏa mãn yêu cầu đề bài là $\overrightarrow{HK}$ và $\overrightarrow{KH}$.
+	}
+\end{bt}
+
+% nguồn: TuLuan_Lop10_Dot2 (nhập 14/11/2026)
+\begin{bt}%[0H5N1-1]%[Dự án 4 - TLDH - TeamTeXHoa - Lê Quân]%[ma:f6c505d9]
+Cho tứ giác $ABCD$. Có bao nhiêu véc-tơ khác véc-tơ-không có điểm đầu và điểm cuối là đỉnh của tứ giác.
+	\loigiai
+	{
+	Hai điểm phân biệt, chẳng hạn $A,\,\,B$ ta xác định được hai véc-tơ khác véc-tơ-không là $\overrightarrow{AB},\,\,\overrightarrow{BA}$.\\
+	 Mà từ bốn đỉnh $A,\,\,B,\,\,C,\,\,D$ của tứ giác ta có 6 cặp điểm phân biệt do đó có 12 véc-tơ thỏa mãn yêu cầu bài toán.	
+	}
+\end{bt}
+
+% nguồn: TuLuan_Lop10_Dot2 (nhập 14/11/2026)
+\begin{bt}%[0H5N1-1]%[Dự án bài tập sách CTST]%[Phan Anh]%[ma:6c514302]
+	\immini{Cho hình vuông $ABCD$ có tâm $O$ và có cạnh bằng $1$ (tham khảo hình vẽ).
+		\begin{enumerate}
+			\item Tìm điểm đầu, điểm cuối, giá và độ dài của các véc-tơ: $\overrightarrow{CA}$, $\overrightarrow{OA}$, $\overrightarrow{BD}$.
+			\item Tìm các véc-tơ đơn vị trong hình.
+	\end{enumerate}}
+	{\begin{tikzpicture}[>=stealth,line join=round,line cap=round,font=\footnotesize,scale=0.7]
+			\path (0,3) coordinate (A)
+			(3,3) coordinate (B)
+			(3,0) coordinate (C)
+			(0,0) coordinate (D)
+			($(A)!0.5!(C)$)coordinate (O)
+			;
+			\draw (C)--(A)--(B)--(C)--(D)--(A) (B)--(D);
+			\foreach \p / \r in {A/135,B/45,C/-45,D/-135,O/-90}
+			\fill (\p) circle (1.2pt) node[shift={(\r:3mm)}]{$\p$};
+			\tkzLabelSegments[left,pos=0.5](A,D){$1$}
+	\end{tikzpicture}}
+	\loigiai{
+		\begin{enumerate}
+			\item Véc-tơ $\overrightarrow{CA}$ có điểm đầu là $C$, điểm cuối là $A$ và có giá là đường thẳng $AC$.\\
+			Véc-tơ $\overrightarrow{OA}$ có điểm đầu là $O$, điểm cuối là $A$ và có giá là đường thẳng $AO$.\\
+			Véc-tơ $\overline{BD}$ có điểm đầu là $B$, điểm cuối là $D$ và có giá là đường thẳng $BD$.\\
+			Ta có: $CA=BD=\sqrt{2};OA=\dfrac{\sqrt{2}}{2}$.\\
+			Suy ra $|\overrightarrow{CA}|=|\overrightarrow{BD}|=\sqrt{2};|\overrightarrow{OA}|=\dfrac{\sqrt{2}}{2}$.
+			\item Các véc-tơ đơn vị là $\overrightarrow{AB}$, $\overrightarrow{BA}$, $\overrightarrow{BC}$, $\overrightarrow{CB}$, $\overrightarrow{CD}$, $\overrightarrow{DC}$, $\overrightarrow{DA}$, $\overrightarrow{AD}$.
+	\end{enumerate}}
+\end{bt}
+
+% nguồn: TuLuan_Lop10_Dot2 (nhập 14/11/2026)
+\begin{bt}%[0H5N1-1]%[Dự án bài tập sách CTST]%[Phan Anh]%[ma:925ef1af]
+	Bạn hãy tìm sự khác biệt giữa hai đại lượng sau
+	\begin{itemize}
+		\item Chiếc xe máy có giá tiền là $30$ triệu đồng.
+		\item Chiếc thuyền chạy với vận tốc là $30$km/h theo hướng tây nam.
+	\end{itemize}
+	\loigiai{
+		Một đại lượng chi số lượng; đại lượng còn lại chỉ rõ giá trị và hướng.}
+\end{bt}
+
+% nguồn: TuLuan_Lop10_Dot2 (nhập 14/11/2026)
+\begin{bt}%[0H5N1-1]%[Dự án bài tập sách CTST]%[Phan Anh]%[ma:0f19612e]
+	Trong các đại lượng sau: nhiệt độ, lực, thể tích, tuổi, độ dịch chuyển, vận tốc, đại lượng nào cần được biểu diễn bởi véc-tơ? 
+	\loigiai{
+		Các đại lượng cần được biểu diễn bởi véc-tơ là lực, sức hút, độ dịch chuyển, vận tốc.}
+\end{bt}
