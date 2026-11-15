@@ -206,6 +206,19 @@ footer .gian{flex:1}
 #kt-ds .tt{margin-left:auto;font-size:11px;white-space:nowrap}
 #kt-ds .co{color:#15803d}#kt-ds .chua{color:#b45309}
 #hop-kt .cot{display:flex;flex-direction:column;gap:8px;min-width:0;min-height:0}
+#hop-thi,#hop-dthi{position:fixed;inset:0;background:rgba(17,24,39,.35);display:none;align-items:center;justify-content:center;z-index:18}
+#hop-thi .noi,#hop-dthi .noi{background:#fff;border-radius:14px;width:min(860px,96vw);max-height:92vh;display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.25)}
+#hop-dthi .noi{width:min(620px,96vw)}
+#hop-thi h2,#hop-dthi h2{margin:0;padding:12px 18px;font-size:16px;border-bottom:1px solid var(--vien)}
+#hop-thi .than,#hop-dthi .than{overflow:auto;padding:12px 18px;display:flex;flex-direction:column;gap:9px;font-size:13px}
+#hop-dthi label{display:flex;flex-direction:column;gap:3px;font-weight:600}#hop-dthi label input,#hop-dthi label select{font-weight:400;padding:6px 8px}
+#hop-dthi .hang{display:flex;gap:10px}#hop-dthi .hang>label{flex:1}
+#hop-thi .chan,#hop-dthi .chan{padding:10px 18px;border-top:1px solid var(--vien);display:flex;gap:8px;align-items:center}
+#thi-ds table{width:100%;border-collapse:collapse}#thi-ds td,#thi-ds th{border-bottom:1px solid #eef0f4;padding:6px;text-align:left;vertical-align:top}
+#thi-ds .tt{font-size:12px;padding:2px 7px;border-radius:9px;white-space:nowrap}.tt.dang_mo{background:#dcfce7;color:#166534}.tt.da_cong_bo{background:#dbeafe;color:#1e40af}.tt.da_dong{background:#f3f4f6;color:#6b7280}
+#thi-ds button{font-size:12px;padding:3px 7px;margin:1px}
+.thi-kq{display:flex;gap:16px;align-items:center}.thi-kq img{width:170px;height:170px;border:1px solid var(--vien);border-radius:8px}
+.thi-kq a{font-size:16px;font-weight:700;word-break:break-all}
 #hop-gop{position:fixed;inset:0;background:rgba(17,24,39,.35);display:none;align-items:center;justify-content:center;z-index:15}
 #hop-gop .noi{background:#fff;border-radius:14px;width:min(760px,96vw);max-height:90vh;display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.25)}
 #hop-gop h2{margin:0;padding:12px 18px;font-size:16px;border-bottom:1px solid var(--vien)}
@@ -270,6 +283,7 @@ tr.gop-h td{background:#dbeafe;text-align:left;font-weight:700;padding:8px 12px;
   <button id="nut-ts10" title="Ngân hàng đề tuyển sinh 10 Toán TP.HCM: 7 bài theo bảng dạng 135 đề, tạo đề ngẫu nhiên tự luận + lời giải">Tuyển sinh 10</button>
   <button id="nut-kt" title="Kho kiến thức trọng tâm từng bài (lớp 6 – 12): xem, sửa, soạn bằng AI, nhập nhiều bài một lần">Kho kiến thức</button>
   <button id="nut-phieu" title="Phiếu bài học / chuyên đề / ôn tập chương: kiến thức trọng tâm, luyện tập, bài tập về nhà — tự lấy câu theo dạng">Phiếu bài học</button>
+  <button id="nut-thi" title="Đề thi trực tuyến đã đăng: link, mã QR, mở lời giải, đóng đề">🌐 Thi trực tuyến</button>
   <button id="nut-on-thi" title="Ma trận đề ôn thi học kì 12–4–6: lấy câu từ ngân hàng hoặc sinh prompt cho AI tạo đề">Ôn thi học kì</button>
   <button id="nut-lac" title="Tìm câu có nội dung không khớp bài/dạng đang gắn; chuyển sang đúng dạng hoặc xoá">Câu lạc bài</button>
   <button id="nut-trung" title="Dò câu trùng / gần giống trong ngân hàng và xoá bản thừa">Câu trùng</button>
@@ -540,6 +554,35 @@ tr.gop-h td{background:#dbeafe;text-align:left;font-weight:700;padding:8px 12px;
   </div>
   <div class="chan"><span style="font-size:12px;color:#666">Lưu ở du-lieu/kien_thuc/ (phương pháp từng dạng tách sang du-lieu/phuong_phap/ cho Beamer)</span><button id="kt-dong" style="margin-left:auto">Đóng</button></div>
 </div></div>
+<div id="hop-dthi"><div class="noi">
+  <h2>🌐 Tạo link thi trực tuyến</h2>
+  <div class="than">
+    <div id="dthi-tt" style="color:#555"></div>
+    <label>Tên đề (học sinh thấy) <input id="dthi-ten"></label>
+    <div class="hang"><label>Đường dẫn <input id="dthi-slug" placeholder="10a1-hk1-lan2"></label>
+      <label style="flex:0 0 120px">Thời gian (phút) <input id="dthi-phut" type="number" min="1" max="240" value="90"></label></div>
+    <div id="dthi-xem" style="color:#1e3a8a;font-size:12.5px"></div>
+    <label>Cách mở phương án <select id="dthi-lat"><option value="select">Lật phương án nào → chọn phương án đó</option><option value="reveal">Lật để xem → bấm chọn đáp án</option><option value="off">Hiện sẵn tất cả phương án</option></select></label>
+    <label>URL nhận điểm Google Sheets (không bắt buộc) <input id="dthi-sheet" placeholder="https://script.google.com/macros/s/…/exec"></label>
+    <label style="flex-direction:row;align-items:center;gap:8px;font-weight:400"><input type="checkbox" id="dthi-an" checked> <b>Ẩn đáp án &amp; lời giải</b> (mã hoá; thi xong bấm "Mở lời giải" trong danh sách đề)</label>
+  </div>
+  <div class="chan"><span style="font-size:12px;color:#666">Cần đúng 12 TN · 4 Đ/S · 6 TLN.</span>
+    <button id="dthi-ok" class="chinh" style="margin-left:auto">Đăng lên Cloudflare</button><button id="dthi-dong">Đóng</button></div>
+</div></div>
+<div id="hop-thi"><div class="noi">
+  <h2>Đề thi trực tuyến (Cloudflare Pages)</h2>
+  <div class="than">
+    <div id="thi-kq"></div>
+    <div id="thi-ds"></div>
+    <details><summary>Cài đặt</summary><div style="display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end;margin-top:8px">
+      <label style="display:flex;flex-direction:column">Tên dự án Cloudflare <input id="thi-du-an" style="width:200px"></label>
+      <label style="display:flex;flex-direction:column">Địa chỉ trang (tự điền sau lần đăng đầu) <input id="thi-mien" style="width:260px" placeholder="https://thi-toan-vtl.pages.dev"></label>
+      <label style="display:flex;flex-direction:column">URL nhận điểm Google Sheets <input id="thi-sheet" style="width:320px"></label>
+      <button id="thi-luu">Lưu cài đặt</button></div>
+      <p style="color:#666">Lần đầu đăng: máy cần Node.js (nodejs.org). Trình duyệt mở trang Cloudflare để thầy đăng nhập, bấm Allow. Các đề lưu ở <code>thi-truc-tuyen/</code> (đồng bộ GitHub).</p></details>
+  </div>
+  <div class="chan"><span id="thi-node" style="font-size:12px;color:#b45309"></span><button id="thi-dang-lai" style="margin-left:auto">Đăng lại tất cả</button><button id="thi-dong">Đóng</button></div>
+</div></div>
 <div id="hop-gop"><div class="noi">
   <h2>Gộp bài — một dòng ma trận lấy ngẫu nhiên câu từ nhiều bài</h2>
   <div id="gop-than"></div>
@@ -551,7 +594,7 @@ tr.gop-h td{background:#dbeafe;text-align:left;font-weight:700;padding:8px 12px;
   <div id="xt-than"></div>
   <div class="chan"><span style="font-size:12px;color:#666">“Đổi câu” lấy ngẫu nhiên câu khác cùng dạng, cùng mức (ưu tiên câu chưa dùng). Hài lòng thì bấm Xác nhận.</span>
     <button id="xt-random" style="margin-left:auto">↻ Random lại tất cả</button><button id="xt-nhatky">Nhật ký chọn câu</button>
-    <button id="xt-tc" title="Đưa bộ câu của mã đề đang xem sang ứng dụng Soạn đề &amp; trình chiếu Toán (HTML): trình chiếu, bài kiểm tra cho học sinh, Word, thư viện Google Sheets…">▶ Sang trình chiếu HTML</button><button id="xt-ok" class="chinh">Xác nhận &amp; xuất đề</button><button id="xt-dong">Đóng</button></div>
+    <button id="xt-thi" title="Đưa bộ câu của mã đề đang xem lên mạng thành link cho học sinh làm bài (Cloudflare Pages), tự chấm, gửi điểm về Google Sheet">🌐 Link thi trực tuyến</button><button id="xt-tc" title="Đưa bộ câu của mã đề đang xem sang ứng dụng Soạn đề &amp; trình chiếu Toán (HTML): trình chiếu, bài kiểm tra cho học sinh, Word, thư viện Google Sheets…">▶ Sang trình chiếu HTML</button><button id="xt-ok" class="chinh">Xác nhận &amp; xuất đề</button><button id="xt-dong">Đóng</button></div>
 </div></div>
 <div id="hop-ts"><div class="noi">
   <h2>Ngân hàng tuyển sinh 10 – Toán TP.HCM <span style="font-weight:400;font-size:12px;color:#666">7 bài · 10 điểm · 120 phút (cấu trúc đề Sở 2025–26, 2026–27)</span>
@@ -1655,6 +1698,90 @@ $("#xt-tc").onclick=async()=>{
       r.ok?[["Mở thư mục",()=>api("/api/mo",{duong_dan:r.thu_muc}),true]]:[]);}
   finally{n.disabled=false;n.textContent="▶ Sang trình chiếu HTML"}
 };
+// ---------------- THI TRỰC TUYẾN (Cloudflare Pages)
+let DTHI=null;
+function boDauSlug(s){return String(s||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/đ/g,"d").replace(/Đ/g,"D").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"").slice(0,60)}
+function appTrinhChieu(){return new Promise((ok,loi)=>{
+  let f=$("#tc-app"); if(f&&f.contentWindow&&f.contentWindow.createExam) return ok(f.contentWindow);
+  if(!f){f=document.createElement("iframe");f.id="tc-app";f.style.cssText="position:absolute;width:10px;height:10px;left:-9999px;visibility:hidden";f.src="/trinh-chieu-app";document.body.append(f)}
+  let n=0;const t=setInterval(()=>{n++;const w=f.contentWindow;if(w&&w.createExam&&w.examSettings){clearInterval(t);ok(w)}else if(n>100){clearInterval(t);loi(Error("Không mở được ứng dụng trình chiếu (khung/TrinhChieu)."))}},150);
+})}
+$("#xt-thi").onclick=async()=>{
+  const b=XT.bo[Math.min(XT.tab,XT.bo.length-1)];
+  const ma=["TN","DS","TLN"].flatMap(l=>(b[l]||[]).filter(c=>!c.mat).map(c=>c.ma));
+  const dem={TN:(b.TN||[]).length,DS:(b.DS||[]).length,TLN:(b.TLN||[]).length};
+  const nhieu=XT.bo.length>1, so=(+$("#ma_de_bat_dau").value||101)+Math.min(XT.tab,XT.bo.length-1);
+  const ten=((XT.nguon&&XT.mt.ten_ky_thi)||$("#ten_ky_thi").value.trim()||"Bài kiểm tra Toán")+(nhieu?` - Mã ${so}`:"");
+  DTHI={ma,ten};
+  $("#dthi-ten").value=ten; $("#dthi-slug").value=boDauSlug(ten); $("#dthi-phut").value=parseInt(XT.mt.thoi_gian)||90;
+  const ok=dem.TN===12&&dem.DS===4&&dem.TLN===6;
+  $("#dthi-tt").innerHTML=`Bộ câu mã đề đang xem: TN ${dem.TN} · Đ/S ${dem.DS} · TLN ${dem.TLN} `+(ok?'<b style="color:#047857">✓ đúng cấu trúc</b>':'<b style="color:#b91c1c">✗ bài kiểm tra trực tuyến cần đúng 12–4–6</b>');
+  $("#dthi-ok").disabled=!ok;
+  try{const r=await api("/api/thi/ds",{});$("#dthi-sheet").value=r.cau_hinh.script_url||"";DTHI.goc=r.goc;veLinkDthi();
+    if(!r.co_node) $("#dthi-tt").innerHTML+='<br><b style="color:#b45309">Máy chưa có Node.js — cài bản LTS ở nodejs.org trước khi đăng.</b>';}catch(_){}
+  $("#hop-dthi").style.display="flex";
+};
+function veLinkDthi(){$("#dthi-xem").textContent=DTHI&&DTHI.goc?`Link: ${DTHI.goc}/${boDauSlug($("#dthi-slug").value)||"…"}/`:""}
+$("#dthi-slug").oninput=veLinkDthi; $("#dthi-ten").oninput=()=>{};
+$("#dthi-dong").onclick=()=>$("#hop-dthi").style.display="none";
+$("#dthi-ok").onclick=async()=>{
+  const n=$("#dthi-ok"), phut=+$("#dthi-phut").value, ten=$("#dthi-ten").value.trim()||DTHI.ten, sheet=$("#dthi-sheet").value.trim();
+  if(!(phut>=1&&phut<=240)){alert("Thời gian 1–240 phút.");return}
+  if(sheet&&!/^https:\/\/script\.google\.com\/macros\/s\/[A-Za-z0-9_-]+\/exec$/.test(sheet)){alert("URL nhận điểm phải dạng https://script.google.com/macros/s/…/exec");return}
+  n.disabled=true;n.textContent="Đang dựng bài kiểm tra (vẽ hình)…";
+  try{
+    if(sheet) await api("/api/thi/cau-hinh",{script_url:sheet});
+    const r=await api("/api/thi/du-lieu",{ma:DTHI.ma,ten}); if(!r.ok) throw Error(r.loi+"\n"+(r.nhat_ky||""));
+    const w=await appTrinhChieu(), d=r.du_lieu, slug=boDauSlug($("#dthi-slug").value||ten);
+    d.settings={examMinutes:phut,studentExam:w.examSettings({flipMode:$("#dthi-lat").value,scriptUrl:sheet,examId:slug})};
+    const html=w.createExam(d);
+    n.textContent="Đang đăng lên Cloudflare…";
+    const r2=await api("/api/thi/dang",{slug,ten,html,an_dap_an:$("#dthi-an").checked,phut});
+    if(!r2.ok) throw Error(r2.loi);
+    $("#hop-dthi").style.display="none"; $("#hop-xt").style.display="none";
+    await moThi(); theoDoiThi(r2.slug,ten);
+  }catch(e){alert("Chưa tạo được link: "+e.message)}
+  finally{n.disabled=false;n.textContent="Đăng lên Cloudflare"}
+};
+async function theoDoiThi(slug,ten){
+  const s=await api("/api/trang-thai");
+  $("#thi-kq").innerHTML=`<pre style="white-space:pre-wrap;background:#f8fafc;border:1px solid var(--vien);border-radius:8px;padding:8px;max-height:220px;overflow:auto;margin:0">${esc(s.nhat_ky||"Đang chuẩn bị…")}</pre>`;
+  if(!s.xong){setTimeout(()=>theoDoiThi(slug,ten),1500);return}
+  const r=await api("/api/thi/ds",{}); veThi(r);
+  if(s.thi_ok&&slug){const url=`${r.goc}/${slug}/`;
+    $("#thi-kq").innerHTML=`<div class="thi-kq"><img alt="QR" src="https://api.qrserver.com/v1/create-qr-code/?size=340x340&margin=8&data=${encodeURIComponent(url)}">
+      <div><div style="color:#047857;font-weight:700;margin-bottom:6px">✓ Đã đăng: ${esc(ten||"")}</div><a href="${url}" target="_blank">${url}</a>
+      <div style="margin-top:8px;display:flex;gap:6px"><button onclick="navigator.clipboard.writeText('${url}');this.textContent='Đã chép'">Chép link</button>
+      <button onclick="window.open('https://api.qrserver.com/v1/create-qr-code/?size=900x900&margin=20&data=${encodeURIComponent(url)}')">QR khổ lớn (chiếu lớp)</button></div>
+      <div style="color:#666;margin-top:6px;font-size:12px">Link mới có thể cần 1–2 phút để chạy ở mọi nơi.</div></div></div>`;}
+  else if(!s.thi_ok) $("#thi-kq").innerHTML+=`<p style="color:#b91c1c"><b>Chưa đăng xong.</b> Sửa theo nhật ký rồi bấm "Đăng lại tất cả".</p>`;
+}
+const TT_TEN={dang_mo:"Đang mở · ẩn đáp án",da_cong_bo:"Đã công bố lời giải",da_dong:"Đã đóng"};
+function veThi(r){
+  $("#thi-du-an").value=r.cau_hinh.du_an;$("#thi-mien").value=r.cau_hinh.ten_mien||"";$("#thi-sheet").value=r.cau_hinh.script_url||"";
+  $("#thi-node").textContent=r.co_node?"":"Máy chưa có Node.js — cài ở nodejs.org để đăng được.";
+  if(!r.ds.length){$("#thi-ds").innerHTML='<p style="color:#666">Chưa có đề nào. Vào Xem trước câu được chọn → 🌐 Link thi trực tuyến.</p>';return}
+  $("#thi-ds").innerHTML=`<table><tr><th>Đề</th><th>Trạng thái</th><th>Thao tác</th></tr>`+r.ds.map(x=>{const url=`${r.goc}/${x.slug}/`;
+    return `<tr><td><b>${esc(x.ten)}</b><br><a href="${url}" target="_blank" style="font-size:12px">${url}</a><br><span style="color:#888;font-size:11.5px">${x.tao_luc} · ${x.so_cau} câu${x.phut?" · "+x.phut+" phút":""}</span></td>
+    <td><span class="tt ${x.trang_thai}">${TT_TEN[x.trang_thai]||x.trang_thai}</span></td>
+    <td><button data-s="${x.slug}" data-v="qr">QR</button><button data-s="${x.slug}" data-v="chep">Chép link</button>
+    ${x.trang_thai!=="da_cong_bo"?`<button data-s="${x.slug}" data-v="da_cong_bo" title="Đăng lại bản có đáp án + lời giải ở đúng link">Mở lời giải</button>`:`<button data-s="${x.slug}" data-v="dang_mo" title="Ẩn lại đáp án, lời giải">Ẩn lời giải</button>`}
+    ${x.trang_thai!=="da_dong"?`<button data-s="${x.slug}" data-v="da_dong">Đóng đề</button>`:`<button data-s="${x.slug}" data-v="dang_mo">Mở lại</button>`}
+    <button data-s="${x.slug}" data-v="xoa" style="color:#b91c1c">Xoá</button></td></tr>`}).join("")+"</table>";
+  $("#thi-ds").querySelectorAll("button[data-v]").forEach(b=>b.onclick=async()=>{
+    const sl=b.dataset.s,v=b.dataset.v,url=`${r.goc}/${sl}/`;
+    if(v==="chep"){navigator.clipboard.writeText(url);b.textContent="Đã chép";return}
+    if(v==="qr"){window.open(`https://api.qrserver.com/v1/create-qr-code/?size=900x900&margin=20&data=${encodeURIComponent(url)}`);return}
+    if(v==="xoa"&&!confirm("Gỡ đề này khỏi mạng? (bản gốc vẫn giữ trong thi-truc-tuyen/du_lieu/_da_xoa)"))return;
+    const k=await api("/api/thi/trang-thai",{slug:sl,tt:v}); if(!k.ok){alert(k.loi);return}
+    theoDoiThi(v==="xoa"?null:sl,"");
+  });
+}
+async function moThi(){$("#hop-thi").style.display="flex";$("#thi-kq").innerHTML="";veThi(await api("/api/thi/ds",{}))}
+$("#nut-thi").onclick=moThi;
+$("#thi-dong").onclick=()=>$("#hop-thi").style.display="none";
+$("#thi-luu").onclick=async()=>{const r=await api("/api/thi/cau-hinh",{du_an:$("#thi-du-an").value.trim(),ten_mien:$("#thi-mien").value.trim(),script_url:$("#thi-sheet").value.trim()});veThi(await api("/api/thi/ds",{}));};
+$("#thi-dang-lai").onclick=async()=>{const k=await api("/api/thi/dang-lai",{});if(!k.ok){alert(k.loi);return}theoDoiThi(null,"")};
 $("#xt-ok").onclick=async()=>{
   const cs=XT.bo.map(b=>Object.fromEntries(Object.entries(b).map(([l,ds])=>[l,ds.filter(c=>!c.mat).map(c=>c.ma)])));
   $("#hop-xt").style.display="none"; await xuat(false,cs,XT.nguon?XT.mt:null,XT.nguon);

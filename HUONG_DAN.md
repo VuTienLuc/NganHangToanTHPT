@@ -192,6 +192,18 @@ như phần mềm cũ thì ghi `"khung": "DeThi"` trong file JSON.
 - Khi ra đề: câu lấy ngẫu nhiên trong các bài đã gộp, **rải đều giữa các bài** (6 câu gộp 3 bài → mỗi bài khoảng 2 câu); nhiều mã đề khác câu thì mỗi mã cũng chia đều các bài.
 - Trong file ma trận: `"dang": "0D1?1+0D1?2+0H5?3"` (CSV: cột `ma_dang` ghi y như vậy). Lưu ma trận, mở lại, Bộ đề nhiều lần đều giữ dòng gộp.
 
+## Thi trực tuyến (link cho học sinh làm bài — Cloudflare Pages)
+- Chuẩn bị 1 lần: tài khoản Cloudflare (miễn phí) + Node.js trên máy (nodejs.org, kiểm tra `node -v`).
+- Ra đề (ma trận / ôn thi học kì) → **Xem trước** → **🌐 Link thi trực tuyến**: đặt tên đề, đường dẫn, thời gian, cách lật phương án,
+  URL nhận điểm Google Sheets (nếu dùng) → **Đăng lên Cloudflare**. Lần đầu trình duyệt mở trang Cloudflare: đăng nhập, bấm Allow.
+- Kết quả: link `https://<dự án>.pages.dev/<đường-dẫn>/` + mã QR (chiếu lên lớp). Bài kiểm tra đúng mẫu của ứng dụng trình chiếu
+  (12–4–6, đồng hồ, tự chấm thang 10, gửi điểm Google Sheet).
+- **Ẩn đáp án**: bản đăng mạng mã hoá đáp án (SHA-256 có muối), bỏ lời giải; xem nguồn trang không thấy đáp án, máy vẫn chấm đúng.
+- Nút **🌐 Thi trực tuyến** (thanh trên): danh sách đề đã đăng — **Mở lời giải** (đăng bản có đáp án + lời giải ở đúng link),
+  **Đóng đề**, **Mở lại**, **Xoá**, QR, chép link; Cài đặt tên dự án, địa chỉ trang, URL nhận điểm.
+- Dữ liệu ở `thi-truc-tuyen/` (đồng bộ GitHub để máy nào cũng đăng được mà không mất đề cũ): `site/` = đúng những gì trên mạng,
+  `du_lieu/*.goc.html` = bản gốc có đáp án. Đã cài wrangler riêng: đặt biến `NH_WRANGLER=wrangler`.
+
 ## Sang ứng dụng trình chiếu HTML (Soạn đề & trình chiếu Toán)
 - Điền ma trận → **Xem trước câu được chọn** → (đổi câu nếu cần) → **▶ Sang trình chiếu HTML**.
 - Bộ câu của mã đề đang xem được chuyển sang ứng dụng `khung/TrinhChieu/ung_dung_trinh_chieu.html`; trình duyệt mở ngay đề đó.
