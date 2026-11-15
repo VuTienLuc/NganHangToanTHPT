@@ -567,7 +567,7 @@ tr.gop-h td{background:#dbeafe;text-align:left;font-weight:700;padding:8px 12px;
     <div id="ts-xem"></div>
   </div>
   <div class="chan">
-    <button id="ts-nhap">Nhập kho (dán kết quả AI)…</button><button id="ts-mtr">Ma trận &amp; tỉ lệ dạng</button>
+    <button id="ts-nhap">Nhập kho (dán kết quả AI)…</button><button id="ts-dong-bo" title="Lấy các bài đề tuyển sinh 10 (đề chính thức, đề tham khảo quận…) đã nhập vào kho lớp 9 sang kho Tuyển sinh 10: xếp Bài 1–7 theo nội dung, gán mã dạng, biên dịch thử">⇄ Đồng bộ từ kho lớp 9</button><button id="ts-mtr">Ma trận &amp; tỉ lệ dạng</button>
     <button id="ts-xemtruoc" style="margin-left:auto">Xem trước &amp; đổi bài</button><button id="ts-tao" class="chinh">Tạo đề ngẫu nhiên</button><button id="ts-dong">Đóng</button>
   </div>
 </div></div>
@@ -1738,6 +1738,9 @@ async function tsTao(chon_san){
 $("#nut-ts10").onclick=moTS;
 $("#ts-dong").onclick=()=>$("#hop-ts").style.display="none";
 $("#ts-nhap").onclick=tsNhap;
+$("#ts-dong-bo").onclick=async()=>{const b=$("#ts-dong-bo");b.disabled=true;b.textContent="Đang đồng bộ…";
+  try{const r=await api("/api/ts10/dong-bo",{}); hopThoai(r.ok?`Đồng bộ kho Tuyển sinh 10: +${r.them} bài`:"Chưa đồng bộ được",r.nhat_ky||r.loi); tsTai();}
+  finally{b.disabled=false;b.textContent="⇄ Đồng bộ từ kho lớp 9"}};
 $("#ts-tao").onclick=()=>tsTao(null);
 $("#ts-xemtruoc").onclick=async()=>{const r=await api("/api/ts10/xem",{cau_hinh:tsCfg()}); if(!r.ok){alert(r.loi);return}
   TSX={bo:r.bo,thieu:r.thieu}; tsVeXem(); $("#ts-xem").scrollIntoView({behavior:"smooth"});};

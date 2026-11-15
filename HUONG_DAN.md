@@ -174,6 +174,14 @@ Nạp đáp án: Chấm Phiếu AI → ô **Đáp án** → **Nhập từ file E
 Khung đề chính thức nằm ở `khung/DeThiChinhThuc/mau_de.tex` (in đen trắng). Muốn dạng ôn tập có màu
 như phần mềm cũ thì ghi `"khung": "DeThi"` trong file JSON.
 
+## Nhập đề tuyển sinh 10 từ PDF (kho lớp 9 + kho Tuyển sinh 10)
+- Quy trình cho Antigravity/Claude: `.agents/workflows/nhap-ts10.md` (nói "nhập đề TS10 từ … đề 3, 4").
+- Tách chữ PDF miễn phí: `python3 scripts/pdf_sang_chu.py "<file.pdf>" --trang 5-8` (PDF scan → NotebookLM gõ thô).
+- Bài có dòng `% nguon: … Tuyển sinh 10 … Bài N` nhập vào kho lớp 9 sẽ **tự đồng bộ** sang `cau-hoi-ts10/Bai1..7.tex`
+  (xếp bài theo nội dung, gán mã dạng TS10, biên dịch thử, bỏ bài trùng). Đồng bộ tay: menu Tuyển sinh 10 → **⇄ Đồng bộ từ kho lớp 9**
+  hoặc `python3 scripts/ts10_tu_kho9.py`.
+- Nhập kho trong menu Tuyển sinh 10 (dán kết quả AI) nay **biên dịch thử**: bài lỗi không vào kho, ghi `ai-nhap/_loi/`.
+
 ## Gộp bài trong ma trận (lấy ngẫu nhiên các bài gộp lại)
 - Tích chương ở cột trái → bấm **⊕ Gộp bài…** → tích 2 bài trở lên → **Thêm dòng gộp**.
 - Dòng gộp hiện ở đầu bảng (nền xanh), điền số câu theo loại và mức như dòng thường. Có thể tạo nhiều dòng gộp; bấm ✕ để bỏ.

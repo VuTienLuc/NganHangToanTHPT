@@ -331,6 +331,11 @@ class XuLy(BaseHTTPRequestHandler):
                         return self.gui(200, {"ok": True, **ts10.thong_ke()})
                     if viec == "nhap":
                         return self.gui(200, {"ok": True, **ts10.nhap(d.get("van_ban") or "", bool(d.get("thu")))})
+                    if viec == "dong-bo":
+                        import ts10_tu_kho9
+                        dong = []
+                        kq = ts10_tu_kho9.chay(bool(d.get("thu")), in_ra=dong.append)
+                        return self.gui(200, {"ok": True, **kq, "nhat_ky": "\n".join(dong)})
                     if viec == "prompt":
                         return self.gui(200, {"ok": True, "noi_dung": ts10.prompt(d["bai"], d.get("dang") or [], int(d.get("so_luong") or 5))})
                     if viec == "xem":

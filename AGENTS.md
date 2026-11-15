@@ -13,6 +13,7 @@ Thầy dạy Toán THPT (Trường THPT Nguyễn Hữu Cảnh, TP.HCM), sách K�
 - `/nlm-soan-cau` — soạn câu MỚI theo bài, bám tài liệu trong NotebookLM.
 - `/nlm-go-de` — gõ lại một đề / phiếu có sẵn trong NotebookLM vào kho.
 - `/nhap-kho` — kiểm tra → xem trước → nhập → lưu git (dùng cho mọi file trong `ai-nhap/`).
+- `/nhap-ts10` — PDF đề **tuyển sinh 10** → kho lớp 9 + tự đồng bộ kho `cau-hoi-ts10/` (tách chữ bằng máy, chép lời giải có sẵn, 2 đề/lượt).
 - `/nhap-nguon` — nhập từ **nguồn khác** (file .tex ngân hàng khác, Word, PDF, ảnh, thư mục đề). Thầy nói "nhập kho từ …" là làm đủ các bước trong `.agents/workflows/nhap-nguon.md`.
 
 ## Luật cứng
