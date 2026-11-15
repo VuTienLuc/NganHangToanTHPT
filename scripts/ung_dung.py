@@ -213,6 +213,24 @@ class XuLy(BaseHTTPRequestHandler):
                     except Exception as e:
                         log += f"\n(không dựng được bản xem trước: {e})"
                 return self.gui(200, {"ok": ok, "nhat_ky": log, "ten": mt["ten"], "thu_muc": rel, "bien_dich": dang_bd, "xem": bo})
+            if u.path == "/api/trinh-chieu":
+                import trinh_chieu
+                nk = []
+                try:
+                    kq = trinh_chieu.tao(d.get("ma") or [], (d.get("ten") or "Đề trình chiếu").strip(), in_ra=nk.append)
+                except Exception as e:
+                    return self.gui(200, {"ok": False, "nhat_ky": "\n".join(nk + [f"Lỗi: {e}"])})
+                if d.get("mo", True):
+                    p = kq["html"]
+                    try:
+                        if sys.platform.startswith("win"):
+                            os.startfile(p)
+                        else:
+                            subprocess.Popen(["open", p] if sys.platform == "darwin" else ["xdg-open", p])
+                    except Exception:
+                        nk.append("  (Không tự mở được trình duyệt — thầy mở file HTML trong thư mục trên.)")
+                return self.gui(200, {"ok": True, "nhat_ky": "\n".join(nk), "html": os.path.relpath(kq["html"], GOC),
+                                      "thu_muc": os.path.relpath(os.path.dirname(kq["html"]), GOC)})
             if u.path == "/api/doi-cau":
                 import xem_truoc
                 t = xem_truoc.doi(d.get("ma"), d.get("tranh") or [])

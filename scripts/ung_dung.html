@@ -522,7 +522,7 @@ tr.gop-h td{background:#dbeafe;text-align:left;font-weight:700;padding:8px 12px;
   <div id="xt-than"></div>
   <div class="chan"><span style="font-size:12px;color:#666">“Đổi câu” lấy ngẫu nhiên câu khác cùng dạng, cùng mức (ưu tiên câu chưa dùng). Hài lòng thì bấm Xác nhận.</span>
     <button id="xt-random" style="margin-left:auto">↻ Random lại tất cả</button><button id="xt-nhatky">Nhật ký chọn câu</button>
-    <button id="xt-ok" class="chinh">Xác nhận &amp; xuất đề</button><button id="xt-dong">Đóng</button></div>
+    <button id="xt-tc" title="Đưa bộ câu của mã đề đang xem sang ứng dụng Soạn đề &amp; trình chiếu Toán (HTML): trình chiếu, bài kiểm tra cho học sinh, Word, thư viện Google Sheets…">▶ Sang trình chiếu HTML</button><button id="xt-ok" class="chinh">Xác nhận &amp; xuất đề</button><button id="xt-dong">Đóng</button></div>
 </div></div>
 <div id="hop-ts"><div class="noi">
   <h2>Ngân hàng tuyển sinh 10 – Toán TP.HCM <span style="font-weight:400;font-size:12px;color:#666">7 bài · 10 điểm · 120 phút (cấu trúc đề Sở 2025–26, 2026–27)</span>
@@ -1513,6 +1513,18 @@ $("#xt-dong").onclick=()=>$("#hop-xt").style.display="none";
 $("#xt-nhatky").onclick=()=>hopThoai("Nhật ký chọn câu",XT.nhat_ky);
 $("#xt-random").onclick=async()=>{$("#xt-random").disabled=true;$("#xt-random").textContent="Đang chọn lại…";
   try{await xuat(true)}finally{$("#xt-random").disabled=false;$("#xt-random").textContent="↻ Random lại tất cả"}};
+$("#xt-tc").onclick=async()=>{
+  const b=XT.bo[Math.min(XT.tab,XT.bo.length-1)];
+  const ma=["TN","DS","TLN"].flatMap(l=>(b[l]||[]).filter(c=>!c.mat).map(c=>c.ma));
+  if(!ma.length){alert("Chưa có câu nào.");return}
+  const nhieu=XT.bo.length>1, so=(+$("#ma_de_bat_dau").value||101)+Math.min(XT.tab,XT.bo.length-1);
+  const ten=($("#ten_ky_thi").value.trim()||$("#ten").value.trim()||"Đề trình chiếu")+(nhieu?` - Mã ${so}`:"");
+  const n=$("#xt-tc"); n.disabled=true; n.textContent="Đang chuyển (vẽ hình TikZ)…";
+  try{const r=await api("/api/trinh-chieu",{ma,ten});
+    hopThoai(r.ok?"Đã mở ứng dụng trình chiếu":"Chưa chuyển được",r.nhat_ky+(r.ok?"\n\nTrình duyệt đã mở đề. Từ ứng dụng có thể: trình chiếu, xuất HTML trình chiếu, tạo bài kiểm tra cho học sinh, xuất Word, lưu thư viện Google Sheets.":""),
+      r.ok?[["Mở thư mục",()=>api("/api/mo",{duong_dan:r.thu_muc}),true]]:[]);}
+  finally{n.disabled=false;n.textContent="▶ Sang trình chiếu HTML"}
+};
 $("#xt-ok").onclick=async()=>{
   const cs=XT.bo.map(b=>Object.fromEntries(Object.entries(b).map(([l,ds])=>[l,ds.filter(c=>!c.mat).map(c=>c.ma)])));
   $("#hop-xt").style.display="none"; await xuat(false,cs);

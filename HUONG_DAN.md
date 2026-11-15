@@ -180,6 +180,14 @@ như phần mềm cũ thì ghi `"khung": "DeThi"` trong file JSON.
 - Khi ra đề: câu lấy ngẫu nhiên trong các bài đã gộp, **rải đều giữa các bài** (6 câu gộp 3 bài → mỗi bài khoảng 2 câu); nhiều mã đề khác câu thì mỗi mã cũng chia đều các bài.
 - Trong file ma trận: `"dang": "0D1?1+0D1?2+0H5?3"` (CSV: cột `ma_dang` ghi y như vậy). Lưu ma trận, mở lại, Bộ đề nhiều lần đều giữ dòng gộp.
 
+## Sang ứng dụng trình chiếu HTML (Soạn đề & trình chiếu Toán)
+- Điền ma trận → **Xem trước câu được chọn** → (đổi câu nếu cần) → **▶ Sang trình chiếu HTML**.
+- Bộ câu của mã đề đang xem được chuyển sang ứng dụng `khung/TrinhChieu/ung_dung_trinh_chieu.html`; trình duyệt mở ngay đề đó.
+  Hình TikZ và bảng được MacTeX vẽ sẵn thành SVG, nên trình chiếu có hình ngay.
+- Từ ứng dụng trình chiếu: trình chiếu trên lớp, xuất HTML trình chiếu, bài kiểm tra cho học sinh (gửi điểm Google Sheet), Word, lưu Thư viện bài dạy.
+- File lưu ở `de-da-ra/TrinhChieu/` (.html mở thẳng, .json nạp lại vào ứng dụng). Lệnh: `python3 scripts/trinh_chieu.py <mã câu…> --ten "…"`.
+- Có bản ứng dụng mới hơn: chép đè vào `khung/TrinhChieu/ung_dung_trinh_chieu.html` (giữ đúng tên).
+
 ## Ôn thi học kì (ma trận từng câu 12 TN · 4 Đúng/Sai · 6 Trả lời ngắn)
 
 Nút **Ôn thi học kì** trên thanh đầu. Chọn **Lớp 9/10/11/12** và **Kỳ** (giữa/cuối HK I, II); bảng có sẵn ma trận mặc định
