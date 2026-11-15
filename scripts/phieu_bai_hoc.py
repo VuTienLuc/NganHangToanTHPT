@@ -198,6 +198,32 @@ def chon_cau(cau_hinh_phieu, rng):
                 THIEU_CAU.append((None, loai, "H", can - len(v)))
     return cac_dang, kq, thieu
 
+def ten_ngan(ten, n=46):
+    """Tên ngắn cho chân trang / tiêu đề phụ khi phiếu gộp nhiều bài (tên dài lấn chân trang)."""
+    ten = re.sub(r"\s+", " ", ten or "").strip()
+    if len(ten) <= n:
+        return ten
+    phan = [x.strip() for x in re.split(r"\s+[–—-]\s+|\s*;\s*", ten) if x.strip()]
+    if len(phan) > 1:
+        t = f"{phan[0]} … {phan[-1]}"
+        if len(t) <= n:
+            return t
+        dau = phan[0] if len(phan[0]) <= n - 12 else phan[0][:n - 13].rsplit(" ", 1)[0] + "…"
+        return f"{dau} (+{len(phan) - 1} bài)"
+    return ten[:n - 1].rsplit(" ", 1)[0] + "…"
+
+
+def tieu_de_ten(ten, thoat):
+    """Dòng tên trong khung đầu phiếu: ngắn → IN HOA; dài/gộp nhiều bài → chữ thường, ngắt dòng gọn trong khung."""
+    ten = re.sub(r"\s+", " ", ten or "").strip()
+    phan = [x.strip() for x in re.split(r"\s+[–—]\s+|\s*;\s*", ten) if x.strip()]
+    if len(ten) <= 55 and len(phan) <= 1:
+        return r"{\large\bfseries " + thoat(ten.upper()) + "}"
+    noi = r" \,\textbullet\, ".join(thoat(x) for x in phan) if len(phan) > 1 else thoat(ten)
+    co = r"\large" if len(ten) <= 90 else r"\normalsize"
+    return r"\parbox{0.94\linewidth}{\centering" + co + r"\bfseries\linespread{1.05}\selectfont " + noi + "}"
+
+
 def tao(cfg, in_ra=print, chi_tinh=False):
     """chi_tinh=True: chỉ chọn thử câu để tính số câu kho còn thiếu (THIEU_CAU), không ghi file."""
     THIEU_CAU.clear()
@@ -241,7 +267,7 @@ def tao(cfg, in_ra=print, chi_tinh=False):
     gv = tt.get("giao_vien") or "Vũ Tiến Lực"
     # ---------- thư mục ra
     ngay = time.strftime("%d-%m-%Y")
-    goc_ten = ten_tep(f"{nhan.title()}{' Tự Luận' if tu_luan else ''} - {ten} - {ngay}", 90)
+    goc_ten = ten_tep(f"{nhan.title()}{' Tự Luận' if tu_luan else ''} - {ten_ngan(ten, 55)} - {ngay}", 90)
     out_goc, i = os.path.join(GOC, "de-da-ra", goc_ten), 2
     while os.path.exists(out_goc):
         out_goc = os.path.join(GOC, "de-da-ra", f"{goc_ten} ({i})"); i += 1
@@ -272,7 +298,7 @@ def tao(cfg, in_ra=print, chi_tinh=False):
             r"\newcommand{\nhanMuc}[2]{\par\smallskip\noindent{\colorbox{red!75!black}{\color{white}\bfseries\scriptsize\ #1\ }\ {\scriptsize\itshape\color{black!60}Dạng #2}}\par\nopagebreak}",
             r"\newcommand{\dongKe}[1]{\par\foreach \i in {1,...,#1}{\noindent\makebox[\linewidth]{\color{black!35}\dotfill}\par}}",
             r"\pagestyle{fancy}\fancyhf{}\renewcommand{\headrulewidth}{0pt}\renewcommand{\footrulewidth}{0.4pt}",
-            r"\fancyfoot[L]{\footnotesize GV: " + thoat(gv) + r"}\fancyfoot[C]{\footnotesize " + thoat(f"{nhan.title()}: {ten}") + r"}"
+            r"\fancyfoot[L]{\footnotesize GV: " + thoat(gv) + r"}\fancyfoot[C]{\footnotesize " + thoat(f"{nhan.title()}: {ten_ngan(ten)}") + r"}"
             r"\fancyfoot[R]{\footnotesize Trang \thepage/\pageref{trangCuoiPhieu}}",
             r"\fancypagestyle{plain}{\fancyhf{}\fancyfoot[L]{\footnotesize GV: " + thoat(gv) + r"}\fancyfoot[R]{\footnotesize Trang \thepage/\pageref{trangCuoiPhieu}}}"]
     if hai_cot:
@@ -285,7 +311,7 @@ def tao(cfg, in_ra=print, chi_tinh=False):
     def dau_phieu(tieu_de, ho_ten=True):
         return (r"\begin{tcolorbox}[colback=mauPhieu!4,colframe=mauPhieu,boxrule=0.8pt,arc=2mm,left=3mm,right=3mm,top=1.5mm,bottom=1.5mm]" "\n"
            r"{\small " + thoat(tt.get("truong") or "") + r"\hfill " + thoat(tt.get("nam_hoc") or "") + r"}\par\smallskip" "\n"
-           r"\begin{center}{\Large\bfseries\color{mauPhieu} " + tieu_de + r"}\\[2pt]{\large\bfseries " + thoat(ten.upper()) + r"}\\[2pt]"
+           r"\begin{center}{\Large\bfseries\color{mauPhieu} " + tieu_de + r"}\\[2pt]" + tieu_de_ten(ten, thoat) + r"\\[2pt]"
            r"{\small Toán " + str(lop) + (" · " + thoat(chuong) if chuong and loai_phieu != "on_tap_chuong" else "") +
            r" · Thời lượng: " + str(tl) + r" phút}\end{center}" "\n" +
            (r"{\small Họ và tên: \makebox[6cm]{\dotfill}\hfill Lớp: \makebox[1.8cm]{\dotfill}\hfill Ngày: \makebox[2.4cm]{\dotfill}}" "\n" if ho_ten else "") +
@@ -358,7 +384,7 @@ def tao(cfg, in_ra=print, chi_tinh=False):
     than = (dau + "\n" + r"\phanPhieu{I. KIẾN THỨC TRỌNG TÂM}" + "\n" + kien + "\n" + bat + lt + "\n\n" + btvn + tat)
     # File lời giải riêng: đầu "LỜI GIẢI", bảng đáp án ngay đầu, rồi lời giải chi tiết II, III (không có phần I, không dòng kẻ)
     het = "\n\\par\\bigskip\\begin{center}{\\small\\itshape --- Hết ---}\\end{center}\\label{trangCuoiPhieu}\n"
-    chan_goc = thoat(f"{nhan.title()}: {ten}")
+    chan_goc = thoat(f"{nhan.title()}: {ten_ngan(ten)}")
 
     def bang_dap_an(cac_muc):
         d = [r"\phanPhieu{BẢNG ĐÁP ÁN}"]
@@ -395,17 +421,17 @@ def tao(cfg, in_ra=print, chi_tinh=False):
         ghi(os.path.join(out, tep + "_LoiGiai.tex"), m2.replace("<<CHE_DO_LOI_GIAI>>", "\\hienthiloigiai").replace("<<NOI_DUNG>>", danh_so(lg) + het))
 
     # 1) Phiếu đầy đủ (I + II + III); 2) Phiếu trên lớp (I + II); 3) Phiếu về nhà (III) — mỗi phiếu có file lời giải riêng
-    viet("PhieuBaiHoc", nhan, f"{nhan.title()}: {ten}", lt + "\n\n" + btvn, ("II. LUYỆN TẬP", "III. BÀI TẬP VỀ NHÀ"), True)
-    viet("PhieuTrenLop", nhan + " – TRÊN LỚP", f"{nhan.title()} (trên lớp): {ten}", lt, ("II. LUYỆN TẬP",), True)
+    viet("PhieuBaiHoc", nhan, f"{nhan.title()}: {ten_ngan(ten)}", lt + "\n\n" + btvn, ("II. LUYỆN TẬP", "III. BÀI TẬP VỀ NHÀ"), True)
+    viet("PhieuTrenLop", nhan + " – TRÊN LỚP", f"{nhan.title()} (trên lớp): {ten_ngan(ten)}", lt, ("II. LUYỆN TẬP",), True)
     btvn_rieng = btvn.replace(r"\phanPhieu{III. BÀI TẬP VỀ NHÀ}", r"\phanPhieu{BÀI TẬP VỀ NHÀ}", 1)
-    viet("PhieuVeNha", "BÀI TẬP VỀ NHÀ", f"Bài tập về nhà: {ten}", btvn_rieng, ("III. BÀI TẬP VỀ NHÀ",), False)
+    viet("PhieuVeNha", "BÀI TẬP VỀ NHÀ", f"Bài tập về nhà: {ten_ngan(ten)}", btvn_rieng, ("III. BÀI TẬP VỀ NHÀ",), False)
     # Beamer trình chiếu kèm phiếu: phương pháp từng dạng + câu 1 (ví dụ) + câu 2 (HS tự làm) + lời giải
     if cfg.get("beamer", True):
         import beamer_phieu
         beamer_phieu.tao(out, ten, nhan, dict(tt, giao_vien=gv), lop, tl, cac_dang,
                          {d: (id_map.get(d, {}).get("type_name") or d).strip() for d in cac_dang}, kq, kt,
                          phan_ve_nha="II" if khong_kt else "III")
-    ghi(os.path.join(out, "_ten_phieu.txt"), ten_tep(f"{nhan.title()} - {ten}", 90))
+    ghi(os.path.join(out, "_ten_phieu.txt"), ten_tep(f"{nhan.title()} - {ten_ngan(ten, 55)}", 90))
     json.dump(cfg, open(os.path.join(out, "cau_hinh_phieu.json"), "w", encoding="utf-8"), ensure_ascii=False, indent=1)
     so_lt = {l: len(kq["LT"][l]) for l in CAC_LOAI}; so_bt = {l: len(kq["BTVN"][l]) for l in CAC_LOAI}
     in_ra(f"{nhan}: {ten} — {len(cac_dang)} dạng · Luyện tập TN {so_lt['TN']}, ĐS {so_lt['DS']}, TLN {so_lt['TLN']}"
@@ -433,11 +459,11 @@ def _ghi_tu_luan(L):
     lg = (dau_phieu("LỜI GIẢI " + nhan + " – TỰ LUẬN", ho_ten=False) + "\n" +
           r"\phanPhieu{LỜI GIẢI CÁC BÀI TỰ LUYỆN}" + "\n{\\small\\itshape (Ví dụ mẫu đã có lời giải trên phiếu học sinh.)}\n" +
           "\\begin{multicols}{2}\\nhoHinh\n" + phieu_tu_luan.khoi(kq_tl, cac_dang, ten_dang, True, 0, thoat) + "\n\\end{multicols}")
-    chan_goc = thoat(f"{nhan.title()}: {ten}")
+    chan_goc = thoat(f"{nhan.title()}: {ten_ngan(ten)}")
     ghi(os.path.join(out, "PhieuBaiHoc.tex"), mau.replace("<<CHE_DO_LOI_GIAI>>", "\\hienthiloigiai").replace("<<NOI_DUNG>>", hs + het))
     ghi(os.path.join(out, "PhieuBaiHoc_LoiGiai.tex"),
-        mau.replace(chan_goc, thoat(f"Lời giải {nhan.lower()}: {ten}")).replace("<<CHE_DO_LOI_GIAI>>", "\\hienthiloigiai").replace("<<NOI_DUNG>>", lg + het))
-    ghi(os.path.join(out, "_ten_phieu.txt"), ten_tep(f"{nhan.title()} Tự Luận - {ten}", 90))
+        mau.replace(chan_goc, thoat(f"Lời giải {nhan.lower()}: {ten_ngan(ten)}")).replace("<<CHE_DO_LOI_GIAI>>", "\\hienthiloigiai").replace("<<NOI_DUNG>>", lg + het))
+    ghi(os.path.join(out, "_ten_phieu.txt"), ten_tep(f"{nhan.title()} Tự Luận - {ten_ngan(ten, 55)}", 90))
     json.dump(cfg, open(os.path.join(out, "cau_hinh_phieu.json"), "w", encoding="utf-8"), ensure_ascii=False, indent=1)
     if cfg.get("beamer", True):            # Beamer cùng loại phiếu: phương pháp → ví dụ mẫu → từng bài tự luyện (đề, lời giải)
         import beamer_phieu
