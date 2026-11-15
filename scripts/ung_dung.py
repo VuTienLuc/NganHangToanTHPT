@@ -212,7 +212,14 @@ class XuLy(BaseHTTPRequestHandler):
                         bo = {"khac_cau": x["khac_cau"], "bo": xem_truoc.bo_cau(x["bo"])}
                     except Exception as e:
                         log += f"\n(không dựng được bản xem trước: {e})"
-                return self.gui(200, {"ok": ok, "nhat_ky": log, "ten": mt["ten"], "thu_muc": rel, "bien_dich": dang_bd, "xem": bo})
+                ma_dung = []
+                if ok and rel and not thu:
+                    try:
+                        ma_dung = json.load(open(os.path.join(GOC, rel, "_ma_cau_dung.json"), encoding="utf-8"))
+                    except Exception:
+                        pass
+                return self.gui(200, {"ok": ok, "nhat_ky": log, "ten": mt["ten"], "thu_muc": rel, "bien_dich": dang_bd, "xem": bo,
+                                      "ma_dung": ma_dung})
             if u.path == "/api/trinh-chieu":
                 import trinh_chieu
                 nk = []

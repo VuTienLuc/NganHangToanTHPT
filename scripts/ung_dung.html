@@ -415,6 +415,10 @@ tr.gop-h td{background:#dbeafe;text-align:left;font-weight:700;padding:8px 12px;
   <h2>Ôn thi học kì — đề 12 TN · 4 Đúng/Sai · 6 Trả lời ngắn
     <span class="lop" style="margin-left:auto;display:flex;gap:6px"><button data-l="9">Lớp 9</button><button data-l="10">Lớp 10</button><button data-l="11">Lớp 11</button><button data-l="12">Lớp 12</button></span></h2>
   <div class="cai">
+    <label>Bộ <select id="hk-bo" title="Mỗi lớp có nhiều bộ ma trận: Lần 1, Lần 2, Lần 3…"></select></label>
+    <button id="hk-sao" title="Sao chép bộ đang xem thành bộ mới (Lần 2, 3…) để sửa thêm/bớt rồi ra đề tiếp">⧉ Sao chép thành lần mới</button>
+    <button id="hk-doi-ten" title="Đổi tên bộ">✎</button><button id="hk-xoa-bo" title="Xoá bộ khỏi danh sách">✕</button>
+    <label class="hop" title="Không lấy lại câu đã ra ở các lần khác của lớp này"><input type="checkbox" id="hk-tranh" checked> Tránh câu đã ra ở lần khác</label>
     <label>Tên đề <input type="text" id="hk-ten"></label>
     <label>Kỳ <select id="hk-ky"><option>Giữa học kì I</option><option selected>Cuối học kì I</option><option>Giữa học kì II</option><option>Cuối học kì II</option></select></label>
     <span style="color:#555">Đề AI:</span>
@@ -427,7 +431,8 @@ tr.gop-h td{background:#dbeafe;text-align:left;font-weight:700;padding:8px 12px;
   <div id="hk-bang-wrap"><table id="hk-bang"><thead><tr><th style="width:52px">Câu</th><th style="width:21%">Chủ đề (sửa được)</th><th style="width:24%">Bài trong ngân hàng</th>
     <th style="width:108px">Mức</th><th style="width:130px">Ngữ cảnh thực tế</th><th>Câu mẫu (tuỳ chọn, cho đề AI)</th></tr></thead><tbody></tbody></table></div>
   <div class="chan"><span id="hk-tt" style="color:#555"></span>
-    <button id="hk-ngan-hang" class="chinh" style="margin-left:auto" title="Lấy đúng 22 câu từ ngân hàng theo bài + mức từng dòng, xuất đủ mã đề, PDF, Word, đáp án như nút Xuất đề">Ra đề từ ngân hàng</button>
+    <button id="hk-xem" style="margin-left:auto" title="Xem 22 câu được chọn, đổi từng câu hoặc random lại, rồi xác nhận xuất đề">Xem trước &amp; đổi câu</button>
+    <button id="hk-ngan-hang" class="chinh" title="Lấy đúng 22 câu từ ngân hàng theo bài + mức từng dòng, xuất đủ mã đề, PDF, Word, đáp án như nút Xuất đề">Ra đề từ ngân hàng</button>
     <button id="hk-prompt" title="Sinh prompt cho ChatGPT/Gemini/Claude tạo đề mới dạng JSON (nhập lại được vào ứng dụng)">Tạo prompt AI (nguồn ngoài)</button>
     <button id="hk-dong">Đóng</button></div>
 </div></div>
@@ -757,14 +762,15 @@ function hopThoai(tieu,noi,nut=[]){
   $("#hop-thoai").style.display="flex";
 }
 
-async function xuat(thu,chonSan){
-  const mt=maTran();
+async function xuat(thu,chonSan,mtSan,nguon){
+  const mt=mtSan||maTran();
   if(!mt.phan.length){alert("Ma trận chưa có số câu nào.");return}
   const b=thu?$("#nut-xem"):$("#nut-xuat"); b.disabled=true; b.textContent=thu?"Đang chọn…":"Đang xuất…";
   try{
     const r=await api("/api/xuat",{ma_tran:chonSan?{...mt,chon_san:chonSan}:mt,thu,bien_dich:!thu&&$("#bien_dich").checked});
-    if(thu){ if(r.ok&&r.xem){XT={...r.xem,nhat_ky:r.nhat_ky,mt,tab:0};veXT();} else hopThoai("Xem trước các câu được chọn",r.nhat_ky); return}
+    if(thu){ if(r.ok&&r.xem){XT={...r.xem,nhat_ky:r.nhat_ky,mt,tab:0,nguon:nguon||null};veXT();} else hopThoai("Xem trước các câu được chọn",r.nhat_ky); return}
     if(!r.ok){hopThoai("Chưa xuất được",r.nhat_ky);return}
+    if(nguon&&nguon.sauXuat) nguon.sauXuat(r);
     const nut=[["Mở thư mục đề",()=>api("/api/mo",{duong_dan:r.thu_muc}),true]];
     hopThoai(`Đã xuất: ${r.thu_muc}`,r.nhat_ky+(r.bien_dich?"\nĐang biên dịch PDF (mỗi mã đề khoảng vài chục giây)…":""),nut);
     if(r.bien_dich) theoDoi(r.nhat_ky);
@@ -1147,9 +1153,19 @@ const HK_BAI_MAC_DINH={  // bài trong ngân hàng cho từng dòng của ma tr�
  12:"2D1?1 2D1?2 2D1?3 2D1?4 2D1?5 2D1?5 2H2?1 2H2?2 2H2?2 2H2?2 2D3?1 2D3?2 2D1?1 2D1?3 2H2?2 2D3?2 2D1?3 2D1?3 2D1?4 2H2?1 2H2?2 2D3?2".split(" ")};
 const HK_NGU_CANH=["","Kinh tế - Tài chính","Kiến trúc - Xây dựng","Sinh học - Y tế","Vật lý - Chuyển động","Đời sống hàng ngày"];
 const HK_MUC_MA={NB:"N",TH:"H",VD:"V",VDC:"C"};
-let HK_LOP=10, HK={};   // HK[lop] = [{loai,chu_de,muc,ngu_canh,bai,mau,form,kho}]
+let HK_LOP=10, HK={};   // HK[lop] = {i, bo:[{ten, hang:[{loai,chu_de,muc,ngu_canh,bai,mau,form,kho}], da_dung:[mã câu]}]}
 function hkLuu(){try{localStorage.setItem("on_thi_hk",JSON.stringify(HK))}catch(_){}}
-function hkTai(){try{HK=JSON.parse(localStorage.getItem("on_thi_hk")||"{}")||{}}catch(_){HK={}}}
+function hkTai(){try{HK=JSON.parse(localStorage.getItem("on_thi_hk")||"{}")||{}}catch(_){HK={}}
+  for(const l in HK) if(Array.isArray(HK[l])) HK[l]={i:0,bo:[{ten:"Lần 1",hang:HK[l],da_dung:[]}]}}   // dữ liệu cũ: 1 bảng
+const hkLop=()=>HK[HK_LOP], hkBo=()=>hkLop().bo[hkLop().i], hkDs=()=>hkBo().hang;
+function hkTranh(){ // câu đã ra ở các lần khác của lớp này
+  if(!$("#hk-tranh").checked) return [];
+  return [...new Set(hkLop().bo.filter((_,i)=>i!==hkLop().i).flatMap(b=>b.da_dung||[]))]}
+function veBoHK(){
+  const L=hkLop();
+  $("#hk-bo").innerHTML=L.bo.map((b,i)=>`<option value="${i}" ${i===L.i?"selected":""}>${esc(b.ten)}${(b.da_dung||[]).length?` · đã ra ${b.da_dung.length} câu`:""}</option>`).join("");
+  $("#hk-xoa-bo").disabled=L.bo.length<2;
+}
 function hkMacDinh(lop){return HK_MAC_DINH[lop].map(([loai,chu_de,muc,nc],i)=>({loai,chu_de,muc,ngu_canh:nc||"",bai:(HK_BAI_MAC_DINH[lop]||[])[i]||"",mau:"",form:false,kho:false}))}
 function cacBai(lop){ // bài trong kho của lớp: [{k:"0D1?1", ten, dang:[{k,ten}]}]
   const m=new Map();
@@ -1179,12 +1195,13 @@ async function moOnThi(){
 function chonLopHK(lop){
   HK_LOP=lop;
   document.querySelectorAll("#hop-hk .lop button").forEach(b=>b.classList.toggle("on",+b.dataset.l===lop));
-  if(!HK[lop]){HK[lop]=hkMacDinh(lop);hkLuu()}
+  if(!HK[lop]){HK[lop]={i:0,bo:[{ten:"Lần 1",hang:hkMacDinh(lop),da_dung:[]}]};hkLuu()}
+  veBoHK();
   if(!$("#hk-ten").dataset.sua) $("#hk-ten").value=`ĐỀ ÔN THI ${$("#hk-ky").value.toUpperCase()} – TOÁN ${lop}`;
   veHK();
 }
 function veHK(){
-  const ds=HK[HK_LOP], bai=cacBai(HK_LOP), coKho=HK_LOP>=10;
+  const ds=hkDs(), bai=cacBai(HK_LOP), coKho=HK_LOP>=10;
   const opBai=['<option value="">— chọn bài —</option>'].concat(bai.map(b=>`<option value="${b.k}">${esc(b.ten)}</option>`)).join("");
   let h="",cu="",dem={TN:0,DS:0,TLN:0};
   ds.forEach((r,i)=>{
@@ -1202,11 +1219,12 @@ function veHK(){
   $("#hk-bang tbody").innerHTML=h;
   const thieu=coKho?ds.filter(r=>!r.bai).length:0;
   $("#hk-tt").textContent=coKho?(thieu?`${thieu} câu chưa chọn bài trong kho (chỉ cần khi ra đề từ ngân hàng)`:"Mọi câu đã gắn bài trong kho."):"Lớp 9: ngân hàng chưa có — dùng đề AI.";
-  $("#hk-ngan-hang").disabled=!coKho;
+  $("#hk-ngan-hang").disabled=$("#hk-xem").disabled=!coKho;
+  const tr=hkTranh().length; $("#hk-tt").textContent+=tr?` · tránh ${tr} câu đã ra ở các lần khác`:"";
 }
 $("#hk-bang").addEventListener("change",e=>{
   const tr=e.target.closest("tr[data-i]"),f=e.target.dataset.f; if(!tr||!f)return;
-  const r=HK[HK_LOP][+tr.dataset.i]; r[f]=e.target.type==="checkbox"?e.target.checked:e.target.value;
+  const r=hkDs()[+tr.dataset.i]; r[f]=e.target.type==="checkbox"?e.target.checked:e.target.value;
   if(f==="chu_de"&&HK_LOP>=10){const k=khopBai(r.chu_de,HK_LOP);if(k&&k!==r.bai){r.bai=k;veHK()}}
   hkLuu(); if(f==="bai") veHK();
 });
@@ -1215,30 +1233,62 @@ $("#hk-dong").onclick=()=>$("#hop-hk").style.display="none";
 document.querySelectorAll("#hop-hk .lop button").forEach(b=>b.onclick=()=>chonLopHK(+b.dataset.l));
 $("#hk-ky").onchange=()=>{$("#hk-ten").dataset.sua="";chonLopHK(HK_LOP)};
 $("#hk-ten").oninput=()=>$("#hk-ten").dataset.sua="1";
-$("#hk-khop").onclick=()=>{if(HK_LOP<10)return;HK[HK_LOP].forEach(r=>r.bai=khopBai(r.chu_de,HK_LOP)||r.bai);hkLuu();veHK()};
-$("#hk-mac-dinh").onclick=()=>{if(!confirm("Trả bảng lớp này về ma trận mặc định?"))return;HK[HK_LOP]=hkMacDinh(HK_LOP);hkLuu();veHK()};
+$("#hk-khop").onclick=()=>{if(HK_LOP<10)return;hkDs().forEach(r=>r.bai=khopBai(r.chu_de,HK_LOP)||r.bai);hkLuu();veHK()};
+$("#hk-mac-dinh").onclick=()=>{if(!confirm("Trả bảng lớp này về ma trận mặc định?"))return;hkBo().hang=hkMacDinh(HK_LOP);hkLuu();veHK()};
+$("#hk-bo").onchange=()=>{hkLop().i=+$("#hk-bo").value;hkLuu();veHK()};
+$("#hk-tranh").onchange=()=>veHK();
+$("#hk-sao").onclick=()=>{
+  const L=hkLop(), goc=hkBo(), n=L.bo.length+1;
+  const ten=prompt("Tên bộ mới (sao chép từ \""+goc.ten+"\", sửa lại các dòng tùy ý):",`Lần ${n}`); if(ten===null) return;
+  L.bo.push({ten:ten.trim()||`Lần ${n}`,hang:JSON.parse(JSON.stringify(goc.hang)),da_dung:[]}); L.i=L.bo.length-1;
+  hkLuu(); veBoHK(); veHK();
+};
+$("#hk-doi-ten").onclick=()=>{const b=hkBo();const t=prompt("Đổi tên bộ:",b.ten);if(t&&t.trim()){b.ten=t.trim();hkLuu();veBoHK()}};
+$("#hk-xoa-bo").onclick=()=>{const L=hkLop(); if(L.bo.length<2) return;
+  if(!confirm(`Xoá bộ "${hkBo().ten}" khỏi danh sách? (Đề đã xuất trong de-da-ra/ vẫn còn.)`)) return;
+  L.bo.splice(L.i,1); L.i=Math.max(0,L.i-1); hkLuu(); veBoHK(); veHK()};
 // 1) lấy câu từ ngân hàng: mỗi dòng = 1 câu (bài + mức) → xuất đề như nút Xuất đề
-$("#hk-ngan-hang").onclick=async()=>{
-  const ds=HK[HK_LOP], thieu=ds.map((r,i)=>[r,i]).filter(([r])=>!r.bai);
-  if(thieu.length){alert(`Còn ${thieu.length} câu chưa chọn "Bài trong ngân hàng" (vd: ${thieu.slice(0,3).map(([r])=>r.chu_de).join("; ")}).`);return}
+function mtHK(){
+  const ds=hkDs(), thieu=ds.map((r,i)=>[r,i]).filter(([r])=>!r.bai);
+  if(thieu.length){alert(`Còn ${thieu.length} câu chưa chọn "Bài trong ngân hàng" (vd: ${thieu.slice(0,3).map(([r])=>r.chu_de).join("; ")}).`);return null}
   const mt=maTran(), phan=[];
   for(const l of ["TN","DS","TLN"]){const yc=[];
     for(const r of ds.filter(x=>x.loai===l)) yc.push({dang:r.bai,muc:HK_MUC_MA[r.muc]||"N",so:1});
     if(yc.length) phan.push({loai:l,yeu_cau:yc});}
-  Object.assign(mt,{phan,ten:`On_thi_${$("#hk-ky").value}_lop${HK_LOP}`.replace(/\s+/g,"_"),ten_ky_thi:$("#hk-ten").value.trim()||"ĐỀ ÔN THI HỌC KÌ",
+  const bo=hkBo(), nhieu=hkLop().bo.length>1;
+  Object.assign(mt,{phan,ten:`On_thi_${$("#hk-ky").value}_lop${HK_LOP}${nhieu?"_"+bo.ten:""}`.replace(/\s+/g,"_"),
+    ten_ky_thi:($("#hk-ten").value.trim()||"ĐỀ ÔN THI HỌC KÌ")+(nhieu?` (${bo.ten})`:""),
     mon:`TOÁN – Lớp ${HK_LOP}`,bu_cung_nhom:true,mo_rong_dang_khac:true});
+  const tr=hkTranh(); if(tr.length) mt.tranh_ma=tr; else delete mt.tranh_ma;
+  return mt;
+}
+function nguonHK(){ // xem trước/xuất từ Ôn thi HK: ghi câu đã ra vào đúng bộ, đóng xem trước thì quay lại bảng
+  const lop=HK_LOP, bo=hkBo();
+  return {dong:()=>{$("#hop-hk").style.display="flex"},
+    sauXuat:r=>{if(r.ma_dung&&r.ma_dung.length){bo.da_dung=r.ma_dung;hkLuu();if(HK_LOP===lop){veBoHK();veHK()}}}};
+}
+$("#hk-xem").onclick=async()=>{
+  const mt=mtHK(); if(!mt) return;
+  const b=$("#hk-xem");b.disabled=true;b.textContent="Đang chọn câu…";
+  try{$("#hop-hk").style.display="none"; await xuat(true,null,mt,nguonHK());
+    if($("#hop-xt").style.display!=="flex") $("#hop-hk").style.display="flex";}
+  finally{b.disabled=false;b.textContent="Xem trước & đổi câu"}
+};
+$("#hk-ngan-hang").onclick=async()=>{
+  const mt=mtHK(); if(!mt) return; const ng=nguonHK();
   const b=$("#hk-ngan-hang");b.disabled=true;b.textContent="Đang lấy câu…";
   try{
     const r=await api("/api/xuat",{ma_tran:mt,thu:false,bien_dich:$("#bien_dich").checked});
     $("#hop-hk").style.display="none";
     if(!r.ok){hopThoai("Chưa ra được đề",r.nhat_ky);return}
+    ng.sauXuat(r);
     hopThoai(`Đã ra đề ôn thi: ${r.thu_muc}`,r.nhat_ky+(r.bien_dich?"\nĐang biên dịch PDF…":""),[["Mở thư mục đề",()=>api("/api/mo",{duong_dan:r.thu_muc}),true]]);
     if(r.bien_dich) theoDoi(r.nhat_ky); tai();
   }finally{b.disabled=false;b.textContent="Ra đề từ ngân hàng"}
 };
 // 2) prompt cho AI (nguồn ngoài) — định dạng JSON trac_nghiem / dung_sai / tra_loi_ngan, kèm mã dạng của ngân hàng
 function promptHK(){
-  const lop=HK_LOP, ds=HK[lop], so=+$("#hk-ma").value, bai=Object.fromEntries(cacBai(lop).map(b=>[b.k,b]));
+  const lop=HK_LOP, ds=hkDs(), so=+$("#hk-ma").value, bai=Object.fromEntries(cacBai(lop).map(b=>[b.k,b]));
   const ky=$("#hk-ky").value, ten=$("#hk-ten").value.trim();
   let p=`Đóng vai trò là một giáo viên Toán xuất sắc và giàu kinh nghiệm (am hiểu sâu sắc chương trình GDPT 2018 - Sách Kết nối tri thức). Nhiệm vụ của bạn là soạn đề ôn thi ${ky.toLowerCase()} môn Toán Lớp ${lop} theo cấu trúc mới: 12 câu trắc nghiệm, 4 câu đúng/sai, 6 câu trả lời ngắn.\n\n`;
   p+=`Hãy tạo đề Toán dưới dạng JSON tương thích chính xác với cấu trúc bên dưới.\n\nYÊU CẦU BẮT BUỘC:\n`;
@@ -1509,16 +1559,16 @@ async function doiCau(ma,nut){
     const tmp=document.createElement("div");tmp.innerHTML=htmlThe(r.cau,so);const moi=tmp.firstElementChild;moi.classList.add("moi");
     cu.replaceWith(moi); moi.querySelector(".xt-doi").onclick=()=>doiCau(r.cau.ma,moi.querySelector(".xt-doi")); veCong(moi); break}}
 }
-$("#xt-dong").onclick=()=>$("#hop-xt").style.display="none";
+$("#xt-dong").onclick=()=>{$("#hop-xt").style.display="none"; if(XT&&XT.nguon&&XT.nguon.dong) XT.nguon.dong()};
 $("#xt-nhatky").onclick=()=>hopThoai("Nhật ký chọn câu",XT.nhat_ky);
 $("#xt-random").onclick=async()=>{$("#xt-random").disabled=true;$("#xt-random").textContent="Đang chọn lại…";
-  try{await xuat(true)}finally{$("#xt-random").disabled=false;$("#xt-random").textContent="↻ Random lại tất cả"}};
+  try{await xuat(true,null,XT.nguon?XT.mt:null,XT.nguon)}finally{$("#xt-random").disabled=false;$("#xt-random").textContent="↻ Random lại tất cả"}};
 $("#xt-tc").onclick=async()=>{
   const b=XT.bo[Math.min(XT.tab,XT.bo.length-1)];
   const ma=["TN","DS","TLN"].flatMap(l=>(b[l]||[]).filter(c=>!c.mat).map(c=>c.ma));
   if(!ma.length){alert("Chưa có câu nào.");return}
   const nhieu=XT.bo.length>1, so=(+$("#ma_de_bat_dau").value||101)+Math.min(XT.tab,XT.bo.length-1);
-  const ten=($("#ten_ky_thi").value.trim()||$("#ten").value.trim()||"Đề trình chiếu")+(nhieu?` - Mã ${so}`:"");
+  const ten=((XT.nguon&&XT.mt.ten_ky_thi)||$("#ten_ky_thi").value.trim()||$("#ten").value.trim()||"Đề trình chiếu")+(nhieu?` - Mã ${so}`:"");
   const n=$("#xt-tc"); n.disabled=true; n.textContent="Đang chuyển (vẽ hình TikZ)…";
   try{const r=await api("/api/trinh-chieu",{ma,ten});
     hopThoai(r.ok?"Đã mở ứng dụng trình chiếu":"Chưa chuyển được",r.nhat_ky+(r.ok?"\n\nTrình duyệt đã mở đề. Từ ứng dụng có thể: trình chiếu, xuất HTML trình chiếu, tạo bài kiểm tra cho học sinh, xuất Word, lưu thư viện Google Sheets.":""),
@@ -1527,7 +1577,7 @@ $("#xt-tc").onclick=async()=>{
 };
 $("#xt-ok").onclick=async()=>{
   const cs=XT.bo.map(b=>Object.fromEntries(Object.entries(b).map(([l,ds])=>[l,ds.filter(c=>!c.mat).map(c=>c.ma)])));
-  $("#hop-xt").style.display="none"; await xuat(false,cs);
+  $("#hop-xt").style.display="none"; await xuat(false,cs,XT.nguon?XT.mt:null,XT.nguon);
 };
 
 // ---------------- NGÂN HÀNG TUYỂN SINH 10
