@@ -1,0 +1,280 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Lớp 11 | Đường thẳng, mặt phẳng. Quan hệ song song trong | Đường thẳng và mặt phẳng song song
+% Dạng 1H4?3-7: Bài toán quỹ tích và điểm cố định
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+% nguồn: 2026-11-15_11_1H4_TL2_Song_song (nhập 15/11/2026)
+\begin{bt}%[1H4H3-7]%[ma:44230269]
+% nguon: Archive/2024/SP-K10-K11-LyVanHoang_TVN-023/K11-C4-HHKG-QHSS/data/Bai-2-Dang4-Chungminhbadiemthanghangdongquy.tex #2136
+%[BG - 12 New - 4in1, Lê Đạt]
+	Cho tứ diện $SABC$. Trên $SA$, $SB$ và $SC$ lần lượt lấy các điểm $D$, $E$, $F$ sao cho $DE$ cắt $AB$ tại $I$, $EF$ cắt $BC$ tại $J$, $FD$ cắt $CA$ tại $K$. Chứng minh ba điểm $I$, $J$, $K$ thẳng hàng.
+	\loigiai{
+
+			\begin{center}
+\begin{tikzpicture}[scale=1, font=\footnotesize, line join=round, line cap=round, >=stealth]
+\coordinate (A) at (0,0);
+\coordinate (C) at (5,0);
+\coordinate (B) at (1.2,-1.5);
+\coordinate (S) at ($(A)+(2,3)$);
+\coordinate (D) at ($(S)!0.5!(A)$);
+\coordinate (F) at ($(S)!2/3!(C)$);
+\coordinate (E) at ($(S)!1/5!(B)$);
+\fill(intersection of D--F and A--C) coordinate(K);
+\fill(intersection of E--F and B--C) coordinate(J);
+\fill(intersection of E--D and A--B) coordinate(I);
+\draw (S)--(A)--(I)--(E)--(F)--(K)--(C)--(B)--(S)--(C) (A)--(B);
+\draw[dashed](K)--(J)--(F)--(D) (I)--(J)--(C)--(A);
+\foreach \x/\g in {A/190,B/-90,C/-90,S/90,I/180,K/10,J/50,F/50,E/40,D/160} \fill[black] (\x) circle (1pt) +(\g:0.3)node{$\x$};
+\end{tikzpicture}	
+	\end{center}
+		Ta có\\
+		$\bullet$ $\heva{&I=AB\cap DE\,(AB,\,DE\subset (SAB))\\&I\in AB,\, AB\subset (ABC)\\&I\in DE,\,DE\subset (DEF)}\Rightarrow I\in (ABC)\cap (DEF)$.\hfill $(1)$\\
+		$\bullet$ $\heva{&K=AC\cap DF\,(AC,\,DF\subset (SAC))\\&I\in AC,\, AC\subset (ABC)\\&K\in DF,\,DF\subset (DEF)}\Rightarrow K\in (ABC)\cap (DEF)$.\hfill $(2)$\\
+		$\bullet$ $\heva{&J=BC\cap EF\,(BC,\,EF\subset (SBC))\\&J\in BC,\, BC\subset (ABC)\\&J\in EF,\,EF\subset (DEF)}\Rightarrow J\in (ABC)\cap (DEF)$.\hfill $(3)$\\
+		Từ $(1)$, $(2)$ và $(3)$ suy ra ba điểm $I$, $J$, $K$ thẳng hàng.
+	}
+\end{bt}
+
+% nguồn: 2026-11-15_11_1H4_TL2_Song_song (nhập 15/11/2026)
+\begin{bt}%[1H4H3-7]%[ma:ccd502aa]
+% nguon: Archive/2024/SP-K10-K11-LyVanHoang_TVN-023/K11-C4-HHKG-QHSS/data/Bai-2-Dang4-Chungminhbadiemthanghangdongquy.tex #2137
+%[BG - 12 New - 4in1, Lê Đạt]
+	Cho hình chóp $S.ABCD$ có đáy là hình bình hành. Gọi $M$ là trung điểm $SB$, $N$ là điểm đối xứng của $C$ qua $M$. Gọi $P$ là điểm trên cạnh $SD$, $Q$ là giao điểm của $AP$ với $(SBC)$. Chứng minh $N$, $S$, $Q$ thẳng hàng.
+	\loigiai{
+		\immini
+		{
+			Ta có $S\in (SBC)\cap (SAD)$, $Q=AP\cap (SBC)$, $AP\subset (SAD)$ nên $Q\in (SBC)\cap(SAD)$.\\
+			Suy ra $SQ=(SBC)\cap(SAD)$. Mà
+			$$\heva{& BC\subset(SBC) \\ & AD\subset (SAD)\\ & BC\parallel AD}\Rightarrow SQ\parallel BC.$$
+			Mặt khác $SCBN$ là hình bình hành nên $SN\parallel BC$.\\
+			Vậy $N$, $S$, $Q$ thẳng hàng.
+		}
+		{
+			\begin{tikzpicture}[scale=.7,font=\footnotesize, line join=round, line cap=round, >=stealth]
+			\path
+			(0,0) coordinate (A)
+			(5,0) coordinate (D)
+			(-2,-2) coordinate (B)
+			;
+			\coordinate (C) at ($(B)+(D)-(A)$);
+			\coordinate (S) at ($(A)+(1,5)$);
+			\coordinate (M) at ($(S)!0.5!(B)$);
+			\coordinate (N) at ($(C)!2!(M)$);
+			\coordinate (P) at ($(S)!1/3!(D)$);
+			\coordinate (Q) at ($(A)!3/2!(P)$);
+			\draw (S)--(B)--(C)--(D)--(S)--(C)--(N)--(Q)--(P);
+			\draw[dashed] (S)--(A)--(B)
+			(P)--(A)--(D);
+			\foreach \x/\g in {A/135,B/-90,C/-60,D/0,S/90,N/120,M/200,P/90,Q/60} \fill[black](\x) circle (1pt) ($(\x)+(\g:3mm)$) node{$\x$};
+			\end{tikzpicture}
+		}
+	}
+\end{bt}
+
+% nguồn: 2026-11-15_11_1H4_TL2_Song_song (nhập 15/11/2026)
+\begin{bt}%[1H4H3-7]%[ma:1132ba8e]
+% nguon: Archive/2024/SP-K10-K11-LyVanHoang_TVN-023/K11-C4-HHKG-QHSS/data/Bai-2-Dang4-Chungminhbadiemthanghangdongquy.tex #2138
+%[BG - 12 New - 4in1, Lê Đạt]
+	Cho hình chóp $S.ABCD$ có đáy là hình bình hành tâm $O$. Trên $SD$, $SC$ lần lượt lấy $M$ và $N$ sao cho $\dfrac{SM}{SD}=\dfrac{SN}{SC}=\dfrac{2}{3}$. Chứng minh $AN$, $BM$ và $SO$ cùng đồng quy.
+	\loigiai{
+		\immini
+		{
+			Ta có $\dfrac{SM}{SD}=\dfrac{SN}{SC}=\dfrac{2}{3}\Rightarrow MN\parallel CD$, mà $CD\parallel AB$ nên $MN\parallel AB$ và $M$, $N$, $B$, $A$ đồng phẳng.\\
+			Gọi $I$là giao điểm của $AN$ và $BM$ suy ra $I\in (SAC)\cap (SBD)$.\\
+			Mà $SO=(SAC)\cap (SBD)$ nên $SO$ đi qua $I$.\\
+			Vậy $AN$, $BM$ và $SO$ cùng đồng quy tại $I$.
+		}
+		{
+			\begin{tikzpicture}[scale=.7,font=\footnotesize, line join=round, line cap=round, >=stealth]
+			\path
+			(0,0) coordinate (A)
+			(5,0) coordinate (D)
+			(-2,-2) coordinate (B)
+			;				
+			\coordinate (C) at ($(B)+(D)-(A)$);
+			\coordinate (S) at ($(A)+(1,5)$);
+			\coordinate (M) at ($(S)!2/3!(D)$);
+			\coordinate (N) at ($(C)!1/3!(S)$);
+			\coordinate (O) at ($(A)!.5!(C)$);
+			\coordinate (I) at ($(A)!3/5!(N)$);
+			\draw (S)--(B)--(C)--(D)--(S)--(C)
+			(M)--(N);
+			\draw[dashed] (O)--(S)--(A)--(C)
+			(D)--(B)--(A)--(D)
+			(B)--(M)
+			(A)--(N);
+			\foreach \x/\g in {A/180,B/-90,C/-60,D/0,S/90,N/-10,M/60,I/120,O/-90} \fill[black](\x) circle (1pt) ($(\x)+(\g:3mm)$) node{$\x$};
+			\end{tikzpicture}
+		}
+	}
+\end{bt}
+
+% nguồn: 2026-11-15_11_1H4_TL2_Song_song (nhập 15/11/2026)
+\begin{bt}%[1H4H3-7]%[ma:5dfff45d]
+% nguon: Archive/2024/SP-K10-K11-LyVanHoang_TVN-023/K11-C4-HHKG-QHSS/data/Bai-2-Dang4-Chungminhbadiemthanghangdongquy.tex #2142
+%[BG - 12 New - 4in1, Lê Đạt]
+	Cho hình chóp $S.ABCD$ có đáy là hình thang. Gọi $E$, $F$, $I$, $J$ lần lượt là trung điểm $SC$, $SD$, $SA$, $SB$. Gọi $O$ là giao điểm của $AC$ và $BD$, $K$ là giao điểm của $IE$ và $FI$. Chứng minh $S$, $K$, $O$ thẳng hàng.
+	\loigiai{
+		\immini
+		{
+			Giả sử $AB\parallel CD$. Mà theo tính chất đường trung bình thì $EF\parallel CD$, $IJ\parallel AB$ nên $IJ\parallel FE$ và $E$, $F$, $I$, $J$ đồng phẳng.\\
+			Xét $3$ mặt phẳng $(SAC)$, $(SBD)$ và $(EFIJ)$ có  $\heva{& (SAC)\cap (SBD)=SO \\ & (SAC)\cap (EFIJ)=IE\\ & (SBD)\cap (EFIJ)=FJ.}$\\
+			Mà $IE$ cắt $FJ$ nên $SO$, $IE$ và $FJ$ đồng quy tại $O$ hay $S$, $K$, $O$ thẳng hàng.
+		}
+		{
+			\begin{tikzpicture}[scale=1, font=\footnotesize,line join=round, line cap=round, >=stealth]
+			\path
+			(0,0) coordinate (A)
+			(-1.3,-1.2) coordinate (D)
+			(2.5,-1.2) coordinate (C)
+			;
+			\coordinate (B) at ($(A)+(C)-(D)$);
+			\coordinate (S) at ($(A)+(0.5,3)$);
+			\coordinate (I) at ($(S)!1/2!(A)$);
+			\coordinate (J) at ($(S)!1/2!(B)$);
+			\coordinate (E) at ($(S)!1/2!(C)$);
+			\coordinate (F) at ($(S)!1/2!(D)$);
+			\coordinate (K) at ($(I)!0.5!(E)$);
+			\coordinate (O) at ($(A)!0.5!(C)$);
+			\draw (S)--(B)--(C)--(D)--cycle
+			(S)--(C) (J)--(E)--(F);
+			\draw[dashed] (O)--(S)--(A)--(B)--(D)--(A)--(C)
+			(E)--(I)--(J)--(F)--(I); 
+			\foreach \p/\q in {A/160,B/0,C/-90,D/-90,S/90,I/45,J/45,K/45, E/-30,F/180,O/-90}
+			\fill[black] (\p) circle (1.0pt) ($(\p)+(\q:3.5mm)$) node{$\p$};
+			\end{tikzpicture}}
+	}
+\end{bt}
+
+% nguồn: 2026-11-15_11_1H4_TL2_Song_song (nhập 15/11/2026)
+\begin{bt}%[1H4H3-7]%[ma:51d802f0]
+% nguon: Archive/2024/SP-K10-K11-LyVanHoang_TVN-023/K11-C4-HHKG-QHSS/data/Bai-2-Dang4-Chungminhbadiemthanghangdongquy.tex #2143
+%[BG - 12 New - 4in1, Lê Đạt]
+	Cho hình chóp $S.ABC$. Gọi $K,N$ lần lượt là trung điểm của $SA,BC$. Điểm $M$ thuộc cạnh $SC$ sao cho $SM =\dfrac{2}{3}SC$.
+	\begin{enumerate}
+		\item Tìm giao tuyến của hai mặt phẳng $(KMN)$ và $(SBC)$.
+		\item Tìm giao điểm của đường thẳng $AC$ và mặt phẳng $(KMN)$. 
+		\item Gọi $H$ là giao điểm của đường thẳng $AB$ và mặt phẳng $(KMN)$. Chứng minh rằng ba đường thẳng $KN$, $MN$, $SB$ đồng quy.
+	\end{enumerate}
+	\loigiai{
+				\begin{center}
+		\begin{tikzpicture}[scale=1, font=\footnotesize, line join=round, line cap=round, >=stealth]
+		\coordinate (A) at (0,0);
+		\coordinate (C) at (5,0);
+		\coordinate (B) at (1.2,-1.5);
+		\coordinate (S) at ($(A)+(2,3)$);
+		\coordinate (K) at ($(S)!0.5!(A)$);
+		\coordinate (M) at ($(S)!2/3!(C)$);
+		\coordinate (H) at ($(A)!3/4!(B)$);
+		\fill(intersection of K--H and S--B) coordinate(E);
+		\fill(intersection of E--M and B--C) coordinate(N);
+		\fill(intersection of K--M and A--C) coordinate(D);
+		\draw (S)--(A)--(B)--(C)--(S)--(E)--(M)--(D)--(C) (K)--(E);
+		\draw[dashed](N)--(K)--(M) (A)--(C);
+		\foreach \x/\g in {A/190,B/-50,C/-90,S/90,K/180,E/0,M/50,N/-50,H/-140,D/90} \fill[black] (\x) circle (1pt) +(\g:0.3)node{$\x$};
+		\end{tikzpicture}	
+	\end{center}
+		\begin{enumerate}
+			\item Ta có $(KMN) \cap (SBC) = MN$.
+			\item Trong mặt phẳng $(SAC)$, gọi $D$ là giao điểm của $AC$ và $KM$, suy ra $AC \cap (KMN) = \{ D\}$.
+			\item Trong mặt phẳng $(SBC)$, gọi $E$ là giao điểm của $MN$ và $SB$, do đó trong mặt phẳng $(SAB)$, $H$ là giao điểm của $AB$ và $KE$. Dễ thấy ba đường thẳng $KN$, $MN$, $SB$ đồng quy tại $E$.
+		\end{enumerate}
+	}
+\end{bt}
+
+% nguồn: 2026-11-15_11_1H4_TL2_Song_song (nhập 15/11/2026)
+\begin{bt}%[1H4H3-7]%[ma:4b7ef85d]
+% nguon: Archive/2024/SP-K10-K11-LyVanHoang_TVN-023/K11-C4-HHKG-QHSS/data/Bai-2-Dang4-Chungminhbadiemthanghangdongquy.tex #2144
+%[BG - 12 New - 4in1, Lê Đạt]
+	Cho hình chóp $S.ABCD$ đáy là hình thang đáy lớn $AD$, gọi $K$ là giao điểm của $AB$ và $CD$, $M$ là điểm nằm trên $SD$, $P$ là giao điểm của $KM$ và $SC$. Gọi $d$ là giao tuyến của $(SAD)$ và $(SBC)$. Chứng minh $AM$, $BP$ và $d$ đồng quy.
+	\loigiai{
+		\immini
+		{
+			Ta có
+			$$\heva{& AD\subset(SAD) \\ & BC\subset (SBC)\\ & AD\parallel BC\\ & S\in (SAD)\cap (SBC)}\Rightarrow (SAD)\cap (SBC)=Sx\parallel AD\parallel BC.$$
+			Xét $3$ mặt phẳng $(SAD)$, $(SBC)$, $(AMK)$ có
+			$\heva{& (SAD)\cap (SBC)=d \\ & (SAD)\cap (AMK)=AM\\ & (AMK)\cap (SBC)=BP.}$\\
+			Mà $AM$ cắt $Sx$ hay $AM$ cắt $d$, vậy $AM$, $BP$ và $d$ đồng quy.
+		}
+		{
+			\begin{tikzpicture}[scale=.7,font=\footnotesize, line join=round, line cap=round, >=stealth]
+			\path
+			(0,0) coordinate (A)
+			(5,0) coordinate (D)
+			(1,-2) coordinate (B)
+			(3.5,-2) coordinate (C)
+			;				
+			\coordinate (O) at ($(A)!2/3!(C)$);
+			\coordinate (S) at ($(O)+(-.5,6)$);
+			\coordinate (M) at ($(S)!0.5!(D)$);
+			\coordinate (K) at ($(A)!2!(B)$);
+			\coordinate (P) at ($(S)!2/3!(C)$);
+			\coordinate (I) at ($(A)!2!(M)$);
+			\path
+			(intersection of B--P and S--D) coordinate (x)
+			;
+			\draw (S)--(A)--(K)--(D)--(x) (S)--(I)--(B)--(S)--(C)
+			(K)--(P)
+			(B)--(I);
+			\draw[dashed] (I)--(A)--(D)
+			(B)--(C)
+			(M)--(P) (x)--(S);
+			\foreach \x/\g in {A/180,B/-120,C/-60,D/0,S/90,K/-90,P/20,I/90,M/70} \fill[black](\x) circle (1pt) ($(\x)+(\g:4mm)$) node{$\x$};
+			\end{tikzpicture}
+		}
+	}
+\end{bt}
+
+% nguồn: 2026-11-15_11_1H4_TL2_Song_song (nhập 15/11/2026)
+\begin{bt}%[1H4H3-7]%[ma:49a795f5]
+% nguon: Archive/2024/SP-K10-K11-LyVanHoang_TVN-023/K11-C4-HHKG-QHSS/data/Bai-2-Dang4-Chungminhbadiemthanghangdongquy.tex #2145
+%[BG - 12 New - 4in1, Lê Đạt]
+	Cho hình chóp $S.ABCD$ có đáy $ABCD$ là tứ giác có các cạnh đối không song song.
+	\begin{enumerate}
+		\item Tìm giao tuyến của $(SAC)$ và $(SBD)$.
+		\item Gọi $M$ là điểm trên cạnh $SC$ ($M$ không trùng với $S$ và $C$). Tìm giao điểm của $AM$ và $(SBD)$.
+		\item Gọi $H$ là giao điểm của $SD$ và $(ABM)$, $I$ là giao điểm của $BM$ và $(SAD)$. Chứng minh rằng $A$, $I$, $H$ thẳng hàng.
+	\end{enumerate}
+	\loigiai{
+	\begin{center}
+		\begin{tikzpicture}[scale=1,font=\footnotesize, line join=round, line cap=round, >=stealth]
+		\coordinate (A) at (0,0);
+		\coordinate (D) at (5,0);
+		\coordinate (B) at (1.5,-3);
+		\coordinate (C) at (4,-2);
+		\coordinate (S) at ($(A)+(1,4)$);
+		\coordinate (M) at ($(S)!0.6!(C)$);
+		\fill(intersection of A--C and B--D) coordinate(O);
+		\fill(intersection of S--O and A--M) coordinate(E);
+		\fill(intersection of B--E and S--D) coordinate(H);
+		\fill(intersection of A--D and B--C) coordinate(F);
+		\fill(intersection of A--H and S--F) coordinate(I);
+		\foreach \x/\g in {A/160,B/-100,C/-90,D/20,S/90,O/190,M/0,H/90,E/160,I/80,F/90} \fill[black](\x) circle (1.5pt) ($(\x)+(\g:3mm)$) node{$\x$};
+		\draw (S)--(A)--(B)--(C)--(S)--(B)--(I) (S)--(F)--(C);
+		\draw[dashed] (F)--(A)--(C)--(D)--(B)--(H)--(A)--(M) (D)--(S)--(O)
+		(H)--(I);
+		\end{tikzpicture}
+	\end{center}
+		\begin{enumerate}
+			\item Tìm giao tuyến của $(SAC)$ và $(SBD)$.\\
+			Trong mặt phẳng $(ABCD)$ gọi $O$ là giao điểm của $AC$ và $BD$. Xét hai mặt phẳng $(SAC)$ và $(SBD)$. Ta có\\
+			$S$ là một điểm chung của hai mặt phẳng.\\
+			$O \in AC \Leftrightarrow O \in (SAC)$, $O \in BD \Leftrightarrow O \in (SBD)$ nên $O$ là điểm chung thứ hai.\\
+			Mà $S \notin (ABCD)$ nên $S \neq O$.\\
+			Vậy $(SAC) \cap (SBD)=SO$.
+			\item Gọi $M$ là điểm trên cạnh $SC$ ($M$ không trùng với $S$ và $C$). Tìm giao điểm của $AM$ và $(SBD)$.\\
+			Do $M \in SC$ nên $AM \subset (SAC)$. Trong mặt phẳng $(SAC)$, gọi $E$ là giao điểm của hai đường thẳng $SO$ và $AM$.\\
+			Ta có $E \in SO,\ SO \subset (SBD) \Rightarrow E \in (SBD)$ và $E \in AM$.\\
+			Vậy $E$ là giao điểm của $AM$ và mặt phẳng $(SBD)$.
+			\item Gọi $H$ là giao điểm của $SD$ và $(ABM)$, $I$ là giao điểm của $BM$ và $(SAD)$. Chứng minh rằng $A$, $I$, $H$ thẳng hàng.\\
+			Trong mặt phẳng $(ABCD)$, do $AD$ và $BC$ không song song nên chúng cắt nhau giả sử tại $F$. Ta có $SF \subset(SAD)$ và $SF \subset (SBC)$.\\
+			Trong mặt phẳng $(SBC)$, gọi $J$ là giao điểm của $BM$ và $SF$, khi đó do $SF \subset (SAD)$ nên $J$ là điểm chung của hai mặt phẳng $(ABM)$ và $(SAD)$.\\
+			Mặt khác mặt phẳng $(ABM)$ và $(SAD)$ phân biệt, có $A$ là điểm chung, $A \not\equiv J$.\\
+			Giao tuyến của $(ABM)$ và $(SAD)$ là đường thẳng $\Delta$ qua hai điểm $A, J$.\\
+			Theo bài ra $H$ là giao điểm của $SD$ và $(ABM)$ nên $H \in (ABM)$, $H \in SD \Rightarrow H \in (SAD)$. Do đó $H$ là một điểm chung của $(ABM)$ và $(SAD)$. Suy ra $H \in \Delta$.\\
+			Lại có $\{I\}=BM \cap (SAD)$ nên $I \equiv J$. Suy ra $I \in \Delta$.\\
+			Vậy $A$, $H$, $I$ thẳng hàng.
+		\end{enumerate}			
+	}
+\end{bt}

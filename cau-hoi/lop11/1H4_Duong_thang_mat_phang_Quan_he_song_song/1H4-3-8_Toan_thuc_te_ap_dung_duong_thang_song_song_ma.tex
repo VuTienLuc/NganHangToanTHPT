@@ -1,0 +1,90 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Lớp 11 | Đường thẳng, mặt phẳng. Quan hệ song song trong | Đường thẳng và mặt phẳng song song
+% Dạng 1H4?3-8: Toán thực tế áp dụng đường thẳng song song mặt phẳng
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+% nguồn: 2026-11-15_11_1H4_TL2_Song_song (nhập 15/11/2026)
+\begin{bt}%[1H4H3-8]%[ma:ca2d1fc2]
+% nguon: Archive/2024/TOAN_11_XE/TOAN_11_XE/data4/11C4/KNTT-4.3.tex #773
+%[Tex hóa SGK 11-CD]%[Phạm Tiến Long]
+	Trong phòng học của lớp, hãy nêu những hình ảnh về đường thẳng song song với mặt phẳng.
+	\loigiai{Nêu những hình ảnh trong phòng học gợi nên hình ảnh về đường thẳng song song với mặt phẳng, ví dụ: mép trên hoặc mép dưới của bảng song song với nền nhà, những cái trụ song song với những bức tường...}
+\end{bt}
+
+% nguồn: 2026-11-15_11_1H4_TL2_Song_song (nhập 15/11/2026)
+\begin{bt}%[1H4H3-8]%[ma:feb713fc]
+% nguon: Archive/SP_KhoLatex/ID6_old/1-GK1-CanhDieu-De6-NH23-24.tex #3027
+
+	Tết Đoan Ngọ $2023$ bạn An có mua một cái bánh ú có dạng là khối chóp tam giác như hình vẽ. Biết $ A B \perp C D, A B=C D, A B=10 ~\text{cm}$. Bạn $ An $ muốn cắt bánh thành hai phần với điểm đặt ban đầu tại điểm $ I $, biết mặt cắt là mặt phẳng $ (P) $ song song với $ A B, C D $ và cắt $ B C, B D, A D $ lần lượt tại $ M, N, P $. Tìm vị trí của $ I $ trên $ A C $ để diện tích của mặt cắt là lớn nhất.
+	\begin{center}
+			\begin{tikzpicture}[scale=2, font=\footnotesize,>=stealth]%<DTools>
+			\def\canhAC{4};\def\canhBA{2};\def\gocBAC{-50};\def\h{3};
+			%Định nghĩa điểm.
+			\coordinate (B) at (0,0);
+			\coordinate (C) at ($(B)+(\gocBAC:\canhBA)$);
+			\coordinate (D) at ($(B)+(0:\canhAC)$);
+			\coordinate (O) at ($ 1/3*(B)+1/3*(C)+1/3*(D) $);
+			\coordinate (A) at ($(O)+(90:\h)$);
+			\coordinate (M) at ($(A)!0.5!(B)$);
+			\coordinate (N) at ($(A)!0.5!(C)$);
+			%Vẽ khối chóp S.ABC đều.
+			\draw (A)--(C) (A)--(B)--(C) (A)--(D)--(C);
+			\draw[dashed] (B)--(D);
+			%Hiển thị các điểm.
+			\foreach \x/\y in {A/90,B/180,C/-90,D/0}{\fill (\x) circle (1pt) ($(\x)+(\y:0.3cm)$) node{$\x$};}
+		\end{tikzpicture}
+	\end{center}
+
+	\loigiai{
+		\immini{
+			Ta có $ \heva{& A B \parallel(P)\\
+				& A B \subset(A B C)\\
+				& I \in(P) \cap(A B C)} \Rightarrow (P) \cap (A B C)=I M$ ( Với $ I M \parallel A B, M \in B C$).\\  Ta có $ \heva{& C D \parallel(P)\\
+				& C D \subset(B C D)\\
+				& M \in(P) \cap(B C D)} \Rightarrow(P) \cap(B C D)=M N$ (Với $ M N \parallel C D, N \in B D)$.\\
+				Ta có $ \heva{& A B \parallel(P)\\
+				& A B \subset(A B D)\\
+				& N \in(P) \cap(A B D)} \Rightarrow(P) \cap(A B D)=N P$ (Với $ N P \parallel A B, P \in A D$).
+		}{
+				\begin{tikzpicture}[scale=1.5, font=\footnotesize,>=stealth]%<DTools>
+				\def\canhAC{4};\def\canhBA{2};\def\gocBAC{-50};\def\h{3};
+				%Định nghĩa điểm.
+				\coordinate (B) at (0,0);
+				\coordinate (C) at ($(B)+(\gocBAC:\canhBA)$);
+				\coordinate (D) at ($(B)+(0:\canhAC)$);
+				\coordinate (O) at ($ 1/3*(B)+1/3*(C)+1/3*(D) $);
+				\coordinate (A) at ($(O)+(90:\h)$);			
+				\coordinate (M) at ($(B)!1/3!(C)$);
+				\coordinate (N) at ($(B)!1/3!(D)$);
+				\coordinate (M1) at ($(M)+1/2*(A)-1/2*(B)$);
+				\coordinate (M2) at ($(M)+1/2*(B)-1/2*(A)$);
+				\coordinate (N1) at ($(N)+1/2*(A)-1/2*(B)$);
+				\coordinate (N2) at ($(N)+1/2*(B)-1/2*(A)$);
+				\coordinate (I) at (intersection of M1--M2 and A--C);
+				\coordinate (P) at (intersection of N1--N2 and A--D);
+				\draw[dashed] (M)--(N)--(P);
+				\draw (P)--(I)--(M);
+				%Vẽ khối chóp S.ABC đều.
+				\draw (A)--(C) (A)--(B)--(C) (A)--(D)--(C);
+				\draw[dashed] (B)--(D) ;
+				%Hiển thị các điểm.
+				\foreach \x/\y in {A/90,B/180,C/-90,D/0, M/180, N/90, P/0, I/120}{\fill (\x) circle (1pt) ($(\x)+(\y:0.3cm)$) node{$\x$};}
+			\end{tikzpicture}
+		}
+		\noindent Ta có $ \heva{& (P) \cap(A B C)=I M\\
+			& (P) \cap(B C D)=M N\\
+			& (P) \cap(A B D)=N P\\
+			& (P) \cap(A C D)=I P} \Rightarrow $ mặt phẳng $ (P) $ là tứ giác $ I M N P $.\\
+			Ta có $ \heva{& I M \parallel N P\\
+			& M N \parallel I P} \Rightarrow $ tứ giác $ I M N P $ là hình bình hành. 
+			\\
+			Mà $ I M \perp M N($ do $ A B \perp C D) $ nên hình bình hành $ I M N P $ là hình chữ nhật.\\
+			Gọi diện tích hình chữ nhật $ I M N P $ là $ S.$ Với $S=I M \cdot M N $.\\
+			Ta có $ \heva{& \dfrac{I M}{A B}=\dfrac{C M}{B C} (\text { do } I M \parallel A B)\\
+			& \dfrac{M N}{C D}=\dfrac{B M}{B C} (\text {do } M N \parallel C D) \Rightarrow \dfrac{I M+M N}{A B}=\dfrac{C M+B M}{B C}=1 \Rightarrow I M+M N=10.  \\
+			& A B=C D} $.\\
+			Áp dụng bất đẳng thức Cô-si, ta có\\ $ I M+M N \geq 2 \sqrt{I M \cdot M N} $$ \Rightarrow I M \cdot M N \leq 25 \Rightarrow S \leq 25 \Rightarrow S_{\max}=25 $.\\  Dấu \lq\lq=\rq\rq\, xảy ra $ \Leftrightarrow I M=M N \Rightarrow I M=5 \Rightarrow I $ là trung điểm của $ A C $.\\
+			Vậy $ I $ là trung điểm của $ A C $ thì diện tích mặt phẳng cắt lớn nhất. }
+	
+\end{bt}

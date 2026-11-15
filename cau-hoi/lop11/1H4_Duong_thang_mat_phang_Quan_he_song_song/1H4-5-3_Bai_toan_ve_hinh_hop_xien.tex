@@ -731,3 +731,423 @@
 		\end{enumerate}
 	} 
 \end{ex}
+
+% nguồn: 2026-11-15_11_1H4_TL2_Song_song (nhập 15/11/2026)
+\begin{bt}%[1H4H5-3]%[ma:5336b91a]
+% nguon: Archive/2024/SP-K10-K11-LyVanHoang_TVN-023/K11-C4-HHKG-QHSS/data/Bai5-Dang2-Hinhhop.tex #2265
+[CD]%[Bài giảng Toán 11 - Quan Ón]
+	Cho hình hộp $ABCD.A'B'C'D'$. Chứng minh rằng các đường chéo của hình hộp cắt nhau tại trung điểm mỗi đường.
+	\loigiai{
+		\immini
+		{
+			Hình hộp $ABCD.A'B'C'D'$ có các đường chéo $A'C$; $AC'$; $BD'$ và $B'D$.\\
+			Tứ giác $AC C' A'$ có $A A'\parallel C C'$ và $A A'=C C'$ (tính chất hình hộp) nên tứ giác $A C C' A'$ là hình bình hành.\\
+			Gọi $I$ là giao điểm của hai đường chéo $A C'$ ' và $A' C$. Khi đó $I$ là trung điểm của mỗi đường chéo $A C'$ và $A' C$.\\
+			Tương tự, hai tứ giác $A' B' C D$ và $B C D' A'$ cũng là các hình bình hành nên $I$ là trung điểm của $B' D$ và $B D'$.\\
+			Vậy các đường chéo của hình hộp cắt nhau tại trung điểm mỗi đường.
+		}
+		{
+			\begin{tikzpicture}[scale=.7,font=\footnotesize, line join=round, line cap=round, >=stealth]
+				\coordinate (A) at (0,0);
+				\coordinate (B) at (-0.7,-1.2);
+				\coordinate (D) at (5,0);
+				\coordinate (C) at ($(B)+(D)-(A)$);
+				\coordinate (A') at ($(A)+(-1,4)$);
+				\coordinate (B') at ($(A')+(B)-(A)$);
+				\coordinate (C') at ($(A')+(C)-(A)$);
+				\coordinate (D') at ($(A')+(D)-(A)$);
+				\coordinate (I) at ($(A)!0.5!(C')$);
+				\draw (A')--(B')--(C')--(D')--(A')
+				(B)--(C)--(D)--(D')
+				(B)--(B')
+				(C)--(C')--(A');
+				\draw[dashed] (D')--(B)--(A)--(D)--(B')
+				(C')--(A)--(A')--(C)--(A);
+				\foreach \x/\g in {A/180,B/-120,C/-60,D/0,A'/120,B'/180,C'/-10,D'/80,I/90} \fill[black](\x) circle (1pt) ($(\x)+(\g:4mm)$) node{$\x$};
+			\end{tikzpicture}
+		}
+	}
+\end{bt}
+
+% nguồn: 2026-11-15_11_1H4_TL2_Song_song (nhập 15/11/2026)
+\begin{bt}%[1H4N5-3]%[ma:efe6d938]
+% nguon: Archive/2024/SP-K10-K11-LyVanHoang_TVN-023/K11-C4-HHKG-QHSS/data/Bai5-Dang2-Hinhhop.tex #2269
+[KNTT, mức độ 1]%[Bài giảng Toán 11 - Quan Ón]
+	\immini
+	{
+		Cho hình hộp $ABCD.A'B'C'D'$ (hình vẽ bên). Chứng minh rằng các đường chéo $AC'$, $BD'$, $CA'$ và $DB'$ của hình hộp đồng quy.
+	}
+	{
+		\begin{tikzpicture}[>=stealth,line join=round,line cap=round,font=\footnotesize,scale=1]
+			\path 
+			(0,0) coordinate (A)
+			(3.4,0) coordinate (B)
+			(-1.2,-1) coordinate (D)
+			($(B)+(D)-(A)$) coordinate (C)
+			(-.3,-2.6) coordinate (n)
+			($(A)+(n)$) coordinate (A')
+			($(B)+(n)$) coordinate (B')
+			($(C)+(n)$) coordinate (C')
+			($(D)+(n)$) coordinate (D')
+			($(A)!0.5!(C')$) coordinate (I)
+			;
+			\draw 
+			(A)--(B)--(C)--(D)--cycle
+			(D)--(D') (C)--(C')(B)--(B')--(C')--(D') (D)--(C')
+			;
+			\draw[dashed]
+			(A)--(A')--(D') (A)--(C') (D)--(B')--(A') (A)--(B')
+			;
+			\foreach \p/\g in {A/90, B/90, C/-20, D/180, A'/150, B'/0, C'/-90, D'/-90,I/-135}
+			\draw[fill=black] (\p) circle (1pt) node[shift=(\g:3mm)] {$\p$};
+		\end{tikzpicture}
+	}
+	\loigiai
+	{
+		Đáy $ABCD$ của hình hộp là hình bình hành nên $AD \parallel BC$ và $AD=BC$. Mặt bên $BCC'B'$ của hình hộp là hình bình hành nên $BC \parallel B'C'$ và $BC=B'C'$. Vậy $AD\parallel B'C'$ và $AD=B'C'$, suy ra $ADC'B'$ là hình bình hành. Từ đó $AC'$ và $DB'$ cắt nhau tại trung điểm $I$ của mỗi đường.\\
+		Tương tự $AC'$ và $BD'$, $AC'$ và $CA'$ cũng cắt nhau tại trung điểm $I$ của mỗi đường.\\
+		Vậy bốn đường chéo của hình hộp đồng quy. 
+	}
+\end{bt}
+
+% nguồn: 2026-11-15_11_1H4_TL2_Song_song (nhập 15/11/2026)
+\begin{bt}%[1H4H5-3]%[ma:4b1e0db4]
+% nguon: Archive/2024/SP-K10-K11-LyVanHoang_TVN-023/K11-C4-HHKG-QHSS/data/Bai5-Dang2-Hinhhop.tex #2270
+[CD, mức độ 2]%[Bài giảng Toán 11 - Quan Ón]
+	Cho hình hộp $ABCD.A'B'C'D'$. Chứng minh rằng bốn mặt phẳng $(ABC'D')$, $(BCD'A')$, $(CDA'B')$, $(DAB'C')$ cùng đi qua một điểm.
+	\loigiai{
+		\immini{
+			Đáy $ABCD$ của hình hộp là hình bình hành nên $AD \parallel BC$ và $AD=BC$. Mặt bên $BCC'B'$ của hình hộp là hình bình hành nên $BC \parallel B'C'$ và $BC=B'C'$. Vậy $AD\parallel B'C'$ và $AD=B'C'$, suy ra $ADC'B'$ là hình bình hành. Từ đó $AC'$ và $DB'$ cắt nhau tại trung điểm của mỗi đường.\\
+			Tương tự $AC'$ và $BD'$, $AC'$ và $CA'$ cũng cắt nhau tại trung điểm của mỗi đường.\\
+			Do đó bốn đường chéo $AC'$, $BD'$, $CA'$ và $DB'$ của hình hộp cùng đi qua trung điểm $I$ của mỗi đường.\\
+			Mặt khác, ta có $I = AC' \cap DB'$ mà $AC'$, $DB' \subset (DAB'C')$ nên $I \in (DAB'C')$.\\
+			Tương tự, điểm $I$ cũng nằm trong ba mặt phẳng còn lại là $(ABC'D')$, $(BCD'A')$. $(CDA'B')$.\\
+			Vậy $(ABC'D')$, $(BCD'A')$. $(CDA'B')$, $(DAB'C')$ cùng đi qua một điểm.
+		}{
+			\begin{tikzpicture}[>=stealth,line join=round,line cap=round,font=\footnotesize,scale=1]
+				\path 
+				(0,0) coordinate (A)
+				(3.4,0) coordinate (B)
+				(-1.2,-1) coordinate (D)
+				($(B)+(D)-(A)$) coordinate (C)
+				(-.3,-2.6) coordinate (n)
+				($(A)+(n)$) coordinate (A')
+				($(B)+(n)$) coordinate (B')
+				($(C)+(n)$) coordinate (C')
+				($(D)+(n)$) coordinate (D')
+				($(A)!0.5!(C')$) coordinate (I)
+				;
+				\draw 
+				(A)--(B)--(C)--(D)--cycle
+				(D)--(D') (C)--(C')(B)--(B')--(C')--(D') (D)--(C')
+				;
+				\draw[dashed]
+				(A)--(A')--(D') (A)--(C') (D)--(B')--(A') (A)--(B')
+				;
+				\foreach \p/\g in {A/90, B/90, C/-20, D/180, A'/150, B'/0, C'/-90, D'/-90,I/-135}
+				\draw[fill=black] (\p) circle (1pt) node[shift=(\g:3mm)] {$\p$};
+			\end{tikzpicture}
+		}
+	}
+\end{bt}
+
+% nguồn: 2026-11-15_11_1H4_TL2_Song_song (nhập 15/11/2026)
+\begin{bt}%[1H4H5-3]%[ma:5976ebe2]
+% nguon: Archive/2024/SP-K10-K11-LyVanHoang_TVN-023/K11-C4-HHKG-QHSS/data/Bai5-Dang2-Hinhhop.tex #2271
+[KNTT, mức độ 2]%[TeX hoá SGK KNTT Toán 11, TVN-184]
+	\immini
+	{
+		Cho hình hộp $ABCD.A'B'C'D'$. Một mặt phẳng song song với mặt bên $(ABB'A')$ của hình hộp và cắt các cạnh $AD$, $BC$, $A'D'$, $B'C'$ lần lượt tại $M$, $N$, $M'$, $N'$. Chứng minh rằng $ABNM.A'B'N'M'$ là hình hộp.
+	}
+	{
+		\begin{tikzpicture}[>=stealth,line join=round,line cap=round,font=\footnotesize,scale=.81]
+			\path 
+			(0,0) coordinate (A)
+			(1.75,1) coordinate (B)
+			(4,0) coordinate (D)
+			($(B)+(D)-(A)$) coordinate (C)
+			(-.71,-4) coordinate (v)
+			($(A)+(v)$) coordinate (A')
+			($(B)+(v)$) coordinate (B')
+			($(C)+(v)$) coordinate (C')
+			($(D)+(v)$) coordinate (D')
+			($(A)!.8!(D)$) coordinate (M)
+			($(B)!.8!(C)$) coordinate (N)
+			($(A')!.8!(D')$) coordinate (M')
+			($(B')!.8!(C')$) coordinate (N')
+			;
+			\begin{scope}
+				\fill[cyan!10] (M)--(N)--(N')--(M')--cycle;
+			\end{scope}
+			\draw 
+			(A)--(B)--(C)--(D)--(A)--(A')--(D')--(C')--(C) (D)--(D')
+			(N)--(M)--(M')
+			;
+			\draw[dashed]
+			(A')--(B')--(B) (B')--(C')
+			(M')--(N')--(N)
+			;
+			\foreach \p/\g in {A/180, B/90, C/90, D/-20, A'/-90, D'/-90, C'/0, B'/120, M/120, N/90, N'/135, M'/-90}
+			\draw[fill=black] (\p) circle (1pt) node[shift=(\g:3mm)] {$\p$};
+		\end{tikzpicture}
+	}
+	\loigiai
+	{
+		Vì mặt phẳng $(ABCD)$ cắt hai mặt phẳng song song $(ABB'A')$, $(MNN'M')$ theo hai giao tuyến $AB$ và $MN$ $\Rightarrow AB \parallel MN$.\\
+		Mà $AM \parallel BN$ nên $ABNM$ là hình hình hành.\\
+		Tương tự ta cũng có các tứ giác $A'B'N'M'$, $AA'M'N'$, $BB'N'M'$, $MNN'M'$ là các hình bình hành.\\
+		Vậy $ABNM.A'B'N'M'$ là hình hộp.
+	}
+\end{bt}
+
+% nguồn: 2026-11-15_11_1H4_TL2_Song_song (nhập 15/11/2026)
+\begin{bt}%[1H4N5-3]%[ma:425bd914]
+% nguon: Archive/2024/SP-K10-K11-LyVanHoang_TVN-023/K11-C4-HHKG-QHSS/data/Bai5-Dang2-Hinhhop.tex #2272
+[CD, mức độ 3]%[Bài giảng Toán 11 - Quan Ón]
+	Cho hình hộp $ABCD.A'B'C'D'$.
+	\begin{enumerate}
+		\item Chứng minh rằng $\left(ACB'\right)\parallel\left(A'C'D\right)$.
+		\item Gọi $G$, $G'$ lần lượt là giao điểm của $BD'$ với các mặt phẳng $\left(ACB'\right)$ và $\left(A'C'D\right)$. Chứng minh rằng $G$, $G'$ lần lượt là trọng tâm của hai tam giác $ACB'$ và $A'C'D$.
+		\item Chứng minh rằng $B G=G G'=D' G'$.
+	\end{enumerate}
+	\loigiai{
+		\begin{center}
+			\begin{tikzpicture}[scale=1,font=\footnotesize, line join=round, line cap=round, >=stealth]
+				\coordinate (A) at (0,0);
+				\coordinate (B) at (-1.7,-1.3);
+				\coordinate (D) at (4,0);
+				\coordinate (C) at ($(D)+(B)-(A)$);
+				\coordinate (A') at ($(A)+(0.7,5)$);
+				\coordinate (B') at ($(A')+(B)-(A)$);
+				\coordinate (C') at ($(A')+(C)-(A)$);
+				\coordinate (D') at ($(A')+(D)-(A)$);
+				\coordinate (O) at ($(A)!0.5!(C)$);
+				\coordinate (O') at ($(A')!0.5!(C')$);
+				\coordinate (I) at ($(D')!0.5!(B)$);
+				\coordinate (G) at ($(B)!1/3!(D')$);
+				\coordinate (G') at ($(B)!2/3!(D')$);
+				\draw (B')--(A')--(D')--(C')--(B')--(B)--(C)--(D)--(D')--(B')--(C)--(C')--(A')
+				(B')--(D')
+				(C')--(D);
+				\draw[dashed] (B)--(D)--(B')--(A)--(C)
+				(B)--(D')
+				(B')--(O)
+				(D)--(O')
+				(B)--(A)--(D)
+				(A)--(A')--(D);
+				\foreach \x/\g in {A/-90,B/-120,C/-60,D/0,A'/90,B'/180,C'/90,D'/60,G/-95,G'/85,I/90,O/-90,O'/90} \fill[black](\x) circle (1pt) ($(\x)+(\g:4mm)$) node{$\x$};
+			\end{tikzpicture}
+		\end{center}
+		\begin{enumerate}
+			\item Ta có $ACC'A'$ là hình bình hành nên $AC\parallel A'C'$.\\
+			Mà $A'C'\subset (A'C'D)\Rightarrow AC\parallel (A'C'D)$.\hfill (1)\\
+			Lại có $A'B'CD$ là hình bình hành nên $B'C\parallel A'D$.\\
+			Mà $A'D\subset (A'C'D)\Rightarrow B'C\parallel (A'C'D)$.\hfill (2)\\
+			Mặt khác $AC$, $B'C\subset (ACB')$ và $AC$, $B'C$ cắt nhau.\hfill (3)\\
+			Từ (1), (2) và (3) suy ra $\left(A C B'\right) \parallel\left(A' C' D\right)$.
+			\item Gọi $O$ và $O'$ lần lượt là tâm của $ABCD$ và $A'B'C'D'$.\\
+			Trong $(BDD'B')$ gọi $G$ là giao điểm của $BD'$ với $B'O$ và $DO'$.\\
+			Do $B'O\subset (ACB')$, $DO'\subset (A'C'D)$ nên điểm $G$ và $G'$ xác định như trên chính là giao điểm của $B D'$ với các mặt phẳng $\left(A C B'\right)$ và $\left(A' C' D\right)$.\\
+			Gọi $I$ là giao điểm của $BD'$ và $B'D$. Vì $BDD'B'$ là hình bình hành nên $I$ là trung điểm của $BD'$ và $B'D$.\\
+			Xét $\triangle BDB'$ có $B'O$ và $BI$ là trung tuyến nên $G$ là trọng tâm $\triangle BDB'$. Suy ra $B'G=\dfrac{2}{3}BO$.\\
+			Xét $\triangle ACB'$ có $B'O$ là trung tuyến và $B'G=\dfrac{2}{3}BO$ suy ra $G$ là trọng tâm $\triangle ACB'$.\\
+			Một cách tương tự ta cũng chứng minh được $G$ là trọng tâm $\triangle BDD'$ và từ đó suy ra $G$ là trọng tâm $\triangle A'C'D$.
+			\item Xét $\triangle BDG'$ có $O$ là trung điểm $BD$ và $OG\parallel DG'$ nên $G$ là trung điểm $BG'$.\hfill (4)\\
+			Xét $\triangle B'D'G$ có $O'$ là trung điểm $B'D'$ và $O'G'\parallel B'G$ nên $G'$ là trung điểm $D'G$.\hfill (5)\\
+			Từ (4) và (5) suy ra $BG=GG'=D'G'$.
+		\end{enumerate}
+	}
+\end{bt}
+
+% nguồn: 2026-11-15_11_1H4_TL2_Song_song (nhập 15/11/2026)
+\begin{bt}%[1H4N5-3]%[ma:ac95478e]
+% nguon: Archive/2024/SP-K10-K11-LyVanHoang_TVN-023/K11-C4-HHKG-QHSS/data/Bai5-Dang2-Hinhhop.tex #2273
+[CD, mức độ 3]%[Bài giảng Toán 11 - Quan Ón]
+	Cho hình hộp $ABCD.A'B'C'D'$. Gọi $M$, $N$, $P$, $Q$ lần lượt là trung điểm của các cạnh $B C$, $A A'$, $C'D'$, $AD'$. Chứng minh rằng
+	\begin{enumerate}
+		\item $N Q \parallel A' D'$ và $N Q=\dfrac{1}{2} A' D'$;
+		\item Tứ giác $MNQC$ là hình bình hành;
+		\item $MN \parallel\left(ACD'\right)$;
+		\item $(MNP) \parallel\left(ACD'\right)$.
+	\end{enumerate}
+	\loigiai{
+		\begin{center}
+			\begin{tikzpicture}[scale=1,font=\footnotesize, line join=round, line cap=round, >=stealth]
+				\coordinate (A) at (0,0);
+				\coordinate (B) at (-1.7,-1.3);
+				\coordinate (D) at (4,0);
+				\coordinate (C) at ($(D)+(B)-(A)$);
+				\coordinate (A') at ($(A)+(0.7,5)$);
+				\coordinate (B') at ($(A')+(B)-(A)$);
+				\coordinate (C') at ($(A')+(C)-(A)$);
+				\coordinate (D') at ($(A')+(D)-(A)$);
+				\coordinate (O) at ($(A)!0.5!(C)$);
+				\coordinate (M) at ($(B)!0.5!(C)$);
+				\coordinate (N) at ($(A')!0.5!(A)$);
+				\coordinate (P) at ($(C')!.5!(D')$);
+				\coordinate (Q) at ($(A)!.5!(D')$);
+				\draw (B')--(A')--(D')--(C')--(B')--(B)--(C)--(D)--(D')--(C)--(C');
+				\draw[dashed] (A')--(A)--(C)
+				(B)--(A)--(D)
+				(A)--(D')
+				(N)--(M)--(P)--(N)--(Q)--(C)
+				(M)--(O)--(D');
+				\foreach \x/\g in {A/180,B/-120,C/-60,D/0,A'/90,B'/180,C'/90,D'/60,N/180,M/-90,P/100,O/-80,Q/100} \fill[black](\x) circle (1pt) ($(\x)+(\g:3mm)$) node{$\x$};
+			\end{tikzpicture}
+		\end{center}
+		\begin{enumerate}
+			\item Ta có $NQ$ là đường trung bình của $\triangle AA'D'$ nên $N Q \parallel A' D'$ và $N Q=\dfrac{1}{2} A' D'$.
+			\item Ta có $M$ là trung điểm $BC$, $BC$ lại song song và bằng $A'D'$ nên $MC$ song song và độ dài bằng nửa $A'D'$.\\
+			Kết hợp với kết quả câu (1) suy ra $MC$ song song và bằng $NQ$. Do đó $MNQC$ là hình bình hành.
+			\item Do $MNQC$ là hình bình hành nên $MN$ song song với $QC$. Mà $QC$ nằm trong $(ACD')$ nên $MN$ song song với $(ACD')$.
+			\item Trước tiên ta sẽ chứng minh $MOD'P$ là hình bình hành.
+			Thật vậy, gọi $O$ là trung điểm $AC$, suy ra $MO$ là đường trung bình của $\triangle ABC$. Do đó $OM$ song song và có độ dài bằng nửa đoạn $AB$.\hfill (1)\\
+			Lại có $P$ là trung điểm $C'D'$, mà $C'D'$ song song và bằng $AB$ nên $PD'$ song song và độ dài bằng nửa đoạn $AB$.\hfill (2)\\
+			Từ (1) và (2) suy ra $OM$ song song và bằng $PD'$, do đó $MOD'P$ là hình bình hành.\\
+			Từ đó ta có $MP$ song song với $D'O$, mà $D'O\subset (ACD')$ nên $MP$ song song với $(ACD')$.\\
+			Theo câu (2) ta đã chứng minh được $MN$ song song $(ACD')$.\\
+			Mặt khác $MP$, $MN$ nằm trong $(MNP)$ và $MP$, $MN$ cắt nhau.\\
+			Vậy $(MNP)$ song song với $(ACD')$.
+		\end{enumerate}
+	}
+\end{bt}
+
+% nguồn: 2026-11-15_11_1H4_TL2_Song_song (nhập 15/11/2026)
+\begin{bt}%[1H4N5-3]%[ma:563993d9]
+% nguon: Archive/2024/SP-K10-K11-LyVanHoang_TVN-023/K11-C4-HHKG-QHSS/data/Bai5-Dang2-Hinhhop.tex #2274
+[mức độ 3]%[Bài giảng Toán 11 - Quan Ón]
+	Cho hình hộp $ABCD.A'B'C'D'$. Gọi $G$ và $G'$ lần lượt là trọng tâm của hai tam giác $B'D'A$ và $BDC'$. Chứng minh $G$ và $G'$ chia đoạn $A'C$ thành ba phần bằng nhau.
+	\loigiai{
+		\begin{center}
+			\begin{tikzpicture}[scale=.6, font=\footnotesize, line join=round, line cap=round, >=stealth]
+				\path
+				(0,0) coordinate (A)
+				(-3,-4.2) coordinate (B)
+				(7.5,0) coordinate (D)
+				;
+				\coordinate (C) at ($(B)+(D)-(A)$);
+				\coordinate (A') at ($(A)+(1,6)$);
+				\coordinate (B') at ($(A')+(B)-(A)$);
+				\coordinate (C') at ($(A')+(C)-(A)$);
+				\coordinate (D') at ($(A')+(D)-(A)$);
+				\coordinate (O) at ($(B)!.5!(D)$);
+				\coordinate (O') at ($(B')!.5!(D')$);
+				\coordinate (Q) at ($(B')!.5!(D)$);
+				\coordinate (G) at ($(A)!2/3!(O')$);
+				\coordinate (G') at ($(C')!2/3!(O)$);
+				
+				\draw (A')--(B') (B')--(C') (C')--(D') (D')--(A')--(C') (D)--(D') (B')--(D') (C)--(C') (B)--(B') (B)--(C) (C)--(D) (C')--(B) (C')--(D);
+				\draw[dashed] (C)--(A)--(A')--(C) (A)--(B) (A)--(D) (A)--(B') (C')--(A)--(D') (B)--(D);
+				\foreach \x/\g in{A/180, B/180, C/-60, O/-90, D/0, A'/185, B'/180, C'/0, O'/60, D'/0, Q/70, G/180, G'/180}
+				\fill[black](\x)circle(2pt)($(\x)+(\g:4mm)$)node{$\x$};
+				\draw[fill=red,opacity=.1](A)--(B')--(D')--(A);
+				\draw[fill=red,opacity=.1](B)--(C')--(D)--(B);
+			\end{tikzpicture}
+		\end{center}
+		Gọi $O$, $O'$ và $Q$ lần lượt là tâm các hình bình hành $ABCD$, $A'B'C'D'$ và $AA'C'C$.\\
+		Vì $G$ là trọng tâm tam giác $AB'D'$ $\Rightarrow A'Q$ đi qua $G$.\\
+		Vì $G'$ là trọng tâm tam giác $BDC'$ $\Rightarrow CQ$ đi qua $G'$.\\
+		Do đó $A'C$ qua $G$ và $G'$.\\
+		Lại có $\dfrac{A'G}{A'Q}=\dfrac{2}{3}\Rightarrow \dfrac{A'G}{A'C}=\dfrac{1}{3}\Rightarrow A'G=\dfrac{1}{3}A'C$;
+		$\dfrac{CG'}{CQ}=\dfrac{2}{3}\Rightarrow \dfrac{CG'}{A'C}=\dfrac{1}{3}\Rightarrow CG'=\dfrac{1}{3}A'C$.\\
+		Do đó $A'G=GG'=G'C=\dfrac{1}{3}A'C$.
+	}
+\end{bt}
+
+% nguồn: 2026-11-15_11_1H4_TL2_Song_song (nhập 15/11/2026)
+\begin{bt}%[1H4V5-3]%[ma:36a0061a]
+% nguon: Archive/SP_KhoLatex/ID6_old/1-CK1-OT-De-15.tex #3647
+%[Dự án đề cuối kỳ 1,2023-2024]%[Lê Hồng Phi]
+Cho hình hộp $ABCD.A'B'C'D'$ có tất cả các cạnh bằng $a$. Gọi $E$, $F$ lần lượt là trung điểm của $AB$ và $DD'$. Gọi $(P)$ là mặt phẳng đi qua $E$ và song song với các đường thẳng $AC'$ và $AF$. Giả sử $(P)$ cắt $CC'$ tại $I$, tính tỉ số $\dfrac{CI}{CC'}$.
+\loigiai
+{\immini{Dựng $H$ sao cho tứ giác $AEHC'$ là hình bình hành. Ta có $EH\subset \left(ABC'D'\right)$, $EH\parallel AC'$.\\
+Ta có $\heva{& E \in (P)\cap \left(ABC'D'\right)\\ &AC'\subset \left(ABC'D'\right)\\ &AC' \parallel (P)} \Rightarrow (P)\cap \left(ABC'D'\right)=EH$.\\
+Tương tự gọi $N$, $K$ lần lượt là trung điểm của $CC'$ và $FN$ ta có $(P)\cap (ABNF)=EK$.\\
+Gọi $I=HK\cap CC' \Rightarrow \mathrm{I}=(P)\cap CC'$.
+}{\begin{tikzpicture}[scale=1, font=\footnotesize, line join=round, line cap=round,>=stealth]
+\path (-0.7,3) coordinate (h) (0,0)coordinate (B)++(3.2,0) coordinate (A)++(1,1.2) coordinate (D) ($(B)+(D)-(A)$) coordinate (C);
+\foreach \p in {A,B,C,D}\path ($(\p)+(h)$) coordinate (\p');
+\path (barycentric cs:A=1,B=1) coordinate (E) (barycentric cs:D=1,D'=1) coordinate (F) ($(E)+(C')-(A)$) coordinate (H) (intersection of E--H and B'--C') coordinate (h) (barycentric cs:C=1,C'=1) coordinate (N) (barycentric cs:N=1,F=1) coordinate (K) (intersection of C--C' and H--K) coordinate (I);
+\draw (C')--(B')--(B)--(A)--(D)--(D')--cycle (B')--(A')--(D') (A)--(A') (h)--(H)--(C');
+\draw[dashed] (B)--(C)--(D) (A)--(C')--(C) (A)--(F)--(C') (H)--(K)--(E)--(h) (F)--(N);
+\foreach \p/\g in {C/45,B/240,A/-60,D/0,C'/90,B'/180,A'/150,D'/45,E/-90,F/30,H/120,N/210,K/-60,I/210} \fill[black] (\p) circle(1pt)+(\g:0.3) node{$\p$};
+\end{tikzpicture}}\noindent
+Ta có $\heva{& C'H \parallel AE\\ &C'H=AE} \Rightarrow \heva{& C'H \parallel KN\\ &C'H=KN} \Rightarrow \triangle INK=\triangle IC'H$.\\
+Khi đó $IC'=IN=\dfrac{1}{2}NC'=\dfrac{1}{4}CC'\Rightarrow CI=\dfrac{3}{4}CC' \Rightarrow \dfrac{CI}{CC'}=\dfrac{3}{4}$.
+}
+\end{bt}
+
+% nguồn: 2026-11-15_11_1C1_TL2_Bien_hinh_va_hinh_khong_gian (nhập 15/11/2026)
+\begin{bt}%[1H4C5-3]%[ma:a5ef7e0e]
+% nguon: Archive/SP_KhoLatex/ID6_old/4.0.1.tex #2857
+
+		Cho hình hộp chữ nhật $ABCD\cdot A'B'C'D'$. Xác định các điểm $M,N$ tương ứng trên các đoạn $AC'$, $B'D'$ sao cho $MN$ song song với $BA'$ và tính tỉ số $\dfrac{MA}{MC'}$.
+\loigiai{
+	\begin{center}
+	\begin{tikzpicture}[>=stealth,line join=round,line cap=round,font=\footnotesize,scale=1]
+		\coordinate (A') at (0,0);
+		\coordinate (D') at (5,0);
+		\coordinate (B') at (1,-2);
+		\coordinate (C') at ($(B')+(D')-(A')$);
+		\coordinate (A) at ($(A')+(2,3)$);
+		\coordinate (B) at ($(B')+(2,3)$);
+		\coordinate (C) at ($(C')+(2,3)$);
+		\coordinate (D) at ($(D')+(2,3)$);
+		\coordinate (K) at ($(B')!2!(A')$);
+		\coordinate (N) at (intersection of C'--K and B'--D');
+		\coordinate (M) at ($(C')!1/3!(A)$);
+		\draw (A')--(B')--(C') (A')--(A)--(D)--(C)--(B)--(A) (B)--(B') (C)--(C') (A')--(K)--(A) ;
+		\draw[dashed] (C')--(D')--(A') (D)--(D')--(B') (A)--(C')--(K) (N)--(M);
+		\foreach \i/\g in {A'/180,B'/180,C'/0,D'/0,A/90,B/180,C/0,D/0,K/180,N/-90,M/-90}{\draw[fill=black](\i) circle (1.5pt) ($(\i)+(\g:3mm)$) node[scale=1]{$\i$};}
+	\end{tikzpicture}
+\end{center}
+		Xét phép chiếu song song lên mặt phẳng $\left(A'B'C'D'\right)$ theo phương $BA'$, ta có \\
+		$N$ là hình chiếu của $M$ hay $N$ là giao điểm của $B'D'$ với hình chiếu của $AC'$ qua phép chiếu này.\\
+		Do đó ta xác định được $M,N$ như sau:
+		\begin{itemize}
+			\item Trên tia $B'A'$, lấy điểm $K$ sao cho $A'K=B'A'$ thì $ABA'K$ là hình bình hành nên $AK\parallel BA'$, suy ra $K$ là hình chiếu của $A$ qua phép chiếu song song.
+			\item Gọi $N=B'D'\parallel KC'$. Đường thẳng qua $N$ và song song với $AK$ cắt $AC'$ tại $M$.
+		\end{itemize}
+		Từ đó ta xác định được điểm $M,N$ cần tìm.\\
+		Theo định lý Ta-let, ta có $\dfrac{MA}{MC'}=\dfrac{NK}{NC'}=\dfrac{KB'}{C'D'}=2$.}
+\end{bt}
+
+% nguồn: 2026-11-15_11_1C1_TL2_Bien_hinh_va_hinh_khong_gian (nhập 15/11/2026)
+\begin{bt}%[1H4C5-3]%[ma:171675e3]
+% nguon: Archive/SP_KhoLatex/ID6_old/4.0.1.tex #2858
+
+		Cho hình hộp chữ nhật $ABCD\cdot A'B'C'D'$. Gọi $M,N$ lần lượt là trung điểm $CD$ và $DD'$. Xác định đường thẳng $d$ đi qua $M$ đồng thời cắt $BN$ và $AB'$.
+	\loigiai{
+\begin{center}
+	\begin{tikzpicture}[>=stealth,line join=round,line cap=round,font=\footnotesize,scale=1]
+		\coordinate (A) at (0,0);
+		\coordinate (D) at (6,0);
+		\coordinate (B) at (-2,-2);
+		\coordinate (C) at ($(B)+(D)-(A)$);
+		\coordinate (A') at ($(A)+(-1,5)$);	
+		\coordinate (B') at ($(B)+(-1,5)$);	
+		\coordinate (C') at ($(C)+(-1,5)$);	
+		\coordinate (D') at ($(D)+(-1,5)$);	
+		\coordinate (M) at ($(C)!.5!(D)$);
+		\coordinate (N) at ($(D')!.5!(D)$);
+		\coordinate (J) at ($(A)!.5!(B')$);
+		\coordinate (I') at ($(A)!.5!(M)$);
+		\coordinate (I) at ($(J)!.5!(M)$);
+		\coordinate (N') at (intersection of B--I' and C--D);
+		\draw(B')--(C')--(D')--(A')--(B')--(B)--(C)--(D)--(D') (C)--(C') (N)--(N')--(D);
+		\draw[dashed] (A')--(A)--(D) (A)--(B)--(N) (B')--(A)--(M)--(J) (I)--(I') (B)--(N') ;
+		\foreach \i/\g in {A/180,B/180,C/-90,D/0,A'/90,B'/180,C'/0,D'/0,M/0,N/0,J/80,I'/-90,I/90,N'/0}{\draw[fill=black](\i) circle (1.5pt) ($(\i)+(\g:3mm)$) node[scale=1]{$\i$};}
+	\end{tikzpicture}
+\end{center}
+		Giả sử ta đã dựng được đường thẳng $d$ cắt $BN$ và $AB'$. Gọi $I$, $J$ lần lượt là giao điểm của $d$ với $BN$ và $AB'$.\\
+		Xét phép chiếu song song theo phương chiếu $B'A$ lên mặt phẳng $\left(ABCD\right)$. Khi đó, ta có hình chiếu của các điểm $J$, $I$, $M$ lần lượt là $A$, $I'$, $M$.\\
+		Do $J$, $I$, $M$ thẳng hàng nên $A$, $I'$, $M$ cũng thẳng hàng.\\
+		Gọi $N'$ là hình chiếu của $N$ thì $BN'$ là hình chiếu của $BN$.\\
+		Vì $I\in BN\Rightarrow I'\in BN'\Rightarrow I'=AM\cap BN'$\\
+		Từ những phân tích trên, ta suy ra cách dựng đường thẳng $d$ như sau :
+		\begin{itemize}
+			\item Lấy $I'=BN'\cap AM$.
+			\item Trong $\left(BNN'\right)$ dựng $II'\parallel NN'$ cắt $BN$ tại $I$.
+			\item Vẽ đường thẳng $MI$, đó cũng là đường thẳng $d$ cần tìm.
+		\end{itemize}}
+\end{bt}

@@ -779,3 +779,79 @@
 		\end{itemchoice}
 	 }
 \end{ex}
+
+% nguồn: 2026-11-15_11_1D3_TL2_Gioi_han (nhập 15/11/2026)
+\begin{bt}%[1D3N3-2]%[ma:c646c609]
+% nguon: Archive/2024/TOAN_11_XE/TOAN_11_XE/data4/11C5/KNTT-5.3.tex #714
+%[Phạm Hoàng Điệp - Dự Án tex  11 mới]
+	Trong các hàm số có đồ thị ở \textit{Hình 15a, 15b, 15c} hàm số nào liên tục trên tập xác định của hàm số đó? Giải thích.
+	\begin{longtable}{m{5cm}m{5cm}m{5cm}}
+		\begin{tikzpicture}[>=stealth,x=1cm,y=1cm,scale=0.6,font=\tiny]
+			\def\a{1}
+			\def\b{-2}
+			\def\c{0}
+			\draw[color=gray,dash pattern=on 1pt off 1pt,xstep=1.0cm,ystep=1.0cm] (-2,-2) grid (5,5);
+			\draw[->] (-2,0) -- (5,0) node[below] {\scriptsize $x$};
+			\draw[->] (0,-2) -- (0,5) node[left] {\scriptsize $y$};
+			\draw (0,0)node[below left]{\scriptsize $O$};
+			\fill (0,1) node[right]{$1$};
+			\fill (0,2) node[left]{$2$};
+			\fill (0,3) node[left]{$3$};
+			\fill (1,0) node[below]{$1$};
+			\fill (2,0) node[below]{$2$};
+			\fill (3,0) node[below]{$3$};
+			\pgfmathsetmacro\xdinh{-(\b)/2*(\a)}
+			\pgfmathsetmacro\ydinh{(4*(\a)*(\c)-(\b)^2)/(4*(\a))}
+			\fill[dashed] (\xdinh,\ydinh)circle(2pt) edge (\xdinh,0) edge (0,\ydinh);
+			\clip (-2,-2)rectangle(5,5);
+			\draw[red,thick,samples=150,smooth,domain=-5:5] plot(\x,{\a*(\x)^2+(\b)*\x+(\c)});
+		\end{tikzpicture}	
+		&
+		\begin{tikzpicture}[>=stealth,x=1cm,y=1cm,scale=0.6,font=\tiny]
+			\def\a{1}
+			\def\b{0}
+			\def\c{1}
+			\def\d{-1}
+			\draw[color=gray,dash pattern=on 1pt off 1pt,xstep=1.0cm,ystep=1.0cm] (-3,-3) grid (5,4);
+			\draw[->] (-3,0) -- (5,0) node[below] {\scriptsize $x$};
+			\draw[->] (0,-3) -- (0,4) node[left] {\scriptsize $y$};
+			\draw (0,0)node[below left]{\scriptsize $O$};
+			\draw[dashed,blue] (1,-3)--(1,4) (-3,1)--(5,1);
+			\fill (-1,0) node[below left]{$-1$};
+			\fill (1,0) node[above right]{$1$};
+			\fill (0,-1) node[below left]{$-1$};
+			\fill (0,1) node[above left]{$1$};
+			\clip (-3,-3)rectangle(5,4);
+			\pgfmathsetmacro{\can}{-(\d)/(\c)}
+			\draw[thick,samples=150,smooth,domain=-5:{\can-.1},red] plot(\x,{(\a*\x+(\b))/(\c*\x+(\d))});
+			\draw[thick,samples=150,smooth,domain={\can+.1}:5,red] plot(\x,{(\a*\x+(\b))/(\c*\x+(\d))});
+		\end{tikzpicture}
+		&
+		\begin{tikzpicture}[>=stealth,x=1cm,y=1cm,scale=0.6,font=\tiny]
+			\def\a{1}
+			\def\b{1}
+			\draw[color=gray,dash pattern=on 1pt off 1pt,xstep=1.0cm,ystep=1.0cm] (-3,-2) grid (4,5);
+			\draw[->] (-3,0) -- (4,0) node[below] {\scriptsize $x$};
+			\draw[->] (0,-2) -- (0,5) node[left] {\scriptsize $y$};
+			\fill (-1,0) node[below]{$-1$};
+			\fill (1,0) node[above]{$1$};
+			\fill (0,-1) node[right]{$-1$};
+			\fill (0,1) node[left]{$1$};
+			\draw (0,0)node[below right]{\scriptsize $O$};
+			\draw[red,->] (-2,4)--(-1,2);
+			\clip (-1,0)rectangle(4,5);
+			\draw[thick,samples=150,smooth,domain=-5:5,red] plot(\x,{\a*\x+(\b)});
+		\end{tikzpicture}
+		\\
+		a) Đồ thị hàm số \break $ f(x)=x^{2}-2x $
+		&
+		b) Đồ thị hàm số \break $ g(x)=\dfrac{x}{x-1} $
+		&
+		c) Đồ thị hàm số \break$ h(x)=\heva{&-2x \text{ nếu } x<-1\\&x+1 \text{ nếu }x\geq 1} $
+		\\
+		&\hspace*{1.5cm}Hình 15& \\
+	\end{longtable}
+	\loigiai{
+		Hàm số liên tục trên tập xác định là $ f(x)=x^{2}-2x $. Vì đồ thị hàm số ở hình \textit{Hình 15a} là một đường liền nét trên mặt phẳng tọa độ. 
+	}
+\end{bt}

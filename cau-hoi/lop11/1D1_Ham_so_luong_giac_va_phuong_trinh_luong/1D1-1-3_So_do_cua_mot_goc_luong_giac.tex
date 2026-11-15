@@ -2870,3 +2870,218 @@ Vì vậy công thức tổng quát biểu diễn cho các góc lượng giác �
 		\end{itemize}
 	}
 \end{bt}
+
+% nguồn: 2026-11-15_11_1D1_TL2_Luong_giac (nhập 15/11/2026)
+\begin{bt}%[1D1N1-3]%[ma:3b8927da]
+% nguon: Archive/2024/TOAN_11_XE/TOAN_11_XE/data4/11C1/KNTT-1.1.tex #1180
+%[Lê Minh Thiện Anh, dự án 11SGK-KNTT-2022]
+	\immini{Cho góc hình học $uOv$ có số đo $60^\circ$. Xác định số đo của góc lượng giác ($Ou$, $Ov$) và ($Ov$, $Ou$).}
+	{\begin{tikzpicture}[scale=0.77, font=\footnotesize, line join=round, line cap=round, >=stealth]		
+		\draw (0,0) -- (4,0)node[below] {$u$};
+		\draw[red] (0,0) -- (60:4)node[below right] {$v$};
+		\draw (0:.6) arc (0:60:.6);
+		\draw[-stealth] (2.75,1) arc (0:60:1);
+		\path (30:3.5) node[below=-2pt]{$+$};
+		\path (30:1) node{$60^\circ$};
+		\path (0:0) node[below left]{$O$};
+	\end{tikzpicture}}
+	\loigiai{
+		Ta có:
+		\begin{itemize}
+		\item Các góc lượng giác tia đầu $Ou$, tia cuối $Ov$ có số đo là sđ$(Ou,Ov)=60^\circ+k360^\circ$ $(k\in\mathbb{Z})$.
+		\item Các góc lượng giác tia đầu $Ov$, tia cuối $Ou$ có số đo là sđ$(Ov,Ou)=-60^\circ+k360^\circ$ $(k\in\mathbb{Z})$.
+		\end{itemize}
+}
+\end{bt}
+
+% nguồn: 2026-11-15_11_1D1_TL2_Luong_giac (nhập 15/11/2026)
+\begin{bt}%[1D1N1-3]%[ma:e3a42cbb]
+% nguon: Archive/2024/TOAN_11_XE/TOAN_11_XE/data4/11C1/KNTT-1.1.tex #1181
+ %[Lê Minh Thiện Anh, dự án 11SGK-KNTT-2022]
+	Cho một góc lượng giác $(Ox, Ou)$ có số đo $-270^{\circ}$ và một góc lượng giác $(Ox, Ov)$ có số đo $135^{\circ}$. Tính số đo của các góc lượng giác $(Ou, Ov)$.
+\loigiai{
+Số đo của các góc lượng giác tia đầu $Ou$, tia cuối $Ov$ là
+$$
+\begin{aligned}
+\text{sđ}(Ou, Ov) & =\text{sđ}(Ox, Ov)-\text{sđ}(Ox, Ou)+k 360^{\circ} \\
+& =135^{\circ}-\left(-270^{\circ}\right)+k 360^{\circ}=405^{\circ}+k 360^{\circ} \\
+& =45^{\circ}+(k+1) 360^{\circ}=45^{\circ}+m 360^{\circ}(m=k+1, m \in \mathbb{Z}).
+\end{aligned}
+$$
+Vậy các góc lượng giác $(Ou, Ov)$ có số đo là $45^{\circ}+m 360^{\circ}(m \in \mathbb{Z})$.
+}
+\end{bt}
+
+% nguồn: 2026-11-15_11_1D1_TL2_Luong_giac (nhập 15/11/2026)
+\begin{bt}%[1D1N1-3]%[ma:d116a620]
+% nguon: Archive/2024/TOAN_11_XE/TOAN_11_XE/data4/11C1/KNTT-1.1.tex #1194
+
+	Xác định số đo của các góc lượng giác $(Oa,Ob)$ trong hình sau
+	\begin{listEX}[4]
+		\item 
+		\begin{tikzpicture}[>=stealth,line join=round,line cap=round,font=\footnotesize,scale=0.8]
+			\def\r{2.5}
+			\path 
+			(0,0) coordinate (O)
+			(\r,0) coordinate (a)
+			(0,\r) coordinate (b)
+			;
+			\pic[draw,angle radius=2mm,angle eccentricity=1.5] {right angle = a--O--b};
+			\draw (a)--(O)--(b);
+			\draw[->] (0:0.5*\r) arc (0:90:0.5*\r);
+			\fill[black] (O) circle (1pt);
+			\foreach \l/\g in {a/-90,b/180,O/-135}
+			\draw[fill=black] (\l)+(\g:.3) node{$\l$};
+		\end{tikzpicture}
+		\item 
+		\begin{tikzpicture}[>=stealth,line join=round,line cap=round,font=\footnotesize,scale=0.8]
+			\def\r{2.5}
+			\path 
+			(0,0) coordinate (O)
+			(\r,0) coordinate (a)
+			(0,\r) coordinate (b)
+			;
+			\pic[draw,angle radius=2mm,angle eccentricity=1.5] {right angle = a--O--b};
+			\draw (a)--(O)--(b);
+			\draw[->,domain=0:450,variable=\t,samples=200,>=latex]
+			plot ({0.6*(\t+2*450)*cos(\t)/(2*450)},
+			{0.6*(\t+ 2*450)*sin(\t)/(2*450)})
+			;
+			\fill[black] (O) circle (1pt);
+			\foreach \l/\g in {a/-90,b/180,O/-135}
+			\draw[fill=black] (\l) +(\g:.3) node{$\l$};
+		\end{tikzpicture}
+		\item 
+		\begin{tikzpicture}[>=stealth,line join=round,line cap=round,font=\footnotesize,scale=0.8]
+			\def\r{2.5}
+			\path 
+			(0,0) coordinate (O)
+			(\r,0) coordinate (a)
+			(0,\r) coordinate (b)
+			;
+			\pic[draw,angle radius=2mm,angle eccentricity=1.5] {right angle = a--O--b};
+			\draw (a)--(O)--(b);
+			\draw[->,domain=0:810,variable=\t,samples=200,>=latex]
+			plot ({0.6*(\t+2*810)*cos(\t)/(2*810)},
+			{0.6*(\t+ 2*810)*sin(\t)/(2*810)})
+			;
+			\fill[black] (O) circle (1pt);
+			\foreach \l/\g in {a/-90,b/180,O/-135}
+			\draw[fill=black] (\l) +(\g:.3) node{$\l$};
+		\end{tikzpicture}
+		\item 
+		\begin{tikzpicture}[>=stealth,line join=round,line cap=round,font=\footnotesize,scale=0.8]
+			\def\r{2.5}
+			\path 
+			(0,0) coordinate (O)
+			(\r,0) coordinate (a)
+			(0,\r) coordinate (b)
+			;
+			\pic[draw,angle radius=2mm,angle eccentricity=1.5] {right angle = a--O--b};
+			\draw (a)--(O)--(b);
+			\draw[->] (0:0.3*\r) arc (0:-270:0.3*\r);
+			\fill[black] (O) circle (1pt);
+			\foreach \l/\g in {a/-90,b/180,O/-135}
+			\draw[fill=black] (\l) +(\g:.3) node{$\l$};
+		\end{tikzpicture}
+	\end{listEX}
+	\loigiai{
+		\begin{listEX}[1]
+			\item Số đo của góc lượng giác $(Oa,Ob)$ trong hình vẽ là $90^\circ$.
+			\item Số đo của góc lượng giác $(Oa,Ob)$ trong hình vẽ là $90^\circ + 360^\circ = 450^\circ$.
+			\item Số đo của góc lượng giác $(Oa,Ob)$ trong hình vẽ là $90^\circ + 2\cdot 360^\circ = 810^\circ$.
+			\item Số đo của góc lượng giác $(Oa,Ob)$ trong hình vẽ là $\dfrac{3}{4}\cdot \left(-360^\circ\right)=-270^\circ$.
+		\end{listEX}
+	}
+\end{bt}
+
+% nguồn: 2026-11-15_11_1D1_TL2_Luong_giac (nhập 15/11/2026)
+\begin{bt}%[1D1N1-3]%[ma:798384e6]
+% nguon: Archive/2024/SP-K10-K11-LyVanHoang_TVN-023/11. C1-LuongGiac-lvhoang_TVN-023/dataC1K11/Bai1-Dang2.tex #1950
+%[TeX hóa CD 11]%[Nhật Thiện]
+	Cho góc lượng giác $(Ou,Ov)$ có số đo là $-\dfrac{11\pi}{4}$, góc lượng giác $(Ou,Ow)$ có số đo là $\dfrac{3\pi}{4}$. Tìm số đo của góc lượng giác $(Ov,Ow)$.
+	\loigiai{
+		Theo hệ thức Chasles, ta có
+		\begin{eqnarray*}
+			(Ov,Ow)&=&(Ou,Ow)-(Ou,Ov)+k2\pi\\
+			&=&\dfrac{3\pi}{4}+\dfrac{11\pi}{4}+k2\pi\\
+			&=&\dfrac{7\pi}{2}+k2\pi\ (k\in \mathbb{Z}).
+		\end{eqnarray*}
+	}
+\end{bt}
+
+% nguồn: 2026-11-15_11_1D1_TL2_Luong_giac (nhập 15/11/2026)
+\begin{bt}%[1D1N1-3]%[ma:e12bb037]
+% nguon: Archive/SP_KhoLatex/ID6_old/1K1-1-2.tex #3769
+
+	Cho $\widehat{MON} = 60^\circ$. Xác định số đo của các góc lượng giác được biểu diễn trong hình vẽ và viết công thức tổng quát của số đo góc lượng giác $(OM,ON)$.
+	\begin{listEX}[3]
+		\item 
+		\begin{tikzpicture}[>=stealth,line join=round,line cap=round,font=\footnotesize,scale=1]
+			\def\r{2.5}
+			\path 
+			(0,0) coordinate (O)
+			(60:\r) coordinate (N)
+			(0:\r) coordinate (M)
+			;
+			\draw ($(O)!1.2!(M)$)--(O)--($(O)!1.2!(N)$);
+			\draw[->] (0:0.3*\r) arc (0:60:0.3*\r);
+			\foreach \l/\g in {M/-90,N/180,O/-135}
+			\draw[fill=black] (\l) circle (1pt) +(\g:.3) node{$\l$};
+		\end{tikzpicture}
+		\item 
+		\begin{tikzpicture}[>=stealth,line join=round,line cap=round,font=\footnotesize,scale=1]
+			\def\r{2.5}
+			\path 
+			(0,0) coordinate (O)
+			(60:\r) coordinate (N)
+			(0:\r) coordinate (M)
+			;
+			\draw[->,domain=0:780,variable=\t,samples=200,>=latex]
+			plot ({0.6*(\t+2*780)*cos(\t)/(2*780)},
+			{0.6*(\t+ 2*780)*sin(\t)/(2*780)})
+			;
+			\draw ($(O)!1.2!(M)$)--(O)--($(O)!1.2!(N)$);
+			\foreach \l/\g in {M/-90,N/180,O/-135}
+			\draw[fill=black] (\l) circle (1pt) +(\g:.3) node{$\l$};
+		\end{tikzpicture}
+		\item
+		\begin{tikzpicture}[>=stealth,line join=round,line cap=round,font=\footnotesize,scale=1]
+			\def\r{2.5}
+			\path 
+			(0,0) coordinate (O)
+			(60:\r) coordinate (N)
+			(0:\r) coordinate (M)
+			;
+			\draw ($(O)!1.2!(M)$)--(O)--($(O)!1.2!(N)$);
+			\draw[->] (0:0.3*\r) arc (0:-300:0.3*\r);
+			\foreach \l/\g in {M/-90,N/180,O/-135}
+			\draw[fill=black] (\l) circle (1pt) +(\g:.3) node{$\l$};
+		\end{tikzpicture}
+	\end{listEX}
+	\loigiai{
+		\begin{listEX}[1]
+			\item Số đo của góc lượng giác $(OM,ON)$ là $60^\circ$.\\
+			\item Số đo của góc lượng giác $(OM,ON)$ là $60^\circ + 2\cdot 360^\circ = 780^\circ$.\\
+			\item Số đo của góc lượng giác $(OM,ON)$ là $-300^\circ$.\\
+		\end{listEX}
+		Công thức tổng quát: $\textnormal{sđ}(OM,ON) = 60^\circ + k360^\circ$, $k\in\mathbb Z$.
+	}
+\end{bt}
+
+% nguồn: 2026-11-15_11_1D1_TL2_Luong_giac (nhập 15/11/2026)
+\begin{bt}%[1D1H1-3]%[ma:c3a88483]
+% nguon: Archive/SP_KhoLatex/ID6_old/1K1-1-2.tex #3770
+
+	Tìm góc lượng giác $(Ou,Ov)$ có số đo dương nhỏ nhất và số đo âm lớn nhất, biết một góc lượng giác $(Ou,Ov)$ có số đo bằng $1000^\circ$.
+	\loigiai{
+		Ta có $(Ou,Ov)=1000^\circ +k360^\circ$ với $k\in\mathbb{Z}$. \\
+		Gọi $\alpha$ là góc có số đo dương nhỏ nhất thỏa mãn yêu cầu bài toán. \\
+		Ta có $\alpha>0\Leftrightarrow  1000^\circ +k360^\circ>0\Leftrightarrow k>-\dfrac{25}{9}$. 
+		Mà $\alpha$ dương nhỏ nhất nên $k=-2$, khi đó $\alpha =280^\circ$. \\
+		Gọi $\beta$ là góc có số đo âm lớn nhất thỏa mãn yêu cầu bài toán. \\
+		Ta có $\beta<0\Leftrightarrow  1000^\circ +k360^\circ<0\Leftrightarrow k<-\dfrac{25}{9}$. 
+		Mà $\beta$ âm lớn nhất nên $k=-3$, khi đó $\beta =-80^\circ$.
+		
+	}
+\end{bt}

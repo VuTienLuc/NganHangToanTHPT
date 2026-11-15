@@ -1,0 +1,190 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Lớp 11 | Đường thẳng, mặt phẳng. Quan hệ song song trong | Hai đường thẳng song song
+% Dạng 1H4?2-7: Bài toán quỹ tích và điểm cố định
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+% nguồn: 2026-11-15_11_1H4_TL2_Song_song (nhập 15/11/2026)
+\begin{bt}%[1H4V2-7]%[ma:d494e426]
+% nguon: Archive/2024/SP-K10-K11-LyVanHoang_TVN-023/K11-C4-HHKG-QHSS/data/Bai3-Dang6-Badiemthanghang-BaitoanQuytich.tex #2186
+%[KIN-BG11-new, Đoàn Mạnh Hùng]
+	[CTST]
+	Cho hình chóp $S.ABCD$ có đáy $ABCD$ là hình bình hành và một điểm $M$ di động trên cạnh $A D$. Một mặt phẳng $(\alpha)$ qua $M$, song song với $CD$ và $SA$, cắt $BC$, $SC$, $SD$ lần lượt tại $N$, $P$, $Q$.
+	\begin{enumEX}{1}
+		\item $MNPQ$ là hình gì?
+		\item Gọi $I=M Q \cap N P$. Chứng minh rằng $I$ luôn luôn thuộc một đường thẳng cố định khi $M$ di động trên $A D$.
+	\end{enumEX}
+	\loigiai{
+		\immini{\begin{enumEX}{1}
+				\item Ta có $PQ \parallel CD$ và $NM \parallel CD \Rightarrow PQ \parallel NM$.\\
+				Vậy tứ giác $MNPQ$ là hình thang.
+				\item Ta có $\heva{&S\in (SAD)\cap (SBC) \\&AD \subset (SAD)\\&BC \subset (SBC)\\&AD \parallel BC}$\\
+				$\Rightarrow (SAD)\cap (SBC)=Sx\, \text{ với } Sx \parallel AD\parallel BC.$\\
+				Ta có $I=M Q \cap N P\Rightarrow \heva{&I\in MQ\subset (SAD)\\&I\in NP \subset (SBC).}$\\
+				$\Rightarrow I \in (SAD)\cap (SBC)=Sx$. Mà $Sx$ cố định.\\
+				Vậy $I$ luôn luôn thuộc một đường thẳng cố định khi $M$ di động trên $A D$.
+		\end{enumEX}}
+		{\begin{tikzpicture}[=>stealth,line join=round,line cap=round, font=\footnotesize, scale=.7]
+				\def\a{6}
+				\def\goc{230}
+				\def\b{4}
+				\def\h{5.5}
+				\path
+				(0,0)coordinate (A)++(0:\a)coordinate (B)++(\goc:\b)coordinate (C)++(180:\a)coordinate(D)
+				($(A)!.5!(C)$)coordinate (O)
+				(O)++(100:\h)coordinate (S)		
+				($(A)!.4!(D)$)coordinate (M)
+				($(B)!.4!(C)$)coordinate (N)
+				($(D)!.6!(S)$)coordinate (Q)
+				($(C)!.6!(S)$)coordinate (P);
+				\coordinate (K) at (5.5,3.885);
+				\draw (K) node[above left]{$x$};
+				\path (intersection of M--Q and N--P)coordinate (I);
+				%\draw (-1,4)node[left]{$x$};
+				\draw (S)--(B)--(C)--(D)--cycle (S)--(C) (N)--(P)--(Q) (P)--(I)--(Q) (S)--(K);
+				\draw[dashed] (S)--(A) (B)--(A)--(D) (M)--(N) (Q)--(M);
+				\foreach \x/\g in{A/160,B/0,C/-90,S/90,D/-90,M/180,N/0,P/30,Q/120,I/180}
+				\fill[black](\x)circle(1pt) ($(\x)+(\g:3.5mm)$)node{$\x$}
+				;
+		\end{tikzpicture}}	
+	}	
+\end{bt}
+
+% nguồn: 2026-11-15_11_1H4_TL2_Song_song (nhập 15/11/2026)
+\begin{bt}%[1H4H2-7]%[ma:d182e32b]
+% nguon: Archive/2024/SP-K10-K11-LyVanHoang_TVN-023/K11-C4-HHKG-QHSS/data/Bai1-Dang5-BaitoanQuytich.tex #2402
+
+	Cho hai điểm cố định $A,B$ nằm ngoài mặt phẳng $(P)$ sao cho $AB$ không song song với mặt phẳng $(P)$. Gọi $(O)$ là một điểm bất kì trong không gian sao cho các đường thẳng $OA,OB$ lần lượt cắt các mặt phẳng $(P)$ tại các điểm $A',\ B'$. Chứng minh rằng đường thẳng $A'B'$ luôn đi qua một điểm cố định.
+	\loigiai{
+		\immini{
+			Gọi $C=AB \cap (P)$. Khi đó $C \in AB \subset (OAB),C \in (P)$.\\
+			Vì $A'=OA \cap (P)$ nên $A' \in OA \subset (OAB),A' \in (P)$.\\
+			Tương tự $B'=OB \cap (P) \Rightarrow B' \in OB \subset (OAB),B' \in (P)$.\\
+			Do đó ba điểm $A',B',C$ cùng nằm trên giao tuyến của hai mặt phẳng $(OAB)$ và $ (P)$.\\
+			Vậy đường thẳng $A'B'$ cùng đi qua điểm $C$ cố định.
+		}{
+			\begin{tikzpicture}
+				\path 
+				(0,0) coordinate (a)
+				--($(a)+(0:4)$) coordinate (b)
+				--($(a)+(50:2)$) coordinate (d)
+				--($(b)+(d)-(a)$) coordinate (c)
+				(1.3,0.8) coordinate (A')
+				--($(A')+(0:1)$) coordinate (B')
+				--($(A')!1.8!(B')$) coordinate (C)
+				--($(A')+(65:2.5)$) coordinate (O)
+				--($(A')!2/3!(O)$) coordinate (A)
+				--(intersection of A--C and B'--O) coordinate(B);
+				;
+				\draw (a)--(b)--(c)--(d)--cycle (C)--(A')--(O)--(B');
+				\begin{scope}
+					\clip (a)--(A')--(C)--(b)--cycle;
+					\draw[dashed,shorten <= 0cm,shorten >= -0.5cm] (O)--(A');
+					\draw[dashed,shorten <= 0cm,shorten >= -0.5cm] (A)--(C);
+					\draw[dashed,shorten <= 0cm,shorten >= -0.5cm] (O)--(B');
+				\end{scope}
+				\begin{scope}
+					\clip (A')--(A)--(C)--cycle;
+					\fill[white] (A')--(A)--(C)--cycle;
+					\draw[dashed] (d)--(c);
+				\end{scope}
+				\begin{scope}
+					\clip (d)--(a)--(b);
+					\draw (a) circle (8mm);
+				\end{scope}
+				\node at ($(a)+(20:15pt)$){$P$};
+				\draw (O)--(B') (A)--(C);
+				\foreach \p/\g in {A'/180,B'/-150,C/-90,O/0,A/180,B/0}\draw[fill=white] (\p) circle (.7pt)node[shift={(\g:.25)},scale=.8]{$\p$};
+			\end{tikzpicture}
+		}
+	}
+\end{bt}
+
+% nguồn: 2026-11-15_11_1H4_TL2_Song_song (nhập 15/11/2026)
+\begin{bt}%[1H4V2-7]%[ma:193b03a9]
+% nguon: Archive/2024/SP-K10-K11-LyVanHoang_TVN-023/K11-C4-HHKG-QHSS/data/Bai1-Dang5-BaitoanQuytich.tex #2403
+
+	Cho hình chóp $S.ABCD$ có $AB$ cắt $CD$ tại $E$. Gọi $M$ là một điểm di động trên cạnh $SC$. Mặt phẳng $(ABM)$ cắt các đường thẳng $SD,SE$ lần lượt tại $N,F$.
+	\begin{enumerate}
+		\item Nêu cách dựng các điểm $F$ và $N$.
+		\item Đường thẳng $AM$ cắt $BN$ tại $K$. Chứng minh rằng khi $M$ di động trên cạnh $SC$ thì đường thẳng $FK$ luôn đi qua một điểm cố định.
+	\end{enumerate}
+	\loigiai{
+		\immini{
+			\begin{enumerate}
+				\item Ta có $E \in SE$ và $E \in AB$, suy ra $E$ là giao điểm của $(ABM)$ và $SE$.\\
+				Mà $F=(ABM) \cap SE$, do đó $E \equiv F$.\\
+				Lại có $E \in (ABM)$ và $M \in (ABM)$ nên $ME \subset (ABM)$.\\
+				Xét mặt phẳng $(SED)$, gọi $N=ME \cap SD$.\\
+				Khi đó $N \in ME \subset (AMB)$.\\
+				Suy ra $N=(AMB) \cap SD$.
+				\item Vì $E \equiv F$ nên đường thẳng $FK$ luôn đi qua điểm $E$ cố định
+			\end{enumerate}
+		}{
+			\begin{tikzpicture}[line join=round,line cap=round]
+				\tikzset{label style/.style={font=\footnotesize}}
+				\pgfmathsetmacro\h{3}
+				\pgfmathsetmacro\goc{70}
+				\tkzDefPoint(0,0){A}
+				\tkzDefShiftPoint[A](45:1.5*\h){S}
+				\tkzDefShiftPoint[A](0:1.5*\h){B}
+				\tkzDefShiftPoint[A](-\goc:\h){D}
+				\tkzDefShiftPoint[A](-0.3*\goc:1.5*\h){C}
+				\path (intersection of A--B and D--C) coordinate(F)
+				--($(S)!0.45!(C)$) coordinate(M)
+				--(intersection of F--M and S--D) coordinate(N)
+				--(intersection of F--M and S--B) coordinate(sb)
+				--(intersection of A--M and N--B) coordinate(K)
+				;
+				\pgfresetboundingbox
+				\tkzDrawSegments[dashed](A,F C,B A,M B,M B,N sb,B)
+				\tkzDrawSegments(S,sb S,C A,D S,A D,F F,N S,D)
+				\tkzDrawPoints[fill=black](A,B,C,D,S,F,K,M,N)
+				\tkzLabelPoints[below](C,D,K)
+				\tkzLabelPoints[above left](M)
+				\tkzLabelPoints[above right](B)
+				\tkzLabelPoints[above](S,F)
+				\tkzLabelPoints[left](A,N)
+				\path (F) node[below]{$E$};
+			\end{tikzpicture}
+		}
+	}
+\end{bt}
+
+% nguồn: 2026-11-15_11_1H4_TL2_Song_song (nhập 15/11/2026)
+\begin{bt}%[1H4V2-7]%[ma:c85a5acb]
+% nguon: Archive/2024/SP-K10-K11-LyVanHoang_TVN-023/K11-C4-HHKG-QHSS/data/Bai1-Dang5-BaitoanQuytich.tex #2405
+
+	Cho hình chóp $S.ABC$ có $A_1,B_1,C_1$ lần lượt là các điểm di động trên các cạnh $SA,SB,SC$ sao cho $SA_1=\dfrac{1}{n}SA$, $SB_1=\dfrac{1}{2n+1}SB$, $SC_1=\dfrac{1}{3n+2}SC$ (với $n$ là số nguyên dương bất kì).
+	\begin{enumerate}
+		\item Chứng minh rằng các đường thẳng $A_1B_1,A_1C_1$ lần lượt đi qua các điểm cố định $D,E$.
+		\item Chứng minh rằng mặt phẳng $(A_1B_1C_1)$ luôn chứa một đường thẳng cố định.
+	\end{enumerate}
+	\loigiai{
+		\immini{
+			\begin{enumerate}
+				\item Ta có\\
+				$\heva{&2n\overrightarrow{SA_1}=2\overrightarrow{SA} \\& (2n+1)\overrightarrow{SB_1}=\overrightarrow{SB}}\Rightarrow 2n\overrightarrow{A_1B_1}+\overrightarrow{SB_1}=\overrightarrow{SB}-2\overrightarrow{SA}$.\\
+				Gọi $D$ là điểm thỏa $\overrightarrow{SB}-2\overrightarrow{SA}=\overrightarrow{SD}$, suy ra $D$ cố định.\\
+				Vì $2n\overrightarrow{A_1B_1}=\overrightarrow{B_1D}$ nên $A_1B_1$ luôn đi qua điểm cố định là $D$.\\
+				Tương tự, $ A_{1}C_{1} $ luôn đi qua điểm cố định là $ E $.
+				\item Vì $A_1B_1$ luôn đi qua điểm cố định là $D$ và $A_1C_1$ luôn đi qua điểm cố định là $E$ nên mặt phẳng $(A_1B_1C_1)$ luôn chứa một đường thẳng cố định là $DE$.
+			\end{enumerate}
+		}{
+			\begin{tikzpicture}
+				\path 
+				(0,0) coordinate (S)
+				--($(S)+(-120:4)$) coordinate (A)
+				--($(S)+(-70:4)$) coordinate (B)
+				--($(S)+(-40:4)$) coordinate (C)
+				--($(S)!0.6!(A)$) coordinate (A1)
+				--($(S)!0.4!(B)$) coordinate (B1)
+				--($(S)!0.25!(C)$) coordinate (C1)
+				;
+				\draw (A)--(B)--(C)--(S)--cycle (S)--(B) (A1)--(B1);
+				\draw[dashed] (A1)--(C1) (A)--(C);
+				\foreach \p/\g in {A/180,B/-90,C/0,S/90,A1/180,B1/0,C1/30}\draw[fill=white] (\p) circle (.7pt)node[shift={(\g:.25)},scale=.8]{$\p$};
+			\end{tikzpicture}
+		}
+	}
+\end{bt}

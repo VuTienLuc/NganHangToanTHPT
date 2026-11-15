@@ -449,3 +449,109 @@ Trong phòng thí nghiệm có một loài vi khuẩn có quy luật sinh sản 
 	Sau 24 giờ thì số vi khuẩn trong phòng thì nghiệm là $ T_{24} = 10\cdot 2^{24}-2(2^{24}-1)= 8\cdot 2^{24} + 2. $
 }
 \end{bt}
+
+% nguồn: 2026-11-15_11_1D2_TL2_Day_so_Cap_so (nhập 15/11/2026)
+\begin{bt}%[1D2H1-6]%[ma:cb0ce835]
+% nguon: Archive/2024/TOAN_11_XE/TOAN_11_XE/data4/11C2/KNTT-2.1.tex #629
+%[Trương Đăng Khoa]%Ví dụ 2
+	Trên lưới ô vuông, mỗi ô cạnh $1$ đơn vị, người ta vẽ $8$ hình vuông và tô màu khác nhau như hình vẽ. Tìm dãy số biểu diễn độ dài cạnh của $8$ hình vuông đó từ nhỏ đến lớn. Có nhận xét gì về dãy số trên?
+	\begin{center}
+		\begin{tikzpicture}[scale=0.8]
+			\def\r{21}
+			\def\hv(#1){
+				\ifnum #1= 1\else
+				\pgfmathsetmacro{\R}{250*rnd}
+				\pgfmathsetmacro{\G}{250*rnd}
+				\pgfmathsetmacro{\B}{250*rnd}
+				\definecolor{mau}{RGB}{\R,\G,\B}
+				\fill[mau!30](0,0)rectangle(\r,\r);
+				\draw[red,line width=1pt] (0,0) arc(180:90:\r)(0,0)rectangle(\r,\r);
+				\pgfmathtruncatemacro{\k}{#1-1}
+				\begin{scope}[shift={(45:\r*sqrt(2))},rotate=-90,scale={(sqrt(5)-1)/2}]
+					\hv(\k)
+					\pgfmathsetmacro{\n}{int((1/(sqrt(5))*(((1+sqrt(5))/2)^(\k)-(1-(sqrt(5))/2)^(\k)+1)}
+					\ifnum \k>1
+					\path (\r/2,\r/2)node[scale=1.75]{\color{red}$\n$};
+					\else
+					\fi
+				\end{scope}
+				\fi
+			}
+			\begin{scope}[scale=0.35]
+				\hv(9)
+				\draw[teal](0,0)grid(34,21);
+				\path(21/2,21/2)node[scale=2]{21};
+			\end{scope}
+		\end{tikzpicture}
+	\end{center}
+	\loigiai{
+		\begin{multicols}{4}
+			\begin{itemize}
+				\item $u_1=1$.
+				\item $u_2=1$.
+				\item $u_3=2$.
+				\item $u_4=3$.
+				\item $u_5=5$.
+				\item $u_6=8$.
+				\item $u_7=13$.
+				\item $u_8=21$.
+			\end{itemize}
+		\end{multicols}
+		Ta có dãy số $\left(u_n\right)\colon\heva{& u_1=1\\ &u_2=1\\ &u_n=u_{n-1}-u_{n-2}.}$
+	}
+\end{bt}
+
+% nguồn: 2026-11-15_11_1D2_TL2_Day_so_Cap_so (nhập 15/11/2026)
+\begin{bt}%[1D2C1-6]%[ma:3587329a]
+% nguon: Archive/2024/TOAN_11_XE/TOAN_11_XE/data4/11C2/KNTT-2.1.tex #633
+%[Trương Đăng Khoa]%Ví dụ 6
+	Chị Hương vay trả góp một khoản tiền $100$ triệu đồng và đồng ý trả dần $2$ triệu đồng mỗi tháng với lãi suất $0{,}8\%$ số tiền còn lại của mỗi tháng.
+	Gọi $A_n$, ($n\in\mathbb{N}$) là số tiền còn nợ (triệu đồng) của chị Hương sau $n$ tháng.
+	\begin{enumerate}
+		\item Tìm lần lượt $A_0$, $A_1$, $A_2$, $A_3$, $A_4$, $A_5$, $A_6$ đễ tính số tiền còn nợ của chị Hương sau $6$ tháng.
+		\item  Dự đoán hệ thức truy hồi đối với dãy số $(A_n)$.
+	\end{enumerate}
+	\loigiai{
+		\begin{enumerate}
+			\item  Ta có $A_0=100$ (triệu đồng).
+			\begin{itemize}
+				\item Tiền lãi chị Hương phải trả sau $1$ tháng là $100\cdot 0{,}8\%=0{,}8$ (triệu đồng).\\
+				Do đó, số tiền gốc chị Hương trả được sau $1$ tháng là $2-0{,}8=1{,}2$ (triệu đồng).\\
+				Khi đó, số tiền còn nợ của chị Hương sau $1$ tháng là 
+				$A_1=100-1{,}2=98{,}8$ (triệu đồng).
+				\item  Tiền lãi chị Hương phải trả sau $2$ tháng là $98{,}8\cdot 0{,}8\%=0{,}7904$ (triệu đồng).\\
+				Do đó, số tiền gốc chị Hương trả được sau $2$ tháng là $2-0{,}7904=1{,}2096$ (triệu đồng).\\
+				Khi đó, số tiền còn nợ của chị Hương sau $2$ tháng là 
+				$A_2=98{,}8-1{,}2096=97{,}5904$ (triệu đồng).
+				\item Tiền lãi chị Hương phải trả sau $3$ tháng là $97{,}5904\cdot 0{,}8\%=0{,}7807232$ (triệu đồng).\\
+				Do đó, số tiền gốc chị Hương trả được sau $3$ tháng là $2-0{,}7807232=1{,}2192768$ (triệu đồng).\\
+				Khi đó, số tiền còn nợ của chị Hương sau $3$ tháng là 
+				$A_3=97{,}5904-1{,}2192768=96{,}3711232$ (triệu đồng).
+				\item Tiền lãi chị Hương phải trả sau $4$ tháng là $96{,}3711232\cdot 0{,}8\%\approx 0{,}77097$ (triệu đồng).\\
+				Do đó, số tiền gốc chị Hương trả được sau $4$ tháng là $2-0{,}77097=1{,}22903$ (triệu đồng).\\
+				Khi đó, số tiền còn nợ của chị Hương sau $4$ tháng là 
+				$A_4=96{,}3711232-1{,}22903=95{,}1420932$ (triệu đồng).
+				\item Tiền lãi chị Hương phải trả sau $5$ tháng là $95{,}1420932\cdot 0{,}8\%\approx 0{,}76114$ (triệu đồng).\\
+				Do đó, số tiền gốc chị Hương trả được sau $5$ tháng là $2-0{,}76114=1{,}23886$ (triệu đồng).\\
+				Khi đó, số tiền còn nợ của chị Hương sau $5$ tháng là $A_5=95{,}1420932-1{,}23886=93{,}9032332$ (triệu đồng).
+				\item Tiền lãi chị Hương phải trả sau $6$ tháng là $93{,}9032332\cdot 0{,}8\%\approx 0{,}75123$ (triệu đồng).\\
+				Do đó, số tiền gốc chị Hương trả được sau $6$ tháng là $2-0{,}75123=1{,}24877$ (triệu đồng).\\
+				Khi đó, số tiền còn nợ của chị Hương sau $6$ tháng là $A_6=93{,}9032332-1{,}24877=92{,}6544632$ (triệu đồng).
+			\end{itemize}
+			\item Dự đoán hệ thức truy hồi đối với dãy số $(A_n)$ là 
+			\[A_0=100,\, A_n=A_{n-1}-\left(2-A_{n-1} \cdot 0{,}8 \%\right)=1{,}008 A_{n-1}-2\]
+		\end{enumerate}
+	}
+\end{bt}
+
+% nguồn: 2026-11-15_11_1D2_TL2_Day_so_Cap_so (nhập 15/11/2026)
+\begin{bt}%[1D2H1-6]%[ma:beaa5a28]
+% nguon: Archive/SP_KhoLatex/ID6_old/1K2-1.tex #3240
+[NB]
+	Người ta nuôi cấy $5$ con vi khuẩn ecoli trong môi trường nhân tạo. Cứ $30$ phút thì vi khuẩn ecoli sẽ nhân đôi 1 lần. Tính số lượng vi khuẩn thu được sau $1,2,3$ lần nhân đôi.
+	\dapso{$u_2=10, u_3=20, u_4=40$}
+	\loigiai{
+		Đặt $u_1=5$, gọi số vi khuẩn sau $n$ lần phân chia là $u_{n+1}$, khi đó ta có dãy số $(u_n)$ thỏa mãn $$u_1=5, \; u_{n+1}=2u_n$$
+		Ta có $u_2=10, u_3=20, u_4=40$.
+	}	
+\end{bt}

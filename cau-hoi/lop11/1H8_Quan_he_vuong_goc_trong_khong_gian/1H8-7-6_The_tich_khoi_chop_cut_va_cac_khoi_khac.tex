@@ -123,3 +123,199 @@
 		 }
 	 }
 \end{ex}
+
+% nguồn: 2026-11-15_11_1H8_TL2_Vuong_goc (nhập 15/11/2026)
+\begin{bt}%[1H8H7-6]%[ma:aefbf265]
+% nguon: Archive/2024/TOAN_11_XE/TOAN_11_XE/data4/11C7/KNTT-7.7.tex #1404
+%[TeX hóa SGK CTST]%[Thành Đức Trung]
+	Cắt khối chóp tam giác đều $S.ABC$ với cạnh đáy bằng $a$ và chiều cao $2 a$ bởi một mặt phẳng song song với đáy và đi qua trung điểm các cạnh bên. Tính thể tích khối chóp cụt đều được tạo thành.
+	\loigiai{
+		\immini{Gọi $ABC. A'B'C'$  là khối chóp cụt đều được tạo thành, $O$ và $O'$ lần lượt là tâm của hai đáy. 
+			Chiều cao của khối chóp cụt đều là $h=OO'=\dfrac{SO}{2}=\dfrac{2a}{2}=a$;\\
+			Tam giác đều $ABC$ có diện tích $S=\dfrac{AB^2 \sqrt{3}}{4}=\dfrac{a^2 \sqrt{3}}{4}$;\\
+			Tam giác đều $A'B'C'$ có cạnh $A'B'=\dfrac{A B}{2}$ nên có diện tích $S'=\dfrac{AB^2 \sqrt{3}}{16}=\dfrac{S}{4}$.\\
+			Do đó, thể tích khối chóp cụt đều được tạo thành là}
+		{\begin{tikzpicture}[scale=1,>=stealth, font=\footnotesize, line join=round, line cap=round]
+				\path(0,0)coordinate(A) (1.2,-1.6)coordinate(B) (4.5,0)coordinate(C)(barycentric cs:B=1,C=1)coordinate(M)
+				(barycentric cs:A=1,B=1,C=1)coordinate(O)+(0,3.5)coordinate(S);
+				\coordinate (A') at ($(A)!0.5!(S)$);
+				\coordinate (B') at ($(B)!0.5!(S)$);
+				\coordinate (C') at ($(C)!0.5!(S)$);
+				\coordinate (O') at ($(O)!0.5!(S)$);
+				\coordinate (N) at ($(B')!0.5!(C')$);
+				\draw[dashed](M)--(A)--(C)(S)--(O) (A')--(C') (A')--(N);
+				\draw(S)--(A)--(B)--(S)--(C)--(B) (A')--(B') (B')--(C');
+				\pic[draw,angle radius=6]{right angle=S--O--M};
+				\foreach\p/\g in{A/180,B/-90,C/0,S/90,O/-90,A'/180,B'/180,C'/0,O'/30}\fill(\p)circle(1pt)node[shift={(\g:.3)}]{$\p$};		
+		\end{tikzpicture}}
+		\[
+		V=\dfrac{1}{3}h\left(S+\sqrt{SS'}+S'\right)=\dfrac{1}{3} a\left(S+\dfrac{S}{2}+\dfrac{S}{4}\right)=\dfrac{7aS}{12}=\dfrac{7a}{12} \cdot \dfrac{a^2\sqrt{3}}{4}=\dfrac{7a^3\sqrt{3}}{48}.
+		\]}
+\end{bt}
+
+% nguồn: 2026-11-15_11_1H8_TL2_Vuong_goc (nhập 15/11/2026)
+\begin{bt}%[1H8V7-6]%[ma:90dafdbf]
+% nguon: Archive/2024/TOAN_11_XE/TOAN_11_XE/data4/11C7/KNTT-7.7.tex #1407
+
+	Tính thể tích của khối chóp cụt lục giác đều $ABCDEF \cdot A'B'C'D'E'F'$ với $O$ và $O'$ là tâm hai đáy, cạnh đáy lớn và đáy nhỏ lần lượt là $a$ và $\dfrac{a}{2}$, $OO'=a$.
+	\loigiai{
+		\immini{Diện tích đáy lớn $S=6\cdot a^2\dfrac{\sqrt{3}}{4}=\dfrac{3\sqrt{3}}{2}a^2$.\\
+			Diện tích đáy lớn $S'=6\cdot \left(\dfrac{a}{2}\right)^2\dfrac{\sqrt{3}}{4}=\dfrac{3\sqrt{3}}{8}a^2$.\\	
+			Thể tích của khối chóp cụt lục giác đều $ABCDEF \cdot A'B'C'D'E'F'$ là 
+			\allowdisplaybreaks
+			\begin{eqnarray*}
+				V&=&\dfrac{1}{3}OO'\cdot \left(S+\sqrt{S\cdot S'}+S'\right)\\
+				&=&\dfrac{1}{3}\cdot a \cdot \left(\dfrac{3\sqrt{3}}{2}a^2+\sqrt{\dfrac{3\sqrt{3}}{2}a^2\cdot \dfrac{3\sqrt{3}}{8}a^2}+\dfrac{3\sqrt{3}}{8}a^2\right)\\
+				&=&	\dfrac{7\sqrt{3}}{8}a^3.
+		\end{eqnarray*}}
+		{\begin{tikzpicture}[scale=1, font=\footnotesize,line join=round, line cap=round, >=stealth];
+				\clip (-3,-1.5) rectangle (5,3.8);
+				\def\r{2.25};
+				\def\rr{1.5}
+				\def\a{45}
+				\def\h{7}
+				\path 
+				(0,0) coordinate (O)
+				(0,\h) coordinate (S)
+				(-\r,0) coordinate (A)
+				(\r,0) coordinate (D)
+				(\a:\rr) coordinate (E)
+				(-\a:\rr) coordinate (C)
+				($(C)!2!(O)$) coordinate (F)
+				($(E)!2!(O)$) coordinate (B)
+				($(S)!0.6!(O)$) coordinate (O')
+				($(S)!0.6!(A)$) coordinate (A')
+				($(S)!0.6!(B)$) coordinate (B')
+				($(S)!0.6!(C)$) coordinate (C')
+				($(S)!0.6!(D)$) coordinate (D')
+				($(S)!0.6!(E)$) coordinate (E')
+				($(S)!0.6!(F)$) coordinate (F')
+				($(A')!0.5!(B')$) coordinate (I')
+				($(A)!0.5!(B)$) coordinate (I)
+				;
+				\draw 
+				(A)--(B)--(C)--(D) 
+				(A')--(B')--(C')--(D')--(E')--(F')--cycle
+				(A)--(A') (B)--(B') (C)--(C') (D)--(D')
+				;
+				\draw[dashed] 
+				(A)--(F)--(E)--(D)
+				(E)--(E') (F)--(F')
+				(O)--(O')
+				;
+				\foreach \l/\g in {A/180,B/-135,C/-45,D/0,E/45,F/135,O/-90,O'/90,A'/180,B'/45,C'/135,D'/0,E'/45,F'/135}
+				\draw[fill=black] (\l) circle (1pt) +(\g:.3) node{$\l$};
+		\end{tikzpicture}}
+	}
+\end{bt}
+
+% nguồn: 2026-11-15_11_1H8_TL2_Vuong_goc (nhập 15/11/2026)
+\begin{bt}%[1H8H7-6]%[ma:0cf4cf3a]
+% nguon: Archive/2024/TOAN_11_XE/TOAN_11_XE/data4/11C7/KNTT-7.7.tex #1408
+
+	Cho khối chóp cụt tam giác đều $ABC.A'B'C'$ có chiều cao bằng $3a$, $AB=4a$, $A'B'=a$ (Hình $95$). Tính thể tích của khối chóp cụt đều $ABC.A'B'C'$.
+	\loigiai
+	{\immini{Diện tích tam giác đều $A B C$ là
+			$$S_1=\dfrac{1}{2}AB\cdot AC\cdot\sin \widehat{BAC}=\dfrac{1}{2}\cdot 4a\cdot 4a\cdot\sin 60^{\circ}=4\sqrt{3}a^2.$$
+			Diện tích tam giác đều $A'B'C'$ là
+			$$S_2=\dfrac{1}{2}A'B'\cdot A'C'\cdot\sin \widehat{B'A'C'}=\dfrac{1}{2}\cdot a\cdot a\cdot\sin 60^{\circ}=\dfrac{\sqrt{3}a^2}{4}.$$
+			Thể tích khối chóp cụt đều $ABC.A'B'C'$ là
+			$$V=\dfrac{1}{3}\cdot 3a\cdot\left(4\sqrt{3}a^2+\sqrt{4\sqrt{3}a^2\cdot\dfrac{\sqrt{3}a^2}{4}}+\dfrac{\sqrt{3}a^2}{4}\right)
+			=\dfrac{21\sqrt{3}a^3}{4}.$$}{
+			\begin{tikzpicture}[scale=1, font=\footnotesize, line join=round, line cap=round,>=stealth]
+				\def \k{0.6};
+				\path (0,0)coordinate (A) (3.5,0) coordinate (C) (2.5,-1) coordinate (B) ($(B)!0.5!(C)$) coordinate (M) ($(A)!2/3!(M)$) coordinate (O) (0,3) coordinate (h) ($(O)+(h)$) coordinate (S);
+				\foreach \p in {A,B,C}{\path ($(\p)!\k!(S)$) coordinate (\p');}
+				\draw (A')--(A)--(B)--(C)--(C')--cycle (B')--(C') (A')--(B')--(B);
+				\draw[dashed] (A)--(C);
+				\foreach \p/\g in {A/150,B/-60,C/30, A'/150, B'/-30, C'/30} \fill[black] (\p) circle(1pt)+(\g:0.3) node{$\p$};
+				\draw ($(A)!0.5!(C)$)++(-90:1.6)node{Hình $95$};
+		\end{tikzpicture}}
+	}
+\end{bt}
+
+% nguồn: 2026-11-15_11_1H8_TL2_Vuong_goc (nhập 15/11/2026)
+\begin{bt}%[1H8V7-6]%[ma:d9da4073]
+% nguon: Archive/SP-4Phan-Dot3/Data/CD_1_OTHK2_De03.tex #4414
+
+	Cho hình chóp $S.ABC$ có đáy $ABC$ là tam giác đều cạnh $a$. Hình chiếu vuông góc của $S$ trên đáy là điểm $H$ trên cạnh $AC$ sao cho $AH=\dfrac{2}{3}AC$; mặt phẳng $\left( SBC \right)$ tạo với đáy một góc $60^\circ$. Tính thể tích khối chóp $S.ABC$.
+	\loigiai{
+		\begin{center}
+			\begin{tikzpicture}
+				\def\a{4}
+				\path 	(0:0) coordinate (A)
+				(0:\a) coordinate (B)
+				(-50:.5*\a) coordinate (C)
+				($(B)!.5!(C)$)coordinate (M)
+				($(C)!1/3!(M)$)coordinate (N)
+				($(A)!2/3!(C)$)coordinate (H)
+				($(H)+(90:\a)$) coordinate (S);
+				\draw[dashed] 	(B)--(A) (A)--(M) (H)--(N);
+				\draw[thick] 	(A)--(C)--(B) (S)--(A) (S)--(N)
+				(S)--(B) (S)--(C) (S)--(H);
+				\foreach \x/\g in {A/180,B/0,C/-90,S/90,M/-45,N/-45,H/-120}
+				\fill[black] 	(\x) circle (1pt)
+				($(\g:3mm)+(\x)$) node {$\x$};
+				\draw pic[draw,angle radius=3mm]{right angle=A--M--C}
+				pic[draw,angle radius=2mm]{right angle=H--N--C}
+				pic[draw,angle radius=3mm]{right angle=S--H--A};
+			\end{tikzpicture}
+		\end{center}
+		\begin{itemize}
+			\item Gọi $M$ là trung điểm của $BC$,
+			$N\in CM$ sao cho $\dfrac{CN}{CM}=\dfrac{CH}{CA}=\dfrac{1}{3} \Rightarrow HN \parallel AM$.
+			\item Mà
+			$\triangle ABC$ đều nên $AM\perp BC\Rightarrow HN\perp BC\Rightarrow BC\perp \left( SHN \right)$.\\ 
+			Do đó $\left(\left( SBC \right),\left( ABC \right)\right)=\left(SN,HN\right)=\widehat{SNH}=60^\circ$.
+			\item Do $\triangle ABC$ đều nên $AM=\dfrac{a\sqrt{3}}{2}\Rightarrow HN=\dfrac{1}{3}AM=\dfrac{a\sqrt{3}}{6}$.
+			\item $\triangle SHN$ vuông tại $H$ có $SH=HN.\sin \widehat{SNH}=\dfrac{a\sqrt{3}}{6}\cdot \sin 60^\circ=\dfrac{a}{4}$.
+			\item ${{V}_{S.ABC}}=\dfrac{1}{3}SH\cdot {{S}_{ABC}}=\dfrac{1}{3}\cdot \dfrac{a}{4}\cdot \dfrac{a^2\sqrt{3}}{4}=\dfrac{a^3\sqrt{3}}{48}$.
+		\end{itemize}
+	}
+\end{bt}
+
+% nguồn: 2026-11-15_11_1H8_TL2_Vuong_goc (nhập 15/11/2026)
+\begin{bt}%[1H8V7-6]%[ma:d78a56f6]
+% nguon: Archive/SP-4Phan-Dot3/Data/CD_1_OTHK2_De01.tex #4424
+
+	Cho lăng trụ $ABC.A'B'C'$ có thể tích bằng $24$. Gọi $M$, $N$ và $P$ lần lượt là các điểm nằm trên các cạnh $A'B'$, $B'C'$ và $BC$ sao cho $M$ là trung điểm của $A'B'$, $B'N=\dfrac{3}{4} B'C'$ và $BP=\dfrac{1}{4} BC$. Đường thẳng $NP$ cắt đường thẳng $BB'$ tại $E$ và đường thẳng $EM$ cắt đường thẳng $AB$ tại $Q$. Tính thể tích của khối đa diện lồi $AQPC.A'MNC'$.
+	\loigiai{
+		Đặt $S$, $h$ lần lượt là diện tích đáy và chiều cao của lăng trụ đã cho ta có $S\cdot h=24$ và
+		$V_{AQPC.A'MNC'}=V_{ABC.A'B'C'}-V_{BPQ.B'NM}$.\\
+		Trong đó $BPQ.B'NM$ là chóp cụt có chiều cao $h$.\\
+		Ta có $\dfrac{EB}{EB'}=\dfrac{EP}{EN}=\dfrac{EQ}{EM}=\dfrac{BP}{B'N}=\dfrac{BQ}{B'M} =\dfrac{PQ}{NM}=\dfrac{1}{3}$.\\
+		Do đó hai tam giác $\triangle BPQ \backsim \triangle B'NM$ theo tỷ số $k=\dfrac{1}{3}$.
+		\begin{center}
+		\begin{tikzpicture}[scale=0.9, font=\footnotesize, line join=round, line cap=round, >=stealth]
+			\def\a{4.5}
+			\def\h{4.5}
+			\path 	(0:0) coordinate (B')
+					++(0:\a) coordinate (C')
+					++(-135:3*\a/4) coordinate (A')
+					($(A')+(90:\h)$) coordinate (A)
+					($(B')+(90:\h)$) coordinate (B)
+					($(C')+(90:\h)$) coordinate (C)
+					($(A')!1/2!(B')$) coordinate (M)
+					($(B')!3/4!(C')$) coordinate (N)
+					($(B)!1/4!(C)$) coordinate (P)
+					(intersection of N--P and B--B') coordinate (E)
+					(intersection of E--M and B--A) coordinate (Q);
+			\draw[dashed,thick] 	(B')--(C')		(M)--(N)--(P);
+			\draw[thick]	(C)--(C') 	(B)--(B')	(A)--(A')	(M)--(E)--(P)--(Q)
+							(B)--(E)
+							(A)--(B)--(C)--cycle	(B')--(A')--(C');
+			\foreach \x/\g in {A/180,B/180,C/0,A'/180,B'/180,C'/0, M/190, N/45, P/45, E/90, Q/-15}
+					\fill[black] 	(\x) circle (1pt)
+					($(\g:4mm)+(\x)$) node {$\x$};	
+		\end{tikzpicture}
+		\end{center}
+		Suy ra\\
+		\indent $S_{B'NM}=\dfrac{B'N}{B'C'}\cdot \dfrac{B'M}{B'A'} S=\dfrac{3}{4}\cdot \dfrac{1}{2} S=\dfrac{3}{8} S$;\\
+		 \indent $S_{BPQ}=\left(\dfrac{1}{3}\right)^2 S_{B'NM}=\dfrac{1}{24} S$.\\
+		Vì vậy
+		$$
+		V_{BPQ\cdot B'NM}=\dfrac{h}{3}\left(\dfrac{3}{8} S+\dfrac{1}{24} S+\sqrt{\dfrac{3}{8} S\cdot \dfrac{1}{24} S}\right)=\dfrac{13}{72} S \cdot h=\dfrac{13}{72} \cdot 24=\dfrac{13}{3}.
+		$$
+		$\Rightarrow V_{AQPC.A'MNC'}=24-\dfrac{13}{3}=\dfrac{59}{3}$.
+	}
+\end{bt}

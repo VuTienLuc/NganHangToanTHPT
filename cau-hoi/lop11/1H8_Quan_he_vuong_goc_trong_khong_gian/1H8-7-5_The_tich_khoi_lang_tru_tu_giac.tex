@@ -826,3 +826,93 @@
 		Do đó thể tích  của khối lập phương là $(2a)^3=8a^3$.
 	} 
 \end{ex}
+
+% nguồn: 2026-11-15_11_1H8_TL2_Vuong_goc (nhập 15/11/2026)
+\begin{bt}%[1H8H7-5]%[ma:92cbd332]
+% nguon: Archive/2024/TOAN_11_XE/TOAN_11_XE/data4/11C7/KNTT-7.7.tex #1403
+%[TeX hóa SGK CTST]%[Thành Đức Trung]
+	\begin{enumerate}
+		\item[a)] Tính thể tích của khối hộp chữ nhật có ba kích thước là: $6a ; 4a ; 3a$.
+		\item[b)] Tính thể tích khối tứ diện đều $SABC$ cạnh $a$.
+		\item[c)] Cho khối lăng trụ $ABCD. A'B'C'D'$  có đáy là hình vuông cạnh $2a$, cạnh bên $AA'=2 a$, hình chiếu của $A'$ trên $(ABCD)$ trùng với giao điểm $O$ của $AC$ và $BD$. Tính thể tích khối lăng trụ đó.
+	\end{enumerate}
+	\loigiai{
+		\begin{enumerate}
+			\item[a)] Thể tích khối hộp chữ nhật bằng tích ba kích thước \[V=6a \cdot 4a \cdot 3a= 72 a^3.\]
+			\item[b)] Gọi $H$ là hình chiếu vuông góc của $S$ xuống $(ABC)$.\\ Ta có ba tam giác vuông $SHA$, $SHB, SHC$ bằng nhau, suy ra $HA=HB=HC$.\\ Vậy $H$ là tâm của tam giác đều $ABC$.
+			\immini{
+				Ta có
+				$$
+				\begin{aligned}
+					& AM=\dfrac{a\sqrt{3}}{2}, AH=\dfrac{2}{3} AM=\dfrac{a\sqrt{3}}{3}, \\
+					& SH=\sqrt{SA^2-AH^2}=\sqrt{a^2-\dfrac{3a^2}{9}}=\dfrac{a\sqrt{6}}{3} .
+				\end{aligned}
+				$$
+				Khối tứ diện đều $SABC$ có thể tích là
+				\[V=\dfrac{1}{3} S_{ABC} \cdot SH=\dfrac{1}{3} \cdot \dfrac{a^2 \sqrt{3}}{4} \cdot \dfrac{a \sqrt{6}}{3}=\dfrac{a^3 \sqrt{2}}{12} .\]}
+			{\begin{tikzpicture}[scale=.8,>=stealth, font=\footnotesize, line join=round, line cap=round]
+					\path(0,0)coordinate(A) (1.2,-1.6)coordinate(B) (4.5,0)coordinate(C)(barycentric cs:B=1,C=1)coordinate(M)
+					(barycentric cs:A=1,B=1,C=1)coordinate(H)+(0,3.5)coordinate(S);
+					\draw[dashed](M)--(A)--(C)(S)--(H);
+					\draw(S)--(A)--(B)--(S)--(C)--(B) (S)--(M);
+					\pic[draw,angle radius=6]{right angle=S--H--M};
+					\foreach\p/\g in{A/180,B/-90,C/0,S/90,H/-90,M/-30}\fill(\p)circle(1.2pt)node[shift={(\g:.2)}]{$\p$};		
+			\end{tikzpicture}}
+			\item[c)] \immini{Chiều cao của khối lăng trụ
+				\[h=A'O=\sqrt{A'A^2-A O^2}=\sqrt{4 a^2-2 a^2}=a \sqrt{2}.\]
+				Thể tích khối lăng trụ \[V=Sh=4a^2 \cdot a \sqrt{2}=4 a^3 \sqrt{2}.\]}
+			{	\begin{tikzpicture}[scale=0.8, font=\footnotesize, line join=round, line cap=round,>=stealth]
+					\path (0,3) coordinate (h) (0,0)coordinate (B) (3.5,0) coordinate (C) (5,1) coordinate (D) ($(B)+(D)-(C)$) coordinate (A) ($(B)!0.5!(D)$) coordinate (O) ($(O)+(h)$) coordinate (A') ($(B)!0.7!(O)$) coordinate (H);
+					\foreach \p in {B,C,D}\path ($(\p)+(A')-(A)$) coordinate (\p');
+					\draw (A')--(B')--(B)--(C)--(D)--(D')--cycle (B')--(C')--(D') (C)--(C');
+					\draw[dashed] (B)--(A)--(D)--cycle (C)--(A)--(A')--(O);
+					\foreach \p/\g in {A/150,B/240,C/-60,D/0,A'/90,B'/180,C'/-30,D'/45,O/-90} \fill[black] (\p) circle(1pt)+(\g:0.3) node{$\p$};
+					\draw pic[draw, angle radius=0.2cm]{right angle= A'--O--A} pic[draw, angle radius=0.2cm]{right angle= B--A--D};
+			\end{tikzpicture}}
+	\end{enumerate}}
+\end{bt}
+
+% nguồn: 2026-11-15_11_1H8_TL2_Vuong_goc (nhập 15/11/2026)
+\begin{bt}%[1H8V7-5]%[ma:27672468]
+% nguon: Archive/SP-4Phan-Dot3/Data/KNTT_1-OTGK2_De05.tex #4332
+%%Tự luận 4
+	Cho khối chóp $S.ABCD$ có đáy $ABCD$ là hình vuông cạnh bằng $2a$, $SA\perp \left(ABCD\right)$, $SA=\dfrac{2a}{\sqrt{3}}$.
+	\begin{enumerate}
+		\item Chứng minh tam giác $SCD$ vuông?
+		\item Tính khoảng cách từ $A$ đến $(SCD)$.
+		\item Tính thể tích của khối tứ diện $AHCD$?
+	\end{enumerate}
+	\loigiai{
+		\begin{center}
+			{\begin{tikzpicture}[scale=0.8, font=\footnotesize,line join=round, line cap=round, >=stealth]
+					\def\a{4}
+					\def\h{4}
+					\path 	(0:0) coordinate (A)
+					++(0:\a) coordinate (D)
+					++(-130:\a/2) coordinate (C)
+					($(A)+(C)-(D)$) coordinate (B)
+					($(A)+(90:\h)$) coordinate (S)
+					($(S)!(A)!(D)$) coordinate (H);
+					\draw[dashed] 	(B)--(A)--(D)	(A)--(S) (C)--(A)--(H);
+					\draw	(B)-- (C)--(D) (C)--(H)
+					(B)--(S)	(C)--(S)	(D)--(S);
+					\foreach \x/\g in {A/135,B/-135,C/-45,D/45,S/90,H/45}
+					\fill[black] 	(\x) circle (1.5pt)
+					($(\g:3mm)+(\x)$) node {$\x$};	
+					\draw pic[draw,angle radius=2mm]{right angle=D--A--S}
+					pic[draw,angle radius=2mm]{right angle=A--H--S};	
+			\end{tikzpicture}}
+		\end{center}
+		\begin{enumerate}
+			\item Ta có $\heva {&CD\perp AD\text { ($ABCD$ là hình vuông)}\\&CD\perp SA\  (SA\perp (ABCD)}\Rightarrow CD\perp (SCD)$.\\
+			$\Rightarrow CD\perp SD$ hay $\triangle SCD$ vuông tại $D$.
+			\item Gọi $AH$ là đường cao của tam giác $SAD$.\\
+			Ta có $\heva{&AH\perp SD\\ &AH\perp CD}\Rightarrow AH\perp (SCD)$ nên $AH$ là khoảng cách từ $A$ đến $(SCD)$.\\
+			Trong tam giác vuông $SAD$, ta có \[\dfrac{1}{AH^2}=\dfrac{1}{SA^2}+\dfrac{1}{AD^2}=\dfrac{3}{4a^2}+\dfrac{1}{4a^2}=\dfrac{1}{a^2}.\]
+			Suy ra $AH=a$. 
+			\item Ta có $HD=\sqrt{AD^2-AH^2}=\sqrt{4a^2-a^2}=a\sqrt{3}$.
+			Từ đó ta có
+			\[V_{C.AHD}=\dfrac{1}{3} S_{ADH} \cdot CD=\dfrac{1}{3} \cdot \dfrac{AH\cdot HD}{2} \cdot CD=\dfrac{1}{3} \dfrac{a\sqrt{3} \cdot a}{2} \cdot 2a=\dfrac{a^3 \sqrt{3}}{3}.\]
+		\end{enumerate}		
+	}
+\end{bt}

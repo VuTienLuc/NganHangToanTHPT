@@ -51,3 +51,53 @@
 		 Vậy góc giữa mặt đất và đường thẳng chứa tia sáng mặt trời tại thời điểm nói trên khoảng $31^\circ4'$.\\
 	} 
 \end{ex}
+
+% nguồn: 2026-11-15_11_1H8_TL2_Vuong_goc (nhập 15/11/2026)
+\begin{bt}%[1H8V2-6]%[ma:a8372d17]
+% nguon: Archive/SP-4Phan-Dot3/Data/CD_1_OTGK2_De02.tex #4290
+
+	Đại Kim tự tháp Giza có chiều cao $138{,}5$ m và độ dài các cạnh đáy là $230{,}33$ m. Xem Kim tự tháp này là một hình chóp tứ giác đều $S.ABCD$ có $O$ là tâm của đáy. Một đoàn thám hiểm đã đi đến được tâm $O$ của Kim tự tháp và nhận thấy ở mỗi mặt bên của kim tự tháp đều có một ô cửa trống, và từ vị trí của họ đến với ô cửa đó thì sẽ vuông góc với các mặt bên của kim tự tháp. Vậy khoảng cách từ vị trí đang đứng của đoàn thám hiểm đến ô cửa là bao nhiêu? (\textit{Kết quả làm tròn đến hàng thập phân})
+	\loigiai{
+		Theo đề bài, ta vẽ được hình sau
+		\begin{center}
+			\begin{tikzpicture}[line join=round,line cap=round,>=stealth,font=\footnotesize,scale=1]
+				\def\a{4}
+				\def\h{4}
+				\path 	(0:0) coordinate (A)
+				++(0:\a) coordinate (D)
+				++(-140:\a/2) coordinate (C)
+				($(A)+(C)-(D)$) coordinate (B)
+				(intersection of A--C and B--D) coordinate (O)
+				($(O)+(90:\h)$) coordinate (S)
+				($(C)!.5!(D)$) coordinate (I)
+				($(S)!.7!(I)$) coordinate (H)
+				;
+				\draw[dashed] (B)--(A)--(D)	(A)--(S) (A)--(C) (B)--(D) (S)--(O) (O)--(H) (O)--(I);
+				\draw[thick] (B)--(C)--(D) (B)--(S)	(C)--(S) (D)--(S)--(I);
+				\foreach \x/\g in {A/135,B/-135,C/-45,D/45,S/90,O/-90,I/-20,H/20}
+				\fill[black] 	(\x) circle (1.5pt)
+				($(\g:3mm)+(\x)$) node {$\x$};
+				\draw pic[draw,angle radius=3mm]{right angle=D--O--S};
+				\draw pic[draw,angle radius=3mm]{right angle=O--I--C};
+				\draw pic[draw,angle radius=3mm]{right angle=O--H--I};
+				\draw pic[draw,angle radius=3mm]{angle=S--I--O};
+			\end{tikzpicture}
+		\end{center}
+		Ta có $SO$ vuông với đáy, nên $SO$ vuông với $CD$.\\
+		Gọi $I$ là trung điểm $CD$, do $ABCD$ là hình vuông nên $OI$ vuông với $CD$.\\
+		Suy ra $CD\perp(SIO)$.\\
+		Gọi $H$ là hình chiếu của $O$ lên $SI$.\\
+		Do $CD\perp(SIO)$ nên $OH\perp CD$ ($SC$ chứa trong $(SCD)$).\\
+		Mà $OH\perp SI$ ($H$ là hình chiếu) ($SI$ chứa trong $(SCD)$).\\
+		Nên $OH\perp(SCD)$.\\
+		Vậy $H$ chính là ô cửa cần tìm.\\
+		Do vậy khoảng cách từ đoàn thám hiểm đến ô cửa là $OH$.\\
+		Bài toán trở thành tính độ dài $OH$.\\
+		Theo định lý tam giác vuông, ta có
+		\begin{eqnarray*}
+			\dfrac{1}{OH^2}&=&\dfrac{1}{SO^2}+\dfrac{1}{OI^2}\\
+			&=&\dfrac{1}{138{,}5^2}+\dfrac{1}{\left(\dfrac{230{,}33}{2} \right)^2} \\
+			&\Rightarrow& OH\approx 88{,}6 \text{ (m).}
+		\end{eqnarray*}
+	}
+\end{bt}

@@ -1,0 +1,94 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Lớp 11 | Phép biến hình phẳng | Phép quay
+% Dạng 1C1?5-4: Ứng dụng phép quay
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+% nguồn: 2026-11-15_11_1C1_TL2_Bien_hinh_va_hinh_khong_gian (nhập 15/11/2026)
+\begin{bt}%[1C1C5-4]%[ma:1981364e]
+% nguon: Archive/SP_KhoLatex/ID6_old/1H1G5-4.tex #3002
+%[HK1, Lê Quí Đôn - Đà Nẵng, 2018]%[Đức Nguyễn, 11EX1819]
+	Dựng về phía ngoài tam giác nhọn $ABC$ các hình vuông $ABMN$, $ACPQ$. Gọi $O_1$, $O_2$ lần lượt là tâm của hình vuông $ABMN$, $ACPQ$ và $I$ là trung điểm của $BC$.
+	\begin{enumerate}
+		\item Chứng minh tam giác $IO_1O_2$ vuông cân tại $I$.
+		\item Chứng minh $AI$ vuông góc với $NQ$ và $AI=\dfrac{1}{2}NQ$
+	\end{enumerate}
+	\loigiai{
+			\begin{center}
+			\begin{tikzpicture}[scale=1, font=\footnotesize,line join=round, line cap=round,>=stealth]
+			\pgfmathsetmacro\a{4}
+			\tkzDefPoint(0,0){B}
+			\tkzDefShiftPoint[B](0:\a){C}
+			\tkzDefShiftPoint[B](75:\a-0.5){A}
+			\tkzDefPointBy[rotation = center B angle 90](A) \tkzGetPoint{M}
+			\tkzDefPointBy[translation = from B to A](M) \tkzGetPoint{N}
+			\tkzDefPointBy[rotation = center A angle 90](C) \tkzGetPoint{Q}
+			\tkzDefPointBy[translation = from A to Q](C) \tkzGetPoint{P}
+			\tkzDefMidPoint(B,C) \tkzGetPoint{I}
+			\tkzInterLL(A,M)(B,N)    \tkzGetPoint{O1}
+			\tkzInterLL(A,P)(C,Q)    \tkzGetPoint{O2}
+			\tkzDefMidPoint(N,C) \tkzGetPoint{X}
+			\tkzDefMidPoint(B,Q) \tkzGetPoint{Y}
+			\tkzDefPointBy[rotation = center A angle 90](O2) \tkzGetPoint{Z}
+			\tkzDrawPolygon(A,B,C)
+			\tkzDrawSegments(B,M M,N N,A C,P P,Q Q,A N,B A,M C,Q A,P N,C Q,B O1,O2 O2,I O1,I N,Q)
+			\tkzDrawSegments[dashed](A,I X,O2 I,Y Z,Y A,Z)
+			\tkzLabelPoints[above](Z,Q,N)
+			\tkzLabelPoints[below](M,B,I,C)
+			\tkzLabelPoints[right](P)
+			\tkzLabelPoint[above left](Y){\footnotesize $Y$}
+			\tkzLabelPoint[left](O1){\footnotesize $O_1$}
+			\tkzLabelPoint[above left](O2){\footnotesize $O_2$}
+			\tkzLabelPoint[below](X){\footnotesize $X$}
+			\tkzLabelPoints[above left](A)
+		\tkzDrawPoints[fill=black](A,B,C,M,N,P,Q,X,Y,Z,I,O1,O2)
+			\end{tikzpicture}
+		\end{center}
+		\begin{enumerate}
+			\item Không mất tính tổng quát, giả sử $A$, $B$, $C$ có hướng như hình vẽ.\\
+			Xét phép quay $\mathrm{Q}_{\left(A,\dfrac{\pi}{2}\right)}$ thì $N\mapsto B$, $C\mapsto Q$, suy ra $NC=BQ$ và $NC\perp BQ$.\\
+			Từ giả thiết suy ra $IO_1$, $IO_2$ lần lượt là các đường trung bình trong các tam giác $BNC$, $CBQ$ nên suy ra $IO_1=\dfrac{1}{2}NC=\dfrac{1}{2}BQ=IO_2$ và $\widehat{O_1IO_2}=\dfrac{\pi}{2}$. Do đó, tam giác $IO_1O_2$ vuông cân tại $I$. 
+			\item Gọi $X$, $Y$ lần lượt là  trung điểm của $NC$, $BQ$ và $Z=\mathrm{Q}_{\left(A,\dfrac{\pi}{2}\right)}\left(O_2\right)$.\\
+			Qua $\mathrm{Q}_{\left(A,\dfrac{\pi}{2}\right)}$ thì $NC\mapsto BQ$ suy ra $X\mapsto Y$; $XO_2\mapsto YZ$.\\
+			Do $IY$ là đường trung bình của tam giác $BCQ$ nên
+			 $$IY\parallel QC, IY=\dfrac{1}{2}QC\Rightarrow
+			  IY\parallel AZ, IY=AZ.$$
+			Vậy $AIYZ$ là hình bình hành, suy ra $AI\parallel YZ$ và $AI=YZ\Rightarrow AI\perp XO_2$ và $AI=XO_2$.\\
+			  Vì $XO_2$ là đường trung bình của tam giác $NCQ$ nên $AI\perp
+			   NQ$ và $AI=\dfrac{1}{2}NQ$.
+		\end{enumerate}
+	}
+\end{bt}
+
+% nguồn: 2026-11-15_11_1C1_TL2_Bien_hinh_va_hinh_khong_gian (nhập 15/11/2026)
+\begin{bt}%[1C1H5-4]%[ma:102dd419]
+% nguon: Archive/SP_KhoLatex/ID6_old/1H1B5-4.tex #3352
+%[HK1, Lê Quí Đôn - Đà Nẵng, 2018]%[Đức Nguyễn, 11EX1819]
+Dựng về phía ngoài tam giác nhọn $ABC$ các tam giác đều $ABB'$, $ACC'$. Gọi $I$, $J$ lần lượt là trung điểm của $B'C$, $C'B$. Chứng minh rằng tam giác $AIJ$ đều.
+	\loigiai{
+	\begin{center}
+		\begin{tikzpicture}[scale=1, font=\footnotesize,line join=round, line cap=round,>=stealth]
+		\pgfmathsetmacro\a{4}
+		\tkzDefPoint(0,0){B}
+		\tkzDefShiftPoint[B](0:\a){C}
+		\tkzDefShiftPoint[B](75:\a-0.5){A}
+		\tkzDefCircle[radius](A,B)
+		\tkzDefCircle[radius](B,A)
+		\tkzInterCC(B,A)(A,B)    \tkzGetFirstPoint{B'}
+		\tkzDefCircle[radius](A,C)
+		\tkzDefCircle[radius](C,A)
+		\tkzInterCC(A,C)(C,A)    \tkzGetFirstPoint{C'}
+		\tkzDefMidPoint(B',C) \tkzGetPoint{I}
+		\tkzDefMidPoint(B,C') \tkzGetPoint{J}
+		\tkzDrawPolygon(B,B',A,C',C,B)
+		\tkzDrawPolygon(A,I,J)
+		\tkzDrawSegments(A,B A,C B',C B,C')
+		\tkzLabelPoints[above](A,B',C',J)
+		\tkzLabelPoints[below](B,C,I)
+		\tkzDrawPoints[fill=black](A,B,C,B',C',I,J)
+		\end{tikzpicture}
+	\end{center}
+Không mất tính tổng quát ta có thể giả sử tam giác $ABC$ có hướng như hình vẽ. Xét phép quay $\mathrm{Q}_{\left(A,\dfrac{\pi}{3}\right)}$ thì $B'\mapsto B$, $C\mapsto C'$, suy ra $B'C$ biến thành $BC'$ nên $I$ biến thành $J$.\\
+Suy ra $AI=AJ$, $\widehat{IAJ}=\dfrac{\pi}{3}\Rightarrow $ tam giác $AIJ$ đều.
+	}
+\end{bt}

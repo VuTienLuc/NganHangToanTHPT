@@ -594,3 +594,52 @@
 		$P=\dfrac{a-b+c}{100}=\dfrac{-20\,062{,}5-\dfrac{13\,375\sqrt{3}}{2}+13\,375}{100}\approx -183$.
 	}
 \end{bt}
+
+% nguồn: 2026-11-15_11_1D1_TL2_Luong_giac (nhập 15/11/2026)
+\begin{bt}%[1D1H2-5]%[ma:5527179a]
+% nguon: Archive/2024/TOAN_11_XE/TOAN_11_XE/data4/11C1/KNTT-1.OTC.tex #1112
+%[Tex hóa SGK CD-CT,T12/22, TVN-006]
+\immini{
+Khi một tia sáng truyền từ không khí vào mặt nước thì một phần tia sáng bị phản xạ trên bề mặt, phần còn lại bị khúc xạ như hình bên. Góc tới $i$ liên hệ với góc khúc xạ $r$ bởi Định luật khúc xạ ánh sáng
+$$\dfrac{\sin i}{\sin r}=\dfrac{n_2}{n_1}.$$
+Ở đây, $n_1$ và $n_2$ tương ứng với chiết suất của môi trường $1$ (không khí) và môi trường $2$ (nước). Cho biết góc tới $i=50^\circ$, hãy tính góc khúc xạ, biết rằng chiết suất của không khí bằng $1$ còn chiết suất của nước là $1{,}33$.
+}
+{
+	\begin{tikzpicture}[>=stealth,line join=round,line cap=round,font=\footnotesize,scale=.7]
+	\path
+	(0,0)coordinate(I)++(90:3)coordinate(N)++(-90:6)coordinate(N')
+	(I)++(0:3)coordinate(B)++(180:6)coordinate(A)
+	(I)++(30:3)coordinate(S')
+	(I)++(150:3)coordinate(S)
+	(I)++(-55:3)coordinate(R)
+	;
+	\fill[cyan!20!](-3,-3)rectangle(3,0)
+	;
+	\draw (A)--(B)
+	;
+	\draw[dashed](N)--(N')
+	;
+	\draw[->,midway](S)--(I)
+	;
+	\draw[->](I)--(S')
+	;
+	\draw[->](I)--(R)
+	;
+	\foreach \p/\r in {N/180,N'/180,S/160,S'/90,R/0,I/-135}
+	\fill (\p) node[shift={(\r:3mm)}]{$\p$}
+	;
+	\draw pic[angle radius=3mm,draw=red,fill=green!50,"$i$",angle eccentricity=1.5] {angle = N--I--S}
+	;
+	\draw pic[angle radius=4mm,draw=orange,fill=orange!50,"$i'$",angle eccentricity=1.5] {angle = S'--I--N}
+	;
+	\draw pic[angle radius=4mm,draw=blue,fill=blue!50,"$r$",angle eccentricity=1.5] {angle = N'--I--R}
+	;
+	\draw (-2.5,.5)circle(7pt)node{$1$}
+		(-2.5,-.5)circle(8pt)node{$2$}
+		;	
+\end{tikzpicture}
+}
+\loigiai{
+Ta có $\dfrac{\sin i}{\sin r}=\dfrac{n_2}{n_1}\Leftrightarrow \dfrac{\sin 50^\circ}{\sin r}=\dfrac{1{,}33}{1}\Leftrightarrow \sin r=\dfrac{\sin 50^\circ}{1{,}33}\Rightarrow r\approx 35{,}17^\circ$.
+}
+\end{bt}

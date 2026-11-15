@@ -4617,3 +4617,682 @@
 		} 
 	} 
 \end{ex}
+
+% nguồn: 2026-11-15_11_1H8_TL2_Vuong_goc (nhập 15/11/2026)
+\begin{bt}%[1H8V2-2]%[ma:efe73971]
+% nguon: Archive/SP_SauLuoi_2024-2025/Sp_GHKII/data/GHKII/1-TN-DS-TLN-TL-THPT-ThiXaQuangTri-QuangTri-GHKII-NH24-25.tex #146
+ %[Dự án đề GHKII THPT Thị Xã Quảng Trị - Quảng Trị - 24-25][Lê Phúc]
+	Cho hình chóp $S.ABCD$ có đáy $ABCD$ là một hình vuông và $SA\perp(ABCD)$.
+	\begin{enumerate}
+		\item Chứng minh rằng $BC\perp(SAB)$.
+	\item Gọi $H$ là hình chiếu vuông góc của $A$ lên mặt phẳng $(SBD)$. Chứng minh rằng $H$ là trực tâm của tam giác $SBD$.	
+	\end{enumerate}
+	\loigiai{
+		\begin{center}
+			\begin{tikzpicture}[scale=1, font=\footnotesize, line join=round, line cap=round, >=stealth]
+				\coordinate (A) at (0,0);
+				\coordinate (B) at (-2,-3);
+				\coordinate (D) at (7,0);
+				\coordinate (C) at ($(B)+(D)-(A)$);
+				\coordinate (S) at ($(A)+(0,5)$);
+				\coordinate (O) at (intersection of A--C and B--D);
+				\coordinate (H) at ($(S)!2/3!(O)$);
+				\draw(S)--(B) (S)--(C) (S)--(D) (B)--(C)--(D);
+				\draw[dashed,thin](S)--(A)--(C) (B)--(A)--(H) (A)--(D)--(B) (S)--(O) (D)--(H);
+				\pic[draw,thin,angle radius=3mm] {right angle = S--A--D} pic[draw,thin,angle radius=3mm] {right angle = S--A--B} pic[draw,thin,angle radius=3mm] {right angle = A--H--O};
+				\foreach \i/\g in {S/90,A/-90,B/-90,C/-90,D/0,O/-90,H/45}{\draw[fill=black](\i) circle (1pt) ($(\i)+(\g:3mm)$) node[scale=1]{$\i$};}
+			\end{tikzpicture}
+		\end{center}
+	\begin{enumerate}
+		\item Ta có $\heva{&BC\perp AB \ (ABCD \ \text{là hình vuông})\\&BC\perp SA \ (SA\perp (ABCD))}\Rightarrow BC \perp (SAB)$.
+	\item 	Gọi $O$ là tâm hình vuông $ABCD$.\\
+	Kẻ $AH\perp SO$.\\
+	\begin{itemize}
+		\item $\heva{&BD\perp AC\\&BD\perp SA}\Rightarrow BD\perp (SAC)\Rightarrow BD\perp AH$.\\
+	\item  $\heva{&AH\perp SO\\&AH\perp BD}$\\
+	$\Rightarrow AH\perp (SBD)$ hay $H$ là hình chiếu của $A$ lên mặt phẳng $(SBD)$.
+	\item $\heva{&AH\perp(SBD)\\&SB\subset(SBD)}\Rightarrow AH\perp SB$.\\
+	\item $\heva{&BC\perp (SAB)\\&BC\parallel AD}\Rightarrow AD\perp (SAB) \Rightarrow AD\perp SB$.
+	\item $\heva{&SB\perp AH\\&SB\perp AD}\Rightarrow SB\perp (AHD)\Rightarrow SB\perp DH$.
+	\end{itemize}
+	Gọi $E$ là giao điểm của $DH$ và $SB$.\\
+	Suy ra $DE\perp SB$.\\
+	Xét $\triangle SBD$ có $SO$ và $DE$ là hai đường cao cắt nhau tại $H$.\\
+	Vậy $H$ là trực tâm của $\triangle SBD$.
+	\end{enumerate}
+
+	}
+\end{bt}
+
+% nguồn: 2026-11-15_11_1H8_TL2_Vuong_goc (nhập 15/11/2026)
+\begin{bt}%[1H8H2-2]%[ma:d0ace80e]
+% nguon: Archive/SP_SauLuoi_2024-2025/Sp_GHKII/data/GHKII/1-TN-DS-TLN-TL-THPT-HoaHoi-BRVT-GHKII-NH24-25.tex #163
+%[Dự án tex đề GHKII THPT Hoà Hội - Bà Rịa Vũng Tàu- 24-25][Đỗ Minh Vũ]
+	 			Cho hình chóp $S.ABCD$ có đáy $ABCD$ là hình chữ nhật, $SA$ vuông góc với mặt phẳng $(ABCD)$, $SA = AB$, gọi $H$ là hình chiếu vuông góc của $A$ lên đường thẳng $SB$, $M$ là trung điểm $SC$.
+	 			\begin{enumerate}
+	 				\item Chứng minh rằng đường thẳng $BC$ vuông góc với mặt phẳng $(SAB)$.
+	 				\item Chứng minh rằng đường thẳng $MH$ vuông góc với đường thẳng $SA$.
+	 			\end{enumerate}
+	 		\loigiai{
+	 			\begin{center}
+	 				\begin{tikzpicture}[scale=1, font=\footnotesize, line join=round, line cap=round]
+	 					\foreach \x\y\t in {0/3/S,0/0/A,-1.3/-1.6/B,2.5/-1.6/C}
+	 					\coordinate (\t) at (\x,\y);
+	 					\coordinate (D) at ($(A)+(C)-(B)$);
+	 					\coordinate (H) at ($(S)!1/2!(B)$);
+	 					\coordinate (M) at ($(S)!1/2!(C)$);
+	 					\draw (M)--(H) (S)--(C)--(B)--(S)--(D)--(C);
+	 					\draw[dashed](S)--(A)  (B)--(A)--(D) (H)--(A);
+	 					\path pic[draw,angle radius=6]{right angle=S--A--C};
+	 					\foreach \t/\g in {S/90,A/-90,B/-130,C/-60,D/0,H/160,M/40}
+	 					\draw[fill=black] (\t) circle(1.5pt)
+	 					node[shift={(\g:8pt)}]{$\t$};
+	 				\end{tikzpicture}
+	 			\end{center}
+	 			\begin{enumerate}
+	 				\item Chứng minh $BC\perp (SAB)$\\
+	 				Ta có \\
+	 				$BC \perp AB$ (do $ABCD$ là hình chữ nhật)\\
+	 				$BC \perp SA$ (do $SA \perp (ABCD)$)\\
+	 				$\Rightarrow BC \perp (SAB)$.
+	 				\item Chứng minh $MH \perp SA$\\
+	 				Tam giác $SAB$ vuông cân tại $A$ (do $SA=AB$) nên $AH$ vừa là đường cao vừa là trung tuyến $\Rightarrow H$ là trung điểm $SB$.\\
+	 				Và $M$ là trung điểm $SC$ (giả thiết)\\
+	 				Nên $HM \parallel BC$ (tính chất đường trung bình).\\
+	 				$\Rightarrow HM \perp (SAB) \Rightarrow HM \perp SA$ (do $SA \subset (SAB)$).
+	 			\end{enumerate}
+	 		}
+	 	\end{bt}
+
+% nguồn: 2026-11-15_11_1H8_TL2_Vuong_goc (nhập 15/11/2026)
+\begin{bt}%[1H8H2-2]%[ma:8886547c]
+% nguon: Archive/SP_SauLuoi_2024-2025/Sp_GHKII/data/GHKII/1-TN-DS-TLN-TL-THPT-NinhBinh-BacLieu-GHKII-NH24-25.tex #230
+%[Dự án đề kiểm tra Toán 11 GHKII NH24-25-Lê Minh Thiện Anh]%[THPT Ninh Bình-Bạc Liêu]
+	Cho hình chóp $S.ABCD$ có đáy $ABCD$ là hình vuông, cạnh bên $SA$ vuông góc với đáy. Chứng minh $BD \perp (SAC)$.	
+	\loigiai{
+		\immini{Ta có $BD \perp AC$ ($ABCD$ là hình vuông).\\
+		$BD \perp SA$ ($SA \perp (ABCD)$) nên $BD \perp (SAC)$.}
+		{\begin{tikzpicture}[font=\footnotesize, line join=round, line cap=round, >=stealth,scale=0.7]
+		\path
+		(0,0) coordinate (A) 
+		(-2,-2) coordinate (B)
+		(3,-2) coordinate (C)
+		(5,0) coordinate (D)
+		(0,4) coordinate (S)
+		;
+		\draw 
+		(S)--(B)--(C)--(D)--cycle
+		(S)--(C);
+		\draw [dashed] (S)--(A)--(D)--(B)--(A)--(C); 
+		\pic[draw,angle radius=1.5mm,angle eccentricity=1.5] {right angle = S--A--B};
+		\pic[draw,angle radius=1.5mm,angle eccentricity=1.5] {right angle = S--A--D};		
+		\foreach \x/\g in
+		{A/150,B/180,C/0,D/0,S/90}
+		\fill[black](\x) circle (1pt)
+		($(\x)+(\g:3mm)$) node{$\x$};
+		\end{tikzpicture}}
+	}
+\end{bt}
+
+% nguồn: 2026-11-15_11_1H8_TL2_Vuong_goc (nhập 15/11/2026)
+\begin{bt}%[1H8H2-2]%[ma:45004d02]
+% nguon: Archive/SP_SauLuoi_2024-2025/Sp_GHKII/data/GHKII/1-TN-DS-TLN-TL-THPT-LeLoi-KonTum-GHKII-NH24-25.tex #251
+%[Dự án A đợt 9, THPT Lê Lợi Kon Tum GHK2 2024-2025]%[BCTuan]
+Cho hình chóp $S.ABCD$ có đáy $ABCD$ là hình chữ nhật, $SA\perp(ABCD)$.
+Chứng minh $BC\perp (SAB)$.
+\loigiai{
+\immini
+{
+Ta có $\heva{&BC\perp AB \\& BC \perp SA\ (\text{do}\ SA\perp (ABCD))} \Rightarrow BC\perp(SAB)$.
+}
+{
+	\begin{tikzpicture}[scale=0.8, font=\footnotesize, line join=round, line cap=round, >=stealth]
+		\def\bc{4} % cạnh BC
+		\def\ba{2} % cạnh BA
+		\def\h{3} % đường cao
+		\def\gocB{30} % góc B của đáy
+		\coordinate[label=below left:$B$] (B) at (0,0);
+		\coordinate[label=above left:$A$] (A) at (\gocB:\ba);
+		\coordinate[label=below:$C$] (C) at (\bc,0);
+		\coordinate[label=right:$D$] (D) at ($(C)-(B)+(A)$);
+		\coordinate[label=above:$S$] (S) at ($(A)+(90:\h)$);
+		% \coordinate[label=above right:$H$] (H) at ($(S)!0.5!(D)$);
+		\draw (B)--(C)--(D)--(S)--cycle (S)--(C);
+		\draw[dashed] (A)--(D) (S)--(A)--(B);
+		\foreach \diem in {A,B,C,D,S}	\fill (\diem)circle(1pt);
+	\end{tikzpicture}
+}
+}
+\end{bt}
+
+% nguồn: 2026-11-15_11_1H8_TL2_Vuong_goc (nhập 15/11/2026)
+\begin{bt}%[1H8H2-2]%[ma:b99282d3]
+% nguon: Archive/SP_SauLuoi_2024-2025/Sp_GHKII/data/GHKII/1-TN-DS-TLN-TL-THPT-Edison-HaiPhong-GKII-NH24-25.tex #260
+%[Dự án đề kiểm tra Toán 10 GHKII NH24-25- Quan Ón]%[THPT Edison - Hải Phòng]
+	Cho tứ diện $OABC$ có $OA$ vuông góc với mặt phẳng $(OBC)$ và có $A'$, $B'$, $C'$ lần lượt là trung điểm của $OA$, $AB$, $AC$. Vẽ $OH$ là đường cao của tam giác $OBC$. Chứng minh rằng $B'C' \perp (OAH)$.
+	\loigiai{
+		\immini{
+			Ta có $\heva{&OA \perp (OBC)\\&BC \subset (OBC)} \Rightarrow OA \perp BC$.\\
+			Vì $\heva{&BC\perp OA \textrm{ (cmt)}\\&BC\perp OH \textrm{ ($OH$ là đường cao của $\triangle OBC$)}\\&OA \cap OH = \{O\}}$\\
+			$\Rightarrow BC \perp (OAH)$.\\
+			Mà tam giác $ABC$ có $B'C'$ là đường trung bình nên $B'C' \parallel BC$.\\
+			Ta có $\heva{&BC \perp (OAH) \textrm{ (cmt)}\\&B'C' \parallel BC \textrm{ (cmt)}}$\\
+			$\Rightarrow B'C' \perp (OAH)$.
+		}{
+			\begin{tikzpicture}[font=\footnotesize,line join=round, line cap=round, >=stealth,scale=1] 
+				\path  
+				(0,0) coordinate (O)
+				(1,-1.6) coordinate (B)
+				(0,2.8) coordinate (A)
+				(3.5,0) coordinate (C)
+				($(O)!0.5!(A)$) coordinate (A')
+				($(A)!0.5!(B)$) coordinate (B')
+				($(A)!0.5!(C)$) coordinate (C')
+				($(B)!0.35!(C)$) coordinate (H)
+				; 
+				\draw (A)--(O)--(B)--(C)--(A)--(B) (A')--(B')--(C') (A)--(H);
+				\draw[dashed] (A')--(C') (C)--(O)--(H);
+				\foreach \x/\g in {A/90, B/-90, C/-90, O/-135,H/-45,A'/180,B'/-20,C'/45} \fill (\x) circle(1pt) node[{shift=(\g:0.3)}]{$\x$}; 
+				\foreach \a/\b/\c in {O/H/B} {\draw pic [draw, angle radius=2mm] {right angle=\a--\b--\c};}
+			\end{tikzpicture}
+		}
+	}
+\end{bt}
+
+% nguồn: 2026-11-15_11_1H8_TL2_Vuong_goc (nhập 15/11/2026)
+\begin{bt}%[1H8N2-2]%[ma:f485161d]
+% nguon: Archive/SP_SauLuoi_2024-2025/Sp_GHKII/data/GHKII/1-TN-DS-TLN-TL-THPT-NguyenHue-Hue-GHKII-NH24-25.tex #268
+%[Dự án đề kiểm tra Toán 11 Giữa HKII NH24-25- Xuan Vy Pham%[THPT Nguyễn Huệ - Huế]
+Cho lăng trụ đứng tam giác $ABC.A'B'C'$, biết $CA=CB$. Gọi $I$ là trung điểm của $AB$. Chứng minh rằng $CI \perp (ABB'A')$.	
+\loigiai{\begin{center}
+		\begin{tikzpicture}[line join=round, line cap=round,>=stealth,font=\footnotesize,scale=1]
+			\def\a{3.4} 
+			\def\b{2}
+			\def\h{3.1}
+			\path 	(0:0) coordinate (A)
+			++(0:\a) coordinate (C)
+			(A)	++(-50:\b) coordinate (B)
+			($(A)+(90:\h)$) coordinate (A')
+			($(B)+(90:\h)$) coordinate (B')
+			($(C)+(90:\h)$) coordinate (C')
+			($(A)!0.5!(B)$) coordinate (I);
+			\draw[dashed,thick] 	(A)--(C)--(I);
+			\draw[thick] (C)--(C')--(B')--(A') (B)--(B') 	(B)--(C) (C')--(A')--(A)--(B) ;
+			\foreach \x/\g in {A/180,B/-60,C/0,A'/180,B'/-20,C'/0,I/-90}
+			\fill[black] 	(\x) circle (1pt)
+			($(\g:4mm)+(\x)$) node {$\x$};	
+		\end{tikzpicture}
+\end{center}
+Xét tam giác $ACB$ có $CA=CB$ nên tam giác $CAB$ cân tại $C$.\\
+Mà $CI$ là đường trung tuyến nên cũng là đường cao. Do đó $CI \perp AB$.\\
+Ta có $\heva{&CI \perp AA' \; \text{(vì $AA' \perp (ACB)$)}\\&CI \perp AB} \Rightarrow CI \perp (ABB'A')$.
+
+}
+\end{bt}
+
+% nguồn: 2026-11-15_11_1H8_TL2_Vuong_goc (nhập 15/11/2026)
+\begin{bt}%[1H8H2-2]%[ma:b46ecf68]
+% nguon: Archive/2024/TOAN_11_XE/TOAN_11_XE/data4/11C7/KNTT-7.2.tex #1381
+
+	Cho hình chóp $S.ABCD$ có $SA \perp(ABCD)$. Cho biết $ABCD$ là hình thang vuông tại $A$ và $D$, $AB=2AD$.
+	\begin{enumerate}
+		\item Chứng minh $CD \perp(SAD)$;
+		\item Gọi $M$ là trung điểm của $AB$. Chứng minh $CM \perp (SAB)$.
+	\end{enumerate}
+	\loigiai{
+		\immini{
+			\begin{enumerate}
+				\item Ta có $CD \perp AD \quad (1)$.\\
+				Mặt khác $CD \perp SA \quad (2)$ do $SA \perp (ABCD) $.\\
+				Từ $(1)$ và $(2)$ suy ra $CD \perp (SAD)$.
+				\item  Ta có $SA \perp CM \quad (3)$ do $SA \perp (ABCD) $.\\
+				Mặt khác, $CM \parallel AD \Rightarrow CM \perp AB \quad (4)$.\\
+				Từ $(3)$ và $(4)$ suy ra $(SAB)$.
+			\end{enumerate}
+		}
+		{
+			\begin{tikzpicture}[scale=0.5, font=\footnotesize, line join=round, line cap=round, >=stealth]
+				\coordinate (A) at (0,0);
+				\coordinate (D) at (-2,-3);
+				\coordinate (B) at (8,0);
+				\coordinate (C) at ($(D)+(4.5,0)-(A)$);
+				\coordinate (S) at ($(A)+(0,5)$);
+				\coordinate (M) at ($(A)!0.5!(B)$);
+				\draw(S)--(D) (S)--(C) (S)--(B) (D)--(C)--(B);
+				\draw[dashed,thin](S)--(A) (A)--(D) (A)--(B) (C)--(M);
+				\pic[draw,thin,angle radius=3mm] {right angle = S--A--B};
+				\foreach \i/\g in {S/90,A/-90,B/-90,C/-90,D/-90,M/90}{\draw[fill=black](\i) circle (1.5pt) ($(\i)+(\g:3mm)$) node[scale=1]{$\i$};}
+			\end{tikzpicture}
+		}
+	}
+\end{bt}
+
+% nguồn: 2026-11-15_11_1H8_TL2_Vuong_goc (nhập 15/11/2026)
+\begin{bt}%[1H8H2-2]%[ma:f7be5939]
+% nguon: Archive/2024/TOAN_11_XE/TOAN_11_XE/data4/11C7/KNTT-7.2.tex #1382
+
+	Cho hình vuông $ABCD$. Gọi $H$, $K$ lần lượt là trung điểm của $AB$, $AD$. Trên đường thẳng vuông góc với $(ABCD)$ tại $H$, lấy điểm $S$. Chứng minh rằng:
+	\begin{enumEX}{2}
+		\item $AC \perp (SHK)$;
+		\item $CK \perp (SDH)$.
+	\end{enumEX}
+	\loigiai{
+		\begin{center}
+			\begin{tikzpicture}[scale=.65, font=\footnotesize, line join=round, line cap=round, >=stealth]
+				\coordinate (A) at (0,0);
+				\coordinate (B) at (-2,-3);
+				\coordinate (D) at (7,0);
+				\coordinate (C) at ($(B)+(D)-(A)$);
+				\coordinate (S) at ($(-1,0)+(0,5)$);
+				\coordinate (H) at ($(A)!0.5!(B)$);
+				\coordinate (K) at ($(A)!0.5!(D)$);
+				\coordinate (I) at (intersection of H--D and C--K);
+				\draw(S)--(B) (S)--(C) (S)--(D) (B)--(C)--(D);
+				\draw[dashed,thin](S)--(A) (A)--(B) (A)--(D) (S)--(H) (S)--(K)--(H) (A)--(C) (H)--(D) (C)--(K);
+				\foreach \i/\g in {S/90,A/-90,B/-90,C/-90,D/0,H/180,K/45,I/-30}{\draw[fill=black](\i) circle (1.5pt) ($(\i)+(\g:3mm)$) node[scale=1]{$\i$};}
+			\end{tikzpicture}
+		\end{center}
+		\begin{enumerate}
+			\item Theo đề bài ta có $SH \perp (ABCD)$ mà $AC \subset (ABCD)$ nên $SH \perp AC \quad (1)$.\\
+			Vì $HK$ là đường trung bình của $\triangle ABD \Rightarrow HK \parallel BD$.\\
+			Mà $BD \perp AC$ (Vì $BD$ và $AC$ là hai đường chéo của hình vuông $ABCD$).\\
+			Suy ra $HK \perp AC \quad (2)$.\\
+			Từ $(1)$ và $(2)$ ta được $\heva{&AC \perp SH \subset (SHK)\\ & AC \perp HK \subset (SHK)\\ & SH \cup HK =H} \Rightarrow AC \perp (SHK)$.
+			\item Gọi $I=CK \cap DH$.\\
+			Suy ra, $\triangle IDC$ có $\widehat{IDC}+\widehat{ICD}=\widehat{IDC}+\widehat{ADH}=90^\circ \Rightarrow CK \perp DH \quad (3)$.\\
+			Mà $AH \perp (ABCD) \Rightarrow AH \perp CK \quad (4)$.\\
+			Từ $(3)$ và $(4)$ suy ra $CK \perp (SDH)$.
+		\end{enumerate}
+	}
+\end{bt}
+
+% nguồn: 2026-11-15_11_1H8_TL2_Vuong_goc (nhập 15/11/2026)
+\begin{bt}%[1H8H2-2]%[ma:2d5e7cb4]
+% nguon: Archive/2024/TOAN_11_XE/TOAN_11_XE/data4/11C7/KNTT-7.2.tex #1383
+
+	Cho tứ diện $ABCD$ có $AB\perp (BCD)$, các tam giác $BCD$ và $ACD$ là những tam giác nhọn. Gọi $H$ và $K$ lần lượt là trực tâm của các tam giác $BCD$, $ACD$. Chứng minh rằng:
+	\begin{enumerate}
+		\item $CD\perp (ABH)$.
+		\item $CD\perp (ABK)$.
+		\item Ba đường thẳng $AK$, $BH$, $CD$ cùng đi qua một điểm.
+	\end{enumerate}
+	\loigiai{
+		\immini{\begin{enumerate}
+				\item Ta có $CD\perp BH$ (vì $H$ là trực tâm $\triangle BCD$)\\
+				$CD\perp AB$ (vì $AB\perp (BCD)$)\\
+				$BH,AB\subset (ABH)$.\\
+				$\Rightarrow CD\perp (ABH)$.
+				\item Ta có $CD\perp AK$ (vì $K$ là trực tâm $\triangle ACD$)\\
+				$CD\perp AB$ (vì $AB\perp (BCD)$)\\
+				$AK,AB\subset (ABK)$.\\
+				$\Rightarrow CD\perp(ABK)$.
+				\item Ta có hai mặt phẳng $(ABH)$ và $(ABK)$ cùng vuông góc với $CD$ nên chúng song song hoặc trùng nhau. Hơn nữa chúng có chung 2 điểm $A$, $B$ nên trùng nhau.\\
+				Hay $4$ điểm $A,B,H,K$ đồng phẳng.\\
+				Gọi $I$ là giao điểm của $BH$ và $CD$.\\
+				Ta có $I$ vừa thuộc $CD$, vừa thuộc $BH$ nên nằm trên giao tuyến $AK$ của hai mặt phẳng $(ABK)$ và $(ACD)$.\\
+				Vậy ba đường thẳng $BH$, $AK$, $CD$ đồng quy.
+		\end{enumerate}}{\begin{tikzpicture}[scale=1,line join=round,line cap=round]
+				\tkzDefPoints{0/0/B,1.2/-1.5/C,4/0/D}
+				\coordinate (A) at ($(B)+(0,3)$);
+				\coordinate (I) at ($(C)!0.4!(D)$);
+				\coordinate (H) at ($(B)!2/3!(I)$);
+				\coordinate (K) at ($(A)!2/3!(I)$);		
+				\tkzDrawPolygon(A,B,C,D)
+				\tkzDrawSegments(A,B A,C A,I)
+				\tkzDrawSegments[dashed](B,D B,I)
+				\tkzDrawPoints[fill=black,size=4](A,B,C,D,H,K,I)
+				\tkzLabelPoints[above](A,K)
+				\tkzLabelPoints[below](B,H,I)
+				\tkzLabelPoints[below](C)
+				\tkzLabelPoints[right](D)
+		\end{tikzpicture}}	 
+	}
+\end{bt}
+
+% nguồn: 2026-11-15_11_1H8_TL2_Vuong_goc (nhập 15/11/2026)
+\begin{bt}%[1H8H2-2]%[ma:b3c0bbd0]
+% nguon: Archive/2024/TOAN_11_XE/TOAN_11_XE/data4/11C7/KNTT-7.4.tex #1396
+%[HK2 (2016-2017), THPT THỚI LAI, CẦN THƠ]%[Lê Thanh Nin]
+	Cho hình chóp $ S.ABCD $ có đáy $ ABCD $ là hình vuông cạnh $ a, SA\perp (ABCD) $ và $ SA=a\sqrt{10} $. Gọi $ M,N $ lần lượt là trung điểm của $ BC $ và $ CD $.
+	\begin{tasks}(1)
+		\task Chứng minh $ BD\perp (SAC) $.
+		\task Tính góc giữa $ SM $ và $ (ABCD) $.
+	\end{tasks}
+	\loigiai{
+		\begin{center}
+			\begin{tikzpicture}[line cap=round,line join=round, >=stealth,scale=1]
+				\def \xa{-1.3} 
+				\def \xb{-1.5}
+				\def \y{4}
+				\def \z{3}
+				\coordinate (A) at (0,0);
+				\coordinate (B) at ($(A)+(\xa,\xb)$);
+				\coordinate (D) at ($(A)+(\y,0)$);
+				\coordinate (C) at ($ (B)+(D)-(A) $);
+				\coordinate (S) at ($ (A)+(0,\z) $);
+				\tkzDefMidPoint(B,C)    \tkzGetPoint{M}
+				\tkzDefMidPoint(D,C)    \tkzGetPoint{N}
+				\tkzInterLL(A,C)(B,D) \tkzGetPoint{O}
+				\tkzInterLL(A,C)(M,N) \tkzGetPoint{I}
+				\coordinate (H) at ($ (S)!3/5!(I) $);
+				\draw [dashed] (B)--(A)--(D)--(B) (H)--(A)--(S)--(I) (N)--(M)--(A)--(C);
+				\draw (S)--(B)--(C)--(D)--(S)--(C) (N)--(S)--(M);
+				\tkzDrawPoints(S,A,B,C,D,M,N,I,H,O)
+				\tkzLabelPoints[right](D,N)
+				\tkzLabelPoints[above](S,I,O)
+				\tkzLabelPoints[left](A,H)
+				\tkzLabelPoints[below left](C,B,M)
+			\end{tikzpicture}
+		\end{center}
+		\begin{enumerate}
+			\item Ta có $ \heva{&BD\perp AC\\&BD\perp SA}\Rightarrow BD\perp (SAC) $.
+			\item Hình chiếu vuông góc của $ SM $ lên mặt phẳng $ (ABCD) $ là $ AM $.\\
+			Nên $ \widehat{(SM,(ABCD))}=\widehat{(SM,AM)}=\widehat{SMA} $.\\
+			Xét $ \triangle  SAM $ vuông tại $ A $, ta có:\\
+			$ \tan \widehat{SMA}=\dfrac{SA}{AM}=\dfrac{a\sqrt{10}}{\dfrac{a\sqrt{5}}{2}}=2\sqrt{2}\Rightarrow \widehat{SMA}\approx 70^\circ31'. $
+		\end{enumerate}	
+	}
+\end{bt}
+
+% nguồn: 2026-11-15_11_1H8_TL2_Vuong_goc (nhập 15/11/2026)
+\begin{bt}%[1H8H2-2]%[ma:3d12eedd]
+% nguon: Archive/2024/TOAN_11_XE/TOAN_11_XE/data4/11C7/KNTT-7.4.tex #1397
+%[Phan Hoàng Anh]
+	Cho tứ diện $OABC$ có các cạnh $OA$, $OB$, $OC$ đôi một vuông góc với nhau. Gọi $H$ là hình chiếu vuông góc của điểm $O$ trên mặt phẳng $(ABC)$.
+	\begin{tasks}(1)
+		\task Chứng minh rằng $BC\perp (OAH)$, $CA\perp (OBH)$, $AB\perp (OCH)$.
+		\task Chứng minh $H$ là trực tâm của tam giác $ABC$.
+		\task Chứng minh rằng $\dfrac{1}{OH^2}=\dfrac{1}{OA^2}+\dfrac{1}{OB^2}+\dfrac{1}{OC^2}$.
+		\task Chứng minh rằng các góc của tam giác $ABC$ đều nhọn.
+	\end{tasks}
+	\loigiai{
+		\begin{enumerate}[a)]
+			\item \immini{Từ giả thiết ta có $OH\perp (ABC)$ suy ra $OH\perp BC$.\hfill$(1)$\\
+				Ta có $\left\{\begin{aligned}&OA\perp OB \\&OA\perp OC\end{aligned}\right.\Rightarrow OA\perp (OBC) \Rightarrow OA\perp BC$.\hfill$(2)$\\
+				Từ $(1)$ và $(2)$, suy ra $BC\perp (OAH)$. \\
+				Chứng minh tương tự ta được $$CA\perp (OBH)\text{ và }AB\perp (OCH).$$}
+			{\begin{tikzpicture}[scale=0.6]
+					\tkzDefPoints{0/0/O, -2/-1.8/B,5/0/C,0/4/A}
+					\coordinate (K) at ($(B)!0.55!(C)$);
+					\coordinate (H) at ($(A)!0.6!(K)$);
+					\tkzDrawSegments(A,B B,C C,A A,K)
+					\tkzDrawSegments[dashed](O,A O,B O,C O,K O,H)
+					\tkzDrawPoints(A,B,C,O,H,K)
+					\tkzLabelPoints[above left](O)
+					\tkzLabelPoints[above right](C,H)
+					\tkzLabelPoints[below left](B)
+					\tkzLabelPoints[below right](K)
+					\tkzLabelPoints[above](A)
+					\tkzMarkRightAngle(O,K,B)
+					\tkzMarkRightAngle(A,H,O)
+			\end{tikzpicture}}
+			\item Từ kết quả câu a, ta có $BC\perp (OAH)$ suy ra $BC\perp AH$.\hfill$(3)$\\
+			Tương tự, từ $AC\perp (OBH)$ suy ra $AC\perp BH$.\hfill$(4)$\\
+			Từ $(3)$ và $(4)$, ta có $\left\{\begin{aligned}
+				&AH\perp BC \\
+				&BH\perp AC
+			\end{aligned}\right. $ suy ra $H$ là trực tâm của $\triangle ABC$.
+			\item Giả sử $AH$ cắt $BC$ tại $K$, suy ra $OK\perp BC$. \\
+			Trong $\triangle OBC$ vuông tại $O$, ta có $\dfrac{1}{OK^2}=\dfrac{1}{OB^2}+\dfrac{1}{OC^2}$.\hfill$(5)$\\
+			Trong $\triangle OAK$ vuông tại $O$, ta có $\dfrac{1}{OH^2}=\dfrac{1}{OA^2}+\dfrac{1}{OK^2}$.\hfill$(6)$\\
+			Từ $(5)$ và $(6)$, suy ra $\dfrac{1}{OH^2}=\dfrac{1}{OA^2}+\dfrac{1}{OB^2}+\dfrac{1}{OC^2}$.
+			\item Xét $\cos \widehat{BAC}=\dfrac{AB^2+AC^2-BC^2}{2AB\cdot AC}$. \\
+			Để chứng minh $\widehat{BAC}$ nhọn ta cần chứng minh $\cos \widehat{BAC}>0 \Leftrightarrow AB^2+AC^2-BC^2>0$. \\
+			Thật vậy, ta có $AB^2=OA^2+OB^2;BC^2=OB^2+OC^2;AC^2=OA^2+OC^2$. \\
+			Suy ra $AB^2+AC^2-BC^2=2OA^2>0$ (đpcm). \\
+			Chứng minh tương tự, ta được các góc $\widehat{BAC}$ và $\widehat{ACB}$ đều nhọn.
+	\end{enumerate}}
+\end{bt}
+
+% nguồn: 2026-11-15_11_1H8_TL2_Vuong_goc (nhập 15/11/2026)
+\begin{bt}%[1H8H2-2]%[ma:01848f4f]
+% nguon: Archive/SP_KhoLatex/ID6_old/DeThamKhao-07.tex #3298
+%[Dự án ĐGNL-ĐGTD-2022 GĐ1]%[Dao-V- Thuy]
+	Cho hình chóp $S.ABC$ có tam giác $ABC$ vuông cân tại $B$, $AB=BC=a$, $SA=a\sqrt{3}$, $SA \perp(ABC)$. Góc giữa hai mặt phẳng $(SBC)$ và $(ABC)$ có số đo bằng bao nhiêu độ?\\
+	\textit{Kết quả:} \tikz\draw (0,0) rectangle (3,0.6);
+	\loigiai{
+		\immini{
+			Ta có $(SBC) \cap (ABC)=BC$.\\
+			Vì $A$ là hình chiếu của $S$ lên mặt đáy nên $SA\perp AB$. Mà $AB\perp BC$, suy ra $SB\perp BC$.\\
+			Do đó $((SBC),(ABC))=(SB,AB) = \widehat{SBA}=\alpha$.\\
+			Ta lại có $\tan \alpha = \dfrac{SA}{AB} = \sqrt{3} \Rightarrow \alpha = 60^{\circ}\Rightarrow((SBC),(ABC)) = 60^\circ$.
+		}{
+\begin{tikzpicture}[scale=1.0, font=\footnotesize, line join=round, line cap=round, >=stealth]
+				\def\a{2}
+				\path
+				(0,0) coordinate (A)
+				++(0:{\a*sqrt(2)}) coordinate (C)
+				++(-150:\a) coordinate (B)
+				($(A)+(90:{\a*sqrt(3)})$) coordinate (S)
+				;
+				\tkzDrawSegments(S,A S,B S,C A,B B,C)
+				\tkzDrawSegments[dashed](A,C)
+				\foreach \x/\y/\z/\t in {S/A/B/5pt, A/B/C/5pt} {
+					\path 
+					($(\y)!\t!(\z)$) coordinate (1)
+					($(\y)!\t!(\x)$) coordinate (2)
+					($(1)+(2)-(\y)$) coordinate (3)
+					;
+					\draw (1)--(3)--(2);
+				}
+				\foreach \x/\y in {B/-45,C/0,A/160,S/90}
+				\draw[fill=black] (\x) circle (0.03cm) + (\y:0.3cm) node {$\x$};
+\end{tikzpicture}}
+	}
+\end{bt}
+
+% nguồn: 2026-11-15_11_1H8_TL2_Vuong_goc (nhập 15/11/2026)
+\begin{bt}%[1H8V2-2]%[ma:99de44f9]
+% nguon: Archive/SP_KhoLatex/ID6_old/18-OT-Goc.tex #3682
+%[ĐGNL-ĐGTD-2022]%[Đình Nguyên] 
+	Cho hình chóp $S.ABCD$, đáy $ABCD$ là hình vuông cạnh bằng $a$, $ S A \perp(ABCD)$, $S A=a \sqrt{6}$.
+	\begin{enumerate}
+		\item Chứng minh $B C \perp(S A B)$, $B D \perp(S A C)$.
+		\item Tính sin của góc tạo bởi đường thẳng $A C$ với mặt phẳng $(S B C)$.
+	\end{enumerate}
+	\loigiai{
+		\immini
+		{
+			\begin{enumerate}
+				\item Ta có $ \heva{& S A \perp(ABCD) \\ & ABCD\text{ là hình vuông}}\Rightarrow \heva{& SA\perp BC \\ & BC\perp AB}\Rightarrow B C \perp(S A B) $.\\
+				Mặt khác $ \heva{& S A \perp(ABCD) \\ & ABCD\text{ là hình vuông}}\Rightarrow \heva{& SA\perp BD \\ & BD\perp AC}\Rightarrow B D \perp(S A C) $.
+				\item Kẻ $ AH\perp SB $, $ H\in SB $.\\
+				Do $B C \perp(S A B) $ nên $ BC\perp AH $.\\
+				Dẫn đến $ AH\perp (SBC) \Rightarrow (AC,(SBC))=(AC,CH)=\widehat{ACH}$.
+			\end{enumerate}
+		}
+		{
+			\begin{tikzpicture}[line join = round, line cap = round,>=stealth,font=\footnotesize,scale=1]
+				\tkzDefPoints{0/0/A}
+				\coordinate (B) at ($(A)+(3,0)$);
+				\tkzDefShiftPoint[A](-140:1.7){D}
+				\coordinate (C) at ($(B)+(D)-(A)$);
+				\coordinate (S) at ($(A)+(0,2.5)$);
+				\coordinate (H) at ($(B)!0.45!(S)$);
+				\tkzMarkRightAngles(S,A,B S,A,D A,H,S)
+				\tkzDrawPolygon(S,B,C,D)
+				\tkzDrawSegments(S,C C,H)
+				\tkzDrawSegments[dashed](A,B A,S A,D A,H A,C)
+				\tkzDrawPoints[fill=black](A,B,D,C,S,H)
+				\tkzLabelPoints[above](S)
+				\tkzLabelPoints[left](D)
+				\tkzLabelPoints[above right](H)
+				\tkzLabelPoints[right](B,C)
+				\tkzLabelPoints[above left](A)
+			\end{tikzpicture}
+		}
+		\noindent Do $ ABCD $ là hình vuông cạnh $ a $ nên $ AC=a\sqrt{2} $.\\
+		Áp dụng hệ thức lượng trong $ \triangle SAB $, ta có $AH=\dfrac{SA\cdot AB}{\sqrt{SA^2+AB^2}}=\dfrac{a \sqrt{6}\cdot a}{\sqrt{6a^2+a^2}}=\dfrac{a\sqrt{42}}{7}$.
+		Mặt khác $AH\perp (SBC)$ nên $ AH\perp HC$
+		\[\Rightarrow \sin
+		(AC,(SBC))=\sin\widehat{ACH}=\dfrac{AH}{AC}=\dfrac{\dfrac{a\sqrt{42}}{7}}{a\sqrt{2}}=\dfrac{\sqrt{21}}{7}.\]
+	}
+\end{bt}
+
+% nguồn: 2026-11-15_11_1H8_TL2_Vuong_goc (nhập 15/11/2026)
+\begin{bt}%[1H8H2-2]%[ma:82a107c0]
+% nguon: Archive/SP_KhoLatex/ID6_old/18-OT-Goc.tex #3685
+%[ĐGNL-ĐGTD-2022]%[Đình Nguyên]
+	Cho hình chóp $S.ABCD$ có đáy là hình vuông cạnh $a$, cạnh bên $SA \perp (ABCD)$ và $SA = a\sqrt{2}$.
+	\begin{listEX}[1]
+		\item Chứng minh $BC \perp (SAB)$.
+		\item Chứng minh $(SAC) \perp (SBD)$.
+		\item Tính góc giữa hai mặt phẳng $(SBC)$ và $(ABCD)$.
+	\end{listEX}
+	\loigiai{
+		\begin{listEX}[1]
+			\immini{
+				\item Ta có $ABCD$ là hình vuông nên $BC \perp AB$. Vì $SA \perp (ABCD)$ nên $SA \perp BC$.\\
+				Như vậy $\heva{&BC \perp AB \quad \textrm{ (cmt)}\\&BC \perp SA \quad \textrm{ (cmt)}\\&AB \cap SA = A\\&AB,SA \subset (SAB)} \Rightarrow BC \perp (SAB)$.
+				\item Ta có $ABCD$ là hình vuông nên $BD \perp AC$.  Vì $SA \perp (ABCD)$ nên $SA \perp BD$.
+			}{
+				\begin{tikzpicture}[scale=1, font=\footnotesize, line join=round, line cap=round, >=stealth]
+					\tkzDefPoints{0/0/A, 4/0/D, -1.5/-1.5/B, 0/3/S}
+					\tkzDefPointBy[translation=from A to D](B)\tkzGetPoint{C}
+					\tkzDrawSegments(B,C C,D S,B S,C S,D)
+					\tkzDrawSegments[dashed](A,B S,A A,C B,D A,D)
+					\tkzLabelPoints[above left](A)
+					\tkzLabelPoints[below](B,C)
+					\tkzLabelPoints[right](D)
+					\tkzLabelPoints[above](S)
+					\tkzDrawPoints(S,A,B,C,D)
+					\tkzLabelSegment[right](A,B){$a$}
+					\tkzLabelSegment[right](S,A){$a\sqrt{2}$}
+					\tkzMarkAngles[size=.7cm](A,B,S)
+				\end{tikzpicture}	
+			}
+			Như vậy $\heva{&BD \perp AC \quad \textrm{ (cmt)}\\&BD \perp SA \quad \textrm{ (cmt)}\\&AC \cap SA = A\\&AC,SA \subset (SAC)} \Rightarrow BD \perp (SAC)$ mà $BD \subset (SBD)$ nên $(SBD) \perp (SAC)$.
+			\item Ta có $\heva{&(SBC) \cap (ABCD) = BC\\&BC \perp AB \quad \textrm{ (cmt)}\\&BC \perp SB \quad \textrm{ ($BC \perp (SAB)$)}} \Rightarrow ((SBC),(ABCD)) = \widehat{(SB,AB)} = \widehat{SBA}$.\\
+			Xét $\triangle SAB$ vuông tại $A$, ta có $\tan\widehat{SBA} = \dfrac{SA}{AB} = \dfrac{a\sqrt{2}}{a} = \sqrt{2} \Rightarrow \widehat{SBA} \approx 54^\circ 44'8.2''$.\\
+			Vậy góc giữa hai mặt phẳng $(SBC)$ và $(ABCD)$ gần bằng $54^\circ 44'8.2''$.
+		\end{listEX}
+	}
+\end{bt}
+
+% nguồn: 2026-11-15_11_1H8_TL2_Vuong_goc (nhập 15/11/2026)
+\begin{bt}%[1H8V2-2]%[ma:84bc8a9c]
+% nguon: Archive/SP-4Phan-Dot3/Data/CD_1_OTGK2_De04.tex #4209
+
+Cho hình chóp $S.ABCD$ có đáy là hình vuông, cạnh bên $SA$ vuông góc với mặt phẳng đáy. Gọi $H$, $K$ lần lượt là hình chiếu vuông góc của điểm $A$ lên $SC$, $SD$. Chứng minh $SC \perp (AHK)$.
+\loigiai{\begin{center}
+			\begin{tikzpicture}[line join=round, line cap=round,>=stealth,font=\footnotesize,scale=1]
+			\def\a{3.5}
+			\def\b{2.5}
+			\def\h{3.5}
+			\path (0:0) coordinate (A)
+			++(0:\a) coordinate (D)
+			++(-135:\b) coordinate (C)
+			($(A)+(C)-(D)$) coordinate (B)
+			($(A)!1/2!(C)$) coordinate (O)
+			($(A)+(90:\h)$) coordinate (S)
+			($(S)!1/3!(C)$) coordinate (H)
+			($(S)!0.4!(D)$) coordinate (K);
+			\draw[dashed,thick] (D)--(A) (A)--(C) (B)--(D) (A)--(B) (S)--(A) (H)--(A)--(K);
+			\draw[thick] (S)--(B)--(C)--(D)--(S)--(C) (H)--(K);
+			\foreach \x/\g in {A/180,B/180,C/0,D/0,O/-90,S/180,H/70,K/0}
+			\fill[black] (\x) circle (1pt) ($(\g:4mm)+(\x)$) node {$\x$};	
+			\newcommand{\gv}[4][black]{\draw[thick] ($(#3)!8pt!(#2)$)--($(#3)!2!($($(#3)!8pt!(#2)$)!.5!($(#3)!8pt!(#4)$)$)$)--($(#3)!8pt!(#4)$);}
+			\gv{A}{H}{C}
+			\gv{A}{K}{D}
+		\end{tikzpicture}
+\end{center}
+Vì $SA \perp (ABCD)$ nên $SA \perp CD$.\\
+Ta có $\heva{&CD \perp SA\\&CD \perp AD} \Rightarrow CD \perp (SAD)$.\\
+Mà $AK \subset (SAD)$ nên $CD \perp AK$.\\
+Ta có
+$\heva{&AK \perp CD\\&AK \perp SD}\Rightarrow AK \perp (SCD)  \Rightarrow AK \perp SC$.\\
+Do đó $\heva{&SC \perp AK\\&SC \perp AH} \Rightarrow SC \perp (AHK)$.
+} 
+
+\end{bt}
+
+% nguồn: 2026-11-15_11_1H8_TL2_Vuong_goc (nhập 15/11/2026)
+\begin{bt}%[1H8V2-2]%[ma:eaad3c41]
+% nguon: Archive/SP-4Phan-Dot3/Data/CTST_1-OTGK2_De04.tex #4322
+
+Cho tứ diện $ABCD$ có $AD\perp (ABC)$ với $\triangle ABC$ là tam giác đều cạnh bằng $2a$ và $AD=\alpha\sqrt{3}$. Gọi $M$ là trung điểm của $BC$. Điểm $I$ thuộc $AM$ thỏa $\dfrac{AI}{MI}=\dfrac{1}{2}$, $G$ là trọng tâm tam giác $BCD$. Chứng minh rằng $IG\perp (BCD)$. 
+	\loigiai{
+\begin{center}
+	\begin{tikzpicture}
+	\def\a{6} %Khai báo cạnh
+	\def\h{4}
+	\path 	(0:0) coordinate (A)
+			++(0:\a) coordinate (B)
+			++(-150:3*\a/5) coordinate (C)
+			($(A)+(90:\h)$) coordinate (D)
+			($(C)!0.5!(B)$) coordinate (M)
+			($(A)!1/3!(M)$) coordinate (I)
+			($(D)!2/3!(M)$) coordinate (G)
+			($(D)!0.5!(M)$) coordinate (H);
+	\draw	(A)--(C)--(B)
+		(A)--(D)	(B)--(D)	(C)--(D)--(M);
+	\draw[dashed] 	(A)--(B) (A)--(M) (I)--(G) (A)--(H);
+	\foreach \x /\goc in {A/180,B/0,C/-135,D/90,M/-30,I/-120,G/60,H/60}
+			\fill[black] (\x) circle (1.5pt)
+			($(\x)+(\goc:3mm)$) node {$\x$};
+	\draw pic[draw,angle radius=2mm]{right angle=B--A--D};%Theo chiều dương
+\end{tikzpicture}
+\end{center}
+Ta có $\heva{&AD\perp (ABC)\\&BC\subset (ABC)}\Rightarrow AD\perp BC$.\\
+Và $\heva{&\triangle ABC~\text{đều}\\&AM~\text{là đường trung tuyến}}\Rightarrow AM\perp BC$.\\
+Khi đó $\heva{&BC\perp AD\\&BC\perp AM\\&AM\cap AD=A}\Rightarrow BC\perp (ADM)$.\\
+Trong $(ADM)$, kẻ $AH\perp DM~(1)$.\\
+Ta có $\heva{&BC\perp (ADM)\\&AH\subset (ADM)}\Rightarrow AH\perp BC~(2)$.\\
+Từ $(1)$ và $(2)$ suy ra $AH\perp (BCD)~(3)$.\\
+Vì $\triangle ABC$ đều nên $AM=a\sqrt{3}=AD$. Suy ra tam giác $ADM$ cân tại $M$.\\
+Mặt khác, $AH\perp DM$ nên $H$ là trung điểm của $DM$.\\
+Vì $G$ là trọng tâm tam giác $BCD$ nên $\dfrac{GM}{AM}=\dfrac{1}{3}\Rightarrow \dfrac{GM}{HM}=\dfrac{2}{3}$.\\
+Trong tam giác $AHM$ có $\dfrac{GM}{AM}=\dfrac{IM}{AM}=\dfrac{2}{3}\Rightarrow IG\parallel AH~(4)$.\\
+Từ $(3)$ và $(4)$ ta suy ra được $IG\perp (BCD)$.
+	}
+\end{bt}
+
+% nguồn: 2026-11-15_11_1H8_TL2_Vuong_goc (nhập 15/11/2026)
+\begin{bt}%[1H8V2-2]%[ma:08e1d4ef]
+% nguon: Archive/SP-4Phan-Dot3/Data/CTST_1-OTGK2_De03.tex #4386
+  % Câu 4-TL.
+	Cho hình chóp $S.ABCD$ có đáy là hình vuông và $SA \perp (ABCD)$. Gọi $H, K$ lần lượt là hình chiếu vuông góc của $A$ lên $SB$ và $SD$. Chứng minh rằng $SC \perp (AHK)$.
+	\loigiai{
+		\begin{center}
+			\begin{tikzpicture}[scale=1.2, thick, font=\small]
+				% Định nghĩa tọa độ các đỉnh hình bình hành ABCD
+				\coordinate (A) at (0,0);
+				\coordinate (B) at (4,0);
+				\coordinate (D) at (1,2);
+				\coordinate (C) at ($(B)+(D)-(A)$); % C = B + D - A
+				\coordinate (S) at (0,5); % Đỉnh chóp phía trên
+				
+				% Vẽ các cạnh đáy (hình bình hành)
+				\draw[thick] (A) -- (B) -- (C);
+				\draw[dashed] (C) -- (D) -- (A); % Cạnh CD và DA khuất
+				
+				% Vẽ các cạnh bên
+				\draw[thick] (S) -- (A) (S) -- (B) (S) -- (C);
+				\draw[dashed] (S) -- (D); % Cạnh SD khuất
+				
+				% Tính trung điểm H (SB) và K (SD)
+				\coordinate (H) at ($(S)!0.5!(B)$); % Trung điểm SB
+				\coordinate (K) at ($(S)!0.5!(D)$); % Trung điểm SD
+				
+				% Vẽ các đoạn AH, AK, HK và SC
+				\draw[red, thick] (A) -- (H) ;
+				\draw[red, dashed] (A) -- (K) ;
+				\draw[red, dashed] (H) -- (K);
+				% Đặt nhãn các điểm
+				\foreach \p/\pos in {A/below left, B/below right, C/above right, D/above left, S/above}
+				\node[\pos] at (\p) {$\p$};
+				\node[above right=1pt] at (H) {H};
+				\node[above right=1pt] at (K) {K};
+				
+				\foreach \x/\y/\z in {S/K/A,S/H/A}{
+					\path (\y) pic[draw=blue,angle radius=5pt,pic text=.,fill=blue!25]{right angle = \x--\y--\z};
+				}
+			\end{tikzpicture}
+		\end{center}
+		Ta có $BC\perp AB$.
+		$BC\perp SA$ (Vì $SA\perp(ABCD)\supset BC$)
+		Suy ra $BC\perp(SAB)$. Mà $AH\subset(SAB)$. Do đó: $AH\perp BC$.
+		Mặt khác $AH\perp SB\Rightarrow AH\perp(SBC)\Rightarrow SC\perp AH$.
+		Chứng minh tương tự ta cũng có: $SC\perp AK$.
+		Vậy $SC\perp(AHK)$.}
+	\end{bt}

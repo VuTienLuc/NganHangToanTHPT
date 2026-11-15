@@ -542,3 +542,251 @@
 		Dấu  \lq\lq=\rq\rq~xảy ra khi $x=\sqrt{36-x^2}\Leftrightarrow x=3\sqrt{2}$.
 	} 
 \end{ex}
+
+% nguồn: 2026-11-15_11_1H8_TL2_Vuong_goc (nhập 15/11/2026)
+\begin{bt}%[1H8H7-9]%[ma:30366f63]
+% nguon: Archive/2024/TOAN_11_XE/TOAN_11_XE/data4/11C7/KNTT-7.7.tex #1405
+
+	Từ một tấm bìa hình vuông (Hình $92a$), người ta cắt ở bốn góc của tấm bìa đó bốn hình vuông bằng nhau, mỗi hình vuông có cạnh bằng $6$ cm, rồi gập tấm bìa lại để được một chiếc hộp không nắp có dạng hình hộp chữ nhật (Hình $92b$). Tính cạnh của tấm bìa ban đầu, biết rằng thể tích của chiếc hộp bằng $600$ cm$^3$.
+	\begin{center}
+		\begin{tikzpicture}[scale=1, font=\footnotesize, line join=round, line cap=round,>=stealth]
+			\begin{scope}
+				\def\a{4};
+				\def\k{0.2};
+				\pgfmathsetmacro{\m}{\k*\a};
+				\path (0,0)coordinate (A)--++(\a,0) coordinate (B)--++(0,\a) coordinate (C)--++(-\a,0) coordinate (D) ($(A)!\k!(B)$) coordinate (a) ($(B)!\k!(C)$) coordinate (b) ($(C)!\k!(D)$) coordinate (c) ($(D)!\k!(A)$) coordinate (d) ($(B)!\k!(A)$) coordinate (a1) ($(C)!\k!(B)$) coordinate (b1) ($(D)!\k!(C)$) coordinate (c1) ($(A)!\k!(D)$) coordinate (d1);
+				\draw (A)--(B)--(C)--(D)--cycle;
+				\draw[dashed] (a)--(c1) (a1)--(c) (b)--(d1) (b1)--(d);
+				\fill[cyan] (A)--++(\m,0)--++(0,\m)--++(-\m,0)--cycle;
+				\fill[cyan] (B)--++(0,\m)--++(-\m,0)--++(0,-\m)--cycle;
+				\fill[cyan] (C)--++(-\m,0)--++(0,-\m)--++(\m,0)--cycle;
+				\fill[cyan] (D)--++(0,-\m)--++(\m,0)--++(0,\m)--cycle;
+				\draw ($(A)!0.5!(B)$)++(-90:0.5)node{Hình $92a$};
+			\end{scope}
+			\begin{scope}[xshift=8cm]
+				\path (0,1) coordinate (h) (0,0)coordinate (B) (2.7,0) coordinate (C) (4,0.7) coordinate (D) ($(B)+(D)-(C)$) coordinate (A);
+				\foreach \p in {A,B,C,D}\path ($(\p)+(h)$) coordinate (\p');
+				\draw (A')--(B')--(B)--(C)--(D)--(D')--cycle (B')--(C')--(D') (C)--(C');
+				\draw[dashed] (B)--(A)--(D) (A)--(A');
+				\draw ($(B)!0.5!(D)$)++(-90:0.9)node{Hình $92b$};
+			\end{scope}
+		\end{tikzpicture}
+	\end{center}
+	\loigiai
+	{Giả sử tấm bìa ban đầu có cạnh $x$ (cm) ($x>12$). Khi đó,
+		đáy của chiếc hộp là hình vuông cạnh $x-12$ (cm) nên diện tích của đáy chiếc hộp là $(x-12)^2$ $\left(\mathrm{cm}^2\right)$.\\
+		Mà chiều cao của chiếc hộp là $6$ cm, suy ra thể tích của chiếc hộp bằng $(x-12)^2 \cdot 6$ $\left(\mathrm{cm}^3\right)$.\\
+		Theo đề bài, thể tích của chiếc hộp bằng $600$ cm$^3$ nên
+		$$(x-12)^2\cdot 6=600\Leftrightarrow(x-12)^2=100.$$
+		Với $x>12$ ta có $x-12=10 \Leftrightarrow x=22$ (cm).
+		Vậy độ dài cạnh của tấm bìa ban đầu là $22$ cm.
+	}
+\end{bt}
+
+% nguồn: 2026-11-15_11_1H8_TL2_Vuong_goc (nhập 15/11/2026)
+\begin{bt}%[1H8V7-9]%[ma:df7f6568]
+% nguon: Archive/2024/TaiLieuGiangDay/5.HH Oxyz/VDC_TDM.tex #2416
+
+	Cho một hình lăng trụ tam giác đều $A B C .A'B'C'$ có độ dài cạnh đáy bằng $12$ và cạnh bên bằng $16$. Dùng một sợi dây có chiều dài $L$ quấn quanh hình lăng trụ từ điểm $A'$ đến điểm $A$ như hình vẽ, sao cho sợi dây luôn áp sát vào các mặt bên. Hãy xác định chiều dài ngắn nhất của sợ dây?
+	\loigiai{
+		\begin{center}
+			\begin{tikzpicture}[scale=1, font=\footnotesize,>=stealth]
+				%Gán số liệu.
+				\def\canhA'C'{4};\def\canhB'A'{2};\def\gocB'A'C'{-50};\def\h{3};\def\xdinhA{0};
+				%Gán tọa độ.
+				\coordinate (A') at (0,0);
+				\coordinate (B') at ($(A') + (\gocB'A'C':\canhB'A')$);
+				\coordinate (C') at ($(A') + (0:\canhA'C')$);
+				\coordinate (A) at ($(A') + (\xdinhA,\h)$);
+				\coordinate (B) at ($(B') + (\xdinhA,\h)$);
+				\coordinate (C) at ($(C') + (\xdinhA,\h)$);
+				\coordinate (M) at ($(B)!0.7!(B')$);
+				\coordinate (N) at ($(C)!0.3!(C')$);
+				%Vẽ khối lăng trụ A'B'C'.ABC.
+				\draw (A)--(B)--(C)--cycle (B')--(B) (A)--(A')--(B') (C)--(C')--(B') (A')--(M)--(N);
+				\draw[dashed] (A')--(C') (A)--(N);
+				%Gán nhãn.
+				\foreach \x/\y in {A'/180, B'/-90, C'/0, A/180, B/90, C/0, M/-45, N/0}{\fill (\x) circle(1pt) ($(\x)+(\y:0.3cm)$) node{$\x$};}
+			\end{tikzpicture}	
+		\end{center}
+Ta thực hiện việc trải phẳng các mặt bên của hình lăng trụ, ta được hình sau		
+		\begin{center}
+\begin{tikzpicture}[scale=1, font=\footnotesize,>=stealth]
+	\coordinate (A_1') at (0,0);
+	\coordinate (A_1) at (0,4);
+	\coordinate (B') at (2,0);
+	\coordinate (C') at (4,0);
+	\coordinate (A_2') at (6,0);
+	\coordinate (B) at (2,4);
+	\coordinate (C) at (4,4);
+	\coordinate (A_2) at (6,4);
+	\coordinate (M) at ($(B)!0.3!(B')$);
+	\coordinate (N) at ($(C)!0.7!(C')$);;
+	\draw (A_1') rectangle (A_2) (B)--(B') (C)--(C') (A_1')--(A_2) (A_1')--node[below]{$12$}(B') --node[below]{$12$}(C')--node[below]{$12$} (A_2')--node[right]{$16$}(A_2);
+	\draw [dashed] (A_1')--(M)--(N)--(A_2);
+	%Gán nhãn.
+	\foreach \x/\y in {A_1'/-90, B'/-90,C'/-90, A_2'/-90, A_1/90, B/90, C/90,A_2/90, M/180, N/0}{\fill (\x) circle(1pt) ($(\x)+(\y:0.3cm)$) node{$\x$};}
+\end{tikzpicture}
+		\end{center}
+		Ta có $A_1'A_2=\sqrt{(12+12+12)^2+16^2}=4\sqrt{97}$.\\
+		Ta có $L=A'M+MN+NA_2=A_1'M+MN+NA_2\geq A_1'A_2=4\sqrt{97}$.\\
+		Dấu \lq\lq$=$\rq\rq\, xảy ra khi $M=A_1'A_2\cap BB'$, $N=A_1'A_2\cap CC'$.
+	}
+\end{bt}
+
+% nguồn: 2026-11-15_11_1H8_TL2_Vuong_goc (nhập 15/11/2026)
+\begin{bt}%[1H8H7-9]%[ma:7414a7b5]
+% nguon: Archive/SP_DA_SauLuoi/1-TN-DS-TLN-THPT-TruongVinhKy-TpHCM-HKII-NH23-24.tex #2624
+%[Dự án đề kiểm tra Toán 11 CKII NH23-24- TRƯƠNG ĐĂNG KHOA]%[THPT TRƯƠNG VĨNH KÝ]
+	Một tấm bìa hình vuông cắt bỏ ở mỗi góc tấm bìa một hình vuông có cạnh bằng $12$ cm rồi gấp lại thành hình hộp chữ nhật không nắp. Nếu dung tích cái hộp $4800$ cm$^3$ thì độ dài cạnh tấm bìa bằng bao nhiêu?
+	\dapso{$44$ cm}
+	\loigiai{
+		Đặt độ dài cạnh của tấm bìa hình vuông là $x$ (cm), $(x>0)$.\\
+		Độ dài cạnh của tấm bìa hình vuông sau khi cắt bỏ mỗi góc của tấm bìa một hình vuông có cạnh bằng $12$ cm là $x-24$ (cm).\\
+		Theo đề bài có $V=12(x-24)^2=4800\Leftrightarrow x=44$ cm.
+	}
+\end{bt}
+
+% nguồn: 2026-11-15_11_1H8_TL2_Vuong_goc (nhập 15/11/2026)
+\begin{bt}%[1H8V7-9]%[ma:a4493778]
+% nguon: Archive/SP-4Phan-Dot3/Data/KNTT_1-OTGK2_De04.tex #4311
+
+Để chuẩn bị cho hoạt động cắm trại, bạn An tìm hiểu các mẫu lều cắm trại có kích thước như trong hình vẽ.
+Bạn An muốn biết thể tích chênh lệch của hai lều nên thực hiện tính $V_1-V_2$, trong đó $V_1$, $V_2$ lần lượt là thể tích của mẫu lều cắm trại ở Hình a), b). Giá trị của $V_1-V_2$ bằng bao nhiêu decimét khối (làm tròn kết quả đến hàng đơn vị)?
+\begin{center}
+	\begin{tikzpicture}[line join=round,line cap=round,>=stealth,scale=1,font=\footnotesize]
+		\tikzset{every node/.style={outer sep=-0.5mm}}
+		\foreach \x/\y/\n in {0/0/A,3.5/1.8/C,0/1.8/B,3.5/0/D} \coordinate (\n) at (\x,\y);
+		\coordinate (M) at ($(B)!0.5!(C)$);
+		\coordinate (N) at ($(A)!0.5!(D)$);
+		\coordinate (E) at ($(M)+(0,0.4)$);
+		\coordinate (D') at ($(D)+(1.5,1.5)$);
+		\coordinate (C') at ($(C)+(1.5,1.5)$);
+		\coordinate (E') at ($(E)+(1.5,1.5)$);
+		\coordinate (B') at ($(B)+(1.5,1.5)$);
+		\fill[gray!50](A)--(B)--(B')--(E')--(C')--(D')--(D)--(A);
+		\draw (A)--(B)node[midway,above,sloped]{$180$ cm}--(E)--(C)--(D)--(A)node[midway,below]{$350$ cm};
+		\draw (B)--(B')--(E')--(C')--(D')--(D)node[midway,below,sloped]{$460$ cm} (E)--(E') (C)--(C');
+		\draw[<->] (E)--(N)node[midway,fill=gray!50]{$220$ cm};
+		\draw (N)node[yshift=-.75 cm]{Hình a)};
+	\end{tikzpicture}\qquad
+	\begin{tikzpicture}[line join=round,line cap=round,>=stealth,scale=1,font=\footnotesize]
+		\tikzset{every node/.style={outer sep=-0.5mm}}
+		\foreach \x/\y/\n in {0/0/A,3.15/2.1/C,0.55/2.1/B,3.7/0/D} \coordinate (\n) at (\x,\y);
+		\coordinate (M) at ($(B)!0.5!(C)$);
+		\coordinate (N) at ($(A)!0.5!(D)$);
+		\coordinate (E) at ($(M)+(0,0.5)$);
+		\coordinate (D') at ($(D)+(1.4,1.4)$);
+		\coordinate (C') at ($(C)+(1.4,1.4)$);
+		\coordinate (E') at ($(E)+(1.4,1.4)$);
+		\coordinate (B') at ($(B)+(1.4,1.4)$);
+		\fill[gray!50](A)--(B)--(B')--(E')--(C')--(D')--(D)--(A);
+		\draw (A)--(B)--(E)--(C)--(D)--(A)node[midway,below]{$370$ cm};
+		\draw (B)--(B')--(E')--(C')--(D')--(D)node[midway,below,sloped]{$430$ cm} (E)--(E') (C)--(C');
+		\draw[<->] (E)--(N)node[midway,fill=gray!50]{$260$ cm};
+		\draw (A)--($(A)+(-0.3,0)$) (B)--($(B)+(-0.85,0)$);
+		\draw[<->] ($(A)+(-0.2,0)$)--($(B)+(-0.75,0)$)node[midway,above,sloped]{$210$ cm};
+		\draw (B)--($(B)+(0,2.1)$) (C)--($(C)+(0,2.1)$);
+		\draw[<->] ($(B)+(0,2)$)--($(C)+(0,2)$)node[midway,above,sloped]{$260$ cm};
+		\draw (N)node[yshift=-.75 cm]{Hình b)};
+	\end{tikzpicture}
+\end{center}
+\loigiai{
+	\begin{center}
+		\begin{tikzpicture}[line join=round,line cap=round,>=stealth,scale=1.25,font=\footnotesize]
+			\tikzset{every node/.style={outer sep=-0.5mm}}
+			\foreach \x/\y/\n in {0/0/A,3.5/1.8/C,0/1.8/B,3.5/0/D} \coordinate (\n) at (\x,\y);
+			\coordinate (M) at ($(B)!0.5!(C)$);
+			\coordinate (E) at ($(M)+(0,0.5)$);
+			\coordinate (N) at ($(A)!0.5!(D)$);
+			\draw (A)--(B)node[midway,sloped,above]{$180$}--(C)node[midway,below]{$350$}--(D)--(A)node[midway,below]{$350$} (B)--(E)--(C);
+			\foreach \t/\g in {A/180,B/180,C/0,D/0,E/90}{
+				\draw[fill=black] (\t) circle (.8pt) node[shift={(\g:8pt)}]{$ \t $};
+			}
+			\draw[<->] (E)--(M)node[midway,sloped,below]{$40$};
+			\draw (N)node[yshift=-.75 cm]{Hình a)};
+		\end{tikzpicture}\qquad
+		\begin{tikzpicture}[line join=round,line cap=round,>=stealth,scale=1.25,font=\footnotesize]
+			\tikzset{every node/.style={outer sep=-0.5mm}}
+			\foreach \x/\y/\n in {0/0/A,3.15/2.1/C,0.55/2.1/B,3.7/0/D} \coordinate (\n) at (\x,\y);
+			\coordinate (M) at ($(B)!0.5!(C)$);
+			\coordinate (E) at ($(M)+(0,0.5)$);
+			\coordinate (N) at ($(A)!0.5!(D)$);
+			\draw (A)--(B)--(C)node[midway,below]{$260$}--(D)--(A)node[midway,below]{$370$} (B)--(E)--(C);
+			\foreach \t/\g in {A/180,B/180,C/0,D/0,E/90}{
+				\draw[fill=black] (\t) circle (.8pt) node[shift={(\g:8pt)}]{$ \t $};
+			}
+			\draw[<->] (B)--(0.55,0)node[midway,sloped,below]{$210$};
+			\draw[<->] (E)--(M)node[midway,sloped,below]{$50$};
+			\draw (N)node[yshift=-.75 cm]{Hình b)};
+		\end{tikzpicture}
+	\end{center}
+	\begin{itemize}
+		\item Ở hình a), ta có $S_{ABECD}=S_{ABCD}+S_{BEC}=180\cdot 350+\dfrac{1}{2}\cdot 40\cdot 350=70000$ (cm$^2$).\\
+		Suy ra $V_1=S_{ABECD}\cdot h_1=70000\cdot 460=32200000$ (cm$^3$)$=32200$ (dm$^3$).
+		\item Ở hình b), ta có $$S_{ABECD}=S_{ABCD}+S_{BEC}=\dfrac{1}{2}\cdot210\cdot(260+370)+\dfrac{1}{2}\cdot 50\cdot 260=72650 \ (\text{cm}^2).$$
+		Suy ra $V_2=S_{ABECD}\cdot h_2=72650\cdot 430=31239500$ (cm$^3$)$=31239{,}5$ (dm$^3$).
+	\end{itemize}
+	Vậy $V_1-V_2=960{,}5\approx 961$ (dm$^3$).
+}
+\end{bt}
+
+% nguồn: 2026-11-15_11_1H8_TL2_Vuong_goc (nhập 15/11/2026)
+\begin{bt}%[1H8C7-9]%[ma:c7214f5d]
+% nguon: Archive/SP-4Phan-Dot3/Data/CD_1_OTHK2_De06.tex #4357
+%[Làm đề GHK, HK, 4 phần - 2025]%[Huỳnh Xuân Tín]
+	Người ta muốn xây một bể bơi hình hộp chữ nhật có thể tích là $125$ m$^3$. Đáy bể bơi là hình chữ nhật có chiều dài gấp ba lần chiều rộng. Tính chiều rộng của đáy bể bơi để khi thi công tiết kiệm được nguyên liệu nhất.
+	\loigiai{
+		\begin{itemize}
+			\item Gọi chiều rộng đáy là $a$, chiều rộng là $b$, chiều dài là $3a$. Theo bài ra ta có $3a^2\cdot b =125\Rightarrow b=\dfrac{125}{3a^2}$.
+			\item Diện tích toàn phần: $2(3a+a)\cdot b+a\cdot 3a=8a\cdot \dfrac{125}{3a^2}+3a^2=\dfrac{125\cdot 8}{3a}+3a^2$ (chỉ có 1 mặt đáy).
+			\item Ta có: $\dfrac{125\cdot 8}{3a}+3a^2=\dfrac{125\cdot 4}{3a}+\dfrac{125\cdot 4}{3a}+3a^2\ge 3 \sqrt[3]{\dfrac{125\cdot 4}{3a}\cdot \dfrac{125\cdot 4}{3a}\cdot 3a^2}=10\sqrt[3]{12}$.\\ Dấu \lq\lq$=$\rq\rq \ xảy ra khi: $\dfrac{125\cdot 4}{3a}=3a^2\Rightarrow a=5\cdot \sqrt[3]{\dfrac{4}{9}}$.
+		\end{itemize}	
+	}
+\end{bt}
+
+% nguồn: 2026-11-15_11_1H8_TL2_Vuong_goc (nhập 15/11/2026)
+\begin{bt}%[1H8V7-9]%[ma:2268ae0d]
+% nguon: Archive/SP-4Phan-Dot3/Data/KNTT_1-OTGK2_De02.tex #4376
+
+	Từ một tấm bìa hình vuông, người ta cắt ở bốn góc của tấm bìa đó bốn hình vuông bằng nhau, mỗi hình vuông có cạnh bằng $6$ cm, rồi gập tấm bìa lại để được một chiếc hộp không nắp có dạng hình hộp chữ nhật.
+	\begin{center}
+		\begin{tikzpicture}[scale=0.7,x=1cm,y=1cm,line join = round, line cap = round]
+			\coordinate[label=left:$ $] (D) at (0,0);
+			\coordinate [label=left:$ $] (A) at (0,6);
+			\coordinate [label=right:$ $] (B) at (6,6);
+			\coordinate [label=right:$ $] (C) at (6,0);
+			\coordinate [label=right:$ $] (E) at (1,0);
+			\coordinate [label=right:$ $] (F) at (5,0);
+			\coordinate [label=right:$ $] (G) at (1,6);
+			\coordinate [label=right:$ $] (H) at (5,6);
+			\coordinate [label=right:$ $] (I) at (0,5);
+			\coordinate [label=right:$ $] (J) at (0,1);
+			\coordinate [label=right:$ $] (M) at (6,1);
+			\coordinate [label=right:$ $] (N) at (6,5);
+			\draw(A)--(B)--(C)--(D)--(A);
+			\draw[dashed] (G)--(E)(H)--(F)(I)--(N)(J)--(M);
+		\end{tikzpicture}\qquad
+		\begin{tikzpicture}[scale=0.7,x=1cm,y=1cm,line join = round, line cap = round]
+			\coordinate[label=left:$ $] (D) at (0,0);
+			\coordinate [label=left:$ $] (A) at (3,1);
+			\coordinate [label=right:$ $] (B) at (6,0);
+			\coordinate [label=right:$ $] (C) at (9,1);
+			\coordinate [label=right:$ $] (E) at (0,2);
+			\coordinate [label=right:$ $] (F) at (6,2);
+			\coordinate [label=right:$ $] (G) at (3,3);
+			\coordinate [label=right:$ $] (H) at (9,3);
+			\draw(D)--(E)--(G)--(H)--(F)--(E)(D)--(B)--(C)(F)--(B)(C)--(H);
+			\draw[dashed] (D)--(A)--(C)(A)--(G);
+		\end{tikzpicture}
+	\end{center}
+	Tính cạnh của tấm bìa ban đầu, biết rằng thể tích của chiếc hộp bằng $864$ cm$^3$.
+	\loigiai{
+		Giả sử tấm bìa ban đầu có cạnh $x$ (cm), $(x>12)$. Khi đó đáy của chiếc hộp là hình vuông cạnh $x-12$ (cm) nên diện tích của đáy chiếc hộp là $(x-12)^2$ cm$^2$.\\
+		Mà chiều cao của chiếc hộp là $6$ cm, suy ra thể tích của chiếc hộp bằng $(x-12)^2\cdot 6~\left(\mathrm{cm}^3\right)$.\\
+		Theo đề bài, thể tích của chiếc hộp bằng $864$ cm$^3$ nên
+		$$(x-12)^2\cdot 6=864 \Leftrightarrow(x-12)^2=144.$$
+		Với $x>12$ ta có $x-12=12 \Leftrightarrow x=24$ (cm).\\
+		Vậy độ dài cạnh của tấm bìa ban đầu là $24$ cm.
+	}
+\end{bt}

@@ -44,3 +44,77 @@
 		 }
 	 }
 \end{ex}
+
+% nguồn: 2026-11-15_11_1H8_TL2_Vuong_goc (nhập 15/11/2026)
+\begin{bt}%[1H8V4-7]%[ma:12e37418]
+% nguon: Archive/SP_SauLuoi_2024-2025/Sp_GHKII/data/GHKII/1-TN-DS-TLN-TL-THPT-PhanBoiChau-BinhThuan-GHKII-NH24-25.tex #239
+%[GK2-K11-THPT Phan Bội Châu-Bình Thuận NH2425]%[Hieu Phan]
+Kim tự tháp Kheops tại Ai Cập được xây dựng vào khoảng thời gian từ năm $2580-2560$ trước công nguyên có dạng hình chóp tứ giác đều với chiều cao khoảng $149$ m và cạnh đáy dài khoảng $230$ m. Tính tan góc giữa mặt bên và mặt đáy của kim tự tháp.
+\loigiai
+{ \begin{center}
+		\begin{tikzpicture}[scale=0.8, font=\footnotesize,line join=round, line cap=round, >=stealth]
+			\path 
+			(0,0) coordinate (A)
+			++(-140:2) coordinate (B)
+			++(0:3.5) coordinate (C)
+			($(A)+(C)-(B)$) coordinate (D)
+			($(A)!1/2!(C)$) coordinate (O)
+			($(O)+(0,3.5)$) coordinate (S)
+			($(C)!1/2!(D)$) coordinate (M)
+			;
+			\foreach \i in{B,C,D}{\draw (S)--(\i);};
+			\draw (B)--(C)--(D);
+			\draw[dashed] (S)--(A)--(B) (C)--(A)--(D)--(B) (S)--(O)--(M)--cycle;
+			\pic[draw,angle eccentricity=1.8,angle radius=2mm]{right angle=S--O--D};
+			\foreach \i/\g in {A/-90,B/-90,C/-90,D/-90,O/-90,S/90,M/-90}
+			\fill[black] (\i) circle(1pt)+(\g:3mm)node[scale=1]{$\i$};
+		\end{tikzpicture}
+	\end{center}
+	Gọi $O$ là tâm của hình vuông $ABCD$; $ M$ là trung điểm của $ CD$.\\
+Ta có $\left\{\begin{aligned}
+&\left(SCD\right)\cap\left(ABCD\right)=CD\\ 
+& OM\perp CD,\text{OM}\subset\left(ABCD\right)\\ 
+& SM\perp CD,\text{SM}\subset\left(SCD\right).\\ 
+\end{aligned}\right.$\\
+Góc giữa $\left(SCD\right)$ và $\left(ABCD\right)$ là góc $\widehat{SMO}$.\\
+Ta có $ OM=\dfrac{1}{2}AD=\dfrac{230}{2}=115$ m.\\
+Xét tam giác $ SOM$ vuông tại $ O$, ta có $\tan\widehat{SMO}=\dfrac{SO}{OM}$$=\dfrac{149}{115}$.
+}
+\end{bt}
+
+% nguồn: 2026-11-15_11_1H8_TL2_Vuong_goc (nhập 15/11/2026)
+\begin{bt}%[1H8V4-7]%[ma:f473c45f]
+% nguon: Archive/SP-4Phan-Dot3/Data/KNTT_1-OTGK2_De03.tex #4405
+
+	Cho hình chóp tứ giác đều $S.ABCD$ có cạnh đáy bằng $2a$, cạnh bên bằng $a\sqrt{5}$. Tính cosin góc giữa $(SCD)$ với $(SBC)$.
+\loigiai{
+\immini{Ta có $(SCD) \cap (SBC) =SC$. Kẻ $DK \perp SC$ tại $K$. Ta có
+\begin{itemize}
+	\item [$\bullet$] $SC \perp DK \quad (1)$.
+	\item [$\bullet$] $BD \perp (SAC) \Rightarrow SC \perp BD \quad (2)$
+\end{itemize}
+Từ (1) và (2) suy ra $SC \perp (BDK)$ nên $BK \perp SC$.\\
+Do $DK \perp SC$ và $BK \perp SC$ nên góc giữa $(SCD)$ với $(SBC)$ bằng góc giữa $KD$ và $KB$.\\
+Xét $\triangle KBD$. Ta có
+\begin{itemize}
+	\item [$\bullet$] $BD=2\sqrt{2}a$; $KB=KD=\dfrac{a\sqrt{13}}{2}$.
+	\item [$\bullet$] $\cos (KB,KD)=\dfrac{\bigg|KB^2+KD^2-BD^2\bigg|}{2\cdot KB \cdot KD}=\dfrac{3}{13}.$
+\end{itemize}}
+{
+\begin{tikzpicture}[line join=round, line cap=round,thick, scale=0.7]
+	\coordinate (A) at (0,0);
+	\coordinate (B) at (2,-2);
+	\coordinate (D) at (5,0);
+	\coordinate (C) at ($(B)+(D)-(A)$);
+	\coordinate (O) at ($(A)!0.5!(C)$);
+	\coordinate (S) at ($(O)+(0,5.5)$);
+	\coordinate (K) at ($(S)!.5!(C)$);
+	\draw(S)--(A) (S)--(B)--(K) (S)--(C) (A)--(B) (B)--(C);
+	\draw[dashed,thin](A)--(C) (A)--(D) (C)--(D) (S)--(D) (S)--(O) (B)--(D)--(K);
+	\pic[draw,thin,angle radius=2mm] {right angle = B--K--C} pic[draw,thin,angle radius=2mm] {right angle = D--K--C};
+	\foreach \i/\g in {S/90,A/180,B/-90,C/-90,D/0,O/-90,K/0}{\draw[fill=white](\i) circle (1.5pt) ($(\i)+(\g:3mm)$) node[scale=.7]{$\i$};}
+\end{tikzpicture}
+}
+Vậy góc giữa cosin $(SCD)$ với $(SBC)$ bằng $\dfrac{3}{13}$.
+}
+\end{bt}

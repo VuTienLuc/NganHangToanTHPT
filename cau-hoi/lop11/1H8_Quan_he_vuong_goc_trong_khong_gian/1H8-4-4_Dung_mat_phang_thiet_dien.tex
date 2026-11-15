@@ -437,3 +437,82 @@
 		Vậy  diện tích thiết diện cần tìm là \[S=\dfrac{1}{2}(PQ+MN)\cdot GK=\dfrac{1}{2}\left(\dfrac{1}{3}a+\dfrac{2}{3}a\right)\cdot\dfrac{4}{3}a=\dfrac{2a^3}{3}.\]
 	 }
 \end{ex}
+
+% nguồn: 2026-11-15_11_1H8_TL2_Vuong_goc (nhập 15/11/2026)
+\begin{bt}%[1H8H4-4]%[ma:abce5762]
+% nguon: Archive/2024/TOAN_11_XE/TOAN_11_XE/data4/11C7/KNTT-7.5.tex #1400
+%[Nguyễn Thành Khang, dự án Tex hoá lần 3]
+	Cho hình chóp $S.ABCD$ có đáy $ABCD$ là hình vuông và $SA$ vuông góc với mặt đáy. Gọi $(P)$ là mặt phẳng chứa $AD$ và vuông góc với mặt phẳng $(SBC)$. Xác định thiết diện do mặt phẳng $(P)$ cắt hình chóp. 
+	\loigiai{
+		\immini{
+			Kẻ $AH \perp SB\ (H \in SB)$. Ta có $$\heva{&AD \perp SA\ (SA \perp (ABCD)) \\ &AD \perp AB} \Rightarrow AD \perp (SAB) \Rightarrow AD \perp SB.$$
+			Ta có $AD \perp SB$ và $AH \perp SB$ nên $SB \perp (ADH)$, suy ra $(SBC) \perp (ADH)$.\\
+			Do đó, mặt phẳng $(P)$ chứa $AD$ và vuông góc với mặt phẳng $(SBC)$ là $(ADH)$.\\
+			Trong mặt phẳng $(SBC)$ dựng $HK \parallel BC (K \in BC)$, suy ra $HK \parallel AD$ (do cùng song song với $AD$).
+		}{
+			\begin{tikzpicture}[scale=.7, font=\footnotesize, line join=round, line cap=round,>=stealth]
+				\tkzDefPoints{0/0/A, -2/-2/D, 4/-2/C, 6/0/B, 0/4/S}
+				\coordinate (H) at ($(S)!0.7!(B)$);
+				\coordinate (K) at ($(S)!0.7!(C)$);
+				\tkzDrawPoints[fill=black](A,B,C,D,S,H,K)
+				\tkzDrawSegments(S,B S,C S,D B,C C,D H,K D,K)
+				\tkzDrawSegments[dashed](A,B S,A A,D A,H D,H)
+				\tkzMarkRightAngles(S,A,D S,A,B B,A,D)
+				\tkzLabelPoints[above left](A)
+				\tkzLabelPoints[above left](D)
+				\tkzLabelPoints[below right](C)
+				\tkzLabelPoints[above right](B,H)
+				\tkzLabelPoints[above](S)
+				\tkzLabelPoints[below](K)
+				\tkzDrawPolygon[dashed,pattern=north east lines,opacity=.3](A,D,K,H)
+				\tkzDrawPoints(H,K)
+			\end{tikzpicture}
+		}
+		\noindent Vậy thiết diện là hình thang $ADKH$ có hai đáy là $AD$ và $HK$.
+	}
+\end{bt}
+
+% nguồn: 2026-11-15_11_1H8_TL2_Vuong_goc (nhập 15/11/2026)
+\begin{bt}%[1H8V4-4]%[ma:32d97779]
+% nguon: Archive/SP-4Phan-Dot3/Data/CD_1_OTHK2_De03.tex #4413
+
+	Cho hình chóp $S.ABCD$ có đáy là hình vuông cạnh $a$, $SA \perp (ABCD)$ và \break $SA=a\sqrt{2}$. Điểm $M$ thuộc cạnh $AB$ và $AM=x$, với $0<x<a$. Mặt phẳng $(\alpha)$ qua $M$ và vuông góc với $SB$ tại $N$ cắt $SC$, $SD$ tại $P$ và $Q$. Tính diện tích của thiết diện $MNPQ$.
+	\loigiai
+		{\begin{itemize}
+				\item Xét hình tính của $MNPQ$.
+				\immini{
+				Dựng $AH\perp SB$ tại $H$. \quad $(1)$\\
+				Khi đó $\heva{& AH\perp SB \\ & AD\perp SB}$ mà $(\alpha)\perp SB\Rightarrow\heva{& (\alpha)\parallel AH \\ & (\alpha)\parallel AD.}$\\
+				Ta có $\heva{& MN=(\alpha)\cap (SAB) \\ & (\alpha)\parallel AH\subset (SAB)}\Rightarrow MN\parallel AH$.\\
+				Tương tự, 
+					\begin{itemize}
+						\item $\heva{& MQ=(\alpha)\cap (ABCD) \\ & (\alpha)\parallel AD\subset (ABCD)}\Rightarrow MQ\parallel AD$,
+						\item  $\heva{& NP=(\alpha)\cap (SBC) \\ & (\alpha)\parallel BC\subset (SBC)}\Rightarrow NP\parallel BC$.
+				\end{itemize}  }
+			{\begin{tikzpicture}[scale=1, font=\footnotesize, line join=round, line cap=round,>=stealth]
+						\path (0,0)coordinate (B) (3,0) coordinate (C) (4.5,1.3) coordinate (D) ($(B)+(D)-(C)$) coordinate (A) (0,2.5) coordinate (h) ($(A)+(h)$) coordinate (S) ($(B)!0.4!(A)$) coordinate (M) ($(C)!0.4!(D)$) coordinate (Q) ($(B)!0.25!(S)$) coordinate (N) ($(B)!5/2!(N)$) coordinate (H) ($(N)+(Q)-(M)$) coordinate(t) (intersection of N--t and S--C) coordinate (P);
+						\draw (S)--(B)--(C)--(D)--cycle (S)--(C) (N)--(P)--(Q);
+						\draw[dashed] (S)--(A)--(B) (H)--(A)--(D) (Q)--(M)--(N);
+						\fill[opacity=0.2, color=gray] (M)--(N)--(P)--(Q)--cycle;
+						\foreach \p/\g in {A/45,B/240,C/-60, D/0, S/90,M/-90,N/150,P/30,Q/-30,H/150} \fill[black] (\p) circle(1pt)+(\g:0.3) node{$\p$};
+						\draw pic[draw, angle radius=0.2cm]{right angle= A--H--B} pic[draw, angle radius=0.2cm]{right angle= M--N--B};
+				\end{tikzpicture}}\noindent
+				Do đó, thiết diện cần tìm là hình thang $MNPQ$ (vì $MQ\parallel AD\parallel BC\parallel NP$).\\
+				Ta có $AH\perp SB$, $AH\perp BC$ và $SB\cap BC=B$.\\
+				Suy ra $AH\perp (SBC)\Rightarrow AH\perp NP$ (vì $NP\subset (SBC)$).\\
+				Mặt khác, $MN\parallel AH$ nên $MN\perp NP$.\\
+				Vậy $MNPQ$ là hình thang vuông tại $M$ và $N$.
+				\item Tính diện tích của thiết diện.\\
+				Tam giác $SAB$ vuông tại $A$ nên 
+				\begin{itemize}
+				\item $\dfrac{1}{AH^2}=\dfrac{1}{SA^2}+\dfrac{1}{AB^2}=\dfrac{1}{2a^2}+\dfrac{1}{a^2} \Rightarrow AH=\dfrac{a\sqrt{6}}{3}$ và $SB=a\sqrt{3}$,
+				\item $AB^2=BH\cdot BS \Rightarrow BH=\dfrac{a^2}{a\sqrt{3}}=\dfrac{a}{\sqrt{3}}=\dfrac{a\sqrt{3}}{3}$.
+				\end{itemize} 
+				Ta có $MN\|AH \Rightarrow \dfrac{MN}{AH}=\dfrac{BM}{BA}=\dfrac{BN}{BH} \Leftrightarrow \dfrac{MN}{\dfrac{a\sqrt{6}}{3}}=\dfrac{a-x}{a}=\dfrac{BN}{\dfrac{a}{\sqrt{3}}}$.\\
+				Suy ra $MN=\dfrac{(a-x)\sqrt{6}}{3}$ và $BN=\dfrac{a-x}{\sqrt{3}}$.\\
+				Vì $NP\|BC \Rightarrow \dfrac{SN}{SB}=\dfrac{NP}{BC} \Leftrightarrow \dfrac{SB-BN}{SB}=\dfrac{NP}{BC}$\\
+				$ \Rightarrow NP=\left(\dfrac{a\sqrt{3}-\dfrac{a-x}{\sqrt{3}}}{a\sqrt{3}}\right)\cdot a=\dfrac{2a+x}{3}$.\\
+				Vậy $S_{MNPQ}=\dfrac{(MQ+NP)\cdot MN}{2}=\dfrac{\left(a+\dfrac{2a+x}{3}\right)\dfrac{a-x}{\sqrt{3}}}{2}=\dfrac{(5a+x)(a-x)}{6\sqrt{3}}$.
+			\end{itemize}
+		}	
+	\end{bt}

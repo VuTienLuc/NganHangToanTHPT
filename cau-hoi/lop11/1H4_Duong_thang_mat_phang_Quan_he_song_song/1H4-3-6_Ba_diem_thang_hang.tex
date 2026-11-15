@@ -125,3 +125,140 @@
 		\end{enumerate}
 	 }
 \end{ex}
+
+% nguồn: 2026-11-15_11_1H4_TL2_Song_song (nhập 15/11/2026)
+\begin{bt}%[1H4V3-6]%[ma:43a67c33]
+% nguon: Archive/SP_SauLuoi_2024-2025/SP_GHKI/1-TN-DS-TL-THPT-TranPhu-TpHCM-GHKI-NH24-25.tex #123
+%[THPT Trần Phú - TP HCM - 2024 - đợt 3]%[TheHung Nguyen]
+	Cho hình chóp $S. ABCD$ có đáy $ABCD$ là hình thang, $AD$ song song với $BC$ và $AD=3BC$. Gọi $O$ là giao điểm của $AC$ và $BD$, $E$ và $F$ lần lượt thuộc cạnh $SA$ và $SD$ sao cho $SE=2EA$ và $FD=3FS$.
+	\begin{enumerate}
+		\item Tìm giao tuyến của hai mặt phẳng $(SAD)$ và $(SBC)$.
+		\item  Chứng minh đường thẳng $OF$ song song với mặt phẳng $(SBC)$.
+		\item  Tìm giao tuyến $d$ của hai mặt phẳng $(SAB)$ và $(AFC)$. Gọi $I$ là giao điểm của $ED$ và $AF$, chứng minh ba đường thẳng $EB$, $IO$ và $d$ đồng quy tại $K$.	
+	\end{enumerate}
+	\loigiai{\begin{center}
+			\begin{tikzpicture}[scale=1, font=\footnotesize, line join=round, line cap=round, >=stealth]
+				\def\a{6}
+				\def\b{2}
+				\def\h{6}
+				\def\g{130}
+				\path
+				(0,0) coordinate (A)
+				(0:\a) coordinate (D)
+				--++(-\g:4) coordinate (C)
+				--++(-180:\b)coordinate (B)
+				;
+				\path(intersection of A--C and B--D)coordinate (O);	 
+				\coordinate (S) at ($(O)+(0,\h)$);	
+				\coordinate (E) at ($(S)!2/3!(A)$); 
+				\coordinate (F) at ($(S)!1/4!(D)$); 
+				\path(intersection of E--D and A--F)coordinate (I)	
+				(intersection of E--B and O--I)coordinate (K)	
+				;	
+				\draw (S)--++(0:5)coordinate (x) node[above]{$x$};	
+				\draw (C)--(S)--(B)--(C)--(D)--(S)--(A)--(B) (C)--(F) (B)--(K)--(A);
+				\draw[dashed] (A)--(B) (A)--(C) (B)--(D)--(A) (E)--(D) (A)--(F)--(O)--(K);
+				\foreach \x/\g in {A/120,B/-90,C/-90,D/0,S/90,E/130,O/-90,F/45,I/90,K/90}  \fill (\x) circle (1pt)+(\g:.25)node {$\x$};
+			\end{tikzpicture}
+		\end{center}
+		\begin{enumerate}
+			\item Ta có $\heva{&S\in (SAD), \, S\in (SBC)\\& AD\parallel BC\\&AD \subset (SAD); BC\subset (SBC)}\Rightarrow (SAD)\cap (SCB)=Sx, (\text{với}\, Sx\parallel AD\parallel BC).$
+			\item Xét $(ABCD)$, có $BC\parallel AD$ nên $\dfrac{OD}{OB}=\dfrac{AD}{BC}=3$ mà $\dfrac{FD}{FS}=3$ nên $\dfrac{OD}{OB}=\dfrac{FD}{FS}$.\\
+			Xét $\triangle SBD$, có $\dfrac{OD}{OB}=\dfrac{FD}{FS}$ nên $OF\parallel SB$ mà $SB \subset (SBC)$ do đó $OF\parallel (SBC)$. 
+			\item Ta có $\heva{&A\in (SAB), A\in (AFC)\\
+				&SB\parallel FO, OF\subset (AFC)&SB \subset (SAB)}\Rightarrow (SAB)\cap (AFC)=d,(\text{với}\, A\in d  \,\text{và}\, d\parallel SB\parallel FO)$.\\
+			Trong $(AFC)$ gọi $K=d\cap IO$.\\
+			Ta có $\heva{&K\in (ABK), K\in (KBD)\\& E\in (ABK),\, E\in (KBD)\\&B\in (ABK),\, B\in (KBD)}\Rightarrow K, E, B$ thẳng hàng, suy ra $EB$, $IO$ và $d$ đồng quy tại $K$.	
+		\end{enumerate}	
+	}
+\end{bt}
+
+% nguồn: 2026-11-15_11_1H4_TL2_Song_song (nhập 15/11/2026)
+\begin{bt}%[1H4C3-6]%[ma:c9daff42]
+% nguon: Archive/SP_DA_SauLuoi/1-TL-THPT-BaDiem-GHKI-NH23-24.tex #2635
+%[Dự án đề kiểm tra Toán 11 GHKI NH23-24- Phạm Phương]%[THPT Bà Điểm-Tp HCM]
+	%(3,0 điểm)
+	Cho hình chóp $S.ABCD$ có đáy $ABCD$ là hình bình hành. Gọi $M$, $N$, $K$ lần lượt là trung điểm của $AB$, $AD$, $SC$.
+	\begin{enumerate}
+		\item Tìm giao tuyến của $(SMN)$ và $(SBD)$.
+		\item Chứng minh $SA$ song song với $(KBD)$.
+		\item Gọi $G$ là trọng tâm của tam giác $SBD$. Mặt phẳng $(MNG)$ cắt $SC$ tại điểm $H$. Tính tỉ số $\dfrac{SH}{SC}$.
+	\end{enumerate}
+	\loigiai{
+	\begin{center}
+		\begin{tikzpicture}[scale=1,>=stealth, font=\footnotesize, line join=round, line cap=round]
+			\coordinate (A) at (0,0);
+			\coordinate (B) at (-1.5,-1.8);
+			\coordinate (D) at (4,0);
+			\coordinate (C) at ($(B)+(D)-(A)$);
+			\coordinate (S) at ($(A)+(-0.3,2.6)$);
+			\path ($(A)!0.5!(B)$) coordinate (M)
+			($(A)!0.5!(D)$) coordinate (N)
+			($(S)!0.5!(C)$) coordinate (K)
+			($(S)+(M)-(N)$) coordinate (d)
+			(intersection of A--C and B--D) coordinate (O)
+			($(S)!2/3!(O)$) coordinate (G)
+			(intersection of A--C and M--N) coordinate (E)
+			(intersection of S--C and E--G) coordinate (H)
+			;
+			\draw[red] ($(S)!-1.5cm!(d)$)--(d)node[above]{$d$};
+			\draw (S)--(B)--(C)--(D)--cycle
+			(S)--(B) (S)--(C)
+			(B)--(K)--(D);
+			\draw[dashed] (A)--(B) (A)--(D) (S)--(A)
+			(M)--(S)--(N)--cycle
+			(B)--(D)(A)--(C)
+			(K)--(O)--(S)
+			(M)--(G)--(N)
+			(E)--(H);
+			\foreach \p/\r in {S/90,A/180,B/-90,C/-45,D/0,M/180,N/-90,K/75,O/-90,G/170,H/80,E/-100}
+			\fill (\p) circle (1pt) node[shift={(\r:3mm)}]{$\p$};
+		\end{tikzpicture}
+		\hspace*{1cm}
+		\begin{tikzpicture}[scale=1,>=stealth, font=\footnotesize,line join=round,line cap=round]
+			\coordinate (A) at (0,0);
+			\coordinate (C) at ($(A)+(3.5,0)$);
+			\coordinate (S) at (1,4);
+			\path ($(A)!0.5!(C)$) coordinate (O)
+			($(A)!0.5!(O)$) coordinate (E)
+			($(S)!2/3!(O)$) coordinate (G)
+			(intersection of S--C and E--G) coordinate (H)
+			($(S)!0.5!(G)$) coordinate (I)
+			($(S)!0.5!(H)$) coordinate (J)
+			;
+			\draw (S)--(A)--(C)--cycle
+			(S)--(O)
+			(A)--(J)(E)--(H)			
+			;
+			\foreach \p/\r in {A/-145,S/90,C/45,E/-90,O/-90,H/45,J/45,I/-160,G/-20}
+			\fill (\p) circle (1pt) node[shift={(\r:3mm)}]{$\p$};
+		\end{tikzpicture}
+	\end{center}
+	\begin{enumerate}
+		\item Ta có $\heva{&S\in(SMN)\\&S\in(SBD)}
+			\Rightarrow \{S\}\in (SMN) \cap (SBD)$.\hfill (1)
+		\\
+		Lại có $MN\parallel BD$ (vì $MN$ là đường trung bình của $\triangle ABD$). \hfill (2)
+		\\
+		Mà $MN \subset (SMN)$, $BD\subset (SBD)$.\hfill (3)
+		\\
+		Từ (1), (2), (3) ta suy ra giao tuyến của $(SMN)$ và $(SBD)$ là đường thẳng $d$ qua $S$ và song song với $MN$ và $BD$.
+		\item Trong hình bình hành $ABCD$ gọi $O=AC \cap BD$ suy ra $O$ là trung điểm của $AC$.
+		\\
+		$\Rightarrow KO \parallel SA$ (vì $KO$ là đường trung bình của $\triangle SAC$). \hfill (4)
+		\\
+		Mà $O\in BD \subset (KBD)$ nên $KO\subset (SBD)$ và $SA\not\subset (KBD)$.  \hfill (5)
+		\\
+		Từ (4), (5) suy ra $SA \parallel (KBD)$.
+		\item Trong $(ABCD)$ gọi $E=MN\cap AC$. Khi đó $(MNG)$ cắt $SC$ tại điểm $H=EG\cap SC$.
+		\\
+		Gọi $I$, $J$ lần lượt là trung điểm của $SG$, $SH$.
+		\\
+		Ta có $\heva{&IJ\parallel HG\\& IA\parallel GE}\Rightarrow A,I,J$ thẳng hàng.
+		\\
+		Xét $\triangle ACJ$ có $EH\parallel AJ \Rightarrow \dfrac{CH}{HJ}=\dfrac{CE}{EA}=3 \Rightarrow CH=3HJ$.
+		\\
+		Lại có $SH=2HJ$ nên $SC=5HJ$. Vậy $\dfrac{SH}{SC}=\dfrac{2}{5}$.
+	\end{enumerate}
+	}
+\end{bt}

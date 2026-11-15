@@ -327,3 +327,39 @@
 		Vậy $k = 288$ là giá trị cần tìm.
 	}
 \end{bt}
+
+% nguồn: 2026-11-15_11_1D3_TL2_Gioi_han (nhập 15/11/2026)
+\begin{bt}%[1D3H3-6]%[ma:91657403]
+% nguon: Archive/2024/TOAN_11_XE/TOAN_11_XE/data4/11C5/KNTT-5.3.tex #718
+%[Phạm Hoàng Điệp - Dự Án tex  11 mới]
+	\immini{Hình bên cạnh biểu thị độ cao $ h $ (m) của một quả bóng được đá lên thời gian $ t $ (s), trong đó $ h(t)= -2t^{2}+8t $.
+		\begin{enumerate}
+			\item Chứng tỏ hàm số $ h(t) $ liên tục trên tập xác định.
+			\item Dựa và đồ thì hãy xác định $ \displaystyle\lim\limits_{t\to 2}\left(-2t^{2}+8t\right) $.
+		\end{enumerate}
+	}
+	{		\begin{tikzpicture}[>=stealth,x=1cm,y=1cm,scale=0.5,font=\tiny]
+			\def\a{-2}
+			\def\b{8}
+			\def\c{0}
+			\draw[->] (-2,0) -- (6,0) node[below] {\scriptsize $t(s)$};
+			\draw[->] (0,-2) -- (0,9) node[left] {\scriptsize $h(m)$};
+			\draw (0,0)node[below left]{\scriptsize $O$};
+			\fill (0,4) node[left]{$4$};
+			\fill (0,8) node[left]{$8$};
+			\fill (2,0) node[below]{$2$};
+			\draw[dashed] (2,0)--(2,8)--(0,8);
+			\pgfmathsetmacro\xdinh{-(\b)/2*(\a)}
+			\pgfmathsetmacro\ydinh{(4*(\a)*(\c)-(\b)^2)/(4*(\a))}
+			\clip (-2,-2)rectangle(6,9);
+			\draw[red,thick,samples=150,smooth,domain=-5:5] plot(\x,{\a*(\x)^2+(\b)*\x+(\c)});
+			\foreach \x in {2,4} \draw (\x,0) circle (1pt);
+			\foreach \y in {4,8} \draw (0,\y) circle (1pt);
+	\end{tikzpicture}}
+	\loigiai{
+		\begin{enumerate}
+			\item Hàm số trên là hàm đa thức nên liên tục trên $ \mathbb{R} $.
+			\item Dựa vào đồ thị ta có $  \displaystyle\lim\limits_{t\to 2}\left(-2t^{2}+8t\right) =8 $.
+		\end{enumerate}
+	}
+\end{bt}

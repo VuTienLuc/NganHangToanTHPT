@@ -91,3 +91,54 @@
 		Ta có $S A\cdot M H=S G\cdot A M \Rightarrow M H=\dfrac{S  G\cdot A M}{S A}=\dfrac{3\cdot 4 \cdot \sqrt{3}}{2\cdot 7 \sqrt{3}}=\dfrac{6}{7} \approx 0{,}86$.
 	 }
 \end{ex}
+
+% nguồn: 2026-11-15_11_1H8_TL2_Vuong_goc (nhập 15/11/2026)
+\begin{bt}%[1H8H5-5]%[ma:980e1264]
+% nguon: Archive/2024/TOAN_11_XE/TOAN_11_XE/data4/11C7/KNTT-7.6.tex #1409
+%[Nguyễn Thành Khang, dự án Tex hoá lần 3]%[Đinh Thanh Hoàng]
+	Cho tứ diện $OABC$ có $OA$, $OB$, $OC$ vuông góc với nhau đôi một và $OA = OB = OC = a$. Gọi $I$ là trung điểm của $BC$. Hãy dựng và tính độ dài đoạn vuông góc chung của
+	\begin{enumEX}{2}
+		\item $OA$ và $BC$.
+		\item $AI$ và $OC$.
+	\end{enumEX}
+	\loigiai{
+		\immini{
+			\begin{enumerate}
+				\item Ta có $\heva{&OA \perp OI\\ &BC \perp OI}$ $\Rightarrow OI$ là đoạn vuông góc chung của $OA$ và $BC$.\\
+				Tam giác $OBC$ vuông cân tại $O$ nên $OI = \dfrac{BC}{2} = \dfrac{a\sqrt{2}}{2}$.\\
+				Vậy $\mathrm{d}(OA, BC) = \dfrac{a\sqrt{2}}{2}$.
+				\item Gọi $K$ là trung điểm của $OB$, ta có $IK \parallel OC$ $\Rightarrow OC \parallel (AIK)$.\\
+				Ta có $\heva{&IK \perp OB\\ &IK \perp OA}$ $\Rightarrow IK \perp (OAB)$ $\Rightarrow (AIK) \perp (OAB)$ theo giao tuyến $AK$.
+			\end{enumerate}
+		}{
+			\begin{tikzpicture}[scale=.6, font=\footnotesize, line join=round, line cap=round,>=stealth]
+				\tkzDefPoints{0/0/O,0/5/A,5/-3/B,7/0/C}
+				\tkzDefMidPoint(B,C) \tkzGetPoint{I}
+				\tkzDefMidPoint(O,B) \tkzGetPoint{K}
+				\tkzDefPointBy[homothety = center A ratio 0.6](K) \tkzGetPoint{H}
+				\tkzDefPointBy[homothety = center A ratio 0.6](I) \tkzGetPoint{E}
+				\tkzDefPointBy[translation = from H to O](E) \tkzGetPoint{F}
+				\tkzDrawSegments(O,A O,B B,C A,K A,B A,I A,C O,H)
+				\tkzDrawSegments[dashed](O,C K,I H,E E,F O,I)
+				\tkzMarkRightAngles[size=.3](A,O,B A,O,C B,O,C O,H,K F,E,I E,F,C I,K,B)
+				\tkzDrawPoints[fill=black](A,B,C,O,I,K,H,E,F)
+				\tkzLabelPoints[above](A)
+				\tkzLabelPoints[below](B)    		
+				\tkzLabelPoints[right](E,I,C)
+				\tkzLabelPoints[left](O,H)
+				\tkzLabelPoints[below left](K)
+				\tkzLabelPoints[below right](F)
+			\end{tikzpicture}
+		}
+		\begin{enumerate}
+			\item[] Trong mặt phẳng $(OAB)$, kẻ $OH \perp AK$ tại $H$, ta có: $OH \perp (AIK)$ $\Rightarrow OH \perp AI$.\\
+			Trong mặt phẳng $(AIK)$, kẻ $HE \parallel IK$ $(E \in SI)$.\\
+			Trong mặt phẳng $(HE, OC)$, kẻ $EF \parallel OH$ $(F \in OC)$ $\Rightarrow EF \perp AI$.\\
+			Lại có $OC \perp (OAB) \Rightarrow OC \perp AH \Rightarrow OC \perp EF$.\\
+			Do đó $EF$ là đoạn vuông góc chung của $OC$ và $AI$.\\
+			Trong tam giác vuông $OAK$ ta có: $\dfrac{1}{OH^2} = \dfrac{1}{OA^2} + \dfrac{1}{OK^2} = \dfrac{1}{a^2} + \dfrac{4}{a^2} = \dfrac{5}{a^2}$.\\
+			Suy ra $EF = OH = \dfrac{a\sqrt{5}}{5}$.\\
+			Vậy $\mathrm{d}(AI, OC) = \dfrac{a\sqrt{5}}{5}$.
+		\end{enumerate}
+	}
+\end{bt}

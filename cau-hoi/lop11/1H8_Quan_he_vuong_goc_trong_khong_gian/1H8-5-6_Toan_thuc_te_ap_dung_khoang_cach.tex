@@ -61,3 +61,37 @@
 		} 
 	} 
 \end{ex}
+
+% nguồn: 2026-11-15_11_1H8_TL2_Vuong_goc (nhập 15/11/2026)
+\begin{bt}%[1H8V5-6]%[ma:488643cb]
+% nguon: Archive/SP-4Phan-Dot3/Data/KNTT_1-OTGK2_De02.tex #4375
+
+	Kim tự tháp ở Ai Cập có hình dạng là một hình chóp tứ giác đều có đáy là $262$ m và cạnh bên là $230$ m. Giả sử, từ một mặt bên của kim tự tháp ta cần đào một con đường ngắn nhất để đi đến tâm của đáy kim tự tháp, khi đó quãng đường ngắn nhất có độ dài khoảng bao nhiêu mét?
+	\loigiai{
+		\immini
+		{Khoảng cách ngắn nhất từ một điểm tại mặt bên đến tâm $O$ của đáy chính là khoảng cách từ tâm $O$ đến mặt phẳng $(SCD)$.\\
+		Dựng $OI\perp CD$ tại $I$, $OH\perp SI$ tại $H$.\\
+		Ta có $\heva{&CD\perp OI\\&CD\perp SO} \Rightarrow CD\perp (SOI) \Rightarrow OI\perp OH$.\\
+		Ta có $\heva{& OH\perp SI\\& OH\perp CD} \Rightarrow OH\perp (SCD)$.}
+		{\begin{tikzpicture}[declare function={a=2.65;b=4.5;h=4;}, line join=round, line cap=round, >=stealth,scale=0.9]
+			\path (0,0) coordinate (A)
+			(-135:a) coordinate (B)
+			(b,0) coordinate (D)
+			($(D)-(A)+(B)$) coordinate (C)
+			($(B)!0.5!(D)$) coordinate (O)
+			($(O)+(0,h) $) coordinate (S)
+			($(C)!.5!(D)$) coordinate (I)
+			($(S)!0.65!(I)$) coordinate (H);		
+			\path ($(D)-(A)+(B)$) coordinate (C);
+			\draw[dashed] (S)--(A)--(B) (A)--(D) (A)--(C) (S)--(O) (B)--(D) (O)--(I) (O)--(H) ;
+			\draw (B)--(C)--(D) (B)--(S) (D)--(S)--(C) (S)--(I);
+			\draw pic[draw=black,angle radius=0.2cm] {right angle = O--I--C};
+			\draw pic[draw=black,angle radius=0.2cm] {right angle = S--H--O};
+			\foreach \t/\g in {A/150,B/-90,C/-90,D/0,S/90,O/-90,I/-20,H/10}{\draw[fill=black] (\t) circle (0.75pt) node[shift={(\g:7pt)}]{$\t$};}
+		\end{tikzpicture}}
+		\noindent
+		Vậy $OH = \mathrm{d}\left(O,(SCD)\right)$.\\
+		Ta có $OC=\dfrac{262\sqrt{2}}{2} \Rightarrow SO=\sqrt{SC^2-OC^2}=\sqrt{18578}$.\\
+		Ta có $OH=\dfrac{OI\cdot SO}{\sqrt{OI^2+SO^2}} = \dfrac{131\cdot\sqrt{18578}}{\sqrt{131^2+18578}}$ (mét).
+	}
+\end{bt}

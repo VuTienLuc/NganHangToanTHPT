@@ -525,3 +525,63 @@
 		\end{enumerate}
 	}
 \end{bt}
+
+% nguồn: 2026-11-15_11_1D3_TL2_Gioi_han (nhập 15/11/2026)
+\begin{bt}%[1D3C1-1]%[ma:efb20054]
+% nguon: Archive/2024/TOAN_11_XE/TOAN_11_XE/data4/11C5/KNTT-5.1.tex #708
+
+	Gọi $C$ là nữa đường tròn đường kính $AB=2R$.\\
+	$C_1$ là đường gồm hai nửa đường tròn đường kính $\dfrac{AB}{2}$,\\
+	$C_2$ là đường gồm bốn nửa đường tròn đường kính $\dfrac{AB}{4},\cdots$\\
+	$C_n$ là đường gồm $2^n$ nửa đường tròn đường kính $\dfrac{AB}{2^n},\cdots$
+	\immini{	Gọi $p_n$ là độ dài của $C_n$, $S_n$ là diện tích hình phẳng giới hạn bởi $C_n$ và đoạn thẳng $AB$.
+		\begin{enumEX}{1}
+			\item Tính $p_n$, $S_n$.
+			\item Tính giới hạn của các dãy số $(p_n)$ và $(S_n)$.
+		\end{enumEX}
+	}{
+		\begin{tikzpicture}[declare function={r=3;}]
+			\path
+			(0,0) coordinate (O)
+			(0:r) coordinate (A)
+			(180:r) coordinate (B)
+			($(A)!.5!(O)$) coordinate (M)
+			($(B)!.5!(O)$) coordinate (N)
+			($(B)!.5!(N)$) coordinate (I)
+			($(N)!.5!(O)$) coordinate (J)
+			($(O)!.5!(M)$) coordinate (K)
+			($(M)!.5!(A)$) coordinate (H)
+			($(B)!.5!(I)$) coordinate (Q);
+			\draw (A) arc(0:180:r) (A) arc(0:180:r/2) (O) arc(0:180:r/2) (A) arc(0:180:r/4) (A) arc(0:180:r/4)(M) arc(0:180:r/4) (O) arc(0:180:r/4) (N) arc(0:180:r/4)
+			(A) arc(0:180:r/8) (H) arc(0:180:r/8) (M) arc(0:180:r/8) (K) arc(0:180:r/8) (O) arc(0:180:r/8) (J) arc(0:180:r/8) (N) arc(0:180:r/8) (I) arc(0:180:r/8);
+			\draw (A)--(B);
+			\path 
+			($(O)+(90:0.9*r)$) node{$C$}
+			($(N)+(90:0.4*r)$) node[scale=0.8]{$C_1$}
+			($(I)+(90:0.18*r)$) node[scale=0.7]{$C_2$}
+			($(Q)+(90:0.06*r)$) node[scale=0.6]{$C_3$};
+			\foreach \x/\y in {A/-90, B/-90}{\fill (\x) circle(1pt) ($(\x)+(\y:0.3cm)$) node{$\x$};}
+		\end{tikzpicture}
+	}
+	
+	\loigiai{
+		\begin{enumerate}
+			\item Ta có  
+			\begin{eqnarray*}
+				p_n&=&2^n \cdot \pi r=2^n\cdot\pi \cdot \dfrac{AB}{2\cdot2^n}\\
+				&=&\dfrac{\pi AB}{2}\\
+				&=&\dfrac{\pi \cdot 2R}{2}\\
+				&=&\pi R.
+			\end{eqnarray*}
+			\begin{eqnarray*}
+				S_n&=&2^n \cdot \dfrac{1}{2}\pi r^2\\
+				&=&2^n \cdot \dfrac{1}{2}\pi \left(\dfrac{AB}{2\cdot2^n}\right)^2\\
+				&=&2^n \cdot \dfrac{1}{2}\pi \left(\dfrac{2R}{2\cdot2^n}\right)^2\\
+				&=&2^n \cdot \dfrac{1}{2}\pi \dfrac{R^2}{(2^n)^2}\\
+				&=&\dfrac{\pi R^2}{2^{n+1}}.	
+			\end{eqnarray*}			
+			\item $\lim p_n=\lim \left(\pi R\right) = \pi R$.\\
+			$\lim S_n=\lim \dfrac{\pi R^2}{2^{n+1}}=0$ (Vì $\lim \left(\pi R^2\right)=\pi R^2$ và $\lim 2^{n+1}=+\infty$).
+		\end{enumerate}
+	}
+\end{bt}

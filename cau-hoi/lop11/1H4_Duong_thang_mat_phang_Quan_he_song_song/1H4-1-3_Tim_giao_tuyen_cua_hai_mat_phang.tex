@@ -3595,3 +3595,1676 @@ Suy  ra $\left(BDM\right)\cap\left(ABN\right)=BG$.
 		Vậy $F$ là giao điểm của đường  thẳng $AB$ và mặt phẳng $(OMN)$.
 	 }
 \end{ex}
+
+% nguồn: 2026-11-15_11_1H4_TL2_Song_song (nhập 15/11/2026)
+\begin{bt}%[1H4H1-3]%[ma:62686c34]
+% nguon: Archive/2024/TOAN_11_XE/TOAN_11_XE/data4/11C4/KNTT-4.2.tex #781
+
+	Cho hình chóp $S.ABCD$ có đáy $ABCD$ là hình bình hành. Gọi $M$, $N$, $P$ lần lượt là trung điểm của các cạnh $SA$, $AB$, $SD$. Xác định giao tuyến của mỗi cặp mặt phẳng sau: $(SAD)$ và $(SBC)$; $(MNP)$ và $(ABCD)$.
+	\loigiai{
+		\begin{itemize}
+			\item 
+			\immini{Xét hai mặt phẳng $(SAD)$ và $(SBC)$ có:\\
+				$S$ là một điểm chung.\\
+				Hơn nữa, ta có $\heva{&AD\parallel BC\\&AD\subset (SAD)\\&BC\subset (SBC)}$\\
+				$\Rightarrow (SAD)\cap(SBC)=Sx\parallel AD$.}{\begin{tikzpicture}[scale=0.7, font=\footnotesize, line join=round, line cap=round, >=stealth]
+					\coordinate[label=below:$A$] (A) at (0,0);
+					\coordinate[label=below:$B$] (B) at (-1,-1.5);
+					\coordinate[label=below:$D$] (D) at (5,0);
+					\coordinate[label=right:$C$] (C) at ($(B)+(D)-(A)$);
+					\coordinate[label=above:$S$] (S) at ($(A)+(1,3)$);
+					\coordinate[label=left:$M$] (M) at ($(S)!0.5!(A)$);
+					\coordinate[label=right:$P$] (P) at ($(S)!0.5!(D)$);	
+					\coordinate[label=below:$N$] (N) at ($(A)!0.5!(B)$);
+					\coordinate (Q) at ($(S)+(D)-(A)$);
+					\coordinate (I) at ($(C)!0.5!(D)$);
+					\draw (S)--(B) (S)--(C) (S)--(D) (B)--(C) (C)--(D);
+					\draw [dashed] (S)--(A) (M)--(N) (N)--(P) (M)--(P) (N)--(I) (A)--(B) (A)--(D);
+					\foreach \x in{A,B,C,D,S,M,N,P} \draw[fill=black] (\x) circle (1pt);
+					\draw (S)--(Q) node[midway,below]{$x$};
+					\draw [dashed] (N)--(I) node[midway,below]{$y$};
+			\end{tikzpicture}}
+			\item Xét hai mặt phẳng $(MNP)$ và $(ABCD)$ có:\\
+			$N$ là một điểm chung.\\
+			Hơn nữa ta có $\heva{&MP\parallel AD\quad(\text{vì}\, MP\, \text{là đường trung bình của tam giác}\, SAD)\\&AD\subset (ABCD)\\&MP\subset (MNP)}$\\
+			$\Rightarrow (MNP)\cap(ABCD)=Ny\parallel AD$.
+	\end{itemize}}
+\end{bt}
+
+% nguồn: 2026-11-15_11_1H4_TL2_Song_song (nhập 15/11/2026)
+\begin{bt}%[1H4H1-3]%[ma:d4776fba]
+% nguon: Archive/2024/TOAN_11_XE/TOAN_11_XE/data4/11C4/KNTT-4.1.tex #792
+
+	Cho tam giác $A B C$ và một điểm $S$ không thuộc mặt phẳng $(A B C)$. Gọi $M$, $N$ lần lượt là trung điểm của các đoạn thẳng $AB$, $AC$.
+	\begin{enumerate}
+\item Chỉ ra một điểm chung của hai mặt phẳng $(SBN)$, $(SCM)$ và khác điểm $S$.
+\item  Giao tuyến của hai mặt phẳng $(S B N)$ và $(S C M)$ có đi qua trọng tâm của tam giác $A B C$ hay không?
+\end{enumerate}
+\loigiai{
+	\immini{
+\begin{enumerate}
+	\item Trong tam giác $A B C$, hai đường trung tuyến $B N$ và $C M$ cắt nhau tại trọng tâm $G$ của tam giác. Điểm $G$ thuộc $B N$ nên cũng thuộc mặt phẳng $(S B N)$. Điểm $G$ thuộc $C M$ nên cũng thuộc mặt phẳng $(S C M)$. Vậy $G$ là một điểm chung của hai mặt phẳng $(S B N)$ và $(S C M)$.
+\item Vì $S$, $G$ là hai điểm chung của hai mặt phẳng $(S B N)$ và $(S C M)$ nên giao tuyến của hai mặt phẳng này là đường thẳng $S G$. Đường thẳng này đi qua trọng tâm $G$ của tam giác $A B C$.
+\end{enumerate}}{\begin{tikzpicture}[line join=round,line cap=round,font=\footnotesize,scale=1]
+\coordinate (B) at (0,0);
+\coordinate(A) at (1,-1);
+\coordinate(C) at (4,0);
+\coordinate (N) at ($(A)!.5!(C)$);
+\coordinate(M) at ($(A)!.5!(B)$);
+\coordinate(G) at ($(B)!2/3!(N)$);
+\coordinate(S) at ($(G)+(100:3)$);
+\draw (B)--(A)--(C)--(S)--cycle (S)--(A) (S)--(M) (S)--(N);
+\draw[dashed] (N)--(B)--(C) (G)--(S)(C)--(M);
+\foreach \diem in {A,B,C,S,M,N} \fill (\diem) circle(1.0pt);
+\foreach \i/\j in {A/-90, S/90,B/180,C/0,G/-80,M/-120,N/-120}\fill[black] (\i) circle (1pt) ($(\i)+(\j:3mm)$)node{$\i$}; 
+\end{tikzpicture}}}
+\end{bt}
+
+% nguồn: 2026-11-15_11_1H4_TL2_Song_song (nhập 15/11/2026)
+\begin{bt}%[1H4H1-3]%[ma:817ae655]
+% nguon: Archive/2024/TOAN_11_XE/TOAN_11_XE/data4/11C4/KNTT-4.1.tex #793
+
+ Cho hai đường thẳng cắt nhau $a$, $ b$ và gọi $S$ là một điểm không thuộc mp$(a, b)$. Xác định giao tuyến của mp$(S, a)$ và mp$(S, b)$.
+\loigiai{\immini{
+Gọi $M$ là giao điểm của $a$ và $b$. Vì $M$ thuộc $a$ nên $M$ thuộc mp$(S, a)$. Vì $M$ thuộc $b$ nên $M$ thuộc mp$(S, b)$. Hai điểm $S$, $M$ cùng thuộc mp$(S, a)$ và mp$(S, b)$ nên giao tuyến của hai mặt phẳng đó là đường thẳng $SM$.}{\begin{tikzpicture}[scale=1, font=\footnotesize, line join=round, line cap=round,>=stealth]
+	\path (0,0)coordinate (V) (4,0)
+	 coordinate (X) (5.5,1.5) 
+	 coordinate (Y) ($(V)+(Y)-(X)$)
+	  coordinate (Z) (4.3,1) 
+	  coordinate (A) (2.7,0.7)
+	   coordinate (K) (2.0,1.2) 
+		coordinate (H)--+(0.8,1.5) coordinate (S);
+		\coordinate (C) at (1.8,1.2);
+		 \coordinate (D) at (4,0.5);	
+		 \coordinate (M) at (intersection cs:first line={(A)--(K)},second line={(C)--(D)});
+		    
+	\foreach \p in {V,X,Y,Z} {\path (\p)--+(0,-2) coordinate (\p');}
+	\draw[fill=gray!20] (V)--(X)--(Y)--(Z)--cycle (S)--(M);
+	\draw[shorten <=-0.5cm,shorten >=-1.5cm] (A)--(K) node[pos=1.8, below]{$a$};
+	\draw(C)--(D) node[pos=0.2, above]{$b$};
+		\foreach \p/\g in {M/-60,S/180} \fill[black] (\p) circle(1pt)+(\g:0.3) node{$\p$};
+\end{tikzpicture}}}
+\end{bt}
+
+% nguồn: 2026-11-15_11_1H4_TL2_Song_song (nhập 15/11/2026)
+\begin{bt}%[1H4V1-3]%[ma:152ed09b]
+% nguon: Archive/2024/TOAN_11_XE/TOAN_11_XE/data4/11C4/KNTT-4.1.tex #801
+
+	Cho tứ diện $ABCD$ có $G$ là trọng tâm tam giác $BCD$. Gọi $M$, $N$, $P$ lần lượt là trung
+	điểm của các cạnh $AB$, $BC$, $CD$.
+	\begin{enumerate}
+		\item Xác định giao tuyến của $(ADN)$ và $(ABP)$.
+		\item Gọi $I=AG\cap MP$ và $J=CM\cap AN$. Chứng minh $D$, $I$, $J$ thẳng hàng.
+	\end{enumerate}	
+	\loigiai{ 
+		\begin{center}
+			\begin{tikzpicture}[scale=1, font=\footnotesize, line join=round, line cap=round, >=stealth]
+				\path
+				(0,0) coordinate (B)node[left]{$B$}
+				($(A)+(-60:2.5)$) coordinate (C)node[below]{$C$}
+				($(A)+(0:4)$) coordinate (D)node[right]{$D$}
+				($(B)!1/2!(C)$) coordinate (N)node[right]{$N$}
+				($(C)!1/2!(D)$) coordinate (P)node[left]{$P$}
+				($(B)!2/3!(P)$) coordinate (G)node[below]{$G$}
+				($(G)+(90:4)$) coordinate (A)node[above]{$A$}
+				($(A)!1/2!(B)$) coordinate (M)node[left]{$M$}
+				;
+				\path[name path=a] (M)--(C);
+				\path[name path=b] (A)--(N);
+				\path [name intersections={of=a and b,by=J}];
+				\path(J) coordinate (J)node[left]{$J$};
+				\path[name path=c] (A)--(G);
+				\path[name path=d] (M)--(P);
+				\path [name intersections={of=c and d,by=I}];
+				\path(I) coordinate (I)node[left]{$I$};
+				\draw[thick] (A)--(B)--(C)--(D)--(A)--(C) (A)--(N) (C)--(M)(A)--(P);
+				\draw[thick][dashed](B)--(D)--(N) (B)--(P) (A)--(G) (M)--(P);
+				\foreach\p in{A,B,C,D,M,N,P,G,I,J}\draw[thick][fill=black](\p)circle(1pt);
+			\end{tikzpicture}
+		\end{center}
+		\begin{enumerate}
+			\item Ta có $\heva{A\in(ADN)\\A\in(ABP)}\Rightarrow A\in(ADN)\cap(ABP)\quad (1)$\\
+			Tương tự $$G=BP\cap DN\Rightarrow\heva{&G\in DN,DN\subset(ADN)\Rightarrow G\in(ADN)\\&G\in BP,BP\subset(ABP)\Rightarrow G\in(ABP)}\Rightarrow G\in(ADN)\cap(ABP)\quad (2)$$
+			Từ $(1)$, $(2)$ suy ra $(ADN)\cap(ABP)=AG$.
+			\item Gọi đường thẳng $d$ là giao tuyến của hai mặt phẳng $(DCM)$ và $(ADN)$.\\
+			Ta có $\heva{D \in (DCM)\\D \in (ADN)}\Rightarrow D\in d\quad (1)$\\
+			Tương tự:\\
+			$$I=AG\cap MP \Rightarrow \heva{&I \in AG,AG\subset (ADN)\Rightarrow I\in(ADN)\\&I \in MP,MP\subset (DCM)\Rightarrow I\in(DCM)}\Rightarrow I\in d\quad (2)$$
+			$$J=CM\cap AN \Rightarrow \heva{&J \in CM,CM\subset (DCM)\Rightarrow J\in(DCM)\\&J \in AN,AN\subset (ADN)\Rightarrow J\in(ADN)}\Rightarrow J\in d\quad (3)$$
+			Từ (1),(2),(3), suy ra $D$, $I$, $J$ cùng thuộc $d$ $\Rightarrow$ ba điểm $D$, $I$, $J$ thẳng hàng (đpcm).
+		\end{enumerate}	
+	}
+\end{bt}
+
+% nguồn: 2026-11-15_11_1H4_TL2_Song_song (nhập 15/11/2026)
+\begin{bt}%[1H4V1-3]%[ma:7ca42ac7]
+% nguon: Archive/2024/TOAN_11_XE/TOAN_11_XE/data4/11C4/KNTT-4.1.tex #809
+ 
+	Cho hình chóp $S.ABCD$ có $AB \cap CD=E$ và $AD \cap BC=K$. Gọi $M, N, P$ lần lượt là trung điểm của $SA, SB, SC$.
+	\begin{enumerate}
+		\item Tìm giao tuyến của $(SAC)$ và $(SBD)$.
+		\item Tìm giao tuyến của $(MNP)$ và $(SBD)$.
+		\item Tìm giao điểm của $Q$ của $SD$ và $(MNP)$.
+		\item Gọi $H=MN \cap PQ$. Chứng minh: $S, H, E$ thẳng hàng.
+		\item Chứng minh: $SK, QM, NP$ đồng quy.
+	\end{enumerate}
+	\loigiai{
+		\begin{enumerate}
+			\item Tìm giao tuyến của $(SAC)$ và $(SBD)$.
+			\immini{ \begin{itemize}
+					\item Có $S \in(SBD) \cap(SAC) \quad (1)$
+					\item Trong mặt phẳng $(ABCD)$, gọi $I = AC \cap BD$\\
+					$\Rightarrow\heva{&I \in BD \subset (SBD) \\ &I \in AC \subset (SAC)}$\\
+					$\Rightarrow I \in (SBD) \cap (SAC) \quad (2)$
+				\end{itemize}
+				Từ (1) và (2) suy ra $(SBD) \cap (SAC)= SI$
+				\item Tìm giao tuyến của $(MNP)$ và $(SBD)$.
+				\begin{itemize}
+					\item Có $N \in(SBD) \cap(MNP) \quad \quad (3)$
+					\item Trong mặt phẳng $(SAC)$ gọi $J=MP \cap SI$\\
+					$\Rightarrow\heva{&J \in MP \subset(MNP) \\ &J \in SI \subset(SBD)}$\\
+					$\Rightarrow J \in (MNP) \cap(SBD) \quad \quad (4)$
+				\end{itemize}
+				Từ (3) và (4) suy ra $(SBD) \cap(MNP)=NJ$.}{
+				\begin{tikzpicture}[scale=0.6, font=\footnotesize, line join=round, line cap=round, >=stealth]
+					\coordinate[label=below left:$A$] (A) at (-3,0);
+					\coordinate[label=below left:$B$] (B) at (-2,-2);
+					\coordinate[label=below right:$C$] (C) at (2,-4);
+					\coordinate[label=below right:$D$] (D) at (4,0);
+					\coordinate[label=above:$S$] (S) at (0,6);
+					\coordinate[label=above right:$M$] (M) at ($(S)!1/2!(A)$);
+					\coordinate[label=below left:$N$] (N) at ($(S)!1/2!(B)$);
+					\coordinate[label=right:$P$] (P) at ($(S)!1/2!(C)$);
+					\coordinate[label=below:$E$](E) at (intersection of A--B and C--D); %giao điểm
+					%\coordinate[label=right:$F$](F) at (intersection of I--E and S--D); %giao điểm
+					\coordinate[label=above left:$I$](I) at (intersection of A--C and B--D); %giao điểm
+					\coordinate[label=below left:$K$](K) at (intersection of B--C and D--A); %giao điểm
+					\coordinate[label=below right:$H$](H) at (intersection of M--N and S--E); %giao điểm
+					\coordinate[label=right:$Q$](Q) at (intersection of S--D and H--P); %giao điểm
+					\coordinate[label=above left:$R$](R) at (intersection of M--Q and S--K); %giao điểm
+					\coordinate[label=above right:$J$](J) at (intersection of N--Q and M--P); %giao điểm
+					\draw[thick] (C)--(D)--(S) (N)--(H);
+					\draw[thick] (B)--(S)--(C) (B)--(E)--(C) (E)--(S)--(K)--(B) (H)--(Q) (N)--(R);
+					%	\draw[thick] (C)--(E)--(S)--(D)--(M);
+					\draw[thick][dashed] (S)--(A) (A)--(B) (D)--(A)--(E) (B)--(C) (K)--(D) (A)--(C) (B)--(D) (N)--(P) (R)--(Q) (M)--(N) (I)--(S) (M)--(P) (N)--(Q);
+					\foreach \diem in {A,B,C,D,S,E,I,J,P,M,N,Q,K,R}	\fill (\diem)circle(1.5pt);
+			\end{tikzpicture}}
+			\item Tìm giao điểm của $Q$ của $SD$ và $(MNP)$.
+			\begin{itemize}
+				\item Trong mặt phẳng $(SBD)$, gọi
+				$Q=SD \cap NJ$ \\
+				$ \Rightarrow\heva{& Q \in SD \\ & Q \in NJ \subset (MNP)}\\ \Rightarrow Q= SD \cap(MNP)$.
+			\end{itemize}
+			\item Gọi $H=MN \cap PQ$. Chứng minh: $S, H, E$ thẳng hàng.
+			\begin{itemize}
+				\item Có $SE=(SAB) \cap (SCD)$
+				\item Theo giả thuyết có $H=MN \cap PQ$\\
+				$\Rightarrow\heva{H \in MN \subset(SAB) \\ H \in PQ \subset (SCD)}\\
+				\Rightarrow H \in (SAB) \cap (SCD)\Rightarrow H \in SE$
+			\end{itemize}
+			Suy ra ba điểm điểm $S, H, E$ thẳng hàng.
+			\item Chứng minh: $SK, QM, NP$ đồng quy.
+			\begin{itemize}
+				\item Có $SK = (SAD) \cap (SBC)$
+				\item Theo giả thuyết có $ R = MQ \cap NP$\\
+				$\Rightarrow \heva{ R \in MQ \subset(SAD) \\ R \in NP \subset(SBC)}\\
+				\Rightarrow R \in(SAD) \cap (SBC) \Rightarrow R \in SK$ 
+			\end{itemize}
+			Suy ra ba đường thẳng $SK, MQ, NP$ đồng quy tại điểm $R$.
+		\end{enumerate}
+	}
+\end{bt}
+
+% nguồn: 2026-11-15_11_1H4_TL2_Song_song (nhập 15/11/2026)
+\begin{bt}%[1H4H1-3]%[ma:c6c22df6]
+% nguon: Archive/2024/TOAN_11_XE/TOAN_11_XE/data4/11C4/KNTT-4.1.tex #814
+
+Cho hình chóp tứ giác $S . A B C D$ và $M$ là một điểm thuộc cạnh $SC$ ($M$ khác $S$, $C)$. Giả sử hai đường thẳng $A B$ và $C D$ cắt nhau tại $N$. Chứng minh rằng đường thẳng $M N$ là giao tuyến của hai mặt phẳng $(A B M)$ và $(S C D)$.
+\loigiai{\immini{\begin{itemize}
+			\item Vì $M\in (ABM)$ và $M\in SC \subset (SCD)$ nên $M$ là điểm chung thứ nhất của hai mặt phẳng $(ABM)$ và $(SCD)$.
+			\item Mặt khác $N=AB\cap CD\Rightarrow \heva{&N \in AB \subset (ABM) \\&N \in CD \subset (SCD)}$\\ $\Rightarrow N \in  (ABM)\cap(S CD).$\\ Hay $N$ là điểm chung thứ hai của hai mặt phẳng $(ABM)$ và $(SCD)$.
+		\end{itemize}
+	Vậy $(ABM)\cap (SCD)=MN$. }{\begin{tikzpicture}[scale=0.8, font=\footnotesize, line join=round, line cap=round, >=stealth]
+			\def\ad{6} % cạnh AD
+			\def\ab{2.5} % cạnh AB
+			\def\bc{3} % chéo AC
+			\def\as{5} % cạnh AS
+			\def\gocA{55} % góc A của đáy
+			\def\gocB{120} % góc B của đáy
+			\pgfmathsetmacro\k{1/3}
+			\coordinate (A) at (0,0);
+			\coordinate(B) at (-\gocA:\ab);
+			\coordinate (C) at ($(B)+(180-\gocA-\gocB:\bc)$);
+			\coordinate (D) at (\ad,0);
+			\coordinate (S) at (60:\as); % chỉnh 75 và as để thay đổi S
+			\coordinate (M) at ($(S)!\k!(C)$);			
+			\coordinate (N) at (intersection cs:first line={(A)--(B)}, second line={(C)--(D)});
+			\draw (S)--(A)--(B) (C)--(D)--(S)--cycle (B)--(S)--(C)
+			 (M)--(N)--(C) (B)--(N);
+			\draw[dashed] (A)--(D) (C)--(D) (B)--(C)(A)--(M)--(B) ;
+			%	\foreach \diem in {A,B,C,D,S,E,M,N,F,I,O}	\fill (\diem)circle(1.0pt);
+			\foreach \i/\j in {S/90,A/150,B/180,C/-45,D/0,M/20,N/-90}\fill[black] (\i) circle (1pt) ($(\i)+(\j:2.5mm)$)node{$\i$};		
+\end{tikzpicture}}}
+\end{bt}
+
+% nguồn: 2026-11-15_11_1H4_TL2_Song_song (nhập 15/11/2026)
+\begin{bt}%[1H4V1-3]%[ma:eb0fc3e0]
+% nguon: Archive/2024/TOAN_11_XE/TOAN_11_XE/data4/11C4/KNTT-4.4.tex #821
+
+	Cho hình hộp chữ nhật $ABCD.A’B’C’D’$. Gọi $M$, $N$, $P$ lần lượt là trung điểm các cạnh $AB$, $AD$, $A’D’$. Xác định giao tuyến của $(MNP)$ và các mặt $(A’B’C’D’)$, $(AA’B’B)$.
+	\loigiai{
+		\immini{
+			Ta có $M$, $N$, $P$ lần lượt là trung điểm các cạnh $AB$, $AD$, $A’D’$. 
+			\\ $\Rightarrow \heva{&MN\parallel BD\parallel B’D’\\ &NP\parallel AA’\parallel DD’}\Rightarrow (MNP)\parallel (BDD’B’)$\\
+			Khi đó: $\heva{&(MNP)\parallel (BDD’B’)\\ & (BDD’B’)\cap (A’B’C’D’)=B’D’\\ &(MNP)\cap (A’B’C’D)=P}$\\
+			$\Leftrightarrow (MNP)\cap (A’B’C’D’)=PQ$ với $\heva{&PQ \cap A’B’= Q\\ & PQ\parallel B’D’}$.\\
+			Suy ra $(MNP)\cap (ABB’A’)=MQ$. 
+		}{
+			\begin{tikzpicture}[scale=0.4,line cap=round,line join =round]
+				\tkzDefPoints{0/0/A', -3/-3/B', 10/0/D'}
+				\coordinate (A) at($(A')+(0,6)$);
+				\coordinate (B) at($(B')+(A)-(A')$);
+				\coordinate (C') at($(D')+(B')-(A')$);
+				\coordinate (C) at($(C')+(B)-(B')$);
+				\coordinate (D) at($(C)+(A)-(B)$);
+				\coordinate (M) at($(A)!0.5!(B)$);
+				\coordinate (N) at($(A)!0.5!(D)$);
+				\coordinate (P) at($(A')!0.5!(D')$);
+				\coordinate (x) at($(M)+(P)-(N)$);
+				\tkzInterLL(P,x)(A',B')\tkzGetPoint{Q}
+				\tkzDrawSegments(A,B B,C B',B C',C B',C' A,D D,C D,D' C',D' M,N)
+				\tkzDrawSegments[dashed](A',A A',B' B',C' D',A' N,P P,M P,Q Q,M)
+				\tkzLabelPoints[above left](A,B,B',A',M,Q)
+				\tkzLabelPoints[above right](D,D',N)
+				\tkzLabelPoints[above]()
+				\tkzLabelPoints[below]()
+				\tkzLabelPoints[below left]()
+				\tkzLabelPoints[below right](C,C',P)
+				\tkzDrawPoints[fill=black,size=5pt](A,B,C,A',B',C',D,D',M,N,P,Q)
+			\end{tikzpicture}
+		}
+	}
+\end{bt}
+
+% nguồn: 2026-11-15_11_1H4_TL2_Song_song (nhập 15/11/2026)
+\begin{bt}%[1H4H1-3]%[ma:91212fa3]
+% nguon: Archive/2024/TOAN_11_XE/TOAN_11_XE/data4/11C4/KNTT-4.6.tex #830
+%[Tex hóa SGK11, Kiều Ngân]
+	Cho hình chóp $S.ABCD$ có đáy là hình bình hành. Gọi $M$, $N$ lần lượt là trung điểm của các cạnh $BC$, $SD$. Xác định giao tuyến của mặt phẳng $(AMN)$ với mỗi mặt phẳng sau
+	
+	\begin{enumerate}
+		\item $(SCD)$;
+		\item $(SBC)$.
+	\end{enumerate}
+	\loigiai{\begin{center}
+			\begin{tikzpicture}[scale=1, font=\footnotesize, line join=round, line cap=round, >=stealth]
+				\path
+				(0,0) coordinate (A)
+				(-1,-0.6) coordinate (B)
+				(3,0) coordinate (D)
+				($(B)+(D)-(A)$) coordinate (C)
+				($(A)+(-0.2,2)$) coordinate (S)
+				($(B)!0.5!(C)$) coordinate (M)
+				($(S)!0.5!(D)$) coordinate (N)
+				(intersection of A--M and C--D) coordinate (E)
+				(intersection of N--E and S--C) coordinate (F)
+				;
+				\draw (S)--(B)--(M) (C)--(D)--(S)--(C) (M)--(E)--(C) (N)--(E) (M)--(F);
+				\draw[dashed] (S)--(A)--(B) (A)--(D) (A)--(M)--(N)--(A) (M)--(C);
+				\foreach \x/\g in {S/90,A/160,B/-90,C/-90,D/0,M/-120,N/60,E/-90,F/30} \draw[fill=black] (\x) circle(1pt)++(\g:0.3)node{$\x$};
+			\end{tikzpicture}
+		\end{center}
+			\begin{enumerate}
+				\item Tìm giao tuyến của mặt phẳng $(AMN)$ với $(SCD)$.\\
+				Ta có $\heva{&N\in (AMN)\\&N\in SD,\,SD\subset (SCD)}\Rightarrow \heva{&N\in (AMN)\\&N\in (SCD)}$\\
+				$\Rightarrow N\in (AMN)\cap (SCD)$.\\
+				Trong $(ABCD)$ gọi $E=AM\cap CD\Rightarrow \heva{&E\in AM,\,AM\subset (AMN)\\&E\in CD,\,CD\subset (SCD)}$\\
+				$\Rightarrow\heva{&E\in (AMN)\\&E\in (SCD)}\Rightarrow E\in (AMN)\cap (SCD)$.\\
+				Vậy $NE=(AMN)\cap (SCD)$.
+				\item Tìm giao tuyến của mặt phẳng $(AMN)$ với $(SBC)$.\\
+				Ta có $\heva{&M\in (AMN)\\&M\in BC,\,BC\subset (SBC)}\Rightarrow \heva{&M\in (AMN)\\&M\in (SBC)}$\\
+				$\Rightarrow M\in (AMN)\cap (SBC)$.\\
+				Trong $(SCD)$ gọi $F=NE\cap SC\Rightarrow \heva{&F\in NE,\,NE\subset (AMN)\\&F\in SC,\,SC\subset (SBC)}$\\
+				$\Rightarrow\heva{&F\in (AMN)\\&F\in (SBC)}\Rightarrow F\in (AMN)\cap (SBC)$.\\
+				Vậy $MF=(AMN)\cap (SBC)$.
+			\end{enumerate}
+	}
+\end{bt}
+
+% nguồn: 2026-11-15_11_1H4_TL2_Song_song (nhập 15/11/2026)
+\begin{bt}%[1H4N1-3]%[ma:284ed1ae]
+% nguon: Archive/2024/SP-K10-K11-LyVanHoang_TVN-023/K11-C4-HHKG-QHSS/data/Bai-1-Dang2-Xacdinhgiaotuyencuahaimatphangcatnhau.tex #2332
+
+	Trong mặt phẳng $\left(\alpha \right)$ cho tứ giác $ABCD$ có các cặp cạnh đối không song song và điểm $S$ không thuộc $\left(\alpha \right)$. Xác định giao tuyến của hai mặt phẳng $\left(SAB\right)$ và $\left(ABCD\right)$.
+	\loigiai{
+		\immini{ Ta có\\
+			$\heva{&A\in (SAB)\cap(ABCD)\\&B\in (SAB)\cap(ABCD)}$\\
+			$\Rightarrow AB=(SAB)\cap(ABCD)$
+		}{\begin{tikzpicture}[scale=0.75, line join=round, line cap=round]
+				\coordinate (A) at (0,0);
+				\coordinate (B) at (.8,-1.6);
+				\coordinate (C) at (3,-2.4);
+				\coordinate (D) at (5,0);
+				\coordinate (S) at ($(A)+(0.5,3)$);
+				\draw (S)--(A)--(B)--(C)--(D)--cycle;
+				\draw (C)--(S)--(B);
+				\draw[dashed](A)--(D);
+				\foreach \p/\g in {S/90,A/180,B/200,C/0,D/0} \draw[fill] (\p) circle(.5pt) node [shift={(\g:.3)}] {$\p$};
+		\end{tikzpicture}}
+	}
+\end{bt}
+
+% nguồn: 2026-11-15_11_1H4_TL2_Song_song (nhập 15/11/2026)
+\begin{bt}%[1H4H1-3]%[ma:79cc2b59]
+% nguon: Archive/2024/SP-K10-K11-LyVanHoang_TVN-023/K11-C4-HHKG-QHSS/data/Bai-1-Dang2-Xacdinhgiaotuyencuahaimatphangcatnhau.tex #2336
+
+	Cho hình chóp $S.ABCD$, có đáy $ABCD$ là tứ giác có các cặp cạnh đối không song song và $O$ là giao điểm của $AC$ và $BD$. Gọi $M$ là trung điểm cả $SO$. Tìm giao tuyến của hai mặt phẳng $(MCD)$ và $(SAD)$.
+	\loigiai{
+		\immini{Ta có $D\in (MCD)\cap (SAD)$.\quad (1)\\
+			Trong mặt phẳng $(SAC)$, gọi $N=CM\cap SA$.\\
+			Suy ra $N\in (MCD)\cap (SAD)$. \quad (2)\\
+			Từ (1) và (2) suy ra $DN=(MCD)\cap (SAD)$.
+		}
+		{
+			\begin{tikzpicture}[font=\footnotesize,line cap=round,line join=round,>=stealth,scale=.75]
+				\path
+				(1,1) coordinate (A)
+				(1.98,-0.18) coordinate (B)
+				(4.4,-0.7) coordinate (C)
+				(6,1) coordinate (D)
+				(2.72,4.64) coordinate (S)
+				(intersection of A--C and B--D)coordinate (O);
+				\coordinate (M) at ($(S)!.5!(O)$);
+				\coordinate (N) at (intersection cs:first line={(C)--(M)}, second line={(S)--(A)});
+				\foreach \x/\g in{A/180,B/-90,C/-90,D/0,S/90,O/-60,M/45,N/180}
+				\fill[black](\x) circle (1pt)($(\x)+(\g:3mm)$) node{$\x$};
+				\draw (S)--(A)--(B)--(C)--(D)--(S)--(B) (S)--(C);
+				\draw [dashed] (C)--(A)--(D)--(B) (S)--(O)(C)--(N)--(D)--(M);
+			\end{tikzpicture}	
+		}	
+	}
+\end{bt}
+
+% nguồn: 2026-11-15_11_1H4_TL2_Song_song (nhập 15/11/2026)
+\begin{bt}%[1H4H1-3]%[ma:7c886e50]
+% nguon: Archive/2024/SP-K10-K11-LyVanHoang_TVN-023/K11-C4-HHKG-QHSS/data/Bai-1-Dang2-Xacdinhgiaotuyencuahaimatphangcatnhau.tex #2337
+
+	Cho tứ diện $ABCD$. Gọi $M$ là một điểm bên trong tam giác $ABD$, $N$ là một điểm bên trong tam giác $ACD$. Tìm giao tuyến của hai mặt phẳng $\left(AMN\right)$ và $(BCD)$.
+	\loigiai{
+		\immini{Trong mặt phẳng $\left(ABD\right)$, gọi $E=AM\cap BD$. Ta có 
+			\begin{itemize}
+				\item $E\in AM$ mà $AM\subset \left(AMN\right)$ suy ra $E\in \left(AMN\right)$.
+				\item $E\in BD$ mà $BD\subset (BCD)$ suy ra $E\in (BCD)$.
+			\end{itemize}
+			Do đó $E$ là điểm chung thứ nhất của $\left(AMN\right)$ và $(BCD)$.\\
+			Trong mặt phẳng $\left(ACD\right)$, gọi $F=AN\cap CD$. Ta có 
+			\begin{itemize}	
+				\item $F\in AN$ mà $AN\subset \left(AMN\right)$ suy ra $F\in \left(AMN\right)$.
+				\item $F\in CD$ mà $CD\subset (BCD)$ suy ra $F\in (BCD)$.
+			\end{itemize}
+			Do đó $F$ là điểm chung thứ hai của $\left(AMN\right)$ và $(BCD)$.\\
+			Vậy $EF$ là giao tuyến của $\left(AMN\right)$ và $(BCD)$.
+		}{\begin{tikzpicture}[scale=1, font=\footnotesize, line join=round, line cap=round,>=stealth]
+				\coordinate (A) at (1,3.5);
+				\coordinate (B) at (0,0);
+				\coordinate (C) at (2.5,-1.6);
+				\coordinate (D) at (4.5,0);
+				%\coordinate (S) at (0,5);
+				\coordinate (E) at ($(B)!.24!(D)$);
+				\coordinate (F) at ($(C)!.48!(D)$);
+				\coordinate (M) at ($(A)!.76!(E)$);
+				\coordinate (N) at ($(A)!.4!(F)$);
+				\draw (A)--(B)--(C)--(D)--cycle 
+				(A)--(C) (A)--(F);
+				\draw[dashed]
+				(B)--(D) (E)--(F) (A)--(E) (M)--(N);
+				\foreach \p/\g in {D/0,A/90,B/-100,C/-80,E/-120,F/0,M/180,N/0} \draw[fill] (\p) circle(.5pt) node [shift={(\g:.3)}] {$\p$};
+			\end{tikzpicture}
+		}	
+	}
+\end{bt}
+
+% nguồn: 2026-11-15_11_1H4_TL2_Song_song (nhập 15/11/2026)
+\begin{bt}%[1H4H1-3]%[ma:6341d180]
+% nguon: Archive/2024/SP-K10-K11-LyVanHoang_TVN-023/K11-C4-HHKG-QHSS/data/Bai-1-Dang2-Xacdinhgiaotuyencuahaimatphangcatnhau.tex #2338
+
+	Cho hình chóp $S.ABC$. Gọi $M$ và $N$ lần lượt là hai điểm trên hai cạnh $AB$ và $BC$ sao cho $MN$ không song song với $AC$. Tìm giao tuyến của các mặt phẳng $(SMN)$ và $(SAC)$.
+	\loigiai{
+		\immini{
+			Trong mặt phẳng $(ABC)$, gọi $E=MN\cap AC$.\\
+			Ta có $S$ và $E$ là hai điểm chung của hai mặt phẳng $(SMN)$ và $(SAC)$, suy ra $(SMN)\cap(SAC)=SE$.
+		}{
+			\begin{tikzpicture}[font=\footnotesize]
+				\path (0,0) coordinate (A)
+				(3,0) coordinate (C)
+				(1.4,-1.2) coordinate (B)
+				(1.5,2.5) coordinate (S)
+				($(B)!.3!(A)$) coordinate (M)
+				($(B)!.5!(C)$) coordinate (N)
+				(intersection of M--N and A--C) coordinate (E)
+				(intersection of A--N and C--M) coordinate (F);
+				\draw (S)--(A)--(B)--(N)--(E)--cycle (S)--(B) (S)--(M) (S)--(N);
+				\draw[dashed] (S)--(C) (A)--(E) (M)--(N)--(C);
+				\foreach \t/\g in {S/90,A/180,B/-90,C/45,E/0,M/210,N/-30}{
+					\draw[fill=black] (\t) circle (1pt) node[shift={(\g:7pt)},font=\scriptsize]{$\t$};
+				}
+			\end{tikzpicture}
+		}
+	}
+\end{bt}
+
+% nguồn: 2026-11-15_11_1H4_TL2_Song_song (nhập 15/11/2026)
+\begin{bt}%[1H4H1-3]%[ma:0e2071f2]
+% nguon: Archive/2024/SP-K10-K11-LyVanHoang_TVN-023/K11-C4-HHKG-QHSS/data/Bai-1-Dang2-Xacdinhgiaotuyencuahaimatphangcatnhau.tex #2339
+
+	Cho bốn điểm $A$, $B$, $C$, $D$ không cùng thuộc một mặt phẳng. Trên các đoạn thẳng $AB$, $AC$, $BD$ lần lượt lấy các điểm $M$, $N$, $P$ sao cho $MN$ không song song với $BC$. Tìm giao tuyến giữa hai mặt phẳng $(BCD)$ và $(MNP)$.
+	\loigiai{
+		\immini{	
+			Ta có 
+			\begin{itemize}
+				\item $P\in BD$ mà $BD\subset (BCD)$ suy ra $P\in (BCD)$.
+				\item $P\in (NMP)$.
+			\end{itemize}
+			Do đó $P$ là điểm chung thứ nhất của $(BCD)$ và $(MNP)$.\\
+			Trong mặt phẳng $\left(ABC\right)$, do $MN$ không song song với $BC$ nên gọi $E=MN\cap BC$. Ta có
+			\begin{itemize}
+				\item $E\in MN$ mà $MN\subset (MNP)$ suy ra $E\in (MNP)$.
+				\item $E\in BC$ mà $BC\subset (BCD)$ suy ra $E\in (BCD)$.
+			\end{itemize}
+			Do đó $E$ là điểm chung thứ hai của $(BCD)$ và $(MNP)$.\\
+			Vậy $PE$ là giao tuyến của $(BCD)$ và $(MNP)$.
+		}{\begin{tikzpicture}[scale=1, font=\footnotesize, line join=round, line cap=round,>=stealth]
+				\coordinate (A) at (1,3.5);
+				\coordinate (B) at (0,0);
+				\coordinate (C) at (4.3,0);
+				\coordinate (D) at (1.5,-1.6);
+				%\coordinate (S) at (0,5);
+				\coordinate (M) at ($(A)!.7!(B)$);
+				\coordinate (N) at ($(A)!.33!(C)$);
+				\coordinate (P) at ($(B)!.6!(D)$);
+				\coordinate (E) at (intersection of B--C and M--N);
+				\draw (A)--(D)--(C)--cycle (M)--(E)--(P)--cycle (A)--(M) (P)--(D);
+				\draw[dashed]
+				(B)--(P) (B)--(M) (M)--(N) (N)--(P) (C)--(E);
+				\foreach \p/\g in {A/90,B/-100,C/-80,D/-90,M/110,N/30,P/0,E/180} \draw[fill] (\p) circle(.5pt) node [shift={(\g:.3)}] {$\p$};
+			\end{tikzpicture}
+		}
+	}
+\end{bt}
+
+% nguồn: 2026-11-15_11_1H4_TL2_Song_song (nhập 15/11/2026)
+\begin{bt}%[1H4V1-3]%[ma:708c025a]
+% nguon: Archive/2024/SP-K10-K11-LyVanHoang_TVN-023/K11-C4-HHKG-QHSS/data/Bai-1-Dang2-Xacdinhgiaotuyencuahaimatphangcatnhau.tex #2340
+
+	Cho hình chóp $S.ABCD$ có đáy $ABCD$ là hình bình hành tâm $O$. Gọi $I$, $J$ lần lượt là trung điểm $SB$ và $SD$. Tìm giao tuyến giữa hai mặt phẳng $(AIJ)$ và $(SCD)$.
+	\loigiai{
+		\immini{
+		Ta có $J\in (AIJ)\cap(SCD)$. \quad (1)\\
+		Trong mặt phẳng $(SBD)$, gọi $K=IJ\cap SO$.\\
+		Trong mặt phẳng $(SAC)$, gọi $H=AK\cap SC$.
+		\begin{itemize}
+			\item $H\in IK$ và $IK\subset (AIJ)$.
+			\item $H\in SC$ và $SC\subset (SCD)$.
+		\end{itemize}
+		Suy ra $H\in (AIJ)\cap(SAC)$. \quad (2)\\
+		Từ (1) và (2) Suy ra $IH=(AIJ)\cap(SCD)$.
+		}
+		{\begin{tikzpicture}[scale=0.75, font=\footnotesize, line join=round, line cap=round,>=stealth]
+				\def\h{7}
+				\coordinate (A) at (0,0);
+				\coordinate (D) at (-3,-2);
+				\coordinate (B) at (5,0);
+				\coordinate (C) at ($(B)+(D)-(A)$);
+				\coordinate (O) at (intersection cs:first line={(A)--(C)}, second line={(B)--(D)});
+				\coordinate (S) at ($(O)+(0,\h)$);
+				\coordinate (I)at($(S)!0.5!(B)$);
+				\coordinate (J)at($(S)!0.5!(D)$);
+				\coordinate (K) at (intersection cs:first line={(S)--(O)}, second line={(I)--(J)});
+				\coordinate (H) at (intersection cs:first line={(A)--(K)}, second line={(S)--(C)});
+				\draw(S)--(B)--(C)--(D)--(S)--(C)(J)--(H);
+				\draw[dashed](S)--(A)--(B) (A)--(D) (A)--(C)(B)--(D)(I)--(J)--(A)--(I)(S)--(O)(A)--(H);
+				\foreach \x/\g in {A/160,B/0,C/-90,S/90,D/-90,I/0,J/180,O/-90,K/150,H/0}\fill[black](\x) circle (1pt)($(\x)+(\g:4mm)$) node{$\x$};
+		\end{tikzpicture}}
+	}
+\end{bt}
+
+% nguồn: 2026-11-15_11_1H4_TL2_Song_song (nhập 15/11/2026)
+\begin{bt}%[1H4H1-3]%[ma:572a8530]
+% nguon: Archive/SP_DA_SauLuoi/1-TL-THPT-BuiThiXuan-GHKI-NH23-24.tex #2495
+%[Dự án đề kiểm tra Toán 11 GHKI NH23-24- Don Lee]%[THPT Bùi Thị Xuân - Tp HCM]
+	[$3{,}75$ điểm]
+	Cho hình chóp $S.ABCD$ có đáy $ABCD$ là hình bình hành tâm $O$. Gọi $E$, $H$ lần lượt là trung điểm của $SA$ và $AB$.
+	\begin{enumerate}[a)]
+		\item Tìm giao tuyến của hai mặt phẳng $(SAC)$ và $(SBD)$.
+		\item Gọi $I$ là giao điểm của $SO$ và $CE$; $F$ là giao điểm của $SB$ và mặt phẳng $(ECD)$. Chứng minh ba điểm $D$, $I$, $F$ thẳng hàng.
+		\item Gọi $G$ là giao điểm của $SH$ và $BE$. Tìm giao điểm $K$ của của $GO$ và mặt phẳng $(SCD)$.
+	\end{enumerate}
+	\loigiai{
+		\immini
+		{\begin{enumerate}[a)]
+				\item Ta có $\heva{&O\in AC\subset (SAC)\\&O\in BD\subset (SBD)}$\\
+				suy ra $O\in (SAC)\cap (SBD)$.\\
+				Lại có $S\in (SAC)\cap (SBD)$,\\
+				suy ra $SO=(SAC)\cap (SBD)$.
+				\item Ta có $\heva{&I=SO\cap CE\\&F=SB\cap (CDE)}$ suy ra $\heva{&I\in (SBD)\cap (CDE)\\&F\in (SBD)\cap (CDE).}$\\
+				Lại có $D\in (SBD)\cap (CDE)$.\\
+				Do đó $D$, $I$, $F$ thẳng hàng.			
+				\item Gọi $M$ là trung điểm của $CD$.\\
+				Trong $(SHM)$, gọi $K=GO\cap SM$.\\
+				Ta có $\heva{&K\in GO\\&K\in SM\subset (SCD)}$ suy ra $K=GO\cap (SCD)$.
+		\end{enumerate}}
+		{\begin{tikzpicture}[>=stealth,line join=round,line cap=round,scale=1.2]
+				\path (0,0)coordinate[label=below:$A$](A) (-1.5,-1.5)coordinate[label=below:$B$](B) (4,0)coordinate[label=below:$D$](D) (2.5,-1.5)coordinate[label=below right:$C$](C);
+				\coordinate (N) at ($(A)!1/3!(C)$);
+				\coordinate[label=below:$O$] (O) at ($(A)!1/2!(C)$);
+				\coordinate[label=below right:$H$] (H) at ($(A)!1/2!(B)$);
+				\coordinate[label=above:$S$] (S) at ($(N)+(90:4)$);
+				\coordinate[label=above right:$E$] (E) at ($(A)!1/2!(S)$);
+				\coordinate[label=above right:$I$] (I) at ($(S)!2/3!(O)$);
+				\coordinate[label=left:$F$] (F) at ($(B)!1/2!(S)$);
+				\coordinate[label=below left:$G$] (G) at ($(S)!2/3!(H)$);
+				\coordinate[label=right:$M$] (M) at ($(C)!1/2!(D)$);
+				\coordinate[label=right:$K$] (K) at (intersection cs:first line={(G)--(O)}, second line={(S)--(M)});
+				\coordinate (J) at (intersection cs:first line={(G)--(K)},second line={(B)--(C)});
+				\draw (J)--(K)--(S)--(B)--(C)--(D)--(S)--(C);
+				\draw[dashed] (C)--(A)--(B)--(D)--(A)--(S)--(O)  (C)--(E)--(D)--(I)--(F)  (S)--(H)--(M)  (B)--(E)  (G)--(J);
+				\foreach \diem in {A,B,C,D,S,O,E,H,I,F,G,M,K} \fill[black](\diem)circle(1.5pt);
+		\end{tikzpicture}}
+	}
+\end{bt}
+
+% nguồn: 2026-11-15_11_1H4_TL2_Song_song (nhập 15/11/2026)
+\begin{bt}%[1H4N1-3]%[ma:3f6c5840]
+% nguon: Archive/SP_DA_SauLuoi/1-TL-TN-THPT-VoThiSau-GHKI-NH23-24.tex #2521
+%[Dự án đề kiểm tra Toán 11 GHKI NH23-24- Dương Phước Sang]%[THPT Võ Thị Sáu - Tp HCM]
+	Cho hình chóp $S.ABCD$ có đáy $ABCD$ là hình bình hành tâm $O$, $G$ là trọng tâm tam giác $SCD$, $H$ là trọng tâm tam giác $ACD$.
+	\begin{listEX}
+		\item Tìm giao tuyến của hai mặt phẳng $(SAC)$ và $(SBD)$.
+		\item Chứng minh hai đường thẳng $HG$ và $SA$ song song.
+		\item Tìm giao điểm của đường thẳng $OG$ và $(SAD)$.
+	\end{listEX}
+	\loigiai{
+		\begin{listEX}
+			\item Ta có $O=AC \cap BD \Rightarrow \heva{&O \in AC,\,AC \subset (SAC)\\&O \in BD,\,BD \subset (SBD).}$
+			\immini{
+				$$\Rightarrow O \in (SAC) \cap (SBD).$$
+				Và $S \in (SAC) \cap (SBD)$ nên 
+				$SO=(SAC) \cap (SBD)$.
+				\item Gọi $I$ là trung điểm cạnh $CD$.\\
+				Do $G,H$ lần lượt là trọng tâm $\triangle SCD$ và $\triangle ACD$ nên
+				$$\dfrac{IH}{IA}=\dfrac{1}{3}=\dfrac{IG}{IS} \Rightarrow HG \parallel SA.$$
+				\item Xét 2 mặt phẳng $(OGD)$ và $(SAD)$ có $D$ là 1 điểm chung và lần lượt chứa 2 đường thẳng song song $GH$ và $SA$, do đó $(OGD)$ và $(SAD)$ cắt nhau theo giao tuyến là đường thẳng $d$ qua $D$ và song song với $SA$.
+			}
+			{\begin{tikzpicture}[scale=1, font=\footnotesize, line join=round, line cap=round]
+					\foreach \x\y\t in {0/0/A,-1.7/-1.6/B,2.5/-1.6/C,-0.1/2.8/S}
+					\coordinate (\t) at (\x,\y);
+					\coordinate (D) at ($(A)+(C)-(B)$);
+					\coordinate (O) at ($(A)!1/2!(C)$);
+					\coordinate (I) at ($(D)!1/2!(C)$);
+					\coordinate (H) at ($(A)!2/3!(I)$);
+					\coordinate (G) at ($(S)!2/3!(I)$);
+					\coordinate (K) at ($(S)+(D)-(A)$);
+					\coordinate (x) at (intersection of S--D and G--K);
+					\draw (I)--(S)--(B)--(C)--(S)--(x) (G)--(D)--(C) (D)--(K)--(G);
+					\draw[dashed](B)--(A)--(D)--(B) (H)--(G)--(O)--(S)--(A)--(C) (A)--(I)  (x)--(D);
+					\foreach \t/\g in {S/90,A/160,B/-140,C/-45,D/0,O/-95,I/-20,H/-90,G/90,K/80}
+					\draw[fill=black] (\t) circle(1pt)
+					node[shift={(\g:7pt)}]{$\t$};
+			\end{tikzpicture}}\noindent
+			Trong $(OGD)$, gọi $K=d \cap OG$ ta có $\heva{&K \in OG\\&K\in d,\,d \subset (SAD)}$ nên $K=OG \cap (SAD)$.
+		\end{listEX}
+	}
+\end{bt}
+
+% nguồn: 2026-11-15_11_1H4_TL2_Song_song (nhập 15/11/2026)
+\begin{bt}%[1H4H1-3]%[ma:6dccd893]
+% nguon: Archive/SP_DA_SauLuoi/1-TL-THPT-Tenloman-GHKI-NH23-24.tex #2590
+
+	Cho hình chóp $S.ABCD$ có đáy $ABCD$ là hình bình hành. Gọi $M, N$ lần lượt là các điểm thuộc cạnh SA và SD sao cho $3SM=MA$, $SN=3ND$, G là trọng tâm tam giác ACD.\\
+	a) Tìm giao tuyến của hai mặt phẳng $(SAC)$ và $(SBD)$.\\
+	b) Tìm giao điểm H của đường thẳng BC và mặt phẳng $(GNM)$. Tính tỉ số $\dfrac{HB}{HC}$.
+	\loigiai{
+\immini{Ta có:\\
+	$S \in(S A C) \cap(S B D)$\\
+	$O=A C \cap B D$\\
+	$O \in(S A C) \cap(S B D)$\\
+	$\Rightarrow S O=(S A C) \cap(S B D)$\\
+	$(G M N) \cap(A B C D)=G J$\\
+	$G J \cap C B=H \Rightarrow(G M N) \cap B C=H$\\
+	Tính tỉ lệ ra cho 0.25.}{
+\begin{tikzpicture}
+	\def\a{4}
+	\path 	(0:0) coordinate (A)
+			++(0:\a) coordinate (D)
+			++(-130:\a/2) coordinate (C)
+			($(A)+(C)-(D)$) coordinate (B)
+			($(A)+(80:\a)$) coordinate (S)
+	(intersection of A--C and B--D) coordinate (O)
+	($(A)!3/4!(S)$) coordinate (M)
+	($(S)!3/4!(D)$) coordinate (N)
+	($(O)!1/3!(D)$) coordinate (G)
+	(intersection of M--N and A--D) coordinate (I)
+	(intersection of I--G and B--C) coordinate (H)
+	(intersection of M--H and B--S) coordinate (J)
+	(intersection of G--I and D--C) coordinate (I')
+	(intersection of G--I and A--B) coordinate (J')
+	 ;
+\tkzDrawSegments[dashed](A,C B,D S,O M,G G,N N,M I',J')
+\tkzDrawSegments(N,I I,I' J',H H,B)
+	\draw[dashed,thick] 	(B)--(A)--(D)	(A)--(S);
+	\draw[thick] 			(B)-- (C)--(D)
+					(B)--(S)	(C)--(S)	(D)--(S);
+	\foreach \x/\g in {A/135,B/-135,C/-45,D/45,S/90,M/180,N/0,O/0,G/0,I/0,H/180}
+			\fill[black] 	(\x) circle (1pt)
+			($(\g:4mm)+(\x)$) node {$\x$};	
+\end{tikzpicture}}
+}
+\end{bt}
+
+% nguồn: 2026-11-15_11_1H4_TL2_Song_song (nhập 15/11/2026)
+\begin{bt}%[1H4V1-3]%[ma:735ff9f2]
+% nguon: Archive/SP_KhoLatex/ID6_old/1-CK1-OT-De-35.tex #2637
+
+ Cho hình chóp $S.ABCD$ có đáy $ABCD$ là hình thang với $AB\parallel CD$, $AB > CD$. Gọi $I, J$ theo thứ tự là trung điểm $SB$ và $SC$.
+ \begin{enumerate}[a)]
+ \item Xác định giao tuyến của $(SAD)$ và $(SBC)$.
+ \item Tìm giao điểm của đường thẳng $SD$ với $(AIJ)$.
+ \item Xác định thiết diện của hình chóp $S.ABCD$ cắt bởi mặt phẳng $(AIJ)$.
+ \end{enumerate}
+  \loigiai{
+ \begin{center}
+ \begin{tikzpicture}[scale=1, transform shape]
+ 	\def \a{4} 		\def \b{2} 		\def \g{60} 		\def \h{3}
+ 	\path
+ 	(0,0) coordinate (A)++(0:\a)coordinate (B)++(\g-180:\b)coordinate (C)++
+ 	(180:\b)coordinate (D) 	(80:\h) coordinate (S) ($(S)!.5!(B)$)coordinate (I) ($(S)!.5!(C)$)coordinate (J)
+ 	(intersection of A--D and B--C) coordinate (L)
+ 	(intersection of I--J and S--L) coordinate (K)
+ 	(intersection of A--K and S--D) coordinate (M)
+ 	;
+ 	\draw[dash pattern=on 2pt off 1.5pt,thin] (I)--(A)--(B)  (D)--(C) (M)--(J);
+ 	\draw (S)--(L)--(A)--cycle (C)--(S)--(B)--(L) (S)--(D) (I)--(K)--(A);
+ 	\foreach \p/\g in {A/180,B/0,C/-90,D/180,S/90,I/30,M/200,J/0,L/180,K/0} \fill[black] (\p) circle(1pt)+(\g:0.3) node{$\p$};
+ \end{tikzpicture}
+ \end{center}
+ \begin{enumerate}[a)]
+ \item Xác định giao tuyến của $(SAD)$ và $(SBC)$.
+ Ta có \[S\in (SAD) \cap (SBC).\quad (1)\] 
+ Trong mặt phẳng $(ABCD)$ gọi $L=AD\cap BC$ \[L\in (SAD) \cap (SBC).\quad (2)\]
+  Từ $(1), (2)$ ta có $(SAD) \cap (SBC)=SL$.
+ \item Tìm giao điểm của đường thẳng $SD$ với $(AIJ)$.\\ 
+ Trong mặt phẳng $(SBC)$ gọi $K=SL\cap IJ$.\\ 
+ Trong mặt phẳng $(SAD)$ gọi $M=SD\cap AK$ $\Rightarrow M\in SD\cap (AIJ)$.
+ \item Xác định thiết diện của hình chóp $S.ABCD$ cắt bởi mặt phẳng $(AIJ)$.\\ 
+ Ta có
+  \[AM=(AIJ) \cap (SAD).\] \[MJ=(AIJ) \cap (SCD).\] \[JI=(AIJ) \cap (SBC).\] \[IM=(AIJ) \cap (SAB).\]
+  Suy ra thiết diện cắt bởi mặt phẳng $(AIJ)$ và hình chóp $S.ABCD$ là tứ giác $AMJI$.
+ \end{enumerate}
+ }
+ \end{bt}
+
+% nguồn: 2026-11-15_11_1H4_TL2_Song_song (nhập 15/11/2026)
+\begin{bt}%[1H4C1-3]%[ma:1fc02208]
+% nguon: Archive/SP_KhoLatex/ID6_old/1H2G3-3.tex #2645
+%[Đề thi HK1, THPT Nguyễn Du, THPCM năm học 2018-2019]%[Nguyễn Quang Dũng, dự án 11EX-HK1-1819]
+Cho hình chóp $S.ABCD$ có đáy $ABCD$ là hình bình hành tâm $O$. Gọi $M$ là trung điểm của $SD$.
+\begin{enumerate}
+\item Tìm giao tuyến của hai mặt phẳng $(SAC)$ và $(SBD)$.
+\item Tìm giao điểm $N$ của $SA$ và mặt phẳng $(BCM)$.\dapso{$N$ là trung điểm của $SA$.}
+\item Gọi $E$ là giao điểm của $CN$ và mặt phẳng $(SBD)$. Tính $\dfrac{CE}{NE}$.\dapso{$\dfrac{CE}{NE}=2$.}
+\end{enumerate}
+\loigiai{
+\begin{enumerate}
+\item Tìm giao tuyến của hai mặt phẳng $(SAC)$ và $(SBD)$.
+\immini{Ta có $O$ và $S$ là hai điểm chung phân biệt của hai mặt phẳng $(SBD)$ và $(SAC)\Rightarrow$ giao tuyến của hai mặt phẳng chính là đường thẳng $d$ chứa $SO$.}
+{\begin{tikzpicture}[scale=1, font=\footnotesize, line join=round, line cap=round, >=stealth]
+\def\a{2};
+\def\b{0.75*\a};
+\draw(0,0)coordinate(A)++(0:{\a})coordinate(B)++(45:{\b})coordinate(C)++(180:{\a})coordinate(D);
+\coordinate(O) at ($(A)!0.5!(C)$);
+\coordinate(S) at ($(O)+(0,{1.2*\a})$);
+\draw (A)--(B)--(C)(S)--(A)(S)--(B)(S)--(C);
+\draw [dashed](A)--(D)--(C)(D)--(S)--(O)(A)--(C)(B)--(D);
+\foreach \d/\g in {O/-90,A/-90,B/-90,C/0,S/90,D/180}
+\draw [fill=black] (\d) circle (1pt) node [shift={({\g}:0.25)}] {$\d$};
+\end{tikzpicture}}
+\item Tìm giao điểm $N$ của $SA$ và mặt phẳng $(BCM)$.
+\immini{ Ta có $\heva{&AD\subset (SAD)\\&BC\parallel AD}\Rightarrow MN\parallel AD$.\\
+Do $M$ là trung điểm của $AD\Rightarrow MN$ là đường trung bình của $\triangle SAD\Rightarrow N$ là trung điểm của $SA$.}
+{\begin{tikzpicture}[scale=1, font=\footnotesize, line join=round, line cap=round, >=stealth]
+\def\a{2.5};
+\def\b{0.5*\a};
+\draw(0,0)coordinate(A)++(0:{\a})coordinate(B)++(45:{\b})coordinate(C)++(180:{\a})coordinate(D);
+\coordinate(O) at ($(A)!0.5!(C)$);
+\coordinate(S) at ($(O)+(0,{1.2*\a})$);
+\coordinate(M) at ($(S)!0.5!(D)$);
+\coordinate(N) at ($(S)!0.5!(A)$);
+\draw (A)--(B)--(C)(S)--(A)(S)--(B)--(N)(S)--(C);
+\draw [dashed](A)--(D)--(C)--(M)--(N)(D)--(S)--(O)(A)--(C)(B)--(D);
+\foreach \d/\g in {N/180,M/0,O/-90,A/-90,B/-90,C/0,S/90,D/180}
+\draw [fill=black] (\d) circle (1pt) node [shift={({\g}:0.25)}] {$\d$};
+\end{tikzpicture}}
+\item Gọi $E$ là giao điểm của $CN$ và mặt phẳng $(SBD)$. Tính $\dfrac{CE}{NE}$.
+\immini{Xét tam giác $SAC$, giao điểm của $CN$ và $SO$ chính là giao điểm $E$ của $(SBD)$ và $CN$.\\
+Mặt khác $SO,NC$ là các trung tuyến của $\triangle SAC\Rightarrow E$ chính là trọng tâm của $\triangle SAC$.\\
+Do đó ta có $\dfrac{CE}{NE}=2$.}
+{\begin{tikzpicture}[scale=1, font=\footnotesize, line join=round, line cap=round, >=stealth]
+\def\a{2.5};
+\def\b{0.5*\a};
+\draw(0,0)coordinate(A)++(0:{\a})coordinate(B)++(45:{\b})coordinate(C)++(180:{\a})coordinate(D);
+\coordinate(O) at ($(A)!0.5!(C)$);
+\coordinate(S) at ($(O)+(0,{1.2*\a})$);
+\coordinate(M) at ($(S)!0.5!(D)$);
+\coordinate(N) at ($(S)!0.5!(A)$);
+\draw (A)--(B)--(C)(S)--(A)(S)--(B)--(N)(S)--(C);
+\draw [dashed](A)--(D)--(C)--(M)--(N)--(C)(D)--(S)--(O)(A)--(C)(B)--(D);
+\tkzInterLL(S,O)(N,C)\tkzGetPoint{E}
+
+\foreach \d/\g in {E/45,N/180,M/0,O/-90,A/-90,B/-90,C/0,S/90,D/180}
+\draw [fill=black] (\d) circle (1pt) node [shift={({\g}:0.25)}] {$\d$};
+\end{tikzpicture}}
+\end{enumerate}
+}
+\end{bt}
+
+% nguồn: 2026-11-15_11_1H4_TL2_Song_song (nhập 15/11/2026)
+\begin{bt}%[1H4V1-3]%[ma:e47e171a]
+% nguon: Archive/SP_KhoLatex/ID6_old/GV3.tex #2767
+%Bài 1
+	Cho hình chóp $S.ABCD$ có đáy $ABCD$ là hình bình hành tâm $O$. Gọi $M$, $N$, $P$ lần lượt là trung điểm của $SB$, $SD$ và $OC$.
+	\begin{enumerate}[a)]
+		\item  Tìm giao tuyến của $(MNP)$ với $(SAC)$ và $(ABCD)$.
+		\item  Tìm giao điểm của $SA$ và $(MNP)$.
+		\item  Xác định thiết diện của hình chóp với $(MNP)$. Tính tỉ số mà $(MNP)$ chia các cạnh $SA$, $BC$ và $CD$. 
+	\end{enumerate}
+	\loigiai{
+		\immini{\begin{enumerate}[a)]
+				\item  \textit{Tìm giao tuyến của $(MNP)$ và $(SAC)$.}
+				\begin{itemize}
+					\item $P$ là điểm chung thứ nhất của $(MNP)$ và $(SAC)$.
+					\item Trong tam giác $SAC$, hai đoạn thẳng $MN$ và $SO$ phải cắt nhau. Gọi giao điểm này là $I$ thì $I$ là điểm chung thứ hai của $(MNP)$ và $(SAC)$.			
+				\end{itemize}
+				Vậy $(MNP) \cap (SAC)=PI$.		
+		\end{enumerate}}
+		{\begin{tikzpicture}[scale=1, font=\footnotesize, line join=round, line cap=round, >=stealth]
+				\def\a{2.9} \def\b{1.2} \def\c{6} \def\d{3.9} \def\e{6}
+				\path (0,0) coordinate (B)
+				(\a,\b) coordinate (A)
+				(\c,0) coordinate (C)
+				(\d,\e) coordinate (S)
+				($(A)+(C)-(B)$) coordinate (D)	
+				($(S)!.5!(B)$) coordinate (M)
+				($(S)!.5!(D)$) coordinate (N)
+				($(A)!.5!(C)$) coordinate (O)
+				($(O)!.5!(C)$) coordinate (P)
+				($(D)!.5!(C)$) coordinate (Q)
+				($(B)!.5!(C)$) coordinate (T)
+				; 
+				\coordinate(I) at (intersection cs:first line={(M)--(N)}, second line={(S)--(O)});
+				\coordinate(R) at (intersection cs:first line={(P)--(I)}, second line={(S)--(A)});
+				\draw[thick] (C)--(S)--(B)--(C)--(D)--(S) (M)--(T) (Q)--(N) ;
+				\draw[thick][dashed,thick](S)--(A) (B)--(A)--(D) (A)--(C) (B)--(D) (M)--(N)--(P)--(M) (S)--(O) (P)--(R) (M)--(R)--(N) (T)--(Q)node[pos=.70,above]{$d$};
+				\foreach \i/\j in {A/45,B/-135,C/-45,D/0,N/45,M/180,S/90, O/-90, R/170,T/-90,Q/-90, P/-140,I/45}\fill[black] (\i) circle (1pt) ($(\i)+(\j:3mm)$)node{$\i$};
+				\fill[cyan,opacity=0.5] (M)--(T)--(Q)--(N)--(R)--cycle;
+				\fill[pattern=dots] (P)--(N)--(M)--cycle;
+		\end{tikzpicture}}
+		\begin{enumerate}[b)]
+			\item[$*$] \textit{Tìm giao tuyến của  $(MNP)$ và $(ABCD)$}
+			\begin{itemize}
+				\item $MN$ là đường trung bình của tam giác $SBD$ nên $MN \parallel BD$.
+				\item Hai mặt phẳng $(MNP)$, $(ABCD)$ phân biệt, có điểm chung $P$ và lần lượt chứa hai đường thẳng song song $MN$, $BD$ nên chúng cắt nhau theo một giao tuyến $d$ qua $P$ và $d$ song song với $BD$.
+			\end{itemize}
+			\item \textit{ Tìm giao điểm của $SA$ và $(MNP)$.}
+			\begin{itemize}
+				\item  Chọn mặt phẳng phụ chứa $SA$ là $(SAC)$.
+				\item $(SAC)\cap (MNP)=PI$.
+				\item Trong mặt phẳng $(SAC)$ hai đường thẳng $PI$ và $SA$ phải cắt nhau, gọi giao điểm này là $R$ thì $R$ chính là giao điểm của $SA$ với $(MNP)$.
+			\end{itemize}
+			\item[$\text{c})$]  \textit{Xác định thiết diện của hình chóp với $(MNP)$. Tính tỉ số mà $(MNP)$ chia các cạnh $SA$, $BC$ và $CD$.}
+			\begin{itemize}
+				\item  Gọi $T=d\cap BC$, $Q=d\cap CD$. Ta thấy, thiết diện mà mặt phẳng $(MNP)$ cắt hình chóp $S.ABCD$ là ngũ giác $MTQNR$.
+				\item 	Áp dụng định lí Menelaus cho tam giác $SAO$ với ba điểm thẳng hàng $R, I, P$ ta có
+				$$\dfrac{SR}{RA}\cdot\dfrac{AP}{PO}\cdot\dfrac{OI}{IS}=1\Leftrightarrow \dfrac{SR}{RA}=\dfrac{1}{3}.$$
+				\item $\heva{&d \parallel BD \\
+					& P\;\text{là trung điểm của} \;OC}$ $\Rightarrow$ $\heva{&T\;\text{là trung điểm của}\;CB \\& Q\;\text{là trung điểm của}\;CD}\Rightarrow \dfrac{CT}{TB}=\dfrac{CQ}{QD}=1$.
+			\end{itemize}
+			Vậy các tỉ số cần tìm là  $\dfrac{SR}{RA}=\dfrac{1}{3}, \dfrac{CT}{TB}=\dfrac{CQ}{QD}=1.$
+	\end{enumerate}}
+\end{bt}
+
+% nguồn: 2026-11-15_11_1H4_TL2_Song_song (nhập 15/11/2026)
+\begin{bt}%[1H4V1-3]%[ma:b1b3e2b5]
+% nguon: Archive/SP_KhoLatex/ID6_old/GV3.tex #2769
+%Bài 1
+	Hình chóp $S.ABCD$ có đáy $ABCD$ không là hình thang, điểm $P$ nằm trong tam giác $SAB$ và điểm $M$ thuộc cạnh $SD$ sao cho $MD=2MS$.
+	\begin{enumerate}[a)]
+		\item  Tìm giao tuyến của hai mặt phẳng $(SAB)$ và $(PCD)$.
+		\item  Tìm giao điểm của $SC$ với mặt phẳng $(ABM)$.
+		\item  Gọi $N$ là trung điểm của $AD .$ Tìm thiết diện tạo bởi $(MNP)$ và hình chóp.
+	\end{enumerate}
+	\loigiai{
+		\immini{\begin{enumerate}[a)]
+				\item  \textit{Tìm giao tuyến của hai mặt phẳng $(SAB)$ và $(PCD)$.}
+				\begin{itemize}
+					\item $P$ là điểm chung thứ nhất của $(SAB)$ và $(PCD)$.
+					\item  Theo giả thiết, tứ giác $ABCD$ không phải là hình thang nên hai đường thẳng $AB$ và $CD$ cắt nhau. Gọi $O$ là giao điểm của $AB$ và $CD$ thì $O$ là điểm chung thứ hai của $(SAB)$ và $(PCD)$.
+					\item Vậy $(SAB)\cap (PCD)=PO$.		
+				\end{itemize}
+				\item  \textit{Tìm giao điểm của $SC$ với mặt phẳng $(ABM)$.}
+				\begin{itemize}
+					\item  Chọn mặt phẳng phụ chứa $SC$ là $(SCD)$.
+					\item $(SCD)\cap (ABM)=OM$.
+					\item Trong tam giác $SCD$, hai đoạn thẳng $OM$ và $SC$ phải cắt nhau, gọi giao điểm là $R$ thì đó là giao điểm của $SC$ và $(ABM)$.	
+				\end{itemize}
+			\end{enumerate}
+		}
+		{\begin{tikzpicture}[scale=1, font=\footnotesize, line join=round, line cap=round, >=stealth]
+				\def\ad{7} % cạnh AD
+				\def\ab{2.5} % cạnh AB
+				\def\bc{3} % chéo AC
+				\def\as{4} % cạnh AS
+				\def\gocA{55} % góc A của đáy
+				\def\gocB{120} % góc B của đáy
+				\pgfmathsetmacro\k{1/3}
+				\coordinate (A) at (0,0);
+				\coordinate(B) at (-\gocA:\ab);
+				\coordinate (C) at ($(B)+(180-\gocA-\gocB:\bc)$);
+				\coordinate (D) at (\ad,0);
+				\coordinate (S) at (60:\as); % chỉnh 75 và as để thay đổi S
+				\coordinate(E) at ($(B)!0.6!(C)$);
+				\coordinate (M) at ($(S)!\k!(D)$);	
+				\coordinate (F) at ($(A)!0.4!(B)$);
+				\coordinate (P) at ($(S)!0.5!(F)$);	
+				
+				
+				\coordinate (O) at (intersection cs:first line={(A)--(B)}, second line={(C)--(D)});
+				\coordinate(Q) at (intersection cs:first line={(P)--(O)}, second line={(S)--(A)});
+				\coordinate (R) at (intersection cs:first line={(M)--(O)}, second line={(S)--(C)});
+				\draw[thick] (S)--(A)--(B) (C)--(D)--(S)--cycle (B)--(S)--(C)
+				(S)--(F) (B)--(O) (C)--(O)--(Q) (M)--(O);
+				\draw[thick][dashed] (A)--(D) (A)--(C)--(P)--(D) (B)--(C)(A)--(M)--(B)--(D)  ;
+				%	\foreach \diem in {A,B,C,D,S,E,M,N,F,I,O}	\fill (\diem)circle(1.0pt);
+				\foreach \i/\j in {S/90,A/150,B/180,C/-45,D/0,M/20,P/180,O/-90,Q/150,R/0}\fill[black] (\i) circle (1pt) ($(\i)+(\j:2.5mm)$)node{$\i$};
+				%	\fill[cyan,opacity=0.5] (A)--(M)--(B)--cycle;
+				\fill[pattern=dots] (P)--(C)--(D)--cycle;
+		\end{tikzpicture}}
+		\vspace{0.6cm}
+		\noindent c) \textit{Gọi $N$ là trung điểm của $AD .$ Tìm thiết diện tạo bởi $(MNP)$ và hình chóp.}
+		\immini{\begin{itemize}
+				\item Trong mặt phẳng $SAD$, ta có $$\dfrac{MD}{MS}=\dfrac{2}{3}\neq\dfrac{1}{2}=\dfrac{DN}{DA}$$ nên hai đường thẳng $MN$ và $SA$ cắt nhau, gọi $U$ là giao điểm.
+				\item Trong mặt phẳng $(SAB)$, đường thẳng $UP$ phải cắt hai đoạn thẳng $SB$ và $AB$. Gọi các giao điểm theo thứ tự là $X$, $T$.
+				\item  Cuối cùng, ta cần tìm giao điểm của $(MNP)$ và cạnh $SC$.
+				\begin{itemize}
+					\item  Chọn mặt phẳng phụ chứa $SC$ là $(SAC)$.
+					\item Gọi $L=AC\cap TN $ thì $(SAC)\cap (AMN)=UL$.
+					\item Trong tam giác $SAC$, hai đoạn thẳng $UL$ và $SC$ phải cắt nhau, gọi giao điểm là $Y$ thì đó là giao điểm của $SC$ và $(AMN)$.	
+				\end{itemize}
+				\item Vậy thiết diện mà mặt phẳng $(MNP)$ cắt hình chóp $S.ABCD$ là ngũ giác $MNTXY$.
+		\end{itemize}}
+		{\begin{tikzpicture}[scale=1, font=\footnotesize, line join=round, line cap=round, >=stealth]
+				\def\ad{6} % cạnh AD
+				\def\ab{2.5} % cạnh AB
+				\def\bc{3} % chéo AC
+				\def\as{4} % cạnh AS
+				\def\gocA{55} % góc A của đáy
+				\def\gocB{120} % góc B của đáy
+				\pgfmathsetmacro\k{1/3}
+				\coordinate (A) at (0,0);
+				\coordinate(B) at (-\gocA:\ab);
+				\coordinate (C) at ($(B)+(180-\gocA-\gocB:\bc)$);
+				\coordinate (D) at (\ad,0);
+				\coordinate (S) at (60:\as); % chỉnh 75 và as để thay đổi S
+				\coordinate(E) at ($(B)!0.6!(C)$);
+				\coordinate (M) at ($(S)!\k!(D)$);	
+				\coordinate (F) at ($(A)!0.8!(B)$);
+				\coordinate (P) at ($(S)!0.6!(F)$);	
+				\coordinate (N) at ($(A)!0.5!(D)$);			
+				\coordinate (O) at (intersection cs:first line={(A)--(B)}, second line={(C)--(D)});
+				\coordinate(Q) at (intersection cs:first line={(P)--(O)}, second line={(S)--(A)});
+				\coordinate (U) at (intersection cs:first line={(M)--(N)}, second line={(S)--(A)});
+				\coordinate (T) at (intersection cs:first line={(U)--(P)}, second line={(A)--(B)});
+				\coordinate (X) at (intersection cs:first line={(S)--(B)}, second line={(P)--(U)});
+				\coordinate(L) at (intersection cs:first line={(A)--(C)}, second line={(T)--(N)});
+				\coordinate(Y) at (intersection cs:first line={(U)--(L)}, second line={(C)--(S)});		
+				\coordinate (V) at (intersection cs:first line={(A)--(B)}, second line={(M)--(N)});
+				\draw[thick] (S)--(A)--(B) (C)--(D)--(M) (B)--(S)
+				(B)--(C) (A)--(U)--(M) (U)--(T) (U)--(Y)--(C) (X)--(Y)--(M);
+				\draw[thick][dashed] (A)--(D) (A)--(C) (B)--(D) (T)--(N)  (M)--(N) (L)--(Y)--(S)--(M)--(N)--(P)--(M);
+				%	\foreach \diem in {A,B,C,D,S,E,M,N,F,I,O}	\fill (\diem)circle(1.0pt);
+				\foreach \i/\j in {S/90,A/150,B/180,C/-45,D/0,M/20,P/160,N/-90,U/150,T/180,X/180,L/-90,Y/40}\fill[black] (\i) circle (1pt) ($(\i)+(\j:2.5mm)$)node{$\i$};
+				\fill[cyan,opacity=0.5] (M)--(N)--(T)--(X)--(Y)--cycle;
+				\fill[pattern=dots] (P)--(M)--(N)--cycle;
+		\end{tikzpicture}}
+	}
+\end{bt}
+
+% nguồn: 2026-11-15_11_1H4_TL2_Song_song (nhập 15/11/2026)
+\begin{bt}%[1H4V1-3]%[ma:265392b3]
+% nguon: Archive/SP_KhoLatex/ID6_old/GV3.tex #2770
+%Bài 1]
+	Cho hình chóp $S.ABCD$ có đáy $ABCD$ là hình bình hành tâm $O$. Trên các cạnh $SB, SD$ ta lần lượt lấy các điểm $M$ và $N$ thỏa $S B=3 S M$ và $3SN=2SD$. 
+	\begin{enumerate}
+		\item Tìm giao tuyến của hai mặt phẳng $(AMN)$ và $(SCD)$.
+		\item Tìm thiết diện của mặt phẳng $(AMN)$ và hình chóp 
+		$S.ABCD$.
+		\item Gọi $K$ là giao điểm của $IN$ và $CD$. Tính tỉ số $\dfrac{KC}{KD}$.
+	\end{enumerate}
+	\loigiai{
+		\immini{\begin{enumerate}
+				\item \textit{Tìm giao tuyến của hai mặt phẳng $(AMN)$ và $(SCD)$.}
+				\begin{itemize}
+					\item  $N$ là điểm chung thứ nhất của $(AMN)$ và $(SCD)$.
+					\item Gọi $P=MN\cap SO $, $I=AP\cap SC$, thì $I$ là điểm chung thức hai của hai mặt phẳng này.
+				\end{itemize}
+				Vậy $(AMN)\cap(SCD)=NI$.
+				\item \textit{Tìm  thiết diện của mặt phẳng $(AMN)$ và hình chóp $S.ABCD$.}
+				Từ câu (a), ta có thiết diện mà mặt phẳng $(AMN)$ cắt hình chóp $S.ABCD$ là tứ giác $AMIN$.	
+		\end{enumerate}}
+		{\begin{tikzpicture}[scale=1, font=\footnotesize, line join=round, line cap=round, >=stealth]
+				\def\a{2.5} \def\b{1.2} \def\c{5} \def\d{4} \def\e{5}
+				\pgfmathsetmacro\k{1/3}
+				\pgfmathsetmacro\t{2/3}
+				\path (0,0) coordinate (B)
+				(\a,\b) coordinate (C)
+				(\c,0) coordinate (A)
+				(\d,\e) coordinate (S)
+				($(A)+(C)-(B)$) coordinate (D)
+				($(S)!\k!(B)$) coordinate (M)
+				($(S)!\t!(D)$) coordinate (N); 
+				\coordinate(O) at (intersection cs:first line={(A)--(C)}, second line={(B)--(D)});	
+				\coordinate(P) at (intersection cs:first line={(S)--(O)}, second line={(M)--(N)});
+				\coordinate(I) at (intersection cs:first line={(A)--(P)}, second line={(C)--(S)});
+				\coordinate(K) at (intersection cs:first line={(I)--(N)}, second line={(C)--(D)});
+				
+				\draw[thick] (A)--(S)--(B)--(A)--(D)--(S) (N)--(A)--(M) (N)--(K)--(D);
+				\draw[thick][dashed,thick](S)--(C) (B)--(C)--(D) (M)--(N) (A)--(C) (B)--(D) (S)--(O) (A)--(I) (M)--(I)--(N);
+				\foreach \i/\j in {A/-90,B/-135,C/180,D/-90,M/150,N/90,S/180,O/-90,I/30,P/210,K/-90}\fill[black] (\i) circle (1pt) ($(\i)+(\j:3mm)$)node{$\i$};
+				\fill[cyan,opacity=0.5] (A)--(M)--(I)--(N)--cycle;
+		\end{tikzpicture}}
+		\vspace{0.6cm}
+		c) \textit{Gọi $K$ là giao điểm của $IN$ và $CD$. Tính tỉ số $\dfrac{KC}{KD}$.}
+		\immini{
+			\begin{itemize}
+				\item Áp dụng định lí Menelaus cho tam giác $SBD$ với ba điểm thẳng hàng $M, N, Q$ ta có
+				$$\dfrac{SM}{MB}\cdot\dfrac{BQ}{QD}\cdot\dfrac{DN}{NS}=1\Leftrightarrow \dfrac{BQ}{QD}=\dfrac{1}{4}.$$
+				\item Áp dụng định lí Menelaus cho tam giác $SOD$ với ba điểm thẳng hàng $P, N, Q$ ta có
+				$$\dfrac{SP}{PO}\cdot\dfrac{OQ}{QD}\cdot\dfrac{DN}{NS}=1\Leftrightarrow \dfrac{SP}{PO}=\dfrac{4}{5}.$$		
+		\end{itemize}}
+		{\begin{tikzpicture}[>=stealth,line join=round,line cap=round,line width=0.6pt,font=\footnotesize,scale=1]
+				\coordinate(B) at (0,0);
+				\coordinate(D) at (4,0);
+				\coordinate(S) at (1,3);
+				\pgfmathsetmacro\k{1/3}
+				\pgfmathsetmacro\t{2/3}
+				\coordinate (M) at ($(S)!\k!(B)$);
+				\coordinate (N) at ($(S)!\t!(D)$);
+				\coordinate (O) at ($(B)!0.5!(D)$);
+				\coordinate(Q) at (intersection cs:first line={(M)--(N)}, second line={(B)--(D)});
+				\coordinate(P) at (intersection cs:first line={(S)--(O)}, second line={(M)--(N)});	
+				\draw[thick] (S)--(B)--(D)--cycle (M)--(Q) (S)--(O) (D)--(Q);
+				\foreach \i/\j in {S/90,B/-135,M/150,N/90,P/210,D/-90,O/-90,Q/-90}\fill[black] (\i) circle (1pt) ($(\i)+(\j:3mm)$)node{$\i$};
+		\end{tikzpicture}}
+		\begin{itemize}
+			\item Áp dụng định lí Menelaus cho tam giác $SCO$ với ba điểm thẳng hàng $I, P, A$ ta có
+			$$\dfrac{SI}{IC}\cdot\dfrac{CA}{AO}\cdot\dfrac{OP}{PS}=1\Leftrightarrow \dfrac{SI}{IC}=\dfrac{2}{5}.$$
+			\item Áp dụng định lí Menelaus cho tam giác $SCD$ với ba điểm thẳng hàng $I, N, K$ ta có
+			$$\dfrac{SI}{IC}\cdot\dfrac{CK}{KD}\cdot\dfrac{DN}{NS}=1\Leftrightarrow \dfrac{CK}{KD}=5.$$
+		\end{itemize}
+	}
+\end{bt}
+
+% nguồn: 2026-11-15_11_1H4_TL2_Song_song (nhập 15/11/2026)
+\begin{bt}%[1H4V1-3]%[ma:30ca161a]
+% nguon: Archive/SP_KhoLatex/ID6_old/GV3.tex #2774
+
+	Cho hình chóp $S.ABCD$. Gọi $I$ và $J$ là hai điểm trên hai cạnh $AD$, $SB$.
+	\begin{enumerate}
+		\item Tìm giao tuyến của $(SBI)$ và $(SAC)$. Tìm giao điểm $K$ của $IJ$ và $(SAC)$.
+		\item Tìm giao tuyến của $(SBD)$ và $(SAC)$. Tìm giao điểm $L$ của $DJ$ và $(SAC)$.
+		\item Gọi $O=AD\cap BC$, $M=OJ\cap SC$. Chứng minh rằng: $A$, $K$, $L$, $M$ thẳng hàng.
+	\end{enumerate}
+	\loigiai{ 
+		\immini{	
+			\begin{enumerate}
+				\item Ta có $\heva{S\in(SBI)\\S\in(SAC)}\Rightarrow (SBI)\cap(SAC)=S\quad(1)$\\
+				Gọi $H=BI\cap AC\Rightarrow \heva{&H\in BI\subset (SBI)\Rightarrow H\in(SBI)\\&H\in AC\subset (SAC)\Rightarrow H\in(SAC)}\Rightarrow H\in(SBI)\cap(SAC)\quad(2)$\\
+				Từ (1),(2) suy ra $(SBI)\cap(SAC)=SH$.\\
+				Chọn $(SBI)$ chứa $IJ$, $(SBI)\cap(SAC)=SH$. Gọi $K=IJ\cap SH$ suy ra $IJ\cap(SAC)=K$.
+				\item Ta có $\heva{S\in(SBD)\\S\in(SAC)}\Rightarrow (SBD)\cap(SAC)=S\quad(1)$\\
+				Gọi $G=BD\cap AC\Rightarrow \heva{&G\in BD\subset (SBD)\Rightarrow G\in(SBD)\\&G\in AC\subset (SAC)\Rightarrow G\in(SAC)}\\ \Rightarrow G\in(SBD)\cap(SAC)\quad(2)$\\
+				Từ (1),(2) suy ra $(SBD)\cap(SAC)=SG$.\\
+				Chọn $(SBD)$ chứa $DJ$, $(SBD)\cap(SAC)=SG$. Gọi $L=DJ\cap SG$ suy ra $DJ\cap(SAC)=L$.	
+		\end{enumerate}}	{\begin{tikzpicture}[scale=1, font=\footnotesize, line join=round, line cap=round, >=stealth]
+				\path
+				(0,0) coordinate (A)node[left]{$A$}
+				($(A)+(0:4)$) coordinate (B)node[right]{$B$}
+				($(A)+(-40:4)$) coordinate (C)node[below]{$C$}
+				($(A)+(-60:2)$) coordinate (D)node[left]{$D$}
+				($(A)+(80:4)$) coordinate (S)node[left]{$S$}
+				($(B)!2/3!(S)$) coordinate (J)node[right]{$J$}
+				($(D)!0.6!(A)$) coordinate (I)node[left]{$I$}
+				;
+				\path[name path=a] (B)--(I);
+				\path[name path=b] (A)--(C);
+				\path [name intersections={of=a and b,by=H}];
+				\path(H) coordinate (H)node[below]{$H$};
+				\path[name path=c] (B)--(D);
+				\path[name path=b] (A)--(C);
+				\path [name intersections={of=c and b,by=G}];
+				\path(G) coordinate (G)node[below]{$G$};
+				\path(H) coordinate (H)node[below]{$H$};
+				\path[name path=d] (S)--(H);
+				\path[name path=e] (I)--(J);
+				\path [name intersections={of=d and e,by=K}];
+				\path(K) coordinate (K)node[above left]{$K$};
+				\path[name path=f] (S)--(G);
+				\path[name path=g] (D)--(J);
+				\path [name intersections={of=f and g,by=L}];
+				\path(L) coordinate (L)node[above right]{$L$};
+				\path
+				($(D)!2!180:(A)$) coordinate (Dt)
+				($(C)!2!180:(B)$) coordinate (Ct)
+				;
+				\path[name path=h] (D)--(Dt);
+				\path[name path=i] (C)--(Ct);
+				\path [name intersections={of=h and i,by=O}];
+				\path(O) coordinate (O)node[right]{$O$};
+				\path[name path=j] (S)--(C);
+				\path[name path=k] (O)--(J);
+				\path [name intersections={of=j and k,by=M}];
+				\path(M) coordinate (M)node[right]{$M$};
+				\draw[thick](S)--(A)--(D) (C)--(B)--(S)--(D) (S)--(C)--(O)--(D) (O)--(J);
+				\draw[red,thick][dashed] (A)--(M);
+				\draw[thick][dashed](A)--(B) (I)--(J) (I)--(B) (A)--(C) (B)--(D) (S)--(H) (S)--(G) (D)--(J) (D)--(C);
+				\foreach\p in{J,I,H,G,K,L,O,M}\draw[thick][fill=black](\p)circle(1pt);
+				
+		\end{tikzpicture}}
+		\vspace{-1cm}
+		\begin{enumerate}[c)]
+			\item Gọi đường thẳng $d$ là giao tuyến của hai mặt phẳng $(SAC)$ và $(AJO)$.\\
+			Ta có 
+			$\heva{&A\in(SAC)\\&A\in(AJO)}\Rightarrow A\in d\quad (1)$.\\
+			Tương tự
+			$$K=IJ\cap SH \Rightarrow \heva{&K\in IJ\subset (AJO)\Rightarrow K\in(AJO)\\&K \in SH\subset (SAC)\Rightarrow K\in(SAC)}\Rightarrow K\in d\quad (2)$$
+			$$L=DJ\cap SG \Rightarrow \heva{&L \in DJ\subset (AJO)\Rightarrow L\in(AJO)\\&L \in SG\subset (SAC)\Rightarrow L\in(SAC)}\Rightarrow L\in d\quad (3)$$
+			$$M=OJ\cap SC \Rightarrow \heva{&M \in OJ\subset (AJO)\Rightarrow M\in(AJO)\\&M \in SC\subset (SAC)\Rightarrow M\in(SAC)}\Rightarrow M\in d\quad (4)$$
+			Từ (1),(2),(3),(4) suy ra $A$, $K$, $L$, $M$ cùng thuộc $d$ $\Rightarrow$ bốn điểm $A$, $K$, $L$, $M$ thẳng hàng (đpcm).
+		\end{enumerate}
+	}
+\end{bt}
+
+% nguồn: 2026-11-15_11_1H4_TL2_Song_song (nhập 15/11/2026)
+\begin{bt}%[1H4V1-3]%[ma:b0fb33bb]
+% nguon: Archive/SP_KhoLatex/ID6_old/GV3.tex #2776
+
+	Cho hình chóp $S.ABCD$ có đáy $ABCD$ là hình bình hành tâm $O$. Gọi $M$, $N$ lần lượt
+	là trung điểm của $SA$, $SC$.
+	\begin{enumerate}
+		\item Tìm giao tuyến của $(BMN)$ với các mặt phẳng $(SAB)$ và $(SBC)$.
+		\item Tìm $I=SO\cap (BMN)$ và $K=SD\cap (BMN)$
+		\item Tìm $E=AD\cap (BMN)$ và $F=CD\cap (BMN)$
+		\item Chứng minh rằng ba điểm $B$, $E$, $F$ thẳng hàng.
+	\end{enumerate}
+	\loigiai{
+		\immini
+		{a)Ta có 
+			$$\heva{&B\in(BMN)\\&B\in(SAB)}\Rightarrow B\in(BMN)\cap(SAB)\quad(1)$$
+			$$\heva{&M\in(BMN)\\&M\in SA\subset(SAB)}\Rightarrow M\in(BMN)\cap(SAB)\quad(2)$$
+			Từ (1),(2) suy ra $(BMN)\cap(SAB)=BM$.
+		}{	\begin{tikzpicture}[scale=0.8, font=\footnotesize, line join=round, line cap=round, >=stealth]
+				\path
+				(0,0) coordinate (A)node[below]{$A$}
+				($(A)+(-150:2)$) coordinate (B)node[below]{$B$}
+				($(B)+(0:4)$) coordinate (C)node[below]{$C$}
+				($(A)+(0:4)$) coordinate (D)node[right]{$D$}
+				($(B)+(85:5)$) coordinate (S)node[left]{$S$}
+				($(S)!1/2!(A)$) coordinate (M)node[left]{$M$}
+				($(S)!1/2!(C)$) coordinate (N)node[right]{$N$}
+				;
+				\path[name path=a] (A)--(C);
+				\path[name path=b] (B)--(D);
+				\path [name intersections={of=a and b,by=O}];
+				\path(O) coordinate (O)node[below]{$O$};
+				\path[name path=c] (S)--(O);
+				\path[name path=d] (M)--(N);
+				\path [name intersections={of=c and d,by=I}];
+				\path(I) coordinate (I)node[right]{$I$};
+				\path
+				($(I)!1!180:(B)$) coordinate (It)
+				;
+				\path[name path=e] (I)--(It);
+				\path[name path=f] (S)--(D);
+				\path [name intersections={of=e and f,by=K}];
+				\path(K) coordinate (K)node[right]{$K$};
+				\path
+				($(N)!7!180:(K)$) coordinate (Nt)
+				($(C)!2!180:(D)$) coordinate (Ct)
+				($(M)!4!180:(K)$) coordinate (Mt)
+				($(A)!1!180:(D)$) coordinate (At)
+				;
+				\path[name path=g] (N)--(Nt);
+				\path[name path=h] (C)--(Ct);
+				\path [name intersections={of=g and h,by=F}];
+				\path(F) coordinate (F)node[below]{$F$};
+				\path[name path=i] (M)--(Mt);
+				\path[name path=k] (A)--(At);
+				\path [name intersections={of=i and k,by=E}];
+				\path(E) coordinate (E)node[left]{$E$};
+				
+				\coordinate (P) at (intersection cs:first line={(S)--(B)}, second line={(E)--(K)});
+				\coordinate (Q) at (intersection cs:first line={(S)--(B)}, second line={(A)--(E)});
+				\coordinate (T) at (intersection cs:first line={(B)--(C)}, second line={(K)--(F)});
+				
+				\draw[thick](S)--(B) (C)--(D)--(S)--(C) (N)--(B) (K)--(F)--(C) (P)--(E)--(F);
+				\draw[thick][dashed](S)--(A)--(B)--(C) (Q)--(D) (E)--(A)--(C) (B)--(D) (B)--(M)--(N) (S)--(O) (B)--(I)--(K) (K)--(P);
+				\foreach\p in{A,B,C,D,S,M,N,O,I,K,F,E}\draw[thick][fill=black](\p)circle(1pt);
+		\end{tikzpicture}}
+		
+		Ta có 
+		$$\heva{&B\in(BMN)\\&B\in(SBC)}\Rightarrow B\in(BMN)\cap(SBC).\quad(1)$$
+		$$\heva{&N\in(BMN)\\&N\in SC\subset(SBC)}\Rightarrow N\in(BMN)\cap(SBC).\quad(2)$$
+		Từ (1),(2) suy ra $(BMN)\cap(SBC)=BN$.
+		\begin{enumerate}[b)]
+			\item Trong $(SAC)$ gọi $I=SO\cap MN$ mà $MN\subset(BMN)$, suy ra $I=SO\cap(BMN)$.\\
+			Chọn $(SBD)$ chứa $SD$, ta có $(SBD)\cap(BMN)=BI$. Kẻ $BI\cap SD=K$. Suy ra $K=SD\cap(BMN)$.
+			\item Trong $(SAD)$ gọi $E=KM\cap AD$ mà $KM\subset(BMN)$, suy ra $E=AD\cap(BMN)$.\\
+			Trong $(SCD)$ gọi $F=CD\cap KN$ mà $KN\subset(BMN)$, suy ra $F=CD\cap(BMN)$.
+			\item Gọi đường thẳng $d$ là giao tuyến của hai mặt phẳng $(KEF)$ và $(DEF)$.\\
+			Ta có 
+			$$\heva{E\in(KEF)\\E \in(DEF)}\Rightarrow E\in d\quad (1)$$
+			$$\heva{F\in(KEF)\\F \in(DEF)}\Rightarrow F\in d\quad (2)$$
+			$$B=BD\cap BK \Rightarrow \heva{B \in BD\subset (DEF)\Rightarrow B\in(DEF)\\B \in BK\subset (KEF)\Rightarrow B\in(KEF)}\Rightarrow B\in d\quad (3)$$
+			Từ (1),(2),(3) suy ra $B$, $E$, $F$, cùng thuộc $d$ $\Rightarrow$ ba điểm $B$, $E$, $F$ thẳng hàng (đpcm).
+	\end{enumerate}	}
+\end{bt}
+
+% nguồn: 2026-11-15_11_1H4_TL2_Song_song (nhập 15/11/2026)
+\begin{bt}%[1H4V1-3]%[ma:6c15bac1]
+% nguon: Archive/SP_KhoLatex/ID6_old/GV3.tex #2779
+
+	Cho hình chóp $S.ABCD$ có đáy $ABCD$ là hình thang, $AD$ là đáy lớn và $AD=2BC$. Gọi $M, N$ lần lượt là trung điểm của $SB, SC$; $O$ là giao điểm của $AC$ và $BD$.
+	\begin{enumerate}
+		\item Tìm giao tuyến của $(ABN)$ và $(SCD)$.
+		\item Tìm giao điểm $P$ của $DN$ và $(SAB)$.
+		\item Gọi $K$ là giao điểm của $AN$ và $DM$. Chứng minh $S, K, O$ thẳng hàng. Đặt $KS=k\cdot KO$. Tìm $k$.
+	\end{enumerate}
+	\loigiai{
+		\begin{enumerate}
+			\item Tìm giao tuyến của $(ABN)$ và $(SCD)$.
+			\immini{
+				
+				Ta có$\colon N \in (ABN) \cap (SCD) \,\,(1)$.\\
+				Trong $(ABCD)$, gọi $I = AB \cap CD$.\\$ \Rightarrow I \in (ABN) \cap (SCD) \,\,(2)$.\\
+				Từ $(1), (2)$ suy ra $IN = (ABN) \cap (SCD)$.
+			}{
+				\begin{tikzpicture}[scale=0.7, font=\footnotesize, line join=round, line cap=round, >=stealth]
+					\coordinate[label= above left:$A$] (A) at (0,0);
+					\coordinate[label=below:$B$] (B) at (-3,-2);
+					\coordinate[label=below:$C$] (C) at (0,-2);
+					\coordinate[label=right:$D$] (D) at (6,0);
+					\coordinate[label=above:$S$] (S) at (2,4);
+					\coordinate[label= above left:$I$] (I) at (-6,-4);
+					\coordinate[label=above right:$N$] (N) at ($(S)!1/2!(C)$);
+					\coordinate[label=above:$M$] (M) at ($(S)!1/2!(B)$); 
+					\path[name path=ac] (A)--(C);
+					\path[name path=bd] (B)--(D);
+					\path[name intersections={of= ac and bd,by=O}]; 
+					\coordinate[label=above left:$O$] (O) at (O);
+					\draw[thick] (B)--(C)--(D)--(S)-- (B)--(I)--(C) (S)--(C)(B)--(N);
+					\draw[thick][dashed] (S)--(A)--(D)--(B)--(A)--(C)(N)--(A);
+					\foreach \diem in {A,B,C,D,S,O, M,N,I}	\fill (\diem)circle(1.0pt);
+					
+				\end{tikzpicture}
+			}
+			\item Tìm giao điểm $P$ của $DN$ và $(SAB)$.
+			\immini{
+				
+				Trong $(SCD)$, gọi $P = DN \cap SI$\\$ \Rightarrow \heva{&P \in DN \\&I \in SI \subset (SAB)}$.\\
+				Vậy $P = DN \cap (SAB)$.	
+			}{
+				\begin{tikzpicture}[scale=0.7, font=\footnotesize, line join=round, line cap=round, >=stealth]
+					\coordinate[label= above left:$A$] (A) at (0,0);
+					\coordinate[label=below:$B$] (B) at (-3,-2);
+					\coordinate[label=below:$C$] (C) at (0,-2);
+					\coordinate[label=right:$D$] (D) at (6,0);
+					\coordinate[label=above:$S$] (S) at (2,4);
+					\coordinate[label= above left:$I$] (I) at (-6,-4);
+					\coordinate[label= above left:$P$] (P) at($(S)!1/3!(I)$);;
+					\coordinate[label=above right:$N$] (N) at ($(S)!1/2!(C)$);
+					\coordinate[label=below:$M$] (M) at ($(S)!1/2!(B)$); 
+					\path[name path=ac] (A)--(C);
+					\path[name path=bd] (B)--(D);
+					\path[name intersections={of= ac and bd,by=O}]; 
+					\coordinate[label=above left:$O$] (O) at (O);
+					\draw[thick] (I)--(C)--(D)--(S) (S)--(C)(D)--(N) (I)--(S)(N)--(P);
+					\draw[thick][dashed] (S)--(A)--(D)--(B)--(A)--(C)--(B)--(N)--(A)(S)--(B)--(I);
+					\foreach \diem in {A,B,C,D,S,O, M,N,I,P}	\fill (\diem)circle(1.0pt);
+					
+				\end{tikzpicture}
+				
+			}		
+			\item Gọi $K$ là giao điểm của $AN$ và $DM$. Chứng minh $S, K, O$ thẳng hàng. Đặt $KS=k.KO$. Tìm $k$.
+			\begin{center}
+				\begin{tikzpicture}[scale=1, font=\footnotesize, line join=round, line cap=round, >=stealth]
+					\coordinate[label= above left:$A$] (A) at (0,0);
+					\coordinate[label=below:$B$] (B) at (-3,-2);
+					\coordinate[label=below:$C$] (C) at (0,-2);
+					\coordinate[label=right:$D$] (D) at (6,0);
+					\coordinate[label=above:$S$] (S) at (2,4);
+					\coordinate[label= above left:$I$] (I) at (-6,-4);
+					\coordinate[label= above left:$P$] (P) at($(S)!1/3!(I)$);
+					\coordinate[label= below right:$K$] (K) at($(S)!3/5!(O)$);
+					\coordinate[label=above right:$H$] (H) at ($(S)!5/6!(C)$);
+					\coordinate[label=above right:$N$] (N) at ($(S)!1/2!(C)$);
+					\coordinate[label=below:$M$] (M) at ($(S)!1/2!(B)$); 
+					\path[name path=ac] (A)--(C);
+					\path[name path=bd] (B)--(D);
+					\path[name intersections={of= ac and bd,by=O}]; 
+					\coordinate[label=above left:$O$] (O) at (O);
+					\draw[thick] (I)--(C)--(D)--(S) (S)--(C)(D)--(N) (I)--(S);
+					\draw[thick][dashed] (O)--(S)--(A)--(D)--(B)--(A)--(C)(N)--(A)(S)--(B)--(I)(D)--(M)(O)--(H)(B)--(C);
+					\foreach \diem in {A,B,C,D,S,O, M,N,I,P,H}	\fill (\diem)circle(1.0pt);
+					
+				\end{tikzpicture}
+			\end{center}
+			\begin{itemize}
+				\item $S \in (SAC) \cap (SBD)$.
+				\item $\heva{&K \in AN \subset (SAC)\\&K \in DM \subset (SBD)} \Rightarrow K \in (SAC) \cap (SBD)$.
+				\item $\heva{&O \in AC \subset (SAC)\\&O \in DB \subset (SBD)} \Rightarrow O \in (SAC) \cap (SBD)$.\\
+				Vậy $S,K,O$ thẳng hàng.
+				\item $ABCD$ là hình thang có $AD = 2BC \Rightarrow \dfrac{BC}{AD}=\dfrac{OC}{OA}=\dfrac{1}{2}$.\\
+				Trong  $\Delta SAC$, kẻ $OH \parallel AN \Rightarrow \dfrac{CH}{CN}=\dfrac{1}{3} \Rightarrow \dfrac{SK}{SO}=\dfrac{SN}{SH}=\dfrac{3}{5}$.\\
+				Vậy $k =\dfrac{3}{5}$.
+			\end{itemize}
+		\end{enumerate}
+	}
+\end{bt}
+
+% nguồn: 2026-11-15_11_1H4_TL2_Song_song (nhập 15/11/2026)
+\begin{bt}%[1H4V1-3]%[ma:8c1072e5]
+% nguon: Archive/SP_KhoLatex/ID6_old/GV3.tex #2780
+
+	Cho hình chóp $S.ABCD$ có đáy $ABCD$ là hình bình hành tâm $O$. Gọi $M, N$ lần lượt là trung điểm của $SA,SC$. Gọi $(P)$ là mặt phẳng qua $M, N$ và $B$.
+	\begin{enumerate}
+		\item Tìm giao tuyến của $(P)$ với các mặt phẳng $(SAB), (SBC), (SCD), (SAD)$.
+		\item Tìm $E=DA \cap (P), F=DC \cap (P)$.
+		\item Chứng tỏ rằng $E, F, B$ thẳng hàng.
+	\end{enumerate}
+	\loigiai{
+		\begin{enumerate}
+			\item Tìm giao tuyến của $(P)$ với các mặt phẳng $(SAB), (SBC), (SCD), (SAD)$.
+			\begin{center}
+				\begin{tikzpicture}[scale=0.8, font=\footnotesize, line join=round, line cap=round, >=stealth]
+					\coordinate[label= above left:$A$] (A) at (0,0);
+					\coordinate[label=below:$B$] (B) at (-3,-2);
+					\coordinate[label=below:$C$] (C) at (3,-2);
+					\coordinate[label=right:$D$] (D) at (6,0);
+					\coordinate[label=above:$S$] (S) at (2,4);
+					\coordinate[label=above:$M$] (M) at ($(A)!1/2!(S)$);
+					\coordinate[label=above right:$N$] (N) at ($(S)!1/2!(C)$);
+					\coordinate[label=below:$O$] (O) at ($(A)!1/2!(C)$); 
+					\coordinate[label=left:$I$] (I) at ($(S)!1/2!(O)$);
+					\coordinate[label=above right:$K$] (K) at ($(S)!1/3!(D)$);
+					\draw[thick] (B)--(C)--(D)--(S)-- (B)--(N) (S)--(C);
+					\draw[thick][dashed] (S)--(A)--(D)--(B)--(A)--(C) (B)--(M)--(N) (O)--(S)(B)--(I)--(K);
+					\foreach \diem in {A,B,C,D,S,M,N,O,I,K}	\fill (\diem)circle(1.0pt);
+				\end{tikzpicture}
+			\end{center}
+			\begin{itemize}
+				\item $MB = (P) \cap (SAB)$.
+				\item $NB = (P)  \cap (SBC)$.
+				\item Tìm giao tuyến của $(P)$ và $(SCD)$.
+				\begin{itemize}
+					\item $N \in (P) \cap (SCD) $.
+					\item Trong $(SAC)$, gọi $I = SO \cap MN; K = BI \cap SD$.\\
+					$\Rightarrow \heva{&K \in BI \subset (P)\\&K \in SD \subset (SCD)} \Rightarrow K \in (P) \cap (SCD) $.
+				\end{itemize}	
+				Vậy $NK = (MNB) \cap (SCD)$.
+				\item Tìm giao tuyến của $(P)$ và $(SAD)$.
+				\begin{itemize}
+					\item $M \in (P) \cap (SAD)$.
+					\item $K \in (P) \cap (SAD)$.\\
+					Vậy $MK = (P) \cap (SAD)$.
+				\end{itemize}
+			\end{itemize}
+			
+			\item Tìm $ E=DA \cap (P), F=DC \cap (P)$.
+			\begin{center}
+				\begin{tikzpicture}[scale=0.8, font=\footnotesize, line join=round, line cap=round, >=stealth]
+					\coordinate[label= above left:$A$] (A) at (0,0);
+					\coordinate[label=below:$B$] (B) at (-3,-2);
+					\coordinate[label=below:$C$] (C) at (3,-2);
+					\coordinate[label=right:$D$] (D) at (6,0);
+					\coordinate[label=above:$S$] (S) at (2,4);
+					\coordinate[label=above:$M$] (M) at ($(A)!1/2!(S)$);
+					\coordinate[label=above right:$N$] (N) at ($(S)!1/2!(C)$);
+					\coordinate[label=below:$O$] (O) at ($(A)!1/2!(C)$); 
+					\coordinate[label=left:$I$] (I) at ($(S)!1/2!(O)$);
+					\coordinate[label=above right:$K$] (K) at ($(S)!1/3!(D)$);
+					\coordinate[label=above right:$E$] (E) at (-6,0);
+					\coordinate[label= below:$F$] (F) at (0,-4);
+					\draw[thick] (C)--(D)--(S)-- (B)--(N) (S)--(C)(M)--(E)(K)--(N)--(F)--(C) (E)--(F)--(B);
+					\draw[thick][dashed] (S)--(A)--(D)--(B)--(A)--(C) (B)--(M)--(N) (O)--(S)(B)--(I)--(K)--(M)(E)--(A)(B)--(C);
+					\foreach \diem in {A,B,C,D,S,M,N,O,I,K,E,F}	\fill (\diem)circle(1.0pt);
+				\end{tikzpicture}
+			\end{center}
+			\begin{itemize}
+				\item Gọi $E = MK \cap AD \Rightarrow E = AD \cap (P)$.
+				\item Gọi $F = NK \cap CD \Rightarrow F = CD \cap (P)$.
+			\end{itemize}
+			\item Chứng tỏ rằng $E, F, B$ thẳng hàng.
+			\begin{itemize}
+				\item $E \in (P) \cap (ABCD)$.
+				\item $F \in (P) \cap (ABCD)$.
+				\item $B \in (P) \cap (ABCD)$.
+			\end{itemize}
+			Vậy $E, F, B$ thẳng hàng.
+		\end{enumerate}
+	}
+\end{bt}
+
+% nguồn: 2026-11-15_11_1H4_TL2_Song_song (nhập 15/11/2026)
+\begin{bt}%[1H4C1-3]%[ma:195f0d18]
+% nguon: Archive/SP_KhoLatex/ID6_old/GV3.tex #2784
+
+	Cho tứ diện $ABCD$. Trên các cạnh $AB, AC, BD$ lần lượt lấy ba điểm $E, F, G$ sao cho $AB=3AE; AC=2AF; DB=4DG$.
+	\begin{enumerate}
+		\item Tìm giao tuyến của hai mặt phẳng $(EFG)$ và $(BCD)$.
+		\item Tìm giao điểm $H$ của đường thẳng $CD$ với $(EFG)$. Tính tỉ số $\dfrac{HC}{HD}$.
+		\item Tìm giao điểm $I$ của đường thẳng $AD$ và $(EFG)$. Tính tỉ số $\dfrac{IA}{ID}$.
+		\item Chứng minh ba đường thẳng $FI$, $GM$, $CD$ đồng quy.
+		\item Gọi $J$ là trung điểm của $BC, AJ$ cắt $EF$ tại $K$. Tính tỉ số $\dfrac{AK}{AJ}$.
+	\end{enumerate}
+	\loigiai{
+		\begin{center}
+			\begin{tikzpicture}[scale=0.8, font=\footnotesize, line join=round, line cap=round, >=stealth]
+				\coordinate[label= above left:$B$] (B) at (0,0);
+				\coordinate[label=above:$A$] (A) at (2,8);
+				\coordinate[label=below:$C$] (C) at (3,-2);
+				\coordinate[label=right:$D$] (D) at (8,0);
+				\coordinate[label=left:$E$] (E) at ($(A)!1/3!(B)$);
+				\coordinate[label=left:$F$] (F) at ($(A)!1/2!(C)$);
+				\coordinate[label=above right :$G$] (G) at ($(B)!0.82!(D)$);
+				\coordinate[label=above right :$M$] (M) at ($(B)!2!(C)$);
+				
+				\coordinate[label=above right :$I$] (I) at ($(A)!1.76!(D)$);
+				\coordinate[label=above right :$J$] (J) at ($(B)!1/2!(C)$);
+				\coordinate[label=left :$K$] (K) at ($(A)!2/5!(J)$);
+				\coordinate (P) at (intersection cs:first line={(E)--(M)}, second line={(C)--(D)});
+				\coordinate[label=left:$H$] (H) at (intersection cs:first line={(G)--(M)}, second line={(P)--(D)});		
+				\coordinate(Q) at (intersection cs:first line={(E)--(I)}, second line={(C)--(D)});
+				
+				\draw[thick] (A)--(B)--(C)--(A)--(D)--(H) (I)--(M) (A)--(C)  (E)--(F)(C)--(M)--(F)(D)--(I)(A)--(J) (H)--(M) (I)--(F);
+				\draw[thick][dashed] (B)--(D) (C)--(H) (E)--(G)--(F)(H)--(G)(E)--(Q)--(I);
+				\foreach \diem in {A,B,C,D,E,F,G,M,H,I,J,K}	\fill (\diem)circle(1.0pt);
+				\fill[cyan,opacity=0.5] (M)--(E)--(I)--cycle;
+			\end{tikzpicture}
+		\end{center}
+		
+		\begin{enumerate}
+			\item Tìm giao tuyến của hai mặt phẳng $(EFG)$ và $(BCD)$.
+			\begin{itemize}
+				\item $G \in (EFG) \cap (BCD)$.
+				\item Ta có$\colon \dfrac{AE}{AB} \neq \dfrac{AF}{AC} \Rightarrow $ EF cắt $BC$ tại $M \Rightarrow M \in (EFG)\cap (BCD)$
+			\end{itemize}
+			Vậy $MG =(EFG)\cap (BCD)$.
+			\item Tìm giao điểm $H$ của đường thẳng $CD$ với $(EFG)$. Tính tỉ số $\dfrac{HC}{HD}$.
+			\begin{itemize}
+				\item Trong $(BCD)$, gọi $H =MG \cap CD \Rightarrow H =CD \cap (EFG)$.
+				\item Áp dụng định lý Menelaus trong $\Delta BCA$ với ba điểm thẳng hàng $M, E, F$ ta có$\colon$\\$\dfrac{AE}{EB}\cdot \dfrac{BM}{MC}\cdot \dfrac{CF}{FA}=1 \Rightarrow \dfrac{BM}{MC}=2$.
+				\\Áp dụng định lý Menelaus trong $\Delta BCD$ với ba điểm thẳng hàng $M, H, G$ ta có$\colon$\\$\dfrac{DG}{DB}\cdot \dfrac{BM}{MC}\cdot \dfrac{CH}{HD}=1 \Rightarrow \dfrac{CH}{HD}=\dfrac{3}{2}$.
+			\end{itemize}
+			\item Tìm giao điểm $I$ của đường thẳng $AD$ và $(EFG)$. Tính tỉ số $\dfrac{IA}{ID}$.
+			\begin{itemize}
+				\item Ta có$\colon \dfrac{BE}{BA}\neq \dfrac{BG}{BD} \Rightarrow EG$ cắt $AD$ tại điểm $I \Rightarrow I = AD \cap (EFG)$.
+				\item Áp dụng định lý Menelaus trong $\Delta ABD$ với ba điểm thẳng hàng $E, G, I$ ta có$\colon$\\$\dfrac{BE}{EA}\cdot \dfrac{AI}{ID}\cdot \dfrac{DG}{GB}=1 \Rightarrow \dfrac{AI}{ID}=\dfrac{3}{2}$.
+			\end{itemize}
+			\item Chứng minh ba đường thẳng $FI$, $GM$, $CD$ đồng quy.
+			\begin{itemize}
+				\item $F\in (EFG)\cap (ACD)$.
+				\item $H \in (EFG)\cap (ACD)$.
+				\item $I \in (EFG)\cap (ACD)$.
+			\end{itemize}
+			Suy ra ba điểm $F$, $H$, $I$ thẳng hàng.\\
+			Vậy ba đường thẳng $FI$, $GM$, $CD$ đồng quy.
+			\item Gọi $J$ là trung điểm của $BC, AJ$ cắt $EF$ tại $K$. Tính tỉ số $\dfrac{AK}{AJ}$.\\
+			Áp dụng định lý Menelaus trong $\Delta ABJ$ với ba điểm thẳng hàng $E, F, M$ ta có$\colon$\\$\dfrac{AE}{EB}\cdot \dfrac{BM}{MJ}\cdot \dfrac{JK}{KA}=1 \Rightarrow \dfrac{JK}{KA}=\dfrac{3}{2}$.\\
+			Vậy $\dfrac{AK}{AJ}=\dfrac{2}{3}$.
+		\end{enumerate}
+	}
+	
+\end{bt}
+
+% nguồn: 2026-11-15_11_1H4_TL2_Song_song (nhập 15/11/2026)
+\begin{bt}%[1H4N1-3]%[ma:fec20f17]
+% nguon: Archive/SP_KhoLatex/ID6_old/1H2Y2-4.tex #2785
+%[HK1-THPT Nguyễn An Ninh - TP HCM - Năm 2017-2018]%[Lê Thanh Nin]
+	Cho hình chóp $S.ABCD$ có đáy $ABCD$ là hình bình hành. Tìm giao tuyến của mặt phẳng $(SAB)$ và mặt phẳng $(SCD)$.	
+	\loigiai{
+	\immini{Do $AB\parallel CD$ và $S$ là một điểm chung của hai mặt phẳng $(SAB)$ và $(SCD)$ nên giao tuyến của hai mặt phẳng $(SAB)$ và mặt phẳng $(SCD)$ là đường thẳng $\Delta$ đi qua $S$ và $\Delta\parallel AB.$}{	\begin{tikzpicture}[line cap=round,line join=round, >=stealth,scale=1]
+		\def \xa{-2} 
+		\def \xb{-1}
+		\def \y{4}
+		\def \z{3}		
+		\coordinate (B) at (0,0);
+		\coordinate (C) at ($(B)+(\xa,\xb)$);
+		\coordinate (A) at ($(B)+(\y,0)$);
+		\coordinate (D) at ($ (C)+(A)-(B) $);
+		\coordinate (S) at ($ (B)+(0,\z) $);
+		\tkzDefLine[parallel=through S](B,A) \tkzGetPoint{i}
+		\draw (i) node[above right]{$\Delta$};
+		\tkzDrawLine[add = 0.5 and 0.1](S,i)
+		\draw [dashed] (A)--(S)--(B)--(A)--(D) (B)--(C);
+		\draw (S)--(C)--(D)--(A)--(S)--(D);
+		\tkzDrawPoints(S,A,B,C,D)
+		\tkzLabelPoints[right](A)
+		\tkzLabelPoints[above](S)
+		\tkzLabelPoints[above left](B)
+		\tkzLabelPoints[below](D,C)
+		\end{tikzpicture}}
+				
+	} 
+\end{bt}
+
+% nguồn: 2026-11-15_11_1H4_TL2_Song_song (nhập 15/11/2026)
+\begin{bt}%[1H4V1-3]%[ma:48cdb4b8]
+% nguon: Archive/SP_KhoLatex/ID6_old/1K4-OT-C4.tex #3334
+%[Dự án 3 - TLDH - TeamTeXHoa - DiaMond]
+	Cho hình chóp $S.ABCD$, có đáy $ABCD$  là tứ giác có cặp cạnh đối không song song, điểm $M$ thuộc cạnh $SA$. Tìm giao tuyến của các cặp mặt phẳng sau
+	\begin{multicols}{2}
+		\begin{enumerate}
+			\item $\left( SAC \right)$ và $\left( SBD \right)$.
+			\item $\left( SAC \right)$ và $\left( MBD \right)$. 
+			\item $\left( MBC \right)$ và $\left( SAD \right)$.
+			\item $\left( SAB \right)$ và $\left( SCD \right)$.
+		\end{enumerate}
+	\end{multicols}
+	\loigiai{
+		\begin{center}
+			\begin{tikzpicture}[scale=1,font=\footnotesize,line cap=round,line join=round,>=stealth]
+				\path (0,0)coordinate(A)+(0:4)coordinate(D)+(-30:3.5)coordinate(C)+(-60:3)coordinate(B)+(55:4.5)coordinate(S);
+				\path ($(S)!.4!(A)$)coordinate(M) (intersection of A--B and D--C)coordinate(E) (intersection of A--D and B--C)coordinate(F) (intersection of A--C and B--D)coordinate(O) (intersection of M--F and S--D)coordinate(I);
+				\foreach \i/\j in {A/180,B/180,C/-60,D/80,S/90,M/170,E/-90,F/0,O/-90}
+				\draw[fill=black] (\i)node[shift=(\j:.32)]{$\i$}circle(1pt);
+				\draw[dashed] (F)--(A)--(C)--(M)--(I)--(D)--(B)--(C)--(D) (S)--(O);
+				\draw (I)--(S)--(A)--(E)--(C)--(S)--(B)--(M) (I)--(F)--(C);
+			\end{tikzpicture}
+		\end{center}
+		\begin{enumerate}
+			\item Trong mặt phẳng $(ABCD)$ gọi $O=AC\cap BD$, suy ra $\heva{&O\in AC\subset (SAC)\\&O\in BD\subset (SBD)}$ 
+			khi đó hai mặt phẳng $(SAC)$ và $(SBD)$ có hai điểm chung là $S$ và $O$.\\
+			Suy ra $SO=(SAC)\cap (SBD)$. 
+			\item Điểm $M\in SA\Rightarrow M\in (SAC)$.\\ 
+			Hai mặt phẳng $(SAC)$ và $(MBD)$ có hai điểm chung là $O$ và $M$.\\
+			Suy ra $OM=(SAC)\cap (MBD)$. 
+			\item Gọi $F=AD\cap BC$ suy ra $\heva{&F\in (MBC)\\&F\in (SAD).}$\\
+			Khi đó hai mặt phẳng $(MBC)$ và $(SAD)$ có hai điểm chung là $M$ và $F$, suy ra $MF=(MBC)\cap (SAD)$. 
+			\item Gọi $E=AB\cap CD$ suy ra $\heva{& E\in (SAB)\\& E\in (SCD)}$, suy ra hai mặt phẳng $(SAB)$ và $(SCD)$ có hai điểm chung là $S$ và $E$.\\
+			Suy ra $SE=(SAB)\cap(SCD)$. 
+		\end{enumerate}
+	}
+\end{bt}
+
+% nguồn: 2026-11-15_11_1C1_TL2_Bien_hinh_va_hinh_khong_gian (nhập 15/11/2026)
+\begin{bt}%[1H4H1-3]%[ma:cb39997d]
+% nguon: Archive/SP_DA_SauLuoi/1-TL-THPT-NamKyKhoiNghia-GHKI-NH23-24.tex #2449
+%[Dự án đề kiểm tra Toán 11 GHKI NH23-24 - Quan Ón]%[THPT Nam Kỳ Khởi Nghĩa - Tp HCM]
+	Cho hình chóp $S.ABCD$ có đáy $ABCD$ là hình bình hành tâm $O$; $G$ là trọng tâm tam giác $SCD$; $H$ là trọng tâm tam giác $ACD$.
+	\begin{enumerate}
+		\item Tìm giao tuyến của hai mặt phẳng $(SAC)$ và $(SBD)$.
+		\item Chứng minh hai đường thẳng $HG$ và $SA$ song song.
+		\item Tìm giao điểm của đường thẳng $OG$ với mặt phẳng $(SAD)$.
+	\end{enumerate}
+	\loigiai{
+		\begin{center}
+			\begin{tikzpicture}[>=stealth,line join=round,line cap=round,font=\footnotesize,scale=0.9]
+				\path 
+				(0.57,3.34) coordinate (S)
+				(0,0) coordinate (A)
+				(-2,-2) coordinate (B)
+				(3,-2) coordinate (C)
+				(5,0) coordinate (D)
+				(intersection of A--C and B--D) coordinate (O)
+				($(C)!0.5!(D)$) coordinate (M)
+				($(S)!0.5!(C)$) coordinate (N)
+				($(A)!2/3!(M)$) coordinate (H)
+				($(S)!2/3!(M)$) coordinate (G)
+				($(D)-(O)+(N)$) coordinate (a)
+				($(a)!1.6!(D)$) coordinate (x)
+				(intersection of D--a and O--G) coordinate (E);
+				\draw (S)--(B)--(C)--(D)--(S)--(C) (S)--(M) (D)--(N) (G)--(E)--(x);
+				\draw[dashed] (B)--(A)--(D)--(B) (C)--(A)--(S)--(O)--(N) (A)--(M) (H)--(G)--(O);
+				\foreach \l/\g in {A/180,B/-135,C/-45,D/0,O/-90,S/90,N/180,M/-45,G/85,H/-70,E/0}
+				\draw[fill=black] (\l) circle (1pt) +(\g:.3) node{$\l$};
+				\fill (x) node[right]{$x$};
+			\end{tikzpicture}
+		\end{center}
+		\begin{enumerate}
+			\item Ta có $S \in (SAC)\cap (SBD)$. $\hfill (1)$\\
+			Vì $O$ là tâm của hình bình hành $ABCD$ nên $O \in AC$, $O \in BD$.\\
+			Suy ra $\heva{&O \in AC,AC \subset (SAC)\\&O \in BD, BD \subset (SBD)} \Rightarrow O \in (SAC)\cap (SBD)$. $\hfill (2)$\\
+			Từ $(1)$ và $(2)$, suy ra $SO = (SAC)\cap (SBD)$.
+			\item Gọi $M$, $N$ lần lượt là trung điểm của các cạnh $CD$ và $SC$.\\
+			Vì $G$ là trọng tâm tam giác $SCD$ nên $\dfrac{MG}{MS} = \dfrac{1}{3}$.\\
+			Mặt khác, ta có $H$ là trọng tâm tam giác $ACD$ suy ra $\dfrac{MH}{MA} = \dfrac{1}{3}$.\\
+			Do đó $\dfrac{MG}{MS} = \dfrac{MH}{MA} = \dfrac{1}{3} \Rightarrow HG \parallel SA$.
+			\item Vì $G$ là trọng tâm tam giác $SCD$ nên $\dfrac{DG}{DN} = \dfrac{2}{3}$.\\
+			Vì $H$ là trọng tâm tam giác $ACD$ nên $\dfrac{DH}{DO} = \dfrac{2}{3}$.\\
+			Do đó $\dfrac{DG}{DN} = \dfrac{DH}{DO} = \dfrac{2}{3} \Rightarrow ON \parallel HG$.\\
+			Mà $HG \parallel SA$ (cmt) nên $ON \parallel SA$.\\
+			Xét $OG \subset (OGD)$.\\
+			Ta có $\heva{&D \in (SAD)\cap (OGD)\\
+			&ON \subset (OGD)\\&SA \subset (SAD)\\&ON \parallel SA \textrm{ (cmt)}} \Rightarrow (OGD)\cap (SAD) = Dx\parallel ON\parallel SA$.\\
+			Trong $(OGD)$, gọi $E = OG \cap Dx$.\\
+			Khi đó $\heva{&E \in OG\\&E \in Dx, Dx \subset (SAD)} \Rightarrow E = OG \cap (SAD)$.
+		\end{enumerate}
+	}
+\end{bt}
+
+% nguồn: 2026-11-15_11_1C1_TL2_Bien_hinh_va_hinh_khong_gian (nhập 15/11/2026)
+\begin{bt}%[1H4V1-3]%[ma:20dbcd60]
+% nguon: Archive/SP_DA_SauLuoi/1-TL-TN-THPT-PHAMPHUTHU-GHKI-NH23-24.tex #2597
+%[Dự án đề kiểm tra Toán 11 GHKI NH23-24- Nguyễn Sơn]%[THPT Phạm Phú Thứ - Tp HCM]
+Cho hình chóp $ S.ABCD $ có đáy $ ABCD $ là hình bình hành tâm $O$. Gọi $M, N$ lần lượt là trung điểm của $SB, SD$. Trên đoạn thẳng $SC$ lấy điểm $P$ sao cho $SP > PC$. Biết $MN$ cắt $SO$.
+\begin{listEX}[1]
+	\item Tìm giao tuyến của hai mặt phẳng $ (SAD) $ và $ (SBC) $.
+	\item Tìm giao tuyến của hai mặt phẳng $ (SAC) $ và $(MNP)$.
+	\item Tìm giao điểm $Q$ của đường thẳng $SA$ và mặt phẳng $(MNP)$.
+	\item Gọi $I,J$ lần lượt là giao điểm của $QM$ và $AB, QP$ và $AC$. Chứng minh $IJ, QN$ và $AD$ đồng quy.
+\end{listEX}
+\loigiai{
+\begin{center}
+\begin{tikzpicture}[
+	>=stealth, line join=round, line cap=round, 
+	scale=0.7,
+	declare function={r=3; a=75;}]
+% ve diem
+	\path 
+		(0,0) coordinate (A)
+		(-3,-3) coordinate (D)
+		(6,-3) coordinate (C)
+		(9,0) coordinate (B)
+		(2,6) coordinate (S)
+		(-3,1) coordinate (x1)
+		(4,8) coordinate (x)
+		($ (S)!.5!(B) $) coordinate (M)
+		($ (S)!.5!(D) $) coordinate (N)
+		($ (S)!.85!(C) $) coordinate (P)
+		(intersection of A--C and B--D) coordinate (O)	
+		(intersection of S--O and M--N) coordinate (K)
+		(intersection of P--K and S--A) coordinate (Q)
+		(intersection of Q--M and A--B) coordinate (I)	
+		(intersection of Q--P and A--C) coordinate (J)	
+		(intersection of I--J and A--D) coordinate (E)	
+		;
+	\draw[thick] (S)--(B)--(C)--(D)--(S)--(C) (x1)--(x) (M)--(P) (N)--(P) (B)--(I)--(M) (P)--(J)--(C);
+	\draw[dashed](S)--(A)--(B)--(D)	(D)--(A)--(C) (S)--(O) (M)--(N) (P)--(Q) (P)--(J)--(C) (P)--(Q)--(M) (Q)--(N);
+	\draw  (I)--(E)--(A) (E)--(Q);
+	\foreach \a/\b/\c in {}	{
+		\draw pic [draw=black,angle radius = 10] {right angle = \a--\b--\c};	}
+% danh dau diem
+	\foreach \x/\g in {S/90, A/135, B/-90, C/-140, D/180, M/90, N/180, O/-90, P/0, x/90, K/-120, Q/20, I/-90, J/-90, E/-90}{
+		\draw[fill=black] (\x) circle (1.5pt)+(\g:.4) node{$\x$};}
+\end{tikzpicture}
+\end{center}
+\begin{listEX}[1]
+	\item Ta có $\heva{&S\in (SAD)\cap (SBC) \\ & AD\subset (SAD)\\&BC\subset(SBC)\\&AD\parallel BC}\Rightarrow (SAD)\cap (SBC) = Sx $ với $Sx \parallel AD \parallel BC$.
+	\item Trong mặt phẳng $(SBD)$, gọi $K$ là giao điểm của $MN$ và $SO$.\\
+	 Suy ra  $K\in (SAC)\cap (MNP)$.\\
+	Ta lại có  $P\in (SAC)\cap (MNP)$.\\
+	Suy ra $KP=(SAC)\cap(MNP)$.
+	\item Trong mặt phẳng $(SAC)$ gọi $Q$ là giao điểm của $SA$ và $KP$.\\
+	Suy ra $\heva{&Q\in SA\\&Q\in KP\subset (MNP)}\Rightarrow Q=SA\cap (MNP)$.
+	\item Trong mặt phẳng $(SAD)$ gọi $E$ là giao điểm của $QN$ và $AD$.\\
+	Ta cần chứng minh ba điểm $E, J, I $ thẳng hàng.\\
+	Ta có $\heva{&E\in AD\subset (ABCD)\\&E\in QN\subset(MNP)}\Rightarrow E\in (ABCD)\cap (MNP)$\quad (1).\\
+	Ta có $\heva{&J\in AC\subset (ABCD)\\&J\in QP\subset(MNP)}\Rightarrow J\in (ABCD)\cap (MNP)$\quad (2).\\
+	Ta có $\heva{&I\in AB\subset (ABCD)\\&I\in QM\subset(MNP)}\Rightarrow I\in (ABCD)\cap (MNP)$\quad (3).\\
+	Từ (1) (2) và (3) suy ra $E, I, J$ cùng thuộc giao tuyến hai mặt phẳng $(ABCD)$ và $(MNP)$. Suy ra $E, J, I $ thẳng hàng. Vậy ba đường thẳng $IJ, QN$ và $AD$ đồng quy.
+\end{listEX}
+}
+\end{bt}
+
+% nguồn: 2026-11-15_11_1C1_TL2_Bien_hinh_va_hinh_khong_gian (nhập 15/11/2026)
+\begin{bt}%[1H4H1-3]%[ma:54b5f3c7]
+% nguon: Archive/SP_DA_SauLuoi/1-TL-THPT-TranKhaiNguyen-GHKI-NH23-24.tex #2631
+
+	Cho hình chóp $S.ABCD$ có đáy là hình bình hành tâm $O$. Gọi $M$, $N$ lần lượt là trung điểm của $SB$, $SD$. Lấy $P$ thuộc đoạn $SC$ và không là trung điểm của $SC$.
+	\begin{enumerate}
+		\item Tìm giao tuyến của hai mặt phẳng $(SAB)$ và $(SBD)$. Tìm giao điểm $E$ của đường thẳng SO và mặt phẳng $(MNP)$.
+		\item Chứng minh $MN\parallel BD$. Từ đó tìm giao tuyến của hai mặt phẳng $(ABCD)$ và $(CMN)$.
+	\end{enumerate}
+	\loigiai
+	{
+		\begin{center}
+			\begin{tikzpicture}[>=stealth,line join=round,line cap=round,font=\footnotesize,scale=1]
+				\coordinate (B) at (0,0);
+				\coordinate (A) at (1,1.2);
+				\coordinate (C) at (3.5,0);
+				\coordinate (D) at ($(C)-(B)+(A)$);
+				\coordinate (S) at ($(A)+(100:3.5)$);
+				\coordinate (M) at ($(S)!0.5!(B)$);
+				\coordinate (N) at ($(S)!0.5!(D)$);
+				\coordinate (P) at ($(S)!0.6!(C)$);
+				\coordinate (O) at ($(A)!0.5!(C)$);
+				\draw ($(C)+(N)-(M)$) node[below]{$d$}--(C)--($(C)+(M)-(N)$);
+				\draw (B)--(C)--(D)--(S)--cycle (S)--(C) (M)--(P)--(N)--(C)--cycle;
+				\draw[dashed] (A)--(D) (S)--(A)--(B) (A)--(C) (B)--(D) (M)--(N) (S)--(O);
+				\foreach \diem/\goc in {A/180,B/-90,C/-90,D/0,S/90,M/180,P/0,N/0,O/-90} \fill[black](\diem) circle (1pt) ($(\diem)+(\goc:3mm)$) node{$\diem$};
+			\end{tikzpicture}
+		\end{center}
+		\begin{enumerate}
+			\item Xét hai mặt phẳng $(SAB)$ và $(SBD)$. Ta có
+			\begin{align*}
+				&\heva{&S\in(S A B)\\ &S\in(S B D)}\Rightarrow S\in(S A B)\cap(S B D)\\ 
+				&\heva{&B\in(S A B)\\ &B\in(S B D)}\Rightarrow B\in(S A B)\cap(S B D)
+			\end{align*}
+			Vậy $(SAB)\cap (SBD)=SB$.\\
+			Trong mặt phẳng $(SBD)$, gọi $E=SO\cap MN$.\\
+			Ta có $\heva{& E\in SO \\ & E\in MN,MN\subset (MNP)}\Rightarrow \heva{& E\in SO \\ & E\in (MNP)}\Rightarrow E=SO\cap (MNP)$.\\
+			Vậy $E$ là giao điểm của $SO$ và $(MNP)$.
+			\item Xét tam giác $SBD$ có $M$ là trung điểm $SB$, $N$ trung điểm $SD$, suy ra $MN$ là đường trung bình của tam giác $SBD\Rightarrow MN\parallel BD$.\\
+			Ta có $\heva{& C\in (ABCD)\cap (CMN) \\ & MN\parallel BD \\ & MN\subset (CMN), BD\subset (ABCD)}\Rightarrow (ABCD)\cap (CMN)=d$ với $d\parallel MN\parallel BD$ và $d$ đi qua $C$.
+		\end{enumerate}
+	}
+\end{bt}

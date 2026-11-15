@@ -649,3 +649,133 @@
 		$$S_{APMQ}=\dfrac{1}{2}PQ\cdot AM=\dfrac{1}{2}\cdot \dfrac{4}{3}a\cdot a\sqrt{2}=\dfrac{2a^2\sqrt{2}}{3}.$$ 
 	} 
 \end{ex}
+
+% nguồn: 2026-11-15_11_1H8_TL2_Vuong_goc (nhập 15/11/2026)
+\begin{bt}%[1H8V2-4]%[ma:47d0e2b9]
+% nguon: Archive/SP_SauLuoi_2024-2025/Sp_GHKII/data/GHKII/1-TN-DS-TLN-TL-THPT-HauNghia-LongAn-GHKII-NH24-25.tex #214
+%[Dự án đề kiểm tra Toán 11 GHKII NH24-25 - Đợt 9 - Huỳnh Đức Vũ]%[THPT Hậu Nghĩa - Long An]
+Cho hình chóp $S.ABCD$ có đáy $ABCD$ là hình vuông và $SA\perp(ABCD)$. Gọi $I$, $J$, $K$ lần lượt là trung điểm của $A B$, $BC$ và $SB$. Chứng minh
+\begin{enumerate}
+	\item $ CD\perp\left(SAD\right).$
+\item  $ BD\perp\left(\text{IJ}K\right).$
+\end{enumerate}
+\loigiai{
+	\immini{
+\begin{enumerate}
+	\item Ta có $$\heva{&
+CD\perp AD\\&CD\subset (ABCD)\\&CD\perp SA}\Rightarrow SA\perp ABCD.$$
+\item Ta có $IK$, $IJ$ lần lượt là đường trung bình của các tam giác $SAB$, $ABC$ nên $IK \parallel SA$, $I J \parallel AC$.\\
+Suy ra $(I J K) \parallel  (SAC)$.\\
+Khi đó $\heva{&(IJK) \parallel (SAC)\\& B D\perp(S A C)}\Rightarrow B D\perp(IJK).$
+\end{enumerate}}{\begin{tikzpicture}[scale=1, font=\footnotesize, line join=round, line cap=round, >=stealth]
+\def\bc{4} % cạnh BC
+\def\ba{2} % cạnh BA
+\def\h{4} % đường cao
+\def\gocB{30} % góc B của đáy
+\coordinate[label=below left:$B$] (B) at (0,0);
+\coordinate[label=above right:$A$] (A) at (\gocB:\ba);
+\coordinate[label=below:$C$] (C) at (\bc,0);
+\coordinate[label=right:$D$] (D) at ($(C)-(B)+(A)$);
+\coordinate[label=above:$S$] (S) at ($(A)+(90:\h)$);
+\coordinate[label=above left:$I$] (I) at ($(A)!0.5!(B)$);
+\coordinate[label=below:$J$] (J) at ($(C)!0.5!(B)$);
+\coordinate[label=above left:$K$] (K) at ($(S)!0.5!(B)$);
+\draw (B)--(C)--(D)--(S)--cycle (S)--(C) (K)--(J);
+\draw[dashed] (A)--(D) (S)--(A)--(B) (K)--(I)--(J) (A)--(C) (B)--(D)
+;
+\foreach \diem in {A,B,C,D,S,I,J,K}	\fill (\diem)circle(1.0pt);
+\newcommand{\gocv}[4][black]{\draw[#1] ($(#3)!5pt!(#2)$)--($(#3)!2!($($(#3)!5pt!(#2)$)!.5!($(#3)!5pt!(#4)$)$)$)--($(#3)!5pt!(#4)$);}
+\gocv{S}{A}{D}
+\end{tikzpicture}
+}
+}
+\end{bt}
+
+% nguồn: 2026-11-15_11_1H8_TL2_Vuong_goc (nhập 15/11/2026)
+\begin{bt}%[1H8H2-4]%[ma:d7840409]
+% nguon: Archive/2024/TOAN_11_XE/TOAN_11_XE/data4/11C7/KNTT-7.5.tex #1399
+
+	Cho tam giác đều $ABC$ cạnh $a, I$ là trung điểm của $BC, D$ là điểm đối xứng với $A$ qua $I$. Vẽ đoạn thẳng $SD$ có độ dài bằng $\dfrac{a\sqrt{6}}{2}$ và vuông góc với $(ABC)$. Chứng minh rằng
+	\begin{enumEX}{2}
+		\item $(SBC)\perp(SAD)$
+		\item $(SAB)\perp(SAC)$.
+	\end{enumEX}
+	
+	\loigiai{
+		\immini
+		{
+			\begin{enumerate}
+				\item Ta có $SD\perp (ABC)$ suy ra $SD\perp AD$.\tagEX{1}
+				Vì $\triangle ABC$ đều cạnh $a$ và $D$ đối xứng với $I$ qua $A$ nên $ABCD$ là hình  thoi.\\
+				Suy ra $AD\perp BC$.	\tagEX{2}
+				Từ (1), (2) suy ra $AD\perp (SBC)$ mà $AD\subset (SAD)$ nên $(SBC)\perp (SAD)$.
+				\item Kẻ $BK\perp SA$.\\
+				Ta có $\triangle SBA=\triangle SCA$ (c.c.c)
+				$\Rightarrow \heva{&BK=CK\\&CK\perp SA.\\}$				
+			\end{enumerate}
+		}{
+			\begin{tikzpicture}[scale=0.8,font=\footnotesize, line join=round, line cap=round, >=stealth]
+				\path
+				(180:2) coordinate (A)
+				(-90:2) coordinate (B)
+				(0:2) coordinate (C)
+				($(B)!.5!(C)$) coordinate (I)
+				($(A)!2!(I)$) coordinate (D)
+				($(D)+(0,6)$) coordinate (S)
+				($(A)!(B)!(S)$) coordinate (K)
+				;
+				\draw (A)--(B)--(D) (S)--(D) (S)--(A) (S)--(B) (B)--(K)--(C);
+				\draw[dashed] (A)--(C)--(B) (C)--(D) --(A) (S)--(C);
+				%\draw pic[draw, angle radius=2mm]{right angle=C--H--S};
+				\draw pic[draw, angle radius=2mm]{right angle=A--D--S};
+				\draw pic[draw, angle radius=2mm]{right angle=B--K--A};
+				\draw pic[draw, angle radius=2mm]{right angle=C--K--S};
+				\foreach \x/\g in {A/180,B/-90,C/0,I/-90,D/0,S/90,K/140} \fill[black] (\x) circle (1pt)+(\g:.3) node {$\x$};
+			\end{tikzpicture}
+		}
+		\noindent  Mà $AD=2AI=\sqrt{3}a\Rightarrow SA=\dfrac{3\sqrt{2}}{2}a$; $BD=a\Rightarrow SB=\dfrac{\sqrt{10}}{2}a$.\\
+			Suy ra $S_{\triangle SAB}=\sqrt{p(p-SB)(p-BA)(p-SA)}=\dfrac{3}{4}a^2$.\\
+			Mặt khác, $BK=\dfrac{2S_{\triangle SAB}}{SA}=\dfrac{\sqrt{2}}{2}a\Rightarrow BK=CK=\dfrac{\sqrt{2}}{2}a$.\\
+			Mà $BK^2+CK^2=BC^2\Rightarrow BK\perp CK$.\\
+			Suy ra $(SAB)\perp (SAC)$.
+	}
+\end{bt}
+
+% nguồn: 2026-11-15_11_1H8_TL2_Vuong_goc (nhập 15/11/2026)
+\begin{bt}%[1H8H2-4]%[ma:08af7b27]
+% nguon: Archive/2024/TOAN_11_XE/TOAN_11_XE/data4/11C7/KNTT-7.5.tex #1401
+%[Nguyễn Thành Khang, dự án Tex hoá lần 3]
+	Cho tứ diện $OABC$ có các cạnh $OA, OB, OC$ đôi một vuông góc nhau và $OA=OB=OC=a$. Gọi $M$ là điểm trên cạnh $AC$ sao cho $AC=3MC$. Gọi $H$ là hình chiếu của $O$ lên mặt phẳng $(ABC)$. Gọi $(\alpha)$ là mặt phẳng chứa $OM$ và vuông góc với mặt phẳng $(ABC)$. Xác định và tính diện tích thiết diện do mặt phẳng $(\alpha)$ cắt tứ diện.
+	\loigiai{
+		\immini{
+			Ta có $OA \perp OB$ và $OA \perp OC$ nên $OA \perp (OBC)$.\\
+			Vì $OH \perp BC$ (do $OH \perp (ABC)$) và $OA \perp BC$ (do $OH \perp (ABC)$) nên $BC \perp (OAH)$, suy ra $BC \perp AH$.\hfill $(1)$\\
+			Tương tự ta có $AC \perp BH$.\hfill $(2)$\\
+			Từ $(1)$ và $(2)$ suy ra $H$ là trực tâm của $\triangle ABC$.\\
+			Ta có $OH  \perp (ABC)$ nên mặt phẳng $(\alpha)$ chứa $OM$ và vuông góc với mặt phẳng $(ABC)$ là $(OHM)$.\\
+			Trong mặt phẳng $(ABC)$ gọi $N$ là giao điểm của $HM$ và $AB$, suy ra thiết diện của mặt phẳng $(OHM)$ và tứ diện là $\triangle OMN$.\\
+			Do $OA=OB=OC=a$ và $OA, OB, OC$ đôi một vuông góc nhau nên $AB=AC=BC= a\sqrt{2}$, suy ra $\triangle ABC$ đều.\\
+			Mà $H$ là trực tâm của $\triangle ABC$ nên $AH$ cắt $BC$ tại trung điểm của đoạn $BC$.
+		}{
+			\begin{tikzpicture}[scale=.55, font=\footnotesize, line join=round, line cap=round,>=stealth]
+				\tkzDefPoints{0/0/O, -3/-2/B, 6/-3/C, 0/9/A, 0.8/1.3/H}
+				\coordinate (M) at ($(A)!0.7!(C)$);
+				\tkzInterLL(A,H)(B,C) \tkzGetPoint{E}
+				\tkzInterLL(H,M)(A,B) \tkzGetPoint{N}
+				\tkzDrawSegments[dashed](O,A O,B O,C O,H O,M O,E O,N)
+				\tkzDrawSegments(A,B A,C B,C M,N A,E)
+				\tkzMarkRightAngles(A,O,B A,O,C C,O,B)
+				\tkzLabelPoints[below](O,E)
+				\tkzLabelPoints[above left](B,N)
+				\tkzLabelPoints[above](A)
+				\tkzLabelPoints[above right](C,M,H)
+				\tkzDrawPolygon[dashed,pattern=north east lines,opacity=.3](O,M,N)
+				\tkzDrawPoints[fill=black](A,B,C,O,H,M,N,E)
+			\end{tikzpicture}
+		}
+		\noindent Gọi $E$ là trung điểm $BC$.\\
+		Ta có $H$ là trọng tâm $\triangle ABC$ nên $3HE=AE$. Do đó, $MN \parallel BC$, suy ra $MN= \dfrac{2}{3} BC= \dfrac{2a \sqrt{3}}{3}$.\\
+		Vì $\triangle AOE$ vuông tại $A$ nên $\dfrac{1}{OH^2}=\dfrac{1}{OA^2}+\dfrac{1}{OE^2}=\dfrac{3}{4a^2}$, suy ra $AH=\dfrac{a \sqrt{3}}{3}$.\\
+		Vậy $S_{\triangle OMN}= \dfrac{1}{2} \cdot MN \cdot OH= \dfrac{2a^2 \sqrt{6}}{9}$.
+	}
+\end{bt}

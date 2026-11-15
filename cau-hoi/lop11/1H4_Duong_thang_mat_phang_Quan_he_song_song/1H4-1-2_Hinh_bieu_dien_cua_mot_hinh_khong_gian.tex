@@ -449,3 +449,80 @@
 		Hình tứ diện có $6$ cạnh. 
 	 }
 \end{ex}
+
+% nguồn: 2026-11-15_11_1H4_TL2_Song_song (nhập 15/11/2026)
+\begin{bt}%[1H4H1-2]%[ma:a56b31f7]
+% nguon: Archive/2024/SP-K10-K11-LyVanHoang_TVN-023/K11-C4-HHKG-QHSS/data/Bai1-Dang1-LTvaBieudienhinhKG.tex #2192
+[Cánh diều, Mức độ 1]%[BG K10-K11-LVH, Dat Tien Pham]
+	\immini{Dựa trên hình bên, vẽ hình biểu diễn của hộp phấn.}{
+		\begin{tikzpicture}[font=\footnotesize, line join=round, line cap=round, >=stealth,scale=.7]
+			\definecolor{anti-flashwhite}{rgb}{0.95, 0.95, 0.96}
+			\definecolor{ruddy}{rgb}{1.0, 0.0, 0.16}
+			\def\r{0.15}
+			\foreach \j in {0,...,10}{
+				\foreach \i in{0,...,20}{
+					\fill[xslant=0.1,yslant=-0.2,anti-flashwhite,draw=teal](2*\i*\r,0)++(60:2*\j*\r)circle(\r);
+					\draw[xslant=0.77,yslant=-0.18,ruddy](-.4,-.2)rectangle(7,2.6);
+					\fill[ruddy](-.5,-.1)--(-.5,-2.1)--(5.8,-3.4)--(5.8,-1.4)--cycle
+					(5.8,-3.4)--(5.8,-1.4)--(8.05,1.37)--(8.05,-.63)--cycle;
+			}}
+		\end{tikzpicture}	
+	}
+	\loigiai{
+		\immini{
+			Hình biểu diễn của hộp phấn có thể vẽ như hình bên.
+		}{
+			\begin{tikzpicture}[line cap=round,line join=round,font=\footnotesize,>=stealth,scale=.8]
+				\path
+				(0,0) coordinate (A)
+				(-1.5,-1.5) coordinate (B)
+				(5,0) coordinate (D)
+				($(B)+(D)-(A)$) coordinate (C)
+				;
+				\coordinate (A') at	($(A)+(0,3)$);
+				\coordinate (B') at ($(B)+(A')-(A)$);
+				\coordinate (D') at ($(D)+(A')-(A)$);
+				\coordinate (C') at ($(B')+(D')-(A')$);
+				\draw (A')--(B')--(C')--(D')--cycle (B)--(C)--(D) (B')--(C')--(C) (D)--(D') (B')--(B);
+				\draw[dashed] (B)--(A)--(D) (A)--(A');
+			\end{tikzpicture}
+		}
+	}	
+\end{bt}
+
+% nguồn: 2026-11-15_11_1H4_TL2_Song_song (nhập 15/11/2026)
+\begin{bt}%[1H4N1-2]%[ma:a788f40a]
+% nguon: Archive/2024/SP-K10-K11-LyVanHoang_TVN-023/K11-C4-HHKG-QHSS/data/Bai1-Dang1-LTvaBieudienhinhKG.tex #2199
+[Cánh diều, Mức độ 1]%[BG K10-K11-LVH, Dat Tien Pham]
+	\immini{Hình bên là hình ảnh của chặn giấy bằng gỗ có bốn mặt phân biệt là các tam giác. Vẽ hình biểu diễn của chặn giấy bằng gỗ đó.}{
+		\definecolor{tumbleweed}{rgb}{0.87, 0.67, 0.53}%màu cát
+		\begin{tikzpicture}[scale=.7, font=\footnotesize, line join=round, line cap=round, >=stealth]
+			\def\bd{5} % cạnh BD
+			\def\bc{2} % cạnh BC
+			\def\gocB{-30} % góc BCủa đáy
+			\coordinate (B) at (0,0);
+			\coordinate (C) at (\gocB:\bc);
+			\coordinate (D) at (\bd,0);
+			\coordinate (A) at (70:4);
+			\fill[tumbleweed] (A)--(B)--(C)--(D)--cycle;
+			\draw (A)--(B)--(C)--(D)--cycle (A)--(C);
+		\end{tikzpicture}
+	}
+	\loigiai{
+		\immini{
+			Hình biểu diễn của chặn giấy bằng gỗ như hình bên.
+		}
+		{\begin{tikzpicture}[scale=.7, font=\footnotesize, line join=round, line cap=round, >=stealth]
+				\def\bd{5} % cạnh BD
+				\def\bc{2} % cạnh BC
+				\def\gocB{-30} % góc BCủa đáy
+				\coordinate[label=left:$B$] (B) at (0,0);
+				\coordinate[label=below:$C$] (C) at (\gocB:\bc);
+				\coordinate[label=right:$D$] (D) at (\bd,0);
+				\coordinate [label=above:$A$](A) at (70:4);
+				\draw (A)--(B)--(C)--(D)--cycle (A)--(C);
+				\draw[dashed] (B)--(D);
+				\foreach \i in {A,B,C,D} \fill[black] (\i) circle (1.5pt);
+		\end{tikzpicture}}
+	}	
+\end{bt}

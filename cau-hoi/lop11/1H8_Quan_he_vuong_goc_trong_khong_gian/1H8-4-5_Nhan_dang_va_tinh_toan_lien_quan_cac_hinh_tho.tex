@@ -236,3 +236,265 @@
 		 }
 	} 
 \end{ex}
+
+% nguồn: 2026-11-15_11_1H8_TL2_Vuong_goc (nhập 15/11/2026)
+\begin{bt}%[1H8H4-5]%[ma:80ba3cbb]
+% nguon: Archive/2024/TOAN_11_XE/TOAN_11_XE/data4/11C7/KNTT-7.5.tex #1398
+
+	Cho hình chóp $S . ABC$ có đáy là tam giác vuông tại $C$, mặt bên $SAC$ là tam giác đều và nằm trong mặt phẳng vuông góc với $(ABC)$.
+	\begin{enumerate}
+		\item Chứng minh rằng $(SBC)\perp(SAC)$.
+		\item Gọi $I$ là trung điểm của $SC$. Chứng minh rằng $(ABI)\perp(SBC)$.
+	\end{enumerate}
+	
+	\loigiai{
+		\immini
+		{
+			\begin{enumerate}
+				\item Gọi $H$ là trung điểm $AC$. Suy ra $SH\perp AC$ ($\triangle  SAC $ đều).\\
+				Vì $(SAC)\perp (ABC)$ nên $SH\perp (ABC)$ suy ra $BC\perp SH$.\tagEX{1}
+				Mà $BC\perp AC$. \tagEX{2}
+				Từ (1), (2) suy ra $BC\perp (SAC)$ mà $BC\subset (SBC)$\\ nên $(SBC)\perp (SAC)$.
+				\item $\triangle  SAC $ đều suy ra $AI\perp SC$.\tagEX{3}
+				Ta có $BC\perp (SAC)$ suy ra $BC\perp AI$.\tagEX{4}			
+				Từ (3),(4) suy ra $AI\perp (SBC)$ mà $AI\subset (ABI)$ \\nên $(ABI)\perp(SBC)$.
+			\end{enumerate}
+		}{\begin{tikzpicture}[scale=0.8,font=\footnotesize, line join=round, line cap=round, >=stealth]
+				\path
+				(0,0) coordinate (A)
+				(2,-1.5) coordinate (B)
+				(5,0) coordinate (C)
+				($(A)!.5!(C)$) coordinate (H)
+				($(H)+(0,4)$) coordinate (S)
+				($(S)!.5!(C)$) coordinate (I)
+				;
+				\draw (A)--(B)--(C) (S)--(A) (S)--(B) (S)--(C) (B)--(I);
+				\draw[dashed] (A)--(C) (S)--(H) (A)--(I);
+				\draw pic[draw, angle radius=2mm]{right angle=C--H--S};
+				\draw pic[draw, angle radius=2mm]{right angle=A--C--B};
+				\foreach \x/\g in {A/180,B/-90,C/0,S/90,H/-90,I/0} \fill[black] (\x) circle (1pt)+(\g:.3) node {$\x$};
+			\end{tikzpicture}
+		}
+		
+	}
+\end{bt}
+
+% nguồn: 2026-11-15_11_1H8_TL2_Vuong_goc (nhập 15/11/2026)
+\begin{bt}%[1H8H4-5]%[ma:99213cd8]
+% nguon: Archive/2024/TOAN_11_XE/TOAN_11_XE/data4/11C7/KNTT-7.5.tex #1402
+%[TeX hóa SGK CTST]%[Truc Danh]
+	Cho hình lăng trụ đứng $ABCD\cdot A'B'C'D'$ có đáy $ABCD$ là hình thang vuông tại $A$ và $B$, $AA'=2a, AD=2a, AB=BC=a$.
+	\begin{enumerate}
+		\item Tính độ dài đoạn thẳng $AC'$.
+		\item Tính tổng diện tích các mặt của hình lăng trụ.
+	\end{enumerate}
+	\loigiai{
+		\immini
+		{
+			\begin{enumerate}
+				\item Tam giác $ABC$ vuông tại $B$ có $AC=\sqrt{AB^2+AC^2}=a\sqrt{2}$.\\
+				Tam giác $ACC'$ vuông tại $C$ có $$AC'=\sqrt{AC^2+CC'^2}=\sqrt{(a\sqrt{2})^2+(2a)^2}=a\sqrt{6}.$$
+				\item Gọi $I$ là trung điểm $AD$, suy ra $ABCI$ là hình vuông nên $\triangle CID$ vuông tại $I$. Ta có
+				$$CD=\sqrt{IC^2+ID^2}=a\sqrt{2}.$$
+			\end{enumerate}
+		}{
+			\begin{tikzpicture}[scale=0.8,font=\footnotesize, line join=round, line cap=round, >=stealth]
+				\path 
+				(0,0) coordinate (B)
+				(2.5,0) coordinate (C)
+				(4,1) coordinate (D)	
+				(-1,1) coordinate (A)
+				($(A)+(0,3)$) coordinate (A')
+				($(B)+(0,3)$) coordinate (B')
+				($(C)+(0,3)$) coordinate (C')
+				($(D)+(0,3)$) coordinate (D')
+				($(D)!.5!(A)$) coordinate (I)
+				;
+				\draw (A)--(B)--(C)--(D) (A)--(A') (B)--(B') (C)--(C') (A')--(B')--(C')--(D')--(A') (D)--(D');
+				\draw[dashed] (A)--(D)  (A)--(C') (A)--(C)--(I);
+				\draw pic[draw, angle radius=2mm]{right angle=D--A--B};
+				\draw pic[draw, angle radius=2mm]{right angle=A--B--C};
+				\path (A)--(A') node[left,midway]{$2a$};
+				\path (A)--(I) node[above,midway]{$a$};
+				\path (D)--(I) node[above,midway]{$a$};
+				\path (C)--(I) node[left,midway]{$a$};
+				\path (A)--(B) node[left,midway]{$a$};
+				\path (B)--(C) node[below,midway]{$a$};
+				\draw pic[draw, angle radius=2mm]{right angle=C--I--D};
+				\foreach \x/\g in {A/180,B/-90,C/-90,D/30,A'/90,B'/70,C'/90,D'/30,I/90} \fill[black] (\x) circle (1pt)+(\g:.3) node {$\x$};
+			\end{tikzpicture}
+		}
+		\begin{enumerate}{\setcounter{enumi}{1}}
+			\item 	Diện tích $S_{ABB'A'}=2a\cdot a=2a^2$; 
+			Diện tích $S_{ABCD}=S_{A'B'C'D'}=\dfrac{(2a+a)\cdot a}{2}=\dfrac{3}{2}a^2$; 
+			Diện tích $S_{BCC'B'}=2a\cdot a=2a^2$; Diện tích $S_{ADD'A'}=2a\cdot 2a=4a^2$.\\
+			Diện tích $S_{CDD'C'}=2a\cdot a\sqrt{2}=2a^2\sqrt{2}$.\\
+			Vậy tổng diện tích các mặt của hình lăng trụ bằng $$2a^2+3a^2+2a^2+4a^2+2a^2\sqrt{2}=(11+2\sqrt{2})a^2.$$
+		\end{enumerate}
+	}
+\end{bt}
+
+% nguồn: 2026-11-15_11_1H8_TL2_Vuong_goc (nhập 15/11/2026)
+\begin{bt}%[1H8H4-5]%[ma:3015b06d]
+% nguon: Archive/SP_DA_SauLuoi/1-TL-TN-THPT-NgoQuyen-ThaiNguyen-HKII-NH23-24.tex #2430
+%[Dự án đề kiểm tra Toán 11 HKII NH23-24- Nguyễn Cường]%[THPT Ngô Quyền - Thái Nguyên]
+Cho hình chóp $S.ABC$ đáy là tam giác vuông tại $B$, $SA$ vuông góc với đáy. Chứng minh mặt phẳng $(SBA)$ vuông góc với mặt phẳng $(SBC)$.
+\loigiai{
+\begin{center}
+	\begin{tikzpicture}[scale=1, font=\footnotesize, line join=round, line cap=round, >=stealth]
+			\path
+			(0,0) coordinate (A)++(0:4)coordinate(C)++(230:2)coordinate(B)
+			(A)++(90:3)coordinate (S)
+			;
+			\draw (B)--(S)--(A)--(B)--(C)--(S);
+			\draw [dashed] (A)--(C);
+			\foreach \x/\y/\z in {A/B/C}{
+				\draw[thin] pic[draw, angle radius = 6pt]{right angle = \x--\y--\z};
+			}
+			\foreach \p/\g in {A/180,B/-90,C/0,S/90}\fill[black] (\p) circle (1pt) +(\g:.3)node{$\p$};
+	\end{tikzpicture}
+\end{center}
+Ta có $\heva{&BC\perp BA\\&BC\perp SA}\Rightarrow BC\perp (SAB)$.\\
+Mà $BC\subset (SBC)$ nên $(SBC)\perp (SBA)$.
+}
+\end{bt}
+
+% nguồn: 2026-11-15_11_1H8_TL2_Vuong_goc (nhập 15/11/2026)
+\begin{bt}%[1H8H4-5]%[ma:ff0c2eea]
+% nguon: Archive/SP_DA_SauLuoi/1-TL-THPT-NguyenTatThanh-HCM-HKII-NH23-24.tex #2558
+%[Dự án đề kiểm tra Toán 11 HKII NH23-24- Trần Xuan Hòa]%[THPT NguyenTatTHanh]
+Cho hình chóp $S.ABCD$ có đáy là hình chữ nhật, $SA\perp (ABCD), AD=SA=a$, $AB=\sqrt{3}a; H, K$ lần lượt là hình chiếu của $A$ trên $SB$ và $SD$.
+\begin{enumerate}
+	\item Chứng minh $(SCD) \perp (SAD), (AHK) \perp (SAC)$.
+	\item Tính thể tích khối chóp $S.ABC$.
+	\item Tính khoảng cách giữa hai đường thẳng $HK$ và $AC$.
+\end{enumerate}	
+	\loigiai{
+	\begin{center}
+		\begin{tikzpicture}[scale=1.1, font=\footnotesize,line join=round, line cap=round, >=stealth]
+			\path 
+			(0,0) coordinate (A)
+			++(-140:2) coordinate (B)
+			++(0:3.5) coordinate (C)
+			($(A)+(C)-(B)$) coordinate (D)
+			($(A)+(0,3)$) coordinate (S)
+			;
+			\coordinate (H) at ($(S)!.45!(B)$);
+			\coordinate (K) at ($(S)!.5!(D)$);
+			\coordinate (O) at ($(B)!.5!(D)$);
+			\coordinate (N) at ($(S)!.4!(A)$);
+			\coordinate (M) at (intersection of S--O and H--K);
+			\foreach \i in{B,C,D}{\draw (S)--(\i);};
+			\draw (B)--(C)--(D);
+			\draw[dashed] (S)--(A)--(B) (C)--(A)--(D) (B)--(D) (S)--(O) (H)--(K) (K)--(A)--(H) (M)--(N)--(K);
+			\pic[draw,angle eccentricity=1.8,angle radius=2mm]{right angle=S--A--D};
+			\pic[draw,angle eccentricity=1.8,angle radius=2mm]{right angle=D--K--A};
+			\pic[draw,angle eccentricity=1.8,angle radius=2mm]{right angle=B--H--A};
+			\foreach \i/\g in {A/-90,B/-90,C/-90,D/-90,S/90,H/190,K/60,O/-90,M/-140,N/180}
+			\fill[black] (\i) circle(1pt)+(\g:3mm)node[scale=1]{$\i$};
+		\end{tikzpicture}
+	\end{center}
+	\begin{enumerate}
+		\item 
+		\begin{itemize}
+			\item Ta có $C D \perp A D, C D \perp S A \Rightarrow C D \perp(S A D) \Rightarrow(S C D) \perp(S A D)$
+			\item Ta có $C D \perp A K, S D \perp A K \Rightarrow A K \perp(S C D) \Rightarrow A K \perp S C$.
+		\end{itemize}
+		Tương tự $A H \perp S C; SC \perp (AHK) \Rightarrow(SAC) \perp(AHK)$.
+		\item $V_{\text{SABC}}=\dfrac{1}{3} S A \cdot S_{\text{ABC}}=\dfrac{\sqrt{3}}{6} a^3$.\\
+		\item Gọi $O=B D \cap A C, M=S O \cap H K$.\\
+		Trong $\triangle SAO$ kẻ $MN \parallel AO$, nên $AC\parallel (MNK)$.\\
+		Ta có $\mathrm{d}(AC,HK)=\mathrm{d}(AC,(MNK))=\mathrm{d}(A,(MNK))$.\\
+		Ta có $\mathrm{d}(A,(MNK))=2\mathrm{d}(S,(MNK))$.\\
+		Tính được 
+		\begin{itemize}
+			\item $V_{S.MNK}=\dfrac{SN}{SA}\cdot \dfrac{SM}{SO}\cdot \dfrac{SK}{SD}\cdot V_{S.OAD}=\dfrac{1}{18}\cdot \dfrac{1}{2}V_{S.ABC}=\dfrac{1}{36}\cdot \dfrac{\sqrt{3}}{6} a^3=\dfrac{\sqrt{3}}{216}a^3$.
+			\item $MN=\dfrac{OA}{3}=\dfrac{a}{3}$; $NK^2=SN^2+SK^2-2SN\cdot SK\cos 45^\circ=\dfrac{5}{18}$.
+			\item $MK^2=\dfrac{2}{9}$, trong $\triangle MNK$ có $\cos \widehat{M}=\dfrac{MK^2+MN^2-NK^2}{2MK\cdot MN}=\dfrac{1}{4\sqrt{2}}$.\\ Do đó $\sin \widehat{M}=\dfrac{\sqrt{31}}{4\sqrt{2}}$. \\Vậy diện tích $\triangle MNK$ là $S=\dfrac{MN\cdot MK\cdot \sin \widehat{M}}{2}=\dfrac{\sqrt{31}}{72}$.
+			\item Ta có $V_{S.MNK}=\dfrac{\mathrm{d}(S,(MNK))\cdot S}{3}$ nên $\mathrm{d}(S,(MNK))=\dfrac{\sqrt{93}}{31}$.
+		\end{itemize}
+		Vậy $\mathrm{d}(A,(MNK))=2\mathrm{d}(S,(MNK))=\dfrac{2 \sqrt{93}}{31}a$.
+		\end{enumerate}
+	}
+\end{bt}
+
+% nguồn: 2026-11-15_11_1H8_TL2_Vuong_goc (nhập 15/11/2026)
+\begin{bt}%[1H8C4-5]%[ma:bdd07e61]
+% nguon: Archive/SP_KhoLatex/ID6_old/1H3G5-5.tex #2821
+%[Nguyễn Đắc Giáp]
+	Cho tam giác đều $SAD$ và hình vuông $ABCD$ cạnh $a$ nằm trong hai mặt phẳng vuông góc. Gọi $I$ là trung điểm của $AD,M$ là trung điểm của $AB,F$ là trung điểm của $SB$ và $K$ là giao điểm của $CM$ và $BI$.
+	\begin{enumerate}
+		\item Chứng minh $(CMF)\perp (SIB)$.
+		\item Tính $BK$ và $KF$ và suy ra rằng tam giác $BKF$ cân.
+		\item Dựng và tính độ dài đoạn vuông góc chung của hai đường thẳng $AB$ và $SD$.
+		\item Tính khoảng cách giữa hai đường thẳng $CM$ và $SA$.
+	\end{enumerate}
+	\loigiai{
+			\immini{
+			\begin{enumerate}
+			\item Ta có $\left.\begin{aligned}
+			&SI\perp AD \\
+			&(SAD)\perp (ABCD)
+			\end{aligned}\right\} \Rightarrow SI\perp (ABCD) \Rightarrow SI\perp CM$  (1). \\
+			$\triangle BCM=\triangle ABI \Rightarrow \widehat{B_1}={\widehat{C}}_1$ mà \\
+			$\widehat{C_1}+{\widehat{M}}_1=90^{\circ} \Rightarrow \widehat{B_1}+{\widehat{M}}_1=90^{\circ} \Rightarrow M\widehat{K}B=90^{\circ}$. \\
+			Hay $BI\perp CM$  (2). \\
+			Từ (1) và (2) suy ra $\left.\begin{aligned}
+			&CM\perp (SIB) \\
+			&CM\subset (CMF)
+			\end{aligned}\right\} \Rightarrow (CMF)\perp (SIB)$.
+		\end{enumerate}
+		}
+	{
+	\begin{tikzpicture}[scale=1, line join=round, line cap=round]
+	\tkzDefPoints{0/0/D,-2.2/-1.6/A,2.5/-1.6/B}
+	\coordinate (C) at ($(B)+(D)-(A)$);
+	\tkzDefMidPoint(D,A)\tkzGetPoint{I}
+	\coordinate (S) at ($(I)+(0,5)$);
+	\tkzDefMidPoint(A,B)\tkzGetPoint{M}
+	\tkzDefMidPoint(S,B)\tkzGetPoint{F}
+	\tkzDefMidPoint(S,D)\tkzGetPoint{J}
+	\tkzInterLL(C,M)(B,I)\tkzGetPoint{K}
+	\coordinate (H) at ($(F)!-1.2!(K)$);
+	\tkzDrawPolygon(S,A,B,C)
+	\tkzDrawSegments(S,B M,F F,C S,H F,H)
+	\tkzDrawSegments[dashed](S,D S,I A,D D,C B,I M,C F,K A,J)
+	\tkzDrawPoints[fill=black](S,A,B,C,D,I,J,M,K,H,F)
+	\tkzLabelPoints[above](S)
+	\tkzLabelPoints[below](A,B,M)
+	\tkzLabelPoints[left](D,I)
+	\tkzLabelPoints[above right](H,F,K)
+	\tkzLabelPoints[right](J,C)
+	\tkzMarkRightAngles[size=0.15,fill=gray!20](S,H,F S,I,D)
+	\end{tikzpicture}	
+}
+		
+	\begin{enumerate}\setcounter{enumi}{1}
+		\item Trong tam giác vuông $MBC,KB$ là đường cao nên 
+		$$\dfrac{1}{KB^2}=\dfrac{1}{MB^2}+\dfrac{1}{CB^2}=\dfrac{1}{\left(\dfrac{a}{2}\right)^2}-\dfrac{1}{a^2} \Rightarrow KB^2=\dfrac{a^2}{5} \Rightarrow KB=\dfrac{a\sqrt{5}}{5}.$$
+		Ta dễ dàng chứng minh được: $SB=SC;SC^2=SD^2+DC^2$ (vì $SD\perp DC$) $ \Rightarrow SB=SC=a\sqrt{2}$. \\
+		Trong tam giác $SBC,CF$ là trung tuyến nên ta có: $$SC^2+BC^2=2\cdot CF^2+\dfrac{SB^2}{2} \Rightarrow 2a^2+a^2=2\cdot CF^2+a^2 \Rightarrow CF^2=a^2.$$
+		Vì $CK\perp (SIB) \Rightarrow CK\perp FK \Rightarrow \triangle CKF$ vuông tại $K$ nên $FK^2=CF^2-KC^2$. \\
+		Ta lại có: $$KC^2=BC^2-KB^2=a^2-\dfrac{a^2}{5}=\dfrac{4a^2}{5}.$$
+		Do đó $$KF^2=a^2-\dfrac{4a^2}{5}=\dfrac{a^2}{5} \Rightarrow KF=\dfrac{a\sqrt{5}}{5}.$$
+		Vậy $KB=KF \Rightarrow \triangle BKF$ cân đỉnh $K$. \\
+		\item Ta có $SI\perp (ABCD) \Rightarrow \left.\begin{aligned}
+		&SI\perp AB \\
+		&AD\perp AB
+		\end{aligned}\right\} \Rightarrow AB\perp (SAD)$. \\
+		Ta kẻ đường cao $AJ$ của tam giác $SAD$ thì $AB\perp (SAD) \Rightarrow AB\perp AJ$. \\
+		$SD\perp IJ \Rightarrow AJ$ là đoạn vuông góc chung của $AB$ và $SD$. \\
+		Ta có ngay: $AJ=\dfrac{a\sqrt{3}}{2}$ (vì $\triangle SAD$ đều cạnh $a$). \\
+		\item Dễ thấy $SA\parallel FM \Rightarrow SA\parallel (CMF)$ mà $(CMF)\supset CM$. Do vậy khoảng cách giữa $SA$ và $CM$ cũng là khoảng cách từ một điểm trên $SA$ đến $(CMF)$. Ta chọn điểm $S$ chẳng hạn. Từ $S$ kẻ $SH\perp (CMF);SH$ là khoảng cách giữa $SA$ và $CM$. Ta đã có 
+		$$\left.\begin{aligned}
+		&(SIB)\perp (CMF) \\
+		&(SIB)\cap (CMF)=KF \\
+		&SH\perp (SIB),SH\perp (CMF)
+		\end{aligned}\right\} \Rightarrow H\in KF.$$
+		Ta có: $SH=SF\cdot \sin \widehat{SFH}$ vì $\widehat{SFH}=\widehat{BFK}$ (đối đỉnh) mà $\widehat{BFK}=\widehat{FBK}$ ($\triangle FBK$ cân) \\
+		$ \Rightarrow \widehat{SFK}=\widehat{FBK} \Rightarrow \sin \widehat{SFH}=\sin \widehat{FBK}$. Do đó\\
+		$$\sin \widehat{FPK}=\dfrac{SI}{SB}=\dfrac{\dfrac{a\sqrt{3}}{2}}{a\sqrt{2}}=\dfrac{\sqrt{3}}{2\sqrt{2}} \Rightarrow SH=\dfrac{a\sqrt{2}}{2}\cdot \dfrac{\sqrt{3}}{2\sqrt{2}}=\dfrac{a\sqrt{3}}{4}.$$ 
+	\end{enumerate}
+		
+	}
+\end{bt}

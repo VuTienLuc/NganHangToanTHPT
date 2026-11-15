@@ -2622,3 +2622,80 @@
 		Ta có $SH=\sqrt{SA^2-AH^2}=\sqrt{\dfrac{3a^2}{4}-\dfrac{3a^2}{9}}=\dfrac{a\sqrt{15}}{6}$, ${{S}_{\Delta ABC}}=\dfrac{a^2\sqrt{3}}{4}$.\\ 
 	Suy ra ${V_{S.ABC}}=\dfrac{1}{3}SH\cdot  {{S}_{\Delta ABC}}=\dfrac{{{a}^3}\sqrt{5}}{24}$.}
 \end{ex}
+
+% nguồn: 2026-11-15_11_1H8_TL2_Vuong_goc (nhập 15/11/2026)
+\begin{bt}%[1H8H7-2]%[ma:f691d741]
+% nguon: Archive/SP_DA_SauLuoi/1-TN-DS-TLN-THPT-TruongVinhKy-BenTre-HKII-2023-2024.tex #2611
+%[Dự án đề kiểm tra Toán 11 HKII NH23-24- Nhật Thiện]%[THPT Trương Vĩnh Ký - Bến Tre]
+	Cho hình chóp $S.ABC$ có đáy là tam giác đều cạnh bằng $2a$, $SA$ vuông góc với đáy. Góc giữa $(SBC)$ với đáy bằng $30^\circ$.
+	\begin{enumerate}
+		\item Tính thể tích khối chóp $S.ABC$ theo $a$.
+		\item Xác định và tính khoảng cách từ $A$ đến mặt phẳng $(SBC)$.
+	\end{enumerate}
+\loigiai{
+	\begin{center}
+		\begin{tikzpicture}[scale=1, font=\footnotesize, line join=round, line cap=round, >=stealth]
+\path (0,0) coordinate (A)	(1,-1) coordinate (B) (4,0) coordinate (C) (A)+(0,3) coordinate (S) ($(B)!.5!(C)$) coordinate (M) ($(S)!2/3!(M)$) coordinate (H);
+\draw (S)--(A)--(B)--(C)--cycle (S)--(B) (S)--(M);
+\draw[dashed] (A)--(C) (A)--(M) (A)--(H);
+\foreach \x/\dinh/\y in {A/H/M,S/A/B} \draw[fill = gray!50] ($(\dinh)!3pt!(\x)$)--($(\dinh)!3pt!(\x)+(\dinh)!3pt!(\y)-(\dinh)$)--($(\dinh)!3pt!(\y)$)--(\dinh)--cycle; 
+\foreach \p/\r in {A/120,S/90,B/-120,C/-60,M/-30,H/60}
+\fill (\p) circle (1pt) node[shift={(\r:3mm)}]{$\p$};
+\end{tikzpicture}
+	\end{center}
+	\begin{enumerate}
+		\item Gọi $M$ là trung điểm cạnh $BC$.\\
+		Ta có $\heva{&AM\perp BC\\&SA\perp BC}\Rightarrow BC\perp SM$.\\
+		Khi đó 
+		$\heva{&SM\perp BC,\ SM\subset (SBC)\\&AM\perp BC,\ AM\subset (ABC)\\&(SBC)\cap (ABC)=BC.}$\\
+		Suy ra góc giữa $(SBC)$ và mặt đáy là góc giữa $SM$ và $AM$.\\
+		Hay $\widehat{SMA}=30^\circ$.\\
+		Ta có $AM=\dfrac{2a\sqrt{3}}{2}=a\sqrt{3}$.\\
+		Suy ra $SA=AM\cdot \tan \widehat{SMA}=a$.\\
+		Khi đó thể tích của khối chóp là $V=\dfrac{1}{3}\cdot SA\cdot S_{\triangle ABC}=\dfrac{1}{3}\cdot a\cdot \dfrac{a^2\sqrt{3}}{4}=\dfrac{a^3\sqrt{3}}{12}$.
+		\item Gọi $H$ là hình chiếu của $A$ lên $SM$.\\
+		Ta có $BC\perp (SAM)\Rightarrow BC\perp AH$.\\
+		Khi đó $\heva{&AH\perp SM\\&AH\perp BC}\Rightarrow \mathrm{d}(A,(SBC))=AH$.\\
+		Xét tam giác $SAM$ vuông tại $A$ có
+		$$AH=\dfrac{AM\cdot SA}{\sqrt{AM^2+SA^2}}=\dfrac{a\sqrt{3}\cdot a}{\sqrt{(a\sqrt{3})^2+a^2}}=\dfrac{a\sqrt{3}}{2}.$$
+		Vậy khoảng cách từ $A$ đến $(SBC)$ bằng $\dfrac{a\sqrt{3}}{2}$.
+	\end{enumerate}
+}
+\end{bt}
+
+% nguồn: 2026-11-15_11_1H8_TL2_Vuong_goc (nhập 15/11/2026)
+\begin{bt}%[1H8V7-2]%[ma:99ae1bd6]
+% nguon: Archive/SP-4Phan-Dot3/Data/CD_1_OTHK2_De04.tex #4303
+
+	Cho lăng trụ tam giác $ABC.A'B'C'$ có đáy là tam giác đều cạnh bằng $5$, độ dài cạnh bên bằng $20$. Biết mặt phẳng $\left(BCC' B'\right)$ vuông góc với mặt phẳng đáy và góc $\widehat{B'BC}=30^{\circ}$. Tính thể tích khối chóp $A.CC'B'$.
+	\loigiai{
+		\begin{center}
+			\begin{tikzpicture}[line join = round, line cap = round,>=stealth,font=\footnotesize,scale=.8,declare function={ab=3;ac=5;cao=4;gocA=-50;}]
+				\path (0,0) coordinate (B)
+				(gocA:ab) coordinate (A)
+				(ac,0) coordinate (C)
+				($(B)+(67:cao)$) coordinate (B')
+				($(B')+(ac,0)$) coordinate (C')
+				($(B')+(gocA:ab)$) coordinate (A')
+				($(B)!0.5!(C)$) coordinate (M)
+				($(B)!(B')!(C)$) coordinate (H)
+				;
+				\draw (A')--(B')--(C')--cycle (A')--(A) (B')--(B) (C')--(C)
+				(B)--(A)--(C) (C')--(A)--(B')
+				;
+				\draw pic[draw,cap=butt,angle radius=4mm,"$30^\circ$",angle eccentricity=1.9]{angle=C--B--B'};
+				\draw[dashed] (B)--(C)--(B') (A)--(M) (B')--(H);
+				\foreach \x/\y/\z in {A/M/B,B'/H/B} \draw pic[draw,angle radius=2.5mm]{right angle=\x--\y--\z};
+				\foreach \x/\gm in {B/180,A/-90,C/0,B'/90,A'/-50,C'/0,H/-90,M/60} \fill (\x) circle (1pt) ($(\x)+(\gm:3.5mm)$)node{$\x$};
+			\end{tikzpicture}
+		\end{center}
+		Kẻ $B'H\perp BC$.\\
+		Ta có $\heva{& (BCC'B')\perp(ABC) \\ & (BCC'B')\cap(ABC)=BC \\ & B'H\perp BC \\ & B'H\subset(BCC'B')}\Rightarrow B'H\perp(ABC)$.\\
+		Gọi $M$ là trung điểm của $BC$ suy ra $AM\perp BC$.\\
+		Ta có $\heva{& AM\perp BC \\ & AM\perp B'H}\Rightarrow AM\perp(BCC'B')\Rightarrow\mathrm{d}\left(A,(BCC'B')\right)=AM$.\\
+		$AM=\sqrt{AC^2+MC^2}=\sqrt{5^2+\left(\dfrac{5}{2}\right)^2}=\dfrac{5\sqrt{5}}{2}$.\\
+		Ta có $B'H=BB'\cdot\sin{30^\circ}=20\cdot\dfrac{1}{2}=10$.\\
+		$S_{B'BC}=S_{CB'C'}=\dfrac{1}{2}\cdot B'H\cdot BC=\dfrac{1}{2}\cdot 10\cdot 5=25$.\\
+		Thể tích khối chóp $A.CC'B'$:\\ $V_{A.CC'B'}=\dfrac{1}{3}\cdot AM\cdot S_{CC'B'}=\dfrac{1}{3}\cdot\dfrac{5\sqrt{5}}{2}\cdot 25=\dfrac{75\sqrt{5}}{6}$ (đvtt).
+	}
+\end{bt}
