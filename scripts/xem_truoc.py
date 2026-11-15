@@ -77,7 +77,7 @@ def bo_cau(bo):
     return [{l: [the_cau(m, ls) for m in ds] for l, ds in b.items()} for b in bo]
 
 
-def doi(ma, tranh, rng=None):
+def doi(ma, tranh, rng=None, da_dung="uu_tien"):
     """Câu thay thế cho `ma`: cùng loại + cùng dạng + cùng mức → cùng dạng → cùng bài. Ưu tiên câu chưa dùng."""
     rng = rng or random.Random()
     K = kho(); c = K.get(ma)
@@ -85,7 +85,8 @@ def doi(ma, tranh, rng=None):
         return None
     tranh = set(tranh or []) | {ma}
     ls = lich_su()
-    cung = [x for x in K.values() if x["loai"] == c["loai"] and x["ma"] not in tranh and hop_le(x)]
+    cung = [x for x in K.values() if x["loai"] == c["loai"] and x["ma"] not in tranh and hop_le(x)
+            and not (da_dung == "loai_bo" and ls.get(x["ma"]))]
     bai = (c.get("dang_key") or "").split("-")[0]
     for loc, ghi in ((lambda x: x.get("dang_key") == c.get("dang_key") and x.get("muc_chuan") == c.get("muc_chuan"), ""),
                      (lambda x: x.get("dang_key") == c.get("dang_key"), "khác mức"),
@@ -93,7 +94,7 @@ def doi(ma, tranh, rng=None):
                       "dạng khác cùng bài")):
         ung = [x for x in cung if loc(x)]
         if ung:
-            moi = [x for x in ung if not ls.get(x["ma"])]
+            moi = [x for x in ung if not ls.get(x["ma"])] if da_dung != "khong" else []
             x = rng.choice(moi or ung)
             t = the_cau(x["ma"], ls)
             t["ghi_chu"] = ghi

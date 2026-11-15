@@ -174,6 +174,10 @@ Nạp đáp án: Chấm Phiếu AI → ô **Đáp án** → **Nhập từ file E
 Khung đề chính thức nằm ở `khung/DeThiChinhThuc/mau_de.tex` (in đen trắng). Muốn dạng ôn tập có màu
 như phần mềm cũ thì ghi `"khung": "DeThi"` trong file JSON.
 
+## Tuyển sinh 10: không lấy lại bài đã ra
+- Ô **Bài đã ra ở đề trước**: *Ưu tiên bài chưa dùng* (mặc định) / *Không lấy lại (ẩn bài đã ra)* / *Không xét*. Lịch sử ghi khi bấm Tạo đề
+  (`du-lieu/ts10_lich_su.json`). Chọn "Không lấy lại" thì bài đã ra không xuất hiện ở đề sau (cả khi ↻ Đổi bài); hết bài thì báo "hết bài chưa dùng".
+
 ## Nhập đề tuyển sinh 10 từ PDF (kho lớp 9 + kho Tuyển sinh 10)
 - Quy trình cho Antigravity/Claude: `.agents/workflows/nhap-ts10.md` (nói "nhập đề TS10 từ … đề 3, 4").
 - Tách chữ PDF miễn phí: `python3 scripts/pdf_sang_chu.py "<file.pdf>" --trang 5-8` (PDF scan → NotebookLM gõ thô).
@@ -213,6 +217,8 @@ Nút **Ôn thi học kì** trên thanh đầu. Chọn **Lớp 9/10/11/12** và *
   **Nhập vào ngân hàng** (xem trước, câu lỗi biên dịch bị loại), **Tải JSON chuẩn**.
 - **Xem trước & đổi câu**: xem 22 câu được chọn (đủ đáp án), **↻ Đổi câu** từng câu, **Random lại tất cả**, **Sang trình chiếu HTML**,
   rồi **Xác nhận & xuất đề**. Đóng xem trước là quay lại bảng ôn thi.
+- **Câu đã ra ở đề trước** (lịch sử rút câu của cả ngân hàng, ghi khi xuất đề): *Ưu tiên câu chưa dùng* / *Không lấy lại (ẩn câu đã ra)* / *Không xét*.
+  Chọn "Không lấy lại" thì câu đã ra ở bất kỳ đề nào trước đây không xuất hiện ở đề sau, kể cả khi bấm ↻ Đổi câu; thiếu câu thì báo.
 - **Nhiều bộ (Lần 1, 2, 3…)**: ô **Bộ** chọn bộ đang làm; **⧉ Sao chép thành lần mới** chép nguyên bảng sang bộ mới để sửa thêm/bớt;
   ✎ đổi tên, ✕ xoá bộ. Mỗi bộ nhớ các câu đã ra; tích **Tránh câu đã ra ở lần khác** thì lần 2, 3… không lấy lại câu của các lần trước.
   Tên đề và thư mục tự thêm "(Lần 2)"…

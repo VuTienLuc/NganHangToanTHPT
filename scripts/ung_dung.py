@@ -243,7 +243,7 @@ class XuLy(BaseHTTPRequestHandler):
                                       "thu_muc": os.path.relpath(os.path.dirname(kq["html"]), GOC)})
             if u.path == "/api/doi-cau":
                 import xem_truoc
-                t = xem_truoc.doi(d.get("ma"), d.get("tranh") or [])
+                t = xem_truoc.doi(d.get("ma"), d.get("tranh") or [], da_dung=d.get("da_dung") or "uu_tien")
                 return self.gui(200, {"ok": bool(t), "cau": t})
             if u.path == "/api/luu-ma-tran":
                 mt = d["ma_tran"]; ten = ten_khong_dau(mt.get("ten") or "MaTran", 60)
@@ -343,7 +343,7 @@ class XuLy(BaseHTTPRequestHandler):
                         return self.gui(200, {"ok": True, "thieu": thieu,
                                               "bo": [{b: ts10.the_xem(x) for b, x in de.items()} for de in bo]})
                     if viec == "doi":
-                        x = ts10.doi(d["bai"], d.get("kieu"), d.get("tranh") or [], d.get("ma"))
+                        x = ts10.doi(d["bai"], d.get("kieu"), d.get("tranh") or [], d.get("ma"), d.get("da_dung") or "uu_tien")
                         return self.gui(200, {"ok": bool(x), "bai": ts10.the_xem(x) if x else None})
                     if viec == "tao":
                         dong = []

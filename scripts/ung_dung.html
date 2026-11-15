@@ -429,6 +429,7 @@ tr.gop-h td{background:#dbeafe;text-align:left;font-weight:700;padding:8px 12px;
     <button id="hk-sao" title="Sao chép bộ đang xem thành bộ mới (Lần 2, 3…) để sửa thêm/bớt rồi ra đề tiếp">⧉ Sao chép thành lần mới</button>
     <button id="hk-doi-ten" title="Đổi tên bộ">✎</button><button id="hk-xoa-bo" title="Xoá bộ khỏi danh sách">✕</button>
     <label class="hop" title="Không lấy lại câu đã ra ở các lần khác của lớp này"><input type="checkbox" id="hk-tranh" checked> Tránh câu đã ra ở lần khác</label>
+    <label title="Lịch sử rút câu của cả ngân hàng: câu đã ra ở bất kỳ đề nào trước đây">Câu đã ra ở đề trước <select id="hk-da-dung"><option value="uu_tien">Ưu tiên câu chưa dùng</option><option value="loai_bo">Không lấy lại (ẩn câu đã ra)</option><option value="khong">Không xét</option></select></label>
     <label>Tên đề <input type="text" id="hk-ten"></label>
     <label>Kỳ <select id="hk-ky"><option>Giữa học kì I</option><option selected>Cuối học kì I</option><option>Giữa học kì II</option><option>Cuối học kì II</option></select></label>
     <span style="color:#555">Đề AI:</span>
@@ -562,7 +563,7 @@ tr.gop-h td{background:#dbeafe;text-align:left;font-weight:700;padding:8px 12px;
       <label>Tên đợt <input type="text" id="ts-ten" value="Đề luyện tuyển sinh 10" style="width:220px"></label>
       <label>Nhãn đề <input type="text" id="ts-nhan" value="ĐỀ LUYỆN TẬP" style="width:150px"></label>
       <label>Năm học <input type="text" id="ts-nam" value="NĂM HỌC 2027 – 2028" style="width:170px"></label>
-      <label class="hop"><input type="checkbox" id="ts-tranh" checked> ưu tiên bài chưa dùng</label>
+      <label title="Lịch sử rút bài: bài đã ra ở các bộ đề trước">Bài đã ra ở đề trước <select id="ts-da-dung"><option value="uu_tien">Ưu tiên bài chưa dùng</option><option value="loai_bo">Không lấy lại (ẩn bài đã ra)</option><option value="khong">Không xét</option></select></label>
     </div>
     <div id="ts-xem"></div>
   </div>
@@ -1261,6 +1262,8 @@ $("#hk-khop").onclick=()=>{if(HK_LOP<10)return;hkDs().forEach(r=>r.bai=khopBai(r
 $("#hk-mac-dinh").onclick=()=>{if(!confirm("Trả bảng lớp này về ma trận mặc định?"))return;hkBo().hang=hkMacDinh(HK_LOP);hkLuu();veHK()};
 $("#hk-bo").onchange=()=>{hkLop().i=+$("#hk-bo").value;hkLuu();veHK()};
 $("#hk-tranh").onchange=()=>veHK();
+try{$("#hk-da-dung").value=localStorage.getItem("hk_da_dung")||"uu_tien"}catch(_){}
+$("#hk-da-dung").onchange=()=>{try{localStorage.setItem("hk_da_dung",$("#hk-da-dung").value)}catch(_){}};
 $("#hk-sao").onclick=()=>{
   const L=hkLop(), goc=hkBo(), n=L.bo.length+1;
   const ten=prompt("Tên bộ mới (sao chép từ \""+goc.ten+"\", sửa lại các dòng tùy ý):",`Lần ${n}`); if(ten===null) return;
@@ -1284,6 +1287,7 @@ function mtHK(){
     ten_ky_thi:($("#hk-ten").value.trim()||"ĐỀ ÔN THI HỌC KÌ")+(nhieu?` (${bo.ten})`:""),
     mon:`TOÁN – Lớp ${HK_LOP}`,bu_cung_nhom:true,mo_rong_dang_khac:true});
   const tr=hkTranh(); if(tr.length) mt.tranh_ma=tr; else delete mt.tranh_ma;
+  mt.cau_da_dung=$("#hk-da-dung").value; mt.tranh_cau_da_dung=mt.cau_da_dung!=="khong";
   return mt;
 }
 function nguonHK(){ // xem trước/xuất từ Ôn thi HK: ghi câu đã ra vào đúng bộ, đóng xem trước thì quay lại bảng
@@ -1626,9 +1630,9 @@ function veXT(){
 }
 async function doiCau(ma,nut){
   const b=XT.bo[Math.min(XT.tab,XT.bo.length-1)];
-  const tranh=XT.bo.flatMap(x=>Object.values(x).flat().map(c=>c.ma));
+  const tranh=XT.bo.flatMap(x=>Object.values(x).flat().map(c=>c.ma)).concat((XT.mt&&XT.mt.tranh_ma)||[]);
   nut.disabled=true;nut.textContent="Đang đổi…";
-  const r=await api("/api/doi-cau",{ma,tranh});
+  const r=await api("/api/doi-cau",{ma,tranh,da_dung:(XT&&XT.mt&&XT.mt.cau_da_dung)||$("#cau_da_dung").value});
   if(!r.ok){nut.textContent="Hết câu thay";alert("Kho không còn câu khác cùng dạng (cùng loại) để đổi.");return}
   for(const ds of Object.values(b)){const i=ds.findIndex(c=>c.ma===ma); if(i>=0){ds[i]=r.cau;
     const so=i+1, cu=$("#xt-than").querySelector(`.the-cau[data-ma="${ma}"]`);
@@ -1677,7 +1681,7 @@ async function tsTai(){
 }
 function tsKieu(){const o={};document.querySelectorAll("#ts-bang tr[data-b]").forEach(tr=>o[tr.dataset.b]=tr.querySelector("select").value);return o}
 function tsCfg(){return {so_de:+$("#ts-so").value||1,ten:$("#ts-ten").value.trim(),nhan_de:$("#ts-nhan").value.trim(),nam_hoc:$("#ts-nam").value.trim(),
-  giao_vien:$("#giao_vien").value.trim(),tranh_da_dung:$("#ts-tranh").checked,dang:tsKieu()}}
+  giao_vien:$("#giao_vien").value.trim(),da_dung:$("#ts-da-dung").value,tranh_da_dung:$("#ts-da-dung").value!=="khong",dang:tsKieu()}}
 function tsPrompt(bai){
   const dg=TS.dang.filter(d=>d.bai===bai), sel=tsKieu()[bai];
   hopThoai(`Prompt AI soạn Bài ${bai}`,"Tích các dạng muốn AI soạn (mặc định: dạng đang chọn, hoặc mọi dạng), nhập số bài, rồi bấm Tạo prompt.",
@@ -1721,7 +1725,7 @@ function tsVeXem(){
 async function tsDoi(el){
   const de=+el.dataset.de,b=+el.dataset.b,ma=el.dataset.ma,n=el.querySelector(".ts-doi");n.disabled=true;n.textContent="Đang đổi…";
   const tranh=TSX.bo.flatMap(d=>Object.values(d).map(x=>x.ma));
-  const r=await api("/api/ts10/doi",{bai:b,kieu:tsKieu()[b],tranh,ma});
+  const r=await api("/api/ts10/doi",{bai:b,kieu:tsKieu()[b],tranh,ma,da_dung:$("#ts-da-dung").value});
   if(!r.ok){n.textContent="Hết bài thay";alert(`Kho Bài ${b} không còn bài khác để đổi — bấm Prompt AI soạn thêm.`);return}
   TSX.bo[de][b]=r.bai; const tmp=document.createElement("div");tmp.innerHTML=tsThe(r.bai,de);const moi=tmp.firstElementChild;moi.classList.add("moi");
   el.replaceWith(moi); moi.querySelector(".ts-doi").onclick=()=>tsDoi(moi); veCong(moi);
@@ -1738,6 +1742,8 @@ async function tsTao(chon_san){
 $("#nut-ts10").onclick=moTS;
 $("#ts-dong").onclick=()=>$("#hop-ts").style.display="none";
 $("#ts-nhap").onclick=tsNhap;
+try{$("#ts-da-dung").value=localStorage.getItem("ts10_da_dung")||"uu_tien"}catch(_){}
+$("#ts-da-dung").onchange=()=>{try{localStorage.setItem("ts10_da_dung",$("#ts-da-dung").value)}catch(_){}};
 $("#ts-dong-bo").onclick=async()=>{const b=$("#ts-dong-bo");b.disabled=true;b.textContent="Đang đồng bộ…";
   try{const r=await api("/api/ts10/dong-bo",{}); hopThoai(r.ok?`Đồng bộ kho Tuyển sinh 10: +${r.them} bài`:"Chưa đồng bộ được",r.nhat_ky||r.loi); tsTai();}
   finally{b.disabled=false;b.textContent="⇄ Đồng bộ từ kho lớp 9"}};
