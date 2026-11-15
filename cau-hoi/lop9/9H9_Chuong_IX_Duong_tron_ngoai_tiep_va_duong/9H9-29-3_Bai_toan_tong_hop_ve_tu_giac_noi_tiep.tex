@@ -1930,3 +1930,201 @@ Cho tam giác $ABC$ có ba góc nhọn ($AB < AC$) nội tiếp đường tròn 
 	\end{enumerate}
 }
 \end{bt}
+
+% nguồn: 2026-11-15_01_cum1_de1_de2_26_27 (nhập 15/11/2026)
+\begin{bt}%[9H9C29-3]%[ma:f99dc95e]
+% nguon: Đề tham khảo Tuyển sinh 10 TP.HCM 2026-2027 – Cụm 1 (Đề 1), Bài 7, trang 4
+Từ điểm $A$ nằm ngoài đường tròn $(O; R)$ vẽ hai tiếp tuyến $AB, AC$ ($B, C$ là tiếp điểm). Vẽ đường kính $BD$ của đường tròn $(O)$. Gọi $K$ là hình chiếu của $C$ trên $BD$, $CK$ cắt $AD$ tại $I$. Gọi $H$ là giao điểm của $OA$ và $BC$.
+\begin{enumerate}[a)]
+	\item Chứng minh tứ giác $ABOC$ nội tiếp và $OA \perp BC$.
+	\item Chứng minh $I$ là trung điểm của $CK$.
+	\item Đường thẳng $BD$ và đường thẳng $AC$ cắt nhau tại $S$. Tia $SI$ cắt $AB$ tại $M$. Giả sử $OA = 2R$, hãy tính diện tích của tứ giác $AMOC$ theo $R$.
+\end{enumerate}
+\loigiai{
+	\begin{center}
+	\begin{tikzpicture}[scale=1]
+		\coordinate (O) at (0,0);
+		\def\R{2.5}
+		\draw[thick] (O) circle (\R);
+		\coordinate (B) at (0,\R);
+		\coordinate (D) at (0,-\R);
+		\coordinate (A) at (-4.33,\R);
+		
+		\draw[thick] (B) -- (D);
+		
+		\coordinate (C) at (-120:\R);
+		\coordinate (H) at ($(B)!(O)!(C)$);
+		
+		\draw[thick] (A) -- (B);
+		\draw[thick] (A) -- (C);
+		\draw[thick] (O) -- (B);
+		\draw[thick] (O) -- (C);
+		\draw[thick] (O) -- (A);
+		\draw[thick] (B) -- (C);
+		\draw[thick] (A) -- (D);
+		
+		\coordinate (K) at ($(B)!(C)!(D)$);
+		\coordinate (I) at (intersection of C--K and A--D);
+		\draw[thick] (C) -- (K);
+		
+		\coordinate (S) at (intersection of B--D and A--C);
+		\draw[dashed] (C) -- (S) -- (D);
+		\coordinate (M) at (intersection of S--I and A--B);
+		\draw[dashed] (S) -- (M);
+		\draw[thick] (O) -- (M);
+		
+		\fill (A) circle (1.5pt) node[left] {$A$};
+		\fill (B) circle (1.5pt) node[above] {$B$};
+		\fill (C) circle (1.5pt) node[below left] {$C$};
+		\fill (D) circle (1.5pt) node[below] {$D$};
+		\fill (O) circle (1.5pt) node[right] {$O$};
+		\fill (H) circle (1.5pt) node[above left] {$H$};
+		\fill (K) circle (1.5pt) node[right] {$K$};
+		\fill (I) circle (1.5pt) node[below right] {$I$};
+		\fill (S) circle (1.5pt) node[below] {$S$};
+		\fill (M) circle (1.5pt) node[above] {$M$};
+	\end{tikzpicture}
+	\end{center}
+	\begin{enumerate}[a)]
+		\item Vì $AB, AC$ là hai tiếp tuyến của $(O)$ nên:
+		$$\widehat{ABO} = 90^\circ, \quad \widehat{ACO} = 90^\circ.$$
+		Xét tứ giác $ABOC$ có $\widehat{ABO} + \widehat{ACO} = 90^\circ + 90^\circ = 180^\circ$, do đó tứ giác $ABOC$ nội tiếp đường tròn đường kính $OA$.\\
+		Ta có $AB = AC$ (tính chất hai tiếp tuyến cắt nhau) và $OB = OC = R$, suy ra $OA$ là đường trung trực của đoạn thẳng $BC$. Do đó $OA \perp BC$ tại $H$.
+		\item Ta có $AB \perp BD$ (do $AB$ là tiếp tuyến tại $B$ của đường kính $BD$).\\
+		Lại có $CK \perp BD$ (theo giả thiết), suy ra $CK \parallel AB$.\\
+		Áp dụng hệ quả định lý Ta-lét trong tam giác $DAB$ có $IK \parallel AB$:
+		$$\frac{IK}{AB} = \frac{DK}{DB} = \frac{DK}{2R} \quad (1)$$
+		Mặt khác, $\widehat{BCD} = 90^\circ$ (góc nội tiếp chắn nửa đường tròn đường kính $BD$), suy ra $CD \perp BC$.\\
+		Mà $OA \perp BC$ nên $OA \parallel CD$.\\
+		Xét $\Delta DKC$ và $\Delta BOA$ có:
+		$$\widehat{CKD} = \widehat{ABO} = 90^\circ, \quad \widehat{KDC} = \widehat{BOA}\text{ (hai góc đồng vị do } CD \parallel OA\text{)}.$$
+		Suy ra $\Delta DKC \backsim \Delta BOA$ (g-g), do đó:
+		$$\frac{CK}{AB} = \frac{DK}{BO} = \frac{DK}{R} \quad (2)$$
+		Từ $(1)$ và $(2)$, suy ra:
+		$$\frac{IK}{AB} = \frac{1}{2} \cdot \frac{CK}{AB} \implies IK = \frac{1}{2}CK.$$
+		Vậy $I$ là trung điểm của đoạn thẳng $CK$.
+		\item Áp dụng định lý Ta-lét trong tam giác $SAB$ với $CK \parallel AB$:
+		$$\frac{IC}{AM} = \frac{SI}{SM} = \frac{IK}{MB} \implies \frac{IC}{AM} = \frac{IK}{MB}.$$
+		Mà $IC = IK$ (do $I$ là trung điểm của $CK$) nên $AM = MB$, hay $M$ là trung điểm của $AB$.\\
+		Xét tam giác vuông $ABO$ vuông tại $B$, theo định lý Py-ta-go:
+		$$AB = \sqrt{OA^2 - OB^2} = \sqrt{(2R)^2 - R^2} = R\sqrt{3}.$$
+		Diện tích tam giác $ABO$ là:
+		$$S_{ABO} = \frac{1}{2} AB \cdot OB = \frac{1}{2} \cdot R\sqrt{3} \cdot R = \frac{R^2\sqrt{3}}{2}.$$
+		Vì $M$ là trung điểm của $AB$ nên:
+		$$S_{AMO} = \frac{1}{2} S_{ABO} = \frac{R^2\sqrt{3}}{4}.$$
+		Tương tự, xét tam giác vuông $ACO$ vuông tại $C$:
+		$$AC = \sqrt{OA^2 - OC^2} = R\sqrt{3} \implies S_{ACO} = \frac{1}{2} AC \cdot OC = \frac{R^2\sqrt{3}}{2}.$$
+		Vậy diện tích của tứ giác $AMOC$ là:
+		$$S_{AMOC} = S_{AMO} + S_{ACO} = \frac{R^2\sqrt{3}}{4} + \frac{R^2\sqrt{3}}{2} = \frac{3R^2\sqrt{3}}{4}.$$
+	\end{enumerate}
+}
+\end{bt}
+
+% nguồn: 2026-11-15_01_cum1_de1_de2_26_27 (nhập 15/11/2026)
+\begin{bt}%[9H9C29-3]%[ma:d32a616b]
+% nguon: Đề tham khảo Tuyển sinh 10 TP.HCM 2026-2027 – Cụm 1 (Đề 2), Bài 7, trang 6
+Từ điểm $M$ nằm ngoài đường tròn $(O; R)$ kẻ hai tiếp tuyến $MA, MB$ đến $(O)$ ($A, B$ là các tiếp điểm). Kẻ đường kính $AC$ của $(O)$, $MC$ cắt $(O)$ tại $D$ ($D \neq C$). Gọi $H$ là giao điểm của $AB$ và $MO$.
+\begin{enumerate}[a)]
+	\item Chứng minh $\widehat{MDA} = \widehat{MHA}$, từ đó suy ra tứ giác $MDHA$ nội tiếp.
+	\item Chứng minh $MD \cdot MC = MH \cdot MO$ và $\widehat{MHD} = \widehat{DBA}$.
+	\item Chứng minh $\widehat{HDB} = 90^\circ$ và tính theo $R$ diện tích tam giác $ABD$ trong trường hợp $MA = 2R$.
+\end{enumerate}
+\loigiai{
+	\begin{center}
+	\begin{tikzpicture}[scale=1]
+		\coordinate (O) at (0,0);
+		\def\R{2.5}
+		\draw[thick] (O) circle (\R);
+		\coordinate (A) at (0,\R);
+		\coordinate (C) at (0,-\R);
+		\coordinate (M) at (-5,\R);
+		
+		\draw[thick] (A) -- (C);
+		\draw[thick] (M) -- (A);
+		\draw[thick] (M) -- (O);
+		
+		% B là tiếp điểm thứ hai từ M đến (O)
+		\coordinate (H_mid) at ($(M)!0.5!(O)$);
+		% Tính góc của B
+		\path [name path=circleO] (O) circle (\R);
+		\path [name path=circleM] (M) circle ({sqrt(5^2 - \R^2)});
+		
+		% B nằm phía dưới
+		\coordinate (B) at (-126.87:\R); % approximate
+		% chính xác:
+		\pgfmathsetmacro{\distMO}{sqrt(5^2 + \R^2)}
+		\coordinate (B) at (-1.538,-1.97); % tiếp điểm tiếp tuyến MB
+		
+		\draw[thick] (M) -- (B);
+		\draw[thick] (A) -- (B);
+		\draw[thick] (O) -- (B);
+		\draw[thick] (O) -- (A);
+		
+		\coordinate (H) at (intersection of A--B and M--O);
+		\coordinate (D) at (intersection of M--C and A--B); % MC cắt (O) tại D
+		\draw[thick] (M) -- (C);
+		\path [name path=MC] (M) -- (C);
+		% D là giao điểm của MC và đường tròn (O)
+		\coordinate (D) at (-1.47,-0.735);
+		
+		\draw[thick, blue] (A) -- (D);
+		\draw[thick, red] (H) -- (D);
+		\draw[thick, red] (B) -- (D);
+		
+		\fill (O) circle (1.5pt) node[right] {$O$};
+		\fill (A) circle (1.5pt) node[above] {$A$};
+		\fill (C) circle (1.5pt) node[below] {$C$};
+		\fill (M) circle (1.5pt) node[left] {$M$};
+		\fill (B) circle (1.5pt) node[below left] {$B$};
+		\fill (H) circle (1.5pt) node[above left] {$H$};
+		\fill (D) circle (1.5pt) node[below left] {$D$};
+	\end{tikzpicture}
+	\end{center}
+	\begin{enumerate}[a)]
+		\item Ta có $MA = MB$ (tính chất hai tiếp tuyến cắt nhau) và $OA = OB = R$, suy ra $MO$ là đường trung trực của đoạn thẳng $AB$.\\
+		Do đó $MO \perp AB$ tại $H$, suy ra $\widehat{MHA} = 90^\circ$.\\
+		Mặt khác, $\widehat{ADC} = 90^\circ$ (góc nội tiếp chắn nửa đường tròn đường kính $AC$), suy ra $AD \perp MC$ tại $D$.\\
+		Do đó $\widehat{MDA} = 90^\circ$.\\
+		Suy ra $\widehat{MDA} = \widehat{MHA} = 90^\circ$.\\
+		Xét tứ giác $MDHA$ có hai đỉnh kề nhau $D$ và $H$ cùng nhìn đoạn thẳng $MA$ dưới góc $90^\circ$, nên tứ giác $MDHA$ nội tiếp đường tròn đường kính $MA$.
+		\item Xét tam giác vuông $MAO$ vuông tại $A$ có đường cao $AH$:\\
+		Theo hệ thức lượng trong tam giác vuông, ta có:
+		$$MA^2 = MH \cdot MO \quad (1)$$
+		Xét tam giác vuông $MAC$ vuông tại $A$ có đường cao $AD$:\\
+		Theo hệ thức lượng trong tam giác vuông, ta có:
+		$$MA^2 = MD \cdot MC \quad (2)$$
+		Từ $(1)$ và $(2)$, suy ra:
+		$$MD \cdot MC = MH \cdot MO.$$
+		Từ $MD \cdot MC = MH \cdot MO \implies \dfrac{MD}{MO} = \dfrac{MH}{MC}$.\\
+		Xét $\Delta MHD$ và $\Delta MCO$ có:
+		$$\widehat{OMC}\text{ là góc chung và } \frac{MD}{MO} = \frac{MH}{MC}.$$
+		Suy ra $\Delta MHD \backsim \Delta MCO$ (c-g-c), do đó:
+		$$\widehat{MHD} = \widehat{MCO} = \widehat{ACD}.$$
+		Mặt khác, trong đường tròn $(O)$, ta có $\widehat{ACD} = \widehat{ABD}$ (hai góc nội tiếp cùng chắn cung $AD$).\\
+		Suy ra $\widehat{MHD} = \widehat{ABD} = \widehat{DBA}$.
+		\item Vì $MO \perp AB$ tại $H$ nên:
+		$$\widehat{MHD} + \widehat{DHB} = 90^\circ.$$
+		Mà $\widehat{MHD} = \widehat{DBA}$ (chứng minh ở câu b), suy ra:
+		$$\widehat{DBA} + \widehat{DHB} = 90^\circ \iff \widehat{HBD} + \widehat{DHB} = 90^\circ.$$
+		Xét tam giác $HBD$ có $\widehat{HBD} + \widehat{DHB} = 90^\circ$, suy ra $\widehat{HDB} = 90^\circ$.\\
+		\textbf{Tính diện tích tam giác $ABD$ khi $MA = 2R$}:\\
+		Vì $AC$ là đường kính nên $AC = 2R$. Tam giác vuông $MAC$ vuông tại $A$ có $MA = AC = 2R$ nên $\Delta MAC$ vuông cân tại $A$.\\
+		Suy ra $\widehat{ACM} = 45^\circ \implies \widehat{ACD} = 45^\circ$.\\
+		Từ đó $\widehat{HBD} = \widehat{ACD} = 45^\circ$.\\
+		Tam giác $HBD$ vuông tại $D$ có $\widehat{HBD} = 45^\circ$ nên $\Delta HBD$ là tam giác vuông cân tại $D$.\\
+		Kẻ $DQ \perp HB$ tại $Q$. Trong tam giác vuông cân $HBD$, đường cao $DQ$ đồng thời là đường trung tuyến ứng với cạnh huyền $HB$, do đó:
+		$$DQ = \frac{1}{2}HB.$$
+		Xét tam giác vuông $MAO$ vuông tại $A$, theo định lý Py-ta-go:
+		$$MO = \sqrt{MA^2 + OA^2} = \sqrt{(2R)^2 + R^2} = R\sqrt{5}.$$
+		Theo hệ thức lượng:
+		$$AH \cdot MO = MA \cdot AO \implies AH = \frac{MA \cdot AO}{MO} = \frac{2R \cdot R}{R\sqrt{5}} = \frac{2R}{\sqrt{5}}.$$
+		Vì $H$ là trung điểm của $AB$ nên:
+		$$HB = AH = \frac{2R}{\sqrt{5}} \quad \text{và} \quad AB = 2AH = \frac{4R}{\sqrt{5}}.$$
+		Suy ra độ dài đường cao $DQ$ là:
+		$$DQ = \frac{1}{2}HB = \frac{R}{\sqrt{5}}.$$
+		Diện tích tam giác $ABD$ là:
+		$$S_{ABD} = \frac{1}{2} DQ \cdot AB = \frac{1}{2} \cdot \frac{R}{\sqrt{5}} \cdot \frac{4R}{\sqrt{5}} = \frac{2R^2}{5}.$$
+		Vậy diện tích tam giác $ABD$ theo $R$ là $\dfrac{2R^2}{5}$.
+	\end{enumerate}
+}
+\end{bt}
