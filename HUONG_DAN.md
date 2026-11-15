@@ -198,6 +198,11 @@ Nút **Ôn thi học kì** trên thanh đầu. Chọn **Lớp 9/10/11/12** và *
 - **Tạo prompt AI (nguồn ngoài)**: prompt cho ChatGPT/Gemini/Claude sinh đề **JSON** (`trac_nghiem`, `dung_sai`, `tra_loi_ngan`,
   kèm `ma_dang` chọn từ danh sách dạng của bài, `figures` là mã TikZ); tuỳ chọn số mã đề AI, giải thích bẫy sai lầm, tự phản biện.
   JSON AI trả về: **Trộn đề từ file** (ra mã đề, PDF, Word, đáp án) hoặc **Nhập câu hỏi** (đưa vào ngân hàng đúng dạng).
+- **Xem trước & đổi câu**: xem 22 câu được chọn (đủ đáp án), **↻ Đổi câu** từng câu, **Random lại tất cả**, **Sang trình chiếu HTML**,
+  rồi **Xác nhận & xuất đề**. Đóng xem trước là quay lại bảng ôn thi.
+- **Nhiều bộ (Lần 1, 2, 3…)**: ô **Bộ** chọn bộ đang làm; **⧉ Sao chép thành lần mới** chép nguyên bảng sang bộ mới để sửa thêm/bớt;
+  ✎ đổi tên, ✕ xoá bộ. Mỗi bộ nhớ các câu đã ra; tích **Tránh câu đã ra ở lần khác** thì lần 2, 3… không lấy lại câu của các lần trước.
+  Tên đề và thư mục tự thêm "(Lần 2)"…
 
 ## Câu lạc bài — chuyển đúng dạng hoặc xoá
 
