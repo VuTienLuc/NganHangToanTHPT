@@ -220,6 +220,9 @@ class XuLy(BaseHTTPRequestHandler):
                         pass
                 return self.gui(200, {"ok": ok, "nhat_ky": log, "ten": mt["ten"], "thu_muc": rel, "bien_dich": dang_bd, "xem": bo,
                                       "ma_dung": ma_dung})
+            if u.path == "/api/de-ai/kiem":
+                import de_ai
+                return self.gui(200, de_ai.kiem(d.get("van_ban") or "", d.get("can")))
             if u.path == "/api/trinh-chieu":
                 import trinh_chieu
                 nk = []

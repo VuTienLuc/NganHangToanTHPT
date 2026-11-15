@@ -198,6 +198,11 @@ Nút **Ôn thi học kì** trên thanh đầu. Chọn **Lớp 9/10/11/12** và *
 - **Tạo prompt AI (nguồn ngoài)**: prompt cho ChatGPT/Gemini/Claude sinh đề **JSON** (`trac_nghiem`, `dung_sai`, `tra_loi_ngan`,
   kèm `ma_dang` chọn từ danh sách dạng của bài, `figures` là mã TikZ); tuỳ chọn số mã đề AI, giải thích bẫy sai lầm, tự phản biện.
   JSON AI trả về: **Trộn đề từ file** (ra mã đề, PDF, Word, đáp án) hoặc **Nhập câu hỏi** (đưa vào ngân hàng đúng dạng).
+- **Nhập đề AI (JSON)**: prompt AI nay **bắt buộc AI trả một khối mã ```json** (bấm Copy code) và tạo thêm file .json để tải về nếu công cụ cho phép;
+  đề dài thì AI ghi "CÒN TIẾP", nhắn "tiếp" để nhận khối JSON kế tiếp. Bấm **Nhập đề AI (JSON)** → dán nguyên câu trả lời (nhiều khối cũng được)
+  hoặc chọn file .json → **Kiểm tra đề**: máy tách từng mã đề AI, đếm 12–4–6 so với ma trận, soát lỗi từng câu (thiếu 4 phương án, đáp án sai kiểu,
+  đáp số quá 4 ô, thiếu lời giải). Mỗi mã: **Trộn đề từ mã này…** (ra mã đề, PDF, Word, đáp án; tên kỳ thi lấy từ bảng ôn thi),
+  **Nhập vào ngân hàng** (xem trước, câu lỗi biên dịch bị loại), **Tải JSON chuẩn**.
 - **Xem trước & đổi câu**: xem 22 câu được chọn (đủ đáp án), **↻ Đổi câu** từng câu, **Random lại tất cả**, **Sang trình chiếu HTML**,
   rồi **Xác nhận & xuất đề**. Đóng xem trước là quay lại bảng ôn thi.
 - **Nhiều bộ (Lần 1, 2, 3…)**: ô **Bộ** chọn bộ đang làm; **⧉ Sao chép thành lần mới** chép nguyên bảng sang bộ mới để sửa thêm/bớt;
