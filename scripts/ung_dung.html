@@ -150,6 +150,16 @@ footer .gian{flex:1}
 .the-lac pre{white-space:pre-wrap;background:#f9fafb;padding:6px;border-radius:6px;max-height:260px;overflow:auto;font-size:12px}
 .nhan-lac{background:#fee2e2;color:#991b1b;border-radius:6px;padding:0 6px;font-size:11px}
 #hop-lac .chan{padding:10px 18px;border-top:1px solid var(--vien);display:flex;gap:8px;align-items:center;font-size:13px;flex-wrap:wrap}
+#hop-hka{position:fixed;inset:0;background:rgba(17,24,39,.35);display:none;align-items:center;justify-content:center;z-index:12}
+#hop-hka .noi{background:#fff;border-radius:14px;width:min(980px,96vw);height:min(90vh,860px);display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.25)}
+#hop-hka h2{margin:0;padding:12px 18px;font-size:16px;border-bottom:1px solid var(--vien)}
+#hop-hka .than{flex:1;overflow:auto;padding:12px 18px;display:flex;flex-direction:column;gap:10px;font-size:13px}
+#hka-van{min-height:170px;flex:0 0 auto;width:100%;box-sizing:border-box;padding:8px;border:1px solid var(--vien);border-radius:8px;font:12px ui-monospace,Menlo,monospace}
+#hka-kq .ma{border:1px solid var(--vien);border-radius:10px;padding:10px 12px;margin-bottom:8px}
+#hka-kq .ma h3{margin:0 0 6px;font-size:14px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+#hka-kq .ok{color:#047857}#hka-kq .canh{color:#b45309}#hka-kq .hong{color:#b91c1c}
+#hka-kq ul{margin:4px 0 6px 18px;padding:0;max-height:140px;overflow:auto}#hka-kq .nut{display:flex;gap:6px;flex-wrap:wrap}
+#hop-hka .chan{padding:10px 18px;border-top:1px solid var(--vien);display:flex;gap:8px;align-items:center}
 #hop-hk{position:fixed;inset:0;background:rgba(17,24,39,.35);display:none;align-items:center;justify-content:center;z-index:11}
 #hop-hk .noi{background:#fff;border-radius:14px;width:min(1250px,97vw);height:min(94vh,960px);display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.25)}
 #hop-hk h2{margin:0;padding:12px 18px;font-size:16px;border-bottom:1px solid var(--vien);display:flex;gap:10px;align-items:center;flex-wrap:wrap}
@@ -433,8 +443,21 @@ tr.gop-h td{background:#dbeafe;text-align:left;font-weight:700;padding:8px 12px;
   <div class="chan"><span id="hk-tt" style="color:#555"></span>
     <button id="hk-xem" style="margin-left:auto" title="Xem 22 câu được chọn, đổi từng câu hoặc random lại, rồi xác nhận xuất đề">Xem trước &amp; đổi câu</button>
     <button id="hk-ngan-hang" class="chinh" title="Lấy đúng 22 câu từ ngân hàng theo bài + mức từng dòng, xuất đủ mã đề, PDF, Word, đáp án như nút Xuất đề">Ra đề từ ngân hàng</button>
+    <button id="hk-nhap-ai" title="Dán / chọn file JSON đề AI trả về: kiểm tra số câu và lỗi, rồi trộn thành mã đề hoặc nhập vào ngân hàng">Nhập đề AI (JSON)</button>
     <button id="hk-prompt" title="Sinh prompt cho ChatGPT/Gemini/Claude tạo đề mới dạng JSON (nhập lại được vào ứng dụng)">Tạo prompt AI (nguồn ngoài)</button>
     <button id="hk-dong">Đóng</button></div>
+</div></div>
+<div id="hop-hka"><div class="noi">
+  <h2>Nhập đề AI (nguồn ngoài) — <span id="hka-tieu"></span></h2>
+  <div class="than">
+    <div style="color:#555">Dán nguyên câu trả lời của ChatGPT / Gemini / Claude (có khối <code>```json</code> cũng được, nhiều khối — mỗi lượt một mã đề — cũng được), hoặc chọn file <b>.json</b> AI cho tải về. Máy tự bỏ chữ thừa, sửa dấu <code>\</code> LaTeX, tách từng mã đề và soát lỗi.</div>
+    <textarea id="hka-van" placeholder='{ "trac_nghiem": [ … ], "dung_sai": [ … ], "tra_loi_ngan": [ … ] }'></textarea>
+    <div style="display:flex;gap:8px;align-items:center"><button id="hka-tep">Chọn file .json…</button><input type="file" id="hka-file" accept=".json,.txt,.md" multiple hidden>
+      <button id="hka-kiem" class="chinh">Kiểm tra đề</button><span id="hka-tt" style="color:#555"></span></div>
+    <div id="hka-kq"></div>
+  </div>
+  <div class="chan"><span style="color:#555;font-size:12px">Trộn đề: ra nhiều mã đề, PDF, Word, đáp án Excel theo các ô ở khung Trộn đề. Nhập ngân hàng: câu có ma_dang vào đúng dạng; câu lỗi biên dịch bị loại.</span>
+    <button id="hka-nhap-het" style="margin-left:auto" disabled>Nhập tất cả vào ngân hàng</button><button id="hka-dong">Đóng</button></div>
 </div></div>
 <div id="hop-phieu"><div class="noi">
   <h2>Phiếu bài học · chuyên đề · ôn tập chương</h2>
@@ -544,7 +567,7 @@ tr.gop-h td{background:#dbeafe;text-align:left;font-weight:700;padding:8px 12px;
     <div id="ts-xem"></div>
   </div>
   <div class="chan">
-    <button id="ts-nhap">Nhập kho (dán kết quả AI)…</button><button id="ts-mtr">Ma trận &amp; tỉ lệ dạng</button>
+    <button id="ts-nhap">Nhập kho (dán kết quả AI)…</button><button id="ts-dong-bo" title="Lấy các bài đề tuyển sinh 10 (đề chính thức, đề tham khảo quận…) đã nhập vào kho lớp 9 sang kho Tuyển sinh 10: xếp Bài 1–7 theo nội dung, gán mã dạng, biên dịch thử">⇄ Đồng bộ từ kho lớp 9</button><button id="ts-mtr">Ma trận &amp; tỉ lệ dạng</button>
     <button id="ts-xemtruoc" style="margin-left:auto">Xem trước &amp; đổi bài</button><button id="ts-tao" class="chinh">Tạo đề ngẫu nhiên</button><button id="ts-dong">Đóng</button>
   </div>
 </div></div>
@@ -979,6 +1002,7 @@ $("#tron-chay").onclick=async()=>{
     xao_cau:$("#tron-thu-tu").value!=="giu_nguyen",xao_phuong_an:$("#tron-xao-pa").checked,xao_y_dung_sai:$("#tron-xao-y").checked,
     co_chu:co,tiet_kiem:co<12,hai_cot:co<12&&$("#tron-hai-cot").checked,xuat_word_de:$("#tron-word").checked,
     xuat_word_k12:$("#tron-k12").checked,k12_thu_tu:$("#k12_thu_tu").value,word_cong_thuc:$("#tron-ct").value,de_cuong:$("#tron-de-cuong").checked,xuat_leftnote:$("#tron-leftnote").checked,xuat_beamer:$("#tron-beamer").checked,beamer_khung_de:$("#beamer_khung_de").value,moi_ma_de_cau_khac_nhau:false});
+  if(TEP_TRON.them) Object.assign(mt,TEP_TRON.them);
   b.disabled=true;b.textContent="Đang trộn…";
   try{
     const r=await api("/api/tron-file",{tep:TEP_TRON,ma_tran:mt,bien_dich:$("#tron-pdf").checked});
@@ -1292,7 +1316,12 @@ function promptHK(){
   const ky=$("#hk-ky").value, ten=$("#hk-ten").value.trim();
   let p=`Đóng vai trò là một giáo viên Toán xuất sắc và giàu kinh nghiệm (am hiểu sâu sắc chương trình GDPT 2018 - Sách Kết nối tri thức). Nhiệm vụ của bạn là soạn đề ôn thi ${ky.toLowerCase()} môn Toán Lớp ${lop} theo cấu trúc mới: 12 câu trắc nghiệm, 4 câu đúng/sai, 6 câu trả lời ngắn.\n\n`;
   p+=`Hãy tạo đề Toán dưới dạng JSON tương thích chính xác với cấu trúc bên dưới.\n\nYÊU CẦU BẮT BUỘC:\n`;
-  p+=`1. Chỉ trả về một đối tượng JSON hợp lệ, không thêm giải thích, không bọc trong khối Markdown.\n`;
+  const dem={TN:ds.filter(r=>r.loai==="TN").length,DS:ds.filter(r=>r.loai==="DS").length,TLN:ds.filter(r=>r.loai==="TLN").length};
+  const tenFile=`De_on_thi_Toan${lop}_${ky.replace(/\s+/g,"_")}.json`.normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/đ/g,"d").replace(/Đ/g,"D");
+  p+=`1. ĐẦU RA BẮT BUỘC LÀ MÃ JSON: trả toàn bộ đề trong ĐÚNG MỘT khối mã \`\`\`json … \`\`\` (để tôi bấm "Copy code"/tải về). Không viết lời dẫn, tiêu đề, giải thích hay bảng ngoài khối mã; không dùng Markdown, không in đậm trong JSON.\n`;
+  p+=`   - Nếu bạn tạo được file tải về (ChatGPT: Code Interpreter / Canvas; Claude: tệp hoặc Artifact; Gemini: Canvas), tạo thêm file "${tenFile}" cùng nội dung để tôi tải.\n`;
+  p+=`   - Nếu đề quá dài một lượt: dừng ở cuối một câu trọn vẹn, đóng đúng ngoặc JSON, ghi một dòng "CÒN TIẾP" bên ngoài khối mã; tôi nhắn "tiếp" thì viết phần còn lại thành một khối \`\`\`json mới có cùng cấu trúc (chỉ chứa các câu chưa viết).${so>1?" Với nhiều mã đề: mỗi lượt viết trọn 1 mã đề trong 1 khối \`\`\`json.":""}\n`;
+  p+=`   - Trước khi xuất, ĐẾM LẠI: trac_nghiem đúng ${dem.TN} câu, dung_sai đúng ${dem.DS} câu, tra_loi_ngan đúng ${dem.TLN} câu (mỗi mã đề). JSON phải parse được bằng JSON.parse.\n`;
   p+=`2. Giữ nguyên tên trường và kiểu dữ liệu. Không bọc JSON trong một trường khác${so>1?" (trừ phần nhân bản mã đề bên dưới)":""}.\n`;
   p+=`3. Sử dụng các nhóm trac_nghiem, dung_sai, tra_loi_ngan. Nhóm không có câu hỏi phải là [].\n`;
   p+=`4. Công thức LaTeX đặt trong $...$ (cùng dòng) hoặc $$...$$ (riêng dòng). Trong JSON, mỗi dấu \\ của LaTeX phải viết thành \\\; ví dụ "$\\\\sqrt{2}$". Số thập phân trong công thức viết "$15{,}25$".\n`;
@@ -1329,12 +1358,59 @@ function promptHK(){
 }
 $("#hk-prompt").onclick=()=>{
   const p=promptHK();
-  const hd="CÁCH DÙNG: 1) Chép prompt, dán vào ChatGPT / Gemini / Claude. 2) Lưu JSON AI trả về thành file .json (hoặc .txt). "
-   +"3) Nút “Trộn đề từ file” → chọn file đó: ra các mã đề, PDF, Word, đáp án Excel; hoặc nút “Nhập câu hỏi” để đưa câu vào ngân hàng (câu đã có ma_dang tự vào đúng dạng).\n"+"─".repeat(60)+"\n\n";
+  const hd="CÁCH DÙNG: 1) Chép prompt, dán vào ChatGPT / Gemini / Claude. 2) AI trả về khối mã ```json (hoặc file .json tải về): bấm Copy code / tải file. "
+   +"3) Bảng Ôn thi học kì → nút “Nhập đề AI (JSON)” → dán hoặc chọn file → Kiểm tra đề → Trộn đề (ra mã đề, PDF, Word, đáp án) hoặc Nhập vào ngân hàng.\n"+"─".repeat(60)+"\n\n";
   hopThoai(`Prompt đề ôn thi ${$("#hk-ky").value} – Toán ${HK_LOP} (${p.length.toLocaleString("vi-VN")} ký tự)`,hd+p,[
     ["Chép prompt",async e=>{try{await navigator.clipboard.writeText(p);e.target.textContent="Đã chép ✓"}catch(_){alert("Không chép tự động được — bôi đen rồi Cmd+C.")}},true],
-    ["Lưu file .txt",()=>{const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([p],{type:"text/plain"}));a.download=`Prompt_Toan${HK_LOP}_${$("#hk-ky").value.replace(/\s+/g,"_")}.txt`;a.click()}]]);
+    ["Lưu file .txt",()=>{const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([p],{type:"text/plain"}));a.download=`Prompt_Toan${HK_LOP}_${$("#hk-ky").value.replace(/\s+/g,"_")}.txt`;a.click()}],
+    ["Nhập đề AI (JSON)…",()=>{$("#hop-thoai").style.display="none";moHKA()}]]);
 };
+// 3) NHẬP ĐỀ AI (JSON) — kiểm tra, rồi trộn đề hoặc nhập ngân hàng
+let HKA=null;
+function moHKA(){
+  $("#hka-tieu").textContent=`Toán ${HK_LOP} · ${$("#hk-ky").value}${hkLop()&&hkLop().bo.length>1?" · "+hkBo().ten:""}`;
+  $("#hka-tt").textContent=""; if(!HKA) $("#hka-kq").innerHTML="";
+  $("#hop-hk").style.display="none"; $("#hop-hka").style.display="flex"; $("#hka-van").focus();
+}
+$("#hk-nhap-ai").onclick=moHKA;
+$("#hka-dong").onclick=()=>{$("#hop-hka").style.display="none";$("#hop-hk").style.display="flex"};
+$("#hka-tep").onclick=()=>$("#hka-file").click();
+$("#hka-file").onchange=async e=>{const fs=[...e.target.files];e.target.value="";if(!fs.length)return;
+  const t=await Promise.all(fs.map(f=>f.text()));
+  $("#hka-van").value=t.length>1?t.map(x=>"```json\n"+x.trim().replace(/^```[a-z]*\s*|```\s*$/g,"")+"\n```").join("\n\n"):t[0];
+  $("#hka-kiem").click()};
+function tenTepHKA(m){return `De_AI_Toan${HK_LOP}_${boDau($("#hk-ky").value).replace(/[^a-z0-9]+/gi,"_")}${hkLop().bo.length>1?"_"+boDau(hkBo().ten).replace(/[^a-z0-9]+/gi,"_"):""}_${m.ten.replace(/\D+/g,"")||"1"}.json`}
+$("#hka-kiem").onclick=async()=>{
+  const van=$("#hka-van").value.trim(); if(!van){alert("Dán nội dung AI trả về hoặc chọn file .json.");return}
+  const ds=hkDs(), can={TN:ds.filter(r=>r.loai==="TN").length,DS:ds.filter(r=>r.loai==="DS").length,TLN:ds.filter(r=>r.loai==="TLN").length};
+  $("#hka-tt").textContent="Đang kiểm tra…";
+  const r=await api("/api/de-ai/kiem",{van_ban:van,can}); HKA=r;
+  if(!r.ok){$("#hka-tt").textContent="";$("#hka-kq").innerHTML=`<div class="ma"><b class="hong">✗ ${esc(r.loi).replace(/\n/g,"<br>")}</b></div>`;$("#hka-nhap-het").disabled=true;return}
+  $("#hka-tt").textContent=`Đọc được ${r.ma.length} mã đề AI.`;
+  $("#hka-kq").innerHTML=r.ma.map((m,i)=>{
+    const dat=!m.lech.length, sach=!m.loi.length;
+    return `<div class="ma"><h3>${esc(m.ten)} <span class="${dat?"ok":"canh"}">TN ${m.so.TN} · ĐS ${m.so.DS} · TLN ${m.so.TLN}${dat?" ✓ đúng ma trận":" ⚠ lệch ma trận"}</span>
+      <span class="${sach?"ok":"hong"}">${sach?"· không lỗi":`· ${m.loi.length} lỗi`}</span></h3>
+      ${m.lech.length||m.loi.length?`<ul>${[...m.lech.map(x=>`<li class="canh">${esc(x)}</li>`),...m.loi.map(x=>`<li class="hong">${esc(x)}</li>`)].join("")}</ul>`:""}
+      <div class="nut"><button class="chinh" data-v="tron" data-i="${i}">Trộn đề từ mã này…</button><button data-v="nhap" data-i="${i}">Nhập vào ngân hàng</button>
+        <button data-v="tai" data-i="${i}">Tải JSON chuẩn</button></div></div>`}).join("");
+  $("#hka-nhap-het").disabled=false;
+};
+$("#hka-kq").onclick=e=>{
+  const b=e.target.closest("button[data-v]"); if(!b||!HKA) return; const m=HKA.ma[+b.dataset.i], ten=tenTepHKA(m);
+  if(m.loi.length&&b.dataset.v!=="tai"&&!confirm(`${m.ten} còn ${m.loi.length} lỗi (xem danh sách). Vẫn tiếp tục? Câu hỏng có thể sai đáp án hoặc bị loại khi nhập.`)) return;
+  if(b.dataset.v==="tai"){const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([m.json],{type:"application/json"}));a.download=ten;a.click();return}
+  $("#hop-hka").style.display="none";
+  if(b.dataset.v==="nhap"){xemNhap([{ten,noi_dung:m.json}],"");return}
+  TEP_TRON={ten,noi_dung:m.json,them:{ten_ky_thi:($("#hk-ten").value.trim()||"ĐỀ ÔN THI HỌC KÌ")+(hkLop().bo.length>1?` (${hkBo().ten})`:""),mon:`TOÁN – Lớp ${HK_LOP}`}};
+  $("#tron-ten").textContent=`${ten} (${m.so_khoi} câu · đề AI ôn thi Toán ${HK_LOP})`;
+  $("#tron-so").value=$("#so_ma_de").value; $("#tron-bat-dau").value=$("#ma_de_bat_dau").value;
+  $("#tron-co").value=$("#kho_in").value; $("#tron-ct").value=$("#word_cong_thuc").value;
+  $("#tron-pdf").disabled=!DL.pdflatex; if(!DL.pdflatex) $("#tron-pdf").checked=false;
+  $("#hop-tron").style.display="flex";
+};
+$("#hka-nhap-het").onclick=()=>{if(!HKA||!HKA.ok)return; $("#hop-hka").style.display="none";
+  xemNhap(HKA.ma.map(m=>({ten:tenTepHKA(m),noi_dung:m.json})),"")};
 
 // ---------------- PHIẾU BÀI HỌC
 async function moPhieu(){
@@ -1662,6 +1738,9 @@ async function tsTao(chon_san){
 $("#nut-ts10").onclick=moTS;
 $("#ts-dong").onclick=()=>$("#hop-ts").style.display="none";
 $("#ts-nhap").onclick=tsNhap;
+$("#ts-dong-bo").onclick=async()=>{const b=$("#ts-dong-bo");b.disabled=true;b.textContent="Đang đồng bộ…";
+  try{const r=await api("/api/ts10/dong-bo",{}); hopThoai(r.ok?`Đồng bộ kho Tuyển sinh 10: +${r.them} bài`:"Chưa đồng bộ được",r.nhat_ky||r.loi); tsTai();}
+  finally{b.disabled=false;b.textContent="⇄ Đồng bộ từ kho lớp 9"}};
 $("#ts-tao").onclick=()=>tsTao(null);
 $("#ts-xemtruoc").onclick=async()=>{const r=await api("/api/ts10/xem",{cau_hinh:tsCfg()}); if(!r.ok){alert(r.loi);return}
   TSX={bo:r.bo,thieu:r.thieu}; tsVeXem(); $("#ts-xem").scrollIntoView({behavior:"smooth"});};

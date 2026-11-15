@@ -97,7 +97,7 @@ def thong_ke():
 
 
 # ---------------------------------------------------------------- nhập kho
-def nhap(van_ban, thu=False):
+def nhap(van_ban, thu=False, bien_dich=True):
     """Dán kết quả AI → thêm vào kho. thu=True: chỉ kiểm tra."""
     t = van_ban or ""
     m = re.search(r"```(?:latex|tex)?\s*\n(.*?)```", t, re.S)
@@ -126,6 +126,20 @@ def nhap(van_ban, thu=False):
         ma = hashlib.sha1(n.encode()).hexdigest()[:8]
         khoi = f"\\begin{{bt}}%[TS10 {' '.join(x['cac_dang'])}]%[ma:{ma}]\n{x['de']}\n\\loigiai{{\n{x['lg']}\n}}\n\\end{{bt}}"
         them[x["bai"]].append(khoi)
+    # biên dịch thử: bài lỗi KHÔNG vào kho, ghi riêng ai-nhap/_loi/
+    tat_ca = [(b, k) for b, ds in them.items() for k in ds]
+    loi = kiem_bien_dich([k for _, k in tat_ca], in_ra=lambda *_: None) if tat_ca and bien_dich else {}
+    if loi:
+        hong = [(tat_ca[i][1], ly) for i, ly in loi.items()]
+        for i, ly in sorted(loi.items()):
+            canh_bao.append(f"✗ LOẠI Bài {tat_ca[i][0]} (lỗi biên dịch): {'; '.join(ly)}")
+        them = collections.defaultdict(list)
+        for i, (b, k) in enumerate(tat_ca):
+            if i not in loi:
+                them[b].append(k)
+        if not thu:
+            p = ghi_loi(hong)
+            canh_bao.append(f"Bài lỗi ghi vào {os.path.relpath(p, GOC)}")
     if not thu:
         os.makedirs(P_KHO, exist_ok=True)
         for b, ds in them.items():
@@ -133,6 +147,67 @@ def nhap(van_ban, thu=False):
             with open(p, "a", encoding="utf-8") as f:
                 f.write(("\n\n" if os.path.exists(p) and os.path.getsize(p) else f"% NGÂN HÀNG TUYỂN SINH 10 – BÀI {b}\n\n") + "\n\n".join(ds) + "\n")
     return {"so": sum(len(v) for v in them.values()), "theo_bai": {b: len(v) for b, v in sorted(them.items())}, "canh_bao": canh_bao}
+
+
+# ---------------------------------------------------------------- kiểm tra biên dịch (bài lỗi không vào kho)
+def kiem_bien_dich(cac_khoi, in_ra=print, nhom=150):
+    """Biên dịch thử từng nhóm bài bằng đúng phần đầu của đề TS10 → {chỉ số khối: [lỗi]}. Không có pdflatex → {}."""
+    import tempfile
+    pdfl = tim_pdflatex()
+    if not pdfl:
+        in_ra("   (máy không có pdflatex — bỏ qua biên dịch thử)")
+        return {}
+    loi = collections.defaultdict(list)
+    tam = tempfile.mkdtemp(prefix="kiem_ts10_")
+    try:
+        for g in range(0, len(cac_khoi), nhom):
+            dong, chi_so = [DAU.replace("<<CHAN>>", "kiem tra")], []
+            for i in range(g, min(g + nhom, len(cac_khoi))):
+                x = phan_tich(cac_khoi[i])
+                phan = f"\\bai{{{i + 1}}}{{1}}" + x["de"] + "\n\\par Lời giải. " + (x["lg"] or "") + "\n\\clearpage\n"
+                dong.append(phan)
+            t = "\n".join(dong) + "\n\\end{document}\n"
+            cur, ban_do = None, []
+            for l in t.split("\n"):
+                m = re.match(r"\\bai\{(\d+)\}", l)
+                if m:
+                    cur = int(m.group(1)) - 1
+                ban_do.append(cur)
+            open(os.path.join(tam, "kt.tex"), "w", encoding="utf-8").write(t)
+            try:
+                subprocess.run([pdfl, "-interaction=nonstopmode", "kt.tex"], cwd=tam, capture_output=True, text=True,
+                               errors="ignore", timeout=120 + 4 * nhom,
+                               env=dict(os.environ, TEXINPUTS=os.environ.get("NH_TEXINPUTS", "") + ":"))
+                log = open(os.path.join(tam, "kt.log"), encoding="latin-1").read().split("\n")
+            except subprocess.TimeoutExpired:
+                in_ra("   ⚠ biên dịch thử quá lâu, bỏ qua nhóm này"); continue
+            for i, l in enumerate(log):
+                if l.startswith("!"):
+                    for x in log[i:i + 14]:
+                        m = re.match(r"l\.(\d+)", x)
+                        if m:
+                            n = int(m.group(1)); k = ban_do[n - 1] if 0 < n <= len(ban_do) else None
+                            tb = "LaTeX: " + l[2:70].strip()
+                            if k is not None and len(loi[k]) < 2 and tb not in loi[k]:
+                                loi[k].append(tb)
+                            break
+            in_ra(f"   biên dịch thử {min(g + nhom, len(cac_khoi))}/{len(cac_khoi)} bài…")
+    finally:
+        shutil.rmtree(tam, ignore_errors=True)
+    return dict(loi)
+
+
+def ghi_loi(cac, ten="ts10"):
+    """cac: [(khối, [lý do])] → ai-nhap/_loi/<ten>_<giờ>.tex (không đồng bộ GitHub)."""
+    if not cac:
+        return None
+    d = os.path.join(GOC, "ai-nhap", "_loi"); os.makedirs(d, exist_ok=True)
+    p = os.path.join(d, f"{ten}_loi_{datetime.datetime.now():%Y%m%d_%H%M%S}.tex")
+    with open(p, "w", encoding="utf-8") as f:
+        f.write("% BÀI TUYỂN SINH 10 LỖI — chưa vào kho. Sửa rồi nhập lại.\n\n")
+        for k, ly in cac:
+            f.write("% LỖI: " + "; ".join(ly) + "\n" + k + "\n\n")
+    return p
 
 
 # ---------------------------------------------------------------- chọn đề
@@ -194,7 +269,7 @@ def the_xem(x):
 # ---------------------------------------------------------------- LaTeX
 DAU = r"""\documentclass[12pt,a4paper]{article}
 \usepackage[utf8]{vietnam}
-\usepackage{amsmath,amssymb,mathtools,array,tabularx,multicol,enumitem,graphicx,xcolor}
+\usepackage{amsmath,amssymb,mathtools,array,tabularx,multicol,graphicx,xcolor}\usepackage[shortlabels]{enumitem}
 \usepackage[a4paper,top=1.6cm,bottom=1.8cm,left=2cm,right=1.8cm]{geometry}
 \usepackage{tikz,pgfplots}\pgfplotsset{compat=1.16}
 \usetikzlibrary{calc,angles,quotes,intersections,patterns,arrows.meta,positioning,through}

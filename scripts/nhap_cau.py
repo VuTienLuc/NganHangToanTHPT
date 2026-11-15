@@ -182,6 +182,14 @@ def nhap(cac_file, thu=False, in_ra=print, ma_dang=None, bien_dich=True):
     in_ra(f"Đã nhập {moi} câu. Đang cập nhật chỉ mục…")
     r = subprocess.run([sys.executable, os.path.join(GOC, "scripts", "lap_chi_muc.py")], cwd=GOC, capture_output=True, text=True)
     in_ra((r.stdout or "") + (r.stderr or ""))
+    # bài có nguồn đề tuyển sinh 10 → đồng bộ sang kho Tuyển sinh 10 (cau-hoi-ts10/BaiN.tex)
+    try:
+        import ts10_tu_kho9
+        if any(ts10_tu_kho9.LA_TS10.search(ts10_tu_kho9.tach(k)[1] or "") for ds in them.values() for _, k, _ in ds):
+            in_ra("Có bài đề tuyển sinh 10 → đồng bộ sang kho Tuyển sinh 10…")
+            ts10_tu_kho9.chay(in_ra=in_ra)
+    except Exception as e:
+        in_ra(f"(Chưa đồng bộ được kho Tuyển sinh 10: {e} — chạy: python3 scripts/ts10_tu_kho9.py)")
     return moi
 
 if __name__ == "__main__":

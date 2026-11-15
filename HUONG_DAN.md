@@ -174,6 +174,14 @@ Nạp đáp án: Chấm Phiếu AI → ô **Đáp án** → **Nhập từ file E
 Khung đề chính thức nằm ở `khung/DeThiChinhThuc/mau_de.tex` (in đen trắng). Muốn dạng ôn tập có màu
 như phần mềm cũ thì ghi `"khung": "DeThi"` trong file JSON.
 
+## Nhập đề tuyển sinh 10 từ PDF (kho lớp 9 + kho Tuyển sinh 10)
+- Quy trình cho Antigravity/Claude: `.agents/workflows/nhap-ts10.md` (nói "nhập đề TS10 từ … đề 3, 4").
+- Tách chữ PDF miễn phí: `python3 scripts/pdf_sang_chu.py "<file.pdf>" --trang 5-8` (PDF scan → NotebookLM gõ thô).
+- Bài có dòng `% nguon: … Tuyển sinh 10 … Bài N` nhập vào kho lớp 9 sẽ **tự đồng bộ** sang `cau-hoi-ts10/Bai1..7.tex`
+  (xếp bài theo nội dung, gán mã dạng TS10, biên dịch thử, bỏ bài trùng). Đồng bộ tay: menu Tuyển sinh 10 → **⇄ Đồng bộ từ kho lớp 9**
+  hoặc `python3 scripts/ts10_tu_kho9.py`.
+- Nhập kho trong menu Tuyển sinh 10 (dán kết quả AI) nay **biên dịch thử**: bài lỗi không vào kho, ghi `ai-nhap/_loi/`.
+
 ## Gộp bài trong ma trận (lấy ngẫu nhiên các bài gộp lại)
 - Tích chương ở cột trái → bấm **⊕ Gộp bài…** → tích 2 bài trở lên → **Thêm dòng gộp**.
 - Dòng gộp hiện ở đầu bảng (nền xanh), điền số câu theo loại và mức như dòng thường. Có thể tạo nhiều dòng gộp; bấm ✕ để bỏ.
@@ -198,6 +206,11 @@ Nút **Ôn thi học kì** trên thanh đầu. Chọn **Lớp 9/10/11/12** và *
 - **Tạo prompt AI (nguồn ngoài)**: prompt cho ChatGPT/Gemini/Claude sinh đề **JSON** (`trac_nghiem`, `dung_sai`, `tra_loi_ngan`,
   kèm `ma_dang` chọn từ danh sách dạng của bài, `figures` là mã TikZ); tuỳ chọn số mã đề AI, giải thích bẫy sai lầm, tự phản biện.
   JSON AI trả về: **Trộn đề từ file** (ra mã đề, PDF, Word, đáp án) hoặc **Nhập câu hỏi** (đưa vào ngân hàng đúng dạng).
+- **Nhập đề AI (JSON)**: prompt AI nay **bắt buộc AI trả một khối mã ```json** (bấm Copy code) và tạo thêm file .json để tải về nếu công cụ cho phép;
+  đề dài thì AI ghi "CÒN TIẾP", nhắn "tiếp" để nhận khối JSON kế tiếp. Bấm **Nhập đề AI (JSON)** → dán nguyên câu trả lời (nhiều khối cũng được)
+  hoặc chọn file .json → **Kiểm tra đề**: máy tách từng mã đề AI, đếm 12–4–6 so với ma trận, soát lỗi từng câu (thiếu 4 phương án, đáp án sai kiểu,
+  đáp số quá 4 ô, thiếu lời giải). Mỗi mã: **Trộn đề từ mã này…** (ra mã đề, PDF, Word, đáp án; tên kỳ thi lấy từ bảng ôn thi),
+  **Nhập vào ngân hàng** (xem trước, câu lỗi biên dịch bị loại), **Tải JSON chuẩn**.
 - **Xem trước & đổi câu**: xem 22 câu được chọn (đủ đáp án), **↻ Đổi câu** từng câu, **Random lại tất cả**, **Sang trình chiếu HTML**,
   rồi **Xác nhận & xuất đề**. Đóng xem trước là quay lại bảng ôn thi.
 - **Nhiều bộ (Lần 1, 2, 3…)**: ô **Bộ** chọn bộ đang làm; **⧉ Sao chép thành lần mới** chép nguyên bảng sang bộ mới để sửa thêm/bớt;
