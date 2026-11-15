@@ -211,9 +211,9 @@ def ghi_loi(cac, ten="ts10"):
 
 
 # ---------------------------------------------------------------- chọn đề
-def _chon_1(bai, kieu, kho, tranh, ls, rng, D):
-    """kieu: 'ti_le' | 'hay_nhat' | mã dạng."""
-    ung = [x for x in kho if x["bai"] == bai and x["ma"] not in tranh]
+def _chon_1(bai, kieu, kho, tranh, ls, rng, D, loai_bo=False):
+    """kieu: 'ti_le' | 'hay_nhat' | mã dạng. loai_bo: không lấy bài đã ra ở đề trước (theo lịch sử)."""
+    ung = [x for x in kho if x["bai"] == bai and x["ma"] not in tranh and not (loai_bo and ls.get(x["ma"]))]
     if not ung:
         return None
     dang_bai = [d for d in D["dang"] if d["bai"] == bai]
@@ -237,27 +237,31 @@ def _chon_1(bai, kieu, kho, tranh, ls, rng, D):
 def chon_bo(cfg, rng=None):
     """→ (danh sách đề [{bai: mục}], thiếu)."""
     rng = rng or random.Random(cfg.get("seed"))
-    D = du_lieu(); kho = doc_kho(); ls = lich_su() if cfg.get("tranh_da_dung", True) else {}
+    D = du_lieu(); kho = doc_kho()
+    che_do = cfg.get("da_dung") or ("uu_tien" if cfg.get("tranh_da_dung", True) else "khong")
+    ls = lich_su() if che_do != "khong" else {}
+    lb = che_do == "loai_bo"
     so_de = max(1, int(cfg.get("so_de") or 1))
     kieu = {int(k): v for k, v in (cfg.get("dang") or {}).items()}
     de, thieu, da = [], [], set()
     for _ in range(so_de):
         mot = {}
         for b in range(1, 8):
-            x = _chon_1(b, kieu.get(b, "ti_le"), kho, da, ls, rng, D)
-            if not x:   # hết bài riêng → cho phép dùng lại giữa các đề
+            x = _chon_1(b, kieu.get(b, "ti_le"), kho, da, ls, rng, D, lb)
+            if not x and not lb:   # hết bài riêng → cho phép dùng lại giữa các đề
                 x = _chon_1(b, kieu.get(b, "ti_le"), kho, set(), ls, rng, D)
             if x:
                 mot[b] = x; da.add(x["ma"])
-            elif f"Bài {b}" not in thieu:
-                thieu.append(f"Bài {b}")
+            elif (f"Bài {b}" + (" (hết bài chưa dùng)" if lb else "")) not in thieu:
+                thieu.append(f"Bài {b}" + (" (hết bài chưa dùng)" if lb else ""))
         de.append(mot)
     return de, thieu
 
 
-def doi(bai, kieu, tranh, ma_cu=None):
+def doi(bai, kieu, tranh, ma_cu=None, da_dung="uu_tien"):
     D = du_lieu(); kho = doc_kho()
-    return _chon_1(int(bai), kieu or "ti_le", kho, set(tranh or []) | {ma_cu}, lich_su(), random.Random(), D)
+    return _chon_1(int(bai), kieu or "ti_le", kho, set(tranh or []) | {ma_cu},
+                   lich_su() if da_dung != "khong" else {}, random.Random(), D, da_dung == "loai_bo")
 
 
 def the_xem(x):
