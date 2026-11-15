@@ -2258,3 +2258,174 @@ Cho tam giác $ABC$ ($AC < AB$) có ba góc nhọn và ba đường cao $AM, BE,
 	\end{enumerate}
 }
 \end{bt}
+
+
+\begin{bt}%[TS10 7.C4 7.a1 7.b1 7.c1]%[ma:12a34c21]
+% nguon: Đề tham khảo Tuyển sinh 10 TP.HCM 2026-2027 – Cụm 2 (Đề 2), Bài 7, trang 12
+Cho đường tròn $(O)$ có đường kính $BC$. Trên nửa đường tròn $(O)$, lấy hai điểm $A$ và $D$ sao cho số đo cung $BA$ nhỏ hơn số đo cung $BD$. Tia $BA$ và tia $CD$ cắt nhau tại $S$, đoạn thẳng $AC$ cắt $BD$ tại $H$. Gọi $I$ là trung điểm của $SH$.
+\begin{enumerate}[a)]
+	\item Tính số đo $\widehat{BAC}$ và chứng minh tứ giác $SAHD$ nội tiếp.
+	\item Tia $SH$ cắt $BC$ tại $M$. Chứng minh $\widehat{IAH} = \widehat{MDC}$.
+	\item Trong trường hợp $\widehat{BSC} = 60^\circ$ và $BC = 6\text{ cm}$, hãy tính độ dài đoạn thẳng $AD$ và bán kính đường tròn ngoại tiếp tam giác $SAD$.
+\end{enumerate}
+\loigiai{
+\begin{center}
+	\begin{tikzpicture}[scale=1]
+		\coordinate (O) at (0,0);
+		\def\R{3}
+		\coordinate (B) at (-\R,0);
+		\coordinate (C) at (\R,0);
+		\draw[thick] (B) -- (C);
+		\draw[thick] (C) arc (0:180:\R);
+		
+		\coordinate (A) at (140:\R);
+		\coordinate (D) at (50:\R);
+		
+		\coordinate (S) at (intersection of B--A and C--D);
+		\coordinate (H) at (intersection of A--C and B--D);
+		\coordinate (I) at ($(S)!0.5!(H)$);
+		\coordinate (M) at ($(B)!(S)!(C)$);
+		
+		\draw[thick] (B) -- (S) -- (C);
+		\draw[thick] (A) -- (C);
+		\draw[thick] (B) -- (D);
+		\draw[thick, blue] (S) -- (M);
+		\draw[thick, red] (A) -- (D);
+		\draw[dashed] (I) -- (A);
+		\draw[dashed] (M) -- (D);
+		
+		\fill (O) circle (1.5pt) node[below] {$O$};
+		\fill (B) circle (1.5pt) node[below left] {$B$};
+		\fill (C) circle (1.5pt) node[below right] {$C$};
+		\fill (A) circle (1.5pt) node[above left] {$A$};
+		\fill (D) circle (1.5pt) node[above right] {$D$};
+		\fill (S) circle (1.5pt) node[above] {$S$};
+		\fill (H) circle (1.5pt) node[below] {$H$};
+		\fill (I) circle (1.5pt) node[left] {$I$};
+		\fill (M) circle (1.5pt) node[below] {$M$};
+	\end{tikzpicture}
+	\end{center}
+	\begin{enumerate}[a)]
+		\item Ta có $\widehat{BAC} = 90^\circ$ (góc nội tiếp chắn nửa đường tròn đường kính $BC$).\\
+		Tương tự, $\widehat{BDC} = 90^\circ$ (góc nội tiếp chắn nửa đường tròn đường kính $BC$).\\
+		Từ đó suy ra:
+		$$\widehat{SAH} = 180^\circ - \widehat{BAC} = 90^\circ \quad \text{và} \quad \widehat{SDH} = 180^\circ - \widehat{BDC} = 90^\circ.$$
+		Xét tứ giác $SAHD$ có $\widehat{SAH} + \widehat{SDH} = 90^\circ + 90^\circ = 180^\circ$, do đó tứ giác $SAHD$ nội tiếp đường tròn đường kính $SH$.
+		\item Vì tứ giác $SAHD$ nội tiếp đường tròn đường kính $SH$ có tâm là $I$ (trung điểm của $SH$) nên:
+		$$IA = IH = R_I \implies \Delta IAH \text{ cân tại } I \implies \widehat{IAH} = \widehat{IHA}.$$
+		Mà $\widehat{IHA} = \widehat{MHC}$ (hai góc đối đỉnh).\\
+		Trong tam giác $SBC$, ta có $CA \perp SB$ (do $\widehat{BAC} = 90^\circ$) và $BD \perp SC$ (do $\widehat{BDC} = 90^\circ$), nên $CA$ và $BD$ là hai đường cao cắt nhau tại $H$. Suy ra $H$ là trực tâm của tam giác $SBC$.\\
+		Do đó $SH \perp BC$ tại $M$, hay tam giác $HMC$ vuông tại $M$.\\
+		Xét tứ giác $DMCH$ có:
+		$$\widehat{HDC} = 90^\circ \quad \text{và} \quad \widehat{HMC} = 90^\circ.$$
+		Hai đỉnh $D$ và $M$ cùng nhìn đoạn thẳng $HC$ dưới một góc vuông, nên tứ giác $DMCH$ nội tiếp đường tròn đường kính $HC$.\\
+		Suy ra $\widehat{MDC} = \widehat{MHC}$ (hai góc nội tiếp cùng chắn cung $MC$).\\
+		Từ đó ta có $\widehat{IAH} = \widehat{MDC}$.
+		\item Xét $\Delta SAD$ và $\Delta SCB$ có:
+		$$\widehat{BSC}\text{ là góc chung và } \widehat{SAD} = \widehat{SCB}\text{ (cùng bù với } \widehat{BAD}\text{)}.$$
+		Suy ra $\Delta SAD \backsim \Delta SCB$ (g-g), do đó:
+		$$\frac{AD}{BC} = \frac{SA}{SC} = \cos \widehat{BSC} = \cos 60^\circ = \frac{1}{2}.$$
+		Suy ra:
+		$$AD = \frac{1}{2}BC = \frac{1}{2} \cdot 6 = 3\text{ (cm)}.$$
+		Đường tròn ngoại tiếp tam giác $SAD$ chính là đường tròn $(I)$ ngoại tiếp tứ giác $SAHD$.\\
+		Trong đường tròn $(I)$, ta có góc ở tâm:
+		$$\widehat{AID} = 2\widehat{ASD} = 2\widehat{BSC} = 2 \cdot 60^\circ = 120^\circ.$$
+		Kẻ $IQ \perp AD$ tại $Q$. Do $\Delta IAD$ cân tại $I$ ($IA = ID = R_I$) nên $IQ$ đồng thời là đường phân giác và đường trung tuyến ứng với cạnh đáy $AD$.\\
+		Suy ra $QD = \dfrac{1}{2}AD = 1{,}5\text{ cm}$ và $\widehat{QID} = \dfrac{1}{2}\widehat{AID} = 60^\circ$.\\
+		Xét tam giác vuông $IQD$ vuông tại $Q$:
+		$$\sin \widehat{QID} = \frac{QD}{ID} \implies ID = \frac{QD}{\sin 60^\circ} = \frac{1{,}5}{\frac{\sqrt{3}}{2}} = \frac{3}{\sqrt{3}} = \sqrt{3}\text{ (cm)}.$$
+		Vậy $AD = 3\text{ cm}$ và bán kính đường tròn ngoại tiếp tam giác $SAD$ là $\sqrt{3}\text{ cm}$.
+	\end{enumerate}
+}
+\end{bt}
+
+\begin{bt}%[TS10 7.C2 7.a1 7.b2 7.c1]%[ma:4f29f300]
+% nguon: Đề tham khảo Tuyển sinh 10 TP.HCM 2026-2027 – Cụm 2 (Đề 3), Bài 7, trang 14
+Cho tam giác $ABC$ có ba góc nhọn ($AB < AC$) nội tiếp đường tròn $(O; R)$. Hai đường cao $AD, BE$ của tam giác $ABC$ cắt nhau tại trực tâm $H$. Gọi $M, N$ lần lượt là giao điểm của đường tròn $(O)$ với các tia $BE, AD$ ($M \neq B, N \neq A$).
+\begin{enumerate}[a)]
+	\item Chứng minh tứ giác $ABDE$ nội tiếp đường tròn và xác định tâm $I$ của đường tròn này, từ đó suy ra $DE \parallel MN$.
+	\item Kẻ đường kính $CK$ của đường tròn $(O)$. Chứng minh tứ giác $AKBH$ là hình bình hành và suy ra ba điểm $H, I, K$ thẳng hàng.
+	\item Trong trường hợp $\widehat{BCA} = 60^\circ$, chứng minh $DE = \dfrac{1}{2}AB$ và tính diện tích hình viên phân giới hạn bởi cung nhỏ $DE$ và dây cung $DE$ của đường tròn $(I)$ theo $R$.
+\end{enumerate}
+\loigiai{
+\begin{center}
+	\begin{tikzpicture}[scale=1]
+		\coordinate (O) at (0,0);
+		\def\R{3}
+		\draw[thick] (O) circle (\R);
+		\coordinate (A) at (75:\R);
+		\coordinate (B) at (200:\R);
+		\coordinate (C) at (-20:\R);
+		
+		\coordinate (D) at ($(B)!(A)!(C)$);
+		\coordinate (E) at ($(A)!(B)!(C)$);
+		\coordinate (H) at (intersection of A--D and B--E);
+		
+		\coordinate (K) at ($(O)!-1!(C)$);
+		\coordinate (I) at ($(A)!0.5!(B)$);
+		
+		\coordinate (M) at (105:\R);
+		\coordinate (N) at (275:\R);
+		
+		\draw[thick] (A) -- (B) -- (C) -- cycle;
+		\draw[thick, blue] (A) -- (D);
+		\draw[thick, blue] (B) -- (E);
+		\draw[dashed] (D) -- (N);
+		\draw[dashed] (E) -- (M);
+		\draw[thick, red] (D) -- (E);
+		\draw[dashed] (M) -- (N);
+		\draw[thick] (C) -- (K);
+		\draw[dashed] (A) -- (K) -- (B);
+		\draw[dashed] (H) -- (K);
+		
+		\fill (A) circle (1.5pt) node[above] {$A$};
+		\fill (B) circle (1.5pt) node[below left] {$B$};
+		\fill (C) circle (1.5pt) node[below right] {$C$};
+		\fill (D) circle (1.5pt) node[below] {$D$};
+		\fill (E) circle (1.5pt) node[above right] {$E$};
+		\fill (H) circle (1.5pt) node[below left] {$H$};
+		\fill (O) circle (1.5pt) node[right] {$O$};
+		\fill (K) circle (1.5pt) node[above left] {$K$};
+		\fill (I) circle (1.5pt) node[above left] {$I$};
+		\fill (M) circle (1.5pt) node[above left] {$M$};
+		\fill (N) circle (1.5pt) node[below] {$N$};
+	\end{tikzpicture}
+	\end{center}
+	\begin{enumerate}[a)]
+		\item Xét tam giác $AEB$ vuông tại $E$ (do $BE \perp AC$) nên tam giác $AEB$ nội tiếp đường tròn đường kính $AB$.\\
+		Xét tam giác $ADB$ vuông tại $D$ (do $AD \perp BC$) nên tam giác $ADB$ nội tiếp đường tròn đường kính $AB$.\\
+		Do đó bốn điểm $A, B, D, E$ cùng thuộc đường tròn đường kính $AB$, suy ra tứ giác $ABDE$ nội tiếp đường tròn có tâm $I$ là trung điểm của $AB$.\\
+		Trong tứ giác nội tiếp $ABDE$, ta có:
+		$$\widehat{BDE} = \widehat{BAE} \quad (\text{hai góc nội tiếp cùng chắn cung } BE).$$
+		Trong đường tròn $(O)$, ta có:
+		$$\widehat{BMN} = \widehat{BAN} \quad (\text{hai góc nội tiếp cùng chắn cung } BN).$$
+		Mà điểm $E$ nằm trên cạnh $AC$ và điểm $N$ nằm trên tia $AD$ nên $\widehat{BAE} = \widehat{BAC} = \widehat{BAN}$.\\
+		Suy ra $\widehat{BDE} = \widehat{BMN}$.\\
+		Hai góc này ở vị trí đồng vị nên $DE \parallel MN$.
+		\item Ta có $\widehat{KAC} = 90^\circ$ (góc nội tiếp chắn nửa đường tròn đường kính $KC$), suy ra $KA \perp AC$.\\
+		Mà $BE \perp AC$ (do $BE$ là đường cao) $\implies KA \parallel BH$.\\
+		Tương tự, $\widehat{KBC} = 90^\circ$ (góc nội tiếp chắn nửa đường tròn đường kính $KC$), suy ra $KB \perp BC$.\\
+		Mà $AD \perp BC$ (do $AD$ là đường cao) $\implies KB \parallel AH$.\\
+		Tứ giác $AKBH$ có các cặp cạnh đối song song nên là hình bình hành.\\
+		Vì $I$ là trung điểm của đường chéo $AB$ nên $I$ cũng là trung điểm của đường chéo $HK$.\\
+		Vậy ba điểm $H, I, K$ thẳng hàng.
+		\item Xét $\Delta CDE$ và $\Delta CAB$ có:
+		$$\widehat{C}\text{ là góc chung và } \widehat{CDE} = \widehat{CAB}\text{ (cùng bù với } \widehat{BDE}\text{)}.$$
+		Suy ra $\Delta CDE \backsim \Delta CAB$ (g-g), do đó:
+		$$\frac{DE}{AB} = \frac{CD}{CA} = \cos \widehat{BCA} = \cos 60^\circ = \frac{1}{2} \implies DE = \frac{1}{2}AB.$$
+		Kẻ đường kính $AQ$ của đường tròn $(O)$.\\
+		Ta có $\widehat{ABQ} = 90^\circ$ và $\widehat{AQB} = \widehat{ACB} = 60^\circ$ (hai góc nội tiếp cùng chắn cung $AB$).\\
+		Xét tam giác vuông $ABQ$ vuông tại $B$:
+		$$AB = AQ \cdot \sin \widehat{AQB} = 2R \cdot \sin 60^\circ = R\sqrt{3}.$$
+		Suy ra bán kính của đường tròn $(I)$ là:
+		$$R_I = \frac{AB}{2} = \frac{R\sqrt{3}}{2}.$$
+		Tam giác $IDE$ có $ID = IE = R_I$ và $DE = \dfrac{1}{2}AB = R_I$, do đó $\Delta IDE$ là tam giác đều cạnh $R_I = \dfrac{R\sqrt{3}}{2}$, suy ra $\widehat{DIE} = 60^\circ$.\\
+		Diện tích hình quạt tròn $IDE$ là:
+		$$S_{\text{quạt}} = \frac{\pi R_I^2 \cdot 60^\circ}{360^\circ} = \frac{\pi \cdot \left(\frac{R\sqrt{3}}{2}\right)^2}{6} = \frac{\pi R^2}{8}.$$
+		Diện tích tam giác đều $IDE$ là:
+		$$S_{\Delta IDE} = \frac{R_I^2 \sqrt{3}}{4} = \frac{\left(\frac{R\sqrt{3}}{2}\right)^2 \sqrt{3}}{4} = \frac{3R^2\sqrt{3}}{16}.$$
+		Diện tích hình viên phân giới hạn bởi cung nhỏ $DE$ và dây cung $DE$ là:
+		$$S = S_{\text{quạt}} - S_{\Delta IDE} = \frac{\pi R^2}{8} - \frac{3R^2\sqrt{3}}{16} = \frac{(2\pi - 3\sqrt{3})R^2}{16}.$$
+	\end{enumerate}
+}
+\end{bt}
