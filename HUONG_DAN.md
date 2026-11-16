@@ -543,3 +543,12 @@ Tạo phiếu như cũ (📄 Phiếu bài học, kiểu trắc nghiệm hoặc t
 - Hình TikZ tự đổi sang SVG (máy cần LaTeX như khi xuất PDF).
 - Bài giảng bất kỳ cũng cho HS xem được: 🌐 Thi trực tuyến → thẻ Bài giảng → nút **Cho HS xem / Thôi cho HS**.
 - Phiếu tạo từ bản cũ (trước khi có tính năng) cần tạo lại phiếu để có dữ liệu web.
+
+## Ôn thi học kì — hàng "Xuất đề"
+
+Bảng Ôn thi học kì có hàng **Xuất đề** (máy nhớ lựa chọn):
+- **Số đề mỗi lần** + **Mỗi đề câu khác nhau** (tắt: các mã chỉ trộn thứ tự cùng 22 câu).
+- **📚 Gộp PDF thành 1 cuốn đề cương**: quyển Câu hỏi (bìa, mục lục, mọi đề) + quyển Lời giải.
+- **📝 Left note**: bản đề có lề trái để học sinh ghi chú (Leftnote_101…).
+- **Lời giải từng đề file riêng** (De_101_LoiGiai.pdf…), **Beamer**, **Biên dịch PDF**.
+Áp dụng cho cả *Ra đề từ ngân hàng* và *Xem trước & đổi câu → Xác nhận*.

@@ -479,6 +479,17 @@ tr.gop-h td{background:#dbeafe;text-align:left;font-weight:700;padding:8px 12px;
     <button id="hk-khop" title="Chọn lại bài trong kho theo chữ ở cột Chủ đề (dùng khi thầy đã sửa nhiều chủ đề)">Tự khớp bài theo chủ đề</button>
     <button id="hk-mac-dinh" title="Trả bảng về ma trận mặc định của lớp">Ma trận mặc định</button>
   </div>
+  <div class="cai" id="hk-xuat" style="background:#eaf3ff">
+    <b style="color:#1e3a8a">Xuất đề:</b>
+    <label title="Mỗi lần bấm Ra đề / Xác nhận xuất ra bấy nhiêu đề">Số đề mỗi lần <input type="number" id="hk-so-de" min="1" max="20" value="4" style="width:58px"></label>
+    <label class="hop" title="Bật: mỗi đề là bộ câu khác nhau (cùng ma trận). Tắt: các mã đề chỉ trộn thứ tự cùng 22 câu"><input type="checkbox" id="hk-khac" checked> Mỗi đề câu khác nhau</label>
+    <label class="hop" title="Quyển Câu hỏi (bìa, mục lục, tất cả đề) + quyển Lời giải — 2 file PDF"><input type="checkbox" id="hk-de-cuong" checked> 📚 Gộp PDF thành 1 cuốn đề cương</label>
+    <label class="hop" title="Bản đề có lề trái rộng để học sinh ghi chú (file Leftnote)"><input type="checkbox" id="hk-leftnote"> 📝 Left note (lề ghi chú)</label>
+    <label class="hop" title="Mỗi đề một file lời giải riêng: De_101_LoiGiai.pdf…"><input type="checkbox" id="hk-lg-rieng" checked> Lời giải từng đề file riêng</label>
+    <label class="hop" title="Beamer sửa bài (trắng + xanh)"><input type="checkbox" id="hk-beamer"> Beamer</label>
+    <label class="hop"><input type="checkbox" id="hk-pdf" checked> Biên dịch PDF</label>
+    <span id="hk-xuat-tt" style="color:#555;font-size:12px"></span>
+  </div>
   <div id="hk-bang-wrap"><table id="hk-bang"><thead><tr><th style="width:52px">Câu</th><th style="width:21%">Chủ đề (sửa được)</th><th style="width:24%">Bài trong ngân hàng</th>
     <th style="width:108px">Mức</th><th style="width:130px">Ngữ cảnh thực tế</th><th>Câu mẫu (tuỳ chọn, cho đề AI)</th></tr></thead><tbody></tbody></table></div>
   <div class="chan"><span id="hk-tt" style="color:#555"></span>
@@ -1433,6 +1444,15 @@ $("#hk-xoa-bo").onclick=()=>{const L=hkLop(); if(L.bo.length<2) return;
   if(!confirm(`Xoá bộ "${hkBo().ten}" khỏi danh sách? (Đề đã xuất trong de-da-ra/ vẫn còn.)`)) return;
   L.bo.splice(L.i,1); L.i=Math.max(0,L.i-1); hkLuu(); veBoHK(); veHK()};
 // 1) lấy câu từ ngân hàng: mỗi dòng = 1 câu (bài + mức) → xuất đề như nút Xuất đề
+// ---- tuỳ chọn xuất đề của bảng Ôn thi HK (nhớ trên máy)
+const HK_XUAT_ID={so:"hk-so-de",khac:"hk-khac",de_cuong:"hk-de-cuong",leftnote:"hk-leftnote",lg_rieng:"hk-lg-rieng",beamer:"hk-beamer",pdf:"hk-pdf"};
+function hkXuat(){const o={};for(const [k,id] of Object.entries(HK_XUAT_ID)){const e=$("#"+id);o[k]=e.type==="checkbox"?e.checked:Math.max(1,Math.min(20,+e.value||1))}return o}
+function hkXuatVe(){const x=hkXuat();
+  $("#hk-xuat-tt").textContent=`→ ${x.so} đề`+(x.so>1?(x.khac?" khác câu":" trộn từ cùng câu"):"")+`${x.de_cuong?" · 2 cuốn đề cương":""}${x.leftnote?" · Left note":""}${x.lg_rieng?" · lời giải riêng từng đề":""}`;
+  try{localStorage.setItem("hk_xuat",JSON.stringify(x))}catch(_){}}
+(()=>{let x=null;try{x=JSON.parse(localStorage.getItem("hk_xuat")||"null")}catch(_){}
+  if(x)for(const [k,id] of Object.entries(HK_XUAT_ID)){const e=$("#"+id);if(!e||x[k]==null)continue;if(e.type==="checkbox")e.checked=!!x[k];else e.value=x[k]}
+  Object.values(HK_XUAT_ID).forEach(id=>$("#"+id).addEventListener("input",hkXuatVe));Object.values(HK_XUAT_ID).forEach(id=>$("#"+id).addEventListener("change",hkXuatVe));hkXuatVe()})();
 function mtHK(){
   const ds=hkDs(), thieu=ds.map((r,i)=>[r,i]).filter(([r])=>!r.bai);
   if(thieu.length){alert(`Còn ${thieu.length} câu chưa chọn "Bài trong ngân hàng" (vd: ${thieu.slice(0,3).map(([r])=>r.chu_de).join("; ")}).`);return null}
@@ -1445,6 +1465,9 @@ function mtHK(){
     ten_ky_thi:($("#hk-ten").value.trim()||"ĐỀ ÔN THI HỌC KÌ")+(nhieu?` (${bo.ten})`:""),
     mon:`TOÁN – Lớp ${HK_LOP}`,bu_cung_nhom:true,mo_rong_dang_khac:true});
   const tr=hkTranh(); if(tr.length) mt.tranh_ma=tr; else delete mt.tranh_ma;
+  const x=hkXuat(); Object.assign(mt,{so_ma_de:x.so,moi_ma_de_cau_khac_nhau:x.khac&&x.so>1,de_cuong:x.de_cuong,xuat_leftnote:x.leftnote,
+    loi_giai_rieng:x.lg_rieng,xuat_beamer:x.beamer});
+  $("#bien_dich").checked=x.pdf;
   mt.cau_da_dung=$("#hk-da-dung").value; mt.tranh_cau_da_dung=mt.cau_da_dung!=="khong";
   return mt;
 }

@@ -517,7 +517,8 @@ for s in range(so_ma):
     than, cuoi, rows = soan_ma_de(bo, ma_de)
     tat_ca_dap_an += rows
     ghi(os.path.join(out, f"De_{ma_de}.tex"), tai_lieu(than, False))
-    ghi(os.path.join(out, f"De_{ma_de}_LoiGiai.tex"), tai_lieu(than + "\n\n" + cuoi, True))
+    if mt.get("loi_giai_rieng", True):     # lời giải từng đề: file riêng De_xxx_LoiGiai
+        ghi(os.path.join(out, f"De_{ma_de}_LoiGiai.tex"), tai_lieu(than + "\n\n" + cuoi, True))
     gop_de.append(than); gop_lg.append(than + "\n\n" + cuoi); gop_cuoi.append(cuoi)
 ghi(os.path.join(out, "TatCa_De.tex"), tai_lieu("\n\n\\newpage\n".join(gop_de), False))
 ghi(os.path.join(out, "TatCa_LoiGiai.tex"), tai_lieu("\n\n\\newpage\n".join(gop_lg), True))
