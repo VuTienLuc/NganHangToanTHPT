@@ -693,7 +693,18 @@ async function api(duong,than){
   const r=await fetch(duong,than?{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(than)}:{});
   return r.json();
 }
-setInterval(()=>fetch("/api/ping").catch(()=>{}),30000);
+// nhắc khởi động lại khi mã chương trình đã cập nhật (git pull) mà ứng dụng còn chạy bản cũ
+async function kiemBan(){try{const r=await (await fetch("/api/ping")).json();const cu=r.ban===undefined, doi=!!r.cu;
+  let b=$("#bang-ban"); if(!(cu||doi)){if(b)b.remove();return}
+  if(!b){b=document.createElement("div");b.id="bang-ban";b.style.cssText="position:fixed;left:50%;top:8px;transform:translateX(-50%);z-index:50;background:#fef3c7;border:1px solid #f59e0b;color:#78350f;padding:8px 14px;border-radius:10px;box-shadow:0 6px 20px rgba(0,0,0,.15);font-size:13.5px;display:flex;gap:10px;align-items:center";document.body.append(b)}
+  b.innerHTML=cu?"⚠ Ứng dụng đang chạy <b>bản cũ</b>. Thầy đóng hẳn cửa sổ Terminal của ứng dụng rồi mở lại để dùng chức năng mới."
+    :'Ứng dụng vừa được cập nhật. <button id="nut-kdl" class="chinh">Khởi động lại</button>';
+  const n=$("#nut-kdl"); if(n) n.onclick=async()=>{n.disabled=true;n.textContent="Đang khởi động lại…";const k=await api("/api/khoi-dong-lai",{});
+    if(!k.ok){alert(k.loi);n.disabled=false;n.textContent="Khởi động lại";return}
+    for(let i=0;i<40;i++){await new Promise(r=>setTimeout(r,500));try{const p=await (await fetch("/api/ping")).json();if(p.ok&&!p.cu){location.reload();return}}catch(_){}}
+    alert("Chưa khởi động lại được — thầy đóng cửa sổ Terminal rồi mở lại ứng dụng.");};
+ }catch(_){}}
+kiemBan(); setInterval(kiemBan,30000);
 
 async function tai(){
   DL=await api("/api/du-lieu");
@@ -1746,10 +1757,16 @@ $("#xt-tc").onclick=async()=>{
 // ---------------- THI TRỰC TUYẾN (Cloudflare Pages)
 let DTHI=null;
 function boDauSlug(s){return String(s||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/đ/g,"d").replace(/Đ/g,"D").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"").slice(0,60)}
-function appTrinhChieu(){return new Promise((ok,loi)=>{
+async function appTrinhChieu(){
+  const f0=$("#tc-app"); if(f0&&f0.contentWindow&&f0.contentWindow.createExam) return f0.contentWindow;
+  let r; try{r=await fetch("/trinh-chieu-app",{method:"GET"})}catch(e){throw Error("Mất kết nối với ứng dụng ra đề — mở lại ứng dụng.")}
+  if(!r.ok||!/html/.test(r.headers.get("content-type")||"")) throw Error("Ứng dụng ra đề đang chạy BẢN CŨ (chưa khởi động lại sau khi cập nhật). Thầy đóng hẳn cửa sổ Terminal của ứng dụng rồi mở lại, sau đó thử lại.");
+  return appTrinhChieu0();
+}
+function appTrinhChieu0(){return new Promise((ok,loi)=>{
   let f=$("#tc-app"); if(f&&f.contentWindow&&f.contentWindow.createExam) return ok(f.contentWindow);
   if(!f){f=document.createElement("iframe");f.id="tc-app";f.style.cssText="position:absolute;width:10px;height:10px;left:-9999px;visibility:hidden";f.src="/trinh-chieu-app";document.body.append(f)}
-  let n=0;const t=setInterval(()=>{n++;const w=f.contentWindow;if(w&&w.createExam&&w.examSettings){clearInterval(t);ok(w)}else if(n>100){clearInterval(t);loi(Error("Không mở được ứng dụng trình chiếu (khung/TrinhChieu)."))}},150);
+  let n=0;const t=setInterval(()=>{n++;const w=f.contentWindow;if(w&&w.createExam&&w.examSettings){clearInterval(t);ok(w)}else if(n>300){clearInterval(t);loi(Error("Ứng dụng trình chiếu (khung/TrinhChieu) mở quá lâu hoặc bị lỗi. Thầy thử lại; nếu vẫn lỗi, mở thử file khung/TrinhChieu/ung_dung_trinh_chieu.html xem có chạy không."))}},150);
 })}
 $("#xt-thi").onclick=async()=>{
   const b=XT.bo[Math.min(XT.tab,XT.bo.length-1)];

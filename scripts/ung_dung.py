@@ -191,7 +191,7 @@ class XuLy(BaseHTTPRequestHandler):
                 return self.gui(200, open(os.path.join(GOC, "khung", "TrinhChieu", "ung_dung_trinh_chieu.html"), "rb").read(),
                                 "text/html; charset=utf-8")
             if u.path == "/api/ping":
-                return self.gui(200, {"ok": True})
+                return self.gui(200, {"ok": True, "ban": MA_KHOI, "cu": ma_ma_nguon() != MA_KHOI})
             self.gui(404, {"loi": "không có"})
         except Exception as e:
             self.gui(500, {"loi": str(e)})
@@ -243,6 +243,12 @@ class XuLy(BaseHTTPRequestHandler):
             if u.path == "/api/de-ai/kiem":
                 import de_ai
                 return self.gui(200, de_ai.kiem(d.get("van_ban") or "", d.get("can")))
+            if u.path == "/api/khoi-dong-lai":
+                if cong_viec.get("dang_chay"):
+                    return self.gui(200, {"ok": False, "loi": "Đang có việc chạy, đợi xong rồi khởi động lại."})
+                self.gui(200, {"ok": True})
+                threading.Thread(target=khoi_dong_lai, args=(self.server.server_address[1],), daemon=True).start()
+                return
             if u.path.startswith("/api/thi/"):
                 import thi_truc_tuyen as T
                 viec = u.path.rsplit("/", 1)[1]
@@ -569,7 +575,35 @@ def canh_gac():
         if time.time() - lan_ping[0] > 180 and not cong_viec["dang_chay"]:
             os._exit(0)
 
+def ma_ma_nguon():
+    """Dấu vân tay mã chương trình (giờ sửa các file .py) — đổi sau git pull → nhắc khởi động lại."""
+    return str(int(sum(os.path.getmtime(os.path.join(SCRIPTS, f)) for f in os.listdir(SCRIPTS) if f.endswith(".py"))))
+
+
+MA_KHOI = ma_ma_nguon()
+
+
+def khoi_dong_lai(cong):
+    time.sleep(0.6)
+    try:
+        SV[0].server_close()
+    except Exception:
+        pass
+    os.execv(sys.executable, [sys.executable, os.path.abspath(__file__), "--khong-mo", "--cong", str(cong)])
+
+
+SV = [None]
+
+
 def cong_trong():
+    if "--cong" in sys.argv:                       # khởi động lại: giữ cổng cũ để trang đang mở chạy tiếp
+        c = int(sys.argv[sys.argv.index("--cong") + 1])
+        for _ in range(25):
+            with socket.socket() as s:
+                try:
+                    s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1); s.bind(("127.0.0.1", c)); return c
+                except OSError:
+                    time.sleep(0.2)
     for c in range(8765, 8800):
         with socket.socket() as s:
             try:
@@ -583,7 +617,7 @@ if __name__ == "__main__":
         print("Đang lập chỉ mục ngân hàng…")
         chay([os.path.join(SCRIPTS, "lap_chi_muc.py")])
     cong = cong_trong()
-    sv = ThreadingHTTPServer(("127.0.0.1", cong), XuLy)
+    sv = SV[0] = ThreadingHTTPServer(("127.0.0.1", cong), XuLy)
     url = f"http://127.0.0.1:{cong}/"
     print("Ứng dụng ra đề đang chạy tại", url)
     threading.Thread(target=canh_gac, daemon=True).start()
