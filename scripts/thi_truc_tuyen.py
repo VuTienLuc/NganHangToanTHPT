@@ -964,6 +964,37 @@ def _ten_chuong(r):
     return r
 
 
+def dat_thu_muc(slug, thu_muc):
+    """Nhớ thư mục phiếu gốc (de-da-ra/…) để sau này dựng lại HTML bằng mẫu mới."""
+    ds = danh_sach()
+    for x in ds:
+        if x["slug"] == slug and x.get("loai") == "bai_giang":
+            x["thu_muc"] = thu_muc
+    luu_ds(ds)
+
+
+def tim_thu_muc_phieu(x):
+    """Thư mục phiếu gốc: đã nhớ, hoặc tìm PhieuHocTap_Web.html trong de-da-ra trùng nội dung trang đang đăng."""
+    goc = os.path.dirname(THU)
+    if x.get("thu_muc") and os.path.isfile(os.path.join(goc, x["thu_muc"], "tex", "phieu_web.json")):
+        return os.path.join(goc, x["thu_muc"])
+    p = os.path.join(SITE, "bai-giang", x["slug"], "index.html")
+    if not os.path.exists(p):
+        p = os.path.join(AN, x["slug"], "index.html")
+    try:
+        dang = re.sub(r'<meta name="robots"[^>]*>', "", open(p, encoding="utf-8").read())
+    except OSError:
+        return None
+    for g, _, tep in os.walk(os.path.join(goc, "de-da-ra")):
+        if "PhieuHocTap_Web.html" in tep and os.path.isfile(os.path.join(g, "tex", "phieu_web.json")):
+            try:
+                if re.sub(r'<meta name="robots"[^>]*>', "", open(os.path.join(g, "PhieuHocTap_Web.html"), encoding="utf-8").read()) == dang:
+                    return g
+            except OSError:
+                pass
+    return None
+
+
 def dat_goi_y(slug, bat):
     """Bật / tắt Gợi ý AI cho đề (link chung: áp cho mọi mã con), dựng lại trang."""
     ds = danh_sach()

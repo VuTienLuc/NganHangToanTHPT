@@ -2116,7 +2116,7 @@ function tvMuc(x,tk){
       (x.trang_thai!=="da_dong"?`<button data-v="da_dong">Đóng đề</button>`:`<button data-v="dang_mo">Mở lại</button>`)+
       `<button data-v="goi-y">${x.goi_y_ai?"Tắt 💡 Gợi ý AI":"Bật 💡 Gợi ý AI"}</button><button data-v="xoa" style="color:#b91c1c">Xoá</button>`}
   else{them=(x.trang_thai==="an"?`<button data-v="hien">Hiện lại</button>`:`<button data-v="an">Ẩn</button>`)+`<button data-v="hs">${x.hs?"Thôi cho HS xem":"Cho HS xem"}</button>`+
-      `<button data-v="thay">Thay file…</button><button data-v="xoa" style="color:#b91c1c">Xoá</button>`}
+      (lo==="phieu"?`<button data-v="lam-lai" title="Dựng lại trang bằng mẫu mới nhất (nút ▶ Trình chiếu, nền sáng/tối…) từ thư mục phiếu gốc">⟳ Làm lại bằng mẫu mới</button>`:"")+`<button data-v="thay">Thay file…</button><button data-v="xoa" style="color:#b91c1c">Xoá</button>`}
   const con=x.loai==="nhom"?TV.r.ds.filter(y=>y.nhom===x.slug):[];
   return `<div class="tv-muc ${dong?"dong":""}" data-s="${esc(x.slug)}" data-l="${lo}">
     <div class="tv-ic ${lo==="de"?"":lo==="phieu"?"ph":x.kieu==="pdf"?"pdf":"bg"}" aria-hidden="true">${ic}</div>
@@ -2168,6 +2168,8 @@ async function hanhDongDe(x,v,b){const sl=x.slug;
 }
 async function hanhDongBg(x,v,b){const sl=x.slug;
   if(v==="thay")return moBg(null,{slug:sl,ten:x.ten,lop:x.lop});
+  if(v==="lam-lai"){b.disabled=true;b.textContent="Đang dựng lại…";const k=await api("/api/thi/phieu-lam-lai",{slug:sl});
+    if(!k.ok){b.disabled=false;b.textContent="⟳ Làm lại bằng mẫu mới";alert(k.loi+(k.nhat_ky?"\n\n"+k.nhat_ky:""));return} return theoDoiThi(null,"")}
   if(v==="hs"){const k=await api("/api/thi/bg-hs",{slug:sl,hs:!x.hs});if(!k.ok){alert(k.loi);return} return theoDoiThi(null,"")}
   if(v==="xoa"&&!confirm("Gỡ bài giảng này khỏi mạng? (file vẫn giữ trong thi-truc-tuyen/da_xoa)"))return;
   const k=await api("/api/thi/bg-trang-thai",{slug:sl,tt:v});if(!k.ok){alert(k.loi);return} theoDoiThi(null,"");
