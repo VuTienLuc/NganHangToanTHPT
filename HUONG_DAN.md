@@ -220,6 +220,12 @@ như phần mềm cũ thì ghi `"khung": "DeThi"` trong file JSON.
 - **⚑ Học sinh cần quan tâm**: máy tự đánh dấu em chưa làm, thiếu bài, TB dưới 5, tụt từ 1 điểm, hoặc đang lo lắng/mệt (cảm xúc khi làm bài). Bấm ⚑ trong bảng để đánh dấu / bỏ đánh dấu thêm (nhớ theo lớp).
 - Mỗi em được đánh dấu có **tin nhắn riêng tích cực, vui** (sửa được, 🎲 đổi câu khác). **💌 Gửi vào trang học** → em thấy khung “💌 Thầy nhắn em” khi đăng nhập, bấm “Em đã đọc 👍”; bảng của thầy hiện “✓ em đã đọc”. Hoặc **Chép tin nhắn** để gửi Zalo.
 
+### 🎯 Lớp phụ đạo theo khối (PD10, PD11, PD12…)
+- Mọi em đang **⭐ theo dõi** tự thuộc thêm **lớp phụ đạo khối** của mình: lớp 10A4 → **PD10**. Em vẫn ở lớp chính, điểm lớp chính không đổi.
+- Đưa em vào: bấm ☆ trong bảng tổng hợp lớp, hoặc trong khung ⚑ cần quan tâm chọn các em → **🎯 Đưa các em đã chọn vào lớp phụ đạo**. Bỏ ra: ★ → ☆ hoặc “Bỏ theo dõi”.
+- **Ra đề thêm riêng**: khi đăng đề (Xem trước → Link thi trực tuyến, hoặc ⚡ Tạo nhanh) ghi ô **Lớp giao = PD10** (có gợi ý sẵn). Chỉ các em phụ đạo thấy và làm được; em khác mở link bị chặn.
+- Xem kết quả: Tổng hợp quá trình → ô Lớp chọn **🎯 Phụ đạo khối 10 (PD10)**; Bảng điểm lọc lớp PD10. Đề ra cho PD tự tính là đã giao.
+
 ### 📋 Bảng điểm từng lượt (trang giáo viên trên web)
 - Đăng nhập GV tại thi-toan-vtl.pages.dev → nút **📋 Bảng điểm** (mọi đợt) hoặc **📋 Điểm** ở từng đề (một đợt). Trong app: Tổng hợp quá trình → **📋 Bảng điểm từng lượt**.
 - Mỗi lượt: lớp, STT, họ tên, đợt, mã đề, lần, **điểm, số phút làm bài, số lần rời tab**, cảm xúc, số câu mở 💡, giờ nộp. Rời tab ≥ 3 tô đỏ, làm dưới 3 phút tô vàng.
