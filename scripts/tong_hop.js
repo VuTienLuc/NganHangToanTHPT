@@ -42,6 +42,11 @@
 .th-td-dau{display:flex;gap:6px;align-items:center;flex-wrap:wrap}.th-td-dau .th-ten{font-size:15px}.th-td-the textarea{min-height:70px!important;border-color:#fbcfe8!important}
 .th-giao{font-size:11px!important;min-height:0!important;padding:1px 6px!important;margin-top:3px!important;border-radius:999px!important;color:#64748b!important}
 .th-giao.bat{background:#dcfce7!important;border-color:#86efac!important;color:#15803d!important}.th-bang th.them,.th-bang td.them{background:#f8fafc;color:#94a3b8}
+.bd-tk{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:10px;margin-bottom:10px}
+.bd-khoi{border:1px solid;border-radius:10px;padding:9px 11px;display:flex;flex-direction:column;gap:6px;max-height:330px}
+.bd-k-dau{display:flex;gap:6px;align-items:center}.bd-k-dau b{flex:1}.bd-k-dau button{font-size:12.5px!important;min-height:30px!important;padding:3px 9px!important}
+.bd-stt{font:600 13.5px/1.5 ui-monospace,Menlo,monospace;background:#f8fafc;border-radius:7px;padding:6px 8px;word-break:break-word;user-select:all}
+.bd-ds{overflow:auto;display:flex;flex-direction:column;gap:2px;font-size:13px}.bd-ds small{color:#64748b}
 @media (max-width:760px){.th-em{grid-template-columns:auto minmax(0,1fr)}.th-em textarea,.th-em .nut{grid-column:1/-1}}`;
   const e = s => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
   const F = v => v == null || isNaN(v) ? '—' : (Math.round(v * 10) / 10).toString().replace('.', ',');
@@ -412,7 +417,7 @@
       <div class="th-than"><div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:8px">
         <input id="bd-q" type="search" placeholder="Tìm học sinh…" aria-label="Tìm học sinh" style="flex:1;min-width:200px;padding:8px 10px;border:1px solid #cbd5e1;border-radius:8px;font:inherit;width:auto">
         <label><input type="checkbox" id="bd-cao"> Chỉ lần điểm cao nhất mỗi em</label></div>
-        <div class="th-the" id="bd-the"></div><div id="bd-bang"></div></div>
+        <div class="th-the" id="bd-the"></div><div id="bd-tk"></div><div id="bd-bang"></div></div>
       <div class="th-chan"><span style="margin-right:auto;font-size:12px;color:#64748b">Rời tab ≥ 3 lần tô đỏ · làm dưới 3 phút tô vàng (nên xem lại) · bấm tiêu đề cột để sắp xếp</span>
         <button id="bd-xuat" class="chinh">⬇ Tải Excel (CSV)</button><button id="bd-dong">Đóng</button></div></div>`;
     hop.parentNode.appendChild(bdHop);
@@ -454,6 +459,7 @@
     const tab = nop.filter(x => (x.chuyen_tab || 0) >= 3).length;
     $('bd-the').innerHTML = `<div><b>${nop.length}</b><span>lượt đã nộp${ds.length > nop.length ? ` (+${ds.length - nop.length} đang làm)` : ''}</span></div><div><b>${hs}</b><span>học sinh</span></div>
       <div><b>${F(tb)}</b><span>điểm TB các lượt</span></div><div><b>${tbp == null ? '—' : Math.round(tbp) + '′'}</b><span>số phút TB mỗi lượt</span></div><div class="qt"><b>${tab}</b><span>lượt rời tab ≥ 3 lần</span></div>`;
+    bdThongKe();
     const tat = !BD.nhom, cot = (k2, t, cls) => `<th class="${cls || ''}" data-xep="${k2}" style="cursor:pointer" title="Sắp xếp">${t}${BD.xep === k2 ? (BD.nguoc ? ' ▼' : ' ▲') : ''}</th>`;
     if (!ds.length) { $('bd-bang').innerHTML = '<div style="padding:24px;text-align:center;color:#64748b"><b style="display:block;color:#0f172a">Chưa có lượt làm bài nào</b>Thử chọn “Tất cả các đợt” hoặc “Mọi lớp”.</div>'; return }
     $('bd-bang').innerHTML = `<div style="overflow:auto;max-height:60vh;border:1px solid #e2e8f0;border-radius:10px"><table class="th-bang"><thead><tr>
@@ -465,6 +471,29 @@
           <td style="${tb2 >= 3 ? 'background:#fee2e2;color:#b91c1c;font-weight:700' : ''}">${tb2 || ''}</td><td>${CXB[x.cam_xuc] || ''}</td><td>${x.goi_y || ''}</td>
           <td>${x.nop_luc ? new Date(x.nop_luc).toLocaleString('vi-VN', { dateStyle: 'short', timeStyle: 'short' }) : ''}</td></tr>` }).join('')}</tbody></table></div>`;
     $('bd-bang').querySelectorAll('[data-xep]').forEach(th => th.onclick = () => { const k2 = th.dataset.xep; BD.nguoc = BD.xep === k2 ? !BD.nguoc : k2 === 'diem' || k2 === 'nop'; BD.xep = k2; bdVe() });
+  }
+  // thống kê riêng cho MỘT đợt: xếp hạng điểm (STT cao → thấp), em chưa làm, em hay bỏ bài
+  function bdThongKe() {
+    const o = document.getElementById('bd-tk'), k = BD.k;
+    if (!BD.nhom) { o.innerHTML = '<p style="margin:0 0 8px;font-size:12.5px;color:#64748b">Chọn <b>một đợt</b> ở ô Đợt để xem xếp hạng điểm, danh sách em chưa làm và em hay bỏ bài (kèm dãy số thứ tự để chép).</p>'; return }
+    const hs = k.hs || [], cao = new Map();
+    for (const x of k.ds) if (x.nop_luc && x.nhom === BD.nhom && (!cao.has(x.tk) || x.diem > cao.get(x.tk).diem)) cao.set(x.tk, x);
+    const lops = [...new Set(hs.map(h => h.lop).concat([...cao.values()].map(x => x.lop)).filter(Boolean))].sort();
+    const nhieuLop = lops.length > 1, sttDs = (ds, f) => nhieuLop
+      ? lops.map(l => { const v = ds.filter(x => x.lop === l); return v.length ? `${l}: ${v.map(f).join(', ')}` : '' }).filter(Boolean).join('\n') : ds.map(f).join(', ');
+    const xh = [...cao.values()].sort((a, b) => b.diem - a.diem || (a.lop || '').localeCompare(b.lop || '') || (a.stt || 0) - (b.stt || 0));
+    const chua = hs.filter(h => !cao.has(h.ten)).sort((a, b) => (b.bo || 0) - (a.bo || 0) || (a.lop || '').localeCompare(b.lop || '') || (a.stt || 0) - (b.stt || 0));
+    const hay = hs.filter(h => (h.bo || 0) >= 2).sort((a, b) => b.bo - a.bo || (a.stt || 0) - (b.stt || 0));
+    const sttXh = sttDs(xh, x => x.stt ?? x.tk), sttChua = sttDs(chua.slice().sort((a, b) => (a.lop || '').localeCompare(b.lop || '') || (a.stt || 0) - (b.stt || 0)), h => h.stt ?? h.ten), sttHay = sttDs(hay, h => h.stt ?? h.ten);
+    const khoi = (tieu, mauNen, n, stt, ds, id) => `<div class="bd-khoi" style="border-color:${mauNen}"><div class="bd-k-dau"><b>${tieu}</b><span class="th-ly" style="border-color:${mauNen}">${n}</span>
+      ${n ? `<button data-chep="${id}" title="Chép dãy số thứ tự">📋 Chép STT</button>` : ''}</div>
+      ${n ? `<div class="bd-stt" id="${id}">${e(stt).replace(/\n/g, '<br>')}</div><div class="bd-ds">${ds}</div>` : '<div style="color:#64748b;font-size:13px">Không có em nào.</div>'}</div>`;
+    o.innerHTML = `<div class="bd-tk">
+      ${khoi('🏆 Điểm cao → thấp (STT)', '#93c5fd', xh.length, sttXh, xh.map((x, i) => `<span>${i + 1}. <b>${x.stt ?? ''}</b> ${e(x.ho_ten || x.tk)} — <span class="o-d ${mau(x.diem)}">${F(x.diem)}</span>${nhieuLop ? ` <small>${e(x.lop)}</small>` : ''}</span>`).join(''), 'bd-s1')}
+      ${khoi('⏳ Chưa làm đợt này', '#fca5a5', chua.length, sttChua, chua.map(h => `<span><b>${h.stt ?? ''}</b> ${e(h.ho_ten || h.ten)}${nhieuLop ? ` <small>${e(h.lop)}</small>` : ''}${h.so_giao ? ` <small title="Số bài đã giao em chưa làm / tổng số bài đã giao">· bỏ ${h.bo}/${h.so_giao} bài</small>` : ''}</span>`).join(''), 'bd-s2')}
+      ${khoi('🔁 Hay bỏ bài (≥ 2 bài đã giao chưa làm)', '#fcd34d', hay.length, sttHay, hay.map(h => `<span><b>${h.stt ?? ''}</b> ${e(h.ho_ten || h.ten)}${nhieuLop ? ` <small>${e(h.lop)}</small>` : ''} — bỏ <b>${h.bo}</b>/${h.so_giao} bài</span>`).join(''), 'bd-s3')}
+    </div>${hs.some(h => h.so_giao) ? '' : '<p style="margin:0 0 8px;font-size:12px;color:#64748b">“Bỏ bài” chỉ tính các bài thầy đã <b>xác nhận đã giao</b> (Thư viện → nút Xác nhận đã giao).</p>'}`;
+    o.querySelectorAll('[data-chep]').forEach(b => b.onclick = () => chep(document.getElementById(b.dataset.chep).innerText.trim(), 'Đã chép dãy STT'));
   }
   function bdXuat() {
     const ds = bdLoc(), dau = ['Lớp', 'STT', 'Họ tên', 'Tài khoản', 'Đợt', 'Mã đề', 'Lần', 'Điểm', 'Số phút', 'Rời tab', 'Cảm xúc', 'Số câu mở Gợi ý AI', 'Bắt đầu', 'Nộp lúc'];

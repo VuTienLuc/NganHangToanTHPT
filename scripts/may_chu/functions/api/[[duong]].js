@@ -62,7 +62,21 @@ async function bangDiem(DB, d) {
   const ds = (await DB.prepare(sql).bind(...b).all()).results;
   const de = (await DB.prepare("SELECT slug, ten, lop, tao_luc FROM de WHERE nhom = '' OR nhom IS NULL ORDER BY tao_luc DESC").all()).results;
   const cac_lop = (await DB.prepare("SELECT lop, COUNT(*) AS n FROM tk WHERE vai = 'hs' AND lop <> '' GROUP BY lop ORDER BY lop").all()).results;
-  return { ok: true, ds, de, cac_lop };
+  let hs = [];
+  if (nhom) {          // danh sách lớp của đợt này + số bài ĐÃ GIAO mỗi em đã bỏ (lịch sử chưa làm)
+    const g = await DB.prepare('SELECT lop, giao FROM de WHERE slug = ?').bind(nhom).first();
+    const lops = lop ? [lop] : String(g?.lop || '').split(',').map(x => x.trim()).filter(Boolean);
+    hs = (await DB.prepare("SELECT ten, ho_ten, lop, stt FROM tk WHERE vai = 'hs' ORDER BY lop, stt").all()).results
+      .filter(h => lops.length ? lops.some(l => l.toUpperCase() === String(h.lop || '').toUpperCase()) : true);
+    const giao = (await DB.prepare("SELECT slug, lop FROM de WHERE (nhom = '' OR nhom IS NULL) AND giao = 1").all()).results;
+    const lam = new Set((await DB.prepare('SELECT DISTINCT tk, nhom FROM bai WHERE nop_luc IS NOT NULL').all()).results.map(x => x.tk + '|' + x.nhom));
+    for (const h of hs) {
+      const cua = giao.filter(x => lopKhop(x.lop, h.lop));
+      h.so_giao = cua.length; h.bo = cua.filter(x => !lam.has(h.ten + '|' + x.slug)).length;
+      h.lam_dot = lam.has(h.ten + '|' + nhom);
+    }
+  }
+  return { ok: true, ds, de, cac_lop, hs };
 }
 // thầy đánh dấu bài đã giao (tính vào tổng hợp) / chưa giao (chỉ là tự luyện thêm); null = tự động theo ô Lớp giao
 async function datGiao(DB, d) {
