@@ -469,6 +469,7 @@ tr.gop-h td{background:#dbeafe;text-align:left;font-weight:700;padding:8px 12px;
     <button id="hk-sao" title="Sao chép bộ đang xem thành bộ mới (Lần 2, 3…) để sửa thêm/bớt rồi ra đề tiếp">⧉ Sao chép thành lần mới</button>
     <button id="hk-doi-ten" title="Đổi tên bộ">✎</button><button id="hk-xoa-bo" title="Xoá bộ khỏi danh sách">✕</button>
     <label class="hop" title="Không lấy lại câu đã ra ở các lần khác của lớp này"><input type="checkbox" id="hk-tranh" checked> Tránh câu đã ra ở lần khác</label>
+    <button id="hk-reset" title="Cho lấy lại những câu đã rút ra cho bộ đề này / lớp này (xoá khỏi danh sách đã ra và lịch sử dùng câu, có sao lưu để hoàn tác)">↺ Lấy lại câu đã rút</button>
     <label title="Lịch sử rút câu của cả ngân hàng: câu đã ra ở bất kỳ đề nào trước đây">Câu đã ra ở đề trước <select id="hk-da-dung"><option value="uu_tien">Ưu tiên câu chưa dùng</option><option value="loai_bo">Không lấy lại (ẩn câu đã ra)</option><option value="khong">Không xét</option></select></label>
     <label>Tên đề <input type="text" id="hk-ten"></label>
     <label>Kỳ <select id="hk-ky"><option>Giữa học kì I</option><option selected>Cuối học kì I</option><option>Giữa học kì II</option><option>Cuối học kì II</option></select></label>
@@ -1433,6 +1434,28 @@ $("#hk-khop").onclick=()=>{if(HK_LOP<10)return;hkDs().forEach(r=>r.bai=khopBai(r
 $("#hk-mac-dinh").onclick=()=>{if(!confirm("Trả bảng lớp này về ma trận mặc định?"))return;hkBo().hang=hkMacDinh(HK_LOP);hkLuu();veHK()};
 $("#hk-bo").onchange=()=>{hkLop().i=+$("#hk-bo").value;hkLuu();veHK()};
 $("#hk-tranh").onchange=()=>veHK();
+$("#hk-reset").onclick=()=>{
+  const L=hkLop(), bo=hkBo(), lop=HK_LOP, cuaBo=[...new Set(bo.da_dung||[])], cuaLop=[...new Set(L.bo.flatMap(b=>b.da_dung||[]))];
+  const xong=(r,tieu)=>{hkLuu();veBoHK();veHK();tai();
+    hopThoai(tieu,`Đã cho lấy lại câu: bỏ ${r.da_xoa} câu khỏi lịch sử dùng câu của ngân hàng.\nLần ra đề tới sẽ được rút lại những câu này.\n\nSao lưu lịch sử cũ: du-lieu/_cu/${r.sao_luu}`,
+      [["↶ Hoàn tác",async()=>{const k=await api("/api/lich-su",{hoan_tac:r.sao_luu});if(!k.ok){alert(k.loi);return}
+        L.bo.forEach((b,i)=>b.da_dung=luuDa[i]); hkLuu();veBoHK();veHK();tai();
+        hopThoai("Đã hoàn tác","Lịch sử dùng câu và danh sách câu đã ra đã trở lại như trước.")}]])};
+  const luuDa=L.bo.map(b=>[...(b.da_dung||[])]);
+  hopThoai(`Lấy lại câu đã rút — Toán ${lop}`,
+    `Bộ đang xem: ${bo.ten} — đã ra ${cuaBo.length} câu.\nCả lớp ${lop} (${L.bo.length} bộ: ${L.bo.map(b=>b.ten).join(", ")}) — đã ra ${cuaLop.length} câu.\n\n`+
+    `• Chỉ lần xuất tới: không xoá gì, tạm bỏ qua câu đã rút (bỏ tick “Tránh câu đã ra ở lần khác”, đặt “Câu đã ra ở đề trước: Không xét”).\n`+
+    `• Reset bộ này / cả lớp: xoá các câu đó khỏi danh sách đã ra và khỏi lịch sử dùng câu của ngân hàng → được rút lại bình thường. Có sao lưu, bấm Hoàn tác được.\n`+
+    `• Reset toàn bộ lịch sử lớp ${lop}: mọi câu lớp ${lop} từng dùng ở bất kỳ đề nào (kể cả đề kiểm tra, tạo nhanh…) đều được rút lại.`,
+    [["Chỉ lần xuất tới (không xoá)",()=>{$("#hk-tranh").checked=false;$("#hk-da-dung").value="khong";$("#hk-da-dung").onchange();veHK();
+        hopThoai("Đã tạm bỏ qua câu đã rút","Lần xuất tới được lấy cả câu đã rút. Muốn tránh lại thì tick “Tránh câu đã ra ở lần khác” và chọn “Ưu tiên câu chưa dùng”.")},true],
+     [`Reset bộ “${bo.ten}” (${cuaBo.length} câu)`,async()=>{if(!cuaBo.length){alert("Bộ này chưa ra câu nào.");return}
+        const r=await api("/api/lich-su",{bo_ma:cuaBo});if(!r.ok){alert(r.loi||"Lỗi");return} bo.da_dung=[]; xong(r,`Đã reset bộ ${bo.ten}`)}],
+     [`Reset cả lớp ${lop} (${cuaLop.length} câu)`,async()=>{if(!cuaLop.length){alert("Lớp này chưa ra câu nào.");return}
+        const r=await api("/api/lich-su",{bo_ma:cuaLop});if(!r.ok){alert(r.loi||"Lỗi");return} L.bo.forEach(b=>b.da_dung=[]); xong(r,`Đã reset các bộ lớp ${lop}`)}],
+     [`Reset toàn bộ lịch sử lớp ${lop}`,async()=>{if(!confirm(`Cho rút lại MỌI câu lớp ${lop} đã từng dùng (mọi đề)? Có sao lưu để hoàn tác.`))return;
+        const r=await api("/api/lich-su",{bo_lop:lop});if(!r.ok){alert(r.loi||"Lỗi");return} L.bo.forEach(b=>b.da_dung=[]); xong(r,`Đã reset toàn bộ lịch sử lớp ${lop}`)}]]);
+};
 try{$("#hk-da-dung").value=localStorage.getItem("hk_da_dung")||"uu_tien"}catch(_){}
 $("#hk-da-dung").onchange=()=>{try{localStorage.setItem("hk_da_dung",$("#hk-da-dung").value)}catch(_){}};
 $("#hk-sao").onclick=()=>{

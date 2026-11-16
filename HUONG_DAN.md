@@ -554,3 +554,10 @@ Bảng Ôn thi học kì có hàng **Xuất đề** (máy nhớ lựa chọn):
 - **📝 Left note**: bản đề có lề trái để học sinh ghi chú (Leftnote_101…).
 - **Lời giải từng đề file riêng** (De_101_LoiGiai.pdf…), **Beamer**, **Biên dịch PDF**.
 Áp dụng cho cả *Ra đề từ ngân hàng* và *Xem trước & đổi câu → Xác nhận*.
+
+### ↺ Lấy lại câu đã rút (Ôn thi HK)
+Nút cạnh "Tránh câu đã ra ở lần khác":
+- **Chỉ lần xuất tới (không xoá)**: tạm bỏ qua câu đã rút.
+- **Reset bộ này / cả lớp**: xoá câu đã ra của bộ (hoặc mọi bộ của lớp) khỏi danh sách đã ra và lịch sử dùng câu → được rút lại.
+- **Reset toàn bộ lịch sử lớp**: mọi câu lớp đó từng dùng ở bất kỳ đề nào.
+Mỗi lần reset đều sao lưu `du-lieu/_cu/lich_su_dung_<ngày-giờ>.json`, có nút **↶ Hoàn tác**.
