@@ -1886,7 +1886,10 @@ function theThi(v){v=v===true?"bg":v===false?"de":v;["de","bg","tk"].forEach(k=>
 $("#the-de").onclick=()=>theThi("de");$("#the-bg").onclick=()=>theThi("bg");$("#the-tk").onclick=()=>theThi("tk");
 // ---------------- TÀI KHOẢN
 async function taiTk(){$("#tk-bang").innerHTML="Đang tải danh sách tài khoản từ máy chủ…";const r=await api("/api/thi/tk-ds",{});
-  if(!r.ok){$("#tk-bang").innerHTML=`<p style="color:#b45309">${esc(r.loi||"Chưa kết nối máy chủ")} — lần đầu cần bấm "Đăng lại tất cả" để dựng máy chủ.</p>`;return}
+  if(!r.ok){$("#tk-bang").innerHTML=`<p style="color:#b45309">${esc(r.loi||"Chưa kết nối máy chủ")}</p>`+(r.chua_dung?'<button id="tk-dung" class="chinh">Dựng trang lần đầu</button>':"");
+    const d=$("#tk-dung"); if(d) d.onclick=async()=>{const k=await api("/api/thi/dang-lai",{});if(!k.ok){alert(k.loi);return}theoDoiThi(null,"");
+      const doi=async()=>{const s=await api("/api/trang-thai");if(!s.xong)return setTimeout(doi,2000);theThi("tk")};setTimeout(doi,2000)};
+    return}
   const ds=r.ds, lop=[...new Set(ds.filter(x=>x.vai==="hs").map(x=>x.lop))].sort();
   $("#tk-loc-lop").innerHTML='<option value="">Mọi lớp</option>'+lop.map(l=>`<option>${esc(l)}</option>`).join("");
   $("#tk-bang").innerHTML=`<div style="color:#555;margin-bottom:4px">${ds.filter(x=>x.vai==="hs").length} học sinh · ${lop.length} lớp · ${ds.filter(x=>x.vai==="gv").length} giáo viên</div>
