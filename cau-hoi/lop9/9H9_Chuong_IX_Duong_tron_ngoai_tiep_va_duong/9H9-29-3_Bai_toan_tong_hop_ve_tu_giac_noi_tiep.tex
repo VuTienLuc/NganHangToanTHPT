@@ -4968,3 +4968,202 @@ Cho đường tròn $(O)$ đường kính $AB$. Gọi $H$ là điểm nằm gi�
 \end{enumerate}
 }
 \end{bt}
+
+% nguồn: 2026-11-16_19_cum13_de1_cum13_de2_37_38 (nhập 16/11/2026)
+\begin{bt}%[9H9C29-3]%[ma:57f2cb09]
+% nguon: Đề tham khảo Tuyển sinh 10 năm học 2026-2027 Sở GD&ĐT TP.HCM - Cụm 13 Đề 1 (Đề số 37)
+Cho điểm $A$ nằm ngoài đường tròn $(O; R)$ sao cho $OA = 2R$. Kẻ hai tiếp tuyến $AB, AC$ với đường tròn $(O; R)$ ($B, C$ là các tiếp điểm), tia $AO$ cắt dây $BC$ tại $I$. Điểm $H$ thuộc đoạn thẳng $BI$ ($H$ khác $B$ và $I$). Đường thẳng $d$ vuông góc với $OH$ tại $H$; đường thẳng $d$ cắt $AB, AC$ lần lượt tại $P$ và $Q$.
+\begin{enumerate}[a)]
+	\item Chứng minh tứ giác $OHBP$ nội tiếp đường tròn.
+	\item Chứng minh rằng $OP = OQ$.
+	\item Khi $H$ là trung điểm của đoạn thẳng $BI$, tính độ dài đoạn thẳng $BC$ và diện tích của tam giác $OPQ$ theo $R$.
+\end{enumerate}
+\loigiai{
+\begin{center}
+\begin{tikzpicture}[>=stealth,scale=1.1]
+	\def\R{2.2}
+	\coordinate (O) at (0,0);
+	\draw[thick] (O) circle (\R);
+	\coordinate (A) at (2*\R,0);
+	% Tiếp tuyến AB, AC: cos(AOB) = R/(2R) = 0.5 -> góc 60 độ
+	\coordinate (B) at ({\R*cos(60)},{\R*sin(60)});
+	\coordinate (C) at ({\R*cos(-60)},{\R*sin(-60)});
+	\draw (A) -- (B) -- (O) -- (C) -- (A);
+	\draw (O) -- (A);
+	\draw (B) -- (C);
+	\coordinate (I) at (intersection of B--C and O--A);
+	% H trung điểm BI
+	\coordinate (H) at ($(B)!0.5!(I)$);
+	\draw (O) -- (H);
+	% Đường thẳng d qua H vuông góc OH
+	\coordinate (P) at ($(H)!2!90:(O)$);
+	\coordinate (Q) at ($(H)!2!-90:(O)$);
+	\coordinate (P_real) at (intersection of H--P and A--B);
+	\coordinate (Q_real) at (intersection of H--Q and A--C);
+	\draw (P_real) -- (Q_real);
+	\draw (O) -- (P_real);
+	\draw (O) -- (Q_real);
+	% Ký hiệu
+	\fill (O) circle (1.5pt) node[left] {$O$}
+		  (A) circle (1.5pt) node[right] {$A$}
+		  (B) circle (1.5pt) node[above] {$B$}
+		  (C) circle (1.5pt) node[below] {$C$}
+		  (I) circle (1.5pt) node[below right] {$I$}
+		  (H) circle (1.5pt) node[above right] {$H$}
+		  (P_real) circle (1.5pt) node[above right] {$P$}
+		  (Q_real) circle (1.5pt) node[below right] {$Q$};
+\end{tikzpicture}
+\end{center}
+\begin{enumerate}[a)]
+	\item Vì $AB$ là tiếp tuyến của $(O)$ tại $B$ nên $AB \perp OB$, do đó $\widehat{OBP} = 90^\circ$.
+	Tam giác $OBP$ vuông tại $B$ nên nội tiếp đường tròn đường kính $OP$.
+	Lại có $d \perp OH$ tại $H$ nên $\widehat{OHP} = 90^\circ$.
+	Tam giác $OHP$ vuông tại $H$ nên nội tiếp đường tròn đường kính $OP$.
+	Suy ra bốn điểm $O, H, B, P$ cùng thuộc đường tròn đường kính $OP$, hay tứ giác $OHBP$ nội tiếp.
+	\item Theo tính chất hai tiếp tuyến cắt nhau, ta có $AB = AC$ và $OB = OC = R$.
+	Do đó $OA$ là đường trung trực của đoạn thẳng $BC$, suy ra $OA \perp BC$ tại $I$.
+	Tương tự câu a:
+	\begin{itemize}
+		\item Vì $AC$ là tiếp tuyến của $(O)$ tại $C$ nên $\widehat{OCQ} = 90^\circ$, tam giác $OCQ$ nội tiếp đường tròn đường kính $OQ$.
+		\item Vì $OH \perp HQ$ nên $\widehat{OHQ} = 90^\circ$, tam giác $OHQ$ nội tiếp đường tròn đường kính $OQ$.
+	\end{itemize}
+	Suy ra bốn điểm $O, H, C, Q$ cùng thuộc đường tròn đường kính $OQ$, hay tứ giác $OHCQ$ nội tiếp.
+	Từ các tứ giác nội tiếp, ta có:
+	\begin{itemize}
+		\item Tứ giác $OHBP$ nội tiếp $\implies \widehat{OPH} = \widehat{OBH}$ (hai góc nội tiếp cùng chắn cung $OH$).
+		\item Tứ giác $OHCQ$ nội tiếp $\implies \widehat{OQH} = \widehat{OCH}$ (hai góc nội tiếp cùng chắn cung $OH$).
+	\end{itemize}
+	Mà tam giác $OBC$ cân tại $O$ (do $OB = OC = R$) nên $\widehat{OBH} = \widehat{OCH}$.
+	Suy ra $\widehat{OPH} = \widehat{OQH}$, hay $\widehat{OPQ} = \widehat{OQP}$.
+	Do đó tam giác $OPQ$ cân tại $O$, suy ra $OP = OQ$.
+	\item Trong tam giác vuông $OBA$ có $\cos \widehat{BOA} = \dfrac{OB}{OA} = \dfrac{R}{2R} = \dfrac{1}{2} \implies \widehat{BOA} = 60^\circ$.
+	Xét tam giác vuông $OBI$ tại $I$:
+	$$OI = OB \cdot \cos 60^\circ = \dfrac{R}{2}; \quad BI = OB \cdot \sin 60^\circ = \dfrac{R\sqrt{3}}{2}.$$
+	Vì $OA$ là đường trung trực của $BC$ nên $I$ là trung điểm $BC$, suy ra:
+	$$BC = 2BI = 2 \cdot \dfrac{R\sqrt{3}}{2} = R\sqrt{3}.$$
+	Khi $H$ là trung điểm của $BI$, ta có:
+	$$IH = \dfrac{BI}{2} = \dfrac{R\sqrt{3}}{4}.$$
+	Áp dụng định lý Pythagore trong tam giác vuông $OIH$, ta có:
+	$$OH^2 = OI^2 + IH^2 = \left(\dfrac{R}{2}\right)^2 + \left(\dfrac{R\sqrt{3}}{4}\right)^2 = \dfrac{R^2}{4} + \dfrac{3R^2}{16} = \dfrac{7R^2}{16} \implies OH = \dfrac{R\sqrt{7}}{4}.$$
+	Xét $\triangle OHP$ và $\triangle OIB$ có:
+	$$\widehat{OHP} = \widehat{OIB} = 90^\circ; \quad \widehat{OPH} = \widehat{OBI}\text{ (chứng minh câu b)}.$$
+	Do đó $\triangle OHP \sim \triangle OIB$ (g-g).
+	Suy ra:
+	$$\dfrac{PH}{IB} = \dfrac{OH}{OI} \implies PH = \dfrac{OH \cdot IB}{OI} = \dfrac{\dfrac{R\sqrt{7}}{4} \cdot \dfrac{R\sqrt{3}}{2}}{\dfrac{R}{2}} = \dfrac{R\sqrt{21}}{4}.$$
+	Vì tam giác $OPQ$ cân tại $O$ có $OH$ là đường cao nên $OH$ đồng thời là đường trung tuyến, suy ra:
+	$$PQ = 2PH = 2 \cdot \dfrac{R\sqrt{21}}{4} = \dfrac{R\sqrt{21}}{2}.$$
+	Diện tích tam giác $OPQ$ là:
+	$$S_{\triangle OPQ} = \dfrac{1}{2} OH \cdot PQ = \dfrac{1}{2} \cdot \dfrac{R\sqrt{7}}{4} \cdot \dfrac{R\sqrt{21}}{2} = \dfrac{7R^2\sqrt{3}}{16}.$$
+	Vậy $BC = R\sqrt{3}$ và $S_{\triangle OPQ} = \dfrac{7R^2\sqrt{3}}{16}$.
+\end{enumerate}
+}
+\end{bt}
+
+% nguồn: 2026-11-16_19_cum13_de1_cum13_de2_37_38 (nhập 16/11/2026)
+\begin{bt}%[9H9C29-3]%[ma:5a5aa8c1]
+% nguon: Đề tham khảo Tuyển sinh 10 năm học 2026-2027 Sở GD&ĐT TP.HCM - Cụm 13 Đề 2 (Đề số 38)
+Cho tam giác $ABC$ nhọn ($AB < AC$) nội tiếp đường tròn $(O; R)$, hai đường cao $BE$ và $AF$ cắt nhau tại trực tâm $H$. Vẽ đường kính $AD$ của đường tròn $(O)$. Qua $H$ vẽ đường thẳng $d$ vuông góc với $AD$ tại $K$; đường thẳng $d$ cắt các cạnh $AB, AC$ và đường thẳng $BC$ lần lượt tại $M, N$ và $S$.
+\begin{enumerate}[a)]
+	\item Chứng minh $4$ điểm $A, E, H, K$ cùng thuộc một đường tròn. Xác định tâm $I$ của đường tròn này.
+	\item Chứng minh $\triangle AKM \sim \triangle ABD$ và $SM \cdot SN = SB \cdot SC$.
+	\item Chứng minh $SI \perp OI$.
+\end{enumerate}
+\loigiai{
+\begin{center}
+\begin{tikzpicture}[>=stealth,scale=1.1]
+	\def\R{2.6}
+	\coordinate (O) at (0,0);
+	\draw[thick] (O) circle (\R);
+	\coordinate (A) at (-0.6,2.53);
+	\coordinate (B) at (-2.4,-0.99);
+	\coordinate (C) at (2.2,-1.38);
+	\draw (A) -- (B) -- (C) -- cycle;
+	% Đường cao AF, BE
+	\coordinate (F) at ($(B)!(A)!(C)$);
+	\coordinate (E) at ($(A)!(B)!(C)$);
+	\draw (A) -- (F);
+	\draw (B) -- (E);
+	\coordinate (H) at (intersection of A--F and B--E);
+	% Đường kính AD
+	\coordinate (D) at ($(O)!-1!(A)$);
+	\draw (A) -- (D);
+	\draw (B) -- (D);
+	\draw (C) -- (D);
+	% Đường thẳng d qua H vuông góc AD tại K
+	\coordinate (K) at ($(A)!(H)!(D)$);
+	\coordinate (M) at (intersection of H--K and A--B);
+	\coordinate (N) at (intersection of H--K and A--C);
+	\coordinate (S) at (intersection of H--K and B--C);
+	\draw (S) -- (N);
+	\draw (S) -- (B);
+	% I là trung điểm AH
+	\coordinate (I) at ($(A)!0.5!(H)$);
+	\draw (S) -- (I);
+	\draw (O) -- (I);
+	% Ký hiệu
+	\fill (O) circle (1.5pt) node[below left] {$O$}
+		  (A) circle (1.5pt) node[above] {$A$}
+		  (B) circle (1.5pt) node[left] {$B$}
+		  (C) circle (1.5pt) node[right] {$C$}
+		  (H) circle (1.5pt) node[above right] {$H$}
+		  (E) circle (1.5pt) node[above right] {$E$}
+		  (F) circle (1.5pt) node[below] {$F$}
+		  (D) circle (1.5pt) node[below] {$D$}
+		  (K) circle (1.5pt) node[above right] {$K$}
+		  (M) circle (1.5pt) node[above left] {$M$}
+		  (N) circle (1.5pt) node[above right] {$N$}
+		  (S) circle (1.5pt) node[below left] {$S$}
+		  (I) circle (1.5pt) node[left] {$I$};
+\end{tikzpicture}
+\end{center}
+\begin{enumerate}[a)]
+	\item Vì $BE \perp AC$ tại $E$ nên $\widehat{AEH} = 90^\circ$, suy ra tam giác $AEH$ vuông tại $E$ nên nội tiếp đường tròn đường kính $AH$.
+	Vì $d \perp AD$ tại $K$ nên $\widehat{AKH} = 90^\circ$, suy ra tam giác $AKH$ vuông tại $K$ nên nội tiếp đường tròn đường kính $AH$.
+	Do đó bốn điểm $A, E, H, K$ cùng thuộc đường tròn đường kính $AH$.
+	Tâm $I$ của đường tròn này là trung điểm của đoạn thẳng $AH$.
+	\item Ta có $\widehat{ABD} = 90^\circ$ (góc nội tiếp chắn nửa đường tròn đường kính $AD$).
+	Xét $\triangle AKM$ và $\triangle ABD$ có:
+	\begin{itemize}
+		\item $\widehat{BAD}$ là góc chung;
+		\item $\widehat{AKM} = \widehat{ABD} = 90^\circ$.
+	\end{itemize}
+	Do đó $\triangle AKM \sim \triangle ABD$ (g-g).
+	Suy ra $\widehat{AMK} = \widehat{ADB}$.
+	Mặt khác, trong đường tròn $(O)$, $\widehat{ADB} = \widehat{ACB}$ (hai góc nội tiếp cùng chắn cung $AB$).
+	Do đó $\widehat{AMK} = \widehat{ACB}$.
+	Mà $\widehat{SMB} = \widehat{AMK}$ (hai góc đối đỉnh), suy ra $\widehat{SMB} = \widehat{SCN}$.
+	Xét $\triangle SMB$ và $\triangle SNC$ có:
+	\begin{itemize}
+		\item $\widehat{CSN}$ là góc chung;
+		\item $\widehat{SMB} = \widehat{SCN}$ (chứng minh trên).
+	\end{itemize}
+	Do đó $\triangle SMB \sim \triangle SNC$ (g-g).
+	Suy ra $\dfrac{SM}{SC} = \dfrac{SB}{SN} \implies SM \cdot SN = SB \cdot SC$.
+	\item Ta có:
+	\begin{itemize}
+		\item $\widehat{ACD} = 90^\circ$ (góc nội tiếp chắn nửa đường tròn $(O)$) $\implies CD \perp AC$.
+		Lại có $BH \perp AC$ (do $BE$ là đường cao) $\implies BH \parallel CD$.
+		\item $\widehat{ABD} = 90^\circ$ $\implies BD \perp AB$.
+		Lại có $CH \perp AB$ (do $H$ là trực tâm) $\implies CH \parallel BD$.
+	\end{itemize}
+	Tứ giác $BHCD$ có $BH \parallel CD$ và $CH \parallel BD$ nên là hình bình hành.
+	Gọi $Q$ là giao điểm của hai đường chéo $BC$ và $HD$, suy ra $Q$ là trung điểm của $HD$ và $Q \in BC$.
+	Trong tam giác $AHD$:
+	\begin{itemize}
+		\item $I$ là trung điểm của $AH$;
+		\item $Q$ là trung điểm của $HD$.
+	\end{itemize}
+	Suy ra $IQ$ là đường trung bình của tam giác $AHD$, do đó $IQ \parallel AD$.
+	Mà $d \perp AD$ tại $K$ nên $IQ \perp d$, hay $IQ \perp SH$.
+	Trong tam giác $SIQ$:
+	\begin{itemize}
+		\item $SH \perp IQ$ (chứng minh trên), nên $SH$ là đường cao kẻ từ đỉnh $S$;
+		\item $AI \perp SQ$ (vì $AH \perp BC$ tại $F$, mà $I \in AH$ và $S, Q \in BC$), nên $AI$ là đường cao kẻ từ đỉnh $I$.
+	\end{itemize}
+	Hai đường cao $SH$ và $AI$ cắt nhau tại $H$, suy ra $H$ là trực tâm của tam giác $SIQ$.
+	Do đó $QH \perp SI$. Mà $Q, H, D$ thẳng hàng nên $HD \perp SI$.
+	Mặt khác, trong tam giác $AHD$, $I$ là trung điểm $AH$ và $O$ là trung điểm $AD$ nên $IO$ là đường trung bình của tam giác $AHD$, suy ra $IO \parallel HD$.
+	Vì $IO \parallel HD$ và $HD \perp SI$ nên $SI \perp OI$.
+\end{enumerate}
+}
+\end{bt}
