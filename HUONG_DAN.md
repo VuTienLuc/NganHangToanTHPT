@@ -586,3 +586,8 @@ Bật khi đăng đề (ô **💡 Cho dùng Gợi ý AI** trong 🌐 Link thi tr
 - Học sinh chụp màn hình khung đó gửi ChatGPT/Gemini, hoặc bấm **Chép chữ** để dán; có nút mở ChatGPT, Gemini.
 - Mỗi câu mở gợi ý được đếm: bảng điểm có cột **💡 Gợi ý** (số câu đã mở), có trong file CSV.
 - Nên dùng cho đề luyện tập / ôn tập; đề kiểm tra lấy điểm nên tắt.
+
+### ▶ Trình chiếu phiếu HTML
+Nút **▶ Trình chiếu** (phím **P**) trên phiếu HTML: bìa → kiến thức trọng tâm (mỗi phần/dạng một slide) → từng câu một slide.
+Phím: ←/→/Space đổi slide · **A** đáp án · **S** lời giải · **G** mục lục · **T** nền sáng/tối · **F** toàn màn hình · **Esc** thoát; vuốt trái/phải trên điện thoại.
+Chữ tự co cho vừa màn hình (A−/A+ chỉnh tay), bấm vào phương án để đánh dấu lựa chọn của lớp. Nút **🌓** trên thanh công cụ đổi nền cả trang: Tự động / Sáng / Tối.
