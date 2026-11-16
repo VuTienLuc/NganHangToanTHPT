@@ -107,7 +107,8 @@ def doc_pham_vi(pham_vi):
     for b in bai:
         t = doc(b).strip()
         if t:
-            phan.append((r"\textbf{\color{mauPhieu}" + ds[b]["ten_bai"] + "}\n" if len(bai) > 1 else "") + t)
+            phan.append((r"\par\medskip{\large\bfseries\color{mauPhieu} Bài " + str(ds[b]["so_bai"]) + ". " + ds[b]["ten_bai"]
+                         + r"}\par\smallskip" + "\n" if len(bai) > 1 else "") + t)
     return "\n\n".join(phan)
 
 
