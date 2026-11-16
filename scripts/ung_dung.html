@@ -579,6 +579,12 @@ tr.gop-h td{background:#dbeafe;text-align:left;font-weight:700;padding:8px 12px;
     <label>Cách mở phương án <select id="dthi-lat"><option value="select">Lật phương án nào → chọn phương án đó</option><option value="reveal">Lật để xem → bấm chọn đáp án</option><option value="off">Hiện sẵn tất cả phương án</option></select></label>
     <label>URL nhận điểm Google Sheets (không bắt buộc) <input id="dthi-sheet" placeholder="https://script.google.com/macros/s/…/exec"></label>
     <label style="flex-direction:row;align-items:center;gap:8px;font-weight:400"><input type="checkbox" id="dthi-an" checked> <b>Ẩn đáp án &amp; lời giải</b> — trang làm bài không chứa đáp án, máy chủ chấm; thi xong bấm "Mở lời giải"</label>
+    <div style="background:#f0fdf4;border-radius:8px;padding:8px 10px">
+      <b style="color:#166534">Kèm bài giảng chữa đề</b> <span style="color:#555;font-size:12px">(cùng bộ câu, có đáp án + lời giải; chỉ tài khoản giáo viên xem, vào mục lục lớp)</span>
+      <div style="display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin-top:4px">
+        <label style="flex-direction:row;align-items:center;gap:6px;font-weight:400"><input type="checkbox" id="dthi-bg-html" checked> Trình chiếu HTML</label>
+        <label style="flex-direction:row;align-items:center;gap:6px;font-weight:400"><input type="checkbox" id="dthi-bg-pdf"> PDF Beamer sửa bài <span style="color:#888;font-size:11.5px">(biên dịch thêm 1–3 phút)</span></label>
+        <label style="flex-direction:row;align-items:center;gap:6px;font-weight:400">Mục lục <select id="dthi-bg-lop"><option value="6">Toán 6</option><option value="7">Toán 7</option><option value="8">Toán 8</option><option value="9">Toán 9</option><option value="10">Toán 10</option><option value="11">Toán 11</option><option value="12">Toán 12</option></select></label></div></div>
     <div style="color:#555;font-size:12px">Học sinh phải <b>đăng nhập</b> bằng tài khoản thầy cấp (thẻ 👥 Tài khoản); lớp, STT, họ tên tự điền theo tài khoản.</div>
   </div>
   <div class="chan"><span style="font-size:12px;color:#666">Cần đúng 12 TN · 4 Đ/S · 6 TLN.</span>
@@ -1783,6 +1789,7 @@ $("#xt-thi").onclick=async()=>{
   const ok=dem.TN===12&&dem.DS===4&&dem.TLN===6;
   $("#dthi-tt").innerHTML=`Bộ câu mã đề đang xem: TN ${dem.TN} · Đ/S ${dem.DS} · TLN ${dem.TLN} `+(ok?'<b style="color:#047857">✓ đúng cấu trúc</b>':'<b style="color:#b91c1c">✗ bài kiểm tra trực tuyến cần đúng 12–4–6</b>');
   $("#dthi-ok").disabled=!ok;
+  $("#dthi-bg-lop").value=String(XT.nguon?HK_LOP:doanLop(ten+" "+($("#mon")?$("#mon").value:"")));
   try{const r=await api("/api/thi/ds",{});$("#dthi-sheet").value=r.cau_hinh.script_url||"";DTHI.goc=r.goc;veLinkDthi();
     if(!r.co_node) $("#dthi-tt").innerHTML+='<br><b style="color:#b45309">Máy chưa có Node.js — cài bản LTS ở nodejs.org trước khi đăng.</b>';}catch(_){}
   $("#hop-dthi").style.display="flex";
@@ -1817,11 +1824,18 @@ $("#dthi-ok").onclick=async()=>{
       d.settings={examMinutes:phut,studentExam:w.examSettings({flipMode:$("#dthi-lat").value,scriptUrl:sheet,examId:slugi})};
       const r2=await api("/api/thi/dang",{slug:slugi,ten:teni,html:w.createExam(d),an_dap_an:$("#dthi-an").checked,phut,dang_ngay:false,lop_giao:$("#dthi-lop").value,so_luot:+$("#dthi-luot").value});
       if(!r2.ok) throw Error(r2.loi); ra.push(r2.slug);
+      if($("#dthi-bg-html").checked){
+        const g=await api("/api/thi/bg-dang",{slug:r2.slug+"-chua",ten:teni+" – chữa đề",lop:+$("#dthi-bg-lop").value,kieu:"html",html:w.createLegacy(d),ghi_de:true,nguon:"đề "+r2.slug,dang_ngay:false});
+        if(!g.ok) throw Error("Bài giảng HTML: "+g.loi);
+      }
     }
     n.textContent="Đang đăng lên Cloudflare…";
     let chinh=ra[0];
-    if(tat&&$("#dthi-chung").checked){const g=await api("/api/thi/nhom",{slug:goc,ten,con:ra,lop_giao:$("#dthi-lop").value,so_luot:+$("#dthi-luot").value}); if(!g.ok) throw Error(g.loi); chinh=g.slug}
-    else{const k=await api("/api/thi/dang-lai",{}); if(!k.ok) throw Error(k.loi)}
+    if(tat&&$("#dthi-chung").checked){const g=await api("/api/thi/nhom",{slug:goc,ten,con:ra,lop_giao:$("#dthi-lop").value,so_luot:+$("#dthi-luot").value,dang_ngay:false}); if(!g.ok) throw Error(g.loi); chinh=g.slug}
+    if($("#dthi-bg-pdf").checked){
+      const boPdf=(DTHI.dao?[XT.bo[0]]:cac.map(i=>boCua(i))).map(b=>Object.fromEntries(["TN","DS","TLN"].map(l=>[l,(b[l]||[]).filter(c=>!c.mat).map(c=>c.ma)])));
+      const k=await api("/api/thi/bg-pdf",{mt:XT.mt,bo:boPdf,bat_dau:DTHI.dao?DTHI.bat_dau:DTHI.bat_dau+cac[0],slug:goc,ten,lop:+$("#dthi-bg-lop").value}); if(!k.ok) throw Error(k.loi);
+    } else {const k=await api("/api/thi/dang-lai",{}); if(!k.ok) throw Error(k.loi)}
     $("#hop-dthi").style.display="none"; $("#hop-xt").style.display="none";
     await moThi(); theoDoiThi(chinh,ten,ra.length>1?ra:null);
   }catch(e){alert("Chưa tạo được link: "+e.message)}

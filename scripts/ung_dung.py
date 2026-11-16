@@ -142,6 +142,46 @@ def bien_dich_ts10(out):
     ghi_log("Xong.")
     cong_viec.update(dang_chay=False, xong=True)
 
+def bai_giang_pdf(d, log):
+    """Bài giảng PDF chữa đề: xuất đúng bộ câu đã đăng (không đảo) → biên dịch Beamer sửa bài → đưa vào mục lục lớp."""
+    import thi_truc_tuyen as T
+    bo = d.get("bo") or []
+    if not bo:
+        return
+    log(f"Dựng bài giảng PDF (Beamer sửa bài) cho {len(bo)} bộ câu…")
+    mt = dict(d.get("mt") or {})
+    mt.update({"ten": ten_khong_dau((d.get("slug") or "bai_giang") + "_baigiang", 60), "so_ma_de": len(bo),
+               "ma_de_bat_dau": int(d.get("bat_dau") or 101), "moi_ma_de_cau_khac_nhau": len(bo) > 1, "chon_san": bo,
+               "xao_cau": False, "xao_phuong_an": False, "xao_y_dung_sai": False, "xuat_beamer": True, "xuat_leftnote": False,
+               "xuat_word": False, "xuat_word_k12": False, "xuat_word_de": False, "de_cuong": False})
+    mt.pop("tranh_ma", None)
+    p = os.path.join(GOC, "du-lieu", "_ma_tran_tam.json")
+    json.dump(mt, open(p, "w", encoding="utf-8"), ensure_ascii=False, indent=2)
+    rc, ra = chay([os.path.join(SCRIPTS, "tron_de.py"), p])
+    m = re.search(r"^THU_MUC:(.*)$", ra, re.M)
+    if rc != 0 or not m:
+        log("✗ Chưa xuất được đề cho bài giảng PDF:\n" + ra[-800:]); return
+    thu = os.path.join(GOC, m.group(1).strip()); tex = os.path.join(thu, "tex")
+    pdfl = tim_pdflatex()
+    if not pdfl:
+        log("✗ Máy chưa có pdflatex — bỏ qua bài giảng PDF."); return
+    for i in range(len(bo)):
+        so = int(d.get("bat_dau") or 101) + i
+        f = f"BeamerTrang_{so}.tex"
+        if not os.path.exists(os.path.join(tex, f)):
+            log(f"   ✗ không thấy {f}"); continue
+        for _ in range(2):
+            subprocess.run([pdfl, "-interaction=nonstopmode", f], cwd=tex, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, timeout=1800)
+        pdf = os.path.join(tex, f[:-4] + ".pdf")
+        if not os.path.exists(pdf):
+            log(f"   ✗ biên dịch lỗi {f} (xem {os.path.relpath(tex, GOC)}/{f[:-4]}.log)"); continue
+        nhieu = len(bo) > 1
+        sl = T.them_bai_giang(f"{d.get('slug')}{'-' + str(so) if nhieu else ''}-pdf",
+                              f"{d.get('ten')}{' – Mã ' + str(so) if nhieu else ''} – chữa đề (PDF)", int(d.get("lop") or 10), "pdf",
+                              open(pdf, "rb").read(), ghi_de=True, nguon=os.path.relpath(pdf, GOC))
+        log(f"   ✓ bài giảng PDF: bai-giang/{sl}/")
+
+
 def dang_thi_nen(viec=None):
     """Đổi đề (nếu có) rồi đăng thư mục thi-truc-tuyen/site lên Cloudflare Pages."""
     import thi_truc_tuyen as T
@@ -320,9 +360,13 @@ class XuLy(BaseHTTPRequestHandler):
                                                 d.get("kieu") or "html", noi, bool(d.get("ghi_de")), d.get("nguon") or "")
                     except Exception as e:
                         return self.gui(200, {"ok": False, "loi": str(e)})
-                    threading.Thread(target=dang_thi_nen, daemon=True).start()
+                    if d.get("dang_ngay", True):
+                        threading.Thread(target=dang_thi_nen, daemon=True).start()
                     return self.gui(200, {"ok": True, "slug": slug, "url": f"{T.goc_url()}/bai-giang/{slug}/",
                                           "muc_luc": f"{T.goc_url()}/toan{int(d.get('lop') or 10)}/"})
+                if viec == "bg-pdf":
+                    threading.Thread(target=dang_thi_nen, args=(lambda log: bai_giang_pdf(d, log),), daemon=True).start()
+                    return self.gui(200, {"ok": True})
                 if viec == "bg-trang-thai":
                     sl, tt = d.get("slug"), d.get("tt")
                     threading.Thread(target=dang_thi_nen, args=(lambda log: (T.doi_bai_giang(sl, tt),
@@ -341,7 +385,8 @@ class XuLy(BaseHTTPRequestHandler):
                 if viec == "nhom":
                     slug = T.them_nhom(d.get("slug"), (d.get("ten") or "Đề thi").strip(), d.get("con") or [],
                                        d.get("lop_giao") or "", int(d.get("so_luot") if d.get("so_luot") is not None else 2))
-                    threading.Thread(target=dang_thi_nen, daemon=True).start()
+                    if d.get("dang_ngay", True):
+                        threading.Thread(target=dang_thi_nen, daemon=True).start()
                     return self.gui(200, {"ok": True, "slug": slug, "url": T.goc_url() + "/" + slug + "/"})
                 if viec == "trang-thai":
                     sl, tt = d.get("slug"), d.get("tt")

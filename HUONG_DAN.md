@@ -198,6 +198,9 @@ như phần mềm cũ thì ghi `"khung": "DeThi"` trong file JSON.
   URL nhận điểm Google Sheets (nếu dùng) → **Đăng lên Cloudflare**. Lần đầu trình duyệt mở trang Cloudflare: đăng nhập, bấm Allow.
 - Kết quả: link `https://<dự án>.pages.dev/<đường-dẫn>/` + mã QR (chiếu lên lớp). Bài kiểm tra đúng mẫu của ứng dụng trình chiếu
   (12–4–6, đồng hồ, tự chấm thang 10, gửi điểm Google Sheet).
+- **Kèm bài giảng chữa đề** (trong hộp đăng đề): tích *Trình chiếu HTML* (mỗi mã một trang, có Đáp án / Xem lời giải) và/hoặc
+  *PDF Beamer sửa bài* (xuất đúng bộ câu, không đảo, biên dịch thêm 1–3 phút), chọn mục lục lớp → đăng cùng lúc với đề,
+  vào `…/bai-giang/<đường-dẫn>-101-chua/`, `…/<đường-dẫn>-pdf/` và mục lục lớp (chỉ tài khoản giáo viên xem).
 - **Nhiều mã đề một lần**: ra đề nhiều mã (ô Số mã đề) → hộp đăng chọn *Tất cả N mã đề*: mỗi mã một link `…/<đường-dẫn>-101/`, `-102/`…
   (cùng bộ câu thì máy tự đảo thứ tự câu và phương án theo ô Đảo phương án / Đảo ý Đ-S). Tích **link chung** → thêm `…/<đường-dẫn>/`:
   mỗi học sinh mở được chia ngẫu nhiên 1 mã (tải lại vẫn mã đó). Mở lời giải / Đóng / Xoá ở link chung áp cho cả nhóm.
