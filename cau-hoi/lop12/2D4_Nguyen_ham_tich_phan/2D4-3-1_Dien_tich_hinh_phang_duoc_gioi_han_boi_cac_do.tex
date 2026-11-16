@@ -3892,3 +3892,445 @@
 		 Vậy $\dfrac{S_1}{S_2}=\dfrac{1}{4}$.
 	} 
 \end{bt}
+
+% nguồn: 2026-11-16_12_2D4_TL_Nguyen_ham_Tich_phan (nhập 16/11/2026)
+\begin{bt}%[2D4V3-1]%[ma:8ea44f69]
+% nguon: Archive/2024/TaiLieuGiangDay/5.HH Oxyz/VDC_TDM.tex #3157
+
+	Cho hai hình phẳng $\left(H_1\right)$ và $\left(H_2\right)$ được tô màu như hình vẽ bên dưới. Biết các điểm $A$, $B$, $C$, $D$, $E$ đều là các đỉnh của các đường parabol. Hãy tính diện tích các hình phẳng $\left(H_1\right)$ và $\left(H_2\right)$?	
+	\begin{center}
+		\begin{tikzpicture}[scale=.45, font=\footnotesize, line join=round, line cap=round, >=stealth]		
+			\def\xmin{-8}\def\xmax{8}\def\ymin{-4.5}\def\ymax{13}						
+			\begin{scope}
+				[rotate=-90]		
+				\clip (\xmin,\ymin) rectangle (7,\ymax);
+				\fill[gray!30] plot[shift={(-5,0)},smooth,samples=200,domain=-2:0] (\x,{-1*((\x)^2)+0*\x+4})
+				--plot[shift={(-2.5,4)},smooth,samples=200,domain=-2.5:0] (\x,{-.64*((\x)^2)+0*\x+4})
+				-- plot[shift={(0,8)},smooth,samples=200,domain=-2.5:2.5] (\x,{-.64*((\x)^2)+0*\x+4})
+				--plot[shift={(2.5,4)},smooth,samples=200,domain=0:2.5] (\x,{-.64*((\x)^2)+0*\x+4})	
+				--plot[shift={(5,0)},smooth,samples=200,domain=0:2] (\x,{-1*((\x)^2)+0*\x+4});
+				\draw[shift={(5,0)},smooth,samples=200,domain=-2:2] plot (\x,{-1*((\x)^2)+0*\x+4});	%1
+				
+				\draw[name path=a2,shift={(-5,0)},smooth,samples=200,domain=-2:2] plot (\x,{-1*((\x)^2)+0*\x+4});	%2
+				
+				\draw[name path=a3,smooth,samples=200,domain=-3:3] plot (\x,{-4/9*((\x)^2)+0*\x+4});	%3
+				
+				\draw[name path=a4,shift={(2.5,4)},smooth,samples=200,domain=-2.5:2.5] plot (\x,{-.64*((\x)^2)+0*\x+4});	
+				%4
+				\draw[name path=a5,shift={(-2.5,4)},smooth,samples=200,domain=-2.5:2.5] plot (\x,{-.64*((\x)^2)+0*\x+4});	 %5
+				\draw[name path=a6,shift={(0,8)},smooth,samples=200,domain=-2.5:2.5] plot (\x,{-.64*((\x)^2)+0*\x+4});
+				
+				\draw (-7,0)rectangle (7,12);			
+				
+				\foreach \x in {-5,-3,...,5}
+				\draw[dashed] (\x,0)--(\x,12);				
+				\foreach \x in {4,8}
+				\draw[dashed] (-7,\x)--(7,\x);			
+				
+				\fill (-5,4) node[above right]{$A$} circle (1.5pt)
+				(0,4) node[left]{$B$} circle (1.5pt)
+				(5,4) node[below right]{$C$} circle (1.5pt)
+				(-2.5,8) node[left]{$D$} circle (1.5pt)
+				(2.5,8) node[left]{$E$} circle (1.5pt)
+				; 
+				
+				\draw[|<->|,blue] (-7,-.75)--node[black,midway,sloped,fill=white]{$2$}(-5,-.75);
+				
+				\draw[|<->|,blue] (-7.65,0)--node[black,midway,sloped,fill=white]{$4$}(-7.65,4);	
+				
+				
+				\draw (-2.5,3.5) node[]{$(H_1)$};		
+			\end{scope}				
+			\end{tikzpicture}			
+			\begin{tikzpicture}[scale=.35, font=\footnotesize, line join=round, line cap=round, >=stealth]			
+				\def\xmin{-8}\def\xmax{9.5}\def\ymin{-1.25}\def\ymax{18}
+				\clip (\xmin,\ymin) rectangle (8.5,\ymax);					
+				\draw[fill=gray!30] (-6,0)rectangle (6,16);				
+				\fill[smooth,samples=200,domain=-4:4, white] plot (\x,{-.75*((\x)^2)+0*\x+12});	
+				\fill[smooth,samples=200,domain=-6:6,white] plot (\x,{5/18*((\x)^2)+0*\x+6});	
+				\draw[smooth,samples=200,domain=-4:4] plot (\x,{-.75*((\x)^2)+0*\x+12});	
+				\draw[smooth,samples=200,domain=-6:6] plot (\x,{5/18*((\x)^2)+0*\x+6});		
+				\draw[|<->|,blue] (-6,16.75)--node[black,midway,sloped,fill=white]{$12$}(6,16.75);
+				\draw[|<->|,blue] (6.85,0)--node[black,midway,sloped,fill=white]{$16$}(6.85,16);	
+				\draw[|<->|,blue] (-4,-.85)--node[black,midway,sloped,fill=white]{$8$}(4,-.85);				
+				\draw[|<->|,blue] (0,0)--node[black,midway,sloped,fill=white]{$6$}(0,6);
+				\draw[|<->|,blue] (0,12)--node[black,midway,sloped,fill=white]{$4$}(0,16);				
+				\draw[dashed] (0,6)--(0,12);
+				\draw (-4.5,7) node[]{$(H_2)$};
+			\end{tikzpicture}
+	\end{center}
+	\loigiai{Không mất tỉnh tổng quát, vẽ lại hình $(H_1)$ như bên dưới. 
+	\begin{center}
+		\begin{tikzpicture}[scale=.45, font=\footnotesize, line join=round, line cap=round, >=stealth]
+			
+			\def\xmin{-8}\def\xmax{10}\def\ymin{-2.5}\def\ymax{13}						
+			\begin{scope}
+				%[rotate=-90]		
+				\clip (\xmin,-2) rectangle (8,\ymax);
+				\fill[gray!30] plot[shift={(-5,0)},smooth,samples=200,domain=-2:0] (\x,{-1*((\x)^2)+0*\x+4})
+				--plot[shift={(-2.5,4)},smooth,samples=200,domain=-2.5:0] (\x,{-.64*((\x)^2)+0*\x+4})
+				-- plot[shift={(0,8)},smooth,samples=200,domain=-2.5:2.5] (\x,{-.64*((\x)^2)+0*\x+4})
+				--plot[shift={(2.5,4)},smooth,samples=200,domain=0:2.5] (\x,{-.64*((\x)^2)+0*\x+4})	
+				--plot[shift={(5,0)},smooth,samples=200,domain=0:2] (\x,{-1*((\x)^2)+0*\x+4});
+				\draw[shift={(5,0)},smooth,samples=200,domain=-2:2] plot (\x,{-1*((\x)^2)+0*\x+4});	%1
+				
+				\draw[name path=a2,shift={(-5,0)},smooth,samples=200,domain=-2:2] plot (\x,{-1*((\x)^2)+0*\x+4});	%2
+				
+				\draw[name path=a3,smooth,samples=200,domain=-3:3] plot (\x,{-4/9*((\x)^2)+0*\x+4});	%3
+				
+				\draw[name path=a4,shift={(2.5,4)},smooth,samples=200,domain=-2.5:2.5] plot (\x,{-.64*((\x)^2)+0*\x+4});	
+				%4
+				\draw[name path=a5,shift={(-2.5,4)},smooth,samples=200,domain=-2.5:2.5] plot (\x,{-.64*((\x)^2)+0*\x+4});	 %5
+				\draw[name path=a6,shift={(0,8)},smooth,samples=200,domain=-2.5:2.5] plot (\x,{-.64*((\x)^2)+0*\x+4});
+				
+				\draw (-7,0)rectangle (7,12);			
+				
+				\foreach \x in {-5,-3,...,5}
+				\draw[dashed] (\x,0)--(\x,12);				
+				\foreach \x in {4,8}
+				\draw[dashed] (-7,\x)--(7,\x);			
+				
+				\fill (-5,4) node[above left]{$A$} circle (1.5pt)
+				(0,4) node[below]{$B$} circle (1.5pt)
+				(5,4) node[above right]{$C$} circle (1.5pt)
+				(-2.5,8) node[below]{$D$} circle (1.5pt)
+				(2.5,8) node[below]{$E$} circle (1.5pt)
+				; 
+				
+				\draw[|<->|,blue] (-7,-1.25)--node[black,midway,sloped,fill=white]{$2$}(-5,-1.25);
+				
+				\draw[|<->|,blue] (-7.65,0)--node[black,midway,sloped,fill=white]{$4$}(-7.65,4);				
+				
+				\draw (-2.5,3.5) node[]{$(H_1)$};
+				
+				\fill (-7,0) node[below]{$M$} circle (1.5pt)
+				(7,0) node[below]{$N$} circle (1.5pt)
+				(7,4) node[above right]{$I$} circle (1.5pt)
+				(-7,4) node[above left]{$K$} circle (1.5pt)
+				
+				(-5,8) node[above left]{$G$} circle (1.5pt)
+				(5,8) node[above right]{$R$} circle (1.5pt)
+				(5,0) node[below]{$O_1$} circle (1.5pt)
+				(2.5,4) node[below]{$O_2$} circle (1.5pt)
+				;						
+			\end{scope}				
+		\end{tikzpicture}			
+	\end{center}
+	
+	\begin{itemize}
+		\item Tính diện tích hình $(H_1)$.
+		Từ hình vẽ ta thấy hai hình parabol ở dưới cùng bằng nhau. Do đó chọn hệ trục tọa độ $Oxy$ sao cho $Ox$ trùng với tia $O_1N$ và $Oy$ trùng với tia $OC$. Khi đó ta có $N(2{,}0)$ và $C(0{,}4)$.\\
+		Parabol đi qua điểm $C$ và $N$ có phương trình là $y=-x^2+4$.\\
+		Do đó diện tích phân tô đậm trong hình chữ nhật $MNIK$ là $$S_1=S_{MNIK}-2\displaystyle\int\limits_0^2[4-(-x^2+4)]\mathrm{\,d}x=4\cdot 14-2\cdot \dfrac{8}{3}=\dfrac{152}{3}.$$
+		Từ dữ liệu hình vẽ ba hình parabol ở trên bằng nhau. Chọn hệ trục tọa độ $Oxy$ sao cho $O$ trùng với trung điểm $O_2$ của $BC$, trục $Ox$ trùng với tia $O_2C$ và trục $Oy$ trùng với tia $O_2E$. Khi đó ta có $C(2{,}5;0)$ và $E(0;4)$. \\
+		Parabol đi qua điểm $E$ và $C$ có phương trình là $y=-\dfrac{16}{25}x^2+4$.\\		
+		Do đó diện tích phân tô đậm trong hình chữ nhật $ACRG$ là\\ $$S_2=S_{ACRG}-2\displaystyle\int\limits_0^{2{,}5}\left[4-\left(-\dfrac{16}{25}x^2+4\right)\right]\mathrm{\,d}x=4\cdot 10-2\cdot\dfrac{10}{3} =\dfrac{100}{3}.$$	
+		Diện tích phần tô tậm phía trên là $$S_3=2\cdot \displaystyle\int\limits_0^{2{,}5}\left(-\dfrac{16}{25}x^2+4\right)\mathrm{\,d}x=\dfrac{40}{3} .$$
+		Vậy diện tích hình phẳng $(H_1)$ là $S_1+S_2+S_3=\dfrac{152}{3}+\dfrac{100}{3}+\dfrac{40}{3}=\dfrac{292}{3}$.
+		\item Tính diện tích hình $(H_2)$.\\
+		\begin{center}
+			\begin{tikzpicture}[scale=.35, font=\footnotesize, line join=round, line cap=round, >=stealth]			
+				\def\xmin{-8}\def\xmax{9.5}\def\ymin{-1.25}\def\ymax{18}
+				\clip (\xmin,\ymin) rectangle (8.5,\ymax);					
+				\draw[fill=gray!30] (-6,0)rectangle (6,16);				
+				\fill[smooth,samples=200,domain=-4:4, white] plot (\x,{-.75*((\x)^2)+0*\x+12});	
+				\fill[smooth,samples=200,domain=-6:6,white] plot (\x,{5/18*((\x)^2)+0*\x+6});	
+				\draw[smooth,samples=200,domain=-4:4] plot (\x,{-.75*((\x)^2)+0*\x+12});	
+				\draw[smooth,samples=200,domain=-6:6] plot (\x,{5/18*((\x)^2)+0*\x+6});		
+				\draw[|<->|,blue] (-6,16.75)--node[black,midway,sloped,fill=white]{$12$}(6,16.75);
+				\draw[|<->|,blue] (6.85,0)--node[black,midway,sloped,fill=white]{$16$}(6.85,16);	
+				\draw[|<->|,blue] (-4,-.85)--node[black,midway,sloped,fill=white]{$8$}(4,-.85);				
+				\draw[|<->|,blue] (0,0)--node[black,midway,sloped,fill=white]{$6$}(0,6);
+				\draw[|<->|,blue] (0,12)--node[black,midway,sloped,fill=white]{$4$}(0,16);				
+				\draw[dashed] (0,6)--(0,12);
+				\draw (-4.5,7) node[]{$(H_2)$};
+				
+				\fill (4,0) node[above left]{$F$} circle (1.5pt)
+				(0,12) node[above left]{$T$} circle (1.5pt)
+				(0,6) node[above left]{$S$} circle (1.5pt)
+				(6,16) node[above right]{$U$} circle (1.5pt)
+				(0,0) node[above right]{$O_3$} circle (1.5pt)
+				;
+			\end{tikzpicture}
+		\end{center}
+		Chọn hệ trục tọa độ $Oxy$ sao cho gốc tọa độ trùng với $O_3$, tia $Ox$ và $Oy$ lần lượt trùng với tia $O_3F$ và $O_3T$ như hình vẽ.\\
+		Khi đó parabol có đỉnh là $T(0{,}12)$ và đi qua điểm $F(4{,}0)$ có phương trình $$y=-\dfrac{3}{4}x^2+12.$$
+		Khi đó diện tích giới hạn giữa $y=-\dfrac{3}{4}x^2+12$ là trục hoành là 
+		$$S_4=2\displaystyle\int\limits_0^4\left(-\dfrac{3}{4}x^2+12\right)\mathrm{\,d}x=2\cdot 32=64.$$		
+		Parabol có đỉnh $S(0,6)$ và đi qua điểm $U(6,16)$ có phương trình là $y=\dfrac{5}{18}x^2+6$.\\
+		Diện tích giới hạn giữa $y=\dfrac{5}{18}x^2+6$ và đường thẳng $y=16$ là 		
+		$$S_5=2\displaystyle\int\limits_0^{6}\left[16-\left(\dfrac{5}{18}x^2+6\right)\right]\mathrm{\,d}x =2\cdot 40=80.$$	
+		Phương trình hoành độ giao điểm của $y=-\dfrac{3}{4}x^2+12$ và  $y=\dfrac{5}{18}x^2+6$ là
+		$$\dfrac{5}{18}x^2+6= -\dfrac{3}{4}x^2+12\Leftrightarrow \dfrac{37}{36}x^2=6\Leftrightarrow \hoac{&x_1=-\dfrac{6\sqrt{222}}{37}\\&x_2=\dfrac{6\sqrt{222}}{37}.}$$
+		Ta có diện tích giới hạn của $y=-\dfrac{3}{4}x^2+12$ và  $y=\dfrac{5}{18}x^2+6$ là		
+		$$S_6=2\displaystyle\int\limits_0^{x_2}\left(-\dfrac{3}{4}x^2+12-\dfrac{5}{18}x^2-6\right)\mathrm{\,d}x=2\cdot\displaystyle\int\limits_0^{x_2}\left(-\dfrac{37}{36}x^2+6\right)\mathrm{\,d}x \approx 19{,}33.$$
+		 Khi đó diện tích hình $(H_2)$ là $16\cdot 12- S_4-S_5+S_6\approx 67{,}33$.
+	\end{itemize}
+	}
+\end{bt}
+
+% nguồn: 2026-11-16_12_2D4_TL_Nguyen_ham_Tich_phan (nhập 16/11/2026)
+\begin{bt}%[2D4H3-1]%[ma:55d06812]
+% nguon: Archive/SP_KhoLatex/ID6_old/2-GHK2-17-THPTSo3BaoThang-LaoCai-22TN-TL.tex #3590
+%[GHK2 THPT Số 3 Bảo Thắng - Lào Cai, 2022]%[Phan Quốc Trí, 12EX4-2022]
+	Tính diện tích $S$ của hình phẳng giới hạn bởi đồ thị hai hàm số $y=x^3 +3x+3$ và $y=x^2+5x+3$.
+	\loigiai{
+		Ta có 	$x^3 +3x+3 = x^2+5x+3 \Leftrightarrow x^3 -x^2 -2x =0 \Leftrightarrow \hoac{&x=-1\\&x=0\\&x=2.}$\\
+		Diện tích hình phẳng
+\begin{eqnarray*}
+			S&=& \displaystyle \int\limits_{-1}^{2} \left| x^3 -x^2 -2x \right| \mathrm{\,d}x\\
+			& =& \displaystyle \int\limits_{-1}^{0} \left| x^3 -x^2 -2x \right| \mathrm{\,d}x + \displaystyle \int\limits_{0}^{2} \left| x^3 -x^2 -2x \right| \mathrm{\,d}x  \\
+			&=& \left| \displaystyle \int\limits_{-1}^{0} \left(x^3 -x^2 -2x\right) \mathrm{\,d}x \right| + \left| \displaystyle \int\limits_{0}^{2} \left(x^3 -x^2 -2x\right) \mathrm{\,d}x \right| \\
+			&=& \left| \left( \dfrac{x^4}{4}-\dfrac{x^3}{3}-x^2 \right) \Big|_{-1}^{0} \right| + \left| \left( \dfrac{x^4}{4}-\dfrac{x^3}{3}-x^2 \right) \Big|_{0}^{2} \right|\\
+			&=& \dfrac{37}{12}.
+\end{eqnarray*}
+	}
+\end{bt}
+
+% nguồn: 2026-11-16_12_2D4_TL_Nguyen_ham_Tich_phan (nhập 16/11/2026)
+\begin{bt}%[2D4V3-1]%[ma:6b8d03d8]
+% nguon: Archive/SP_KhoLatex/ID6_old/2-GHK2-25-TXQuangTri-QuangTri-22.tex #3732
+%[Thi giữa học kỳ 2- THPT TX Quảng Trị- Quảng Trị - 22]%[Lê Văn Toàn - EX4]
+		\immini{
+		Cho hàm số $y=f(x)$ liên tục trên $\mathbb{R}$ và hàm số $y=g(x)=x\cdot f\left(x^2\right)$ có đồ thị trên đoạn $[0;2]$ như hình vẽ.
+		Biết diện tích miền tô màu là $S=\dfrac{5}{2}$, tính tích phân $I=\displaystyle\int\limits_{1}^{4} f(x) \mathrm{\,d}x$.
+		}
+	{
+\begin{tikzpicture}[scale=1, font=\footnotesize, line join=round, line cap=round, >=stealth]
+	\draw[->] (-0.5,0)--(3.1,0) node[below left] {$x$};
+	\draw[->] (0,-0.5)--(0,3) node[below left] {$y$};
+	\draw (0,0) node [below left] {$O$};
+\begin{scope}
+		\clip (-0.5,-0.5) rectangle (3,3);
+		\draw[dashed,thin,fill=black!35](1,0) node[below] {$1$}--plot[samples=200,domain=1:2,smooth,variable=\x] (\x,{0.6*(\x)^2})--(2,0) node[below] {$2$};
+		\draw plot[samples=200,domain=0:2.1,smooth,variable=\x] (\x,{0.6*(\x)^2}) node[above]{$g(x)$};
+	\end{scope}
+\end{tikzpicture}
+}
+\loigiai{
+Ta có $S=\displaystyle\int\limits_{1}^{2} g(x) \mathrm{\,d} x=\dfrac{5}{2}=\displaystyle\int\limits_{1}^{2} x f\left(x^2\right) \mathrm{\,d} x$. Đặt $t=x^2 \Rightarrow \mathrm{\,d} t=2x \mathrm{\,d}x$.\\
+Đổi cận $x=1 \Rightarrow t=1$; $x=2 \Rightarrow t=4$.\\
+Khi đó, $S=\displaystyle\int\limits_{1}^{2} x f\left(x^{2}\right) \mathrm{\,d} x=\dfrac{1}{2} \displaystyle\int\limits_{1}^{4} f(t) \mathrm{\,d} t=\dfrac{5}{2} \Rightarrow \displaystyle\int\limits_{1}^{4} f(t) \mathrm{\,d} t=5 \Rightarrow \displaystyle\int\limits_{1}^{4} f(x) \mathrm{\,d} x=5$.
+
+}
+	\end{bt}
+
+% nguồn: 2026-11-16_12_2D4_TL_Nguyen_ham_Tich_phan (nhập 16/11/2026)
+\begin{bt}%[2D4H3-1]%[ma:70251675]
+% nguon: Archive/SP-4Phan-Dot3/Data/KNTT_2-OTGK2_De04.tex #4388
+
+	Tính diện tích của hình phẳng giới hạn bởi đồ thị hàm số $y=-x^2+4$ và $Ox$. 
+	\loigiai{
+		Phương trình hoành độ giao điểm của đồ thị hàm số $y=-x^2+4$ và $Ox$ là 
+		$$-x^2+4=0\Leftrightarrow \hoac{&x=-2\\&x=2.}$$
+		Diện tích hình phẳng $S = \displaystyle \int\limits_{-2}^{2} \left(-x^2+4\right) \mathrm{d}x = \dfrac{32}{3}$.
+	}	
+\end{bt}
+
+% nguồn: 2026-11-16_12_2D4_TL_Nguyen_ham_Tich_phan (nhập 16/11/2026)
+\begin{bt}%[2D4H3-1]%[ma:6b3f482a]
+% nguon: Archive/SP-4Phan-Dot3/Data/KNTT_2-OTGK2_De01.tex #4430
+
+	Cho hình $(H)$ giới hạn bởi các đường $y=\dfrac{2}{x}$, $y=0$, $x=1$ và $x=4$. Gọi $x=k$ là đường thẳng chia hình $(H)$ thành $2$ phần có diện tích bằng nhau. Khi đó $k=1$.
+	\loigiai{
+		\begin{center}
+			\begin{tikzpicture}[scale=1, font=\footnotesize, line join=round, line cap=round, >=stealth]
+				\draw[->] (-1,0)--(4.5,0) node[below] {$x$} ;
+				\draw[->] (0,-0.6)--(0,2.5) node[right] {$y$} ;
+				\draw[fill=black] (0,0) node[below left] {$O$};
+				\draw[domain=0.8:4.4] plot(\x,{2/(\x)}) ;
+				\draw[color=black,fill=black,pattern=north east lines,pattern color=black] {[smooth,samples=100,domain=1:4] plot(\x,{2/(\x)})} -- (4, 0)-- (1,0) -- cycle;
+				\draw[dashed] (2,-.61)--(2,2) node[below right] {$x=k$};
+				\draw (1,0) node[below] {$1$};
+				\draw(4,0) node[below]{$4$};
+				\fill (1,0) circle (1pt) (0,0) circle (1pt) (4,0) circle (1pt);
+			\end{tikzpicture}
+		\end{center}
+		Diện tích hình $(H)$ bằng $S=\displaystyle\int\limits_1^4\dfrac{2}{x}\mathrm{\,d}x=4\ln 2$.\\
+		Đường thẳng $x=k$ chia hình $(H)$ thành $2$ phần có diện tích bằng nhau nên $$\displaystyle\int\limits_1^k\dfrac{2}{x}\mathrm{\,d}x=2\ln 2\Leftrightarrow\left(2\ln x\right)\bigg|_1^k=2\ln 2\Leftrightarrow 2\ln k=2\ln 2\Leftrightarrow k=2.$$
+	}
+\end{bt}
+
+% nguồn: 2026-11-16_12_2D4_TL_Nguyen_ham_Tich_phan (nhập 16/11/2026)
+\begin{bt}%[2D4V3-1]%[ma:4f22bf4a]
+% nguon: Archive/SP-4Phan-Dot3/Data/CD_2-OTGK2-De04.tex #4441
+%[Dự án đề 4 phần]%[Đoàn Hùng]
+	Tính diện tích hình phẳng giới hạn bởi đồ thị của hai hàm số $y=x^2$, $y=2-x$ và hai đường thẳng $x=0$, $x=2$.
+	\loigiai{
+		\immini{
+			Diện tích cần tìm là $$S=\displaystyle\int\limits_{0}^{2} |x^2-(2-x)|
+			\mathrm{\,d}x=\displaystyle\int\limits_{0}^{2} |x^2+x-2|
+			\mathrm{\,d}x$$
+			Ta có $x^2+x-2=0\Leftrightarrow x=1$ hoặc $x=-2$.
+			\begin{align*}
+				\text{Vậy } S&=\displaystyle\int\limits_{0}^{1} |x^2+x-2|
+				\mathrm{\,d}x+\displaystyle\int\limits_{1}^{2} |x^2+x-2|
+				\mathrm{\,d}x\\
+				&=\left|\displaystyle\int\limits_{0}^{1} (x^2+x-2)
+				\mathrm{\,d}x\right|+\left|\displaystyle\int\limits_{1}^{2} (x^2+x-2)
+				\mathrm{\,d}x\right|\\
+				&=\left|\left(\dfrac{x^3}{3}+\dfrac{x^2}{2}-2x\right)\bigg|_0^1\right|+\left|\left(\dfrac{x^3}{3}+\dfrac{x^2}{2}-2x\right)\bigg|_1^2\right|\\
+				&=\left|-\dfrac{7}{6}\right|+\left|\dfrac{11}{6}\right|\\
+				&=3.
+		\end{align*}}
+		{\begin{tikzpicture}				
+				\fill[fill=black,pattern=north east lines,pattern color=black](0,0)--plot[domain=0:1](\x,{\x*(\x)})--
+				plot[domain=1:0](\x,{2-\x})--(0,2)--cycle;
+				\fill[fill=black,pattern=north east lines,pattern color=black](1,1)--plot[domain=1:2](\x,{\x*(\x)})--(2,4)--(2,0)--
+				plot[domain=2:1](\x,{2-\x})--cycle;
+				\draw[dashed](1,0)--(1,1);
+				\draw(2,-2)--(2,5); \path (2,2)node[right]{$x=2$}; 
+				\draw[thick,samples=150,smooth,domain=-2.5:3.3] plot(\x,{2-\x})node[below ]{$y=2-x$};
+				\draw[thick,samples=150,smooth,domain=-2.2:2.2]          
+				plot(\x,{\x*(\x)})node[ right]{$y=x^2$};
+				\foreach \d in {1,2}{\path (\d,0)node[below left]{$\d$};}
+				\foreach \d in {2,4}{\path (0,\d)node[below left]{$\d$};}
+				\foreach \i in{-1,1,3}{\draw(\i,-.1)--(\i, .1);}
+				\foreach \i in{-1,1,2,3,4}{\draw(-.1,\i)--( .1,\i);}
+				
+				\path (0,0)node[below left]{$O$};
+				\draw[->] (-2,0)--(4,0)node[below]{$x$};
+				\draw[->] (0,-2)--(0,5)node[left]{$y$};
+			\end{tikzpicture}
+			%	\caption{ }
+			%\end{figure}
+		}
+	}
+\end{bt}
+
+% nguồn: 2026-11-16_12_2D4_TL_Nguyen_ham_Tich_phan (nhập 16/11/2026)
+\begin{bt}%[2D4V3-1]%[ma:7796e5c0]
+% nguon: Archive/SP-4Phan-Dot3/Data/CD_2-OTGK2-De03.tex #4471
+
+	Cho parabol $( P )\colon y=x^2$ và hai điểm $A$, $B$ thuộc $( P )$ sao cho $AB=2$. Tìm giá trị lớn nhất của diện tích hình phẳng giới hạn bởi parabol $( P )$ và đường thẳng $AB$.
+	\loigiai{
+		\begin{center}
+			\begin{tikzpicture}[line join=round, line cap = round, >=stealth, scale=.8,font=\footnotesize,transform shape]
+				\draw[line width=0.5pt,gray!50] ; % Hiển thị lưới đồ thị.
+				\draw[->] (-3,0)--(3,0) node[below]{\footnotesize $x$};
+				\draw[->] (0,-2)--(0,5) node[right]{\footnotesize $y$};
+				\clip (-3,-2) rectangle (3,4.5);
+				\draw (0,0) node[below left]{\footnotesize $O$};
+				%\draw (0,0) node[below right]{\footnotesize $O$};
+				%\draw (-\d/\c-\m,\a/\c)--(-\d/\c+\m,\a/\c) (-\d/\c,\a/\c-\m)--(-\d/\c,\a/\c+\m);
+				\draw[samples=500, ] plot (\x,{(\x)^2});
+				\node[below] at (-1,4) {$y=x^2$};
+				\node[below] at (1,0) {$1$};
+				\path
+				(-1,1) coordinate (A)
+				(1.5,2.25) coordinate (B)
+				;
+				\draw[-] (A)--(B);
+				\foreach \x/\g in {A/-135,B/-45}
+				\fill[black] (\x) circle(1pt) ($(\x)+(\g:3mm)$) node{$\x$};
+				\fill[pattern=north east lines]plot[domain=-1:1.5](\x,{(\x)^2})--plot[domain=1.5:-1](\x,{1/2*(\x)+3/2})--cycle;
+			\end{tikzpicture}
+		\end{center}
+		Gọi $A( a;a^2 )$ và $B( b;b^2 )$ là hai điểm thuộc $( P )$ sao cho $AB=2$.\\
+		Không mất tính tổng quát giả sử $a<b$.\\
+		Theo giả thiết ta có $AB=2$ nên
+		$$( b-a )^2+\left(b^2-a^2\right)^2=4\Leftrightarrow ( b-a )^2[ ( b+a )^2+1 ]=4.$$
+		Do $( b+a )^2+1\ge 1$ nên $(b-a)^2 \le 4$ hay $|b-a|\ge 2$.\\
+		Phương trình đường thẳng đi qua hai điểm $A$ và $B$ là $y=( b+a )x-ab$.\\
+		Gọi $S$ là diện tích hình phẳng giới hạn bởi parabol $( P )$ và đường thẳng $AB$ ta có\\ \indent
+		$S=\displaystyle \int\limits_{a}^{b}{[ ( a+b )x-ab-x^2 ] \mathrm{\, d}x}
+		=\left [ ( a+b )\dfrac{x^2}{2}-abx-\dfrac{x^3}{3} \right] \bigg|_{a}^{b}
+		=\dfrac{{{( b-a )}^3}}{6}$.\\
+		Mặt khác $|b-a|\ge 2$ nên $ S=\dfrac{( b-a )^3}{6}\le \dfrac{2^3}{6}$. \\
+		Vậy $S_{\max }=\dfrac{4}{3}$, dấu bằng xảy ra khi và chỉ khi $a=-b=\pm 1$.
+	}
+\end{bt}
+
+% nguồn: 2026-11-16_12_2D4_TL_Nguyen_ham_Tich_phan (nhập 16/11/2026)
+\begin{bt}%[2D4H3-1]%[ma:643494ab]
+% nguon: Archive/SP-4Phan-Dot3/Data/CTST_2-OTGK2-De04.tex #4488
+
+	\immini[thm]{Cho parabol $(P) \colon y=f(x)=2-x^2$ và các đường thẳng $d_1 \colon x=1$, $d_2 \colon x=-1$. Tính diện tích hình thang cong giới hạn bởi $(P)$, trục $Ox$ và hai đường thẳng $d_1$, $d_2$.}
+	{\begin{tikzpicture}[font=\footnotesize, line join=round, line cap=round, >=stealth]
+		\begin{scope}[scale=1]
+			\draw[samples=100,domain=-1.7:1.7]plot(\x,{2-(\x)^2});
+			\draw [->](-2,0)--(2.5,0)node[below]{$x$};
+			\draw [->](0,-1)--(0,3)node[left]{$y$};
+			\draw (0,0) node[shift=(-45:0.3)]{$O$};
+			\filldraw [pattern=north west lines, opacity=0.5] 
+			plot[domain=-1:1] (\x,{2-(\x)^2})--(1,1)--(1,0)--(-1,0)--cycle;
+			\draw(0,2)circle(0.7pt)node[above left]{$2$};
+			\draw(0,1)circle(0.7pt)node[left]{$1$};
+		\end{scope}
+		\draw (-1,0)--(-1,1) (1,0)--(1,1);
+		\draw[fill=black] (-1.41,0) circle (1pt) node[shift=(135:0.5)]{$-\sqrt{2}$};
+		\draw[fill=black] (1.41,0) circle (1pt) node[shift=(45:0.5)]{$\sqrt{2}$};
+		\draw (1,1.5) node[right]{$y=2-x^2$};
+	\end{tikzpicture}}
+	\loigiai{
+		Diện tích hình thang cong giới hạn bởi $(P)$, $d_1$ và $d_2$ là $$S=\displaystyle\int\limits_{-1}^{1} (2-x^2)\mathrm{\,d}x=\left(2x-\dfrac{x^3}{3}\right)\Bigg|_{-1}^{1} =\dfrac{10}{3}.$$}
+\end{bt}
+
+% nguồn: 2026-11-16_12_2D4_TL_Nguyen_ham_Tich_phan (nhập 16/11/2026)
+\begin{bt}%[2D4H3-1]%[ma:418cf1df]
+% nguon: Archive/SP-4Phan-Dot3/Data/CTST_2-OTGK2-De01.tex #4518
+%[Dự án đè thi 4 phần đợt 3]%[Đoàn Văn Mùi]
+	Cho hàm số $f(x)=x^2-4x$. Tính diện tích hình phẳng giới hạn bởi đồ thị hàm số $y=f(x)$ và $Ox$.
+	\loigiai{
+			Ta có $x^2-4x=0 \Leftrightarrow \hoac{&x=0\\&x=4.}$\\
+			Bảng xét dấu
+			\begin{center}
+				\begin{tikzpicture}
+					\tkzTabInit[nocadre=false,lgt=1.5,espcl=2.5,deltacl=0.6]
+					{$x$/0.7,$f(x)$/0.7}
+					{$-\infty$,$0$,$4$,$+\infty$}
+					\tkzTabLine{,+,0,-,0,+,}   
+				\end{tikzpicture}
+			\end{center}
+			Suy ra $x^2-4x\le 0, \, \forall x \in [0;4]$.\\
+			$S = \displaystyle \int \limits_{0}^{4}{\left| x^2-4x \right|}\mathrm{\,d}x =-\int \limits_{0}^{4}{\left( x^2-4x \right)}\mathrm{\,d}x = -\left(\dfrac{x^3}{3} - 2x^2\right)\bigg|_0^4 = \dfrac{32}{3}$.
+	}
+\end{bt}
+
+% nguồn: 2026-11-16_12_2D4_TT_Nguyen_ham_Tich_phan (nhập 16/11/2026)
+\begin{bt}%[2D4C3-1]%[ma:44f6d07b]
+% nguon: Archive/2024/TaiLieuGiangDay/5.HH Oxyz/VDC_TDM_Dot2.tex #3173
+
+Trên mặt phẳng $(\alpha)$. Cho hình chữ nhật $ABCD$ có $AB = 48$ cm, $BC = 120$ cm. Gọi $I$ là trung điểm của cạnh $AC$. Xét hình phẳng $(H)$ là tập hợp các điểm $M$ nằm trong hình vuông $ABCD$ sao cho thỏa mãn $MI \leq \mathrm{d}(M, AB)$. Hãy tính diện tích của $(H)$ theo đơn vị centimet vuông (làm tròn kết quả đến hàng đơn vị)?
+\shortans{$4243$}
+\loigiai{
+\immini{
+Đặt gốc tọa độ tại $A(0, 0)$. Khi đó, các đỉnh của hình chữ nhật là $A(0, 0)$, $B(48, 0)$, $C(48, 120)$, $D(0, 120)$.\\
+Vì $I$ là trung điểm của $AC$. Tọa độ của $I(24;60)$.\\
+Gọi $M(x, y)$ là một điểm nằm trong hình chữ nhật $ABCD$. Suy ra $0\leq x\leq 48$ và $0\leq y\leq 120$.
+\begin{itemize}
+\item $MI = \sqrt{(x-24)^2 + (y-60)^2}$
+\item $d(M, AB) = |y| = y$ (vì $M$ nằm trong hình chữ nhật có $y \ge 0$).
+\end{itemize}
+Điều kiện trở thành $\sqrt{(x-24)^2 + (y-60)^2} \leq y\Leftrightarrow (x-24)^2 + (y-60)^2 \le y^2\Leftrightarrow y \geq \dfrac{1}{120}(x-24)^2+30$.\\
+Miền $(H)$ là phần nằm trong hình chữ nhật $ABCD$ và thỏa mãn $y \geq \dfrac{(x - 24)^2}{120} + 30$.\\
+Giải phương trình giao điểm với $y = 120$, ta có
+\begin{eqnarray*}
+120=\dfrac{(x - 24)^2}{120} + 30&\Leftrightarrow&\dfrac{(x - 24)^2}{120} = 90\\
+&\Leftrightarrow&(x - 24)^2 = 10800\\
+&\Leftrightarrow&x = 24 \pm 60\sqrt{3}.
+\end{eqnarray*}
+Do $x \in [0;48]$, nên $(H)$ là phần được tô như hình vẽ và giới hạn bởi $\left\{y=120; y=\dfrac{1}{120}(x-24)^2+30; x=0; x=48\right\}$.\\
+Diện tích của $(H)$ được tính bằng tích phân
+\begin{eqnarray*}
+S(H)&=&\displaystyle\int_{0}^{48} \left( 120 - \dfrac{(x-24)^2 + 3600}{120} \right) \mathrm{\,d}x\\
+&=&\displaystyle\int_{0}^{48} \left(90-\dfrac{(x - 24)^2}{120}\right)\mathrm{\,d}x\\
+&=&\left(90x-\dfrac{1}{360}(x-24)^3\right)\bigg|_0^{48}\\
+&=&90\cdot 48 - \dfrac{2\cdot 24}{360}\\
+&=&4243{,}2\approx 4243.
+\end{eqnarray*}
+Vậy diện tích của $(H)$ là $4243$.
+}{
+\begin{tikzpicture}[scale=.1, font=\footnotesize, line cap=round, line join=round, >=stealth]
+\path (0,0)coordinate(A) (48,0)coordinate(B) (48,120)coordinate(C) (0,120)coordinate(D) (24,60)coordinate(I) (15,50)coordinate(M) ($(A)!(M)!(B)$)coordinate(H);
+\foreach \i/\j in {A/225, B/-90, C/0, D/180, I/90, M/90, H/-90}
+\draw[fill=black] (\i)node[shift=(\j:.32)]{$\i$}circle(1pt);
+\draw[->] (-.5,0)--(53,0)node[below]{$x$};
+\draw[->] (0,-.5)--(0,125)node[right]{$y$};
+\fill[pattern=dots] (0,30)--plot[samples=100, domain=0:48](\x, {(\x-24)^2/120+30})--(C)--(D)--cycle;
+\draw[samples=100, domain=0:48] plot(\x, {(\x-24)^2/120+30});
+\draw (B)--(C)--(D) (A)--(C) (I)--(M)--(H);
+\end{tikzpicture}
+}
+}
+\end{bt}

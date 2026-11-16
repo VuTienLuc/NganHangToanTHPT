@@ -273,3 +273,624 @@
 		Dựa vào đồ thị, ta thấy phương trình $f'(x)=\dfrac{2018}{2017}$ có 4 nghiệm phân biệt. Do đó, hàm số đã cho có 4 điểm cực trị. 
 	} 
 \end{bt}
+
+% nguồn: 2026-11-16_12_2D1_TL_Ham_so (nhập 16/11/2026)
+\begin{bt}%[2D1H5-5]%[ma:caff727b]
+% nguon: Archive/2024/TaiLieuGiangDay/1.HamSo/1. K12 - 4in1 - Hamso/ThubaiGoc/Bai5-Dang5.tex #2304
+
+	Cho hàm số $y=\dfrac{2x-2}{x+1}$ có đồ thị như hình vẽ sau. Hãy  suy ra đồ thị của hàm số $y=\left| \dfrac{2x-2}{x+1} \right|$ ?
+	\begin{center}
+		\begin{tikzpicture}[>=stealth,x=1cm,y=1cm,scale=0.4]
+		\def\a{2}
+		\def\b{-2}
+		\def\c{1}
+		\def\d{1}
+		\draw[->] (-7.5,0) -- (5.5,0) node[below] {\scriptsize $x$};
+		\draw[->] (0,-5.5) -- (0,8.5) node[right] {\scriptsize $y$};
+		\fill (0,0)node[above right]{\scriptsize $O$} circle(2pt);
+		\draw[dashed,blue] (-1,-5)--(-1,8) (-7,2)--(5,2); % Vẽ TCĐ và TCN
+		\clip (-7,-5)rectangle(5,8);
+		\pgfmathsetmacro{\can}{-(\d)/(\c)}
+		\draw[thick,samples=150,smooth,domain=-7:{\can-.1}] plot(\x,{(\a*\x+(\b))/(\c*\x+(\d))}); % Vẽ nhánh bên trái TCĐ
+		\draw[thick,samples=150,smooth,domain={\can+.1}:5] plot(\x,{(\a*\x+(\b))/(\c*\x+(\d))}); % Vẽ nhánh bên phải TCĐ
+		\fill (0,2) node[above right] {\scriptsize $2$} circle(2pt)
+		(0,-2) node[right] {\scriptsize $-2$} circle(2pt)
+		(-1,0) node[below left] {\scriptsize $-1$} circle(2pt)
+		(1,0) node[below right] {\scriptsize $1$} circle(2pt);
+		\end{tikzpicture}
+	\end{center}
+	\loigiai{
+		Tập xác định $\mathscr{D}=\mathbb{R} \setminus \{-1\}$.\\
+		Đồ thị hàm số $y=\left| \dfrac{2x-2}{x+1} \right|$ có được bằng cách:
+		\begin{itemize}
+			\item Giữ nguyên phần đồ thị của hàm số $y= \dfrac{2x-2}{x+1}$ nằm trên trục hoành.
+			\item Lấy đối xứng qua trục hoành phần đồ thị của $y= \dfrac{2x-2}{x+1}$ nằm dưới trục hoành.
+		\end{itemize}
+		Do đó đồ thị của hàm số $y=\left| \dfrac{2x-2}{x+1} \right|$ là
+		\begin{center}
+			\begin{tikzpicture}[>=stealth,x=1cm,y=1cm,scale=0.4]
+				\def\a{2}
+				\def\b{-2}
+				\def\c{1}
+				\def\d{1}
+				\draw[->] (-7.5,0) -- (5.5,0) node[below] {\scriptsize $x$};
+				\draw[->] (0,-5.5) -- (0,8.5) node[right] {\scriptsize $y$};
+				\fill (0,0)node[below right]{\scriptsize $O$} circle(2pt);
+				\draw[dashed,blue] (-1,-5)--(-1,8) (-7,2)--(5,2); % Vẽ TCĐ và TCN
+				\clip (-7,-5)rectangle(5,8);
+				\pgfmathsetmacro{\can}{-(\d)/(\c)}
+				\draw[thick,samples=150,smooth,domain=-7:{\can-.1}] plot(\x,{(\a*\x+(\b))/(\c*\x+(\d))}); % Vẽ nhánh bên trái TCĐ
+				\draw[thick,samples=150,smooth,domain={\can+.1}:5] plot(\x,{abs((\a*\x+(\b))/(\c*\x+(\d)))}); % Vẽ nhánh bên phải TCĐ
+				\fill (0,2) node[above right] {\scriptsize $2$} circle(2pt)
+				(0,-2) node[right] {\scriptsize $-2$} circle(2pt)
+				(-1,0) node[below left] {\scriptsize $-1$} circle(2pt)
+				(1,0) node[below right] {\scriptsize $1$} circle(2pt);
+			\end{tikzpicture}
+		\end{center} 
+	}
+
+\end{bt}
+
+% nguồn: 2026-11-16_12_2D1_TL_Ham_so (nhập 16/11/2026)
+\begin{bt}%[2D1N5-5]%[ma:c5ffec17]
+% nguon: Archive/2024/TaiLieuGiangDay/1.HamSo/1. K12 - 4in1 - Hamso/ThubaiGoc/Bai5-Dang8.tex #2789
+
+	\immini
+	{
+		Cho hàm số $ y=f(x) $ xác định và liên tục trên $ [-2;3] $ đồng thời hàm số $ y=f'(x) $ có đồ thị như hình vẽ bên. Xét tính đơn điệu của hàm số đã cho.
+	}
+	{
+		\begin{tikzpicture}[>=stealth,x=1cm,y=1cm,scale=0.75,font=\footnotesize]
+			%	Phương trình đường thẳng:
+			\path
+			(0,0) coordinate (O)
+			%	Các điểm mút cho lệnh controls:
+			(-2.5,0) coordinate (A1)
+			(-1.75,1) coordinate (N)
+			(0.2,-2) coordinate (Q1)
+			(1.75,1) coordinate (M)
+			(3.5,-3) coordinate (Q2)
+			;
+			%Vẽ đường cong, đường thẳng:
+			%	\draw[red] (A1)--(N)--(Q1)--(M)--(Q2);
+			\draw[thick,name path=fx] (A1)..controls +(70:0.25) and +(-175:0.25)..(N)..controls +(-5:0.5) and +(170:0.65)..(Q1)..controls +(5:0.5) and +(-170:0.65)..(M)..controls +(-5:0.65) and +(120:0.25)..(Q2)node[black,shift={(-0.7,0.2)}]{$ y=f'(x) $};
+			\draw [domain=-3:3, samples=0.1,name path=gx] plot (\x, 0);
+			\path[name intersections={of=fx and gx, by={-2,-1,1,2}}] ;
+			%Vẽ hệ trục tọa dộ:
+			\draw[->] (-3,0)--(0,0) node[above left]{$O$}--(4,0) node[below]{$x$};
+			\draw[->] (0,-3.5) --(0,3) node[left]{$y$};
+			%-2,-1,1,2,3
+			\foreach \p/\r in {-2/-120,-1/-120,1/120,2/60}
+			\draw[fill=black] (\p) circle (1.2pt) node[shift={(\r:2.5mm)}]{$\p$};
+			\draw[dashed](Q2)--($(A1)!(Q2)!(O)$)node[above]{$ 3 $};
+			\draw[fill=black]($(A1)!(Q2)!(O)$)  circle (1.2pt) ;
+		\end{tikzpicture}
+	}
+	\loigiai{
+		Dựa vào đồ thị $ y=f'(x) $, hàm số $ y=f(x) $ đồng biến trên các khoảng $ (-2;-1) $ và $ (1;2) $, nghịch biến trên các khoảng $ (-1;1) $ và $ (2;3) $.
+	}
+\end{bt}
+
+% nguồn: 2026-11-16_12_2D1_TL_Ham_so (nhập 16/11/2026)
+\begin{bt}%[2D1N5-5]%[ma:518a123f]
+% nguon: Archive/2024/TaiLieuGiangDay/1.HamSo/1. K12 - 4in1 - Hamso/ThubaiGoc/Bai5-Dang8.tex #2790
+
+	\immini
+	{
+		Cho hàm số $ y=f(x) $ xác định và liên tục trên $ \mathbb{R} $. Biết đồ thị hàm số $ y=f'(x) $ tiếp xúc với trục hoành tại điểm có hoành độ $ x=1 $ và cắt trục hoành tại hai điểm có hoành độ lần lượt là $ x=-1 $, $ x=2 $ như hình vẽ bên. Xét tính đơn điệu của hàm số đã cho.
+	}
+	{
+		\begin{tikzpicture}[>=stealth,x=1cm,y=1cm,scale=0.75,font=\footnotesize]
+			%	Phương trình đường thẳng:
+			\path
+			(0,0) coordinate (O)
+			%	Các điểm mút cho lệnh controls:
+			(-1.3,1.7) coordinate (N)
+			(-0.5,-1.5) coordinate (P)
+			(1,0) coordinate (B1)
+			(2,-1.5) coordinate (Q)
+			(2.7,2.5) coordinate (M)
+			;
+			%Vẽ đường cong, đường thẳng:
+			%	\draw[red] (N)--(P)--(B1)--(Q)--(M);
+			\draw[thick,name path=fx] (N)..controls +(-95:0.5) and +(175:0.5)..(P) ..controls +(5:0.25) and +(-170:0.65)..(B1)..controls +(-5:0.5) and +(175:0.5)..(Q)..controls +(5:0.5) and +(100:0.25)..(M)node[black,shift={(0.7,-0.3)}]{$ y=f'(x) $};
+			\draw [domain=-2:3, samples=0.1,name path=gx] plot (\x, 0);
+			\path[name intersections={of=fx and gx, by={-1,1,2}}] ;
+			%Vẽ hệ trục tọa dộ:
+			\draw[->] (-2,0)--(0,0) node[above left]{$O$}--(4,0) node[below]{$x$};
+			\draw[->] (0,-2) --(0,3) node[left]{$y$};
+			%-2,-1,1,2,3
+			\foreach \p/\r in {-1/-150,1/90,2/120}
+			\draw[fill=black] (\p) circle (1.2pt) node[shift={(\r:2.5mm)}]{$\p$};
+		\end{tikzpicture}
+	}
+	\loigiai{
+		Dựa vào đồ thị $ y=f'(x) $, hàm số $ y=f(x) $ đồng biến trên các khoảng $ (-\infty;-1) $ và $ (2;+\infty) $, nghịch biến trên khoảng $ (-1;2) $.
+	}
+\end{bt}
+
+% nguồn: 2026-11-16_12_2D1_TL_Ham_so (nhập 16/11/2026)
+\begin{bt}%[2D1N5-5]%[ma:1cb60d2c]
+% nguon: Archive/2024/TaiLieuGiangDay/1.HamSo/1. K12 - 4in1 - Hamso/ThubaiGoc/Bai5-Dang8.tex #2791
+
+	\immini{Cho hàm số $y=f(x)$ có đạo hàm liên tục trên $[-2;2]$ và $y=f'(x)$ có đồ thị như hình bên. Trên khoảng $(-2;2)$, hàm số $y=f(x)$ có bao nhiêu điểm cực trị?}
+	{
+		\begin{tikzpicture}[smooth, >=latex, line cap =round, line join =round,scale=0.7,font=\scriptsize]
+			\draw[->] (-3,0)--(3,0) node[below]{$x$};
+			\draw[->] (0,-2.5) -- (0,3) node[below left] {$y$};
+			\draw[thick, name path=dcong] (-2,-2)..controls +(90:0.3) and +(180:0.3)..(-0.7,2.7)..controls +(0:0.2) and +(180:0.3)..(0,0.5)..controls +(30:0.2) and +(180:0.3)..(1,2)..controls +(0:0.3) and +(90:0.1).. (2,-2); 
+			\draw[thick,dashed] (-2,-2) -- (-2,0) node[above]{$-2$} (-1,0) node[below] {$-1$} --(-1,2) --(1,2) -- (1,0) node[below] {$1$} (2,0) node[above] {$2$}--(2,-2) (0,2) node[above right] {$2$};
+			\draw (-1.6,1.8) node[rotate=75] {$y=f'(x)$};
+		\end{tikzpicture}
+	}
+	\loigiai{
+			Trên khoảng $(-2;2)$ đồ thị hàm số $y=f'(x)$ cắt trục hoành tại hai điểm phân biệt nên phương trình $f'(x)=0$ có hai nghiệm đơn. Suy ra hàm số $y=f(x)$ có hai điểm cực trị.
+				
+	}
+\end{bt}
+
+% nguồn: 2026-11-16_12_2D1_TL_Ham_so (nhập 16/11/2026)
+\begin{bt}%[2D1N5-5]%[ma:a21ebc66]
+% nguon: Archive/2024/TaiLieuGiangDay/1.HamSo/1. K12 - 4in1 - Hamso/ThubaiGoc/Bai5-Dang8.tex #2792
+
+	\immini{
+		Cho hàm số $y=f'(x)$ có đồ thị như hình vẽ bên. Đồ thị hàm số $y=f(x)$ cắt trục hoành tại tối đa bao nhiêu điểm?
+	}
+	{\begin{tikzpicture}[>=stealth,x=1cm,y=1cm,scale=0.5]
+			\def\a{0.5} % Hệ số a phải khác 0
+			\def\b{-2}
+			\def\c{0}
+			\def\d{2}
+			\draw[->] (-4,0) -- (6,0)node[below]{\scriptsize $x$};
+			\draw[->] (0,-4) -- (0,5) node[left] {\scriptsize $y$};
+			\draw (0,0)node[below left]{\scriptsize $O$};
+			\clip (-4,-4)rectangle(6,5);
+			\draw[thick,samples=150,smooth,domain=-5:6] plot(\x,{\a*(\x)^3+(\b)*(\x)^2+(\c)*\x+(\d)});
+	\end{tikzpicture}}
+	\loigiai{
+		Gọi $a, b, c$ $(a<b<c)$ là hoành độ giao điểm của đồ thị hàm số $y=f'(x)$ và trục hoành, dựa vào đồ thị trên ta có bảng biến thiên
+		\begin{center}
+			% Cần khai báo \usepackage{tkz-tab}
+			\begin{tikzpicture}[>=stealth]
+				\tkzTabInit[nocadre=false,lgt=1,espcl=2,deltacl=0.5]{$x$/.7 ,$f'(x)$/.7,$f(x)$/2}
+				{$-\infty$ , $a$ , $b$ , $c$ , $+\infty$}
+				\tkzTabLine{ , - , $0$ , + , $0$ , - , $0$ , + , }
+				\tkzTabVar{+/$+\infty$ , -/$f(a)$, +/$f(b)$ , -/$f(c)$ , +/$+\infty$}
+			\end{tikzpicture}
+		\end{center}
+		Dựa vào bảng biến thiên ta thấy đồ thị hàm số $y=f(x)$ cắt trục hoành tại tối đa $4$ điểm.}
+\end{bt}
+
+% nguồn: 2026-11-16_12_2D1_TL_Ham_so (nhập 16/11/2026)
+\begin{bt}%[2D1H5-5]%[ma:7e4dcefc]
+% nguon: Archive/2024/TaiLieuGiangDay/1.HamSo/1. K12 - 4in1 - Hamso/ThubaiGoc/Bai5-Dang8.tex #2793
+
+	\immini
+	{
+		Cho hàm số $ y=f(x) $ có đạo hàm liên tục trên đoạn $ [-2;-2] $ và đồ thị hàm số $ y=f'(x) $ như hình vẽ. Tìm giá trị nhỏ nhất và  giá trị lớn nhất hàm số $ y=f(x) $ trên đoạn $ [-2;2] $, biết $ f(-1)=4 $, $ f(-2)=-5 $, $ f(2)=-3 $.
+	}
+	{
+		\begin{tikzpicture}[>=stealth,x=1cm,y=1cm,scale=0.9,font=\footnotesize]
+			\path
+			(2,0) coordinate (B2)
+			(-1.7,1.7) coordinate (N)node[shift={(0.8,-0.3)}]{\scriptsize$ y=f'(x)$}
+			(-0.7,-0.7) coordinate (P)
+			(0,0) coordinate (O)node[above right]{$ O$}
+			(1.7,-1.7) coordinate (Q)
+			($(B2)!(N)!(O)$) coordinate (A1)node[below]{$ -2 $}
+			($(B2)!(Q)!(O)$) coordinate (B1)node[above]{$ 2 $}
+			;
+			%	\draw[red] (N)--(P)--(O)--(Q);
+			\draw[name path=ox] (O)--(-2,0);
+			\draw[name path=fx,thick,black]
+			(N)..controls +(-70:1) and+(170:0.25)..
+			(P)..controls +(9:0.25) and+(-170:0.25)..(O)
+			..controls +(-5:0.35) and+(140:0.25)..(Q)
+			;
+			\draw[dashed](N)--(A1) (Q)--(B1);
+			\path[name intersections={of=fx and ox, by={A3,A2}}] ;
+			%Vẽ hệ trục tọa dộ:
+			\draw[->] (-2,0)--(0,0)--(2,0) node[below]{$x$};
+			\draw[->] (0,-2) --(0,2.2) node[left]{$y$};
+			%	Node các điểm
+			\foreach \p in {N,O,Q}
+			\fill (\p) circle (1.5pt) ;
+			\fill(A3) circle (1.5pt) node[above right]{$ -1 $};
+		\end{tikzpicture}
+	}
+	
+	\loigiai{
+		Dựa vào đồ thị ta có  $ f'(x)=0 \Leftrightarrow\hoac{& x=-1 \\ & x=0.}$\\
+		Ta có bảng biến thiên của hàm số $ y=f(x) $:
+		\begin{center}
+			\begin{tikzpicture}
+				\tkzTabInit[nocadre=false,lgt=1.2,espcl=2.,deltacl=0.7]
+				{$x$ /0.6,$f’(x)$ /0.6,$f(x)$ /2}
+				{$-2$,$-1$,$0$,$2$}
+				\tkzTabLine{,+,0,-,0,-,}
+				\tkzTabVar{-/$ -5 $\  , +/$ 4 $  , R/ , -/$ -3 $  }
+				%\tkzTabVar{-/ $f(-2)$  , +/ $f(-1)$ / , R/ , -/ $f(2)$ / }
+			\end{tikzpicture}
+		\end{center}
+		Vậy
+		$ \max\limits_{[-2; 2]}f(x)=4, \min\limits_{[-2; 2]}f(x)=-5  $.
+	}
+\end{bt}
+
+% nguồn: 2026-11-16_12_2D1_TL_Ham_so (nhập 16/11/2026)
+\begin{bt}%[2D1V5-5]%[ma:83cfa4b2]
+% nguon: Archive/2024/TaiLieuGiangDay/1.HamSo/1. K12 - 4in1 - Hamso/ThubaiGoc/Bai5-Dang8.tex #2794
+
+	\immini
+	{
+		Cho hàm số $ y=f(x) $ có đạo hàm liên tục trên $ \mathbb{R} $. Biết đồ thị hàm số $ y=f'(x) $ chỉ cắt trục hoành tại ba điểm như hình vẽ bên. Xét tính đơn điệu của hàm số $ g(x)=2 f(x)-x^{2} $ trên khoảng $ (-1;1) $.
+	}
+	{
+		\begin{tikzpicture}[>=stealth,x=1cm,y=1cm,scale=0.8,font=\footnotesize]
+			\def\a{1}
+			\path
+			(0,0) coordinate (O)
+			(-1,0) coordinate (A)node[above]{$ -1 $}
+			(1,0) coordinate (B)node[below]{$ 1 $}
+			(0,-1) coordinate (C)node[right]{$ -1 $}
+			(0,1) coordinate (D)node[left]{$ 1 $}
+			%	Các điểm mút cho lệnh controls:
+			(-1,-1) coordinate (P)
+			(-0.3,0.5) coordinate (N)
+			(0.3,-0.5) coordinate (Q)
+			(1,1) coordinate (M)
+			;
+			%Vẽ đường cong, đường thẳng:
+			%		\draw[red] (P)--(N)--(Q)--(M);
+			\draw[thick,name path=fx,shorten >=-1cm, shorten <=-0.5cm] (P)..controls +(75:0.5) and +(185:0.25)..(N)..controls +(-10:0.3) and +(170:0.3)..(Q)..controls +(2:0.35) and +(-105:0.25)..(M)node[black,shift={(0.8,0.3)}]{$ y=f'(x) $};
+			%Vẽ hệ trục tọa dộ:
+			\draw[->] (-1.5,0)--(0,0) node[below left]{$O$}--(2,0) node[below]{$x$};
+			\draw[->] (0,-1.5) --(0,2.35) node[left]{$y$};
+			%-2,-1,1,2,3
+			\draw[dashed](B)|-(D) (A)|-(C);
+			\foreach \p in {M,P,O,A,B,C,D}
+			\fill (\p) circle (1pt);
+		\end{tikzpicture}
+	}
+	\loigiai{
+		\immini
+		{
+			Tập xác định: $\mathscr{D} = \mathbb{R}$.\\
+			$g'(x)=2\cdot f'(x) -2x$.\\
+			Số nghiệm của phương trình $ g'(x)=0 $ chính là số giao điểm của đồ thị hàm số $ y=f'(x) $ với đường thẳng $ y=x $ (như hình vẽ bên).\\
+			$ g'(x)=0 \Leftrightarrow f'(x)=x \Leftrightarrow \hoac{& x=-1 \\ & x=0 \\ & x=1.}$\\
+		}
+		{
+			\begin{tikzpicture}[>=stealth,scale=0.85,font=\footnotesize]
+				\def\a{1}
+				\path
+				(0,0) coordinate (O)
+				(-1,0) coordinate (A)node[above]{$ -1 $}
+				(1,0) coordinate (B)node[below]{$ 1 $}
+				(0,-1) coordinate (C)node[right]{$ -1 $}
+				(0,1) coordinate (D)node[left]{$ 1 $}
+				%	Các điểm mút cho lệnh controls:
+				(-1,-1) coordinate (P)
+				(-0.3,0.5) coordinate (N)
+				(0.3,-0.5) coordinate (Q)
+				(1,1) coordinate (M)
+				;
+				%Vẽ đường cong, đường thẳng:
+				%		\draw[red] (P)--(N)--(Q)--(M);
+				\draw[thick,name path=fx,shorten >=-1cm, shorten <=-0.5cm] (P)..controls +(75:0.5) and +(185:0.25)..(N)..controls +(-10:0.3) and +(170:0.3)..(Q)..controls +(2:0.35) and +(-105:0.25)..(M)node[black,shift={(1,0.9)}]{$ y=f'(x) $};
+				\draw[purple,shorten >=-0.9cm, shorten <=-0.75cm](P)--(M)node[black,shift={(0.9,0.35)}]{$ y=x $};
+				%Vẽ hệ trục tọa dộ:
+				\draw[->] (-1.5,0)--(0,0) node[above left]{$O$}--(2,0) node[below]{$x$};
+				\draw[->] (0,-1.5) --(0,2.35) node[left]{$y$};
+				%-2,-1,1,2,3
+				\draw[dashed](B)|-(D) (A)|-(C);
+				\foreach \p in {M,P,O,A,B,C,D}
+				\fill (\p) circle (1pt);
+			\end{tikzpicture}
+		}
+		Lập bảng biến thiên
+		\begin{center}
+			\begin{tikzpicture}[yscale=0.55,xscale=0.9]
+				\def\c{9}%số cột
+				\def\d{4}%số dòng
+				\foreach \x in {0,...,\c}{
+					\foreach \y in {0,...,\d}
+					\path[yscale=-1] (\x,\y) node[gray!0,minimum size=1cm] (\x\y) {\x\y};
+				}
+				
+				\draw[shift={(-0.5,0.5)}]
+				(0,0) rectangle (\c+1,-\d-1)
+				(0,-1)--(\c+1,-1)
+				(0,-2)--(\c+1,-2)
+				(1,0)--(1,-\d-1);
+				
+				\path
+				(00) node {$x$}(10) node {$-\infty$}(30) node {$-1$}(50) node {$0$}(70) node {$1$}(90) node {$+\infty$}
+				(01) node {$g'(x)$}(21) node {$-$}(31) node {$0$}(41) node {$+$}(51) node {$0$}(61) node {$-$}(71) node {$0$}(81) node {$+$}
+				(03) node {$g(x)$}
+				;
+				
+				\foreach \a/\b in {12/34,34/52,52/74,74/92}
+				\draw[->,>=stealth,shorten >=-0.36cm, shorten <=-0.36cm] (\a)--(\b);
+			\end{tikzpicture}
+		\end{center}
+	}
+	Dựa vào bảng biến thiên, hàm số $ g(x)=2 f(x)-x^{2} $ nghịch biến trên các khoảng $ (-\infty;-1) $ và $ (0;1) $; đồng biến trên các khoảng $ (-1;0) $ và $ (1;+\infty) $.
+\end{bt}
+
+% nguồn: 2026-11-16_12_2D1_TL_Ham_so (nhập 16/11/2026)
+\begin{bt}%[2D1V5-5]%[ma:0e581e8b]
+% nguon: Archive/2024/TaiLieuGiangDay/1.HamSo/1. K12 - 4in1 - Hamso/ThubaiGoc/Bai5-Dang8.tex #2795
+
+	\immini
+	{
+		Cho hàm số $ y=f(x) $ có đạo hàm liên tục trên đoạn $ [-2;-2] $ và đồ thị hàm số $ y=f'(x) $ như hình vẽ. Tìm giá trị nhỏ nhất và  giá trị lớn nhất của hàm số $ g(x)=f^{2}(x)-4 f(x) $ trên đoạn $ [-2;2] $, biết $ f(-1)=1 $, $ f(-2)=-1 $, $ f(2)=-2 $.
+	}
+	{
+		\begin{tikzpicture}[>=stealth,x=1cm,y=1cm,scale=0.9,font=\footnotesize]
+			\path
+			(2,0) coordinate (B2)
+			(-1.7,1.7) coordinate (N)node[shift={(0.8,-0.3)}]{\scriptsize$ y=f'(x)$}
+			(-0.7,-0.7) coordinate (P)
+			(0,0) coordinate (O)node[above right]{$ O$}
+			(1.7,-1.7) coordinate (Q)
+			($(B2)!(N)!(O)$) coordinate (A1)node[below]{$ -2 $}
+			($(B2)!(Q)!(O)$) coordinate (B1)node[above]{$ 2 $}
+			;
+			%	\draw[red] (N)--(P)--(O)--(Q);
+			\draw[name path=ox] (O)--(-2,0);
+			\draw[name path=fx,thick,black]
+			(N)..controls +(-70:1) and+(170:0.25)..
+			(P)..controls +(9:0.25) and+(-170:0.25)..(O)
+			..controls +(-5:0.35) and+(140:0.25)..(Q)
+			;
+			\draw[dashed](N)--(A1) (Q)--(B1);
+			\path[name intersections={of=fx and ox, by={A3,A2}}] ;
+			%Vẽ hệ trục tọa dộ:
+			\draw[->] (-2,0)--(0,0)--(2,0) node[below]{$x$};
+			\draw[->] (0,-2) --(0,2.2) node[left]{$y$};
+			%	Node các điểm
+			\foreach \p in {N,O,Q}
+			\fill (\p) circle (1.5pt) ;
+			\fill(A3) circle (1.5pt) node[above right]{$ -1 $};
+		\end{tikzpicture}
+	}
+	
+	\loigiai{
+		Ta có bảng biến thiên của hàm số $ y=f(x) $
+		\begin{center}
+			\begin{tikzpicture}
+				\tkzTabInit[nocadre=false,lgt=1.2,espcl=2.,deltacl=0.7]
+				{$x$ /0.6,$f’(x)$ /0.6,$f(x)$ /2}
+				{$-2$,$-1$,$0$,$2$}
+				\tkzTabLine{,+,0,-,0,-,}
+				\tkzTabVar{-/$ -1 $\  , +/$ 1 $  , R/ , -/$ -2 $  }
+			\end{tikzpicture}
+		\end{center}
+		Từ bảng biến thiên $ \Rightarrow f(x)\leq 1,\quad \forall x \in [-2;2] $.\\
+		Ta có $ g'(x)=2f(x)\cdot f'(x) -4 f'(x)=2f'(x)\cdot\left [f(x)-2\right ] $.\\
+		Cho $ g'(x)=0 \Leftrightarrow\hoac{& f'(x)=0&(1) \\ & f(x)=2&(2)} $\\
+		Dựa vào đồ thị, $ (1) \Leftrightarrow \hoac{& x=-1 \\ & x=0.}$\\
+		Mặt khác ta có $ f(x)\leq 1, \forall x \in [-2;2] \Rightarrow f(x)-2<0,  \forall x \in [-2;2] $.\\
+		Vậy phương trình $ (2) $ vô nghiệm.\\
+		Do đó, phương trình $ g'(x)=0 $ có hai nghiệm là $ x=-1 $, $ x=0 $.
+		\begin{center}
+			\begin{tikzpicture}
+				\tkzTabInit[nocadre=false,lgt=1.2,espcl=2.,deltacl=0.7]
+				{$x$ /0.6,$g’(x)$ /0.6,$g(x)$ /2.5}
+				{$-2$,$-1$,$0$,$2$}
+				\tkzTabLine{,-,0,+,0,+,}
+				\tkzTabVar{+/$ g(-2) $\  , -/$ g(-1) $  , R/ , +/$ g(2) $  }
+			\end{tikzpicture}
+		\end{center}
+		Ta lại có $ g(-1)=-3$, $ g(-2)=5$, $ g(2)=12$.\\
+		Vậy $ \max\limits_{[-2; 2]}g(x)=g(2)=12, \min\limits_{[-2; 2]}g(x)=g(-1)=-3  $.
+	}
+\end{bt}
+
+% nguồn: 2026-11-16_12_2D1_TL_Ham_so (nhập 16/11/2026)
+\begin{bt}%[2D1H5-5]%[ma:d2303156]
+% nguon: Archive/2024/TaiLieuGiangDay/1.HamSo/1. K12 - 4in1 - Hamso/ThubaiGoc/Bai5-Dang8.tex #2799
+
+	\immini{Cho hàm số $y=f(x)$ xác định, liên tục trên $\mathbb{R}$ và có đạo hàm $f’(x)$. Biết rằng hàm số $f’(x)$ có đồ thị như hình vẽ bên. Hàm số đồng biến trên khoảng nào?
+		}
+	{\begin{tikzpicture}[>=stealth,line join=round,line cap=round,font=\normalsize,scale=0.6]
+			\draw[-stealth] (-4,0)--(0,0)node[above left]{$O$}--(1.5,0)node[below]{$x$};
+			\draw[-stealth] (0,-2.5)--(0,2)node[left]{$y$};
+			\draw
+			(-3.2,-2)..controls +(80:.5)and+(180:.35)..(-2.5,1)
+			..controls+(0:.25) and+(105:.25)..(-2,0)
+			..controls+(-75:.25) and+(180:.5)..(-1.2,-1.75)
+			..controls+(0:.5) and+(180:.25)..(0,0)
+			..controls+(0:.25) and+(-90:.25)..(0.5,-2)
+			;
+			\draw 
+			(-3,0) node[below left]{$-3$}
+			(-2,0) node[below right]{$-2$}
+			;
+	\end{tikzpicture}}
+	\loigiai{
+		Quan sát đồ thị ta thấy $f’(x)>0$ trên khoảng $(-3;-2)$ nên hàm số $y=f(x)$ đồng biến  trên khoảng $(-3;-2)$.}
+\end{bt}
+
+% nguồn: 2026-11-16_12_2D1_TL_Ham_so (nhập 16/11/2026)
+\begin{bt}%[2D1H5-5]%[ma:901eafd7]
+% nguon: Archive/2024/TaiLieuGiangDay/1.HamSo/1. K12 - 4in1 - Hamso/ThubaiGoc/Bai5-Dang8.tex #2800
+
+	\immini{Cho hàm số $y=f(x)$ xác định và liên tục trên $\mathbb{R}$ và có đồ thị của đạo hàm $y=f’(x)$ như hình bên.  Hàm số nghịch biến trên khoảng nào? 
+	}
+	{\begin{tikzpicture}[>=stealth,line join=round,line cap=round,font=\normalsize,scale=0.6]
+			\draw[->] (-5,0)--(4,0)node[below]{$x$};
+			\foreach \x in {-4,-3,-2,-1,1,2,3}
+			\draw[shift={(\x,0)}] (0,2pt)--(0,-2pt) node[below]{\scriptsize $\x$};
+			\draw[->] (0,-3)--(0,1)node[right]{$y$};
+			\foreach \y in {-2,-1}
+			\draw[shift={(0,\y)}] (2pt,0)--(-2pt,0) node[right]{\scriptsize $\y$};
+			\draw (0,0)node[below left]{$0$};
+			\draw
+			(-5,-1)..controls +(80:.25)and+(180:.75)..(-3,0.5)
+			..controls+(0:.5) and+(130:.5)..(-2,0)
+			..controls+(-50:.5) and+(180:1)..(1,-2.5)
+			..controls+(0:1) and+(-90:.25)..(3,0)--(3.25,1)
+			;
+	\end{tikzpicture}}
+	\loigiai{
+		Quan sát đồ thị ta thấy $f’(x)<0$ trên khoảng $(-\infty;-4)$ và $(-2;3)$ nên hàm số $y=f(x)$ nghịch biến  trên khoảng $(-\infty;-4)$ và $(-2;3)$.}
+\end{bt}
+
+% nguồn: 2026-11-16_12_2D1_TL_Ham_so (nhập 16/11/2026)
+\begin{bt}%[2D1H5-5]%[ma:f48cb3d7]
+% nguon: Archive/2024/TaiLieuGiangDay/1.HamSo/1. K12 - 4in1 - Hamso/ThubaiGoc/Bai5-Dang8.tex #2801
+
+	\immini{Cho hàm số $y=f(x)$ có đạo hàm liên tục trên $(a,b)$ và $y=f'(x)$ có đồ thị như hình vẽ bên. Trên khoảng $(a,b)$, hàm số $y=f(x)$ có bao nhiêu điểm cực trị?}
+	{
+		\begin{tikzpicture}[smooth, >=latex, line cap =round, line join =round,scale=0.7,font=\scriptsize]
+			\draw[->] (-2.5,0)--(3.5,0) node[below]{$x$};
+			\draw[->] (0,-.5) -- (0,4) node[below left] {$y$};
+			\draw[thick, name path=dcong] (-1.5,3)..controls +(-90:0.2) and +(180:0.4).. (-0.3,0.3) .. controls + (0:0.4) and +(180:0.2)..(1,2)..controls +(0:0.09) and +(180:0.1)..(1.4,1.5)..controls +(0:0.3) and +(-135:0.1)..(2.5,3);
+			\draw[dashed] (-1.5,3) -- (-1.5,0) node[below]{$a$} (2.5,3) node[right]{$y=f'(x)$} -- (2.5,0) node[below] {$b$} (0,0) node[below left] {$O$};
+		\end{tikzpicture}
+	}
+	\loigiai{
+		Ta thấy đồ thị $f'(x)$ không cắt trục hoành nên phương trình $f'(x)=0$ vô nghiệm.\\
+		Do đó hàm số $y=f(x)$ không có điểm cực trị.
+	}
+\end{bt}
+
+% nguồn: 2026-11-16_12_2D1_TL_Ham_so (nhập 16/11/2026)
+\begin{bt}%[2D1H5-5]%[ma:5aa9c93c]
+% nguon: Archive/2024/TaiLieuGiangDay/1.HamSo/1. K12 - 4in1 - Hamso/ThubaiGoc/Bai5-Dang8.tex #2802
+
+	\immini{Cho hàm số $y=f(x)$ có đạo hàm liên tục trên $(a,b)$ và $y=f'(x)$ có đồ thị như hình vẽ bên. Trên khoảng $(a,b)$, hàm số $y=f(x)$ có bao nhiêu điểm cực trị.
+	}
+	{
+		\begin{tikzpicture}[smooth, >=latex, line cap =round, line join =round,scale=0.7,font=\scriptsize]
+			\draw[->] (-2.5,1.5)--(3.5,1.5) node[below]{$x$};
+			\draw[->] (0,-.5) -- (0,4) node[below left] {$y$};
+			\draw[thick, name path=dcong] (-1.5,3)..controls +(-90:0.2) and +(180:0.4).. (-0.3,0) .. controls + (0:0.4) and +(180:0.2)..(1,2)..controls +(0:0.09) and +(180:0.1)..(1.4,1.5)..controls +(0:0.3) and +(-135:0.1)..(2.5,3);
+			\draw[dashed] (-1.5,3) -- (-1.5,1.5) node[below]{$a$} (2.5,3) node[right]{$y=f'(x)$} -- (2.5,1.5) node[below] {$b$} (0,1.5) node[above left] {$O$};
+		\end{tikzpicture}
+	}
+	\loigiai{
+		Ta thấy đồ thị $f'(x)$ cắt trục hoành tại hai điểm phân biệt và tiếp xúc tại một điểm. Suy ra phương trình $f'(x)=0$ có hai nghiệm đơn.\\
+		Do đó hàm số $y=f(x)$ có hai điểm cực trị.}
+\end{bt}
+
+% nguồn: 2026-11-16_12_2D1_TL_Ham_so (nhập 16/11/2026)
+\begin{bt}%[2D1V5-5]%[ma:3b49a421]
+% nguon: Archive/2024/TaiLieuGiangDay/1.HamSo/1. K12 - 4in1 - Hamso/ThubaiGoc/Bai5-Dang8.tex #2803
+
+	Cho hàm số $f(x)$, đồ thị của hàm số $y=f'(x)$ là đường cong trong hình vẽ dưới
+	\begin{center}
+		\begin{tikzpicture}[line join=round, line cap=round,>=stealth,thick,scale=.8]
+			\tikzset{label style/.style={font=\footnotesize}}
+			\def \xmin{-3}
+			\def \xmax{5}
+			\def \ymin{-2}
+			\def \ymax{7}
+			\draw[step=1,gray,very thin,dashed]
+			(\xmin,\ymin) grid (\xmax,\ymax);
+			\def \hamso{-0.155*(\x)^5+0.83*(\x)^4-0.08*(\x)^3-3.49*(\x)^2+1.65*\x+4}
+			\draw[->] (\xmin,0)--(\xmax,0) node[below left] {$x$};
+			\draw[->] (0,\ymin)--(0,\ymax) node[below left] {$y$};
+			\draw (0,0) node [below left] {$O$};
+			\foreach \x in {-1,2,4}
+			\draw[thin] (\x,1pt)--(\x,-1pt) node [below left] {$\x$};
+			\foreach \y in {-1,1,2,4}
+			\draw[thin] (1pt,\y)--(-1pt,\y) node [left] {$\y$};
+			\begin{scope}
+				\clip (\xmin+0.01,\ymin+0.01) rectangle (\xmax-0.01,\ymax-0.01);
+				\draw[samples=200,domain=\xmin+0.01:\xmax-0.01,smooth,variable=\x] plot (\x,{\hamso});
+			\end{scope}
+			%\draw[dashed] (0,0.9)--(2,0.9)--(2,0) (0,2)--(4,2)--(4,0);
+		\end{tikzpicture}
+	\end{center}	
+	Xét hàm số $g(x)=f(2x+1)-2x^2$ trên đoạn $[-2;5]$. Hãy so sánh các giá trị $g\left(\dfrac{3}{2}\right)$, $g\left(\dfrac{1}{2}\right)$ và $g(-2)$.
+	\loigiai{
+		\immini
+		{
+			Ta có $g'(x)=2f'(2x+1)-4x$.\\
+			$g'(x)=0 \Leftrightarrow 2f'(2x+1)-4x=0\Leftrightarrow f'(2x+1)=2x.$\hfill$(1)$\\
+			Đặt $t=2x+1$ vì $x\in[-2;2]\Rightarrow t\in[-3;5]$.\\
+			$(1)\Leftrightarrow f'(t)=t-1\Leftrightarrow\hoac{&t=2\\&t=4}\forall t\in[-3;5].$ 
+		}
+		{
+			\begin{tikzpicture}[line join=round, line cap=round,>=stealth,thick,scale=.7]
+				\tikzset{label style/.style={font=\footnotesize}}
+				\def \xmin{-3}
+				\def \xmax{5}
+				\def \ymin{-2}
+				\def \ymax{7}
+				\draw[step=1,gray,very thin,dashed]
+				(\xmin,\ymin) grid (\xmax,\ymax);
+				\def \hamso{-0.155*(\x)^5+0.83*(\x)^4-0.08*(\x)^3-3.49*(\x)^2+1.65*\x+4}
+				\draw[->] (\xmin,0)--(\xmax,0) node[below left] {$x$};
+				\draw[->] (0,\ymin)--(0,\ymax) node[below left] {$y$};
+				\draw (0,0) node [below left] {$O$};
+				\foreach \x in {-1,2,4}
+				\draw[thin] (\x,1pt)--(\x,-1pt) node [below left] {$\x$};
+				\foreach \y in {-1,1,2,4}
+				\draw[thin] (1pt,\y)--(-1pt,\y) node [left] {$\y$};
+				\begin{scope}
+					\clip (\xmin+0.01,\ymin+0.01) rectangle (\xmax-0.01,\ymax-0.01);
+					\draw[samples=200,domain=\xmin+0.01:\xmax-0.01,smooth,variable=\x] plot (\x,{\hamso});
+					\draw[samples=200,domain=\xmin+0.01:\xmax-0.01,smooth,variable=\x] plot (\x,{\x-1});
+				\end{scope}
+				\draw[dashed] (0,3)--(4,3)--(4,0);
+			\end{tikzpicture}
+		}
+		Bảng biến thiên
+		\begin{center}
+			\begin{tikzpicture}
+				\tkzTabInit[lgt=1.2,espcl=2.5]
+				{$x$/1,$t$/1,$g'$/1,$g$/2}
+				{$-2$,$\dfrac{1}{2}$,$\dfrac{3}{2}$,$5$}
+				\tkzTabLine{$-3$,,$2$,,$4$,,$8$}
+				\tkzTabLine{ ,+,0,+,0,-, }
+				\tkzTabVar{-/,R,+/,-/}
+			\end{tikzpicture}
+		\end{center}
+		Dựa vào bảng biến thên ta thấy
+		$g\left(\dfrac{3}{2}\right)>g\left(\dfrac{1}{2}\right)>g(-2)$.}
+\end{bt}
+
+% nguồn: 2026-11-16_12_2D1_TL_Ham_so (nhập 16/11/2026)
+\begin{bt}%[2D1V5-5]%[ma:3f05b1a7]
+% nguon: Archive/SP_KhoLatex/ID6_old/DeThamKhao-01.tex #3640
+%[Dự án ĐGNL-ĐGTD-2022 GĐ1]%[Nguyễn Anh Quốc]
+	\immini
+	{Cho hàm số $y=f(x)$ có đạo hàm liên tục trên $\mathbb{R}$ và hàm số $y=f'(x)$ có đồ thị như hình vẽ bên. Số điểm cực đại của đồ thị hàm số $g(x)=f(x^2-3x)$ là bao nhiêu?
+	\textit{Kết quả:} \tikz\draw (0,0) rectangle (3,0.6);
+}
+	{\begin{tikzpicture}[line cap=round,line join=round,font=\footnotesize,>=stealth,scale=0.75]
+		\draw[->] (-4,0)--(2,0) node[above] {$x$};
+		\draw[->] (0,-5)--(0,1) node[left] {$y$};
+		\draw [samples=100, domain=-3.1:1.1] plot (\x,{(\x)^3+3*(\x)^2-4});
+		\fill (0,0) circle (1pt) node [below left] {$O$};
+		\foreach \x in {-3,-2,-1} \fill (\x,0) circle (1pt) node [above] {$\x$};
+		\fill (1,0) node[below right]{$1$} circle(1pt)
+		(0,-2) node[shift={(40:2ex)}]{$-2$} circle(1pt)
+		(0,-4) node[right]{$-4$} circle(1pt)
+		(-3,-4) circle(1pt) (-1,-2) circle(1pt);
+		\draw[dashed] (-3,0)|-(0,-4) (-1,0)|-(0,-2);
+		
+\end{tikzpicture}}
+	\loigiai
+	{
+		Ta có $g'(x)=(2x-3)\cdot f'(x^2-3x)$.\\
+		Khi đó $g'(x)=0\Leftrightarrow\hoac{&2x-3=0\\&x^2-3x=-2\\&x^2-3x=1}\Leftrightarrow\hoac{&x=\dfrac{3}{2}\\&x=1\\&x=2\\&x=\dfrac{3-\sqrt{13}}{2}\\&x=\dfrac{3+\sqrt{13}}{2}.}$\\
+		Ta có $f'(x^2-3x)>0\Leftrightarrow x^2-3x>1\Leftrightarrow x<\dfrac{3-\sqrt{13}}{2}\text{ hoặc }x>\dfrac{3+\sqrt{13}}{2}$.\\
+		Bảng xét dấu của $f'(x)$ như sau
+		\begin{center}
+			\begin{tikzpicture}
+			\tkzTabInit[nocadre=false,lgt=2.3,espcl=2.5,deltacl=0.6]
+			{$x$ /1,$2x-3$ /.6,$f'(x^2-3x)$ /.6,$g'(x)$ /0.6}{$-\infty$,$\dfrac{3-\sqrt{13}}{2}$,$1$,$\dfrac{3}{2}$,$2$,$\dfrac{3+\sqrt{13}}{2}$,$+\infty$}
+			\tkzTabLine{,-,t,-,t,-,$0$,+,t,+,t,+}
+			\tkzTabLine{,+,$0$,-,$0$,-,t,-,$0$,-,$0$,+}
+			\tkzTabLine{,-,$0$,+,$0$,+,$0$,-,$0$,-,$0$,+}
+			
+\end{tikzpicture}
+		\end{center}
+		Suy ra hàm số $g(x)$ đạt cực đại tại $x=\dfrac{3}{2}$.
+	}
+\end{bt}

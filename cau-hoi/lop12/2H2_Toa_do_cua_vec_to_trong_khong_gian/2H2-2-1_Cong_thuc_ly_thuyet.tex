@@ -58,3 +58,135 @@
 		Hình chiếu vuông góc của $M$  lên trục $Oy$ là $M_2(0;2;0)$.\\
 	Véc-tơ  chỉ phương của đường thẳng $M_1M_2$ là $\overrightarrow{M_1M_2}=(-1;2;0)$.}
 \end{ex}
+
+% nguồn: 2026-11-16_12_2H2_TL_Vecto_Toa_do (nhập 16/11/2026)
+\begin{bt}%[2H2N2-1]%[ma:f7a968ba]
+% nguon: Archive/2024/0. [LVH] BG - 12 New - 4in1-20240625T224301Z-001/0. [LVH] BG - 12 New - 4in1/data/data_C2/Bai2-A-Phan-Ly-Thuyet.tex #1528
+
+		Cho tứ diện $OABC$ có $OA$, $OB$, $OC$ đôi một vuông góc và có độ dài bằng $1$. Vẽ hệ trục toạ độ $Oxyz$ có gốc là $O$, các điểm $A, B, C$ lần lượt nằm trên các tia $Ox$, $Oy$, $Oz$ và chỉ ra các véctơ đơn vị trên các trục toạ độ.
+		\loigiai{
+			\immini{
+				Với $O$ là gốc toạ độ, ta vẽ được các trục $Ox$, $Oy$, $Oz$ như Hình bên. Ba véctơ đơn vị trên ba trục lần lượt là $\overrightarrow{i}=\overrightarrow{OA}$, $\overrightarrow{j}=\overrightarrow{OB}$, $\overrightarrow{k}=\overrightarrow{OC}$.
+			}{
+				\begin{tikzpicture}[scale=0.6, font=\footnotesize, line join=round, line cap=round, >=Stealth]
+					\path 
+					(0:0) coordinate (O)
+					($(O)+(0:3)$) coordinate (B)
+					($(O)+(90:3)$) coordinate (C)
+					($(O)+(-155:2.5)$) coordinate (A)
+					($(B)+(0:1)$) coordinate (y)
+					($(C)+(90:1)$) coordinate (z)
+					($(A)+(-155:1)$) coordinate (x)
+					;
+					\draw[->,dashed,red] (O)--(B) node[pos=.5,above]{$\overrightarrow{j}$};
+					\draw[->,dashed,red] (O)--(C) node[pos=.5,left]{$\overrightarrow{k}$};
+					\draw[->,dashed,red] (O)--(A) node[pos=.5,above=.1]{$\overrightarrow{i}$};
+					\draw[->] (B)--(y) node[below]{$y$};
+					\draw[->] (C)--(z) node[left]{$z$};
+					\draw[->] (A)--(x) node[left]{$x$};
+					\draw 	(A)--(B)--(C)--cycle
+					pic[draw,angle radius=3mm]{right angle=B--O--C}
+					pic[draw,angle radius=2mm]{right angle=C--O--A}
+					pic[draw,angle radius=4mm]{right angle=A--O--B}
+					;
+					\foreach \x/\g in {O/45,B/-90,C/180,A/-80}
+					\draw[fill=black] 	(\x) circle (.5pt)
+					($(\g:.3)+(\x)$) node {$\x$};	
+				\end{tikzpicture}
+			}
+		}
+	\end{bt}
+
+% nguồn: 2026-11-16_12_2H2_TL_Vecto_Toa_do (nhập 16/11/2026)
+\begin{bt}%[2H2N2-1]%[ma:e83a2884]
+% nguon: Archive/2024/0. [LVH] BG - 12 New - 4in1-20240625T224301Z-001/0. [LVH] BG - 12 New - 4in1/data/data_C2/Bai-3-Dang-4-Vandungtoadovectovaobaitoanthuctien.tex #1606
+
+	Một thiết kế cơ khí trong Hình 5a được biểu diễn trong không gian $Oxyz$ như Hình 5b.
+	\begin{enumerate}
+		\item Hãy vẽ ba véc-tơ đơn vị $\overrightarrow{i}$, $\overrightarrow{j}$, $\overrightarrow{k}$ lần lượt trên ba trục toạ độ $Ox$, $Oy$, $Oz$ (mỗi véc-tơ đơn vị có độ dài bằng $1$ m).
+		\item Biểu diễn các véc-tơ $\overrightarrow{OC}$, $\overrightarrow{OB}$, $\overrightarrow{OA}$, $\overrightarrow{AB}$ theo $\overrightarrow{i}$, $\overrightarrow{j}$, $\overrightarrow{k}$.
+	\end{enumerate}
+	\begin{center}
+		\begin{tikzpicture}[line join = round, line cap=round,>=stealth,font=\footnotesize,scale=0.7]
+			
+			\draw[->,line width=1pt] (0,0)--(-3,-1)coordinate (x) node[below]{$x$};
+			\draw[->,line width=1pt] (0,0)--(3,-1)coordinate (y) node[below]{$y$};
+			\draw[->,line width=1pt] (0,0)--(0,4)coordinate (z)  node[left]{$z$};
+			
+			\path 
+			(0,0) coordinate (O)
+			($(O)!0.75!(x)$) coordinate (C)
+			($(O)!0.75!(y)$) coordinate (D)
+			($(O)!0.75!(z)$) coordinate (Q)
+			($(O)!0.45!(y)$) coordinate (E)
+			($(C)+(D)-(O)$) coordinate (B)
+			($(Q)+(E)-(O)$) coordinate (A)
+			;
+			
+			\draw (O) node{
+				\begin{tikzpicture}[line join = round, line cap=round,>=stealth,font=\footnotesize,scale=0.2]
+					\draw[fill=brown,opacity=0.2] (0,0) -- (3,1)--(5,0)--(2,-1)--cycle;
+				\end{tikzpicture}	
+			};
+			\draw (B) node{
+				\begin{tikzpicture}[line join = round, line cap=round,>=stealth,font=\footnotesize,scale=0.2]
+					\draw[fill=brown,opacity=0.2] (0,0) -- (3,1)--(5,0)--(2,-1)--cycle;
+				\end{tikzpicture}	
+			};
+			
+			\draw[line width=6pt,black!40] (O)--(Q);
+			\draw[line width=8pt,cyan!40] ($(Q)!-0.1!(A)$)--(A);
+			\draw[fill=cyan] (Q) ellipse (0.13cm and 0.05cm);
+			\draw[->,line width=1pt] (0,3)--(0,4)coordinate (z)  node[left]{$z$};
+			\path
+			(E)--(A)node[pos=0.5,right]{$5$ m}
+			(D)--(B)node[pos=0.5,below right]{$2$ m}
+			(C)--(B)node[pos=0.5,below left]{$3$ m}
+			;
+			
+			
+			\draw[dashed] (C)--(B)--(D) (E)--(A) (A)--(C) (A)--(B);
+			
+			\foreach \p/\r in {C/120,B/-90,O/-120,A/0}
+			\fill (\p) circle (1.2pt) node[shift={(\r:3mm)}]{$\p$};
+			\draw 	(E) node[above right]{$1$ m};
+			\draw pic[draw,angle radius=3mm] {right angle = O--E--A}; 
+			
+			
+		\end{tikzpicture}	
+		~~
+		\begin{tikzpicture}[line join = round, line cap=round,>=stealth,font=\footnotesize,scale=0.7]
+			
+			\draw[->,line width=1pt] (0,0)--(-3,-1)coordinate (x) node[below]{$x$};
+			\draw[->,line width=1pt] (0,0)--(3,-1)coordinate (y) node[below]{$y$};
+			\draw[->,line width=1pt] (0,0)--(0,4)coordinate (z)  node[left]{$z$};
+			
+			\path 
+			(0,0) coordinate (O)
+			($(O)!0.75!(x)$) coordinate (C)
+			($(O)!0.75!(y)$) coordinate (D)
+			($(O)!0.75!(z)$) coordinate (Q)
+			($(O)!0.45!(y)$) coordinate (E)
+			($(C)+(D)-(O)$) coordinate (B)
+			($(Q)+(E)-(O)$) coordinate (A)
+			;
+			\draw[dashed] (C)--(B)--(D) (E)--(A)--(Q);
+			\foreach \diem in{C,B,D,A}
+			\draw[red,line width=2pt,->] (O)--(\diem);
+			\draw[red,line width=2pt,->] (A)--(B);
+			\foreach \p/\r in {C/120,B/-90,O/140,D/90,E/40,A/0}
+			\fill (\p) circle (1.2pt) node[shift={(\r:3mm)}]{$\p$};
+			\draw 
+			(E) node[below]{$2$}
+			(C) node[below]{$2$}
+			(Q) node[left]{$5$}
+			;
+			\draw pic[draw,angle radius=3mm] {right angle = O--E--A}; 
+			
+		\end{tikzpicture}
+	\end{center}
+	\loigiai{
+		Ta có: $\vec{OC}=2\vec{i}; \vec{OB}=2\vec{i}+3\vec{j}; \vec{OA}=2\vec{j}+5\vec{k}$.\\
+		Do đó: $\vec{AB}=\vec{OB}-\vec{OA}=(2\vec{i}+3\vec{j})-(2\vec{j}+5\vec{k})=2\vec{i}+\vec{j}-5\vec{k}$.
+	}	
+\end{bt}

@@ -6560,24 +6560,24 @@ Vậy góc giữa đường thẳng $SB$ và  mặt phẳng đáy bằng $60^\ci
 				
 			}{
 				\begin{tikzpicture}[>=stealth,line join=round,line cap=round,font=\footnotesize,scale=1]
-					\tikzset{
+					\chardef\catAtCu=\catcode`\@\relax\scantokens{\catcode`\@=6\relax \tikzset{
 						pics/chopTamGiac/.style n args={4}{
 							code={
 								\tikzset{declare function={a=4;b=3;h=3;goc=-60;}}
 								\path 
-								(0,0)coordinate (#1)+(0:a)coordinate (#3)+
-								(goc:b)coordinate (#2)+(90:h)coordinate (#4)
+								(0,0)coordinate (@1)+(0:a)coordinate (@3)+
+								(goc:b)coordinate (@2)+(90:h)coordinate (@4)
 								
 								;
-								\foreach \pointo/\pointt in {#4/#1,#1/#2,#2/#3,#3/#4,#4/#2}{
+								\foreach \pointo/\pointt in {@4/@1,@1/@2,@2/@3,@3/@4,@4/@2}{
 									\draw[fill=black](\pointo)--(\pointt);
 								}
-								\foreach \pointo/\pointt in {#1/#3}{
+								\foreach \pointo/\pointt in {@1/@3}{
 									\draw[fill=black,dashed](\pointo)--(\pointt);
 								}
 								
 							}
-					}}
+					}}}\catcode`\@=\catAtCu\relax 
 					\path 
 					(0,0)coordinate (a)pic{chopTamGiac={A}{B}{C}{S}}
 					($(B)!.5!(C)$)coordinate (I)

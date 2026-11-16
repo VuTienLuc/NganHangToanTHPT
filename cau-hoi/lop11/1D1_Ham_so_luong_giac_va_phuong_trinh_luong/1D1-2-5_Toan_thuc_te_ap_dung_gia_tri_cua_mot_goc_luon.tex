@@ -519,13 +519,13 @@
 			\pgfmathsetmacro{\b}{2*\a/3}
 			\pgfmathsetmacro{\xo}{\a *cos(\g)}
 			\pgfmathsetmacro{\yo}{\b *sin(\g)}
-			\def\longdq(#1:#2){
-				\begin{scope}[shift={(#1:#2)}]
+			\chardef\catAtCu=\catcode`\@\relax\scantokens{\catcode`\@=6\relax \def\longdq(@1:@2){
+				\begin{scope}[shift={(@1:@2)}]
 					\draw (0,-\b) ellipse ({\b/2} and {\b});
 					\fill[blue!60] (\xo,\yo-\b) arc (\g:-180-\g:{\a} and {\b})--cycle;
 					\draw (0,-\b) ellipse({\a} and {\b});
 				\end{scope}
-			}
+			}}\catcode`\@=\catAtCu\relax 
 			\foreach \i in {1,...,\n}{
 				\pgfmathsetmacro{\gm}{360*\i/\n}
 				\pgfmathsetmacro{\gh}{(360*\i+180)/\n}

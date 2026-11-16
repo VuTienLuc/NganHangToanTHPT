@@ -5160,3 +5160,53 @@ Vậy số đo của góc nhị diện $[S,CD,A]$ bằng $\widehat{SHA}=30^{^\ci
 		}
 	}
 \end{bt}
+
+% nguồn: 2026-11-16_12_1H8_TL_The_tich (nhập 16/11/2026)
+\begin{bt}%[1H8C6-2]%[ma:57cd574c]
+% nguon: Archive/SP_KhoLatex/ID6_old/DeThamKhao-04.tex #3714 
+% KIEM_TRA: cần xem lại đáp số/dạng
+%[ĐGNL-ĐGTD-2022, nguyễn hoàng thanh]%
+	Cho lăng trụ tứ giác đều $ABCD.A'B'C'D'$ có cạnh đáy bằng $1$, chiều cao bằng $x$. Tìm $x$ để góc tạo bởi $AD'$ và $(AB'C')$ đạt giá trị lớn nhất.
+	\loigiai{
+		\immini{
+			Gọi $H$ là hình chiếu vuông góc của $D'$ lên mặt phẳng $(AB'C')$. Khi đó, $AH$ là hình chiếu của $AD'$ lên mặt phẳng $(AB'C')$. Do đó, góc tạo bởi $AD'$ và $(AB'C')$ chính là góc $\alpha = \widehat{D'AH}$.\\
+			Ta lại có $\vartriangle D'AH$ vuông tại $H$ nên ta có $\sin{\alpha}=\dfrac{D'H}{AD'}$.\\
+			Gọi $V$ là thể tích hình chóp $A.B'C'D'$. Khi đó, ta có
+			$$ V=\dfrac{1}{3}AA' \times S_{\vartriangle B'C'D'}=\dfrac{1}{6}x. $$
+			Mặt khác, ta có
+			\begin{eqnarray*}
+				&V&=\dfrac{1}{3}D'H\times S_{\vartriangle AB'C'} =\dfrac{1}{6}D'H \times AB' \times B'C'\\
+				& &=\dfrac{1}{6}D'H \times \sqrt{1+x^2}.
+			\end{eqnarray*}
+			Do đó
+			$$ D'H=\dfrac{6V}{\sqrt{1+x^2}}= \dfrac{x}{\sqrt{1+x^2}}.$$
+		}
+		{\begin{tikzpicture}[scale =1.2,thick]
+			\tkzDefPoints{0/0/A, 3/0/D, 1/2/B};
+			\tkzDefPointWith[orthogonal,K=1.2](A,D)\tkzGetPoint{A'}
+			\tkzDefPointBy[translation = from A to D](B)\tkzGetPoint{C}
+			\tkzDefPointBy[translation = from A to D](A')\tkzGetPoint{D'}
+			\tkzDefPointBy[translation = from A to B](A')\tkzGetPoint{B'}
+			\tkzDefPointBy[translation = from A to B](D')\tkzGetPoint{C'}
+			% 					\tkzDefMidPoint(A',C')\tkzGetPoint{I'}
+			% 					\tkzDefMidPoint(B',D)\tkzGetPoint{O}
+			\tkzDrawSegments(A,A' A',D' D',A A',B' A,D D,C C',B' C,C' D,D' D',C');
+			\tkzDrawSegments[dashed](A,B B,C B,B' C',A A,B');
+			
+			\tkzLabelPoints[left](A',B');
+			\tkzLabelPoints[right](C',D');
+			\tkzLabelPoints[left](A);
+			\tkzLabelPoints[above right](B);
+			\tkzLabelPoints[right](D,C)
+			
+			% 					\tkzMarkAngles[mark=x,size=0.8](B',A,D')
+			\end{tikzpicture}}
+		Ta lại có $AD'=\sqrt{1+x^2}$. Suy ra
+		$$ \sin{\alpha}=\dfrac{x}{\sqrt{1+x^2}\sqrt{1+x^2}}=\dfrac{x}{1+x^2}=\dfrac{1}{x+\dfrac{1}{x}}. $$
+		Áp dụng bất đẳng thức Côsi, ta có
+		$$ x+\dfrac{1}{x}\ge 2. $$
+		Do đó, ta có $\sin{\alpha}\le \dfrac{1}{2}. $\\
+		Vì $0 \le \alpha \le 90^\circ$ nên $\alpha$ đạt giá trị lớn nhất khi chỉ khi $\sin{\alpha}$ đạt giá trị lớn nhất, tức là $\sin{\alpha}=\dfrac{1}{2}$ khi
+		$$ x=\dfrac{1}{x} \Leftrightarrow x=1. $$
+	}
+\end{bt}

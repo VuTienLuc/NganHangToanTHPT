@@ -238,3 +238,241 @@
 		Vậy  $z_1=\dfrac{5\,323}{16\,000}\Rightarrow a=5\,323,\,b=16\,000\Rightarrow b-2a=5\,354$.
 	} 
 \end{bt}
+
+% nguồn: 2026-11-16_12_2D6_TT_Xac_suat (nhập 16/11/2026)
+\begin{ex}%[2D6H1-3]%[ma:3841f89d]
+% nguon: Archive/2024/TaiLieuGiangDay/6. K12 - 4in 1 - XsCoDieuKien/data/CHUONG 6 - XAC SUAT/OTC6-De-1.tex #3297
+%[BG12-4in1]%[Đào-V- Thuỷ]
+	Từ một hộp có $7$ viên phấn trắng và $3$ viên phấn đỏ, lấy ngẫu nhiên lần lượt ra $2$ viên (không hoàn lại).
+	\choiceTF[t]
+	{\True Xác suất để lần thứ nhất lấy được viên phấn trắng là $\dfrac{7}{10}$}
+	{\True Xác suất để lần thứ hai lấy được viên phấn đỏ là $\dfrac{3}{10}$}
+	{\True Xác suất để lần thứ hai lấy được viên phấn trắng là $\dfrac{7}{10}$}
+	{Xác suất để hai viên lấy ra cùng màu là $\dfrac{1}{2}$}
+	\loigiai
+	{
+		Ta có sơ đồ hình cây minh hoạ cho phép thử trên như sau
+		\begin{center}
+			\begin{tikzpicture}[>=stealth,line join=round,line cap=round,font=\footnotesize,scale=.81]
+		\def\xmin{-1} \def\xmax{10}  \def\ymin{-5}  \def\ymax{5} 
+		%\draw[color=gray!50,dashed] (\xmin,\ymin) grid (\xmax,\ymax);
+		%\draw[->] (\xmin,0)--(\xmax,0) node [below]{$x$};
+		%\draw[->] (0,\ymin)--(0,\ymax) node [left]{$y$};
+		\clip (\xmin,\ymin) rectangle (\xmax,\ymax);
+		%%%%
+		\node[rectangle, fill=green!10,rounded corners] (a) at (0,0) {Hộp phấn};
+		\node[rectangle, fill=green!10,rounded corners] (b) at (3,2) {Phấn trắng};
+		\node[rectangle, fill=green!10,rounded corners] (c) at (3.7,-2) {Phấn đỏ};
+		\node[rectangle, fill=green!10,rounded corners] (d) at (8.7,-4) {Phấn đỏ};
+		\node[rectangle, fill=green!10,rounded corners] (e) at (8,-1) {Phấn trắng};
+		\node[rectangle, fill=green!10,rounded corners] (f) at (7.7,4) {Phấn trắng};
+		\node[rectangle, fill=green!10,rounded corners] (g) at (8.7,1) {Phấn đỏ};
+		\draw[->] (a)--(b);
+		\draw[->] (a)--(c);
+		\draw[->] (c)--(d);
+		\draw[->] (c)--(e);
+		\draw[->] (b)--(f);
+		\draw[->] (b)--(g);
+		\path (a)--(b) node[pos=0.5,above,sloped] {$\dfrac{7}{10}$};
+		\path (a)--(c) node[pos=0.5,below,sloped] {$\dfrac{3}{10}$};
+		\path (b)--(f) node[pos=0.5,above,sloped] {$\dfrac{6}{9}$};
+		\path (b)--(g) node[pos=0.5,below,sloped] {$\dfrac{3}{9}$};
+		\path (c)--(d) node[pos=0.5,below,sloped] {$\dfrac{2}{9}$};
+		\path (c)--(e) node[pos=0.5,above,sloped] {$\dfrac{7}{9}$};
+\end{tikzpicture}
+		\end{center}
+		\begin{itemchoice}
+			\itemch Đúng. Xác suất để lần thứ nhất lấy được viên phấn trắng là
+			\[
+			\dfrac{7}{10} \cdot \dfrac{6}{9} + \dfrac{7}{10}\cdot \dfrac{3}{9}= \dfrac{7}{10}.
+			\]
+			\itemch Đúng. Xác suất để lần thứ hai lấy được viên phấn đỏ là
+			\[
+			\dfrac{7}{10} \cdot \dfrac{3}{9}+ \dfrac{3}{10}\cdot \dfrac{2}{9}= \dfrac{3}{10}.
+			\]
+			\itemch Đúng. Xác suất để lần thứ hai lấy được viên phấn trắng là
+			\[
+			\dfrac{7}{10} \cdot \dfrac{6}{9} + \dfrac{3}{10} \cdot \dfrac{7}{9}= \dfrac{7}{10}.
+			\]
+			\itemch Sai. Xác suất để hai viên lấy ra cùng màu là 
+			\[
+			\dfrac{7}{10} \cdot \dfrac{6}{9}+ \dfrac{3}{10} \cdot \dfrac{2}{9}= \dfrac{8}{15}.
+			\]
+		\end{itemchoice}
+	}
+\end{ex}
+
+% nguồn: 2026-11-16_12_2D6_TT_Xac_suat (nhập 16/11/2026)
+\begin{ex}%[2D6H1-3]%[ma:a98ee403]
+% nguon: Archive/2024/TaiLieuGiangDay/6. K12 - 4in 1 - XsCoDieuKien/data/CHUONG 6 - XAC SUAT/OTC6-De-1.tex #3298
+%[BG12-4in1]%[Đào-V- Thuỷ]
+	Bạn Bắc chuẩn bị đi dã ngoại tại Đồng Cao trong hai ngày thứ Bảy và Chủ nhật. Biết rằng ở Đồng Cao, mỗi ngày chỉ có nắng hoặc mưa, nếu một ngày là nắng thì khả năng ngày hôm sau vẫn nắng là $80\%$, còn nếu một ngày là mưa thì khả năng ngày hôm sau vẫn mưa là $30\%$. Theo dự báo thời tiết, xác suất trời sẽ nắng vào thứ Bảy là $70\%$. 
+	\begin{center}
+		\begin{tikzpicture}
+			\def\gocm{20}
+			\def\gocn{10}
+			\def\r{4}
+			\tikzset{s/.style={outer sep=0.5 mm,draw=magenta,rectangle,minimum width=2.75cm,rounded corners=1mm}}
+			\path(0,0)node(O){}++(\gocm:\r)node[s](A1){Nắng}++(\gocn:\r)node[s](A2){Nắng};
+			\path(A1)++({-\gocn}:\r)node[s](a2){Mưa};
+			\path(O)++(-\gocm:\r)node[s](B1){Mưa}++(\gocn:\r)node[s](B2){Nắng};
+			\path(B1)++({-\gocn}:\r)node[s](b2){Mưa};
+			\foreach \x/\y in {
+				O/A1,A1/A2,
+				O/B1,B1/B2,
+				A1/a2,
+				B1/b2}
+			\draw[-stealth](\x.east)--(\y.west);
+			\path(O)--(A1.west)node[pos=0.5,above,sloped]{$\mbox{0{,}7}$}(O)--(B1.west)node[pos=0.5,below]{$\mbox{}$}(B1.east)--(B2.west)node[pos=0.5,above]{$\mbox{}$}(A1.east)--(A2.west)node[pos=0.5,above]{$\mbox{}$}
+			(A1.east)--(A2.west)node[pos=0.5,above,sloped]{$\mbox{0{,}8}$}
+			(B1.east)--(b2.west)node[pos=0.5,below,sloped]{$\mbox{0{,}3}$};
+			%%Node dòng trên
+			\path(A2)++(0,1)node{\textbf{Chủ nhật}}++(180:4)node{\textbf{Thứ bảy}};
+		\end{tikzpicture}
+	\end{center}
+	\choiceTF[t]
+	{\True Xác suất để ngày thứ Bảy mưa là $0{,}3$}
+	{Xác suất để có ít nhất một ngày nắng là $0{,}9$}
+	{\True Xác suất để cả hai ngày nắng là $0{,}56$}
+	{\True Xác suất để Chủ nhật nắng là $0{,}77$}
+	\loigiai
+	{
+		Gọi $A$ là biến cố \lq\lq Ngày thứ Bảy trời nắng\rq\rq\ và $B$ là biến cố \lq\lq Ngày Chủ nhật trời nắng\rq\rq.\\
+		Ta có $\mathrm{P}(A)=0{,}7$; $\mathrm{P}(B|A)= 0{,}8$; $P\left(\overline{B}\big|\overline{A}\right)= 0{,}3$.\\
+		Suy ra $\mathrm{P}\left(\overline{A}\right)= 1-\mathrm{P}(A)= 0{,}3$, $\mathrm{P}\left(B|\overline{A}\right)= 0{,}7$, $\mathrm{P}\left(\overline{B}|A\right)= 0{,}2$.
+		\begin{itemchoice}
+			\itemch Đúng. Vì $\mathrm{P}\left(\overline{A}\right)= 1-\mathrm{P}(A)= 0{,}3$.
+			\itemch Sai. Ta có
+			\begin{eqnarray*}
+				\mathrm{P}(A \cup B) &=& 1-\mathrm{P}\left(\overline{A} \overline {B}\right)\\
+				&=& 1- \mathrm{P}\left(\overline{A}\right) \cdot P\left( \overline{B} \big| \overline{A}\right)\\
+				&=&1- 0{,}3 \cdot 0{,}3= 0{,}91.
+			\end{eqnarray*}
+			\itemch Đúng. Ta có
+			\[
+			\mathrm{P}(AB)= \mathrm{P}(A) \cdot \mathrm{P}(B|A)= 0{,}7\cdot 0{,}8= 0{,}56.
+			\]
+			\itemch Đúng. Theo công thức Bayes ta có
+			\begin{eqnarray*}
+				\mathrm{P}(B) &=& \mathrm{P}(A) \cdot \mathrm{P}(B|A) +\mathrm{P}\left(\overline{A}\right) \cdot P\left(B|\overline{A}\right)\\
+				&=& 0{,}7 \cdot 0{,}8+ 0{,}3\cdot 0{,}7= 0{,}77.
+			\end{eqnarray*}			
+		\end{itemchoice}
+	}
+\end{ex}
+
+% nguồn: 2026-11-16_12_2D6_TT_Xac_suat (nhập 16/11/2026)
+\begin{ex}%[2D6H1-3]%[ma:f92c97e8]
+% nguon: Archive/2024/TaiLieuGiangDay/6. K12 - 4in 1 - XsCoDieuKien/data/CHUONG 6 - XAC SUAT/OTC6-De-2.tex #3307
+%[BAI-GIANG-12-4IN1, Võ Thị Thùy Trang]%[Cùng khám phá]		
+	Theo kết quả từ trạm nghiên cứu khí hậu tại địa phương $T$, xác suất để một ngày có gió là $0{,}6$; nếu ngày có gió thì xác suất có mưa là $0{,}4$; nếu ngày không có gió thì xác suất có mưa là $0{,}2$. Gọi $G$ là biến cố \lq\lq Ngày có gió \rq\rq~ và $M$ là biến cố \lq\lq Ngày có mưa\rq\rq. Được mô tả trong sơ đồ cây như hình dưới đây
+	\begin{tikzpicture}[scale=1.0,>=stealth, font=\footnotesize, line join=round, line cap=round]
+		\def\xmin{-1} \def\xmax{10}  \def\ymin{-5}  \def\ymax{5} 
+		%\draw[color=gray!50,dashed] (\xmin,\ymin) grid (\xmax,\ymax);
+		%\draw[->] (\xmin,0)--(\xmax,0) node [below]{$x$};
+		%\draw[->] (0,\ymin)--(0,\ymax) node [left]{$y$};
+		\clip (\xmin,\ymin) rectangle (\xmax,\ymax);
+		%%%%
+		\node[rectangle, fill=yellow!30,rounded corners] (a) at (0,0) {Ngày};
+		\node[rectangle, fill=yellow!30,rounded corners] (b) at (3,2) {Có gió $(G)$};
+		\node[rectangle, fill=yellow!30,rounded corners] (c) at (3.7,-2) {Không có gió $\left(\overline{G}\right)$};
+		\node[rectangle, fill=yellow!30,rounded corners] (d) at (8.7,-4) {Không có mưa};
+		\node[rectangle, fill=yellow!30,rounded corners] (e) at (8,-1) {Có mưa};
+		\node[rectangle, fill=yellow!30,rounded corners] (f) at (7.7,4) {Có mưa};
+		\node[rectangle, fill=yellow!30,rounded corners] (g) at (8.9,1) {Không có mưa};
+		\draw[->] (a)--(b);
+		\draw[->] (a)--(c);
+		\draw[->] (c)--(d);
+		\draw[->] (c)--(e);
+		\draw[->] (b)--(f);
+		\draw[->] (b)--(g);
+	\end{tikzpicture}
+	\choiceTF[t]
+	{\True Xác suất $\mathrm{P}(M|G)=0{,}4$}
+	{Xác suất $\mathrm{P}(\overline{M}|\overline{G})=0{,}4$}
+	{\True Xác suất $\mathrm{P}(GM) =0{,}24$}
+	{\True Xác suất của $\mathrm{P}(G\overline{M}) =0{,}36$}
+	\loigiai{
+		Theo đề bài ta có xác suất $\mathrm{P}(G)=0{,}6$, $\mathrm{P}(\overline{G})=0{,}4$.
+		\begin{itemchoice}
+			\itemch \textbf{Đúng} Theo đề bài ta có xác suất có mưa là $\mathrm{P}(M|G)=0{,}4$. 
+			\itemch \textbf{Sai} Theo đề bài xác suất $\mathrm{P}(M|\overline{G})=0{,}2\Rightarrow \mathrm{P}(\overline{M}|\overline{G})=1-0{,}2=0{,}8.$
+			\itemch \textbf{Đúng} Ta có $\mathrm{P}(GM)=\mathrm{P}(G)\cdot \mathrm{P}(M|G)=0{,}6\cdot 0{,}4=0{,}24$.
+			\itemch \textbf{Đúng} Ta có $\mathrm{P}(G\overline{M})=\mathrm{P}(G)\cdot \mathrm{P}\left(\overline{M}|G\right)=0{,}6\cdot 0{,}6=0{,}36$.
+		\end{itemchoice}
+	}
+\end{ex}
+
+% nguồn: 2026-11-16_12_2D6_TT_Xac_suat (nhập 16/11/2026)
+\begin{ex}%[2D6V1-3]%[ma:ba3a8f0d]
+% nguon: Archive/SP_KhoLatex/SP_Đề Theo Bài-Khối 12/2-OTC6-De1.tex #3986
+
+	Trong một hộp có $18$ quả bóng bàn loại I và $2$ quả bóng bàn loại II, các quả bóng bàn có hình dạng và kích thước như nhau. Một học sinh lấy ngẫu nhiên lần lượt $2$ quả bóng bàn (lấy không hoàn lại) trong hộp.\\ Xét tính đúng, sai của các khẳng định sau
+	\choiceTF
+	{Xác suất để lần thứ nhất lấy được quả bóng bàn loại II là $\dfrac{9}{10}$}
+	{\True Xác suất để lần thứ hai lấy được quả bóng bàn loại II, biết lần thứ nhất lấy được quả bóng bàn loại II, là $\dfrac{1}{19}$}
+	{Xác suất để cả hai lần đều lấy được quả bóng bàn loại II là $\dfrac{9}{190}$}
+	{\True Xác suất để ít nhất $1$ lần lấy được quả bóng bàn loại I là $\dfrac{189}{190}$}
+	\loigiai{
+	Xét các biến cố\\
+	$A\colon$ \lq\lq Lần thứ nhất lấy được quả bóng bàn loại II\rq\rq;\\
+	$B\colon$ \lq\lq Lần thứ hai lấy được quả bóng bàn loại II\rq\rq. 
+	\begin{itemchoice}
+	\itemch Sai, vì Xác suất để lần thứ nhất lấy được quả bóng bàn loại II là $\mathrm{P}(A)=\dfrac{2}{20}=\dfrac{1}{10}$.
+	\itemch Đúng, vì sau khi lấy $1$ quả bóng bàn loại II thì chỉ còn $1$ quả bóng bàn loại II trong hộp.\\ Suy ra xác suất để lần thứ hai lấy được quả bóng bàn loại II, biết lần thứ nhất lấy được quả bóng bàn loại II là $\mathrm{P}(B | A)=\dfrac{1}{19}$.
+	\itemch Sai, vì xác suất để cả hai lần đều lấy được quả bóng bàn loại II là
+	$$
+	\mathrm{P}(C)=\mathrm{P}(A \cap B)=\mathrm{P}(A) \cdot \mathrm{P}(B | A)=\dfrac{1}{10} \cdot \dfrac{1}{19}=\dfrac{1}{190}.
+	$$
+	\itemch Đúng, vì để ít nhất $1$ lần lấy được quả bóng bàn loại I là
+	$$
+	\mathrm{P}(\overline {C})=1-\mathrm{P}(C)=1-\frac{1}{190}=\frac{189}{190} \text {. }
+	$$
+	\end{itemchoice}
+	}
+\end{ex}
+
+% nguồn: 2026-11-16_12_2D6_TT_Xac_suat (nhập 16/11/2026)
+\begin{bt}%[2D6V1-3]%[ma:3534f47f]
+% nguon: Archive/SP_KhoLatex/SP_Đề Theo Bài-Khối 12/2-B18-De1.tex #4054
+
+	Hộp thứ nhất có $4$ viên bi xanh và $6$ viên bi đỏ. Hộp thứ hai có $5$ viên bi xanh và $4$ viên bi đỏ. Các viên bi có cùng kích thước và khối lượng. Lấy ra ngẫu nhiên $1$ viên bi từ hộp thứ nhất chuyển sang hộp thứ hai. Sau đó lại lấy ra ngẫu nhiên $1$ viên bi từ hộp thứ hai.
+	Sử dụng sơ đồ hình cây, tính xác suất của biến cố
+	$B\colon$ \lq\lq Hai viên bi lấy ra có cùng màu\rq\rq.
+	\shortans{$0{,}54$}
+	\loigiai{
+		Gọi $X$ là biến cố: \lq\lq Viên bi lấy ra từ hộp thứ nhất có màu xanh\rq\rq.\\
+		$Y$ là biến cố: \lq\lq Viên bi lấy ra từ hộp thứ hai có màu đỏ\rq\rq.\\
+		Ta có
+		$
+		\mathrm{P}(Y|X)=0{,}4$; $\mathrm{P}(Y \mid \overline{X})=0{,}5 $; $\mathrm{P}(X)=0{,}4
+		$.\\
+		Do đó $\mathrm{P}(\overline{X})=1-\mathrm{P}(X)=0{,}6$; $\mathrm{P}(\overline{Y} |X)=1-\mathrm{P}(Y|X)=0{,}6$; \\
+		$\mathrm{P}(\overline{Y} \mid \overline{X})=1-\mathrm{P}(Y \mid \overline{X})=0{,}5$.\\
+		Ta có sơ đồ hình cây như sau
+		\begin{center}
+			\begin{tikzpicture}
+				\def\gocm{20}
+				\def\gocn{10}
+				\def\r{4}
+				\tikzset{s/.style={outer sep=0.5 mm,draw=magenta,rectangle,minimum width=2.75cm,rounded corners=1mm}}
+				\path(0,0)node(O){}++(\gocm:\r)node[s](A1){X}++(\gocn:\r)node[s](A2){$Y$};
+				\path(A1)++({-\gocn}:\r)node[s](a2){$\overline{Y}$};
+				\path(O)++(-\gocm:\r)node[s](B1){$\overline{X}$}++(\gocn:\r)node[s](B2){$Y$};
+				\path(B1)++({-\gocn}:\r)node[s](b2){$\overline{Y}$};
+				\foreach \x/\y in {
+					O/A1,A1/A2,
+					O/B1,B1/B2,
+					A1/a2,
+					B1/b2}
+				\draw[-stealth](\x.east)--(\y.west);
+				\path(O)--(A1.west)node[pos=0.5,above,sloped]{$0{,}4$}(O)--(B1.west)node[pos=0.5,below,sloped]{$0{,}6$}(B1.east)--(B2.west)node[pos=0.5,above,sloped]{$0{,}5$}(A1.east)--(A2.west)node[pos=0.5,above,sloped]{$0{,}4$}
+				(A1.east)--(a2.west)node[pos=0.5,below,sloped]{$0{,}6$}
+				(B1.east)--(b2.west)node[pos=0.5,below,sloped]{$0{,}5$};
+				
+			\end{tikzpicture}
+			
+		\end{center}
+		Khi đó $\mathrm{P}(B)=\mathrm{P}(X\overline{Y})+\mathrm{P}(\overline{X}Y)=0{,}4\cdot 0{,}6+0{,}6\cdot 0{,}5=0{,}54$.
+	}
+\end{bt}

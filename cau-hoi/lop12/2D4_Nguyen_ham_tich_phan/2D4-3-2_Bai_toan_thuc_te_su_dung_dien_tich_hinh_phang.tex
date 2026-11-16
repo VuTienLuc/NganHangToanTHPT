@@ -5070,3 +5070,1955 @@ Diện tích phần tô đậm là $$S_T  = S-4\cdot S_1 \approx 16{,}03~\mathrm
 		Vậy công ty đó cần số tiền để làm bức tranh là $\dfrac{208}{9}\cdot  1\,200\,000 \approx 27\,733\,000$ (đồng).
 	 }
 \end{bt}
+
+% nguồn: 2026-11-16_12_2D4_TL_Nguyen_ham_Tich_phan (nhập 16/11/2026)
+\begin{bt}%[2D4V3-2]%[ma:5843ad7e]
+% nguon: Archive/2024/TaiLieuGiangDay/5.HH Oxyz/VDC_TDM.tex #3158
+
+Hình phẳng $(H)$ tô màu bên dưới được tạo ra bởi một hình vuông $ABCD$ (có cạnh bằng $20$ cm và có tâm $O$) và một đường cong kín $(L)$ bao quanh hình vuông $ABCD$. Các điểm trên đường cong kín $(L)$ được tạo ra bằng cách cho một điểm $M$ chạy trên các cạnh của hình vuông $ABCD$, với mỗi điểm $M$ ta lấy trên tia đối của tia $MO$ một điểm $N$ sao cho $MN=8$ cm. Hãy tính diện tích hình phẳng $(H)$.
+\begin{center}
+	\begin{tikzpicture}[declare function={a=5;},scale=0.6]
+		% Các điểm
+		\path
+		(0,0) coordinate (A)
+		(a,0) coordinate (B)
+		(0,-a) coordinate (D)
+		($(B)+(D)$) coordinate (C)
+		($(A)!0.5!(C)$) coordinate (O)
+		(-2,2) coordinate (A')
+		(a+2,2) coordinate (B')
+		(-2,-a-2) coordinate (D')
+		($(B')+(D')-(A')$) coordinate (C');
+		\begin{scope}
+			\path[fill=cyan!30, even odd rule]
+			(A') to[bend left=30] (B') 
+			to[bend left=30] (C') 
+			to[bend left=30] (D') 
+			to[bend left=30] (A') -- cycle
+			(A)--(B)--(C)--(D)--cycle;
+		\end{scope}
+		\path (D)--(C)--([turn]-90:0.5) coordinate (xt)
+		($(D)-(C)+(xt)$) coordinate (yt);
+		\draw[dash pattern=on 2pt off 2pt] (D)--(yt) (C)--(xt);
+		\draw[>=stealth,|<->|] (xt)--(yt) node[fill=white,inner sep=0pt,font=\scriptsize,pos=0.3,sloped]{$20$};
+		\fill[brown!30] (A)--(B)--(C)--(D)--cycle;
+		\draw[dashed,red] (A')--(B')--(C')--(D')--cycle;
+		\draw (A)--(B)--(C)--(D)--cycle;
+		\draw[thick] (A') to[bend left=30] (B');
+		\draw[thick] (B') to[bend left=30] (C');
+		\draw[thick] (C') to[bend left=30] (D');
+		\draw[thick] (D') to[bend left=30] (A');
+		\path ($(B)!.3!(C)$) coordinate (M);
+		\path[name path=curveBC] (B') to[bend left=30] (C');
+		\path[name path=rayOM] (O) -- ($(O)!3!(M)$);
+		\path[name intersections={of=curveBC and rayOM, by=N}];
+		\draw[dashed] 		(-4,-2.5)--(9,-2.5) (2.5,-9)--(2.5,4);
+		\draw (O) -- ($(O)!1.3!(M)$);
+		\draw (M) -- (N)node[above,pos=0.5]{$8$}	
+		;
+		\foreach \t/\g in {A/135,B/45,C/-45,D/225,O/220,M/-30,N/0} {
+			\fill (\t) circle (1pt) node[shift={(\g:7pt)},font=\scriptsize] {$\t$};
+		}
+	\end{tikzpicture}
+\end{center}
+\loigiai{
+	\begin{center}
+		\begin{tikzpicture}[declare function={a=5;},scale=0.6]
+			\path
+			(0,0) coordinate (A)
+			(a,0) coordinate (B)
+			(0,-a) coordinate (D)
+			($(B)+(D)$) coordinate (C)
+			($(A)!0.5!(C)$) coordinate (O)
+			(-2,2) coordinate (A')
+			(a+2,2) coordinate (B')
+			(-2,-a-2) coordinate (D')
+			($(B')+(D')-(A')$) coordinate (C');
+			\begin{scope}
+				\path[fill=cyan!30, even odd rule]
+				(A') to[bend left=30] (B') 
+				to[bend left=30] (C') 
+				to[bend left=30] (D') 
+				to[bend left=30] (A') -- cycle
+				(A)--(B)--(C)--(D)--cycle;
+			\end{scope}
+			\path (D)--(C)--([turn]-90:0.5) coordinate (xt)
+			($(D)-(C)+(xt)$) coordinate (yt);
+			\draw[dash pattern=on 2pt off 2pt] (D)--(yt) (C)--(xt);
+			\draw[>=stealth,|<->|] (xt)--(yt) node[fill=white,inner sep=0pt,font=\scriptsize,pos=0.3,sloped]{$20$};
+			\fill[brown!30] (A)--(B)--(C)--(D)--cycle;
+			\draw[dashed,red] (A')--(B')--(C')--(D')--cycle;
+			\draw (A)--(B)--(C)--(D)--cycle;
+			\draw[thick] (A') to[bend left=30] (B');
+			\draw[thick] (B') to[bend left=30] (C');
+			\draw[thick] (C') to[bend left=30] (D');
+			\draw[thick] (D') to[bend left=30] (A');
+			\path ($(B)!.3!(C)$) coordinate (M)
+			(5,-2.5)coordinate (H)node[below left]{$H$}
+			(7,-2.5) node[below left]{$K$}
+			(8.6,-2.5) node[below]{$E$}
+			;
+			\path pic["\scriptsize$\alpha$", angle eccentricity=2,draw,angle radius=12pt]{angle= H--O--M};
+			\path[name path=curveBC] (B') to[bend left=30] (C');
+			\path[name path=rayOM] (O) -- ($(O)!3!(M)$);
+			\path[name intersections={of=curveBC and rayOM, by=N}];
+			\draw[->] (-4,-2.5)--(10,-2.5)node[below]{$x$};
+			\draw[->]  (2.5,-9)--(2.5,4) node[left]{$y$};
+			\draw (O) -- ($(O)!1.3!(M)$) (O)--(B');
+			\draw (M) -- (N)node[above,pos=0.5]{$8$}	
+			;
+			\foreach \t/\g in {A/135,B/120,C/-45,D/225,O/220,M/-30,N/0,B'/90} {
+				\fill (\t) circle (1pt) node[shift={(\g:7pt)},font=\scriptsize] {$\t$};
+			}
+		\end{tikzpicture}
+	\end{center}
+	Ta có $OB=10\sqrt{2}$, $OH=10$, $OB'=OB+BB'=10\sqrt{2}+8$,
+	 $OE=OH+HE=10+8=18=x_E$.\\
+	 $\widehat{B'OK}=45^{\circ} \Rightarrow B'K=OB'\cdot \sin 45^{\circ}=\left(10\sqrt{2}+8\right)\dfrac{\sqrt{2}}{2}=10+\dfrac{5\sqrt{2}}{2}$,\\
+	  $OK=OB'\cdot \cos 45^{\circ}=\left(10\sqrt{2}+8\right)\dfrac{\sqrt{2}}{2}=10+\dfrac{5\sqrt{2}}{2}=x_K$, $HK=OK-OH=10+\dfrac{5\sqrt{2}}{2}-10=\dfrac{5\sqrt{2}}{2}$.\\
+	 Đặt $\widehat{MOH}=\alpha$ và gọi $S_1$ là diện tích phần giới hạn bởi $BH$, $HE$, cung $EB'$ và $BB'$.\\
+	  Khi đó
+	 $ON=OM+MN=\dfrac{OH}{\cos \alpha}+8=\dfrac{10}{\cos \alpha}+8$.\\
+	 $\Rightarrow y_N=ON\cdot \sin \alpha=10 \tan \alpha+8\sin \alpha=10 \cdot \dfrac{y_N}{x_N}+8\cdot \dfrac{y_N}{\sqrt{x_N^2+y_N^2}}$.\\
+	 $\Rightarrow 1=10 \cdot \dfrac{1}{x_N}+8\cdot \dfrac{1}{\sqrt{x_N^2+y_N^2}} \Rightarrow y_N=\sqrt{\dfrac{64}{\left(1-\dfrac{10}{x_N}\right)^2}-x_N^2}$.\\
+	 Ta có 
+	 $S_{\text {BHKB'}}=\dfrac{1}{2}(BH+B'K) \cdot HK=\dfrac{1}{2}\left(10+10+\dfrac{5\sqrt{2}}{2}\right) \cdot \dfrac{5\sqrt{2}}{2}=\dfrac{25+100\sqrt{2}}{4} $ (cm$^2$).\\
+	 Suy ra $S_1=S_{BHKB'}+\displaystyle\int\limits_{x_K}^{x_E} \sqrt{\dfrac{64}{\left(1-\dfrac{10}{x}\right)^2}-x^2}\mathrm{\,d}x \approx 109{,}3$ (cm$^2$).\\
+	 Vậy $S=8\cdot S_1 \approx 874{,}6$ (cm$^2$).
+}
+\end{bt}
+
+% nguồn: 2026-11-16_12_2D4_TL_Nguyen_ham_Tich_phan (nhập 16/11/2026)
+\begin{bt}%[2D4C3-2]%[ma:429497ed]
+% nguon: Archive/2024/TaiLieuGiangDay/5.HH Oxyz/VDC_TDM.tex #3159
+%Câu 1
+ Trong mặt phẳng $(\alpha)$ cho hai điểm $A, B$ cách nhau một đoạn bằng $120$, gọi $I$ là trung điểm của cạnh $AB$. Cho hình phẳng $(H)=\{M \in(\alpha) \mid MA+MI \leq 80, MI \geq 30\}$. Hãy phác hoạ và tính diện tích hình phẳng $(H)$ (làm tròn kết quả đến hàng đơn vị).
+ \loigiai{
+\begin{center}
+\begin{tikzpicture}[line join=round, line cap=round,>=stealth]
+\tikzset{every node/.style={scale=0.9}}
+\coordinate (O) at (0,0);
+\coordinate (A) at (-3,0);
+\coordinate (I) at (3,0);
+\coordinate (P) at ({4/3}, {sqrt(56)/3});
+\coordinate (Q) at ({4/3}, -{sqrt(56)/3});
+\draw[fill=gray!40]  (O) ellipse (4 cm and 2.6 cm);
+\coordinate (M) at ($(O) + (120:4 and 2.6)$);
+\draw[fill=white]  (I) circle (3 cm);
+\draw  (I) circle (3 cm);
+\draw (A)--(M)--(I);
+\draw   (O) ellipse (4 cm and 2.6 cm);
+\draw[->] (-5.1,0)--(7.1,0) node[below left] {$x$};
+\draw[->] (0,-4.1)--(0,4.1) node[below left] {$y$};
+\draw[->] (0.3,2) -- (1,3.5) node[right] {$S_2$};
+\draw[->] (-2,1) -- (-4,3) node[left] {$S_1$};
+\draw (0,0) node [below left] {$O$};
+\foreach \i/\g in {A/-90,I/-90,M/120,P/90,Q/-90}{\fill[black](\i) circle (1.5pt) ($(\i)+(\g:3mm)$) node[scale=1]{$\i$};}
+\end{tikzpicture}
+\end{center} 
+Gọi $O$ là trung điểm của $AI$, 
+chọn hệ trục tọa độ như hình vẽ, đơn vị trên mỗi trục bằng $10$.\\
+Tập hợp các điểm $M\in (\alpha)$ thỏa mãn $MA+MI\le 8$ là các điểm nằm bên trong  Elip $(E)$ có phương trình $\dfrac{x^2}{16}+\dfrac{y^2}{7}= 1$ (kể cả biên).\\
+Tập hợp các điểm $M\in (\alpha)$ thỏa mãn $MI\ge 3$ là phần nằm bên ngoài hình tròn $(C)$ có tâm $I$, bán kính $R=3$ (kể cả những điểm nằm trên đường tròn).\\
+Hình phẳng $(H)$ được tô đậm trên hình vẽ.\\
+Elip $(E)$ và đường tròn $(C)$ cắt nhau tại hai điểm $P\left(\dfrac{4}{3}; \dfrac{\sqrt{56}}{3}\right)$ và $Q\left(\dfrac{4}{3}; -\dfrac{\sqrt{56}}{3}\right)$.\\
+Gọi $S_1$ là diện tích của nửa Elip $(E)$, suy ra $S_1=2\pi\sqrt{7}$.\\
+Gọi $S_2$ là diện tích hình phẳng nằm phía trên trục hoành, giới hạn bởi Elip $(E)$, đường tròn $(C)$ và trục tung.\\
+Ta có 
+\begin{eqnarray*}
+S_{(H)}&=&S_1+2S_2\\
+&=&2\pi\sqrt{7}+2\displaystyle\int\limits_{0}^{\tfrac{4}{3}}\left(\sqrt{7\left(1-\dfrac{x^2}{16}\right)}-\sqrt{9-(x-3)^2}\right)\mathrm{\, d}x \\
+&\approx& 18{,}87.
+\end{eqnarray*}
+ Vậy diện tích hình $H$ bằng $1\,887$ (đ.v.d.t).
+
+ }
+\end{bt}
+
+% nguồn: 2026-11-16_12_2D4_TL_Nguyen_ham_Tich_phan (nhập 16/11/2026)
+\begin{bt}%[2D4V3-2]%[ma:dbaee4cf]
+% nguon: Archive/SP_KhoLatex/ID6_old/2-GHK2-24-HuongHoa-QuangTri-22.tex #3651
+%[Đề thi GHK2 - THPT Hướng Hóa, Quảng Trị - 2022]%[Hoàng Thanh Phương - 12-EX4]
+	\immini{
+Một chiếc cổng có hình dạng là một Parabol có khoảng cách giữa hai chân cổng là $AB=8$ m. Người ta treo một tấm phông hình chữ nhật có hai đỉnh $M$, $N$ nằm trên parabol và hai đỉnh $P$, $Q$ nằm trên mặt đất (như hình vẽ). Ở phần phía ngoài phông (phần không tô đen) người ta mua hoa để trang trí với chi phí mua hoa là $150\,000$ đồng/m$^2$, biết $MN=4$ m, $MQ=6$ m. Hỏi số tiền dùng để mua hoa trang trí chiếc cổng là bao nhiêu?	
+}
+{\begin{tikzpicture}[scale=0.6,>=stealth, font=\footnotesize, line join=round, line cap=round]
+		\path
+		(-4,0) coordinate (A)
+		(-2,0)  coordinate (Q)
+		(2,0) coordinate (P)
+		(4,0) coordinate (B)
+		(-2,6) coordinate (M)
+		(2,6) coordinate (N);
+\def\a{-0.5} \def\b{0} \def\c{8}
+		\draw[smooth,samples=300,domain=-4:4] plot(\x,{\a*(\x)^2+\b*(\x)+\c});
+		\draw (-4,0)--(4,0) (-2,0)--(-2,6)--(2,6)--(2,0);
+		\foreach \x/\g in{A/-90,Q/-90,P/-90,B/-90,M/180,N/0}
+		\draw[fill=black](\x)circle(1pt)node[shift={(\g:0.35)}]{$\x$};
+		\fill[black!20,opacity=0.7] (Q) rectangle (N);
+\end{tikzpicture}}
+\loigiai{
+\immini{
+Chọn hệ trục tọa độ $Oxy$ như hình vẽ. \\
+Parabol $(P)$ đối xứng qua $Oy$ nên phương trình parabol có dạng $y=ax^2+c$. \\
+Vì parabol đi qua $B(4;0)$ và $N(2;6)$ nên $(P)\colon y=-\dfrac{1}{2}x^2+8$. \\
+Diện tích hình phẳng giới hạn bởi $(P)$ và trục $Ox$ là 
+$$S=2\displaystyle\int\limits_0^4 \left(-\dfrac{1}{2}x^2+8\right)\mathrm{\,d}x=\dfrac{128}{3} \,(\text{m}^2).$$  
+}
+{\begin{tikzpicture}[scale=0.6,>=stealth, font=\footnotesize, line join=round, line cap=round]
+		\path
+		(-4,0) coordinate (A)
+		(-2,0)  coordinate (Q)
+		(2,0) coordinate (P)
+		(4,0) coordinate (B)
+		(-2,6) coordinate (M)
+		(2,6) coordinate (N);
+		\draw[->] (-5,0)--(5,0)node[below]{$x$};
+		\draw[->] (0,-2)--(0,9)node[left]{$y$};
+\def\a{-0.5} \def\b{0} \def\c{8}
+		\draw[smooth,samples=300,domain=-4:4] plot(\x,{\a*(\x)^2+\b*(\x)+\c});
+		\draw (-2,0)--(-2,6)--(2,6)--(2,0);
+		\foreach \x/\g in{A/-90,Q/-90,P/-90,B/-90,M/180,N/0}
+		\draw[fill=black](\x)circle(1pt)node[shift={(\g:0.35)}]{$\x$};
+		\fill[black!20,opacity=0.7] (Q) rectangle (N);
+		\draw[fill=black] (0,0) circle (1pt)node[below left]{$O$};
+\end{tikzpicture}}
+\noindent Diện tích phần trồng hoa là 
+$$S_1=S-S_{MNPQ}=\dfrac{128}{3}-24=\dfrac{56}{3} \,(\text{m}^2).$$
+Vậy số tiền cần dùng để mua hoa là $\dfrac{56}{3}\cdot 150\,000=2\,8000\,000$ (đồng).
+}
+\end{bt}
+
+% nguồn: 2026-11-16_12_2D4_TL_Nguyen_ham_Tich_phan (nhập 16/11/2026)
+\begin{bt}%[2D4V3-2]%[ma:a3da8add]
+% nguon: Archive/SP-4Phan-Dot3/Data/KNTT_2-OTGK2_De03.tex #4399
+
+	\immini{Một chiếc cổng có hình dạng là một Parabol có khoảng cách giữa hai chân cổng là $AB=8$ m. Người ta treo một tấm phông hình chữ nhật có hai đỉnh $M$, $N$ nằm trên Parabol và hai đỉnh $P$, $Q$ nằm trên mặt đất (như hình vẽ). Ở phần phía ngoài phông (phần không tô đen) người ta mua hoa để trang trí với chi phí $1$ m$^2$ cần số tiền mua hoa là $200\,000$ đồng, biết $MN=4$ m, $MQ=6$ m. Tính số tiền mua hoa trang trí chiếc cổng. (đơn vị: nghìn đồng, làm tròn đến hàng đơn vị).
+	}{
+		\begin{tikzpicture}[font=\footnotesize, line join=round, line cap=round, >=stealth,scale=0.4]
+				\draw[samples=100,domain=-4:4]plot(\x,{-0.5*(\x)^2+8});
+				\path (-2,6)coordinate(M)(2,6)coordinate(N)(-2,0)coordinate(Q)(2,0)coordinate(P)(-4,0)coordinate(A)(4,0)coordinate(B);
+				\fill[gray!60,draw=black](M)--(N)--(P)--(Q)--cycle;
+				\draw(A)--(B);
+				\foreach \d/\g in{A/180,B/0,M/180,N/0,P/-90,Q/-90}
+				\draw(\d)circle(0.7pt)node[shift={(\g:0.35)}]{$\d$};
+		\end{tikzpicture}
+	}
+	\loigiai{
+		\begin{center}
+			\begin{tikzpicture}[font=\footnotesize, line join=round, line cap=round, >=stealth,scale=0.4]
+				\draw[samples=100,domain=-4:4]plot(\x,{-0.5*(\x)^2+8});
+				\path (-2,6)coordinate(M)(2,6)coordinate(N)(-2,0)coordinate(Q)(2,0)coordinate(P)(-4,0)coordinate(A)(4,0)coordinate(B);
+				\fill[gray!60,draw=black](M)--(N)--(P)--(Q)--cycle;
+				\draw(A)--(B);
+				\foreach \d/\g in{A/135,B/45,M/135,N/0,P/45,Q/135}
+				\draw(\d)circle(0.7pt)node[shift={(\g:0.35)}]{$\d$};
+				\draw [->](-5,0)--(5,0)node[below]{$x$};
+				\draw [->](0,-1)--(0,9)node[left]{$y$};
+				\foreach \x in{-4,-2,2,4}
+				\draw(\x,0)circle(0.7pt)node[below]{$\x$};
+			\end{tikzpicture}
+		\end{center}
+			Chọn hệ trục tọa độ như hình vẽ.\\
+			Parabol đối xứng qua $Oy$ nên có dạng $(P)\colon y=ax^2+c$.\\
+			Vì $(P)$ đi qua $B(4;0)$ và $N(2;6)$ nên ta có hệ $\heva{&16a+c=0\\&4a+c=6}\Leftrightarrow \heva{&a=-\dfrac{1}{2}\\&c=8.}$\\
+			Suy ra $(P)\colon y=-\dfrac{1}{2}x^2+8$.\\
+			Diện tích hình phẳng giới hạn bởi $(P)$ và $Ox$ là
+			$$S_1=2\displaystyle\int\limits_{0}^{4} {\left(-\dfrac{1}{2}x^2+8\right)}\mathrm{\,d}x=\dfrac{128}{3} (\text{m}^2).$$
+			Diện tích phần trồng hoa là $$S=S_1-S_{MNPQ}=\dfrac{128}{3}-24=\dfrac{56}{3}(\text{m}^2).$$
+			Vậy số tiền dùng để mau hoa là $\dfrac{56}{3}\cdot 200\,000=3\,733\,300$ (đồng) $\approx 3\,733$ (nghìn đồng).
+	}
+\end{bt}
+
+% nguồn: 2026-11-16_12_2D4_TL_Nguyen_ham_Tich_phan (nhập 16/11/2026)
+\begin{bt}%[2D4V3-2]%[ma:987be0fc]
+% nguon: Archive/SP-4Phan-Dot3/Data/KNTT_2-OTGK2_De03.tex #4400
+
+	\immini{Một bể bơi hình elip, có độ dài trục lớn bằng $10$ m và trục nhỏ bằng $8$ m. Khu vực $A$ là chứa nước, khu vực $B$ là bậc thang lên xuống bể bơi, là nửa đường tròn có tâm là một tiêu điểm của elip, bán kính bằng $1$ m. Phần còn lại là khu vực $C$ (phần tô đậm) người ta sẽ lát gạch chống trơn. Nếu chi phí lát gạch cho mỗi mét vuông là $400$ nghìn đồng thì chi phí lát gạch cho khu vực $C$ là bao nhiêu? (đơn vị: nghìn đồng, làm tròn đến hàng đơn vị).}{\begin{tikzpicture}[scale=0.5]
+			\def\a{5}
+			\def\b{4}
+			\def\c{3}
+			\draw (\a,0) arc(0:180:5cm and 4cm) (-\a,0) arc(180:360:5cm and 4cm);
+			\coordinate (B) at (\c,0);
+			\coordinate (A) at (0,0);
+			\coordinate (C) at (4,1.5);
+			\draw [opacity=0.5,fill=cyan!20!gray, line width=1pt](\a,0) arc(0:-53:5cm and 4cm)--(\c,-1) arc (-90:90:1cm) --(\c, 3.2) arc(53:0:5cm and 4cm);
+			\path 
+			node at (A){$A$}
+			node at (B)[right]{$B$}
+			node at (C){$C$};
+	\end{tikzpicture}}
+	\loigiai{
+		\begin{center}
+			\begin{tikzpicture}[scale=0.5, font=\footnotesize, line join=round, line cap=round, >=stealth]
+				\def\a{5}
+				\def\b{4}
+				\def\c{3}
+				\draw (\a,0) arc(0:180:5cm and 4cm) (-\a,0) arc(180:360:5cm and 4cm);
+				\coordinate (B) at (\c,0);
+				\coordinate (A) at (0,0);
+				\coordinate (C) at (4,1.5);
+				\draw [opacity=0.5,fill=cyan!20!gray, line width=1pt](\a,0) arc(0:-53:5cm and 4cm)--(\c,-1) arc (-90:90:1cm) --(\c, 3.2) arc(53:0:5cm and 4cm);
+				\draw[->] (-\a-1,0)--(\a+1,0)node[below]{$x$};
+				\draw[->] (0,-\b-1)--(0,\b+1)node[left]{$y$};
+				\path 
+				node at (A)[below left]{$O$}
+				node at (-2,1.5){$A$}
+				node at (B)[above right]{$B$}
+				node at (C){$C$}
+				node at (B)[below]{$3$}
+				node at (0,\b)[above left]{$4$}
+				node at (\b,0)[below right]{$4$}
+				node at (\a,0)[below right]{$5$}
+				node at (0,-\b)[below left]{$-4$}
+				node at (-\a,0) [below left]{$-5$}
+				node at (-3,3.6){$(E)$};
+				\foreach \x in{A,B}{
+					\fill (\x) circle(1pt);
+				}
+			\end{tikzpicture}
+		\end{center}
+		Chọn hệ trục tọa độ như trên hình vẽ.\\
+		Ta có phương trình chính tắc của elip $(E)\colon \dfrac{x^2}{25}+\dfrac{y^2}{16}=1$.\\
+		Khi đó $y=4 \sqrt{1-\dfrac{x^2}{25}}$ là phương trình của đường elip nằm phía trên trục $Ox$.\\
+		Diện tích lát gạch là 
+		$$S=2\cdot \left[\displaystyle\int\limits_{3}^5 4 \sqrt{1-\dfrac{x^2}{25}}\mathrm{\,d}x - \dfrac{1}{4} \cdot \pi \cdot 1^2\right] = 8\displaystyle\int\limits_{3}^5  \sqrt{1-\dfrac{x^2}{25}}\mathrm{\,d}x - \dfrac{1}{2}\pi (\text{m}^2). $$
+		Chi phí lát gạch cho khu vực $C$ là $S\cdot 400\approx 2\,950$ (nghìn đồng).
+	}
+\end{bt}
+
+% nguồn: 2026-11-16_12_2D4_TL_Nguyen_ham_Tich_phan (nhập 16/11/2026)
+\begin{bt}%[2D4V3-2]%[ma:a648497b]
+% nguon: Archive/SP-4Phan-Dot3/Data/CD_2-OTGK2-De01.tex #4453
+
+	Trong chương trình nông thôn mới, tại một xã Y có xây một đoạn đường hầm bằng bê tông như hình vẽ. Tính thể tích khối bê tông để đổ đủ đoạn đường hầm. (Đường cong trong hình vẽ là các đường Parabol).
+	\begin{center}
+		\begin{tikzpicture}[scale=1, font=\footnotesize, line join=round, line cap=round, >=stealth]
+			\path 
+			(0,0) coordinate (O)
+			(0,1) coordinate (B)
+			(-1,0) coordinate (A)
+			(1,0) coordinate (C)
+			($(B)+(0,0.5)$) coordinate (E)
+			($(A)+(-0.5,0)$) coordinate (D)
+			($(C)+(0.5,0)$) coordinate (F)
+			;
+			\foreach \i in {O,A,B,C,D,E,F}
+			\path ($(\i)+(-6,-2)$) coordinate (\i');
+			\draw (E)--(E') (F)--(F')
+			(D')--(F') node[midway,below]{$19$};
+			\draw[dashed] %(O)--(O')
+			(A)--(A') (B)--(B') (D)--(D') (C)--(C')
+			(D)--(F) 
+			;
+			\draw[<->] ($(A')-(0,0.2)$)--($(D')-(0,0.2)$) node[midway,below]{$0{,}5$};
+			\draw[<->] ($(F')-(0,0.2)$)--($(C')-(0,0.2)$) node[midway,below]{$0{,}5$};
+			
+			\draw[<->] ($(O)+(0.1,0)$)--($(B)+(0.1,0)$) node[midway,right]{$2$};
+			\draw[<->] (B)--(E) node[midway,right]{$0{,}5$};
+			\begin{scope}
+				\draw[samples=350,domain=-1.5:1.5,smooth,variable=\x] plot (\x,{(-2/3)*(\x)^2+1.5});
+				\draw[samples=350,domain=-1:1,smooth,variable=\x] plot (\x,{-(\x)^2+1});
+				\draw[samples=350,domain=-7.5:-4.5,smooth,variable=\x] plot (\x,{(-2/3)*(\x+6)^2-0.5});
+				\draw[samples=350,domain=-7:-5,smooth,variable=\x] plot (\x,{-(\x+6)^2-1});
+			\end{scope}
+		\end{tikzpicture}
+	\end{center}
+	\loigiai{
+		Chọn hệ trục $Oxy$ như hình vẽ.\\
+		\begin{center}
+			\begin{tikzpicture}[scale=1, font=\footnotesize, line join=round, line cap=round, >=stealth]
+				\draw[->] (0,0)--(1.5,0) node[below]{$x$};
+				\draw[->] (0,0)--(0,2) node[left]{$y$};
+				\draw[fill=black] (0,0) circle(1pt) node[below left]{$O$};
+				\path 
+				(0,0) coordinate (O)
+				(0,1) coordinate (B)
+				(-1,0) coordinate (A) node[above right]{$B$}
+				(1,0) coordinate (C) node[above right]{$A$}
+				($(B)+(0,0.5)$) coordinate (E)
+				($(A)+(-0.5,0)$) coordinate (D)
+				($(C)+(0.5,0)$) coordinate (F)
+				;
+				\foreach \i in {O,A,B,C,D,E,F}
+				\path ($(\i)+(-6,-2)$) coordinate (\i');
+				\draw (E)--(E') (F)--(F')
+				(D')--(F');
+				\draw[dashed] %(O)--(O')
+				(A)--(A') (B)--(B') (D)--(D') (C)--(C')
+				(D)--(F) 
+				;
+				\draw[<->] ($(A')-(0,0.2)$)--($(D')-(0,0.2)$) node[midway,below]{$0{,}5$};
+				\draw[<->] ($(F')-(0,0.2)$)--($(C')-(0,0.2)$) node[midway,below]{$0{,}5$};
+				%\draw[<->] ($(O)+(0.1,0)$)--($(B)+(0.1,0)$) node[midway,right]{$2$};
+				%	\draw[<->] (B)--(E) node[midway,right]{$0{,}5$};
+				\begin{scope}
+					\draw[samples=350,domain=-1.5:1.5,smooth,variable=\x] plot (\x,{(-2/3)*(\x)^2+1.5});
+					\draw[samples=350,domain=-1:1,smooth,variable=\x] plot (\x,{-(\x)^2+1});
+					\draw[samples=350,domain=-7.5:-4.5,smooth,variable=\x] plot (\x,{(-2/3)*(\x+6)^2-0.5});
+					\draw[samples=350,domain=-7:-5,smooth,variable=\x] plot (\x,{-(\x+6)^2-1});
+				\end{scope}
+			\end{tikzpicture}
+		\end{center}
+		Gọi $(P_1)\colon y=a_1 x^2+b_1$ là Parabol đi qua hai điểm $A\left( \dfrac{19}{2};0 \right)$, $B(0;2)$.\\
+		Nên ta có hệ phương trình sau: 
+		$$\heva{&0=a\left( \dfrac{19}{2} \right)^2+2\\&2=b}
+		\Leftrightarrow \heva{&a_1=-\dfrac{8}{361}\\&b_1=2}
+		\Rightarrow (P_1)\colon y=-\dfrac{8}{361}{x^2}+2.$$
+		Gọi $(P_2)\colon y=a_2x^2+b_2$ là Parabol đi qua hai điểm $C\left( 10;0 \right)$, $D\left( 0;\dfrac{5}{2} \right)$.\\
+		Nên ta có hệ phương trình sau: 
+		$$\heva{&0=a_2\left( 10 \right)^2+\dfrac{5}{2}\\&\dfrac{5}{2}=b_2}
+		\Leftrightarrow \heva{&a_2=-\dfrac{1}{40}\\&b_2=\dfrac{5}{2}}
+		\Rightarrow (P_2)\colon y=-\dfrac{1}{40} x^2+\dfrac{5}{2}.$$
+		Ta có thể tích của bê tông là 
+		$$ V=5\cdot 2\left[ \int_0^{10} \left( -\dfrac{1}{40}{x^2}+\dfrac{5}{2} \right)\mathrm{\,d}x- \int_0^{\tfrac{19}{2}} \left( -\dfrac{8}{361}{x^2}+2 \right)\mathrm{\,d}x \right]
+		=40~\text{m}^3.$$
+	}
+\end{bt}
+
+% nguồn: 2026-11-16_12_2D4_TL_Nguyen_ham_Tich_phan (nhập 16/11/2026)
+\begin{bt}%[2D4V3-2]%[ma:21952890]
+% nguon: Archive/SP-4Phan-Dot3/Data/CD_2-OTGK2-De02.tex #4478
+%[Câu 1] 
+	Thành phố định xây cây cầu bắc ngang con sông dài $500$ m, biết rằng người ta định xây cầu có $10$ nhịp cầu hình dạng parabol, mỗi nhịp cách nhau $40$ m, biết hai bên đầu cầu và giữa mối nhịp nối người ta xây một chân trụ rộng $5$ m. Bề dày nhịp cầu không đổi là $20$ cm. Biết một nhịp cầu như hình vẽ. Hỏi lượng bê tông để xây các nhịp cầu là bao nhiêu mét khối (bỏ qua diện tích cốt sắt trong mỗi nhịp cầu)?
+	\begin{center}
+	\begin{tikzpicture}[declare function={Cngoai=3;Ctrong=2;De=1.4;c=0.7;},>=stealth,font=\footnotesize]
+			\path (0,0) coordinate (O)
+			(180:Cngoai) coordinate (A)			% Chân cầu ngoài trái
+			(180:Ctrong) coordinate (B)			% Chân cầu trong trái
+			(0:Ctrong) coordinate (C)			% Chân cầu trong phải
+			(0:Cngoai) coordinate (D)			% Chân cầu ngoài phải
+			(180:De) coordinate (B')			% Bệ đỡ cầu trong trái
+			($(A)+(-90:c)$) coordinate (D')		
+			($(B')+(D')-(A)$) coordinate (C')
+			(0:De) coordinate (G)				% Bệ đỡ cầu trong phải
+			($(D)+(-90:c)$) coordinate (E)
+			($(E)+(G)-(D)$) coordinate (F)
+			($(A)!0.5!(D)+(90:1.53)$) coordinate (I)
+			($(A)!0.75!90:(O)$) coordinate (Ay)
+			($(D)!-8mm!(O)$) coordinate (Dx)
+			($(O)!0.65!-40:(A)$) coordinate (a)
+			($(O)!0.65!-30:(B)$) coordinate (b)
+			($(a)!0.5!(b)$) coordinate (ab)
+			(150:2.5) coordinate (t) node[above=-1mm,sloped]{$20$ cm}
+			;
+			%%% Vẽ hình
+			\fill[draw=black, pattern color=red,pattern=bricks] (A) to [bend left=60] (D)--(C) to [bend right=50] (B)--cycle;
+			\fill[draw=black, pattern=north west lines] (A)--(B')--(C')--(D')--cycle;
+			\fill[draw=black, pattern=north east lines] (D)--(E)--(F)--(G)--cycle;
+			%%% Ghi chú
+			\draw[<->] (O)--(I)node[above=-1mm,sloped,pos=0.35]{$2$ m};
+			\draw[<->] (O)--(B')node[above=-1mm,sloped,pos=0.5]{$20$ m};
+			\draw[<->] (O)--(G)node[above=-1mm,sloped,pos=0.5]{$20$ m};
+			\path (C')--(D')--([turn]90:0.35) coordinate (xt)
+			($(C')-(D')+(xt)$) coordinate (yt);
+			\draw[dash pattern=on 2pt off 2pt] (C')--(yt) (D')--(xt);
+			\draw[>=stealth,|<->|] (xt)--(yt) node[fill=white,inner sep=0pt,midway,sloped]{$5\ \mathrm{m}$};
+			\path (E)--(F)--([turn]90:0.35) coordinate (xt)
+			($(E)-(F)+(xt)$) coordinate (yt);
+			\draw[>=stealth,|<->|] (xt)--(yt) node[fill=white,inner sep=0pt,midway,sloped]{$5\ \mathrm{m}$};
+			\draw[<->] (a)--(b);
+			\draw[->] (t)to[out=-40,in=-140](ab);
+			%			\draw[->] (A)--(Ay)node[above]{$y$};
+			%			\draw[->] (D)--(Dx)node[right]{$x$};
+			%			\foreach \t/\g/\x in {A/180/O,D/50/A,I/90/I}{
+				%				\fill (\t) circle (1pt) node[shift={(\g:7pt)},font=\scriptsize]{$ \x $};}
+		\end{tikzpicture}
+			\end{center}
+	\loigiai{
+		\immini{Chọn hệ trục tọa độ như hình vẽ với gốc $O(0;0)$ là chân cầu (điểm tiếp xúc Parabol trên), đỉnh $I(25; 2)$, điểm $A(50;0)$ (điểm tiếp xúc Parabol trên với chân đế).\\
+			Gọi đường cong Parabol trên có phương trình\\
+			$(P_1):y_1=ax^2+bx$ vì $(O\in (P_1))$.\\
+			Khi đó ta suy ra $y_2=ax^2+bx-\dfrac{20}{100}=ax^2+bx-\dfrac{1}{5}$\\ 
+			là phương trình parabol dưới.	
+		}{			\begin{tikzpicture}[declare function={Cngoai=3;Ctrong=2;De=1.4;c=0.7;},>=stealth,font=\footnotesize]
+				\path (0,0) coordinate (O)
+				(180:Cngoai) coordinate (A)			% Chân cầu ngoài trái
+				(180:Ctrong) coordinate (B)			% Chân cầu trong trái
+				(0:Ctrong) coordinate (C)			% Chân cầu trong phải
+				(0:Cngoai) coordinate (D)			% Chân cầu ngoài phải
+				(180:De) coordinate (B')			% Bệ đỡ cầu trong trái
+				($(A)+(-90:c)$) coordinate (D')		
+				($(B')+(D')-(A)$) coordinate (C')
+				(0:De) coordinate (G)				% Bệ đỡ cầu trong phải
+				($(D)+(-90:c)$) coordinate (E)
+				($(E)+(G)-(D)$) coordinate (F)
+				($(A)!0.5!(D)+(90:1.53)$) coordinate (I)
+				($(A)!0.75!90:(O)$) coordinate (Ay)
+				($(D)!-8mm!(O)$) coordinate (Dx)
+				($(O)!0.65!-40:(A)$) coordinate (a)
+				($(O)!0.65!-30:(B)$) coordinate (b)
+				($(a)!0.5!(b)$) coordinate (ab)
+				(150:2.5) coordinate (t) node[above=-1mm,sloped]{$20$ cm}
+				;
+				%%% Vẽ hình
+				\fill[draw=black, pattern color=red,pattern=bricks] (A) to [bend left=60] (D)--(C) to [bend right=50] (B)--cycle;
+				\fill[draw=black, pattern=north west lines] (A)--(B')--(C')--(D')--cycle;
+				\fill[draw=black, pattern=north east lines] (D)--(E)--(F)--(G)--cycle;
+				%%% Ghi chú
+				\draw[<->] (O)--(I)node[above=-1mm,sloped,pos=0.35]{$2$ m};
+				\draw[<->] (O)--(B')node[above=-1mm,sloped,pos=0.5]{$20$ m};
+				\draw[<->] (O)--(G)node[above=-1mm,sloped,pos=0.5]{$20$ m};
+				\path (C')--(D')--([turn]90:0.35) coordinate (xt)
+				($(C')-(D')+(xt)$) coordinate (yt);
+				\draw[dash pattern=on 2pt off 2pt] (C')--(yt) (D')--(xt);
+				\draw[>=stealth,|<->|] (xt)--(yt) node[fill=white,inner sep=0pt,midway,sloped]{$5\ \mathrm{m}$};
+				\path (E)--(F)--([turn]90:0.35) coordinate (xt)
+				($(E)-(F)+(xt)$) coordinate (yt);
+				\draw[>=stealth,|<->|] (xt)--(yt) node[fill=white,inner sep=0pt,midway,sloped]{$5\ \mathrm{m}$};
+				\draw[<->] (a)--(b);
+				\draw[->] (t)to[out=-40,in=-140](ab);
+				\draw[->] (A)--(Ay)node[above]{$y$};
+				\draw[->] (D)--(Dx)node[right]{$x$};
+				\foreach \t/\g/\x in {A/180/O,D/50/A,I/90/I}{
+					\fill (\t) circle (1pt) node[shift={(\g:7pt)},font=\scriptsize]{$ \x $};	
+				}
+			\end{tikzpicture}
+		}\noindent
+		Ta có $I$, $A\in (P_1)\Rightarrow y_1=-\dfrac{2}{625}x^2+\dfrac{4}{25}x\Rightarrow y_2=-\dfrac{2}{625}x^2+\dfrac{4}{25}x-\dfrac{1}{5}$.\\
+		Khi đó diện tích mỗi nhịp cầu là $S=S_1$ với $S_1$ là phần giới hạn bởi $y_1$, $y_2$ trong khoảng $(0;25)$.
+		$$S=2\left[\int\limits_0^{0{,}2}\left(-\dfrac{2}{625}x^2+\dfrac{4}{25}x\right)\mathrm{\,d}x+\int\limits_{0{,}2}^{15}\dfrac{1}{5}\mathrm{\,d}x\right]\approx 0{,}9.$$
+		Vì bề dày nhịp cầu không đổi nên coi thể tích là tích diện tích và bề dày $V=S\cdot 0{,}2\approx 1{,}98$ m$^3$.\\
+		Suy ra số lượng bê tông cần cho mỗi nhip cầu là $2$ m$^3$.\\ Vậy mười nhịp cầu hai bên cần $40$ m$^3$ bê tông.
+	}
+\end{bt}
+
+% nguồn: 2026-11-16_12_2D4_TL_Nguyen_ham_Tich_phan (nhập 16/11/2026)
+\begin{bt}%[2D4H3-2]%[ma:6ca86c17]
+% nguon: Archive/SP-4Phan-Dot3/Data/CTST_2-OTGK2-De05.tex #4507
+
+Để trang trí cho một lễ hội đầu xuân, từ một mảnh vườn hình Elip có chiều dài trục lớn là $10$ m, chiều dài trục nhỏ là $4$ m, Ban tổ chức vẽ một đường tròn có đường kính bằng độ dài trục nhỏ và có tâm trùng với tâm của elip như hình vẽ. Trên hình tròn người ta trồng hoa với giá $100.000$ đồng/m$^2$, phần 
+\immini
+{
+còn lại của mảnh vườn người ta trồng cỏ với giá $60.000$ đồng/m$^2$ (biết giá trồng hoa và trồng cỏ bao gồm cả công và cây). Hỏi ban tổ chức cần bao nhiêu tiền để trồng hoa và cỏ (số tiền được làm tròn đến hàng nghìn).
+}
+{
+\begin{tikzpicture}[scale=0.7, font=\footnotesize, line join=round, line cap=round, >=stealth]
+\draw[ultra thick, ->](6,-2)--(6,2);
+\draw[ultra thick, ->](6,2)--(6,-2);
+\draw[ultra thick, ->](-5,-3)--(5,-3);
+\draw[ultra thick, ->](5,-3)--(-5,-3);
+\draw[very thick, dashed](-5,0)--(5,0) (0,-2)--(0,2) (0,2)--(6,2) (0,-2)--(6,-2) (-5,0)--(-5,-3) (5,0)--(5,-3);
+\draw(6,0)node[right]{$4$m} (0,-3)node[below]{$10$m};
+\draw[ultra thick, blue](2,0)arc[x radius=2, y radius=2, start angle=0, end angle=360];
+\draw[ultra thick, blue](5,0)arc[x radius=5, y radius=2, start angle=0, end angle=360];
+\end{tikzpicture}
+}
+\loigiai
+{
+\begin{center}
+\begin{tikzpicture}[scale=0.8, font=\footnotesize, line join=round, line cap=round, >=stealth]
+\draw(5,0)node[below right]{$5$} (-5,0)node[below left]{$-5$} (-2,0)node[below left]{$-2$} (2,0)node[below right]{$2$} (0,2)node[above right]{$2$} (0,-2)node[below right]{$-2$};
+\draw[ultra thick, ->](-7,0)--(7,0)node[above]{$x$};
+\draw[ultra thick, ->](0,-3)--(0,3)node[right]{$y$};
+\draw[ultra thick, blue](2,0)arc[x radius=2, y radius=2, start angle=0, end angle=360];
+\draw[ultra thick, blue](5,0)arc[x radius=5, y radius=2, start angle=0, end angle=360];
+\end{tikzpicture}
+\end{center}
+Chọn hệ trục tọa độ $Oxy$ với gốc $O$ là tâm elip và tâm đường tròn. \\
+Khi đó $(E)$ là elip chính tắc với $\heva{&a=5\\&b=2.}$ \\
+Khi đó diện tích của $(E)$ là $S_{(E)}=\pi ab=10\pi$. \\
+Diện tích vùng trồng hoa là $S_{(C)}=\pi R^2=\pi\cdot2^2=4\pi$. \\
+Suy ra chi phí trồng hoa là $T_1=4\pi\cdot100\,000=400\,000\pi$. \\
+Diện tích vùng trồng cỏ là $S=S_{(E)}-S_{(C)}=10\pi-4\pi=6\pi$. \\
+Suy ra chi phí trồng cỏ là $T_2=6\pi\cdot60\,000=360\,000\pi$. \\
+Vậy tổng chi phí mà ban tổ chức cần dùng là
+\[T=T_1+T_2=400\,000\pi+360\,000\pi=760\,000\pi\approx2\,388\,000\,\text{đồng}\]. \\
+}
+\end{bt}
+
+% nguồn: 2026-11-16_12_2D4_TL_Nguyen_ham_Tich_phan (nhập 16/11/2026)
+\begin{bt}%[2D4V3-2]%[ma:65fc0519]
+% nguon: Archive/SP-4Phan-Dot3/Data/CTST_2-OTHK2-De06.tex #4561
+
+	Một cái cổng có kích thước như hình a. Vòm cổng có hình dạng một parabol có đỉnh $I(0 ; 2)$ và đi qua điểm $B\left(\dfrac{5}{2} ; \dfrac{3}{2}\right)$ như hình b. Tính diện tích hai cánh cửa cổng (\textit{kết quả làm tròn đến hàng phần trăm}).
+	\begin{center}
+		\begin{tikzpicture}[scale=1, font=\footnotesize, line join=round, line cap=round,>=stealth]
+			\fill[color=brown, draw=none] (-5/2,0)--(-5/2,3/2)--plot[domain=-5/2:5/2](\x,{-2/25*(\x)^2+2})--(5/2,3/2)--(5/2,0)--cycle;
+			\draw[fill=orange,draw=none] (-3.5,-0.05) rectangle (-2.55,1.7);
+			\draw[fill=orange,draw=none] (2.55,-0.05) rectangle (3.5,1.7);
+			\draw[fill=gray!50,draw=none] (-3.6,1.7) rectangle (-2.5,1.85);
+			\draw[fill=gray!50,draw=none] (2.5,1.7) rectangle (3.6,1.85);
+			\draw[fill=black,draw=none] (-3.3,1.85) rectangle (-2.8,1.9);
+			\draw[fill=black,draw=none] (2.8,1.85) rectangle (3.3,1.9);
+			\draw[fill=black,draw=none] (-3.1,1.9) rectangle (-3,2);
+			\draw[fill=black,draw=none] (3,1.9) rectangle (3.1,2);
+			\draw[fill=orange!70,draw=none] (-3.05,2.2) circle (0.2);
+			\draw[fill=orange!70,draw=none] (3.05,2.2) circle (0.2);
+			\draw[fill=black,draw=none] (-2.55,0.4) rectangle (-2.5,0.65);
+			\draw[fill=black,draw=none] (-2.55,1.05) rectangle (-2.5,1.3);
+			\draw[fill=black,draw=none] (2.5,0.4) rectangle (2.55,0.65);
+			\draw[fill=black,draw=none] (2.5,1.05) rectangle (2.55,1.3);
+			\draw[color=white] (0,0)--(0,2);
+			\draw (0,2)--(5,2) (5/2,3/2)--(4.4,3/2) (0,0)--(5,0) (-3.5,-0.1)--(-3.5,-0.5) (3.5,-0.1)--(3.5,-0.5);
+			\draw[<->] (-3.5,-0.3)--(3.5,-0.3);
+			\draw[<->] (4.2,0)--(4.2,3/2);
+			\draw[<->] (4.8,0)--(4.8,2);
+			\node at (0,-0.5){$5~\mathrm{m}$};
+			\node[rotate=90] at (4.6,1){$2~\mathrm{m}$};
+			\node[rotate=90] at (3.9,0.75){$\tfrac{3}{2}~\mathrm{m}$};
+			\node[below] at (current bounding box.south){$a)$};
+		\end{tikzpicture}
+		\begin{tikzpicture}[scale=1, font=\footnotesize, line join=round, line cap=round,>=stealth]
+			\draw[->] (-3.5,0) --(3.5,0) node[below]{$x$};
+			\draw[->] (0,-0.75) --(0,3) node[left]{$y$};
+			\draw (0,0) node[below left=-3pt]{$O$};
+			\draw[smooth,samples=200,domain=-5/2:5/2] plot(\x,{-2/25*(\x)^2+2});
+			\draw (-5/2,3/2)--(-5/2,0)--(5/2,0)--(5/2,3/2);
+			\draw[dashed] (-5/2,3/2)--(5/2,3/2);
+			\draw[fill=black]
+			(-5/2,0) node[below]{$-\tfrac{5}{2}$} circle (1pt)
+			(5/2,0) node[below]{$\tfrac{5}{2}$} circle (1pt)
+			(0,3/2) node[below left]{$\tfrac{3}{2}$} circle (1pt)
+			(-5/2,3/2) node[left]{$A$} circle (1pt)
+			(5/2,3/2) node[right]{$B$} circle (1pt)
+			(0,2) node[above right]{$2$} circle (1pt)
+			(0,2) node[above left]{$I$}
+			(-5/2,0) node[above left]{$D$}
+			(5/2,0) node[above right]{$C$}
+			;
+			\node[below] at (current bounding box.south){$b)$};
+		\end{tikzpicture}
+	\end{center}
+	\loigiai{
+		Vòm cổng có hình dạng một parabol $(P)$ có đỉnh $I(0 ; 2)$ nên có phương trình dạng $y=ax^2+2$. Mặt khác $(P)$ đi qua điểm $B\left(\dfrac{5}{2} ; \dfrac{3}{2}\right)$ nên ta có
+		$$\dfrac{3}{2}=a\cdot \left(\dfrac{5}{2}\right)^2+2\Leftrightarrow \dfrac{25}{4}a=-\dfrac{1}{2}\Leftrightarrow a=-\dfrac{2}{25}.$$
+		Do đó $(P)\colon y=-\dfrac{2}{25}x^2+2$.\\
+		Gọi $S~\left(\mathrm{m}^2\right)$ là tổng diện tích hai cánh cửa cổng.\\
+		Khi đó $S$ bằng diện tích hình phẳng giới hạn bởi parabol $(P)$, trục hoành và hai đường thẳng $x=-\dfrac{5}{2}$, $x=\dfrac{5}{2}$. Vậy
+	 	\[S=\int\limits_{-\tfrac{5}{2}}^{\tfrac{5}{2}}\left(-\dfrac{2}{25}x^2+2\right)\,\mathrm{d}x=\left.\left(-\dfrac{2}{75}x^3+2x\right)\right|_{-\tfrac{5}{2}}^{\tfrac{5}{2}}=\dfrac{55}{6}\approx 9{,}17~\left(\mathrm{m}^2\right).\]
+	}
+\end{bt}
+
+% nguồn: 2026-11-16_12_2D4_TL_Nguyen_ham_Tich_phan (nhập 16/11/2026)
+\begin{bt}%[2D4V3-2]%[ma:3e09fddf]
+% nguon: Archive/SP-4Phan-Dot3/Data/CTST_2-OTHK2-De01.tex #4593
+
+	\immini{
+		Một cái cổng hình parabol như hình bên. Chiều cao $GH=4$ m, chiều rộng $AB=4$ m, $AC=BD=0{,}9$ m. Người ta làm hai cánh cổng khi đóng lại là hình chữ nhật $CDEF$ tô đậm với giá $1\,200\,000$ đồng/m$^2$, phần còn lại làm khung hoa sắt với giá $900\,000$ đồng/m$^2$. Hỏi chi phí để làm hai phần nói trên bằng bao nhiêu?
+	}
+	{
+		\begin{tikzpicture}[scale=0.8,>=stealth, font=\footnotesize, line join=round, line cap=round]  
+			\path
+			(-2,0) coordinate (A)
+			(2,0) coordinate (B)
+			(-1.1,0) coordinate (C)
+			(1.1,0) coordinate (D)
+			(-1.1,2.79) coordinate (F)
+			(1.1,2.79) coordinate (E)
+			(0,0) coordinate (H)
+			(0,4) coordinate (G)
+			;
+			\draw[fill,gray!50] (C)--(D)--(E)--(F)--cycle;
+			\draw (A)--(B) (C)--(D)--(E)--(F)--cycle;
+			\draw[dashed] (G)--(H);
+			\draw [black, red, thick, domain=-2:2, samples=100] %
+			plot (\x, {-(\x)^2+4});
+			\foreach \i/\g in {A/-90,B/-90,C/-90,D/-90,E/30,F/150,H/-90,G/90}{\draw[fill=black](\i) circle (1.5pt) ($(\i)+(\g:4mm)$) node[scale=1]{$\i$};}
+			\node[] at (0,-1.5) {\textit{Hình 4.31}};
+		\end{tikzpicture}
+	}
+	\loigiai{
+		\immini{
+			Chọn hệ trục $Oxy$ với gốc tọa độ $H$ là trung điểm của $AB$.\\
+			Khi đó $A(-2;0)$, $B(2;0)$ và $G(0;4)$.\\
+			Gọi phương trình parabol có dạng $(P)\colon y=ax^2+c$.\\
+			Do $(P)$ đi qua $A$ và $G$ nên ta có hệ $\heva{&4a+c=0\\&c=4}\Leftrightarrow \heva{&a=-1\\&c=4.}$\\
+			Suy ra parabol $(P)\colon y=-x^2+4$.\\
+			Diện tích hình phẳng giới hạn bởi parabol $(P)$ và trục hoành là
+			$$S=\displaystyle \int\limits_{-2}^2\left(-x^2+4 \right) \mathrm{\,d}x=\dfrac{32}{3}.$$
+		}
+		{
+			\begin{tikzpicture}[scale=0.8,thick,>=stealth, font=\footnotesize, line join=round, line cap=round]  
+				\path
+				(-2,0) coordinate (A)
+				(2,0) coordinate (B)
+				(-1.1,0) coordinate (C)
+				(1.1,0) coordinate (D)
+				(-1.1,2.79) coordinate (F)
+				(1.1,2.79) coordinate (E)
+				(0,0) coordinate (H)
+				(0,4) coordinate (G)
+				;
+				\draw[fill,gray!50] (C)--(D)--(E)--(F)--cycle;
+				\draw (A)--(B) (C)--(D)--(E)--(F)--cycle;
+				\draw [black, red, thick, domain=-2:2, samples=100] %
+				plot (\x, {-(\x)^2+4});
+				%Vẽ hệ trục
+				\draw[->] (-2.7,0)--(2.7,0) node[below]{$x$};
+				\draw[->] (0,-1)--(0,5) node[left]{$y$};
+				\draw[thin] (2,2pt)--(2,-2pt) + (60:4mm) node {\scriptsize $2$};
+				\draw[thin] (-2,2pt)--(-2,-2pt) + (145:5mm) node {\scriptsize $-2$};
+				\draw[thin] (2pt,4)--(-2pt,4) + (120:3mm) node {\scriptsize $4$};
+				\foreach \i/\g in {A/-90,B/-90,C/-90,D/-90,E/30,F/150,H/-45,G/45}{\draw[fill=black](\i) circle (1.5pt) ($(\i)+(\g:4mm)$) node[scale=1]{$\i$};}
+				
+			\end{tikzpicture}
+		}
+		\noindent
+		Ta có $AB=4$, $AC=BD=0{,}9 \Rightarrow CH=AH-AC=2-0{,}9=1{,}1$.\\
+		Suy ra $C(-1{,}1;0)$, $D(1{,}1;0)$.\\
+		$E(1{,}1;y_E) \in (P) \Leftrightarrow y_E=-(1{,}1)^2+4=2{,}79$.
+		Suy ra $ED=2{,}79$.\\
+		Diện tích hình chữ nhật $CDEF$ là $S_1=CD\cdot ED=2{,}2\cdot 2{,}79=6{,}138$.\\
+		Diện tích khung hoa sắt là $S_2=S-S_1\approx 4{,}53 $.\\
+		Chi phí để làm hai phần nói trên là $S_1\cdot 1\,200\,000+ S_2\cdot 900\,000\approx 11\,441\,400 $ đồng.
+	}
+\end{bt}
+
+% nguồn: 2026-11-16_12_2D4_TT_Nguyen_ham_Tich_phan (nhập 16/11/2026)
+\begin{ex}%[2D4H3-2]%[ma:4669f8b3]
+% nguon: Archive/2024/San pham - Tex hoa Lop 12 Chuong trinh moi - Dot 5 (Chuong 5)/Data/Chuong 4/Ket noi tri thuc/KNTT-Chuong4-Ontapchuong-De2.tex #1750 
+% KIEM_TRA: cần xem lại đáp số/dạng
+%[KNTT - Chương 4 - Ôn tập chương - Đề 2]%[Vũ Hồng Toàn]
+Trong các mệnh đề sau, chỉ ra mệnh đề đúng, mệnh đề sai.
+\choiceTF
+{$\displaystyle\int\limits_0^2\left(3x^2-2\mathrm{e}^x\right)\mathrm{\,d}x=6-2\mathrm{e}^2$}
+{\True Nước chảy từ đáy của một bồn chứa với tốc độ $k(t)=250-6t$ (lít/phút), trong đó $0\leq t \leq 45$. Lượng nước chảy ra khỏi bồn chứa trong 10 phút đầu tiên bằng 2200 (lít)}
+{\True $\displaystyle\int\limits_{\tfrac{\pi}{6}}^{\tfrac{\pi}{4}}\left(\tan ^2x-\cot ^2x\right)\mathrm{\,d}x=a-\dfrac{b}{c} \sqrt{3}$ với $a, b, c \in \mathbb{R}, c \neq 0$ và $\dfrac{b}{c}$ tối giản thì $a+b+c=9$}
+{$\displaystyle\int\limits_0^{\tfrac{\pi}{3}}\left|\cos ^2x-\sin x \cos x\right|\mathrm{\,d}x=a+b \pi-c \sqrt{3}$ với $a, b, c \in \mathbb{R}$ thì $a-c+b=\dfrac{5}{6}$}
+\loigiai{
+\begin{itemchoice}
+\itemch Sai.
+\allowdisplaybreaks
+\begin{eqnarray*}
+\displaystyle\int\limits_0^2\big(3 x^2-2 \mathrm{e}^x\big)\mathrm{\,d}x&=&3 \displaystyle\int\limits_0^2 x^2\mathrm{\,d}x-2 \displaystyle\int\limits_0^2 \mathrm{e}^x \mathrm{\,d} x\\&=&x^3\bigg|_0^2-2\mathrm{e}^x\bigg|_0^2=8-\left(2 \mathrm{e}^2-2\right)\\&=&10-2\mathrm{e}^2.
+\end{eqnarray*}
+\itemch Đúng. Lượng nước chảy ra khỏi bồn chứa trong $10$ phút đầu tiên là
+$$
+V=\displaystyle\int\limits_0^{10} k(t)\mathrm{\,d} t=\displaystyle\int\limits_0^{10}(250-6 t)\mathrm{\,d}t=\left(250 t-3 t^2\right)\bigg|_0 ^{10}=2200\, \text{(lít)}.
+$$
+\itemch Đúng. Ta có
+\allowdisplaybreaks
+\begin{eqnarray*}
+\displaystyle\int\limits_{\tfrac{\pi}{6}}^{\tfrac{\pi}{4}}\left(\tan ^2x-\cot ^2x\right)\mathrm{\,d} x&=&\displaystyle\int\limits_{\tfrac{\pi}{6}}^{\tfrac{\pi}{4}}\left(\dfrac{1}{\cos ^2x}-1-\dfrac{1}{\sin ^2x}+1\right)\mathrm{\,d} x\\&=&\displaystyle\int\limits_{\tfrac{\pi}{6}}^{\tfrac{\pi}{4}}\left(\dfrac{1}{\cos ^2x}-\dfrac{1}{\sin ^2x}\right)\mathrm{\,d}x\\
+&=&(\tan x+\cot x)\bigg|_{\tfrac{\pi}{6}}^{\tfrac{\pi}{4}}=2-\left(\dfrac{1}{\sqrt{3}}+\sqrt{3}\right)\\&=&2-\dfrac{4}{3} \sqrt{3}.
+\end{eqnarray*}
+Do đó $a+b+c=9$.
+\itemch Sai. $$
+\displaystyle\int\limits_0^{\tfrac{\pi}{3}}\left|\cos^2 x-\sin x \cos x\right|\mathrm{\,d}x=\displaystyle\int\limits_0^{\tfrac{\pi}{3}}\big(|\cos x|\cdot|\cos x-\sin x|\big)\mathrm{\,d}x.
+$$
+Ta có $\cos x > 0$ với mọi $x \in\left[0; \dfrac{\pi}{3}\right]$ và phương trình $\cos x-\sin x=0$ có nghiệm $x=\dfrac{\pi}{4}$ trên đoạn $\left[0; \dfrac{\pi}{3}\right]$.\\
+Do đó
+\allowdisplaybreaks
+\begin{eqnarray*}
+\displaystyle\int\limits_0^{\tfrac{\pi}{3}}(|\cos x|\cdot|\cos x-\sin x|)\mathrm{\,d} x&=&\displaystyle\int\limits_0^{\tfrac{\pi}{4}}[\cos x \cdot(\cos x-\sin x)]\mathrm{\,d} x-\displaystyle\int\limits_{\tfrac{\pi}{4}}^{\tfrac{\pi}{3}}[\cos x.(\cos x-\sin x)]\mathrm{\,d}x\\
+&=&\displaystyle\int\limits_0^{\tfrac{\pi}{4}}\left(\cos ^2x-\sin x \cos x\right)\mathrm{\,d} x-\displaystyle\int\limits_{\tfrac{\pi}{4}}^{\tfrac{\pi}{3}}\left(\cos ^2x-\sin x \cos x\right)\mathrm{\,d}x\\
+&=&\dfrac{1}{2} \displaystyle\int\limits_0^{\tfrac{\pi}{4}}(1+\cos 2x-\sin 2x)\mathrm{\,d}x-\dfrac{1}{2} \displaystyle\int\limits_{\tfrac{\pi}{4}}^{\tfrac{\pi}{3}}((1+\cos 2x-\sin 2x))\mathrm{\,d}x\\
+&=&\dfrac{1}{2}\left(x+\dfrac{1}{2} \sin 2x+\dfrac{1}{2} \cos 2x\right)\bigg|_0 ^{\tfrac{\pi}{4}}\\&&-\dfrac{1}{2}\left(x+\dfrac{1}{2} \sin 2x+\dfrac{1}{2} \cos 2x\right)\bigg|_{\tfrac{\pi}{4}} ^{\tfrac{\pi}{3}}\\
+&=&\dfrac{\pi}{8}+\dfrac{1}{4}-\left[\dfrac{\pi}{6}+\dfrac{\sqrt{3}}{8}-\dfrac{1}{8}-\left(\dfrac{\pi}{8}+\dfrac{1}{4}\right)\right]\\&=&\dfrac{\pi}{8}+\dfrac{1}{4}-\dfrac{\pi}{6}-\dfrac{\sqrt{3}}{8}+\dfrac{3}{8}+\dfrac{\pi}{8}\\&=&\dfrac{5}{8}+\dfrac{\pi}{12}-\dfrac{\sqrt{3}}{8}.
+\end{eqnarray*}
+Do đó $a=\dfrac{5}{8}$, $b=\dfrac{1}{12}$, $c=\dfrac{1}{8}$.\\ Vậy $a-c+b=\dfrac{1}{2}-\dfrac{1}{12}=\dfrac{5}{12}$.
+\end{itemchoice}
+}
+\end{ex}
+
+% nguồn: 2026-11-16_12_2D4_TT_Nguyen_ham_Tich_phan (nhập 16/11/2026)
+\begin{ex}%[2D4H3-2]%[ma:c34ea0c6]
+% nguon: Archive/2024/San pham - Tex hoa Lop 12 Chuong trinh moi - Dot 5 (Chuong 5)/Data/Chuong 4/Ket noi tri thuc/KNTT-Chuong4-Ontapchuong-De2.tex #1751
+%[KNTT - Chương 4 - Ôn tập chương - Đề 2]%[Vũ Hồng Toàn]
+Một chiếc cổng có dạng là một parabol $(P)$ có kích thước như hình vẽ, biết chiều cao cổng bằng chiều rộng của cổng và bằng $4$\,m (Tham khảo Hình 1). Người ta thiết kế cửa đi là một hình chữ nhật $CDEF$, phần còn lại dùng để trang trí. Biết chi phí phần tô đậm là $1\,000\,000$\,đồng/m$^2$.
+\begin{center}
+\begin{tikzpicture}[scale=1, line join=round, line cap=round, >=stealth,
+declare function={cr=1.2;f(\x)=-(\x)^2 + 4; xmin=-3; xmax=3.5; ymin=-1; ymax=4.2;}]
+%\draw[color=gray!50,thin] (xmin,ymin) grid (xmax,ymax);
+\path (cr,0) coordinate (C)
+(cr,{f(cr)})coordinate (D)
+(-cr,{f(-cr)})coordinate (E)
+(-cr,0) coordinate (F);
+\fill[cyan!30] (-2,0)--	plot[domain=-2:2] (\x, {f(\x)})--cycle;
+\fill[white] (C)--(D)--(E)--(F)--cycle;
+% Vẽ đồ thị hàm số
+\draw[smooth, samples=100, line width=.5] plot[domain=-2:2] (\x, {f(\x)});
+\draw (-2,0)--(2,0) (C)--(D)--(E)--(F) (0.75,3.5)node[right]{$(P)$};
+\draw[|<->|](-2,-0.5)--(2,-0.5)node[pos=0.5, below]{$4$\,m};
+\draw[|<->|](2.5,0)--(2.5,4)node[pos=0.5, right]{$4$\,m};
+\foreach \x/\goc in {C/-90,D/20,E/180,F/-90}{
+\draw[fill] (\x) circle (1pt) node[shift={(\goc:7pt)},font=\small]{$\x$};
+}
+\path (current bounding box.south) node[below]{Hình 1};
+\end{tikzpicture}
+\hspace{1.5cm}
+\begin{tikzpicture}[scale=1, line join=round, line cap=round, >=stealth, declare function={cr=1.2;f(\x)=-(\x)^2 + 4; xmin=-3; xmax=3.5; ymin=-1; ymax=5;}]
+\path (cr,0) coordinate (C)
+(cr,{f(cr)})coordinate (D)
+(-cr,{f(-cr)})coordinate (E)
+(-cr,0) coordinate (F);
+\fill[cyan!30] (-2,0)--	plot[domain=-2:2] (\x, {f(\x)})--cycle;
+\fill[white] (C)--(D)--(E)--(F)--cycle;
+% Trục toạ độ
+\draw[->] (xmin,0)--(xmax,0) node[shift={(-100:7pt)},font=\normalsize]{$ x $};
+\draw[->] (0,ymin)--(0,ymax) node[shift={(-30:7pt)},font=\normalsize]{$ y $};
+\fill (0,0) circle (1pt) node[shift={(-45:9pt)},font=\normalsize]{$ O $};
+% Vẽ đồ thị hàm số
+\draw[smooth, samples=100, line width=.5] plot[domain=-2:2] (\x, {f(\x)});
+% Các điểm trên trục x và y
+\foreach \x/\goc in {-2/-90,2/-90}{
+\fill (\x,0) circle (1pt) node[shift={(\goc:5pt)},font=\scriptsize]{$\x$};}
+
+\foreach \y/\goc in {4/150}{
+\fill (0,\y) circle (1pt) node[shift={(\goc:6pt)},font=\scriptsize]{$\y$};}
+\draw (-2,0)--(2,0) (C)--(D)--(E)--(F) (0.75,3.5)node[right]{$(P)$};
+\draw[|<->|](-2,-0.5)--(2,-0.5)node[pos=0.5, below]{$4$\,m};
+\draw[|<->|](2.5,0)--(2.5,4)node[pos=0.5, right]{$4$\,m};
+\foreach \x/\goc in {C/-90,D/20,E/180,F/-90}{
+\draw[fill] (\x) circle (1pt) node[shift={(\goc:7pt)},font=\small]{$\x$};
+}
+\path (current bounding box.south) node[below]{Hình 2};
+\end{tikzpicture}
+\end{center}
+\choiceTF
+{\True Chọn hệ trục tọa độ $Oxy$, như Hình 2 thì phương trình của đường cong $(P)$ cánh cổng là $y=f(x)=-x^2+4$}
+{\True Nếu chiều cao cửa đi là $CD=2$\,m thì chiều rộng của cửa là $CF=2\sqrt{2}$\,m}
+{Nếu chiều cao cửa đi là $CD=2$\,m thì chi phí để trang trí phần tô đậm là $\dfrac{32-6\sqrt{2}}{3}$\,(triệu đồng)}
+{\True Số tiền ít nhất dùng để trang trí phần tô đậm (làm tròn đến hàng nghìn đồng) là $4\,508\,000$\,(đồng)}
+\loigiai{
+\begin{itemchoice}
+\itemch Đúng. Từ hình vẽ, ta có parabol $(P)$ có dạng $y=a x^2+b x+c; a, b, c \in \mathbb{R}$.\\
+Do $(P)$ có đồ thị là parabol có đỉnh $(0;4)$ và đi qua điểm có tọa độ là $(2; 0)$ nên \[\heva{&b=0\\& c=4\\& 4a+2b+c=0}\heva{&a=-1\\& b=0\\& c=4.}\]
+Vậy $(P)$ có phương trình $y=-x^2+4$.
+\itemch Đúng. Theo giả thiết điểm $D$ thuộc đồ thị $(P)$ có tung độ bằng $2$ suy ra hoành độ là nghiệm phương trình \[-x^2+4=2\Leftrightarrow x=\pm \sqrt{2}.\]
+Theo đồ thị điểm $D$ có hoành độ dương nên $D(\sqrt{2};2)$.\\
+Chiều rộng của cửa là $CF=2\cdot OD=2\sqrt{2}$\,m.
+\itemch Sai. Diện tích của $(P)$ tạo với trục hoành là \[S=\displaystyle\int_{-2}^2\left(-x^2+4\right)\mathrm{\,d} x=\dfrac{32}{3}\text{m}^2.\]
+Diện tích hình chữ nhật $CDEF$ là $S_{CDEF}=2\cdot 2\sqrt{2}=4\sqrt{2}$.\\
+Diện tích cần trang trí là $S_1=S-S_{CDEF}=\dfrac{32}{3}-4\sqrt{2}=\dfrac{32-12\sqrt{2}}{3}$.\\
+Chi phí để trang trí phần tô đậm là $\left(\dfrac{32-12\sqrt{2}}{3}\right) \cdot 1\,000\,000$\,(đồng).
+\itemch Đúng. Ta có, diện tích của $(P)$ tạo với trục hoành là $S=\displaystyle\int_{-2}^2\left(-x^2+4\right)\mathrm{\,d} x=\dfrac{32}{3}$\,m$^2$.\\
+Ta gọi điểm $C(a; 0) \Rightarrow D\left(a;-a^2+4\right); 0< a < 2$.\\
+Do đó, diện tích của hình chữ nhật $CDEF$ là $S_{CDEF}=2a\left(4-a^2\right)=8a-2a^3$.\\
+Theo đề bài, để phần trang trí, có chi phí nhỏ nhất thì diện tích của hình chữ nhật $CDEF$ đạt giá trị lớn nhất.\\
+Do cổng chào đối xứng qua trục tung nên ta đặt: $g(a)=\dfrac{S_{CDEF}}{2}=4a-a^3{,}0< a < 2$.
+$\Rightarrow g'(a)=4-3a^2\Rightarrow g'(a)=0\Rightarrow a=\dfrac{2\sqrt{3}}{3}$.\\
+Ta có, bảng biến thiên\\
+\centerline{
+\begin{tikzpicture}
+\tkzTabInit
+{$a$/0.7, $g'(a)$/0.7, $g(a)$/2.1} % Khai báo tiêu đề và độ rộng cột
+{$0$, $\tfrac{2\sqrt{3}}{3}$, $2$} % Giá trị trên trục
+\tkzTabLine{,+,0,-} % Dấu của đạo hàm
+\tkzTabVar{-/ , +/$\tfrac{16\sqrt{3}}{9}$, -/ } % Giá trị của hàm số
+\end{tikzpicture}
+}
+Dựa vào bảng biến thiên, suy ra diện tích hình chữ nhật $CDEF$ đạt giá trị lớn nhất là $\dfrac{32\sqrt{3}}{9}$\,m$^2$.\\
+Vậy diện tích nhỏ nhất của phần dùng để trang trí là $\dfrac{96-32\sqrt{3}}{9}$\,m$^2$.\\
+Do đó, số tiền ít nhất dùng để trang trí phần tô đậm là\\
+$\left(\dfrac{96-32\sqrt{3}}{9}\right) \cdot 1\,000\,000=4\,508\,263{,}795\approx 4\,508\,000$\,đồng.
+\end{itemchoice}
+}
+\end{ex}
+
+% nguồn: 2026-11-16_12_2D4_TT_Nguyen_ham_Tich_phan (nhập 16/11/2026)
+\begin{bt}%[2D4V3-2]%[ma:0e8dcdd4]
+% nguon: Archive/2024/San pham - Tex hoa Lop 12 Chuong trinh moi - Dot 5 (Chuong 5)/Data/Chuong 4/Ket noi tri thuc/KNTT-Chuong4-Ontapchuong-De2.tex #1757
+%[KNTT - Chuong 4 - On tap chuong - De 2]%[Trần Hưng]
+	\immini[thm]{
+		Một chi tiết máy hình đĩa tròn có dạng như hình vẽ bên nhận $AB$, $CD$ làm các trục đối xứng. Người ta cần phủ sơn cả hai mặt của chi tiết. Biết rằng đường tròn lớn có bán kính $5$ dm, các đường tròn nhỏ đều có bán kính bằng $2$ dm, $AB=CD=4$ dm và chi phí sơn là $100\,000$ đồng /$\text{m}^2$. Tính chi phí $x$ (nghìn đồng) để sơn hoàn thiện chi tiết máy (làm tròn đến sau dấu phẩy 1 chữ số).
+	}{
+		\begin{tikzpicture}[scale=1, font=\footnotesize, line join=round, line cap=round, >=stealth]
+		\draw[fill=black]  (-1,0) circle(1pt) node[left]{$A$};
+		\draw[fill=black]  (1,0) circle(1pt) node[right]{$B$};
+		\draw[fill=black]  (0,-1) circle(1pt) node[below]{$C$};
+		\draw[fill=black]  (0,1) circle(1pt) node[above]{$D$};
+		\draw (2.32,0.95) arc (71:286.92:1) arc(-22.5:-67.5:2.5)  arc(-18:196.92:1) arc(-110:-158.5:2.5) arc(-116.92:120.6:1) arc(-202.5:-253.5:2.5) arc(-200:14:1) arc(-292.5:-336:2.5);
+		\draw[dashed] (-1,0)--(1,0) (0,-1)--(0,1);
+	\end{tikzpicture}
+}
+	\shortans{$79{,}5$ }
+	\loigiai{
+		\begin{center}
+			\begin{tikzpicture}[scale=1, font=\footnotesize, line join=round, line cap=round, >=stealth]
+				\draw [->] (-3,0) -- (3,0) node[below]{$x$};
+				\draw [->] (0,-3) -- (0,3) node[left]{$y$};
+				\draw (0,0) node[below left]{$O$} circle(1pt);
+				\draw[fill=black]  (-1,0) circle(1pt) node[above right]{$A$};
+				\draw[fill=black]  (1,0) circle(1pt) node[above left]{$B$};
+				\draw[fill=black]  (0,-1) circle(1pt) node[below right]{$C$};
+				\draw[fill=black]  (0,1) circle(1pt) node[above left]{$D$};
+				\draw[fill=black]  (2,0) circle(1pt) node[below]{$I$};
+				\draw[fill=black]  (2,0) circle(1pt) node[above]{$4$};
+				\draw[fill=black]  (2.5,0) node[above right]{$5$};	
+				\draw (2.32,0.95) arc (71:286.92:1) arc(-22.5:-67.5:2.5)  arc(-18:196.92:1) arc(-110:-158.5:2.5) arc(-116.92:120.6:1) arc(-202.5:-253.5:2.5) arc(-200:14:1) arc(-292.5:-336:2.5) ;
+				\fill[pattern=north east lines,opacity=1, line width = 1.2pt] (2.32,0.95) arc (71:286.92:1) circle(1pt) node[below right, black]{$F$} arc(-22.5:20.5:2.6);
+				\draw[fill=black]  (2.32,0.95) circle(1pt) node[above]{$E$};
+			\end{tikzpicture}
+		\end{center}
+		Chọn hệ toạ độ $Oxy$ sao cho $O$ trùng với giao điểm của $AB$ và $CD$; các tia lần lượt trùng với các tia $OB$, $OD$. \\
+		Ta có:\\
+		Phương trình đường tròn lớn tâm $O$ là: $x^2+y^2=25\Leftrightarrow y=\pm\sqrt{25-x^2}$.\\
+		Phương trình đường tròn nhỏ tâm $I$ là: $(x-4)^2+y^2=4\Leftrightarrow y=\pm\sqrt{4-(x-4)^2}$.\\
+		Phương trình hoành độ giao điểm của 2 đường tròn là: $4-(x-4)^2=25-x^2\Leftrightarrow x=\dfrac{37}{8}$.
+		Gọi $S$, $S_t$, $S'$ lần lượt là diện tích một mặt của chi tiết, diện tích đường tròn tâm $O$ và diện tích phần gạch sọc.\\
+		Ta có: $S=S_t-4S'=25\pi -4\cdot \left(2\displaystyle\int\limits _2^{\tfrac{37}{8}}\sqrt{4-(x-4)^2}\mathrm{\, d}x+2\displaystyle\int\limits _{\tfrac{37}{8}}^5\sqrt{25-x^2}\mathrm{\, d}x\right)$.\\
+		Vậy chi phí để sơn hoàn thiện chi tiết máy là: $x=S\cdot 2\cdot 1\,000\approx 79{,}5$ (nghìn đồng).
+	}
+\end{bt}
+
+% nguồn: 2026-11-16_12_2D4_TT_Nguyen_ham_Tich_phan (nhập 16/11/2026)
+\begin{bt}%[2D4V3-2]%[ma:bbf09cf2]
+% nguon: Archive/2024/San pham - To Latex Strong - Tex hoa Lop 12 moi - Dot 3 (Chuong 1 + 2 +3 + 4)/Data/Chuong 4/Canh dieu/To 21 - Dot 17 - Chuong 4 - Bai 4 - CD - De 2.tex #3422
+%[Tổ 21 - Đợt 17 - Chương 4 - Bài 4 - Cánh Diều - Đề 2]
+	\immini{Cho một cái cổng hình Parabol như hình vẽ sau. Chiều cao $G H=4$m, chiều rộng $A B=4$m, $A C=B D=0{,}9$m. Chủ nhà làm hai cánh cổng khi đóng lại là hình chữ nhật $C D E F$ tô đậm có giá là $1\,200\,000$ đồng/m$^{2}$, còn các phần để trắng thì trang trí hoa có giá là $900\,000$ đồng/m$^{2}$. Hỏi tổng số tiền để làm hai phần nói trên cần ít nhất bao nhiêu? (triệu đồng)}{
+		\begin{tikzpicture}[scale=1, font=\footnotesize, line join=round, line cap=round, >=stealth]
+			\def\xt{-1} \def\xp{5} \def\yt{5} \def\yd{-1}
+			\draw[fill=cyan,opacity=0.5] (0.9,0)--(0.9,2.79)--(3.1,2.79)--(3.1,0)--(0.9,0);
+			\clip(\xt+0.1,\yd+0.1) rectangle(\xp+1,\yt-0.1);
+			\draw[smooth,samples=300,domain=0:4] plot(\x,{4*(\x)-(\x)^2});
+			\fill (0.9,2.79) node[ left]{$F$} circle(1pt);
+			\fill (3.1,2.79) node[right]{$E$} circle(1pt);
+			\fill (0.9,0) node[above left]{$C$} circle(1pt);
+			\fill (3.1,0) node[above right]{$D$} circle(1pt);
+			\fill (0,0) node[below right]{$A$} circle(1pt);
+			\fill (4,0) node[below right]{$B$} circle(1pt);
+			\fill (2,0) node[below]{$H$} circle(1pt);
+			\fill (2,4) node[above]{$G$} circle(1pt);
+			\draw[dashed] (2,4)--(2,0);
+			\draw(0,0)--(4,0);
+	\end{tikzpicture}}
+	\shortans{$12$}
+	\loigiai
+	{
+		\immini{Gắn hệ trục tọa độ $O x y$ sao cho $A B$ trùng $O x$, $A$ trùng với gốc $O$. Khi đó parabol có đỉnh $G(2 ; 4)$ và đi qua gốc tọa độ.\\
+			Giả sử phương trình của parabol có dạng $y=a x^{2}+b x+c$, $(a \neq 0)$.\\
+			Vì parabol có đỉnh là $G(2 ; 4)$ và đi qua điểm $O(0 ; 0)$ nên ta có 
+			\[\heva{&c=0\\&-\dfrac{b}{2 a}=2\\&a \cdot 2^{2}+b \cdot 2+c=4}\Leftrightarrow\heva{&a=-1 \\&b=4\\&c=0.}\]
+		}{
+			\begin{tikzpicture}[scale=1.1, font=\footnotesize, line join=round, line cap=round, >=stealth]
+				\def\xt{-1} \def\xp{5} \def\yt{5} \def\yd{-1}
+				\draw[fill=cyan,opacity=0.5] (0.9,0)--(0.9,2.79)--(3.1,2.79)--(3.1,0)--(0.9,0);
+				\draw[->](\xt, 0)--(\xp, 0) node[below]{$x$};
+				\draw[->](0,\yd)--(0,\yt) node[left]{$y$};
+				\node at (0, 0) [below left]{$O$};
+				\clip(\xt+0.1,\yd+0.1) rectangle(\xp+1,\yt-0.1);
+				\draw[smooth,samples=300] plot(\x,{4*(\x)-(\x)^2});
+				\fill (0.9,2.79) node[ left]{$F$} circle(1pt);
+				\fill (3.1,2.79) node[right]{$E$} circle(1pt);
+				\fill (3.1,0) node[below]{$3{,}1$} circle(1pt);
+				\fill (0.9,0) node[below]{$0{,}9$} circle(1pt);
+				\fill (0.9,0) node[above left]{$C$} circle(1pt);
+				\fill (3.1,0) node[above right]{$D$} circle(1pt);
+				\fill (0,0) node[below right]{$A$} circle(1pt);
+				\fill (4,0) node[below right]{$B$} circle(1pt);
+				\fill (4,0) node[above right]{$4$} circle(1pt);
+				\fill (0,4) node[left]{$4$} circle(1pt);
+				\fill (2,0) node[below]{$H$} circle(1pt);
+				\fill (2,4) node[above]{$G$} circle(1pt);
+				\fill (4,4) node[above]{$f(x)=-x^2+4x$};
+				\draw[dashed] (0,4)--(2,4)--(2,0);
+		\end{tikzpicture}}
+		\noindent 		Suy ra phương trình parabol là $y=f(x)=-x^{2}+4 x$.\\
+		Diện tích của cả cổng là $S=\displaystyle\int_{0}^{4}\left(-x^{2}+4 x\right) \mathrm{d} x=\left.\left(-\dfrac{x^{3}}{3}+2 x^{2}\right)\right|_{0} ^{4}=\dfrac{32}{3}\mathrm{~m}^{2}$.\\
+		Mặt khác chiều cao $C F=D E=f(0{,}9)=2{,}79\mathrm{~m}$; $C D=4-2\cdot0{,}9=2{,}2 \mathrm{~m}$.\\
+		Diện tích hai cánh cổng là $S_{\text {CDEF }}=C D \cdot C F=6{,}138 \mathrm{~m}^{2}$.\\
+		Diện tích phần để trắng là $S_{1}=S-S_{C D E F}=\dfrac{32}{3}-6{,}138=\dfrac{6\,793}{1\,500} \mathrm{~m}^{2}$.\\
+		Vậy tổng số tiền để làm cổng là $6{,}138 \cdot 1\,200\,000+\dfrac{6\,793}{1\,500} \cdot 900\,000=11\,441\,400$ đồng.\\
+		Do đó cần ít nhất $12$ triệu đồng.
+	}
+\end{bt}
+
+% nguồn: 2026-11-16_12_2D4_TT_Nguyen_ham_Tich_phan (nhập 16/11/2026)
+\begin{bt}%[2D4V3-2]%[ma:c85ed811]
+% nguon: Archive/2024/San pham - To Latex Strong - Tex hoa Lop 12 moi - Dot 3 (Chuong 1 + 2 +3 + 4)/Data/Chuong 4/Canh dieu/To 21 - Dot 17 - Chuong 4 - Bai 4 - CD - De 2.tex #3424
+%[Tổ 21 - Đợt 17 - Chương 4 - Bài 4 - Cánh Diều - Đề 2]%[Dương Hồng]
+	\immini{Bác Bình muốn làm cửa rào sắt có hình dạng và kích thước như hình vẽ bên, biết đường cong phía trên là một Parabol. Giá $1  \mathrm{m}^{2}$ của rào sắt là $700\,000$ đồng. Hỏi bác Bình phải trả bao nhiêu tiền để làm cái cửa sắt như vậy (nghìn đồng).}{
+		\definecolor{apricot}{rgb}{0.98, 0.81, 0.69}
+		\begin{tikzpicture}[line join=round, line cap=round,scale=1.2,transform shape]
+			
+			\tikzset{cong/.pic={
+					\def\N{ 
+						(-1.8,-1.85)--(-1.8,.25)
+						..controls +(30:.4) and +(175:.4) ..(0,.75)--(0,-1.85)--cycle
+						(-1.8,0)--(0,0)
+						(-1.8,-1.3)--(0,-1.3)
+						(-1.2,-1.2) rectangle (-.6,-.15);
+						;
+					}
+					\draw[fill=black!30] (-1.8,-1.8) rectangle (0,-1.3);
+					\draw[line width=.4mm,black]\N;
+					\draw[fill=black] (0,.75)--(0,-1.85)--(-.1,-1.85)--(-.1,.75)--cycle
+					;
+					%\fill[ecru!80] \N;
+					\draw[pattern=vertical lines,pattern color=black](-1.8,-1.3)rectangle(-1.3,0);
+					\draw[pattern=vertical lines,pattern color=black](-.5,-1.3)rectangle(0,0);
+					\draw[pattern=vertical lines,pattern color=black](-1.2,-.12)rectangle(-.6,0);
+					\draw[pattern=vertical lines,pattern color=black](-1.2,-1.3)rectangle(-.6,-1.2);
+					%Cột
+					\draw[fill=apricot,apricot,line width=.2mm](-2.3,-1.9)rectangle(-1.82,1.28);
+					%\draw[fill=apricot](-3.5,-1.9)rectangle(-2.3,-.5);
+					%======================viền cong
+					\def\V{ 
+						(-1.2,.2)
+						..controls +(-110:.4) and +(-35:.4) ..(-1.1,.4)
+						..controls +(150:.2) and +(100:.2) ..(-1.3,.1)
+						(-.6,.2)
+						..controls +(-110:.4) and +(-35:.4) ..(-.5,.4)
+						..controls +(150:.2) and +(100:.2) ..(-.7,.1)
+						(-.85,.2)
+						..controls +(-170:.2) and +(155:.2) ..(-.8,.3)
+						..controls +(-20:.2) and +(-55:.24) ..(-1.05,.1)
+						(-1.45,.2)
+						..controls +(-170:.2) and +(155:.2) ..(-1.4,.3)
+						..controls +(-20:.2) and +(-55:.6) ..(-1.8,.25)
+						(-.25,.2)
+						..controls +(-170:.2) and +(155:.2) ..(-.18,.3)
+						..controls +(-20:.2) and +(-55:.24) ..(-.45,.1)
+						(-.25,.5)
+						..controls +(-170:.2) and +(155:.2) ..(-.18,.7)
+						..controls +(-20:.2) and +(-65:.55) ..(-.45,.5)
+						(-.55,.52)
+						..controls +(-170:.2) and +(155:.2) ..(-.44,.65)
+						..controls +(-20:.2) and +(-65:.2) ..(-.75,.5)
+						(-.7,.36)
+						..controls +(-170:.2) and +(155:.2) ..(-.85,.55)
+						..controls +(-20:.2) and +(-55:.25) ..(-1.15,.5)
+						;
+					}
+					\draw[line width=.4mm,black]\V;
+					
+			}}
+			%========================hoa, lá\tikzset{hoa/.pic={
+			\tikzset{hoa/.pic={
+					\draw (0,0) ..controls +(40:1) and +(170:1) .. (1.6,-2.4)
+					(0,0) ..controls +(40:1) and +(170:1) .. (1.6,2.6)
+					(0,0) ..controls +(40:1) and +(30:1) .. (-1.4,-2.6)
+					(0,0) ..controls +(120:1) and +(80:1) .. (-1.4,2.6);
+					\def\H{
+						(0,0)
+						..controls +(0:2) and +(60:2) .. (0,0)
+						..controls +(60:2) and +(120:2) .. (0,0)
+						..controls +(120:2) and +(180:2) .. (0,0)
+						..controls +(180:2) and +(240:2) .. (0,0)
+						..controls +(240:2) and +(300:2) .. (0,0)
+						..controls +(300:2) and +(360:2) .. (0,0)
+						;}
+					\fill[black] \H;
+					\draw \H;
+					
+			}}
+			\tikzset{la/.pic={
+					\def\L{ 
+						(1.6,.95)
+						..controls +(30:.5) and +(160:1) ..  (2.4,1.3)
+						..controls +(20:0) and +(-160:0.3) ..  (2.9,1.3)
+						..controls +(-120:1.4) and +(-120:1) ..  (1.6,.95)
+						;}
+					\draw \L;
+					\fill[black!80] \L;
+					%Vẽ gân lá
+					\draw (1.35,1.2)
+					..controls +(-40:.1) and +(-160:1) ..  (2.5,.9) (2.1,1.15)--(1.7,.84)
+					..controls +(-70:.3) and +(170:0) ..  (2,.5)
+					(2.2,.82)--(2.5,1.1) (2.3,.78)--(2.5,.8);
+			}}
+			%==================Mái nhà
+			\definecolor{burntsienna}{rgb}{0.91, 0.45, 0.32}                    
+			\tikzset{mai/.pic={
+					\def\mainha{ 
+						(.5,2) 
+						foreach \n in {1,2,...,30} { -- ++ (0,0) -- ++ (0,1) -- ++ (1,0) -- ++ (0,-1) } -- cycle
+						
+						(.25,1) 
+						foreach \n in {1,2,...,30} { -- ++ (0,0) -- ++ (0,1) -- ++ (1,0) -- ++ (0,-1) } -- cycle
+						
+						(0,0) 
+						foreach \n in {1,2,...,30} { -- ++ (0,0) -- ++ (0,1) -- ++ (1,0) -- ++ (0,-1) } -- cycle
+						;
+					}
+					\clip (-1.5,-3)--(26.5,-3)--(23.5,3)--(1.5,3)--cycle;
+					\draw[fill=burntsienna] \mainha;
+					
+			}}
+			
+			
+			
+			\path (-2.5,1.3)pic[scale=.2]{mai}
+			(0,0)pic[scale=1]{cong} (-.9,-.7)pic[scale=.2]{hoa} (-1,-1.7)pic[scale=.2]{la} 
+			(-.75,-1.7)pic[rotate=-20,scale=.2]{la} 
+			(-.4,-1.8)pic[rotate=140,scale=.2]{la} 
+			
+			(-1.4,-2)pic[rotate=35,scale=.2]{la} 
+			(-.95,-1.9)pic[rotate=125,scale=.3]{la} 
+			%-----------
+			
+			(0,0)pic[scale=1,xscale=-1]{cong}
+			(.9,-.7)pic[scale=.2]{hoa} 
+			(.89,-1.7)pic[rotate=-5,scale=.2,xscale=-1]{la}
+			
+			(.72,-1.77)pic[rotate=10,scale=.2,xscale=-1]{la} 
+			
+			(.3,-1.85)pic[rotate=230,scale=.2,xscale=-1]{la} 
+			
+			(1.4,-2)pic[rotate=-35,scale=.2,xscale=-1]{la} 
+			(.9,-1.8)pic[rotate=225,scale=.3,xscale=-1]{la} 
+			;
+			
+			\draw[dashed] (0,.77)--(2.6,.77);
+			\draw[<->,red] (2.6,-1.9)--(2.6,.77);
+			\draw[<->,red] (-1.8,-2.1)--(1.8,-2.1);
+			\draw[<->,red] (1.9,-1.9)--(1.9,.3);
+			\node at (0,-2.3) {\tiny $5$ m};
+			\node at (2.9,-.5) {\tiny $2$ m};
+			\node at (2.2,-.5) {\tiny $1{,}5$ m};
+	\end{tikzpicture}}
+	\shortans{$6417$}
+	\loigiai{
+		Ta chọn hệ trục tọa độ như hình vẽ.
+		\begin{center}
+			\begin{tikzpicture}[scale=0.7, font=\footnotesize, line join=round, line cap=round, >=stealth]
+				\def\xt{-4} \def\xp{4} \def\yt{3} \def\yd{-1}
+				\draw[->](\xt, 0)--(\xp, 0) node[below]{$x$};
+				\draw[->](0,\yd)--(0,\yt) node[left]{$y$};
+				\fill (0,0) node[below left]{$O$} circle(1.5pt);
+				\clip(\xt+0.1,\yd+0.1) rectangle(\xp-0.1,\yt-0.1);
+				\draw[color=blue, smooth, samples=300] plot(\x,{-0.08*(\x)^2+2});
+				\draw[color=red, smooth, samples=300] plot(-2.5,\x);
+				\draw[color=red, smooth, samples=300] plot(2.5,\x);
+				% Tô màu giữa hai đồ thị
+				\fill[fill=orange, opacity=0.5] 
+				(-2.5,0) -- plot[samples=300, domain=-2.5:2.5] (\x,{-0.08*(\x)^2+2}) -- (2.5,0) -- cycle;
+				\fill (2.5,0) node[below left]{$2{,}5$} circle(1.5pt);
+				\fill (-2.5,0) node[below left]{$-2{,}5$} circle(1.5pt);
+				\fill (0,2) node[above left]{$2$} circle(1.5pt);
+				\fill (0,2) node[above right]{$C$} circle(1.5pt);
+				\fill (-2.5,1.5) node[above right]{$A$} circle(1.5pt);
+				\fill (2.5,1.5) node[above right]{$B$} circle(1.5pt);
+			\end{tikzpicture}
+		\end{center}
+		Trong đó $A(-2{,}5 ; 1{,}5)$, $B(2{,}5 ; 1{,}5)$, $C(0 ; 2)$.\\
+		Giả sử đường cong phía trên là một Parabol có dạng $y=a x^{2}+b x+c$, với $a$; $b$; $c \in \mathbb{Q}$.
+		Do Parabol đi qua các điểm $A(-2{,}5 ; 1{,}5)$, $B(2{,}5 ; 1{,}5)$, $C(0 ; 2)$ nên ta có hệ phương trình
+		$$
+		\heva{&a(-2{,}5)^{2} + b(-2{,}5) + c = 1{,}5\\
+			&a(2{,}5 )^{2} + b(2{,}5 ) + c = 1{,}5 \\
+			&	c = 2 
+		}
+		\Leftrightarrow
+		\heva{&a=-\dfrac{2}{25} \\
+			&b=0\\
+			&	c=2.}
+		$$
+		Khi đó phương trình Parabol là $y=-\dfrac{2}{25} x^{2}+2$.\\
+		Diện tích $S$ của cửa rào sắt là diện tích phần hình phẳng giới hạn bởi đồ thị hàm số $y=-\dfrac{2}{25} x^{2}+2$, trục hoành và hai đường thẳng $x=-2{,}5$; $x=2{,}5$.\\
+		Ta có $S=\displaystyle\int_{-2{,}5}^{2{,}5}\left(-\dfrac{2}{25} x^{2}+2\right) \mathrm{d} x=\left.\left(-\dfrac{2}{25} \dfrac{x^{3}}{3}+2 x\right)\right|_{-2{,}5} ^{2{,}5}=\dfrac{55}{6}$.\\
+		Vậy bác Bình phải trả số tiền để làm cái cửa sắt là
+		$$S \times 700\,000=\dfrac{55}{6} \times 700\,000 \approx 6\,416 \,667 \text{( đồng).}$$ 
+		Hay $6\,417$ nghìn đồng.
+	}
+\end{bt}
+
+% nguồn: 2026-11-16_12_2D4_TT_Nguyen_ham_Tich_phan (nhập 16/11/2026)
+\begin{bt}%[2D4V3-2]%[ma:d8b561ca]
+% nguon: Archive/2024/San pham - To Latex Strong - Tex hoa Lop 12 moi - Dot 3 (Chuong 1 + 2 +3 + 4)/Data/Chuong 4/Canh dieu/To 21 - Dot 17 - Chuong 4 - Bai 4 - CD - De 1.tex #3435
+
+	\immini{
+	Từ hình chữ nhật $ABCD$ có chiều dài $AB=10$ cm và chiều rộng $BC=5$ cm. Người ta cắt bỏ miền $(R)$ được giới hạn bởi cạnh $CD$ của hình chữ nhật và hai nửa đường parabol có chung đỉnh là trung điểm của cạnh $AB$, chúng lần lượt đi qua hai đầu mút $C$, $D$ của hình chữ nhật đó (phần tô đậm như hình vẽ). 
+	}
+	{
+	\begin{tikzpicture}[scale=.6, font=\footnotesize, line join=round, line cap=round, >=stealth]
+		\tikzset{label style/.style={font=\footnotesize}}
+		%Nhập giới hạn đồ thị và hàm số cần vẽ
+		%\pgfmathsetmacro{\so}{sqrt{5}}
+		\def \hamso{sin((2*(\x))*180/pi)}
+		%\def \tiemcanxien{\x+1}
+		%Tự động
+	%	\draw[->] (-5.5,0)--(6,0) node[below left] {$x$};
+	%	\draw[->] (0,-0.5)--(0,6) node[below left] {$y$};
+	%	\draw[fill=black] (0,0) circle(1pt) node [below right] {$O$};
+		%Vẽ các điểm trên 2 hệ trục
+		\draw
+		(-5,0) coordinate (A) circle(1pt) node[above left]{$A$} %node[below]{$-5$}
+		(5,0) coordinate (B) circle(1pt) node[above right]{$B$} %node[below]{$5$}
+		(-5,5) coordinate (D) circle(1pt) node[above left]{$D$}
+		(5,5) coordinate (C) circle(1pt) node[above right]{$C$}
+		%(0,5) circle(1pt) node[above right]{$5$}
+		;
+		\draw
+		(A)--(B)--(C)--(D)--cycle;
+		%Tự động
+		\begin{scope}
+			\draw[samples=350,domain=0:5,smooth,variable=\x] plot (\x,{sqrt(5*\x)});
+			\draw[samples=350,domain=-5:0,smooth,variable=\x] plot (\x,{sqrt{-5*(\x)}});
+		\end{scope}
+	\end{tikzpicture}
+	}
+\noindent Phần còn lại cho quay quanh trục $AB$ để tạo nên một đồ vật làm trang trí, thể tích của vật trang trí đó bằng bao nhiêu? (làm tròn đến hàng đơn vị).
+	\shortans[]{393}
+	\loigiai{
+	\begin{center}
+		\begin{tikzpicture}[scale=.6, font=\footnotesize, line join=round, line cap=round, >=stealth]
+			\tikzset{label style/.style={font=\footnotesize}}
+			%Nhập giới hạn đồ thị và hàm số cần vẽ
+			%\pgfmathsetmacro{\so}{sqrt{5}}
+			\def \hamso{sin((2*(\x))*180/pi)}
+			%\def \tiemcanxien{\x+1}
+			%Tự động
+			\draw[->] (-5.5,0)--(6,0) node[below left] {$x$};
+			\draw[->] (0,-0.5)--(0,6) node[below left] {$y$};
+			\draw[fill=black] (0,0) circle(1pt) node [below right] {$O$};
+			%Vẽ các điểm trên 2 hệ trục
+			\draw
+			(-5,0) coordinate (A) circle(1pt) node[above left]{$A$} node[below]{$-5$}
+			(5,0) coordinate (B) circle(1pt) node[above right]{$B$} node[below]{$5$}
+			(-5,5) coordinate (D) circle(1pt) node[above left]{$D$}
+			(5,5) coordinate (C) circle(1pt) node[above right]{$C$}
+			(0,5) circle(1pt) node[above right]{$5$}
+			;
+			\draw
+			(A)--(B)--(C)--(D)--cycle;
+			%Tự động
+			\begin{scope}
+				\draw[line width=1.5,color=red,samples=350,domain=0:5,smooth,variable=\x] plot (\x,{sqrt(5*\x)});
+				\draw[samples=350,domain=-5:0,smooth,variable=\x] plot (\x,{sqrt{-5*(\x)}});
+			\end{scope}
+		\end{tikzpicture}
+	\end{center}
+	Khi quay hình chữ nhật $ABCD$ quanh trục $AB$ ta được khối trụ có bán kính đáy $r=BC=5$ cm, chiều cao $h=AB=10$ cm.\\
+	Do đó thể tích khối trụ này có thể tích $V_1=\pi \cdot 5^2\cdot 10=250\pi$ (cm$^3$).\\
+	Mặt khác, chọn hệ trục tọa độ như hình vẽ thì $C(5;5)$ và parabol bên phải trục $Ox$ có dạng $(P_1)\colon y^2=2px$.\\
+	Ta có $C\in (P_1)\Leftrightarrow p=\dfrac{5}{2}
+	\Rightarrow (P_1)\colon y^2=5x$ hay $y=\sqrt{5x}$.\\
+	Khi đó miền $(R)$ khi quay quanh trục $Ox$ có thể tích $V_2=2\pi \displaystyle \int\limits_0^5 \left[ {5^2}-5x \right]\,\mathrm{\,d}x=2\pi \left. \left( 25x-\dfrac{5}{2}{x^2} \right) \right|_0^5=125\pi $.\\
+	Vậy thể tích phần còn lại là $V=V_1-V_2=125\pi$ (cm$^3$).\\
+}
+	\end{bt}
+
+% nguồn: 2026-11-16_12_2D4_TT_Nguyen_ham_Tich_phan (nhập 16/11/2026)
+\begin{ex}%[2D4V3-2]%[ma:362f659a]
+% nguon: Archive/SP_KhoLatex/SP_Đề Theo Bài-Khối 12/2-B13-De1.tex #3789
+
+	\immini{
+		Một chiếc cổng có hình dạng là một parabol $(P)$ có kích thước như hình vẽ, biết chiều cao cổng bằng $4$m, $AB=4$m. Người ta thiết kế cửa đi là một hình chữ nhật $CDEF$ (với $C,F\in AB;\ D,E\in (P)$), phần còn lại (\textit{phần tô đậm}) dùng để trang trí. Biết chi phí để trang trí phần tô đậm là $1\,000\,000$ đồng/m$^2$. Gắn hệ trục tọa độ $Oxy$ như hình bên.
+	}{
+		\begin{tikzpicture}[>=stealth,line join=round,line cap=round,font=\footnotesize,scale=.6]
+			\path 
+			(2,-2)coordinate(D)
+			(-2,-2)coordinate(E)
+			(2,-8)coordinate(C)
+			(-2,-8)coordinate(F)
+			(-4,-8)coordinate(A)
+			(4,-8)coordinate(B)
+			;
+			\draw[smooth,samples=100,domain=-4:4] plot(\x,{-0.5*(\x)^2});
+			\draw (C)--(D)--(E)--(F) (A)--(B);
+			\draw[fill=cyan!80] (A) plot[domain=-4:4](\x,{-0.5*(\x)^2}) (B)--(A);
+			\draw[fill=white] (C)--(D)--(E)--(F)--(C);
+			\draw[->] (-5,0)--(6,0) node[below] {$x$};
+			\draw[->] (0,-9)--(0,1) node[left] {$y$};
+			\draw[fill=black] (0,0) node[above left=-0.1] {$O$} circle (1.5pt);
+			\draw[fill=black] (0,-8) node[below left=-0.1] {$-4$} circle (1.5pt);
+			\draw[fill=black] (-4,0) node[above left=-0.1] {$-2$} circle (1.5pt);
+			\draw[fill=black] (4,0) node[above] {$2$} circle (1.5pt);
+			\draw[dashed] (-4,0)--(-4,-8) (4,0)--(4,-8);
+			\foreach \p/\g in {A/-90,F/-90,C/-90,B/-90,E/120,D/60}
+			\draw[fill=black] (\p) circle (1pt) node[shift=(\g:3mm)] {$\p$};
+		\end{tikzpicture}
+	}
+	\choiceTF
+	{\True Parabol đi qua điểm $A(-2;4)$}
+	{Phương trình của chiếc cổng parabol là $y=x^2$}
+	{\True Diện tích cổng parabol (tính luôn cả cửa đi) là $\dfrac{32}{3}$}
+	{Số tiền dùng để trang trí nhỏ nhất là $4\,000\,000$ đồng}
+	\loigiai{
+		\begin{itemchoice}
+			\itemch Parabol đi qua điểm $A(-2;4)$
+			\itemch Parabol có phương trình $y=ax^2+bx+c$.\\
+			Parabol đi qua $3$ điểm $A(-2;-4)$, $O(0;0)$ và $B(2;-4)$ nên ta có
+			$$\heva{&4a-2b+c=-4\\&4a+2b+c=-4\\&c=0}\Leftrightarrow\heva{&a=-1\\&b=0\\&c=0.}$$
+			Khi đó, parabol có phương trình là $y=x^2$.
+			\itemch Diện tích của hình phẳng giới hạn bởi parabol $(P)$ và đường thẳng $y=-4$ bằng
+			$$S_1=\displaystyle\int\limits_{-2}^{2}\left|-x^2+4\right|\mathrm{d}x=\dfrac{32}{3}.$$
+			\itemch Gọi $D\left(t,-t^2\right)\in(P)$ với $0<t<2$. Diện tích của hình chữ nhật $CDEF$ là\\
+			\[S_2=2t\cdot \left(-t^2+4\right)=-2t^3+8t.\]
+			Diện tích phần trang trí
+			\[S=S_1-S_2=2t^3-8t+\dfrac{32}{3}.\]
+			Để số tiền dùng để trang trí nhỏ nhất thì diện tích phần trang trí nhỏ nhất.\\
+			Xét hàm $f(t)=2t^3-8t+\dfrac{32}{3}$ trên $(0;2)$. Ta có
+			\[f'(t)=6t^2-8=0\Rightarrow t= \dfrac{2}{\sqrt{3}}.\]
+				Bảng biến thiên
+				\begin{center}
+					\begin{tikzpicture}[>=stealth]
+						\tkzTabInit[lgt=1.5,espcl=2.5]
+						{$t$ /1.2, $f'(t)$ /1, $f(t)$ /2}
+						{$0$, $\dfrac{2}{\sqrt{3}}$, $2$}
+						\tkzTabLine{,-,0,+,}
+						\tkzTabVar{+/ $\dfrac{32}{3}$, -/ $f_{\text{CT}}$, +/ $\dfrac{32}{3}$}
+					\end{tikzpicture}
+				\end{center}
+			Do đó, $\min\limits_{(0;2)}f(t)=f\left(\dfrac{2}{\sqrt{3}}\right)=\dfrac{96-32\sqrt{3}}{9}\approx 4{,}5083$.\\
+				Vậy số tiền dùng để trang trí nhỏ nhất gần bằng	$4{,}508\cdot 1\,000\,000=4\,508\,000\ \text{đồng}.$
+		\end{itemchoice}
+	}
+\end{ex}
+
+% nguồn: 2026-11-16_12_2D4_TT_Nguyen_ham_Tich_phan (nhập 16/11/2026)
+\begin{bt}%[2D4V3-2]%[ma:5e0d3973]
+% nguon: Archive/SP_KhoLatex/SP_Đề Theo Bài-Khối 12/2-B13-De1.tex #3795
+
+	\immini
+	{
+		Một gia đình muốn làm cánh cổng (như hình vẽ). Phần phía trên cổng có hình dạng là một parabol với $IH=2{,}5$ m, phần phía dưới là một hình chữ nhật kích thước cạnh là $AD=4$ m, $A B=6$ m. Giả sử giá để làm phần cổng được tô màu là $1\,000\,000 \text{~đồng} / \mathrm{m}^2$ và giá để làm phần cổng phía trên là $1\,200\,000 \text{~đồng} / \mathrm{m}^2$. Số tiền tổng cộng gia đình cần trả là bao nhiêu triệu đồng?
+	}
+	{
+		\begin{tikzpicture}[scale=0.7, font=\footnotesize, line join=round, line cap=round, >=stealth]
+			\draw (-3,-2.5) parabola bend (0,0) (3,-2.5);
+			\fill (0,0)coordinate (I)  circle (1pt) node[above]{$I$};
+			\fill (0,-2.5)coordinate (H)  circle (1pt) node[above right]{$H$};
+			\fill (-3,-2.5)coordinate (A)  circle (1pt) node[left]{$A$};
+			\fill (3,-2.5)coordinate (B)  circle (1pt) node[right]{$B$};
+			\fill (-3,-6.5)coordinate (D)  circle (1pt) node[left]{$D$};
+			\fill (3,-6.5)coordinate (C)  circle (1pt) node[right]{$C$};
+			\draw (I)--(H) node[midway, right]{$2{,}5$ m};
+			\draw (A)--(D) node[midway, left]{$4$ m};
+			\draw (D)--(C) node[midway, below]{$6$ m};
+			\draw[pattern = north east lines] (-3,-2.5) rectangle (3,-6.5);
+		\end{tikzpicture}
+	}
+\shortans{$36$}
+	\loigiai{
+		\begin{center}
+			\begin{tikzpicture}[scale=0.8, font=\footnotesize, line join=round, line cap=round, >=stealth]
+				\draw (-3,-2.5) parabola bend (0,0) (3,-2.5);
+				\draw (-11,-2.5) parabola bend (-8,0) (-5,-2.5);
+				\draw[->] (-8,-5)--(-8,1)node[right]{$y$};
+				\draw[->] (-12,0)--(-4,0)node[above]{$x$};
+				\fill (-8,0) circle (1pt) node[above right]{$O$};
+				\fill (-11,-2.5) circle (1.5pt) node[left]{$A$};
+				\fill (-5,-2.5) circle (1.5pt) node[right]{$B$};
+				\draw[dashed] (-11,0)--(-11,-2.5)--(-8,-2.5);
+				\draw[dashed] (-5,0)--(-5,-2.5)--(-8,-2.5);
+				\fill (0,0)coordinate (I)  circle (1pt) node[above]{$I$};
+				\fill (0,-2.5)coordinate (H)  circle (1pt) node[above right]{$H$};
+				\fill (-3,-2.5)coordinate (A)  circle (1pt) node[left]{$A$};
+				\fill (3,-2.5)coordinate (B)  circle (1pt) node[right]{$B$};
+				\fill (-3,-6.5)coordinate (D)  circle (1pt) node[left]{$D$};
+				\fill (3,-6.5)coordinate (C)  circle (1pt) node[right]{$C$};
+				\draw (I)--(H) node[midway, right]{$2.5$ m};
+				\draw (A)--(D) node[midway, left]{$4$ m};
+				\draw (D)--(C) node[midway, below]{$6$ m};
+				\draw[pattern = north east lines] (-3,-2.5) rectangle (3,-6.5);
+				\fill (-11,0) circle (1pt) node[above]{$-3$};
+				\fill (-5,0) circle (1pt) node[above]{$3$};
+				\fill (-8,-2.5) circle (1pt) node[below left]{$-2{,}5$};
+			\end{tikzpicture}
+		\end{center}
+		Diện tích hình chữ nhật $ABCD$ là $S_{ABCD}=24 \text{~m}^2$.\\
+		Chọn hệ trục toạ độ như hình vẽ. Khi đó Parabol đi qua $3$ điểm $A$, $O$, $B$ có dạng $(P)\colon y=ax^2$.\\
+		Mặt khác $B(3;-2{,}5)\in (P)\Rightarrow 9a=-2{,}5\Leftrightarrow a=-\dfrac{5}{18}$.\\
+		Do đó $(P)\colon y=-\dfrac{5x^2}{18}$.\\
+		Diện tích cổng hình Parabol là $$S=\displaystyle\int\limits_{-3}^3 \left[ \left( -\dfrac{5x^2}{18}\right)-(-2{,}5)\right]  \mathrm{\,d}x=\left( -\dfrac{5x^3}{54}+\dfrac{5x}{2}\right) \bigg|_{-3}^3=10.$$
+		Vậy tổng số tiền làm cổng là $T=24\cdot 1\,000\,000+10\cdot 1\,200\,000=36$ triệu đồng.
+	}
+\end{bt}
+
+% nguồn: 2026-11-16_12_2D4_TT_Nguyen_ham_Tich_phan (nhập 16/11/2026)
+\begin{bt}%[2D4C3-2]%[ma:9dc67d82]
+% nguon: Archive/SP_KhoLatex/SP_Đề Theo Bài-Khối 12/2-B13-De2.tex #3837
+%[ST12-dot1-Trần xuân Hòa]
+	\immini{Một hoa văn trang trí được tạo ra từ một miếng bìa hình vuông cạnh bằng $10$ cm bằng cách khoét đi bốn phần bằng nhau có hình dạng parabol như hình vẽ bên. Biết $ AB=5$ cm, $OH=4$ cm. Tính diện tích của bề mặt hoa văn đó (đơn vị: cm$^2$) (kết quả làm tròn đến chữ số thập phân thứ nhất).
+		\shortans{$46{,}7$}
+	}{\begin{tikzpicture}[scale=0.9, font=\footnotesize, line join=round, line cap=round,>=stealth]
+			\tikzset{label style/.style={font=\footnotesize}}
+			\def \r{0.5*sqrt(3)};
+			\coordinate (A) at ($(2,{\r})$);
+			\coordinate (B) at ($(2,{-\r})$);
+			\coordinate (H) at ($(A)!0.5!(B)$);
+			\clip(-2,-2) rectangle (2.5,2);
+			\fill [black] (-2,-2) rectangle (2,2);
+			\foreach \i in {0,90,180,270}
+			\draw [rotate=\i, fill=white,smooth, samples=200]  plot [domain={-\r-0.01}:{\r+0.01}] (\x, {2*(\x)^2+0.5});
+			\draw (A) node[right]{$ A $}--(B)node[right]{$ B $};
+			\draw (0.5, 0) node[left]{$\color{white} O $}--(H)node[right]{$H$};
+	\end{tikzpicture}}
+	\loigiai{
+		Diện tích bề mặt hoa văn là $ S=10^2-4S_0 $, trong đó $ S_0 $ là diện tích của Parabol.
+		\immini{Chọn hệ trục tọa độ như hình vẽ bên.\\
+			Parabol có đỉnh $ O(0; 0) $ và đi qua điểm $ B\left(\dfrac{5}{2}; 4\right) $ nên có phương trình là $ y=\dfrac{16}{25}x^2 $.\\
+			Tính $S_0$. Ta có $S_0=4\cdot 5-2\cdot \displaystyle\int\limits_{0}^{\tfrac{5}{2}}\dfrac{16}{25}x^2\mathrm{\, d}x=\dfrac{40}{3}$ (cm$^2$).
+			}{
+			\begin{tikzpicture}[scale=0.7, font=\footnotesize, line join=round, line cap=round,>=stealth]
+				\def \xmin{-3.1}
+				\def \xmax{3.1}
+				\def \ymin{-1.9}
+				\def \ymax{5.3}
+				\draw[->] (\xmin, 0.) -- (\xmax,0.) node[anchor=north] {$x$};
+				\draw[->] (0.,\ymin) -- (0.,\ymax) node[anchor=west] {$y$};
+				\clip(\xmin,\ymin) rectangle (\xmax,\ymax);
+				\draw[smooth,samples=100,domain=\xmin:\xmax] plot(\x,{0.64*(\x)^2});
+				\draw[pattern=north west lines,smooth,samples=100,domain=-2.5:2.5] plot(\x,{0.64*(\x)^2});
+				\draw[dashed] (-2.5,0) node[below] {$-\dfrac{5}{2}$} -- (-2.5,4)node[left]{$ A $}--(0,4)node[above left] {$4$}--(2.5,4)node[right]{$ B $}--(2.5,0)node[below]{$ \dfrac{5}{2} $};
+				\draw(0,4)node[above right]{$ H $};
+				\draw[fill=black] (0,0) circle (1.5pt) node[below left] {$O$};
+		\end{tikzpicture}}\noindent
+		Vậy diện tích bề mặt hoa văn là $ S=100-4\cdot\dfrac{40}{3}=\dfrac{140}{3}\approx 46{,}7$ (cm$^2$).
+	}
+\end{bt}
+
+% nguồn: 2026-11-16_12_2D4_TT_Nguyen_ham_Tich_phan (nhập 16/11/2026)
+\begin{bt}%[2D4V3-2]%[ma:e8a1caac]
+% nguon: Archive/SP_KhoLatex/SP_Đề Theo Bài-Khối 12/2-OTC4-De2.tex #3867
+
+	\immini{Bạn An cần mua một chiếc gương có viền là đường parabol bậc $2$ (xem hình vẽ). Biết rằng đoạn $AB=60$ cm, $OH=30$ cm. Diện tích của chiếc gương bạn An mua bằng bao nhiêu cm$^2$?
+	\shortans{$1200$}
+	}{\begin{tikzpicture}[scale=1,font=\footnotesize,line join = round, line cap = round, >= stealth]
+			%\tkzDefPoints{0/0/A, 5/0/x, 1.5/1/y, 0/5/z}
+			\draw[thick] (-3,0) parabola bend (0,3) (3,0);
+			\draw[thick,<->] (-3,0)--(3,0);
+			\draw[thick,<->] (0,0)--(0,3);
+			\draw (0,3) node[above]{H} (-3,0) node[below]{A} (3,0) node[below]{B} (0,0) node[above left]{O};
+			\draw (0,0) node[below]{$60$ cm};
+			\draw[](0,1.5) node[left]{$30$ cm};
+			%\clip (-3.5,-1) rectangle (3.5,3.5);
+	\end{tikzpicture}}
+	\loigiai{
+		\immini{Xét hệ trục tọa độ $Oxy$, sao cho gốc $O$ trùng với điểm $O$, trục $Ox$ trùng với tia $OB$, trục $Oy$ trùng với tia $OH$.\\
+			Khi đó $B(30;0)$, $H(0;30)$.\\
+			Phương trình Parabol đi qua $A$, $H$, $B$ có dạng\\ $y=ax^2+b\quad(P)$.
+		}{\begin{tikzpicture}[scale=.85,font=\footnotesize,line join = round, line cap = round, >= stealth]
+				%\tkzDefPoints{0/0/A, 5/0/x, 1.5/1/y, 0/5/z}
+				\draw[thick] (-3,0) parabola bend (0,3) (3,0);
+				\draw[thick,->] (-3.2,0)--(3.5,0) node[below]{$x$};
+				\draw[thick,->] (0,-0.5)--(0,3.5) node[right]{$y$} ;
+				\draw (0,3) node[above left]{H} (-3,0) node[below]{A} (3,0) node[below]{B} (0,0) node[below left]{O};
+				%\draw (0,0) node[below]{$60$ cm};
+				%\draw[](0,1.5) node[left]{$30$ cm};
+				%\clip (-3.5,-1) rectangle (3.5,3.5);
+		\end{tikzpicture}}
+		\noindent $H\in (P)\Rightarrow 30=b.\quad(1)$\\
+		$B\in (P)\Rightarrow 0=a\cdot 30^2+30\Rightarrow a =-\dfrac{1}{30}.\quad(2)$\\
+		Từ $(1)$, $(2)\Rightarrow (P)\colon y=-\dfrac{1}{30}x^2+30$.\\
+		Diện tích của chiếc gương là
+		\[\displaystyle\int\limits_{-30}^{30}\left(-\dfrac{1}{30}x^2+30\right)\mathrm{\,d}x=\left.\left(-\dfrac{x^3}{90}+30x\right)\right|_{-30}^{30}=1200\, \text{(cm$^2$)}.\]
+	}
+\end{bt}
+
+% nguồn: 2026-11-16_12_2D4_TT_Nguyen_ham_Tich_phan (nhập 16/11/2026)
+\begin{bt}%[2D4C3-2]%[ma:550f6111]
+% nguon: Archive/SP_KhoLatex/SP_Đề Theo Bài-Khối 12/2-OTGK2-De2.tex #4259
+
+	\immini
+	{Ông An xây dựng một sân bóng đá mini hình chữ nhật có chiều rộng $30$m và chiều dài $50$m. Để giảm bớt chi phí cho việc trồng cỏ nhân tạo, ông An chia sân bóng ra làm hai phần (tô đen và không tô đen) như hình bên. Phần tô đen gồm hai phần diện tích bằng nhau và đường cong $AIB$ là một parabol đỉnh $I$ được trồng cỏ nhân tạo với giá $130\,000$ đồng/m$^2$ và phần còn lại được trồng với giá $90\,000$ đồng/m$^2$. 
+	}
+	{\begin{tikzpicture}[scale=0.9, font=\footnotesize,line join=round, line cap=round, >=stealth]
+			\coordinate (I) at (0,0);
+			\coordinate (A) at (1.5,2.25);
+			\coordinate (B) at ($(A)+(0,-4.5)$);
+			\coordinate (C) at ($(B)+(-7.5,0)$);
+			\coordinate (D) at ($(A)-(B)+(C)$);
+			\coordinate (M) at ($(A)!1/2!(D)$);
+			\coordinate (N) at ($(B)!1/2!(C)$);
+			\coordinate (P) at ($(A)+(-1.5,0)$);
+			\coordinate (Q) at ($(B)+(-1.5,0)$);
+			\coordinate (R) at ($(D)+(1.5,0)$);
+			\coordinate (S) at ($(C)+(1.5,0)$);
+			\coordinate (td) at ($(D)+(0,0.3)$);
+			\coordinate (dt) at ($(D)+(-0.3,0)$);
+			\coordinate (ct) at ($(C)+(-0.3,0)$);
+			\coordinate (tr) at ($(R)+(0,0.3)$);
+			\coordinate (rp) at ($(R)+(0.3,0)$);
+			\coordinate (I') at ($(R)!1/2!(S)$);
+			\coordinate (g) at ($(I')+(0.3,0)$);
+			\fill[gray]plot[domain=0:1.5](\x,{sqrt(3.375*(\x))})--(A)--plot[domain=1.5:0](\x,{-sqrt(3.375*(\x))})--cycle;
+			\fill[gray](C)--(D)--plot[domain=-6:-4.5](\x,{sqrt(3.375*(-\x-4.5))})--plot[domain=-4.5:-6](\x,{-sqrt(3.375*(-\x-4.5))})--cycle;
+			\draw (A)--(B)--(C)--(D)--cycle (M)--(N);
+			\draw[dashed] (P)--(Q) (R)--(S);
+			\draw[<->](td)--(tr);
+			\node at ($(td)!1/2!(tr)$)[above]{$10$ m};
+			\draw[<->](dt)--(ct);
+			\node at ($(dt)!1/2!(ct)$)[above,rotate=90]{$30$ m};
+			\draw[<->](rp)--(g);
+			\node at ($(rp)!1/2!(g)$)[above,rotate=-90]{$15$ m};
+			\foreach \x/\g in {A/90,B/-90,I/180,I'/-40}\draw[fill=black] (\x) circle (.05) +(\g:.5)node{\footnotesize$\x$};
+	\end{tikzpicture}}
+	\noindent
+	Hỏi ông An phải trả bao nhiêu tiền (triệu đồng) để trồng cỏ nhân tạo cho sân bóng.
+	\shortans{$151$}
+	\loigiai{
+		\immini{
+			Chọn hệ trục tọa độ như hình vẽ ($I$ là gốc tọa độ). Khi đó đường cong $IAB$ là một parabol có phương trình dạng $y=ax^2$.\\
+			Parabol đi qua điểm $\left(15;10 \right)$, suy ra 
+			\[a \cdot 15^2=10 \Rightarrow a=\dfrac{2}{45}.\]
+		}
+		{
+		\begin{tikzpicture}[smooth,samples=300,scale=0.6,>=stealth]
+			\fill[gray!30] (-4,2)--(4,2)--plot[domain=4:-4](\x,{0.125*(\x)^2});
+			\draw[->] (-5,0)--(5,0) node[below]{$x$};
+			\draw[->] (0,-1)--(0,3) node[right]{$y$};
+			\draw (0,0) node[below left]{$I$};
+			\draw[domain=-4:4] plot(\x,{0.125*(\x)^2});
+			\draw[fill=black] (4,2) circle(1.5pt) (-4,2) circle(1.5pt);
+			\draw[dashed] (4,0)node[below]{$15$}--(4,2)node[right]{$B$}--(-4,2)node[left]{$A$}--(-4,0)node[below]{$-15$};
+			
+			\node[right] at (0,2.4) {$10$};
+	\end{tikzpicture}}
+		\noindent
+		Vậy $y=\dfrac{2}{45}x^2$. Diện tích phần tô đen là $S=2 \cdot \displaystyle\int\limits_{-15}^{15} \left(10-\dfrac{2}{45}x^2 \right) \mathrm{\,d}x=400 \, (\text{m}^2)$.\\
+		Diện tích phần còn lại của sân bóng là $S_2=30 \cdot 50-400=1100\,(\text{m}^2).$\\
+		Số tiền Ông An phải trả để trồng cỏ nhân tạo cho sân bóng là
+		$$130000\times 400+90000\times 1100=151000000\text{ đồng}=151\text{ triệu đồng.}$$}
+\end{bt}
+
+% nguồn: 2026-11-16_12_2D4_TT_Nguyen_ham_Tich_phan (nhập 16/11/2026)
+\begin{bt}%[2D4V3-2]%[ma:e9863706]
+% nguon: Archive/SP-4Phan-Dot3/Data/KNTT_2-OTGK2_De04.tex #4384
+
+	\immini{Mặt cắt thẳng đứng của một cái cổng có dạng một đường parabol với chiều cao $OH=4$ m (hình bên). Diện tích hình phẳng giới hạn bởi đường parabol và đoạn thẳng $AB$ bằng bao nhiêu mét vuông (làm tròn kết quả đến hàng phần mười)?
+	}{
+		\begin{tikzpicture}[scale=0.7, font=\footnotesize, line join=round, line cap=round, >=stealth]
+			
+%			\draw[->] (-3,0)--(3,0) node[below left] {$x$};
+%			\draw[->] (0,-5)--(0,1) node[below left] {$y$};
+			\draw (0,0) node [shift={(30:3mm)}] {$O$};
+			\draw[smooth, samples=200, domain=-2:2] plot(\x,{-(\x)^2});
+			\draw (-2,-4)--(2,-4) (0,0)--(0,-4);
+			\draw[fill=black] (-2,-4) circle(0.5pt) node[shift={(-45:3mm)}]{$A$};
+			\draw[fill=black] (0,-4) circle(0.5pt) node[shift={(-45:3mm)}]{$H$};
+			\draw[fill=black] (2,-4) circle(0.5pt) node[shift={(-135:3mm)}]{$B$};
+		\end{tikzpicture}
+	}
+	\shortans{10{,}7}
+	\loigiai
+	{
+		\immini{
+			Chọn hệ trục tọa độ như hình bên.\\
+			Đường cong đó có dạng $y=ax^2$. \\
+			Đường cong đi qua điểm $(2,-4)$. Suy ra $a=-1$.\\
+			Suy ra, đường cong có phương trình $y=-x^2$.\\
+			Đường thẳng $AB \colon y=-4$.\\
+			Diện tích mặt cắt là\\
+			$S = 2\displaystyle \int\limits_{0}^{2} -x^2 +4\mathrm{d}x = 2\dfrac{16}{3} \approx 10{,}7$ m$^2$.
+		}{
+			\begin{tikzpicture}[scale=0.7, font=\footnotesize, line join=round, line cap=round, >=stealth]
+				
+				\draw[->] (-3,0)--(3,0) node[below left] {$x$};
+				\draw[->] (0,-5)--(0,1) node[below left] {$y$};
+				\draw (0,0) node [shift={(30:3mm)}] {$O$};
+				\draw[smooth, samples=200, domain=-2:2] plot(\x,{-(\x)^2});
+				\draw (-2,-4)--(2,-4) (0,0)--(0,-4);
+				\draw[fill=black] (-2,-4) circle(0.5pt) node[shift={(-45:3mm)}]{$A$};
+				\draw[fill=black] (0,-4) circle(0.5pt) node[shift={(-45:3mm)}]{$H$};
+				\draw[fill=black] (2,-4) circle(0.5pt) node[shift={(-135:3mm)}]{$B$};
+				\draw[fill=black] (-2,0) circle(0.5pt) node[shift={(90:3mm)}]{$-2$};
+				\draw[fill=black] (2,0) circle(0.5pt) node[shift={(90:3mm)}]{$2$};
+				\draw[dashed] (-2,0)--(-2,-4) (2,0)--(2,-4);
+			\end{tikzpicture}
+		}
+	}
+\end{bt}
+
+% nguồn: 2026-11-16_12_2D4_TT_Nguyen_ham_Tich_phan (nhập 16/11/2026)
+\begin{bt}%[2D4V3-2]%[ma:31407e0c]
+% nguon: Archive/SP-4Phan-Dot3/Data/KNTT_2-OTGK2_De04.tex #4385
+
+	\immini{Anh Dũng đi rừng đào được tổ mối với mặt cắt có dạng như hình vẽ. Anh Dũng chú thích trên mặt cắt các kích thước. Đơn vị đo khoảng cách là dm. Tính diện tích mặt cắt của tổ mối. (Làm tròn kết quả đến hàng phần chục).
+	}{
+		\begin{tikzpicture}[scale=0.9, font=\footnotesize, line join=round, line cap=round, >=stealth]
+			%			\draw[->] (-2.5,0)--(3.5,0) node[below left] {$x$};
+			%			\draw[->] (0,-3)--(0,5) node[below left] {$y$};
+			%			\draw (0,0) node [shift={(-130:3mm)}] {$O$};
+			\draw[smooth, samples=200, domain=-1.3:-1,dashed] plot(\x,{(\x)^2-(\x)-2});
+			\draw[smooth, samples=200, domain=-1:2] plot(\x,{(\x)^2-(\x)-2});
+			\draw[smooth, samples=200, domain=2:2.5, dashed] plot(\x,{(\x)^2-(\x)-2});
+			\draw[smooth, samples=200, domain=-1.2:-1, dashed] plot(\x,{(\x)^3-3*(\x)^2+4});
+			\draw[smooth, samples=200, domain=-1:2] plot(\x,{(\x)^3-3*(\x)^2+4});
+			\draw[smooth, samples=200, domain=2:2.5, dashed] plot(\x,{(\x)^3-3*(\x)^2+4});
+			\draw[<->] (-1,0)--(0,0) node[sloped, pos=0.5, shift={(90:3mm)}]{$1$};
+			\draw[<->] (0,0)--(2,0) node[sloped, pos=0.5, shift={(90:3mm)}]{$2$};
+			\draw[<->] (0,0.5)--(1/2,0.5) node[sloped, pos=0.5, shift={(90:5mm)}]{$\dfrac{1}{2}$};
+			\draw[<->] (0,0)--(0,4) node[sloped, pos=0.5, shift={(90:3mm)}]{$4$};
+			\draw[<->] (1/2,-9/4)--(1/2,0) node[sloped, pos=0.7, shift={(-90:5mm)}]{$\dfrac{9}{4}$};
+			\draw[dashed] (1/2,0)--(1/2,1/2);
+		\end{tikzpicture}
+	}
+	 
+	\shortans{11{,}3}
+	\loigiai
+	{
+		\begin{center}
+			\begin{tikzpicture}[scale=0.7, font=\footnotesize, line join=round, line cap=round, >=stealth]
+				\draw[->] (-2.5,0)--(3.5,0) node[below left] {$x$};
+				\draw[->] (0,-3)--(0,5) node[below left] {$y$};
+				\draw (0,0) node [shift={(-130:3mm)}] {$O$};
+				\draw[smooth, samples=200, domain=-1.3:-1,dashed] plot(\x,{(\x)^2-(\x)-2});
+				\draw[smooth, samples=200, domain=-1:2] plot(\x,{(\x)^2-(\x)-2});
+				\draw[smooth, samples=200, domain=2:2.5, dashed] plot(\x,{(\x)^2-(\x)-2});
+				\draw[smooth, samples=200, domain=-1.2:-1, dashed] plot(\x,{(\x)^3-3*(\x)^2+4});
+				\draw[smooth, samples=200, domain=-1:2] plot(\x,{(\x)^3-3*(\x)^2+4});
+				\draw[smooth, samples=200, domain=2:2.5, dashed] plot(\x,{(\x)^3-3*(\x)^2+4});
+				\draw[fill=black] (-1,0) circle(0.5pt) node[shift={(150:4mm)}]{$-1$};
+				\draw[fill=black] (2,0) circle(0.5pt) node[shift={(-45:3mm)}]{$2$};
+				\draw[fill=black] (0,4) circle(0.5pt) node[shift={(45:3mm)}]{$4$};
+				\draw[fill=black] (1/2,0) circle(0.5pt) node[shift={(90:3mm)}]{$\tfrac{1}{2}$};
+				\draw[fill=black] (0,-9/4) circle(0.5pt) node[shift={(180:3mm)}]{$-\tfrac{9}{4}$};
+				\draw[dashed] (1/2,0)--(1/2,-9/4)--(0,-9/4);
+			\end{tikzpicture}
+		\end{center}
+			Chọn hệ trục tọa độ như hình vẽ.\\
+			Đường cong trên là đồ thị của hàm số bậc 3 $(C_1) \colon y=ax^3 + bx^2 + cx + d$.\\
+			Có đạo hàm là $y'=3x^2+2bx+c$.\\
+			$(C_1)$ đi qua điểm $(0;4)$ nên $d=4$.\hfill{$(1)$}\\
+			$(C_1)$ đi qua điểm $(-1;0)$ nên $-a+b-c+d=0$.\hfill{$(2)$}\\
+			$(C_1)$ đi qua điểm $(2;0)$ nên $8a+4b+2c+d=0$.\hfill{$(3)$}\\
+			$(C_1)$ có điểm cực tiểu là $(0;4)$ nên $c=0$.\hfill{$(4)$}\\
+			Từ $(1)$, $(2)$, $(3)$, $(4)$ suy ra $\hoac{&a=1\\&b=-3\\&c=0\\&d=4.}$\\
+			Suy ra $(C_1) \colon y= x^3 - 3x^2 +4$.\\
+			Mặt khác đường cong bên dưới là một parabol $(C_2) \colon y=ax^2+bx+c$.\\
+			$(C_2)$ đi qua điểm $(-1{,}0)$ nên $a-b+c=0$. \hfill{$(5)$}\\
+			$(C_2)$ đi qua điểm $(2{,}0)$ nên $4a+2b+c=0$. \hfill{$(6)$}\\
+			$(C_2)$ đi qua điểm $\left(\dfrac{1}{2},-\dfrac{9}{4}\right)$ nên $\dfrac{1}{4}a+\dfrac{1}{2}b+c=-\dfrac{9}{4} \Leftrightarrow a + 2b +4c = -9$. \hfill{$(7)$}\\
+			Từ $(5)$, $(6)$, $(7)$ suy ra $\hoac{&a=1\\&b=-1\\&c=-2.}$\\
+			Suy ra $(C_2) \colon y= x^2 - x - 2$.
+			Hai đồ thị $(C_1)$ và $(C_2)$ cắt nhau tại hai điểm $(-1{,}0)$ và $(2{,}0)$.
+			Diện tích mặt cắt là\\
+			$S = \displaystyle \int\limits_{-1}^{2} \left[\left(x^3 - 3x^2 +4\right) - \left(x^2 - x - 2\right)\right] \mathrm{d}x = \dfrac{45}{4} \approx 11{,}3$ dm$^2$.
+	}
+\end{bt}
+
+% nguồn: 2026-11-16_12_2D4_TT_Nguyen_ham_Tich_phan (nhập 16/11/2026)
+\begin{bt}%[2D4V3-2]%[ma:ca484d2d]
+% nguon: Archive/SP-4Phan-Dot3/Data/KNTT_2-OTGK2_De03.tex #4395
+
+	\immini{
+		Trên bức tường cần trang trí một hình phẳng dạng parabol đỉnh $S$ như hình vẽ, biết $OS=AB=4$ m, $O$ là trung điểm $AB$. Parabol trên được chia thành ba phần để sơn ba màu khác nhau với mức chi phí:
+		\begin{itemize}
+			\item Phần trên (phần kẻ sọc) giá $140\,000$ đồng/m$^2$;
+			\item Phần giữa (hình quạt tâm $O$ bán kính $2$ m được tô đậm) giá $150\,000$ đồng/m$^2$;
+			\item Phần còn lại giá $160\,000$ đồng/m$^2$.
+		\end{itemize}
+		Tổng chi phí để sơn cả ba phần là bao nhiêu triệu đồng (kết quả làm tròn đến hàng phần trăm)?
+	}{
+		\begin{tikzpicture}[scale=0.8, font=\footnotesize, line join=round, line cap=round,>=stealth]
+			\def\xmin{-2.5} \def\xmax{2.5}
+			\def\ymin{-0.5} \def\ymax{4.5} 			
+			\draw[smooth,samples=300,domain=-2:2] plot(\x,{-(\x)^2+4});			
+			\draw[smooth,samples=300,domain=-1.732:1.732] plot(\x,{(4-(\x)^2)^0.5});
+			\draw[pattern=north east lines,opacity=0.5] (-1.732,1) plot[domain=-1.732:1.732] (\x, {-(\x)^2+4})--(0,0)--cycle;
+			\fill[samples=100,domain=-1.732:1.732,gray!60] plot(\x,{(4-(\x)^2)^0.5})--(0,0)--cycle;			
+			\node at (0,0) [below]{$O$};
+			\node at (0,4) [above]{$S$};
+			\draw[fill=black] (-2,0)circle (.5pt) node[left]{\footnotesize $A$};
+			\draw[fill=black] (2,0)circle (.5pt) node[right]{\footnotesize $B$};		
+			\draw (-1.732,1)--(0,0)--(1.732,1) (-2,0)--(2,0);
+			\clip (\xmin+0.1,\ymin+0.1) rectangle (\xmax-0.1,\ymax-0.1);
+		\end{tikzpicture}	
+	}
+	\shortans{$1{,}58$}
+	\loigiai{
+		Chọn hệ trục tọa độ $Oxy$ như hình vẽ.
+		\begin{center}
+			\begin{tikzpicture}[scale=0.8, font=\footnotesize, line join=round, line cap=round,>=stealth]
+				\def\xmin{-2.5} \def\xmax{2.5}
+				\def\ymin{-0.5} \def\ymax{4.5} 			
+				\draw[smooth,samples=300,domain=-2:2] plot(\x,{-(\x)^2+4});				
+				\draw[smooth,samples=300,domain=-1.732:1.732] plot(\x,{(4-(\x)^2)^0.5});
+				\draw[pattern=north east lines,opacity=0.5] (-1.732,1) plot[domain=-1.732:1.732] (\x, {-(\x)^2+4})--(0,0)--cycle;
+				\fill[samples=100,domain=-1.732:1.732,gray!60] plot(\x,{(4-(\x)^2)^0.5})--(0,0)--cycle;				
+				\draw[->] (\xmin,0)--(\xmax,0) node [right]{$x$};
+				\draw[->] (0,\ymin)--(0,\ymax) node [left]{$y$};
+				\node at (0,0) [below right]{$O$};
+				\node at (1.2,3) [right]{$(P)$};
+				\node at (.5,1.5) [right]{$(C)$};
+				\node at (0,4) [above right]{$S$};
+				\node at (-1.732,1) [left]{$M$};
+				\node at (1.732,1) [right]{$N$};
+				\draw[fill=black] (-2,0)circle (.5pt) node[below left]{\footnotesize $A$};
+				\draw[fill=black] (2,0)circle (.5pt) node[below right]{\footnotesize $B$};
+				\draw[fill=black] (-2,0)circle (.5pt) node[above left]{\footnotesize $-2$};
+				\draw[fill=black] (2,0)circle (.5pt) node[above right]{\footnotesize $2$};
+				\draw[fill=black] (-1.732,0)circle (.5pt) node[below]{\footnotesize $-\sqrt{3}$};
+				\draw[fill=black] (-1.732,0)circle (.5pt) node[below]{\footnotesize $-\sqrt{3}$};
+				\draw[fill=black] (1.732,0)circle (.5pt) node[below]{\footnotesize $\sqrt{3}$};
+				\draw[fill=black] (0,1)circle (.5pt) node[above right]{\footnotesize $1$};
+				\draw[dashed] (-1.732,0)--(-1.732,1)--(1.732,1)--(1.732,0);
+				\draw (-1.732,1)--(0,0)--(1.732,1);
+				\clip (\xmin+0.1,\ymin+0.1) rectangle (\xmax-0.1,\ymax-0.1);
+			\end{tikzpicture}
+		\end{center}
+		Ta có phương trình parabol $(P)$ là $y=-x^2+4$; phương trình cung $\mathop{MN}$ (một phần của đường tròn tâm $O$, bán kính $R=2$) là $y=\sqrt{4-x^2}$; phương trình đoạn $ON$ là $y=\dfrac{1}{\sqrt{3}}x$.\\
+		Diện tích phần gạch sọc là $S_1=2\displaystyle\int\limits_0^{\sqrt{3}}\left(-x^2+4-\sqrt{4-x^2}\right)\mathrm{\,d}x$.\\
+		Diện tích hình quạt là $S_2=2\displaystyle\int\limits_0^{\sqrt{3}}\left(\sqrt{4-x^2}-\dfrac{1}{\sqrt{3}}x\right)\mathrm{\,d}x$.\\
+		Diện tích phần còn lại là $S_3=\displaystyle\int\limits_{-2}^{2}\left(4-x^2\right)\mathrm{\,d}x-S_1-S_2$.\\
+		Tổng chi phí là $T=S_1\cdot0{,}14+S_2\cdot0{,}15+S_3\cdot0{,}16\approx1{,}58$ (triệu đồng).
+	}
+\end{bt}
+
+% nguồn: 2026-11-16_12_2D4_TT_Nguyen_ham_Tich_phan (nhập 16/11/2026)
+\begin{bt}%[2D4V3-2]%[ma:d77c0cb5]
+% nguon: Archive/SP-4Phan-Dot3/Data/CD_2-OTGK2-De02.tex #4477
+ %C4
+	Một chiếc cổng hình dạng là một parabol có khoảng cách giữa hai chân cổng là $4$ m và chiều cao là $2$ m. 
+	Diện tích của cổng bằng bao nhiêu? (Nếu kết quả không là số nguyên làm tròn đến hàng phần chục). 
+	\shortans[0ly]{$5{,}3$} 
+	\loigiai{ 
+		\begin{center} 
+			\begin{tikzpicture}[line join=round, line cap=round,>=stealth,thick] 
+				\draw[->,color=black] (-2.9,0.) -- (2.9,0.) node[below left] {$x$};
+				\foreach \x in {-2,2} 
+				\draw[shift={(\x,0)},color=black] (0pt,2pt) -- (0pt,-2pt) node[below] {\footnotesize $\x$}; 
+				\draw[->,color=black] (0.,-1) -- (0.,3.2) node[below left] {$y$}; 
+				\foreach \y in {} 
+				\draw[shift={(0,\y)},color=black] (2pt,0pt) -- (-2pt,0pt) node[left] {\footnotesize $\y$}; 
+				\draw[color=black] (0pt,-10pt) node[right] {\footnotesize $0$}; 
+				\clip(-3,-1) rectangle (3,3);
+				\draw [samples=1000,rotate around={0:(0,0)},xshift=0.cm,yshift=0cm,domain=-9:9)] plot (\x,{(-2/(2*2))*(\x)^2+2}); 
+				\begin{scriptsize}
+					\draw [fill=black] (0,2) circle (1.5pt); 
+					\draw[color=black] (0.3,2+0.2) node {$A$}; 
+					\draw [fill=black] (-2,0.) circle (1.5pt); 
+					\draw[color=black] (-2-0.2,0.4) node {$B$}; 
+					\draw [fill=black] (2,0.) circle (1.5pt); 
+					\draw[color=black] (2+0.2,0.4) node {$C$}; 
+					\draw[color=black] (-0.3,2+0.2) node {$2$}; 
+				\end{scriptsize} 
+			\end{tikzpicture} 
+		\end{center} 
+		Xét hệ trục tọa độ như hình vẽ mà trục đối xứng của parabol trùng với trục tung, trục hoành trùng với đường tiếp đất của cổng. 
+		Khi đó parabol có phương trình dạng $y=ax^2+b$.\\ 
+		Parabol đi qua đỉnh $I(0;2)$ nên ta có $b=2$. \\ 
+		Parabol cắt trục hoành tại hai điểm $(-2;0)$ và $(2;0)$ nên ta có \\ 
+		$$0=a\cdot \left(2\right)^2+ 2 \Rightarrow a = - \dfrac{1}{2}.$$ \\ 
+		Khi đó parabol có phương trình $y=- \dfrac{1}{2}x^2+2$. \\ 
+		Vậy diện tích của cổng là $\displaystyle\int\limits_{-2}^{2}{\left(- \dfrac{1}{2}x^2+2\right)} \mathrm{\,d}x \approx\mathtt{\text{5.3}}$ m$^2$. \\ 
+	}
+\end{bt}
+
+% nguồn: 2026-11-16_12_2D4_TT_Nguyen_ham_Tich_phan (nhập 16/11/2026)
+\begin{bt}%[2D4V3-2]%[ma:2842bd15]
+% nguon: Archive/SP-4Phan-Dot3/Data/CTST_2-OTGK2-De05.tex #4503
+
+\immini
+{
+Một hoa văn trang trí được tạo ra từ một miếng bìa mỏng hình vuông cạnh bằng $10$ cm bằng cách khoét đi bốn phần bằng nhau có hình dạng parabol như hình vẽ. Biết $AB=5$ cm, $OH=4$ cm. Tính diện tích bề mặt hoa văn đó \textit{(kết quả làm tròn đến hàng phần chục)}.
+}
+{
+\begin{tikzpicture}[scale=0.4]
+\node[right] at (10,3) {$B$};
+\node[right] at (10,7) {$A$};
+\clip (-0.1,-0.1) rectangle (10.1,10.1);
+\draw (0,0) rectangle (10,10);
+\fill[gray!80] (0,0) rectangle (10,10);
+\filldraw[fill=white!80,draw=black!30] (0,5) ellipse [x radius=4, y radius=2];
+\filldraw[fill=white!80,draw=black!30] (10,5) ellipse [x radius=4, y radius=2];
+\filldraw[fill=white!80,draw=black!30] (5,0) ellipse [x radius=2, y radius=4];
+\filldraw[fill=white!80,draw=black!30] (5,10) ellipse [x radius=2, y radius=4];
+\draw [dashed](6,5)--(10,5);
+\draw [dashed](10,3)--(10,7);
+\node[above right] at (6,5) {\footnotesize $O$};
+\node[above left] at (10,5) {\footnotesize $H$};
+\draw (6,5) circle (1pt);
+\draw (10,3) circle (1pt);
+\draw (10,7) circle (1pt);
+\draw (10,5) circle (1pt);
+%\node[right] at (10,3) {$B$};
+%\node[right] at (10,7) {$A$};
+\end{tikzpicture}
+}
+\shortans{$46{,}7$}
+\loigiai
+{
+\immini
+{
+Coi parabol trong hình vẽ có đỉnh là $H(0;4)$ cắt trục hoành tại $A$ và $B$ có hoành độ lần lượt là $x=-\dfrac{5}{2}$ và $x=\dfrac{5}{2}$ nên có phương trình là $y=-\dfrac{16}{25}x^2+4$ khi đó diện tích diện tích của mỗi phần parabol là $S_1=2\displaystyle \int \limits_0^{\tfrac{5}{2}} \left(-\dfrac{16}{25}x^2+4\right)\mathrm{\,d}x$.\\
+}
+{
+\begin{tikzpicture}[line cap=round,line join=round,>=stealth, scale=0.5, thick]
+\draw[->,>=stealth] (-4,0)--(4,0) node[below]{$x$};
+\draw[->,>=stealth] (0,-2) --(0,6) node[left]{$y$};
+\draw[line width=1pt,smooth,samples=100,domain=-3:3] plot(\x,{-0.64*(\x)^(2)+4});
+\node[below left] at (-0.01,0) {$0$};
+\node[above left] at (-2.51,0) {$-\dfrac{5}{2}$};
+\node[above right] at (2.51,0) {$\dfrac{5}{2}$};
+\node[above left] at (0,4) {$4$};
+\end{tikzpicture}
+}
+\noindent
+Vậy diện tích của bề mặt hoa văn là
+\[S=10^2-4S_1=100-8\displaystyle \int \limits_0^{\tfrac{5}{2}} \left(-\dfrac{16}{25}x^2+4\right)\mathrm{\,d}x=\dfrac{140}{3}\approx 46{,}7~ \text{cm}^3.\] 
+}
+\end{bt}
+
+% nguồn: 2026-11-16_12_2D4_TT_Nguyen_ham_Tich_phan (nhập 16/11/2026)
+\begin{bt}%[2D4V3-2]%[ma:c0ac9676]
+% nguon: Archive/SP-4Phan-Dot3/Data/CTST_2-OTGK2-De01.tex #4514
+%[Dự án đè thi 4 phần đợt 3]%[Đoàn Văn Mùi]
+	\immini[thm]{
+		Mặt cắt đứng của một cái cổng có dạng một đường parabol với chiều cao $OH=4$ m và khoảng cách giữa hai chân cổng là $AB=4$ m (hình bên). Diện tích hình phẳng giới hạn bởi đường parabol và đoạn thẳng $AB$ bằng bao nhiêu mét vuông? (Làm tròn kết quả đến hàng phần mười).
+	}{
+		\begin{tikzpicture}[line join=round, line cap=round,>=stealth,thick,scale=0.7]
+			\tikzset{label style/.style={font=\footnotesize}}
+			\begin{scope}
+				\clip (-2,-4) rectangle (2,0);
+				\draw[samples=200,domain=-2:2,smooth,variable=\x] plot (\x,{-1*(\x)^2+0*(\x)+0});
+			\end{scope}
+			\path
+			(0,0) coordinate (O)
+			(0,-4) coordinate (H)
+			(2,-4) coordinate (B)
+			(-2,-4) coordinate (A)
+			;
+			\draw[dashed]
+			(A)--(B) (O)--(H)
+			;
+			\foreach \x/\g in {B/0,O/90,A/180,H/-90}\fill[black](\x) circle (1pt)+(\g:3mm) node {$\x$};
+		\end{tikzpicture}
+	}	
+	\shortans{$10{,}7$}
+	\loigiai{
+		\immini{
+			Chọn hệ trục toạ độ $Oxy$ như hình bên với đơn vị của hai trục là mét, đường parabol có phương trình $y=ax^2$ và đi qua các diểm $A(-2;-4), B(2;-4)$. Suy ra $a=-1$.
+			Phương trình đường thẳng $AB$ là $y=-4$.
+			\allowdisplaybreaks
+			\begin{eqnarray*}
+				S&=&\displaystyle\int\limits_{-2}^2\left|\left(-x^2\right)-(-4)\right|\mathrm{\,d}x\\
+				&=&\displaystyle\int\limits_{-2}^2\left(4-x^2\right)\mathrm{\,d}x=\left.\left(4 x-\dfrac{x^3}{3}\right)\right|_{-2}^2\\
+				&=&\dfrac{32}{3} \approx 10{,}7\ \left(\mathrm{m}^2\right).
+			\end{eqnarray*}
+		}{
+			\begin{tikzpicture}[line join=round, line cap=round,>=stealth,thick,scale=1]
+				\tikzset{label style/.style={font=\footnotesize}}
+				\draw[->] (-2.1,0)--(3.1,0) node[below left] {$x$};
+				\draw[->] (0,-4.1)--(0,1.1) node[below left] {$y$};
+				\draw (0,0) node [above right] {$O$};
+				\foreach \x in {-2,-1,1,2}
+				\draw[thin] (\x,1pt)--(\x,-1pt) node [above] {$\x$};
+				\foreach \y in {-4,-1}
+				\draw[thin] (1pt,\y)--(-1pt,\y) node [above left] {$\y$};
+				\draw[dashed,thin](-2,0)--(-2,-4)--(0,-4);
+				\draw[dashed,thin](-1,0)--(-1,-1)--(0,-1);
+				\draw[dashed,thin](1,0)--(1,-1)--(0,-1);
+				\draw[dashed,thin](2,0)--(2,-4)--(0,-4);
+				\begin{scope}
+					\clip (-2,-4) rectangle (2,1);
+					\draw[samples=200,domain=-3:3,smooth,variable=\x] plot (\x,{-1*(\x)^2+0*(\x)+0});
+				\end{scope}
+			\end{tikzpicture}
+		}		
+	}
+\end{bt}
+
+% nguồn: 2026-11-16_12_2D4_TT_Nguyen_ham_Tich_phan (nhập 16/11/2026)
+\begin{bt}%[2D4V3-2]%[ma:990996da]
+% nguon: Archive/SP-4Phan-Dot3/Data/CTST_2-OTGK2-De02.tex #4523
+
+	\immini{Một viên gạch hoa hình vuông cạnh $40$ cm. Người ta đã dùng bốn đường parabol có chung đỉnh tại tâm của viên gạch để tạo ra bốn cánh hoa (phần tô đậm như hình vẽ). Tính diện tích của mỗi cánh hoa đó. (Làm tròn kết quả đến hàng đơn vị).
+	}{\begin{tikzpicture}[scale=1.1,>=stealth, line join = round, line cap = round,font=\footnotesize]
+			\draw (-1,1) rectangle (1,-1);
+			\foreach \i in {0,90,180,270}
+			\draw [fill=gray, smooth, samples=100,rotate=\i] plot [domain=0:1] (\x, {(\x)^2})-- plot [domain=1:0] (\x, {sqrt(\x)});
+	\end{tikzpicture}}
+	\shortans{$ 133 $}
+	\loigiai{
+		\immini{Đặt hình vuông vào hệ trục tọa độ $Oxy$ như hình vẽ, cạnh của hình vuông ta có thể coi có độ dài bằng $2$ trên hệ trục tọa độ.\\
+			Khi đó diện tích một cánh hoa chính là diện tích hình phẳng giới hạn bởi hai đồ thị $y=x^2$ và $y=\sqrt{x}$. Ta có
+			$$S_1=\displaystyle\int\limits_0^1 \left(\sqrt{x}-x^2\right)\mathrm{\,d}x=\left(\dfrac{2}{3}x\sqrt{x}-\dfrac{x^3}{3}\right)\Bigg|_0^1=\dfrac{1}{3}.$$
+			Vậy thực tế diện tích của mỗi cánh hoa là
+			$$S=20\times 20\times S_1=\dfrac{400}{3}\approx 133 \mathrm{\,cm}^2$$ }{\begin{tikzpicture}[scale=1.2,>=stealth, line join = round, line cap = round,font=\footnotesize]
+				\draw[->] (-1.5,0)--(0,0)%
+				node[below right]{$O$}--(1.5,0) node[below]{$x$};
+				\draw[->] (0,-1.5) --(0,1.5) node[right]{$y$};
+				\draw (-1,1) rectangle (1,-1);
+				\foreach \i in {-1,1}
+				\foreach \j in {-1,1}
+				\draw[fill=black]  (\i,0) circle (0.5 pt) node [below left] {\footnotesize $\i$};
+				\draw [fill=gray, smooth, samples=100] plot [domain=0:1] (\x, {(\x)^2})-- plot [domain=1:0] (\x, {sqrt(\x)});
+		\end{tikzpicture}}
+	}
+\end{bt}
+
+% nguồn: 2026-11-16_12_2D4_TT_Nguyen_ham_Tich_phan (nhập 16/11/2026)
+\begin{bt}%[2D4V3-2]%[ma:1144a117]
+% nguon: Archive/SP-4Phan-Dot3/Data/CTST_2-OTGK2-De03.tex #4533
+
+\immini{Bạn An có các tấm thẻ hình chữ nhật có kích thước khác nhau nhưng có cùng chu vi là $6$ cm. Trên mỗi tấm thẻ An vẽ một hình parabol sao cho đỉnh của parabol trùng với trung điểm một cạnh của tấm thẻ như hình vẽ. Hỏi diện tích của hình parabol lớn nhất mà An vẽ được bằng bao nhiêu xăng ti mét vuông?}
+{\begin{tikzpicture}[scale=1,>=stealth, font=\footnotesize, line join=round, line cap=round]
+			\def\a{-1} \def\b{0} \def\c{4} % Hệ số
+			\def\xmin{-3} \def\xmax{3}
+			\def\ymin{-1} \def\ymax{5} 
+			\draw(-2,0)--(2,0);
+			\draw[smooth,samples=300] plot[domain=-2:2](\x,{\a*(\x)^2+\c});
+			\draw[pattern=north east lines] plot[domain=-2:2](\x,{\a*(\x)^2+\c});
+			\draw (-2,0)--(-2,4)--(2,4)--(2,0)--(-2,0);
+		\end{tikzpicture}}
+	\shortans{$1{,}5$}
+	\loigiai{
+	\immini{	Gọi chiều dài của tấm thẻ là $m$, chiều rộng là $n$ $(m > n > 0)$.\\
+		Ta có chu vi của tấm thẻ là $2\cdot(m+n)=6\Rightarrow m+n=3$.\\
+		Chọn hệ trục tọa độ $Ox y$ sao cho đỉnh của parabol là $I(0; n)$ và parabol đi qua $2$ điểm $A\left(\dfrac{-m}{2}; 0\right)$ và $B\left(\dfrac{m}{2}; 0\right)$.}
+	{\begin{tikzpicture}[scale=1,>=stealth, font=\footnotesize, line join=round, line cap=round]
+				\def\a{-1} \def\b{0} \def\c{4} % Hệ số
+				\def\xmin{-3} \def\xmax{3}
+				\def\ymin{-1} \def\ymax{5} 
+				\draw[->] (\xmin,0)--(\xmax,0) node [below]{$x$};
+				\draw[->] (0,\ymin)--(0,\ymax) node [left]{$y$};
+				\node at (0,0) [below left]{$O$};
+				\draw[smooth,samples=300] plot[domain=-2:2](\x,{\a*(\x)^2+\c});
+				\draw[pattern=north east lines] plot[domain=-2:2](\x,{\a*(\x)^2+\c});
+				\node[below] at (-2,0) {$A$};
+				\node[below] at (2,0) {$B$};
+				\node[above right] at (0,4) {$I$};
+				\draw (-2,0)--(-2,4)--(2,4)--(2,0);
+			\end{tikzpicture}} 
+	\noindent	Giả sử parabol có phương trình là $y=ax^2+bx+c$, $(a\neq 0)$.\\
+	Vì parabol cắt trục hoành tại hai điểm phân biệt $A$ và $B$ nên $y=a\left(x^2-\dfrac{m^2}{4}\right)$.\\
+	Mà parabol đi qua $I$ nên $a=-\dfrac{4n}{m^2}$.\\
+		Do đó phương trình parabol có dạng $y=\dfrac{-4n}{m^2} x^2+n$.\\
+		Vậy phần diện tích hình parabol là $$S=2\displaystyle\int\limits_0^{\tfrac{m}{2}}\left(\dfrac{-4n}{m^2} x^2+n\right)\mathrm{\,d}x=2\cdot\left(-\dfrac{4n}{3m^2}x^3+nx\right)\Bigg|_0^{\tfrac{m}{2}}=\dfrac{2m n}{3}.$$
+		Ta có $\dfrac{2}{3} m n \leq \dfrac{2}{3} \cdot\left(\dfrac{m+n}{2}\right)^2=\dfrac{2}{3} \cdot\left(\dfrac{3}{2}\right)^2=1,5$.\\
+		Vậy diện tích của hình parabol lớn nhất mà An vẽ được bằng $1,5$ cm$^2$.
+	}
+\end{bt}
+
+% nguồn: 2026-11-16_12_2D4_TT_Nguyen_ham_Tich_phan (nhập 16/11/2026)
+\begin{bt}%[2D4V3-2]%[ma:fb991255]
+% nguon: Archive/SP-4Phan-Dot3/Data/CTST_2-OTHK2-De01.tex #4587
+
+	\immini{
+		Một hoa văn trang trí được tạo ra từ một miếng bìa mỏng hình vuông cạnh bằng $10$ cm bằng cách khoét đi bốn phần bằng nhau có hình dạng parabol như hình bên. Biết $AB=5$ cm, $OH=4$ cm. Tính diện tích bề mặt hoa văn đó (kết quả được làm tròn đến hàng phần mười).
+	}
+	{
+		\begin{tikzpicture}[line join=round, line cap=round, >=stealth, scale=0.5]
+		\fill [fill=red](0,0) rectangle (10,10);
+		\fill [white,smooth,draw=none] plot[domain=2.5:7.5]
+		(\x, {-0.64*(\x)^2+6.4*(\x)-12})--cycle;
+		\fill [white,smooth,draw=none] plot[domain=2.5:7.5]
+		(\x, {0.64*(\x)^2-6.4*(\x)+22})--cycle;
+		\fill [white,smooth,draw=none] plot[domain=2.5:7.5,rotate=90,variable=\y]
+		(\y, {-0.64*(\y)^2+6.4*(\y)-12-10})--cycle;
+		\fill [white,smooth,draw=none] plot[domain=2.5:7.5,rotate=90,variable=\y]
+		(\y, {0.64*(\y)^2-6.4*(\y)+22-10})--cycle;
+		\coordinate (A) at (10,7.5);
+		\coordinate (B) at (10,2.5);
+		\coordinate (H) at (10,5);
+		\coordinate (O) at (6,5);
+		\draw[dashed] (A)--(B)(O)--(H);
+		\foreach \x/\g in {A/0,B/0,O/30,H/0}
+		\fill[black] (\x) circle (0.8pt)+(\g:.4)node{$\x$};
+		\end{tikzpicture}
+	}
+		\shortans{$46{,}7$}
+	\loigiai{
+		\immini{
+			Chon hệ trục tọa độ sao cho $O$ là gốc tọa độ $OH$ thuộc $Oy,~Ox$ vuông góc với $OH$ tại $O$ chiều dương hướng từ $A$ đến $B$. Khi đó ta có $B\left(\dfrac{5}{2};4\right)$. Giả sử parabol $(P)$ đi qua $O$, $A$, $B$ nhận $O$ làm đỉnh có dạng $$y=ax^2+bx+c.$$ 
+			Dễ dàng ta có hệ phương trình $\heva{&O \in (P)\\&\dfrac{-b}{2a}=0\\&B \in (P)} \Leftrightarrow \heva{&c=0\\&b=0\\&a=\dfrac{16}{25}.}$\\ Do đó $y=\dfrac{16}{25}x^2$.
+		}
+		{
+			\begin{tikzpicture}[scale=0.6, font=\footnotesize,line join=round, line cap=round, >=stealth]
+			\tikzset{label style/.style={font=\footnotesize}}
+			\def \xmin{-4.2}
+			\def \xmax{4.2}
+			\def \ymin{-1}
+			\def \ymax{8}
+			\def \hamso{0.64*(\x)^2}
+			\draw[->] (\xmin,0)--(\xmax,0) node[below left] {$x$};
+			\draw[->] (0,\ymin)--(0,\ymax) node[below left] {$y$};
+			\draw (0,0) node [below left] {$O$};
+			\begin{scope}
+			\clip (\xmin+0.01,\ymin+0.01) rectangle (\xmax-0.01,\ymax-0.01);
+			\draw[samples=200,domain=-4:4,smooth,variable=\x] plot (\x,{\hamso});
+			\end{scope}
+			\draw [dashed](-2.5,0)--(-2.5,4)node[left]{$A$}--(2.5,4)node[right]{$B$}--(2.5,0);
+			\foreach \x/\y in {-2.5/0,2.5/0,-2.5/4,2.5/4,0/0} \fill[black](\x,\y) circle(1.5pt);
+			\end{tikzpicture}
+		}
+	\noindent
+		Gọi diện tích hình phẳng giới hạn các đường $y=\dfrac{16}{25}x^2$, $y=4$, $x=\dfrac{-5}{2}$, $x=\dfrac{5}{2}$ là $S_1$. Khi đó ta có $$S_1=\displaystyle\int\limits_{-2{,}5}^{2{,}5} \left(4-\dfrac{16}{25}x^2\right)\mathrm{d}x=\left(4x-\dfrac{16}{75}x^3\right)\bigg|_{-2{,}5}^{2{,}5}=\dfrac{40}{3}.$$
+		Do đó diện tích hình hoa văn là $S=10^2-\dfrac{40}{3} \cdot 4=\dfrac{140}{3}$ cm$^2$ $\approx 46{,}7$ cm$^2$. }
+\end{bt}

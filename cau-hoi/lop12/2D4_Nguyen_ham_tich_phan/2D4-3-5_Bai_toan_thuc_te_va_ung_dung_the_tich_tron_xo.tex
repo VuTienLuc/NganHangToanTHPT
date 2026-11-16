@@ -4106,3 +4106,607 @@
 		\[V=V_2-V_1=270 \pi-240\pi=30 \pi  \, (\text{cm}^3).\]
 	 }
 \end{bt}
+
+% nguồn: 2026-11-16_12_2D4_TL_Nguyen_ham_Tich_phan (nhập 16/11/2026)
+\begin{bt}%[2D4C3-5]%[ma:42e9a0ae]
+% nguon: Archive/2024/TaiLieuGiangDay/5.HH Oxyz/VDC_TDM.tex #3154
+%[Anh Tuấn]
+	Cho một bình ban đầu chưa đựng gì có dạng hình chóp cụt đều có đáy dưới nhỏ hơn là hình vuông có cạnh bằng $30\,\mathrm{cm}$, đáy trên có cạnh bằng $60\,\mathrm{cm}$, chiều cao bằng $100\,\mathrm{cm}$. 
+	Dùng một vòi cho chảy nước vào bình này với lưu lượng không đổi $2000\,\text{cm$^3$/phút}$. 
+	Trong bài toán, đơn vị thể tích tính theo $\mathrm{cm^3}$ và đơn vị dài tính theo $\mathrm{cm}$, đơn vị thời gian tính theo phút, các kết quả đều được làm tròn đến hàng phần mười.
+	Hãy xây dựng hoặc tìm cách xác định hàm biểu diễn tốc độ dâng của chiều cao mực nước trong bình?
+		\begin{center}
+		\begin{tikzpicture}[scale=0.8,font=\footnotesize, line join=round, line cap=round, >=stealth]
+			\def\a{3} \def\aa{5} 
+			\def\b{2} \def\bb{3.5}
+			\def\h{5}
+			\path (0:0) coordinate (A)
+			++(0:\a) coordinate (D)
+			++(-150:\b) coordinate (C)
+			($(A)+(C)-(D)$) coordinate (B)
+			($(A)+(90:\h)$) coordinate (A')
+			++(0:\aa) coordinate (D')
+			++(-150:\bb) coordinate (C')
+			($(A')+(C')-(D')$) coordinate (B')
+			($(C)!0.5!(D)$) coordinate (M)
+			($(C')!0.5!(D')$) coordinate (N)
+			($(M)+(4.3,0)$) coordinate (M')
+			($(N)+(3,0)$) coordinate (N')
+			;
+			\fill[gray!30] (A)--(B)--(C)--(D)--(A);
+			\draw[dashed] 	(B)--(A)--(D)	(A)--(A') (M)--(M') (N)--(N');
+			\draw 	(C)--(C') (D)--(D') 	(B)--(B')(C)--(C')(B)--(C)--(D) 
+			(A')--(B')--(C')--(D')--cycle;
+			\draw [<->] (N')--(M') node[midway, left]{$100$ cm} ;
+%			\foreach \x/\g in {A/160,B/-135,C/-45,D/0,A'/90,B'/135,C'/90,D'/45}
+%			\fill (\x) circle (1pt)
+%			($(\g:3mm)+(\x)$) node {$\x$};
+			\fill (A') -- (D') node[midway, above]{$60$ cm} (B) -- (C) node[midway, below]{$30$ cm};	
+		\end{tikzpicture}
+	\end{center}
+	\loigiai{
+	Gọi $h$ (cm) là chiều cao của mực nước tại thời điểm $t$ (phút).\\
+	Vì hình chóp cụt đều có tiết diện là hình vuông, và cạnh của nó tăng đều từ $30$ cm lên $60$ cm theo chiều cao từ $0$ đến $100$ cm nên độ dài cạnh của tiết diện tại độ cao $h$ là
+	\[
+	a = 30 + \frac{60 - 30}{100} \cdot h = 30 + 0{,}3h~\text{(cm)}.
+	\]
+	Diện tích mặt cắt ngang tại độ cao $h$ là
+	\[
+	S(h) = a^2 = \left(30 + 0{,}3h\right)^2~\left(\text{cm$^2$} \right).
+	\]
+	Thể tích nước đến độ cao $h$ là
+	\begin{eqnarray*}
+		V(h) &=& \displaystyle\int_0^h S(x)\, dx = \int_0^h \left(30 + 0{,}3x\right)^2 dx\\
+		&=& \displaystyle\int_0^h \left(900 + 18x + 0{,}09x^2\right) dx \\
+		&=& 900h + 9h^2 + 0{,}03h^3~\left(\text{cm$^3$} \right).
+	\end{eqnarray*}
+	Vì vòi nước chảy vào bình này với lưu lượng không đổi $2000\,\text{cm$^3$/phút}$ nên tốc độ dâng của chiều cao mực nước trong bình là
+	\[\dfrac{2000}{V'(h)}=\dfrac{2000}{900 + 18h + 0{,}09h^2}.\]
+	}
+	Vậy hàm biểu diễn tốc độ dâng của chiều cao mực nước trong bình là $f(h)=\dfrac{2000}{900 + 18h + 0{,}09h^2}$ (cm/phút).
+\end{bt}
+
+% nguồn: 2026-11-16_12_2D4_TL_Nguyen_ham_Tich_phan (nhập 16/11/2026)
+\begin{bt}%[2D4V3-5]%[ma:7385368c]
+% nguon: Archive/SP-4Phan-Dot3/Data/CD_2-OTHK2-De05.tex #4377
+%[Dự án Đề thi 4 phần-Đợt 3]%[Đắc Vũ]
+	Tại một nhà máy, gọi $C(x)$ là tổng chi phí (tính theo triệu đồng) để sản xuất $x$ tấn sản phẩm $\mathrm{A}$ trong một tháng. Khi đó, đạo hàm $\mathrm{C}'(x)$, gọi là chi phí cận biên, cho biết tốc độ tăng tổng chi phí theo lượng sản phẩm được sản xuất. Giả sử chi phí cận biên (tính theo triệu đồng trên tấn) của nhà máy được ước lượng bởi công thức
+	$$
+	\mathrm{C}'(x)=5-0{,}06 x+0{,}00072 x^2 \text{ với } 0 \leq x \leq 150.
+	$$
+	Biết rằng $\mathrm{C}(0)=30$ triệu đồng, gọi là chi phí cố định. Tính tổng chi phí (đơn vị triệu đồng) khi nhà máy sản xuất $100$ tấn sản phẩm A trong tháng.
+	\loigiai{
+		Ta có:
+		$$
+		\begin{aligned}
+			\mathrm{C}(100)-\mathrm{C}(0) &=\displaystyle\int\limits_0^{100} \mathrm{C}'(x) \mathrm{\,d} x=\displaystyle\int\limits_0^{100}\left(5-0{,}06 x+0{,}00072 x^2\right) \mathrm{\,d} x \\
+			&=5 \displaystyle\int\limits_0^{100} \mathrm{\,d} x-0{,}06 \displaystyle\int\limits_0^{100} x \mathrm{\,d} x+0{,}00072 \displaystyle\int\limits_0^{100} x^2 \mathrm{\,d} x \\
+			&=5 x\bigg|_0 ^{100}-0{,}03 x^2\bigg|_0 ^{100}+0{,}00024 x^3\bigg|_0 ^{100}=440.
+		\end{aligned}
+		$$
+		Suy ra $	\mathrm{C}(100)=	\mathrm{C}(0)+440=30+440=470$ (triệu đồng).\\
+		Vậy khi nhà máy sản xuất $100$ tấn sản phẩm $A$ trong tháng thì tổng chi phí là $470$ triệu đồng.
+	}
+\end{bt}
+
+% nguồn: 2026-11-16_12_2D4_TL_Nguyen_ham_Tich_phan (nhập 16/11/2026)
+\begin{bt}%[2D4V3-5]%[ma:c91dbd06]
+% nguon: Archive/SP-4Phan-Dot3/Data/KNTT_2-OTGK2_De04.tex #4389
+
+	\immini{
+		Một chiếc chuông được đặt nằm ngang và gắn vào hệ tọa độ như hình vẽ. Vành của chuông là một đường cong parabol có dạng $y^2=2px$. Thể tích cái chuông là bao nhiêu (làm tròn kết quả đến hàng phần chục)?
+	}{
+		\begin{tikzpicture}[scale=0.7, font=\footnotesize, line join=round, line cap=round, >=stealth]
+			
+			\draw[->] (-1,0)--(5,0) node[below left] {$x$};
+			\draw[->] (0,-3)--(0,3) node[below left] {$y$};
+			\draw (0,0) node [shift={(-130:3mm)}] {$O$};
+			\draw plot[smooth, samples=200, domain=0:4] (\x,{sqrt(\x)});
+			\draw plot[smooth, samples=200, domain=0:4] (\x,-{sqrt(\x)});
+			\draw[dashed]
+			(0,-2)node[shift={(180:3mm)}]{$-2$}--
+			(4,-2)--
+			(4,0)node[shift={(30:3mm)}]{$4$}--
+			(4,2)--
+			(0,2)node[shift={(180:3mm)}]{$2$};
+			\draw (4,0) ellipse (1 and 2);
+		\end{tikzpicture}
+	}
+	\loigiai
+	{
+		Parabol đi qua điểm $(4;2)$ suy ra $p=1$.\\
+		Suy ra parabol có phương trình là $y^2=x$.\\
+		Thể tích của cái chuông là xoay đường cong $y=\sqrt{x}$ quanh trục hoành $Ox$ và bị giới hạn vởi hai mặt phẳng $x=0$ và $x=4$.\\
+		$\Rightarrow V = \pi \displaystyle \int\limits_{0}^{4} \left(\sqrt{x}\right)^2 \mathrm{d}x = \pi \displaystyle \int\limits_{0}^{4} x \mathrm{d}x = 8\pi \approx 25{,}1$ (đvtt).
+	}
+\end{bt}
+
+% nguồn: 2026-11-16_12_2D4_TL_Nguyen_ham_Tich_phan (nhập 16/11/2026)
+\begin{bt}%[2D4V3-5]%[ma:b008e314]
+% nguon: Archive/SP-4Phan-Dot3/Data/KNTT_2-OTGK2_De02.tex #4407
+
+	Một xe ô tô đang chuyển động đều thì người lái xe nhìn thấy chướng ngại vật trên đường. Sau $1$\,giây thì người lái xe bắt đầu đạp phanh. Kể từ lúc đạp phanh, ô tô chuyển động chậm dần đều với gia tốc $a = -5$\,m/s$^2$. Biết rằng kể từ lúc nhìn thấy chướng ngại vật đến khi dừng hẳn thì xe đi thêm được quãng đường $41{,}6$\,m. Vận tốc của xe khi người lái xe bắt đầu phanh là bao nhiêu m/s?
+	\loigiai{
+			Gia tốc của xe sau khi đạp phanh là $a=-5$ m/s$^2$ nên vận tốc của xe khi đó là $$v(t)=-5t+b\, (t\geq 0).$$
+			Quãng đường xe đi từ lúc phanh cho đến khi dừng lại được xác định bởi công thức $$s(t)=\displaystyle\int v(t) \mathrm{\,d}t = \displaystyle\int (-5t+b) \mathrm{\,d}t = -\dfrac{5}{2}t^2+bt+c.$$
+			Thời gian xe di chuyển từ lúc đạp phanh đến lúc dừng hẳn $-5t+b=0 \Leftrightarrow t=\dfrac{b}{5}$ giây.\\
+			Trước khi phanh, ô tô chuyển động đều với vận tốc $v_0=v(0)=b$ m/s. Do đó trong $1$ giây xe đi được $b$ mét (điều kiện $b>0$).\\
+			Quãng đường ô tô đi được từ khi bắt đầu phanh đến lúc dừng hẳn là $$s\left(\dfrac{b}{5}\right)-s(0) = -\dfrac{b^2}{10}+\dfrac{b^2}{5} = \dfrac{b^2}{10}.$$
+			Theo bài ra, ta có phương trình $\dfrac{b^2}{10}+b=41{,}6 \Leftrightarrow b^2+10b-416=0 \Rightarrow b=16$.\\
+			Vậy vận tốc của ô tô trước khi người lái bắt đầu phanh là $v_0=16$ m/s.
+	}
+\end{bt}
+
+% nguồn: 2026-11-16_12_2D4_TT_Nguyen_ham_Tich_phan (nhập 16/11/2026)
+\begin{bt}%[2D4V3-5]%[ma:7bf1f960]
+% nguon: Archive/2024/San pham - Tex hoa Lop 12 Chuong trinh moi - Dot 5 (Chuong 5)/Data/Chuong 4/Ket noi tri thuc/KNTT-Chuong4-Ontapchuong-De2.tex #1756
+%[KNTT - Chuong 4 - On tap chuong - De 2]%[Trần Hưng]
+	\immini[thm]{
+		Một cốc rượu có hình dạng tròn xoay (không kể phần chân đế) có kích thước như hình vẽ. Thiết diện dọc của cốc (bổ dọc cốc thành $2$ phần bằng nhau) là một đường Parabol. Tính
+		thể tích rượu tối đa mà cốc có thể chứa được (làm tròn đến hàng đơn vị, đơn vị đo thể tích là $\text{cm}^3$)
+	}{
+\begin{tikzpicture}[line join=round, line cap=round,scale=0.5,transform shape,line width=.4mm]
+	\definecolor{almond}{rgb}{0.94, 0.87, 0.8}%màu ly
+	\definecolor{anti-flashwhite}{rgb}{0.95, 0.95, 0.96}%màu miệng ly
+	\tikzset{co_vat/.pic={
+			\path 
+			(1.85,4)coordinate (A)			
+			(-1.85,4) coordinate (B)	
+			(-3,3)coordinate (C)
+			(-3,-1.5)coordinate (D)					
+			;
+			\draw (A)--(B) (C)--(D);
+			\foreach\p in {A,B,C,D}
+			{\draw[fill=black](\p) circle (1pt);}	
+			\node at (-3.8,1) {$10$ cm};
+			\node at (0,4.5) {$8$ cm};
+			\draw (2,1)--(5,2.5) node[above] {Parabol};			
+			\draw[fill=almond!50!black] (1.75,-4.93)  arc (0:360:1.75 cm and .54cm);
+			\draw[fill=almond] (1.75,-4.8)  arc (0:360:1.75 cm and .4cm);			
+			\draw[fill=anti-flashwhite] (1.85,3)  arc (0:360:1.85 cm and .3cm);
+			\draw[fill=almond] (1.85,3)
+			..controls +(-95:1.3) and +(30:1.7) ..(.4,-1.6) 
+			..controls +(-150:.1) and +(90:2) ..(.2,-4.2) 
+			..controls +(-150:.1) and +(-30:.1) ..(-.2,-4.2) 
+			..controls +(90:2) and +(-30:.1) ..(-.4,-1.6) 
+			..controls +(150:1.7) and +(-85:1.3) ..(-1.85,3)
+			arc (-180:0:1.85 cm and .3cm);
+			;
+			\draw[fill=almond] (.2,-4.2) 
+			..controls +(-150:.1) and +(-30:.1) ..(-.2,-4.2) 
+			..controls +(180:.1) and +(60:.1) ..(-.4,-4.4) 
+			..controls +(180:.3) and +(60:.1) ..(-.9,-4.8) 
+			..controls +(-30:.4) and +(-150:.4) ..(.9,-4.8) 
+			..controls +(120:.1) and +(0:.3) ..(.4,-4.4)
+			..controls +(150:.1) and +(-30:.1) ..(.2,-4.2) 
+			;			
+	}}	
+	\path
+	(0,0)pic[scale=1]{co_vat};	
+\end{tikzpicture}}
+	\shortans{$251$}
+	\loigiai{
+		\begin{center}
+			\begin{tikzpicture}[scale=.7, font=\footnotesize, line join=round, line cap=round, >=stealth]
+				\draw [->] (-2.5,0) -- (2.5,0) node[below]{$x$};
+				\draw [->] (0,-.5) -- (0,4.5) node[left]{$y$};
+				\draw (0,0) node[below left]{$O$} circle(1pt);
+				\draw plot[domain=-2.1:2.1](\x,{(\x)^2});
+				\draw[dashed] (-2,0)--(-2,4)--(2,4)--(2,0);
+				\draw[fill=black] (-2,0) circle(1pt) node[below]{$-4$};
+				\draw[fill=black] (2,0) circle(1pt) node[below]{$4$};
+				\draw[fill=black] (0,4) circle(1pt) node[below left]{$10$};
+				\draw[fill=black] (-2,4) circle(1pt) node[left]{$B$};
+				\draw[fill=black] (2,4) circle(1pt) node[right]{$C$};
+			\end{tikzpicture}
+		\end{center}
+		Parabol có phương trình $y=\dfrac{5}{8}x^2\Leftrightarrow x^2=\dfrac{8}{5}y$.\\
+		Thể tích tối đa cốc\\
+		$V=\pi \displaystyle\int\limits _{0}^{10}\left(\dfrac{8}{5}y\right)\mathrm{\, d}y\approx 251{,}33$.
+	}
+\end{bt}
+
+% nguồn: 2026-11-16_12_2D4_TT_Nguyen_ham_Tich_phan (nhập 16/11/2026)
+\begin{ex}%[2D4H3-5]%[ma:b9d9ebb3]
+% nguon: Archive/2024/San pham - To Latex Strong - Tex hoa Lop 12 moi - Dot 3 (Chuong 1 + 2 +3 + 4)/Data/Chuong 4/Canh dieu/To 20 - Dot 17 - Chuong 4 - Bai 3 - CD - De 8.tex #3408
+
+	Để tham dự hội chợ xuân người ta dự định dựng một lều trại có dạng parabol, với kích thước: nền trại là một hình chữ nhật $ABCD$ có chiều rộng là $3$ mét, chiều sâu là $6$ mét và trải thảm, đỉnh $I$ của parabol cách mặt đất là $3$ mét. 
+	\choiceTF
+	{ \True Diện tích thảm làm nền là $18\,\mathrm{m}^2$ }
+	{\True Chọn hệ trục tọa độ $Oxy$ sao cho $O$ là trung điểm của cạnh $AB$, 
+		$A$, $B$ thuộc trục hoành và $I$ thuộc trục tung. Tọa độ các điểm 
+		$A\left(\dfrac{-3}{2}; 0\right)$, $B\left(\dfrac{3}{2}; 0\right)$, $I(0; 3)$}
+	{ Phương trình của parabol là $y=-\dfrac{4}{3} x^2+6$}
+	{\True Vậy thể tích phần không gian phía trong trại là $V=36$ }
+	\loigiai{
+		\begin{itemchoice}
+			\itemch \textbf{ Đúng}.\\			
+			Nền trại là hình chữ nhật $ABCD$ có $AB=3$ mét, $BD=6$ mét. \\
+			Diện tích nền trại là $S=3\cdot 6=18(m^2)$.
+			\itemch \textbf{ Đúng}.\\	
+			Chọn hệ trục tọa độ $Oxy$ sao cho $O$ là trung điểm của cạnh $AB$, $A$, $B$ thuộc trục hoành và $I$ thuộc trục tung. Tọa độ các điểm $A\left(\dfrac{-3}{2}; 0\right)$, $B\left(\dfrac{3}{2}; 0\right)$, $I(0; 3)$
+			\itemch \textbf{ Sai}.\\
+			Phương trình của parabol có dạng $y=a x^2+b x+c, a \neq 0$.\\
+			Do $I, A$, B thuộc parabol nên ta có 
+			\[\heva{&\dfrac{9}{4} a+\dfrac{3}{2} b+c=0\\ &\dfrac{9}{4} a-\dfrac{3}{2} b+c=0\\ &c=3} \Leftrightarrow \heva{& a=-\dfrac{4}{3} \\& b=0\\ &c=3} \Rightarrow y=-\dfrac{4}{3} x^2+3.\]
+			\itemch \textbf{ Đúng}.\\			
+			Thể tích phần không gian phía trong trại là $V=6\cdot 2\displaystyle\int\limits_0^{\tfrac{3}{2}}\left(-\dfrac{4}{3} x^2+3\right) \mathrm{d} x=36$.
+		\end{itemchoice}
+	}
+\end{ex}
+
+% nguồn: 2026-11-16_12_2D4_TT_Nguyen_ham_Tich_phan (nhập 16/11/2026)
+\begin{bt}%[2D4V3-5]%[ma:202e6bdf]
+% nguon: Archive/2024/San pham - To Latex Strong - Tex hoa Lop 12 moi - Dot 3 (Chuong 1 + 2 +3 + 4)/Data/Chuong 4/Canh dieu/To 20 - Dot 17 - Chuong 4 - Bai 3 - CD - De 8.tex #3411
+%[Tổ 20 - Đợt 17 - Chương 4 - Bài 3 - CD - Đề 8]%[Huỳnh Xuân Tín]
+	\immini{Một chiếc ly có hình dạng tròn xoay và kích thước như hình vẽ, thiết diện dọc của cốc (đường sinh) là một đường Parabol.
+		Tính thể tích của cốc. (kết quả làm tròn đến hàng đơn vị).}{	\definecolor{almond}{rgb}{0.94, 0.87, 0.8}%màu ly
+		\definecolor{anti-flashwhite}{rgb}{0.95, 0.95, 0.96}%màu miệng ly
+		\begin{tikzpicture}[line join=round, line cap=round,scale=1,transform shape,line width=.3mm]
+			
+			\tikzset{cai_ly/.pic={
+					\path 
+					(1.85,4)coordinate (A)			
+					(-1.85,4) coordinate (B)	
+					(-3,3)coordinate (C)
+					(-3,-1.5)coordinate (D)					
+					;
+					\draw (A)--(B) (C)--(D);
+					\foreach\p in {A,B,C,D}
+					{\draw[fill=black](\p) circle (1pt);}	
+					\node at (-3.8,1) {$10$ cm};
+					\node at (0,4.5) {$8$ cm};
+					\draw (2,1)--(5,2.5) node[above] {Parabol};
+					
+					\draw[fill=almond!50!black] (1.75,-4.93)  arc (0:360:1.75 cm and .54cm);
+					\draw[fill=almond] (1.75,-4.8)  arc (0:360:1.75 cm and .4cm);
+					
+					\draw[fill=anti-flashwhite] (1.85,3)  arc (0:360:1.85 cm and .3cm);
+					\draw[fill=almond] (1.85,3)
+					..controls +(-95:1.3) and +(30:1.7) ..(.4,-1.6) 
+					..controls +(-150:.1) and +(90:2) ..(.2,-4.2) 
+					..controls +(-150:.1) and +(-30:.1) ..(-.2,-4.2) 
+					..controls +(90:2) and +(-30:.1) ..(-.4,-1.6) 
+					..controls +(150:1.7) and +(-85:1.3) ..(-1.85,3)
+					arc (-180:0:1.85 cm and .3cm);
+					;
+					\draw[fill=almond] (.2,-4.2) 
+					..controls +(-150:.1) and +(-30:.1) ..(-.2,-4.2) 
+					..controls +(180:.1) and +(60:.1) ..(-.4,-4.4) 
+					..controls +(180:.3) and +(60:.1) ..(-.9,-4.8) 
+					..controls +(-30:.4) and +(-150:.4) ..(.9,-4.8) 
+					..controls +(120:.1) and +(0:.3) ..(.4,-4.4)
+					..controls +(150:.1) and +(-30:.1) ..(.2,-4.2) 
+					;
+					
+			}}
+			
+			\path
+			(0,0)pic[scale=1]{cai_ly};		
+	\end{tikzpicture}}
+	\shortans{$251$}
+	\loigiai
+	{Ta chọn hệ tọa độ như hình vẽ
+		\begin{center}
+			\begin{tikzpicture}[line cap=round,line join=round, >=stealth,scale=0.56]	
+				\def\a{0.625}
+				\def\b{0}
+				\def\c{0}
+				\chardef\catAtCu=\catcode`\@\relax\scantokens{\catcode`\@=6\relax \def\f(@1){\a*((@1)^2)+\b*(@1)+\c}}\catcode`\@=\catAtCu\relax 
+				\pgfmathsetmacro\ct{-\b/(2*\a)}
+				\def\xmin{-3.5}
+				\def\xmax{3.5}
+				\def\ymin{-3}
+				\def\ymax{7}
+				\draw[->] (\xmin-1,0)--(\xmax+1,0) node[below] { $x$};
+				\draw[->] (0,-1)--(0,\ymax+1) node[left] { $y$};
+				\draw (0,0) node [below left] { $O$};
+				%	\foreach \x in {-3,-2,-1,1,2,3}		
+				%	\draw (-3,0)--(-3,-0.1) node [below] { $\x$};
+				%	\foreach \y in {-3,-2,-1,1,2,3}		\draw (0.1,\y)--(-0.1,\y) node [left] { $\y$};
+				%	\clip (\xmin,\ymin) rectangle (\xmax,\ymax);
+				\draw[thick,smooth,samples=200] plot[domain=\xmin:\xmax] (\x,{\f(\x)});
+				\draw[dashed] (\ct,0)--(\ct,{\f(\ct)})--(0,{\f(\ct)});
+				\fill (\ct,{\f(\ct)}) circle (1pt);
+				%	\draw (\xmax,{\f(\xmax)}) node [above right]{${x^2}+2{x}-2$};
+			\end{tikzpicture}		
+		\end{center}
+		Khi này Parabol có phương trình $y=\dfrac{5}{8} x^2 \Leftrightarrow x^2=\dfrac{8}{5} y$.\\
+		Thể tích tối đa cốc $V=\pi \displaystyle\int\limits_0^{10}\left(\dfrac{8}{5} y\right) \cdot\mathrm{\,d}y \approx 251$.
+	}
+\end{bt}
+
+% nguồn: 2026-11-16_12_2D4_TT_Nguyen_ham_Tich_phan (nhập 16/11/2026)
+\begin{ex}%[2D4V3-5]%[ma:41566a98]
+% nguon: Archive/2024/San pham - To Latex Strong - Tex hoa Lop 12 moi - Dot 3 (Chuong 1 + 2 +3 + 4)/Data/Chuong 4/Canh dieu/To 21 - Dot 17 - Chuong 4 - Bai 4 - CD - De 2.tex #3419
+%[ID6]%[To 21 - Dot 17 - Chuong 4 - Bai 4 - CD - De 2]%[Bùi Lương Phúc]
+	Cho hàm số bậc hai $y=ax^2 + bx + c$ trên đoạn $[0;6]$ có đồ thị là $(P)$ như hình vẽ. Gọi $D$ là hình phẳng giới hạn bởi $(P)$, trục hoành và các đường thẳng $x=0$, $x=3$.
+	\begin{center}
+		\begin{tikzpicture}[scale=1, font=\footnotesize, line join=round, line cap=round, >=stealth]
+			\draw[->] (-1,0) -- (7,0) node[below] {$x$};
+			\draw[->] (0,-1) -- (0,4) node[left] {$y$};
+			\draw[domain=0:6, samples=100] plot (\x, {2*\x-1/3*\x*\x});
+			\draw[dotted](3,0)--(3,3)--(0,3);
+			\node[below left] at (0,0) {$O$};
+			\node[below] at (6,0) {$6$};
+			\node[below] at (3,0) {$3$};
+			\fill (6,0) circle (1pt);
+			\fill (3,3) circle (1pt);
+			\fill (0,3) circle (1pt);
+			\fill (3,0) circle (1pt);
+		\end{tikzpicture}
+	\end{center}
+	\choiceTF
+	{Thể tích khối tròn xoay tạo thành khi quay $D$ quanh trục hoành được tính theo công thức $V=\pi \displaystyle\int_0^3 (ax^2 + bx + c) \mathrm{d} x$
+	}
+	{\True Diện tích hình phẳng $D$ được tính bởi công thức $S=\displaystyle\int_0^3 (ax^2 + bx + c) \mathrm{d} x$
+	}
+	{\True Thể tích khối tròn xoay tạo thành khi quay $D$ quanh trục hoành bằng $V=\dfrac{72 \pi}{5}$
+	}
+	{\True Để chuẩn bị cho hội trại do Đoàn trường tổ chức, lớp 12A dự định dựng một cái lều trại có mặt cắt có dạng hình parabol như hình vẽ trên. Chiều dài của trại là $3$ mét. Thể tích phần không gian bên trong lều trại bằng $36 \,\mathrm{m}^{3}$
+	}
+	\loigiai
+	{
+		\begin{itemchoice}
+			\itemch Sai. \\
+			Ta có thể tích khối tròn xoay tạo thành khi quay $D$ quanh trục hoành được tính theo công thức $V=\pi \displaystyle\int_0^3 (ax^2 + bx + c)^2 \mathrm{d} x$.
+			\itemch Đúng. \\
+			Do trên đoạn $[0;3]$, đồ thị nằm phía trên trục hoành nên $ax^2 + bx + c \ge 0$ nên diện tích hình phẳng $D$ được tính bởi công thức $S=\displaystyle\int_0^3 (ax^2 + bx + c) \mathrm{d} x$.
+			\itemch Đúng. \\
+			Do parabol đi qua điểm $(2;0)$ và có đỉnh là $(3;3)$ nên tìm được phương trình của $(P)$ là
+			$y=\dfrac{1}{3}x^2 + 2x$.\\
+			Thể tích khối tròn xoay tạo thành khi quay $D$ quanh trục hoành được tính theo công thức $V=\pi \displaystyle\int_0^3 (\dfrac{1}{3}x^2 + 2x)^2 \mathrm{d} x = \dfrac{72 \pi}{5}.$
+			\itemch Đúng. \\
+			Diện tích mặt cắt là $2S$, tức là bằng hai lần diện tích hình phẳng $D$.\\
+			$2S=2\displaystyle\int_0^3 (\dfrac{1}{3}x^2 + 2x) \mathrm{d}x = 12$.\\
+			Thể tích vật thể, cũng là phần không gian bên trong lều trại là
+			$V_T=\pi \displaystyle\int_0^3 (2S) \mathrm{d} x = 36 \,\mathrm{m}^{3}$.
+		\end{itemchoice}
+	}
+\end{ex}
+
+% nguồn: 2026-11-16_12_2D4_TT_Nguyen_ham_Tich_phan (nhập 16/11/2026)
+\begin{ex}%[2D4V3-5]%[ma:5f8a275b]
+% nguon: Archive/SP_KhoLatex/SP_Đề Theo Bài-Khối 12/2-B13-De1.tex #3790
+
+	Một thùng rượu vang có dạng khối tròn xoay với bán kính mặt đáy và mặt ở trên là $33$ cm, bán kính mặt cắt ở chính giữa thùng là $43$ cm. Chiều cao của thùng rượu là $112$ cm, bao gồm phần thân thùng rượu, hai đế đỡ thùng rượu (mỗi đế cao $3$ cm) và thùng rượu được ghép từ các thanh gỗ sồi với độ dày mỗi thanh gỗ là $3$ cm (Hình 1a). Hình 1b mô phỏng phần bên trong thùng rượu có dạng một khối tròn xoay tạo thành khi quay một phần của parabol $(P)\colon y=ax^2+bx+c$ quanh trục hoành (mỗi đơn vị ứng với $10$ cm).
+	\begin{center}
+		\begin{tikzpicture}[scale=0.4, font=\footnotesize, line join=round, line cap=round,>=stealth]
+			\begin{scope}[rotate=90]
+				\fill[orange!70!black, draw=none] (-5,-3)arc (-90:-270: 0.4 and 3)--(-5,3)--plot[domain=-5:5](\x,{-1/25*(\x)^2+4})--(5,3)arc (90:-90: 0.4 and 3)--(5,-3)--plot[domain=5:-5](\x,{1/25*(\x)^2-4})--cycle;
+				\fill[orange!50!black,draw=none] (5,0) ellipse (0.4 and 3);
+				\fill[orange!80!black,draw=none] (5,0) ellipse (0.3 and 2.8);
+				\draw[color=orange!50!black,line width=3pt] (4.9,3) arc (90:270: 0.4 and 3);
+				\draw[color=orange!50!black,line width=3pt] (4,3.3) arc (90:270: 0.4 and 3.3);
+				\draw[color=orange!50!black,line width=3pt] (2.5,3.7) arc (90:270: 0.4 and 3.7);
+				\draw[color=orange!50!black,line width=3pt] (-2.5,3.7) arc (90:270: 0.4 and 3.7);
+				\draw[color=orange!50!black,line width=3pt] (-4,3.3) arc (90:270: 0.4 and 3.3);
+				\draw[color=orange!50!black,line width=3pt] (-4.9,3) arc (90:270: 0.4 and 3);
+			\end{scope}
+			\node[below] at (current bounding box.south){$a)$};
+		\end{tikzpicture}
+		\begin{tikzpicture}[scale=0.4, font=\footnotesize, line join=round, line cap=round,>=stealth]
+			\fill[color=orange!30, draw=none] (-5,-3)--(-5,3)--plot[domain=-5:5](\x,{-1/25*(\x)^2+4})--(5,3)--(5,-3)--plot[domain=5:-5](\x,{1/25*(\x)^2-4})--cycle;
+			\draw[->] (-7,0) --(7,0) node[below]{$x$};
+			\draw[->] (0,-5) --(0,5) node[left]{$y$};
+			\draw (0,0) node[above right]{$O$};
+			\draw[smooth,samples=200,domain=-5:5] plot(\x,{-1/25*(\x)^2+4});
+			\draw[smooth,samples=200,domain=-5:5] plot(\x,{1/25*(\x)^2-4});
+			\draw (5,0) ellipse (0.4 and 3);
+			\draw (-5,3) arc (90:270: 0.4 and 3);
+			\draw[dashed] (-5,-3) arc (-90:90: 0.4 and 3);
+			\draw[dashed] (-5,-3)--(-5,3)--(5,3)--(5,-3)--cycle;
+			\fill[color=black] 
+			(-5,3) node[above left] {$A$} circle (1.25pt)
+			(0,4) node[above right] {$B$} circle (1.25pt)
+			(5,3) node[above right] {$C$} circle (1.25pt)
+			(2,3.8) node[above] {$(P)$}
+			;
+			\foreach \x in {-2,-1,1,2}
+			\draw (0.15,\x)--(-0.15,\x) node[shift={(180:2mm)},font=\tiny]{$\x$};
+			\foreach \x in {-4,-3,3,4}
+			\draw (0.15,\x)--(-0.15,\x) node[shift={(140:2mm)},font=\tiny]{$\x$};
+			\foreach \x in {-4,-3,-2,-1,1,2,3,4}
+			\draw (\x,0.15)--(\x,-0.15) node[shift={(-90:2mm)},font=\tiny]{$\x$};
+			\foreach \x in {-5,5}
+			\draw (\x,0.15)--(\x,-0.15) node[shift={(-120:2mm)},font=\tiny]{$\x$};
+			\node[below] at (current bounding box.south){$b)$};
+		\end{tikzpicture}\\
+		\textit{Hình 1}
+	\end{center}
+\choiceTF
+{\True Phần bên trong thùng rượu có chiều cao là $100$ cm}
+{Hệ số $b=0$ và $c=20$}
+{\True Parabol $(P)$ có phương trình $y=-\dfrac{1}{250}x^2+40$}
+{\True Thùng rượu đó chứa được tối đa $425{,}16$ lít rượu (làm tròn kết quả đến hàng phần trăm)}
+	\loigiai{
+		\begin{itemchoice}
+			\itemch Chiều cao bên trong của thùng rượu là $112-3\cdot 4=100$ (cm).
+			\itemch  Parabol $(P)$ có đỉnh $B(0;40)$ nên $b=0$, $c=40$.
+			\itemch Mặt khác $(P)$ đi qua $C(50;30)$ nên suy ra
+			$$ 30=a\cdot 50^2+0\cdot 50+40\Leftrightarrow 2500 a=-10\Leftrightarrow a=-\dfrac{1}{250}. $$
+			Vậy $a=-\dfrac{1}{250}$, $b=0$, $c=40$.
+			\itemch Thể tích thùng rượu (tính bằng đơn vị $\mathrm{cm}^3$) bằng thể tích khối tròn xoay tạo thành khi quay quanh $Ox$ hình phẳng giới hạn bởi $(P)$, trục $Ox$ và hai đường thẳng $x=-50$, $x=50$. Vậy số lít rượu tối đa mà thùng rượu chứa được là
+			$$ V=\dfrac{1}{1000}\cdot \pi \int\limits_{-50}^{50} \left(-\dfrac{1}{250}x^2+40\right)^2\,\mathrm{d}x=\dfrac{406\pi}{3}\approx 425{,}16\quad (\text{lít}). $$
+		\end{itemchoice}
+	}
+\end{ex}
+
+% nguồn: 2026-11-16_12_2D4_TT_Nguyen_ham_Tich_phan (nhập 16/11/2026)
+\begin{bt}%[2D4V3-5]%[ma:ef39dc8c]
+% nguon: Archive/SP_KhoLatex/SP_Đề Theo Bài-Khối 12/2-B13-De2.tex #3834
+%[ST12-dot1-Trần xuân Hòa]
+	Du khách ghé thăm Bình Định không thể bỏ qua địa danh Tháp Bánh Ít nổi tiếng. Tháp có hai cửa, mỗi cửa có hình dáng là một cung Parabol nằm cùng một trục (hướng Đông - Tây). Hai cửa cách nhau $ 8 $ mét, có chiều cao $ 4 $ mét, lối đi rộng $ 1 $ mét thông hai cửa với nhau. Hãy tính thể tích phần không gian lối đi giới hạn giữa hai cửa. (Kết quả làm tròn đến chữ số thập phân thứ nhất).
+\shortans{$21{,}3$}
+	\loigiai{
+		\immini{
+			Xét một cửa của Tháp Bánh Ít, đặt hệ trục $ Oxy $ như hình vẽ. Dễ dàng tìm được phương trình của parabol là $ y=-16x^2+4 $.\\
+			Diện tích của parabol là $ S=\displaystyle \int \limits^{0{,}5}_{-0{,}5} \left (-16x^2+4 \right )\mathrm{\,d}x =\dfrac{8}{3}$.}{
+			\begin{tikzpicture}[scale=1, line join=round, line cap=round,>=stealth]
+				\draw[->,line width = 1pt] (-2,-2.25)--(-2,-2.25)--(2,-2.25) node[below]{$x$};
+				\draw[->,line width = 1pt] (0,-3) --(0,1) node[right]{$y$};
+				\draw [<->] (1.5,-2.25)--(-1.5,-2.25);
+				\draw [<->] (0,0)--(0,-2.25);
+				\draw (0,-1.125) node[right]{$4 \mathrm{m}$};
+				\draw (0,-2.25) node[below right]{$1 \mathrm{m}$} ;
+				\draw (0,-2.25) node[above left]{$O$} ;
+				\draw (0,0) parabola (1.5,-2.25) ;
+				\draw (0,0) parabola (-1.5,-2.25) ;
+			\end{tikzpicture}	
+		}
+		\noindent Thể tích phần không gian lối đi giới hạn giữa hai cửa là $ 8\cdot \dfrac{8}{3}=\dfrac{64}{3}\approx 21{,}3$ m$^3$.
+	}
+\end{bt}
+
+% nguồn: 2026-11-16_12_2D4_TT_Nguyen_ham_Tich_phan (nhập 16/11/2026)
+\begin{bt}%[2D4H3-5]%[ma:746085ca]
+% nguon: Archive/SP_KhoLatex/SP_Đề Theo Bài-Khối 12/2-OTCK2-De2.tex #4010
+%[Nguyễn Tuấn, dự án sáng tác đề 12]
+	\immini
+	{
+		Một vật trang trí có dạng khối tròn xoay tạo thành khi quay miền $(R)$ được giới hạn bởi đường gấp khúc $DABFE$ và cung tròn $ED$ (phần gạch chéo trong hình bên) xung quanh trục $AB$. Biết $ABCD$ là hình chữ nhật cạnh $AB =3$ cm, $AD=2$ cm; $F$ là trung điểm của $BC$; điểm $E$ cách $AD$ một đoạn bằng $1$ cm. Tính thể tích của vật trang trí đó, làm tròn kết quả đến hàng phần mười, đơn vị cm$^3$.
+		\shortans{$16{,}5$}
+	}
+	{
+		\begin{tikzpicture}[scale=1.2, line join=round, line cap=round,>=stealth,font=\footnotesize]
+			\path (0,0) coordinate (B)	(2,0) coordinate (C) (2,3) coordinate (D) (0,3) coordinate (A) ($(B)!.5!(C)$) coordinate (F) ($(F)+(0,2)$) coordinate (E) ($(A)!.5!(D)$) coordinate (I) ;
+			\draw (A)--(B)--(C)--(D)--cycle (E)--(F);
+			\draw[dashed] (E)--(I);
+			\foreach \d/\g in {A/90,B/-90,C/0,D/90,F/-90,E/-60}
+			\draw[fill=black] (\d) circle (1pt) +(\g:0.2) node{$\d$};
+			\draw (E) arc (-90:0:1cm); 
+			\fill[color=gray,opacity=0.5] (A)--(B)--(F)--(I)--cycle (E) arc (-90:0:1cm)--(D)--(I)--cycle;
+		\end{tikzpicture}
+	}
+	\loigiai{
+		\immini
+		{
+			Gắn hệ trục tọa độ như hình vẽ bên.\\
+			Quay hình chữ nhật $GEFB$ xung quanh trục $AB$ ta được khối trụ có bán kính đáy bằng $1$ và chiều cao bằng $2$.\\
+			Phương trình đường tròn tâm $I$ bán kính bằng $1$ là $x^2+(y-1)^2=1$, suy ra phương trình của cung $DE$ là $y=1+\sqrt{1-x^2}$.\\
+			Vây thể tích của vật trang trí là
+			$$V=\pi \displaystyle\int\limits_{0}^{1} \left(1+\sqrt{1-x^2}\right)^2 \mathrm{\,d}x+\pi \cdot 1^2\cdot 2\approx 16{,}5\ (\mathrm{cm}^3).$$
+		}
+		{
+			\begin{tikzpicture}[scale=1.2, line join=round, line cap=round,>=stealth,font=\footnotesize]
+				\draw[->] (-0.5,0)--(4,0) node[below]{$x$};
+				\draw[->] (0,-0.5)--(0,3) node[left]{$y$};
+				\path (0,0) coordinate (A)	(3,0) coordinate (B) (3,2) coordinate (C) (0,2) coordinate (D) ($(B)!.5!(C)$) coordinate (F) ($(F)-(2,0)$) coordinate (E) ($(A)!.5!(D)$) coordinate (I) (1,0) coordinate (G) ;
+				\draw (A)--(B)--(C)--(D)--cycle (E)--(F);
+				\draw[dashed] (E)--(I) (E)--(G);
+				\foreach \d/\g in {A/-120,B/-90,C/0,D/120,F/0,E/-60,I/180,G/-90}
+				\draw[fill=black] (\d) circle (1pt) +(\g:0.2) node{$\d$};
+				\draw (E) arc (0:90:1cm); 
+				\fill[color=gray,opacity=0.5] (A)--(B)--(F)--(I)--cycle (E) arc (0:90:1cm)--(D)--(I)--cycle;
+			\end{tikzpicture}	
+		}
+	}
+\end{bt}
+
+% nguồn: 2026-11-16_12_2D4_TT_Nguyen_ham_Tich_phan (nhập 16/11/2026)
+\begin{bt}%[2D4V3-5]%[ma:06534d31]
+% nguon: Archive/SP-4Phan-Dot3/Data/KNTT_2-OTGK2_De02.tex #4405
+
+	Chuẩn bị cho đêm hội diễn văn nghệ chào đón năm mới, bạn Lan đã làm một chiếc mũ \lq\lq cách điệu\rq\rq\,cho ông già Noel có dáng một khối tròn xoay. Mặt cắt qua trục của chiếc mũ như hình vẽ bên dưới. Biết rằng $OO'=6$\,cm, $OA=10$\,cm, $OB=20$\,cm. Đường cong $AB$ là một phần của parabol có đỉnh là điểm $B$. Thể tích của chiếc mũ là bao nhiêu cm$^3$ (làm tròn đến hàng đơn vị)?
+	\begin{center}
+		\begin{tikzpicture}[scale=1.0,font=\footnotesize,line join=round,line cap=round,>=stealth]
+			% Vẽ hình chữ nhật đáy
+			\draw (-2,0) rectangle (2,-1);
+			\node at (2,0) [above right] {$A$};
+			\node at (0,-1) [above right] {$O'$};
+			\node at (0,0) [above right] {$O$};
+			
+			% Vẽ đường cong
+			\draw[domain=-2:0,smooth,variable=\x,samples=100] plot ({\x},{0.5*(\x)^2+2.5*(\x)+3});
+			\draw[domain=0:2,smooth,variable=\x,samples=100] plot ({\x},{0.5*(\x)^2-2.5*(\x)+3});
+			\draw[-] (0,3) -- (0,-1);
+			\node at (0,3) [above] {$B$};
+			\fill (2,0) circle (1pt) (-2,0) circle (1pt)
+			(0,-1) circle (1pt)
+			(2,-1) circle (1pt) (-2,-1) circle (1pt)
+			(0,0) circle (1pt)
+			(0,3) circle (1pt);
+		\end{tikzpicture}
+	\end{center}
+	\par
+	\shortans{3142}
+	
+	\loigiai{
+		Ta chọn hệ trục toạ độ $Oxy$ như hình vẽ sau.
+		\begin{center}
+			\begin{tikzpicture}[scale=1.0,font=\footnotesize,line join=round,line cap=round,>=stealth]
+				% Vẽ hình chữ nhật đáy
+				\draw (-1,2) rectangle (0,-2);
+				\node at (0,-2) [right] {$A$};
+				\node at (-1,0) [above right] {$O'$};
+				\node at (0,0) [above right] {$O$};
+				
+				% Vẽ đường cong
+				\draw[domain=0:3,smooth,variable=\x,samples=100] plot ({\x},{0.17*(\x)^2-1.17*(\x)+2});
+				\draw[domain=0:3,smooth,variable=\x,samples=100] plot ({\x},{-0.17*(\x)^2+1.17*(\x)-2});
+				\draw[-] (-1,0) -- (3,0);
+				\node at (3,0) [above] {$B$};
+				\draw[->] (-2,0)--(4,0) node[below]{$x$};
+				\draw[->] (0,-2.5)--(0,2.5) node[left]{$y$};
+				\fill (0,0) circle (1pt) (0,-2) circle (1pt)
+				(0,2) circle (1pt) (3,0) circle (1pt)
+				(-1,0) circle (1pt) (-1,2) circle (1pt)
+				(-1,-2) circle (1pt);
+			\end{tikzpicture}
+		\end{center}
+		Gọi $y=f(x)=ax^2+bx+c$ là hàm số có đồ thị là đường Parabol đi qua điểm $A(0;-10)$ và có đỉnh là $B(20;0)$.\\
+		Lúc đó ta có $\heva{&a\cdot 0^2+b\cdot 0+c=-10\\&-\dfrac{b}{2a}=20\\&a\cdot 20^2+b\cdot 20+c=0}\Leftrightarrow\heva{&a=-\dfrac{1}{40}\\&b=1\\&c=-10.}$\\
+		Suy ra $y=f(x)=-\dfrac{1}{40}x^2+x-10$.\\
+		Thể tích phần tròn xoay giới hạn bởi đồ thị hàm số $y=f(x)$, trục tung và xoay quanh trục hoành là
+		\[V_1=\pi\displaystyle\int\limits_{0}^{20} \left(\dfrac{-1}{40}x^2+x-10\right)^2\mathrm{d}x= 400\pi\,\mathrm{cm}^3.\]
+		Thể tích phần trụ tròn phía dưới là 
+		\[V_2=\pi \cdot 10^2 \cdot 6=600 \pi\,\mathrm{cm}^3.\]
+		Thể tích của cái mũ là \[V=V_1+V_2=1\,000 \pi \approx 3\,142\,\mathrm{cm}^3.\]
+	}
+\end{bt}
+
+% nguồn: 2026-11-16_12_2D4_TT_Nguyen_ham_Tich_phan (nhập 16/11/2026)
+\begin{bt}%[2D4V3-5]%[ma:5298032a]
+% nguon: Archive/SP-4Phan-Dot3/Data/KNTT_2-OTGK2_De01.tex #4425
+%Câu 6
+	\immini[thm]{Một bình chứa nước dạng như Hình bên có chiều cao là $\dfrac{3\pi }{2}$\,dm. Nếu lượng nước trong bình có chiều cao là $x$\,(dm) thì mặt nước là hình tròn có bán kính $\sqrt{2-\sin x}$\,(dm) với $0\leq x\leq \dfrac{3\pi }{2}$. Tính dung tích của bình (kết quả làm tròn đến hàng phần mười của đềximét khối).\\
+		\shortans{$26{,}5$}
+	}{
+		\begin{tikzpicture}[scale=1, font=\footnotesize, line join=round, line cap=round, >=stealth]
+			\draw (0,1.4) ellipse (0.6cm and 0.2cm);
+			\draw[dashed] (-0.9,0) arc (180:0:0.9cm and 0.2cm);
+			\draw (-0.9,0) arc (-180:0:0.9cm and 0.2cm);
+			\draw[dashed] (-0.7,-1.5) arc (180:0:0.7cm and 0.2cm);
+			\draw (-0.7,-1.5) arc (-180:0:0.7cm and 0.2cm);
+			\draw (-0.6,1.4).. controls +(-60:0.5) and +(75:0.2)..(-0.9,0)..controls +(-105:1) and +(105:0.5)..(-0.7,-1.5);
+			\draw (0.6,1.4).. controls +(-120:0.5) and +(105:0.2)..(0.9,0)..controls +(-75:1) and +(75:0.5)..(0.7,-1.5);
+			\draw [dashed](0,0)--(0.9,0) (0,-1.5)--(0,0) node[pos=0.5,left]{$x$};
+			\draw [->](0.9,1)--(0.3,0) node[pos=-0.2,right=-0.2]{$\sqrt{2-\sin x}$};
+		\end{tikzpicture}
+	}
+	\loigiai{
+		Diện tích của mặt nước hình tròn bán kính $R=\sqrt{2-\sin x}$\,(dm) là \[S(x)=\pi  R^2=\pi (2-\sin  x)\,(\mathrm{dm}^2).\]
+		Dung tích của bình là
+		\begin{eqnarray*}
+			V&=&\displaystyle\int\limits_0^{\tfrac{3\pi }{2}}S(x)\mathrm{\,d}x\\
+			&=&\displaystyle\int\limits_0^{\tfrac{3\pi }{2}}\pi  (2-\sin  x)\mathrm{\,d}x\\
+			&=&\pi (2x+\cos  x)\Big|_0^{\tfrac{3\pi }{2}}\\
+			&=&\pi (3\pi -1) \approx 26{,}5\,\left(\mathrm{dm}^3\right).
+		\end{eqnarray*}
+	}
+\end{bt}
+
+% nguồn: 2026-11-16_12_2D4_TT_Nguyen_ham_Tich_phan (nhập 16/11/2026)
+\begin{bt}%[2D4V3-5]%[ma:1059c95a]
+% nguon: Archive/SP-4Phan-Dot3/Data/KNTT_2-OTGK2_De01.tex #4426
+
+	Người ta tạo ra mô hình một quả trứng ngỗng bằng cách quay hình phẳng giới hạn bởi đồ thị hàm số $y=\dfrac{1}{30}\sqrt{7569-400x^2}$ và trục hoành với $-4{,}35\leq x\leq 4{,}35$ quanh trục hoành. Tính thể tích quả trứng (đơn vị: cm$^3$), biết thể tích mô hình này xem như bằng thể tích quả trứng ngỗng và $x$, $y$ tính theo centimét (kết quả làm tròn đến hàng đơn vị).\\
+	\shortans{$153$}
+	\loigiai{
+		Thể tích quả trứng ngỗng là
+		\begin{eqnarray*}
+			V&=&\pi  \int\limits_{-4{,}35}^{4{,}35}\dfrac{1}{900}\left(7569-400x^2\right)\mathrm{\,d}x=\dfrac{\pi }{900}\left.\left(7569x-\dfrac{400x^3}{3}\right)\right|_{-4{,}35}^{4{,}35}\\
+			&=&\dfrac{21\,9501\pi }{4\,500}\approx 153~\left(\mathrm{cm}^3\right).
+		\end{eqnarray*}
+	}
+\end{bt}

@@ -2679,3 +2679,523 @@
 		 $$V=\displaystyle\int_0^hS(x)\mathrm{\,d}x=\displaystyle\int_0^h\pi r^2\mathrm{\,d} x=\left(\pi r^2x\right)\Big|_0^h=\pi r^2h\quad (\text{đvtt}).$$
 	 }
 \end{bt}
+
+% nguồn: 2026-11-16_12_2D4_TL_Nguyen_ham_Tich_phan (nhập 16/11/2026)
+\begin{bt}%[2D4H3-3]%[ma:87a655ff]
+% nguon: Archive/2024/0. [LVH] BG - 12 New - 4in1-20240625T224301Z-001/0. [LVH] BG - 12 New - 4in1/2. [LVH] TEX SGK 12 NEW-20240418T074833Z-001/2. [LVH] TEX SGK 12 NEW/[LVH] SGK-12-KNTT/data/C4/12-c4-bai13-ungdunghinhhoccuatichphan.tex #1165
+%[TeX hóa SGK KNTT 12]%[Anh Hoàng Lê]
+	Tính thể tích khối tròn xoay sinh ra khi quay quanh trục $Ox$ hình phẳng giới hạn bởi đồ thị hàm số $y=\sqrt{x}$, trục hoành và hai đường thẳng $x=0$, $x=1$ (Hình $4.26$).
+	\begin{center}
+		\begin{tikzpicture}[scale=1.5, font=\footnotesize, line join=round, line cap=round, >=stealth]
+			% Scope 1
+			\begin{scope}[shift={(0,0)}]
+				\fill[blue!20, domain=0:2, variable=\x]
+				(0,0) -- plot ({\x},{sqrt(\x)}) -- (2,0) -- cycle;
+				\draw[->] (-0.5,0) -- (2.5,0) node[right] {$x$};
+				\foreach \x/\xtext in {1/x,2/1}
+				\draw (\x cm,1pt) -- (\x cm,-1pt) node[anchor=north] {$\xtext$};
+				\draw[->] (0,-0.5) -- (0,1.5) node[above] {$y$};
+				\foreach \y/\ytext in {}
+				\draw (1pt,\y cm) -- (-1pt,\y cm) node[anchor=east] {$\ytext$};
+				\draw[domain=0:2,smooth,variable=\x,blue] plot ({\x},{sqrt(\x)});
+				\draw[red] (1,1)--(1,0) ;
+				\draw[-{Stealth[length=3mm,width=3mm]}] (3,0.5) -- (4.5,0.5);
+				\fill (0,0) circle (1pt) node[below left]{$O$};
+			\end{scope}
+			% Scope 2
+			\begin{scope}[shift={(6,0)}]
+				\fill[blue!20, domain=0:2, variable=\x]
+				(0,0) -- plot ({\x},{sqrt(\x)}) -- (2,0) -- cycle;
+				\fill[blue!20,domain=0:2,variable=\x]
+				(0,0) -- plot ({\x},{-sqrt(\x)}) -- (2,0) -- cycle;
+				\fill[yellow!20] (1,0) ellipse (0.15cm and 1cm);
+				\draw[->] (2,0) -- (2.5,0) node[right] {$x$};
+				\foreach \x/\xtext in {1/,2/}
+				\draw (\x cm,1pt) -- (\x cm,-1pt) node[anchor=north] {$\xtext$};
+				\draw[->] (0,-1.5) -- (0,1.5) node[above] {$y$};
+				\foreach \y/\ytext in {}
+				\draw (1pt,\y cm) -- (-1pt,\y cm) node[anchor=east] {$\ytext$};
+				\draw[domain=0:2,smooth,variable=\x,blue] plot ({\x},{sqrt(\x)});
+				\draw[domain=0:2,smooth,variable=\x,blue] plot ({\x},{-sqrt(\x)});
+				\fill (2,0) circle (0pt) node[below right]{$1$};
+				\draw (2,0) ellipse (0.35cm and 1.41cm);
+				\draw (2,1.41)--(2,-1.41)	(-0.5,0)--(0,0);
+				\draw[dashed] (0,0)--(2,0);
+				\fill (0,0) circle (1pt) node[below left]{$O$};
+				\draw[dashed,rotate=-90] (1,1) arc (0:180:1cm and 0.15cm); 
+				\draw[rotate=90] (1,-1) arc (0:180:1cm and 0.15cm); 
+			\end{scope}
+		\end{tikzpicture}
+	\end{center}
+	\begin{center}
+		Hình $4.26$
+	\end{center}
+	\loigiai{
+		Thể tích khối tròn xoay cần tính là
+		$$
+		V=\pi \displaystyle\int_0^1f^2(x) \mathrm{\,d} x=\pi \displaystyle\int_0^1(\sqrt{x})^2 \mathrm{~d}x=\pi \displaystyle\int_0^1x \mathrm{~d}x=\left.\dfrac{\pi x^2}{2}\right|_0^1=\dfrac{\pi}{2}.
+		$$
+	}
+\end{bt}
+
+% nguồn: 2026-11-16_12_2D4_TL_Nguyen_ham_Tich_phan (nhập 16/11/2026)
+\begin{bt}%[2D4H3-3]%[ma:4d5b60a4]
+% nguon: Archive/2024/0. [LVH] BG - 12 New - 4in1-20240625T224301Z-001/0. [LVH] BG - 12 New - 4in1/2. [LVH] TEX SGK 12 NEW-20240418T074833Z-001/2. [LVH] TEX SGK 12 NEW/[LVH] SGK-12-KNTT/data/C4/12-c4-bai13-ungdunghinhhoccuatichphan.tex #1166
+%[TeX hóa SGK KNTT 12]%[Anh Hoàng Lê]
+	Tính thể tích của khối cầu bán kính $R$.
+	\loigiai{
+		\immini{Khối cầu bán kính $R$ có thể xem là vật thể sinh ra khi quay quanh trục hoành nửa hình tròn giới hạn bởi đồ thị hàm số $y=\sqrt{R^2-x^2}\,(-R \leq x \leq R)$, trục hoành và hai đường thẳng $x=-R$, $x=R$ (Hình $4.27$).\\
+			Do đó, thể tích của khối cầu bán kính $R$ là
+			\begin{eqnarray*}
+				V & = & \pi \displaystyle\int_{-R}^R\left(\sqrt{R^2-x^2}\right)^2 \mathrm{~d}x=\pi \displaystyle\int_{-R}^R\left(R^2-x^2\right) \mathrm{\,d} x \\
+				&=& \left.\pi\left(R^2x-\dfrac{x^3}{3}\right)\right|_{-R}^R=\dfrac{4}{3} \pi R^3.
+		\end{eqnarray*}}
+		{\begin{tikzpicture}[scale=0.8, font=\footnotesize, line join=round, line cap=round, >=stealth]
+				\path (0.5,-4)node[below]{Hình $4.27$};
+				\filldraw[blue!20] (3,0) arc [start angle=0, end angle=180, radius=3];
+				\draw (0,0)circle(1pt) node[below left]{$O$};
+				\draw[->] (-4,0) -- (4.6,0) node[below]{$x$};
+				\draw[->] (0,-4) -- (0,4) node[left]{$y$};
+				\draw (3,0) arc [start angle =0, end angle =180, radius=3];
+				\draw[dashed] (-3,0) arc [start angle =180, end angle =360, radius=3];
+				\draw[dashed] (0,0) ellipse [x radius =0.7, y radius=3];
+				\fill[ fill=black,pattern=north east lines,pattern color=black] (2,0) ellipse [x radius=0.45, y radius=2.2];
+				\draw[dashed] (2,0) ellipse [x radius=0.45, y radius=2.2];
+				%\draw (2,0)circle(1pt)node[below]{$x$}--(2,2.2)node[above right]{$y=\sqrt{R^2-x^2}$};
+				\draw[->,>=Stealth] ($(3.9,0.3)+(0:0)$)node[below]{} arc (90:370:{0.1} and {0.5});
+				\path (-3,0)node[below left]{$-R$} (3,0)node[below right]{$R$};
+		\end{tikzpicture}}
+	}
+\end{bt}
+
+% nguồn: 2026-11-16_12_2D4_TL_Nguyen_ham_Tich_phan (nhập 16/11/2026)
+\begin{bt}%[2D4H3-3]%[ma:566c5279]
+% nguon: Archive/2024/0. [LVH] BG - 12 New - 4in1-20240625T224301Z-001/0. [LVH] BG - 12 New - 4in1/2. [LVH] TEX SGK 12 NEW-20240418T074833Z-001/2. [LVH] TEX SGK 12 NEW/[LVH] SGK-12-KNTT/data/C4/12-c4-bai13-ungdunghinhhoccuatichphan.tex #1167
+%[TeX hóa SGK KNTT 12]%[Anh Hoàng Lê]
+	Tính thể tích của khối tròn xoay sinh ra khi quay hình phẳng giới hạn bởi các đường sau xung quanh truc $Ox\colon$$y=2x-x^2$, $y=0$, $x=0$, $x=2$.
+	\loigiai{
+		Thể tích của khối tròn xoay là
+		$$V=\pi \displaystyle\int_0^2 \left(2x-x^2 \right)^2 \mathrm{\,d} x
+		= \pi \displaystyle\int_0^2 \left(x^4-4x^3+4x^2\right) \mathrm{\,d} x
+		=\left.\pi\left(\dfrac{x^5}{5}-x^4+\dfrac{4}{3}x^3\right)\right|_0^2
+		=\dfrac{16}{15}\pi.$$
+	}
+\end{bt}
+
+% nguồn: 2026-11-16_12_2D4_TL_Nguyen_ham_Tich_phan (nhập 16/11/2026)
+\begin{bt}%[2D4H3-3]%[ma:ee1d7861]
+% nguon: Archive/2024/0. [LVH] BG - 12 New - 4in1-20240625T224301Z-001/0. [LVH] BG - 12 New - 4in1/2. [LVH] TEX SGK 12 NEW-20240418T074833Z-001/2. [LVH] TEX SGK 12 NEW/[LVH] SGK-12-KNTT/data/C4/12-c4-bai13-ungdunghinhhoccuatichphan.tex #1168
+%[TeX hóa SGK KNTT 12]%[Anh Hoàng Lê]
+	Khối chỏm cầu có bán kính $R$ và chiều cao $h(0<h \leq R)$ sinh ra khi quay hình phẳng giới hạn bởi cung tròn có phương trình $y=\sqrt{R^2-x^2}$, trục hoành và hai đường thẳng $x=R-h$, $x=R$ xung quanh trục $Ox$ (Hình $4.30$). Tính thể tích của khối chỏm cầu này.
+	\begin{center}
+		\begin{tikzpicture}[scale=.8, font=\footnotesize, line join=round, line cap=round, >=stealth]
+			% Vẽ hình thứ nhất
+			\begin{scope}[shift={(0,0)}]
+				\draw[->] (0,0) -- (4,0) node[below] {$x$};
+				\draw[->] (0,-3.5) -- (0,3.5) node[left] {$y$};
+				\draw[->] (0,0) -- (-2.5,-2.5) node[left] {$z$};
+				\draw (0,-3) arc (-90:90:3cm and 3cm);
+				\draw[dashed] (1,2.82) arc (90:-90:0.5cm and 2.82cm)	(1,0)--(1,2.82);
+				\draw (1,2.82) arc (90:270:0.5cm and 2.82cm);
+				\fill (3,0) circle (0pt) node[below right]{$R$};
+				\fill (1,0) circle (2pt) ;
+				\draw[red]	(1,0)--(3,0) node[pos=0.5,sloped,above]{$h$};
+				
+			\end{scope}
+			% Vẽ hình thứ hai
+			\begin{scope}[shift={(10,0)}] 
+				\def\R{3} % Bán kính
+				\coordinate (O) at (0,0);
+				\coordinate (O') at (0,2);
+				\coordinate (A) at (\R,0);
+				\draw (O) circle (\R) (A) arc (0:-180: {\R} and {\R/3});
+				\draw[dashed] (O)--(A) arc (0:180: {\R} and {\R/3});
+				\draw  (2.15,2) arc (0:-180: {2.15} and {2/3});
+				\draw[dashed] (0,2)--(2.15,2) arc (0:180: {2.15} and {2/3});
+				\draw[dashed] (0,3)--(2.2,3) ;
+				\draw[<->] 	(2.2,2)--(2.2,3) node[pos=0.5,right]{$h$};
+				\foreach \diem in {O,O'}	\fill (\diem)circle(2pt);
+				\fill (1,0) circle (0pt) node[above right]{$R$};	
+			\end{scope}
+		\end{tikzpicture}
+	\end{center}
+	\begin{center}
+		Hình $4.30$
+	\end{center}
+	\loigiai{
+		Thể tích khối chỏm cầu là
+		\begin{eqnarray*}
+			V &=&\pi \displaystyle\int_{R-h}^{R} y^2(x) \mathrm{\,d}x=\pi \displaystyle\int_{R-h}^{R}\left(R^2-x^2\right) \mathrm{\,d}x \\
+			& = &\left.\pi\left(R^2 x-\dfrac{x^3}{3}\right)\right|_{R-h}^{R} \\
+			& =&\pi\left[R^3-\dfrac{R^3}{3}-R^2(R-h)+\dfrac{(R-h)^3}{3}\right] \\
+			& =&\pi h^2\left(R-\dfrac{h}{3}\right).
+		\end{eqnarray*}
+	}
+\end{bt}
+
+% nguồn: 2026-11-16_12_2D4_TL_Nguyen_ham_Tich_phan (nhập 16/11/2026)
+\begin{bt}%[2D4V3-3]%[ma:911a3939]
+% nguon: Archive/2024/0. [LVH] BG - 12 New - 4in1-20240625T224301Z-001/0. [LVH] BG - 12 New - 4in1/2. [LVH] TEX SGK 12 NEW-20240418T074833Z-001/2. [LVH] TEX SGK 12 NEW/[LVH] SGK-12-KNTT/data/C4/12-c4-bai13-ungdunghinhhoccuatichphan.tex #1169
+%[TeX hóa SGK KNTT 12]%[Anh Hoàng Lê]
+	Cho tam giác vuông $OAB$ có cạnh $OA=$ a nằm trên trục $Ox$ và $\widehat{AOB}=\alpha\left(0<\alpha \leq \dfrac{\pi}{4}\right)$. Gọi $\mathcal{B}$ là khối tròn xoay sinh ra khi quay miền tam giác $OAB$ xung quanh trục $Ox$ (Hình $4.31$).
+	\begin{enumerate}
+		\item  Tính thể tích $V$ của $\mathcal{B}$ theo $a$ và $\alpha$.
+		\item  Tìm $\alpha$ sao cho thể tích $V$ lớn nhất.
+	\end{enumerate}
+	\begin{center}
+		\begin{tikzpicture}[scale=1, font=\footnotesize, line join=round, line cap=round, >=stealth]
+			\fill[yellow!30]	(0,0)--(4,2)--(4,0)--cycle;
+			\draw[->] (4,0) -- (5.5,0) node[right] {$x$};
+			\draw[->] (0,-2.5) -- (0,2.5) node[above] {$y$};
+			\draw[->] (0,0) -- (-1.5,-1.5) node[below left] {$z$};
+			\draw (0,0)--(4,2)	(0,0)--(4,-2)	(4,2)--(4,0)	(-0.5,0)--(0,0);
+			\draw[dashed] (0,0)--(4,0)	;
+			\draw (4,0) ellipse (0.5 and 2);
+			\fill (0,0) circle (1pt) node[above left]{$O$};
+			\fill (4,0) circle (1pt) node[below]{$A$};
+			\fill (4,2) circle (1pt) node[above]{$B$};
+			\clip (4,0) -- (0,0) -- (4,2);
+			\draw (0,0) circle (1cm);
+			\draw ($(0,0)+(1,0)$) node[above right]{$\alpha$};
+			\node[below] at (2.5,-2.5) {Hình $4.31$};
+		\end{tikzpicture}
+	\end{center}
+	\loigiai{
+		\begin{enumerate}
+			\item Phương trình đường thẳng $OB$ là $y=x \tan \alpha$.\\
+			Thể tích $V$ của $\mathcal{B}$ là
+			$$
+			V=\pi \displaystyle\int_0^a y^2\mathrm{\,d} x=\pi \displaystyle\int_0^a x^2 \tan^2 \alpha \mathrm{\,d} x=\left.\pi \tan^2 \alpha \cdot \dfrac{x^3}{3}\right|_0^{a}=\pi \tan^2 \alpha \cdot \dfrac{a^3}{3}.
+			$$
+			\item 
+			Đặt $OB=R \Rightarrow OA=a=R \cos \alpha $. Khi đó $V=\dfrac{\pi R^3}{3}\left(\cos \alpha-\cos^3 \alpha \right)$.\\
+			Đặt $t=\cos \alpha \Rightarrow t \in\left[\dfrac{\sqrt{2}}{2};1\right)$ (vì $\alpha \in\left(0;\dfrac{\pi}{4}\right]$ ). Ta có $V=\dfrac{\pi R^3}{3}\left(t-t^3\right)$
+			$$
+			V'=\dfrac{\pi R^3}{3}\left(1-3t^2\right), V'=0 \Leftrightarrow \hoac{&
+				t=\dfrac{1}{\sqrt{3}} \\
+				& t=-\dfrac{1}{\sqrt{3}}} \text{(Loại)}
+			$$
+			Ta tính được $V\left( \dfrac{\sqrt{2}}{2} \right)=\dfrac{\sqrt{2}R^3}{12}; \,\,
+			V\left( 1 \right)=0$.\\
+			Vậy $\max _{\left(0;\dfrac{\pi}{4}\right]} V(\alpha)=\max _{\left[\dfrac{\sqrt{2}}{2};1\right)} V(t)=V\left(\dfrac{\sqrt{2}}{2}\right)=\dfrac{\sqrt{2}R^3}{12}$.\\(trong đó $\cos \alpha=\dfrac{\sqrt{2}}{2} \Rightarrow \alpha=45^{\circ}$).
+		\end{enumerate}
+	}
+\end{bt}
+
+% nguồn: 2026-11-16_12_2D4_TL_Nguyen_ham_Tich_phan (nhập 16/11/2026)
+\begin{bt}%[2D4C3-3]%[ma:0644289d]
+% nguon: Archive/2024/TaiLieuGiangDay/5.HH Oxyz/VDC_TDM.tex #3160
+
+	Tính thể tích khối tròn xoay thu được khi cho hình phẳng giới hạn bởi các đường $y=x^2$, $y=2x$ quay quanh đường thẳng $d\colon y=2x$ (làm tròn kết quả đến hàng phần chục).
+	\begin{center}
+		\begin{tikzpicture}[scale=1, font=\footnotesize,line join=round, line cap=round, >=stealth]
+			\def\a{sqrt(5)}
+			\def\xmin{-5} \def\xmax{5}
+			\def\ymin{-2} \def\ymax{6.5}
+			\draw[->] (\xmin,0) -- (\xmax,0) node[below] {$x$};
+			\draw[->] (0,\ymin) -- (0,\ymax) node[left] {$y$};
+			\fill (0,0) circle (1pt) node[shift=(-145:0.25)]{$O$};
+			\draw[name path = curv1,samples =100] plot[domain=-2.2:2.2] (\x,{(\x)^(2)}); 
+			\draw[smooth,name path = curv2,dashed,samples =100] plot[variable =\x,domain=-2.2:2.2] ({(3/5)*\x - (-4/5)*(\x)^(2)},{(-4/5)*\x + (3/5)*(\x)^(2)}); 
+			\path 
+			(1,1) coordinate (A)
+			(-1,-2) coordinate (X)
+			(4,8) coordinate (Y)
+			($(X)!(A)!(Y)$) coordinate (M)
+			($(A)!2!(M)$) coordinate (B)
+			;
+			\draw 
+			(-1,-2) -- (3,6) node [below right] {$y=2x$}
+			(1.5,2.25) node [right] {$y=x^2$}
+			;
+			\draw[dashed]
+			(A) to [out = -120, in = -120] (B) to [out = 60, in = 60] (A)
+			;
+			\fill [opacity = 0.2]
+			(0,0) -- plot[domain=0:2.1] (\x,{(\x)^(2)}) -- (2,4) -- (0,0);
+			\fill (2,4) circle (1pt) node [right] {$A$};
+		\end{tikzpicture}
+	\end{center}
+	\loigiai{
+		Chọn trục $Oh$ trùng với tia $OA$ như hình vẽ.
+		\begin{center}
+			\begin{tikzpicture}[scale=1, font=\footnotesize,line join=round, line cap=round, >=stealth]
+				\def\a{sqrt(5)}
+				\def\xmin{-5} \def\xmax{5}
+				\def\ymin{-2} \def\ymax{6.5}
+				\draw[->] (\xmin,0) -- (\xmax,0) node[below] {$x$};
+				\draw[->] (0,\ymin) -- (0,\ymax) node[left] {$y$};
+				\draw[name path = curv1,samples =100] plot[domain=-2.2:2.2] (\x,{(\x)^(2)}); 
+				\draw[smooth,name path = curv2,dashed,samples =100] plot[variable =\x,domain=-2.2:2.2] ({(3/5)*\x - (-4/5)*(\x)^(2)},{(-4/5)*\x + (3/5)*(\x)^(2)}); 
+				\path 
+				(1,1) coordinate (A)
+				(2,0) coordinate (x)
+				(0,0) coordinate (O)
+				(-1,-2) coordinate (X)
+				(4,8) coordinate (Y)
+				($(X)!(A)!(Y)$) coordinate (H)
+				($(A)!2!(H)$) coordinate (B)
+				($(B)!2!(H)$) coordinate (M)
+				;
+				\draw[->] (-1,-2) -- (3,6) node [below right] {$y=2x$};
+				\node[above] at (3,6) {$h$};
+				\draw (1.5,2.25) node[right] {$y=x^2$};
+				\fill (O) circle (1pt) node[shift=(-145:0.25)]{$O$};
+				\draw[dashed]
+				(A) to [out = -120, in = -120] (B) to [out = 60, in = 60] (A)
+				;
+				\fill [opacity = 0.2]
+				(0,0) -- plot[domain=0:2.1] (\x,{(\x)^(2)}) -- (2,4) -- (0,0);
+				\draw[dashed] (M)--(H);
+				\pic[draw,angle eccentricity=1.8,angle radius=3mm,"$\alpha$"]{angle=x--O--H};
+				\fill (2,4) circle (1pt) node [right] {$A$};
+				\foreach \x/\g in {H/150,M/-30}
+				\fill (\x) circle (1pt)+(\g:2mm) node{$\x$};
+			\end{tikzpicture}
+		\end{center}
+		Phương trình hoành độ giao điểm của parabol $y=x^2$ và đường thẳng $d\colon y=2x$ là 
+		\allowdisplaybreaks
+		\begin{align*}
+			&x^2 = 2x \\
+			\Leftrightarrow& \hoac{&x=0 \\ &x=2.}
+		\end{align*}
+		Suy ra $A(2;4)$. Do đó $OA = \sqrt{2^2+4^2} = 2\sqrt{5}$. \\
+		Gọi $H$ là điểm thuộc đoạn $OA$. Đặt $OH=h$. \\
+		Gọi $\alpha$ là góc tạo bởi tia $Ox$ và tia $OA$. \\
+		Ta có $\tan\alpha = 2\Leftrightarrow \dfrac{\sin\alpha}{\cos\alpha}=2\Leftrightarrow \sin\alpha = 2\cos\alpha$. \\
+		Mà $\sin^2\alpha + \cos^2\alpha = 1$ nên $4\cos^2\alpha + \cos^2\alpha = 1\Rightarrow \cos\alpha = \dfrac{\sqrt{5}}{5}$ ($\alpha$ là góc nhọn). \\
+		Suy ra $\sin\alpha = \dfrac{2\sqrt{5}}{5}$. \\
+		Khi đó $x_H = h\cos\alpha = \dfrac{\sqrt{5}}{5}h$, $y_H = h\sin\alpha = \dfrac{2\sqrt{5}}{5}h$. Do đó $H\left(\dfrac{\sqrt{5}}{5}h;\dfrac{2\sqrt{5}}{5}h\right)$.\\
+		Đường thẳng $\Delta$ qua $H$ vuông góc với $d$ có dạng $y=-\dfrac{1}{2}x+b$. \\
+		Mà $H\left(\dfrac{\sqrt{5}}{5}h;\dfrac{2\sqrt{5}}{5}h\right)\in\Delta$ nên 
+		$\dfrac{2\sqrt{5}}{5}h = -\dfrac{1}{2}\cdot \dfrac{\sqrt{5}}{5}h + b\Leftrightarrow b = \dfrac{\sqrt{5}}{2}h$. \\
+		Suy ra $\Delta\colon y = -\dfrac{1}{2}x + \dfrac{\sqrt{5}}{2}h$. \\
+		Gọi $M$ là giao điểm của $\Delta$ và parabol $y=x^2$. \\
+		Phương trình hoành độ giao điểm của $\Delta$ và parabol $y=x^2$ là
+		\allowdisplaybreaks
+		\begin{align*}
+			&x^2 = -\dfrac{1}{2}x + \dfrac{\sqrt{5}}{2}h \\
+			\Leftrightarrow&2x^2 + x - \sqrt{5}h = 0 \\
+			\Leftrightarrow& \hoac{&x=\dfrac{-1-\sqrt{1+8\sqrt{5}h}}{4} \\ &x = \dfrac{-1+\sqrt{1+8\sqrt{5}h}}{4}.}
+		\end{align*}
+		Do $x_M>0$ nên $M\left(\dfrac{-1+\sqrt{1+8\sqrt{5}h}}{4};\dfrac{1-\sqrt{1+8\sqrt{5}h}}{8}+\dfrac{\sqrt{5}}{2}h\right)$. \\
+		Khi đó $MH^2 = \left(\dfrac{-1+\sqrt{1+8\sqrt{5}h}}{4}-\dfrac{\sqrt{5}}{5}h\right)^2 + \left(\dfrac{1-\sqrt{1+8\sqrt{5}h}}{8}+\dfrac{\sqrt{5}}{10}h\right)^2$. \\
+		Thể tích khối tròn xoay cần tính là
+		\allowdisplaybreaks
+		\begin{align*}
+			V &= \displaystyle \pi\int\limits_{0}^{2\sqrt{5}}MH^2\mathrm{\,d}h \\
+			&= \displaystyle \pi\int\limits_{0}^{2\sqrt{5}}\left(\dfrac{-1+\sqrt{1+8\sqrt{5}h}}{4}-\dfrac{\sqrt{5}}{5}h\right)^2 + \left(\dfrac{1-\sqrt{1+8\sqrt{5}h}}{8}+\dfrac{\sqrt{5}}{10}h\right)^2\mathrm{d}h \\
+			&\approx 1{,}5.
+		\end{align*}
+	}
+\end{bt}
+
+% nguồn: 2026-11-16_12_2D4_TL_Nguyen_ham_Tich_phan (nhập 16/11/2026)
+\begin{bt}%[2D4H3-3]%[ma:568b56cd]
+% nguon: Archive/SP-4Phan-Dot3/Data/KNTT_2-OTGK2_De02.tex #4409
+
+	Cho hình phẳng $(H)$ giới hạn bởi đồ thị hàm số $y=\dfrac{x+1}{x}$, trục hoành và hai đường thẳng $x=2$, $x=6$. Tính diện tích hình phẳng $(H)$.
+	\loigiai{
+		Diện tích hình phẳng $(H)$ là\\
+			$$S=\displaystyle \int\limits_2^6{\left|\dfrac{x+1}{x}\right|\mathrm{d}x}=\displaystyle \int\limits_2^6{\left(1+\dfrac{1}{x}\right)\mathrm{d}x}=\left(x+\ln x\right)\Big|_2^6=4+\ln 3.$$
+	}
+\end{bt}
+
+% nguồn: 2026-11-16_12_2D4_TL_Nguyen_ham_Tich_phan (nhập 16/11/2026)
+\begin{bt}%[2D4V3-3]%[ma:716b0dfd]
+% nguon: Archive/SP-4Phan-Dot3/Data/KNTT_2-OTGK2_De02.tex #4410
+
+	\immini[thm]{Một chậu nước có hình dạng như hình bên bằng mặt phẳng song song và cách mặt đáy $x$ cm $(0\le x\le 16)$ thì mặt cắt hình tròn có bán kính $\left(10+\sqrt x\right)$ cm. Tìm $x$ (đơn vị cm, làm tròn kết quả đến hàng phần trăm) để dung tích nước trong chậu bằng nửa thể tích của chậu.
+	}{
+		\begin{tikzpicture}[font=\footnotesize, line join=round, line cap=round,scale=.7]
+			\def\l{4}
+			\pgfmathsetmacro{\m}{\l*sin(45)}
+			\pgfmathsetmacro{\n}{\l*sin(75)}
+			\coordinate (O) at ($ (0,0) $);
+			\coordinate (A) at ($(O)+ (0:\l cm )$);
+			\coordinate (A') at ($(O)+(180:\l cm )$);%
+			\coordinate (a) at ($(A)+ (0.5,0)$);%
+			\coordinate (a') at ($(A')+ (0.5,0)$);%
+			\coordinate (B) at ($(O)+ (-45:\l cm )$);
+			\coordinate (B') at ($(O)+ (-135:\l cm )$);
+			\coordinate (C) at ($(O)+ (-15:\l cm )$);
+			\coordinate (C') at ($(O)+ (-165:\l cm )$);
+			\coordinate (I) at ($(C)!1/2!(C')$);
+			\coordinate (J) at ($(B)!1/2!(B')$); 
+			\fill[color=cyan!20](C)arc(0:180:{\n} and {0.2*\n})--(C) arc (-15:-45:{\n})--(B)arc(0:-180:{\m} and {0.2*\m})--(B') arc (-135:-165:{\n}); 
+			\draw (A) arc(0:360:{\l} and {0.2*\l});
+			\draw (A)arc(0:-45:{\l});
+			\draw (A') arc(-180:-135:{\l});
+			\draw (B)arc(0:-180:{\m} and {0.2*\m});
+			\draw[dashed] (B)arc(0:180:{\m} and {0.2*\m});
+			\draw (C)arc(0:-180:{\n} and {0.2*\n});
+			\draw[dashed] (C)arc(0:180:{\n} and {0.2*\n});
+			\draw (1.5,-0.9) node[below]{$10+\sqrt x$};
+			\draw[<->, thick](J)--(I) node[midway, right]{$x$ cm};
+			\draw[<->, thick](J)--(O) node[midway, left]{$16$ cm}; 
+		\end{tikzpicture}
+	}
+	\loigiai{
+		Diện tích của mặt cắt là $S(x)=\pi\left(10+\sqrt x\right)^2 = \pi \left(100+20\sqrt{x}+x\right)$.\\
+		Dung tích của chậu là
+		\allowdisplaybreaks
+		\begin{align*}
+			V=\displaystyle\int\limits_0^{16} S(x)\mathrm{\,d}x =
+			\pi \displaystyle\int\limits_{0}^{16} \left(100+20\sqrt{x}+x\right)\mathrm{d}x  = \pi \left(100x+ \dfrac{x^2}{2} + \dfrac{40}{3} x^{\tfrac{3}{2}}\right)\bigg|_0^{16} = \dfrac{7\,744}{3}\pi.
+		\end{align*}
+		Gọi $h$ là chiều cao của phần nước trong chậu. Lượng nước chứa trong chậu có thể tích là
+		\allowdisplaybreaks
+		\begin{align*}
+			V_h =&\, \displaystyle\int\limits_0^h S(x)\mathrm{\,d}x =\pi \displaystyle\int\limits_0^h \left(100+20\sqrt{x}+x\right)\mathrm{d}x\\
+			=&\, \pi\left(100x +\dfrac{x^2}{2} +\dfrac{40}{3}x^{\tfrac{3}{2}}\right)\bigg|_0^h=\pi\left(100h + \dfrac{h^2}{2} + \dfrac{40}{3}h\sqrt{h}\right).
+		\end{align*}
+		Theo bài ra ta có phương trình
+		\[100h + \dfrac{h^2}{2} + \dfrac{40}{3}h\sqrt{h}=\dfrac{1}{2} \cdot\dfrac{7\,744}{3} \Leftrightarrow 3h^2+80h\sqrt{h}+600h-7\,744=0\]
+		Đặt $k = \sqrt{h}>0$, do đó $h = k^2$. Phương trình trở thành $$3k^4 +80k^3+ 600k^2 - 7\,744 = 0\Rightarrow k\approx2{,}99\Rightarrow h\approx 8{,}94 \,\mathrm{cm}.$$
+	}
+\end{bt}
+
+% nguồn: 2026-11-16_12_2D4_TL_Nguyen_ham_Tich_phan (nhập 16/11/2026)
+\begin{bt}%[2D4C3-3]%[ma:1670d57c]
+% nguon: Archive/SP-4Phan-Dot3/Data/CTST_2-OTHK2-De04.tex #4556
+
+	\immini[thm]{
+		Một vật trang trí có dạng một khối tròn xoay được tạo thành khi xoay miền $(R)$ (phần gạch chéo trong hình vẽ bên) quanh trục $AB$. Miền $(R)$ được giới hạn bởi các cạnh $AB$, $AD$ của hình vuông $ABCD$ và các cung phần tư của các đường tròn bán kính bằng $1$ cm với tâm lần lượt là trung điểm của các cạnh $BC$, $AD$. Tính thể tích của vật trang trí đó (đơn vị cm$^3$).
+	}{
+		\begin{tikzpicture}
+			\coordinate (A) at (0,0);
+			\coordinate (B) at (0,-4);
+			\coordinate (C) at (4,-4);
+			\coordinate (D) at (4,0);
+			\draw (A)--(B)--(C)--(D)--(A);
+			\draw[pattern=north east lines] (B) arc (180:90:2) arc (-90:0:2)--(A)--(B);
+			\path node at (A) [above left]{$A$}
+			node at (B) [below left] {$B$}
+			node at (C) [below right] {$C$}
+			node at (D) [above right] {$D$};
+		\end{tikzpicture}
+	}
+	\loigiai{
+		\begin{center}
+			\begin{tikzpicture}
+				\draw [->] (0,-4) --(5,-4);
+				\draw [->] (0,-4) --(0,1);
+				\coordinate (D) at (0,0);
+				\coordinate (A) at (0,-4);
+				\coordinate (B) at (4,-4);
+				\coordinate (C) at (4,0);
+				\coordinate (I) at (4,-2);
+				\coordinate (J) at (0,-2);
+				\coordinate (K) at (2,-2);
+				\draw (A)--(B)--(C)--(D)--(A);
+				\draw[pattern=north west lines,opacity=0.4] (D) arc (90:0:2) arc (180:270:2)--(B)--(A)--(D);
+				\foreach \x in {A,B,C,D,I,J,K}{
+					\fill (\x) circle (1pt);
+				}
+				
+				\draw[line width=1.5pt, red] (D) arc (90:0:2);
+				\draw[dashed, opacity=0.4,red] (D) arc (90:450:2); 
+				\draw[line width=1.5pt, blue] (K) arc (180:270:2);
+				\draw[dashed, opacity=0.4,blue] (K) arc (180:540:2);
+				
+				\path node at (D) [above left]{$D$}
+				node at (A) [below left] {$A\equiv O$}
+				node at (B) [below right] {$B$}
+				node at (C) [above right] {$C$}
+				node at (I) [left] {$I$}
+				node at (J) [left] {$J$}
+				node at (5,-4) [below] {$x$}
+				node at (0,1) [left] {$y$}
+				node at (K) [right] {$K$}
+				node at (2.6,-0.3) {$y=1+\sqrt{1-x^2}$}
+				node at (4.2,-3) {$y=1-\sqrt{1-(x-2)^2}$};
+			\end{tikzpicture}
+		\end{center}
+		Ta xoay hình lại và đưa vào hệ trục tọa độ như trên hình vẽ. Khi đó phần gạch chéo trên hình sẽ quay quanh trục $Ox$.\\
+		Đường tròn tâm $J$
+		\allowdisplaybreaks
+		\begin{eqnarray*}
+			x^2+(y-1)^2=1&\Rightarrow& (y-1)^2=1-x^2\\
+			& \Leftrightarrow& |y-1|=\sqrt{1-x^2}\\
+			& \Leftrightarrow &\heva{& y-1 =\sqrt{1-x^2}, \mbox{ khi } y\ge 1 \\& -(y-1) =\sqrt{1-x^2}, \mbox{ khi } y< 1} \\
+			&\Leftrightarrow& \heva{& y =1+\sqrt{1-x^2}, \mbox{ khi } y\ge 1 \\& y=1-\sqrt{1-x^2} , \mbox{ khi } y< 1.}
+		\end{eqnarray*}	
+		Suy ra đồ thị đường cong từ $D$ đến $K$ là $y=1+\sqrt{1-x^2}$ với $x\in [0;1]$.\\	
+		Đường tròn tâm $I$
+		\begin{eqnarray*}
+			(x-2)^2+(y-1)^2=17&\Rightarrow& (y-1)^2=1-(x-2)^2 \\
+			&\Leftrightarrow& |y-1|=\sqrt{1-(x-2)^2}\\
+			&\Leftrightarrow& \heva{& y-1 =\sqrt{1-(x-2)^2}, \mbox{ khi } y\ge 1 \\& -(y-1) =\sqrt{1-(x-2)^2}, \mbox{ khi } y< 1}\\
+			&\Leftrightarrow& \heva{& y =1+\sqrt{1-(x-2)^2}, \mbox{ khi } y\ge 1 \\& y=1-\sqrt{1-(x-2)^2} , \mbox{ khi } y< 1}
+		\end{eqnarray*}
+		Suy ra đồ thị đường cong từ $K$ đến $B$ là $y=1-\sqrt{1-(x-2)^2}$ với $x\in [1;2]$.\\	
+		Đường cong đi từ $D$ đến $B$ trên hình gồm hai phần$\colon$ phần thứ nhất là một phần tư đường tròn đi từ $D$ đến $K$ của đường tròn tâm $J$ và phần thứ hai là một phần tư đường tròn đi từ $K$ đến $B$ của đường tròn tâm $I$.\\
+		Thể tích của vật trang trí là
+		$$V= \pi\displaystyle\int\limits_0^1 \left(1+\sqrt{1-x^2}\right)^2\mathrm{\,d}x +  \pi\displaystyle\int\limits_1^2 \left(1-\sqrt{1-(x-2)^2}\right)^2\mathrm{\,d}x \approx 10{,}5 \mbox{ cm}^3.$$
+	}
+\end{bt}
+
+% nguồn: 2026-11-16_12_2D4_TL_Nguyen_ham_Tich_phan (nhập 16/11/2026)
+\begin{bt}%[2D4V3-3]%[ma:888ce92e]
+% nguon: Archive/SP-4Phan-Dot3/Data/CTST_2-OTHK2-De02.tex #4581
+
+    \immini
+    {Một vật trang trí có dạng một khối tròn xoay được tạo thành khi quay miền $(R)$ (phần gạch chéo trong hình vẽ) quanh trục $MN$. Biết rằng $ABCD$ là hình chữ nhật với $AB=6$ cm, $AD=10$ cm. $M$, $N$ lần lượt là trung điểm của $AB$, $CD$, hai đường cong là đường elip có hình chữ nhật cơ sở là $ABCD$ và đường tròn tiếp xúc với hai cạnh $AD$ và $BC$ (tham khảo hình vẽ). Tính thể tích của vật trang trí đó (kết quả làm tròn đến hàng phần chục).}
+    {\begin{tikzpicture}[scale=0.5]
+            \def\r{5}
+            \def\a{3}
+            \draw[]
+            (180:\r) arc (180:0:{\r} and {0.6*\r})
+            (180:\r) arc (180:360:{\r} and {0.6*\r});
+            \draw[pattern=north east lines]
+            (0:\r) arc (0:360:{\r} and {0.6*\r});
+            \draw[fill=white]
+            (0:0) circle(0.6*\r);
+            \path 	(180:5) coordinate (M)
+            (0:5) coordinate (N)
+            ($(M)+(90:\a)$) coordinate (A)
+            ($(N)+(90:\a)$) coordinate (D)
+            ($(M)+(-90:\a)$) coordinate (B)
+            ($(N)+(-90:\a)$) coordinate (C);
+            %\draw[dashed,thick] 	(B)--(D);
+            \draw[thick] 			(B)--(A)--(D) (B)--(C)--(D);
+            \foreach \x/\g in {A/90,B/180,C/-45,D/0,M/180,N/0}
+            \fill[black] 	(\x) circle (1.5pt)
+            ($(\g:4mm)+(\x)$) node {$\x$};
+    \end{tikzpicture}}
+    \loigiai{
+    \immini
+    {Chọn hệ trục tọa độ $Oxy$ với $O$ là trung điểm của $MN$, trục $Ox$ trùng với $MN$ như hình vẽ.\\
+    Khi đó đường elip có hình chữ nhật cơ sở là $ABCD$ có phương trình là $\dfrac{x^2}{25}+\dfrac{y^2}{9}=1$ và đường tròn có phương trình $x^2+y^2=9$.\\
+    Một nửa elip phía trên trục $Ox$ có phương trình $y=f(x)=\dfrac{3}{5}\sqrt{25-x^2}$. Do đó thể tích khối tròn xoay sinh bởi elip đó khi quay quanh trục $Ox$ bằng
+    }
+    {\begin{tikzpicture}[scale=0.5]
+            \def\r{5}
+            \def\a{3}
+            \draw[]
+            (180:\r) arc (180:0:{\r} and {0.6*\r})
+            (180:\r) arc (180:360:{\r} and {0.6*\r});
+            \draw[pattern=north east lines]
+            (0:\r) arc (0:360:{\r} and {0.6*\r});
+            \draw[fill=white]
+            (0:0) circle(0.6*\r);
+            \path 	(180:5) coordinate (M)
+            (0:5) coordinate (N)
+            ($(M)+(90:\a)$) coordinate (A)
+            ($(N)+(90:\a)$) coordinate (D)
+            ($(M)+(-90:\a)$) coordinate (B)
+            ($(N)+(-90:\a)$) coordinate (C);
+            %\draw[dashed,thick] 	(B)--(D);
+            \draw[thick] 			(B)--(A)--(D) (B)--(C)--(D);
+            \foreach \x/\g in {A/90,B/180,C/-45,D/0,M/150,N/40}
+            \fill[black] 	(\x) circle (1.5pt)
+            ($(\g:4mm)+(\x)$) node {$\x$};
+            \draw[->] (-6,0)--(7,0)node[below]{$x$};
+            \draw[->] (0,-3.5)--(0,4)node[right]{$y$};
+            \draw (0,0)node[below right]{$O$};
+    \end{tikzpicture}}
+         $$V_1=\pi\displaystyle\int\limits_{-5}^{5}f^2(x)\mathrm{d}x=\pi\left(9x-\dfrac{3x^3}{25}\right)\bigg|_{-5}^5=60\pi.$$
+        Phần hình tròn bên trong khi quay quanh trục $Ox$ tạo thành khối cầu có bán kính bằng $R=3$ nên có thể tích là $$V_2=\dfrac{4}{3}\pi R^3=36\pi.$$
+        Do vậy thể tích của vật trang trí đó khi quay quanh trục $Ox$ bằng $$V_1-V2=24\pi\approx 75{,}4\,\textrm{cm}^3.$$
+    }
+\end{bt}

@@ -145,8 +145,8 @@
 			\def\a{1.4}
 			\def\b{0.5}
 			\def\h{.25}
-			\def\lat(#1,#2){
-				\begin{scope}[white,shift={(90:#1)}]
+			\chardef\catAtCu=\catcode`\@\relax\scantokens{\catcode`\@=6\relax \def\lat(@1,@2){
+				\begin{scope}[white,shift={(90:@1)}]
 					\path 
 					(0:0) coordinate (O)
 					(0:\a)  coordinate (A)
@@ -155,18 +155,18 @@
 					(A) arc (0:120:{\a} and {\b}) coordinate (C)
 					(A) arc (0:-60:{\a} and {\b}) coordinate (C')
 					;
-					\draw [fill=#2] 
+					\draw [fill=@2] 
 					(O) rectangle ($(O)+(180:\a)+(270:\h)$)
 					(B') arc (240:360:{\a} and {\b}) --++(270:\h) arc (360:240:{\a} and {\b})--cycle
 					;
-					\draw [fill=#2] (O) -- (B') arc (-120:180:{\a} and {\b})--cycle;
+					\draw [fill=@2] (O) -- (B') arc (-120:180:{\a} and {\b})--cycle;
 					\draw (A)--(O) (B)--(B') (C)--(C');
 					\begin{scope}[shift={(200:1)}]
-						\draw[fill=#2] (90:\h) --++(180:\a) --++(270:\h) arc (180:240:{\a} and {\b})--(0:0)--cycle;
-						\draw[fill=#2] (90:\h) --++(180:\a) arc (180:240:{\a} and {\b})--cycle;
+						\draw[fill=@2] (90:\h) --++(180:\a) --++(270:\h) arc (180:240:{\a} and {\b})--(0:0)--cycle;
+						\draw[fill=@2] (90:\h) --++(180:\a) arc (180:240:{\a} and {\b})--cycle;
 					\end{scope}
 				\end{scope}
-			}
+			}}\catcode`\@=\catAtCu\relax 
 			
 			\lat(0,green)
 			\lat(\h,blue!50!white)

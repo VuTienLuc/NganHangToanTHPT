@@ -342,3 +342,649 @@
 		Vậy  có $4$ giá trị nguyên của $m$ thỏa mãn yêu cầu bài toán.
 	} 
 \end{bt}
+
+% nguồn: 2026-11-16_12_2D1_TL_Ham_so (nhập 16/11/2026)
+\begin{bt}%[2D1H5-3]%[ma:49837527]
+% nguon: Archive/2024/TaiLieuGiangDay/1.HamSo/1. K12 - 4in1 - Hamso/ThubaiGoc/Bai5-Dang3.tex #2136
+[Cùng khám phá, Mức độ 2]
+\immini{Đồ thị $(C)$ của hàm số $y=\dfrac{-x^2-3x-6}{x+1}$ là đường cong như hình vẽ bên. Tìm $m$ để đường thẳng $d\colon y=m$ cắt đồ thị $(C)$ tại hai điểm phân biệt.}{\begin{tikzpicture}[scale=1, font=\footnotesize, line join=round, line cap=round,>=stealth,x=0.4cm,y=0.4cm]
+\def \xmin{-9.5};
+\def \xmax{7};
+\def \ymin{-7.5};
+\def \ymax{7.5};
+\draw[->] (\xmin, 0.) -- (\xmax,0.) node[anchor=north] {$x$};
+\draw[->] (0.,\ymin) -- (0.,\ymax) node[anchor=west] {$y$};
+\clip(\xmin+0.1,\ymin+0.1) rectangle (\xmax-0.1,\ymax-0.1);
+\draw[smooth,samples=300,domain=\xmin:-1.01] plot(\x,{(-(\x)^2-3*(\x)-6)/((\x)+1)});
+\draw[smooth,samples=300,domain=-0.99:\xmax] plot(\x,{(-(\x)^2-3*(\x)-6)/((\x)+1)});
+\draw[smooth,samples=200,domain=\xmin:\xmax] plot(\x,{-(\x)-2});
+\draw (-1,\ymin)--(-1,\ymax);
+\draw[dashed] (-3,0)node[below]{$-3$}|-(0,3)node[right]{$3$} (1,0)node[above]{$1$}|-(0,-5)node[left]{$-5$};
+\foreach \x/\y/\l/\g  in {0/0/O/135,0/3//0,1/0//0,-3/0//0,0/-5//0,-3/3//0,1/-5//0}{\fill[black] (\x,\y) circle(1pt)+(\g:0.6) node{$\l$};}
+\end{tikzpicture}}
+\loigiai
+{\immini{Đường thẳng $d\colon y=m$ vuông góc và cắt trục $Oy$ tại điểm có tung độ bằng $m$.\\
+Dựa vào đồ thị, đường thẳng $d$ cắt đồ thị $(C)$ tại hai điểm phân biệt khi $m>3$ hoặc $m<-5$.}{\begin{tikzpicture}[scale=1, font=\footnotesize, line join=round, line cap=round,>=stealth,x=0.4cm,y=0.4cm]
+\def \xmin{-9.5};
+\def \xmax{7};
+\def \ymin{-7.5};
+\def \ymax{7.5};
+\draw[->] (\xmin, 0.) -- (\xmax,0.) node[anchor=north] {$x$};
+\draw[->] (0.,\ymin) -- (0.,\ymax) node[anchor=west] {$y$};
+\clip(\xmin+0.1,\ymin+0.1) rectangle (\xmax-0.1,\ymax-0.1);
+\draw[smooth,samples=300,domain=\xmin:-1.01] plot(\x,{(-(\x)^2-3*(\x)-6)/((\x)+1)});
+\draw[smooth,samples=300,domain=-0.99:\xmax] plot(\x,{(-(\x)^2-3*(\x)-6)/((\x)+1)});
+\draw[smooth,samples=200,domain=\xmin:\xmax] plot(\x,{-(\x)-2});
+\draw (-1,\ymin)--(-1,\ymax) (\xmin,4)--(\xmax,4)node[above,pos=0.9]{$y=m$};
+\draw[dashed] (-3,0)node[below]{$-3$}|-(0,3)node[right]{$3$} (1,0)node[above]{$1$}|-(0,-5)node[left]{$-5$};
+\foreach \x/\y/\l/\g  in {0/0/O/135,0/3//0,1/0//0,-3/0//0,0/-5//0,-3/3//0,1/-5//0,0/4/m/45}{\fill[black] (\x,\y) circle(1pt)+(\g:0.6) node{$\l$};}
+\end{tikzpicture}}
+}
+\end{bt}
+
+% nguồn: 2026-11-16_12_2D1_TL_Ham_so (nhập 16/11/2026)
+\begin{bt}%[2D1V5-3]%[ma:7fa4e5f9]
+% nguon: Archive/2024/TaiLieuGiangDay/1.HamSo/1. K12 - 4in1 - Hamso/ThubaiGoc/Bai5-Dang3.tex #2148
+%[Bài giảng 12 mới, Lê Hồng Phi]
+Tìm $m$ để phương trình $x^2+2x+5=\left(m^2+2m+5\right)(x+1)$ có hai nghiệm dương phân biệt.
+\loigiai
+{Nhận thấy $x=-1$ không phải là nghiệm của phương trình đã cho. Do đó
+\[x^2+2x+5=\left(m^2+2m+5\right)(x+1)\Leftrightarrow\dfrac{x^2+2x+5}{x+1}=m^2+2m+5.\quad (*)\]
+Ta có $(*)$ là phương trình hoành độ giao điểm giữa đồ thị $(C)$ của hàm số $y=\dfrac{x^2+2x+5}{x+1}$ và đường thẳng $d\colon y=m^2+2m+5$.\\
+Hàm số $y=\dfrac{x^2+2x+5}{x+1}$ có tập xác định $\mathscr{D}=\mathbb{R}\setminus\{-1\}$ và $y'=\dfrac{x^2+2x-3}{(x+1)^2}$.\\
+Phương trình $y'=0\Leftrightarrow x^2+2x-3=0\Leftrightarrow\hoac{& x=1 \\ & x=-3.}$\\
+Bảng biến thiên
+\begin{center}
+\begin{tikzpicture}
+\tkzTabInit[nocadre=false, lgt=1.2, espcl=2.5, deltacl=0.6]{$x$/0.6,$y'$/0.6,$y$/2}
+{$-\infty$, $-3$, $-1$, $0$, $1$, $+\infty$}
+\tkzTabLine {,+,0,-,d,,-,,0,+,}
+\tkzTabVar{-/$-\infty$, +/$-4$, -D/$-\infty$ }
+\path (N32)node(C)[below right]{$+\infty$} (N53)node(E)[above]{$4$}($(N32)!0.5!(N53)$)node(D)[]{$5$} (N62)node(F)[below]{$+\infty$};
+\draw[-stealth] (C)--(D);
+\draw[-stealth] (D)--(E);
+\draw[-stealth] (E)--(F);
+\end{tikzpicture}
+\end{center}
+Dựa vào bảng biến thiên, đường thẳng $d$ cắt đồ thị $(C)$ tại hai điểm phân biệt có hoành độ dương khi và chỉ khi \begin{eqnarray*}
+4<m^2+2m+5<5 &\Leftrightarrow &\heva{& m^2+2m+5>4 \\ & m^2+2m+5<5}\\
+&\Leftrightarrow & \heva{& m^2+2m+1>0 \\ & m^2+2m<0}\\
+&\Leftrightarrow & \heva{& m\neq -1 \\ & -2<m<0.}
+\end{eqnarray*}
+Vậy tập hợp các giá trị $m$ cần tìm là $m\in (-2;0)\setminus\{-1\}$.
+}
+\end{bt}
+
+% nguồn: 2026-11-16_12_2D1_TL_Ham_so (nhập 16/11/2026)
+\begin{bt}%[2D1N5-3]%[ma:3e3b7138]
+% nguon: Archive/2024/TaiLieuGiangDay/1.HamSo/1. K12 - 4in1 - Hamso/ThubaiGoc/Bai5-Dang6.tex #2210
+
+	\immini{
+		Cho hàm số $y=f(x)=ax^3+bx^2+cx+d$ có đồ thị như hình vẽ bên. Tìm số nghiệm thực phân biệt của phương trình $f(x)=1$.}{
+		\begin{tikzpicture}[>=stealth,x=1cm,y=1cm,scale=0.7]
+			\draw[->,line width = 1pt] (-4,0)--(0,0) node[below left]{$O$}--(3,0) node[above]{$x$};
+			\draw[->,line width = 1pt] (0,-5) --(0,2) node[left]{$y$};
+			\foreach \x in {-2,,,}{\draw[-] (\x,-0.1)--(\x,0.1) node[above]{$\x$};}
+			\foreach \y in {-4,,,,,}{\draw[-] (-0.1,\y)--(0.1,\y) node[below right]{$\y$};}
+			\draw [line width = 1pt, domain=-3.12:1.19, samples=100] plot (\x, {(\x)^3+3*(\x)^2-4});
+			\draw (1,0) node[above right]{$1$};
+		\end{tikzpicture}
+	}
+	\loigiai{
+		Số nghiệm của phương trình $f(x)=1$ là số giao điểm của đường thẳng $y=1$ với đồ thị hàm số $y=f(x)$.\\
+		Đường thẳng $y=1$ qua điểm $(0;1)$ song song với $Ox$ nên cắt đồ thị hàm số $y=f(x)$ tại đúng $1$ điểm.\\
+		Do đó phương trình $f(x)=1$ có đúng $1$ nghiệm.
+	}
+\end{bt}
+
+% nguồn: 2026-11-16_12_2D1_TL_Ham_so (nhập 16/11/2026)
+\begin{bt}%[2D1N5-3]%[ma:13152e2d]
+% nguon: Archive/2024/TaiLieuGiangDay/1.HamSo/1. K12 - 4in1 - Hamso/ThubaiGoc/Bai5-Dang6.tex #2211
+
+	Cho hàm số $f(x)$ có bảng biến thiên như sau
+	\begin{center}
+		\begin{tikzpicture}[>=stealth,scale=1]
+			\tkzTabInit[lgt=1.2,espcl=3]
+			{$x$ /1.2, $f’(x)$ /1.2, $f(x)$ /2.5}
+			{$-\infty$,$-1$,$1$,$+\infty$}
+			\tkzTabLine{ ,+,0,-,0,+, }
+			\tkzTabVar{-/$-\infty$,+/$4$,-/$0$,+/$+\infty$}
+		\end{tikzpicture}
+	\end{center}
+	Xác định số nghiệm của phương trình $f(x) + 7 = 0$.
+	\loigiai{
+		Ta nhận thấy hàm số nhận giá trị $-7$ tại đúng một điểm trong mỗi khoảng $(-\infty;-1)$ và $(1;+\infty )$ nhưng không nhận giá trị $-7$ trong $(-1;1)$. Do đó, phương trình $f(x) + 7 = 0$ có $2$ nghiệm.
+	}
+\end{bt}
+
+% nguồn: 2026-11-16_12_2D1_TL_Ham_so (nhập 16/11/2026)
+\begin{bt}%[2D1N5-3]%[ma:4b5f8f23]
+% nguon: Archive/2024/TaiLieuGiangDay/1.HamSo/1. K12 - 4in1 - Hamso/ThubaiGoc/Bai5-Dang6.tex #2212
+
+	Hãy xác định tọa độ giao điểm của đồ thị $\left(C\right)\colon y=\dfrac{2x-1}{x+1}$ cắt đường thẳng $d \colon y=2x-3$.
+	\loigiai{
+		Phương trình hoành độ giao điểm: $\dfrac{2x-1}{x+1}=2x-3\Leftrightarrow\heva{&x\ne-1\\ &2x^2-3x-2=0}\Leftrightarrow\hoac{&x=2\\ &x=-\dfrac 12.}$\\
+		Với $ x=2\Rightarrow y=1$.\\
+		Với $ x=- \dfrac{1}{2}\Rightarrow y=-4$.\\
+		Vậy đồ thị $\left(C\right)\colon y=\dfrac{2x-1}{x+1}$ cắt đường thẳng $d \colon y=2x-3$ tại các điểm là $\left(2;1\right)$, $\left(- \dfrac{1}{2}; - 4\right)$.
+	}
+\end{bt}
+
+% nguồn: 2026-11-16_12_2D1_TL_Ham_so (nhập 16/11/2026)
+\begin{bt}%[2D1N5-3]%[ma:54833aa0]
+% nguon: Archive/2024/TaiLieuGiangDay/1.HamSo/1. K12 - 4in1 - Hamso/ThubaiGoc/Bai5-Dang6.tex #2213
+
+	\immini{Cho hàm số $y=f(x)$ có đồ thị như đường cong hình bên. Phương trình $3f(x)+6=2f(x)+8$ có bao nhiêu nghiệm?
+	}
+	{\begin{tikzpicture}[line width=0.6pt,line cap=round,line join=round,>=stealth,smooth,samples=300,scale=0.8]
+			\draw[->] (-2.5,0)--(0,0)%
+			node[below right]{$O$}--(2.5,0) node[below]{\footnotesize $x$};
+			\draw[->] (0,-0.8) --(0,3.5) node[right]{\footnotesize $y$};
+			\foreach \x in {}{
+				\draw (\x,0) node[below]{$\x$};%Ox
+			}
+			\foreach \y in {1,2}{
+				\draw (0,\y) node[left]{\footnotesize $\y$};%Oy
+			}
+			\draw[dashed,line width=0.1pt,color=black!30!] (-2.5,-0.8) grid (2.5,3.5);
+			\draw [black, thick, domain=-1.505:2.2, samples=100] %
+			plot (\x, {(((\x)+1))^2*((\x)-1)*((\x)-2)+1});
+			\fill[fill=black,draw=black]
+			(0,1) circle (1pt)
+			(0,0) circle (1pt)
+			(0,2) circle (1pt)
+			(0,3) circle (1pt);
+	\end{tikzpicture}}
+	\loigiai{
+		Ta có $3f(x)+6=2f(x)+8\Leftrightarrow f(x)=2$.\\
+		Số nghiệm phương trình $f(x)=2$ là số giao điểm của đồ thị hàm số $y=f(x)$ và đường thẳng $y=2$. \\
+		Dựa vào đồ thị suy ra phương trình $f(x)=2$ có $4$ nghiệm phân biệt.}
+\end{bt}
+
+% nguồn: 2026-11-16_12_2D1_TL_Ham_so (nhập 16/11/2026)
+\begin{bt}%[2D1N5-3]%[ma:53559c2e]
+% nguon: Archive/2024/TaiLieuGiangDay/1.HamSo/1. K12 - 4in1 - Hamso/ThubaiGoc/Bai5-Dang6.tex #2214
+
+	Cho hàm số $y=f(x)$ xác định trên $\mathbb{R}\setminus\{2\}$, liên tục trên mỗi khoảng xác định và có bảng biến thiên như hình vẽ sau. Tìm tập hợp tất cả các giá trị của tham số thực $m$ sao cho phương trình  $f(x)=m$ có ba nghiệm phân biệt.
+	\begin{center}
+		\begin{tikzpicture}[>=stealth]
+			\tkzTabInit[lgt=1.2,espcl=3]
+			{$x$ /1,$y'$ /1,$y$ /2.5}
+			{$-\infty$,$2$,$3$,$+\infty$}
+			\tkzTabLine{t,-,d,+,z,-,}%
+			\tkzTabVar{+/ $+\infty$ , -D-/$2$ /$-\infty$, +/ $3$, -/ $-\infty$}
+		\end{tikzpicture}
+	\end{center}
+	\loigiai{
+		Phương trình $f(x)=m$ có $3$ nghiệm phân biệt khi và chỉ khi đồ thị $y=f(x)$ và đường thẳng $y=m$ cắt nhau tại $3$ điểm phân biệt.\\
+		Dựa vào bảng biến thiên ta thấy điều này tương đương với $2<m<3$.}
+\end{bt}
+
+% nguồn: 2026-11-16_12_2D1_TL_Ham_so (nhập 16/11/2026)
+\begin{bt}%[2D1H5-3]%[ma:85b4d3b9]
+% nguon: Archive/2024/TaiLieuGiangDay/1.HamSo/1. K12 - 4in1 - Hamso/ThubaiGoc/Bai5-Dang6.tex #2215
+
+	Tìm tất cả các giá trị thực của $m$ để phương trình $x+1=m\sqrt{2x^2+1}$ có hai nghiệm phân biệt.
+	\loigiai{
+		Phương trình $x+1=m\sqrt{2x^2+1}\Leftrightarrow m=\dfrac{x+1}{\sqrt{2x^2+1}}$.\\
+		Xét hàm số $y=\dfrac{x+1}{\sqrt{2x^2+1}}\Rightarrow y'=\dfrac{1-2x}{\sqrt{2x^2+1}}\Rightarrow y'=0\Leftrightarrow x=\dfrac{1}{2}$.\\
+		Bảng biến thiên
+		\begin{center}
+			\begin{tikzpicture}
+				\tkzTabInit[nocadre,lgt=2,espcl=4]{$x$/0.7, $y'$/0.7, $y$/2.3}{$-\infty$,$\tfrac{1}{2}$,$+\infty$}
+				\tkzTabLine{,+,0,-,}
+				\tkzTabVar{-/$-\tfrac{\sqrt{2}}{2}$,+/$\tfrac{\sqrt{6}}{2}$,-/$\tfrac{\sqrt{2}}{2}$}
+			\end{tikzpicture}
+		\end{center}
+		Dựa vào bảng biến thiên ta thấy phương trình có hai nghiệm phân biệt $\Leftrightarrow \dfrac{\sqrt{2}}{2}<m<\dfrac{\sqrt{6}}{2}$.
+	}
+\end{bt}
+
+% nguồn: 2026-11-16_12_2D1_TL_Ham_so (nhập 16/11/2026)
+\begin{bt}%[2D1N5-3]%[ma:25b3f3e3]
+% nguon: Archive/2024/TaiLieuGiangDay/1.HamSo/1. K12 - 4in1 - Hamso/ThubaiGoc/Bai5-Dang6.tex #2218
+
+	\immini{Cho hàm số $y=f(x)$ có đồ thị như đường cong hình bên. Phương trình $f(x)=2$ có bao nhiêu nghiệm?}
+	{\begin{tikzpicture}[line width=0.6pt,line cap=round,line join=round,>=stealth,smooth,samples=300,scale=0.8]
+			\draw[->] (-2.5,0)--(0,0)%
+			node[below right]{$O$}--(2.5,0) node[below]{\footnotesize $x$};
+			\draw[->] (0,-0.8) --(0,3.5) node[right]{\footnotesize $y$};
+			\foreach \x in {}{
+				\draw (\x,0) node[below]{$\x$};%Ox
+			}
+			\foreach \y in {1,2}{
+				\draw (0,\y) node[left]{\footnotesize $\y$};%Oy
+			}
+			\draw[dashed,line width=0.1pt,color=black!30!] (-2.5,-0.8) grid (2.5,3.5);
+			\draw [black, thick, domain=-1.505:2.2, samples=100] %
+			plot (\x, {(((\x)+1))^2*((\x)-1)*((\x)-2)+1});
+			\fill[fill=black,draw=black]
+			(0,1) circle (1pt)
+			(0,0) circle (1pt)
+			(0,2) circle (1pt)
+			(0,3) circle (1pt);
+	\end{tikzpicture}}
+	\loigiai{
+		Số nghiệm phương trình $f(x)=2$ là số giao điểm của đồ thị hàm số $y=f(x)$ và đường thẳng $y=2$. \\
+		Dựa vào đồ thị suy ra phương trình $f(x)=2$ có $4$ nghiệm phân biệt.}
+\end{bt}
+
+% nguồn: 2026-11-16_12_2D1_TL_Ham_so (nhập 16/11/2026)
+\begin{bt}%[2D1N5-3]%[ma:4db3c238]
+% nguon: Archive/2024/TaiLieuGiangDay/1.HamSo/1. K12 - 4in1 - Hamso/ThubaiGoc/Bai5-Dang6.tex #2219
+
+	\immini{Cho hàm số $ y=f(x) $ có đồ thị như hình vẽ bên. Có bao nhiêu giá trị nguyên của tham số $ m $ để phương trình $ f(x)=m $ có $ 3 $ nghiệm phân biệt.
+	}{
+		\begin{tikzpicture}[>=stealth,scale=0.6]
+			\draw[->,black] (-2.5,0) -- (3,0)node[above left] {$x$};
+			\draw[dashed] (-1,0)--(-1,-2) (-1,-2)--(0,-2);
+			\draw[dashed] (2,0)--(2,1) (2,1)--(0,1);
+			\draw[->,black] (0,-2.5) -- (0,3.1)node[right] {$y$};
+			\node at (1,0) [below] {\footnotesize $ 1 $};
+			\node at (0,1) [left] {\footnotesize $ 1 $};
+			\node at (0,-2) [right] {\footnotesize $ -2 $};
+			\node at (0,1) [left] {\footnotesize $ 1 $};
+			\node at (0,0) [below left] {\footnotesize $O$};
+			\draw[smooth,samples=100,domain=-1.05:2.3] plot(\x,{(\x)^3-2*(\x)^2+1});
+		\end{tikzpicture}
+	}
+	\loigiai{
+		Số nghiệm của phương trình $ f(x)=m $ là số giao điểm của hai đồ thị hàm số $(C)\colon y=f(x) $ với đường thẳng $ y=m $.\\
+		Dựa vào đồ thị hàm số $ y=f(x) $, phương trình $ f(x)=m $ có $ 3 $ nghiệm phân biệt khi chỉ khi $ m $ nhận giá trị nguyên bằng $ 0 $.
+	}
+\end{bt}
+
+% nguồn: 2026-11-16_12_2D1_TL_Ham_so (nhập 16/11/2026)
+\begin{bt}%[2D1H5-3]%[ma:6bf3addc]
+% nguon: Archive/2024/TaiLieuGiangDay/1.HamSo/1. K12 - 4in1 - Hamso/ThubaiGoc/Bai5-Dang6.tex #2220
+
+	Cho đồ thị hàm số $y=f(x)$ như hình bên dưới. Tìm tất cả các giá trị của tham số $m$ để phương trình $f(x)-m=0$ có $4$ nghiệm phân biệt.
+	\begin{center}
+		\begin{tikzpicture}[line join=round, line cap = round, >=stealth, scale=1.2,font=\footnotesize,transform shape]
+			\pgfmathsetmacro\a{sqrt(2)}
+			\draw[->] (-2.2,0) -- (2.2,0)node[above]{$x$};
+			\draw[->] (0,-4.5) -- (0,1.2)node[right]{$y$};
+			%\draw[-] (-1.5,-3.5) -- (1.5,-3.5) node[right]{$y=m$};
+			\draw[fill=black] 
+			(0,0) circle(1pt) node[below left]{$O$} 
+			(0,-3) circle(1pt) node[above right]{$-3$}
+			(0,-4) circle(1pt) node[below right]{$-2$}
+			(-1,0) circle(1pt) node[above]{$-1$}
+			(1,0) circle(1pt) node[above]{$1$}
+			;
+			\draw[dashed] 
+			(-1,0)--(-1,-4)--(1,-4)--(1,0)
+			;
+			\draw[smooth,samples=100,domain=-1.8:1.8] plot(\x,{(\x)^4-2*(\x)^2-3});
+		\end{tikzpicture}
+	\end{center}
+	\loigiai{
+		Ta có $f(x)-m=0 \Leftrightarrow f(x)=m$. \quad $(*)$\\
+		Phương trình $(*)$ có đúng $4$ nghiệm phân biệt khi và chỉ khi đường thẳng $y=m$ cắt đồ thị hàm số $y=f(x)$ tại đúng $4$ điểm phân biệt.\\	
+		Từ đồ thị ta thấy điều này xảy ra khi và chỉ khi $-4<m<-3$.\\
+		Vậy phương trình đã cho có đúng $4$ nghiệm phân biệt khi và chỉ khi $-4<m<-3$.
+	}
+\end{bt}
+
+% nguồn: 2026-11-16_12_2D1_TL_Ham_so (nhập 16/11/2026)
+\begin{bt}%[2D1V5-3]%[ma:f2adbbc5]
+% nguon: Archive/2024/TaiLieuGiangDay/1.HamSo/1. K12 - 4in1 - Hamso/ThubaiGoc/Bai5-Dang6.tex #2221
+
+	Cho đồ thị hàm số $y=f(x)$ như hình bên dưới. Hỏi phương trình $f(x)=x$ có bao nhiêu nghiệm?
+	\begin{center}
+		\begin{tikzpicture}[>=stealth,line join=round,line cap=round,font=\footnotesize,scale=.6]
+			\tikzset{declare function={
+					x1=-4.5;x2=4.5;y1=-3.5;y2=3.5;% Miền hình vẽ
+					a=0;b=1;c=0; m=1;n=-1;
+					f(\x)=(a*(\x)^2+b*(\x)+c)/(m*(\x)^2+n);	
+					a1=a/m;b1=(b-a*n/m)/m;
+					g(\x)=a1*\x+b1;
+					q1=-(n/m)-.1;q2=-n/m+.1;
+					a2=1;b2=0;
+					h(\x)=a2*\x+b2;
+			}}
+			\begin{scope}
+				\clip (x1,y1)rectangle(x2,y2);
+				\draw [smooth,samples=300,domain=x1:q1]plot(\x,{f(\x)});
+				\draw [smooth,samples=300,domain=q2:x2]plot(\x,{f(\x)});
+				\draw [smooth,samples=100,domain=x1:x2,dashed]plot(\x,{g(\x)});
+				%				\draw[smooth,samples=100,domain=x1:x2]plot(\x,{h(\x)});
+				\draw[dashed] (-n/m,y1)--(-n/m,y2);
+			\end{scope}
+			\draw[->] (0,y1)--(0,y2)node[left]{$y$};
+			\draw[->] (x1,0)--(x2,0)node[above]{$x$};
+			\filldraw(0,0)circle(1.2pt)node[below left]{$O$};
+			\draw[dashed]
+			;
+		\end{tikzpicture}
+		
+	\end{center}
+	\loigiai{
+		Vẽ đồ thị của hàm số $y=f(x)$ và $y=x$ trên cùng một đồ thị như hình dưới đây.
+		\begin{center}
+			\begin{tikzpicture}[>=stealth,line join=round,line cap=round,font=\footnotesize,scale=.6]
+				\tikzset{declare function={
+						x1=-4.5;x2=4.5;y1=-3.5;y2=3.5;% Miền hình vẽ
+						a=0;b=1;c=0; m=1;n=-1;
+						f(\x)=(a*(\x)^2+b*(\x)+c)/(m*(\x)^2+n);	
+						a1=a/m;b1=(b-a*n/m)/m;
+						g(\x)=a1*\x+b1;
+						q1=-(n/m)-.1;q2=-n/m+.1;
+						a2=1;b2=0;
+						h(\x)=a2*\x+b2;
+				}}
+				\begin{scope}
+					\clip (x1,y1)rectangle(x2,y2);
+					\draw [smooth,samples=300,domain=x1:q1]plot(\x,{f(\x)});
+					\draw [smooth,samples=300,domain=q2:x2]plot(\x,{f(\x)});
+					\draw [smooth,samples=100,domain=x1:x2,dashed]plot(\x,{g(\x)});
+					\draw[smooth,samples=100,domain=x1:x2]plot(\x,{h(\x)});
+					\draw[dashed] (-n/m,y1)--(-n/m,y2);
+				\end{scope}
+				\draw[->] (0,y1)--(0,y2)node[left]{$y$};
+				\draw[->] (x1,0)--(x2,0)node[above]{$x$};
+				\filldraw(0,0)circle(1.2pt)node[below left]{$O$};
+				\draw[dashed]
+				;
+			\end{tikzpicture}
+			
+		\end{center}
+		Nhìn vào đồ thị ta thấy đường thẳng $y=x$ cắt đồ thị hàm số $y=f(x)$ tại $3$ điểm.\\
+		Vậy phương trình đã cho có $3$ nghiệm.
+	}
+\end{bt}
+
+% nguồn: 2026-11-16_12_2D1_TL_Ham_so (nhập 16/11/2026)
+\begin{bt}%[2D1V5-3]%[ma:932847e5]
+% nguon: Archive/2024/TaiLieuGiangDay/1.HamSo/1. K12 - 4in1 - Hamso/ThubaiGoc/Bai5-Dang6.tex #2222
+
+	Cho bảng biến thiên của hàm số $y=f(x)=ax^3+bx^2+cx+d$. Tìm tất cả các giá trị $m$ để phương trình $|f(x)|=m$ có $4$ nghiệm phân biệt thỏa mãn $x_1<x_2<x_3<\dfrac{1}{2}<x_4$?
+	\begin{center}
+		\begin{tikzpicture}[>=stealth]
+			\tkzTabInit[nocadre=false,lgt=1,espcl=2,deltacl=0.5]{$x$/.7 ,$y'$/.7,$y$/2}
+			{$-\infty$ , $0$ , $1$ , $+\infty$}
+			\tkzTabLine{ , + , $0$ , - , $0$ , + , }
+			\tkzTabVar{-/$-\infty$ , +/$1$ , -/$0$ , +/$+\infty$}
+		\end{tikzpicture}	
+	\end{center}
+	\loigiai{
+		\immini{
+			Từ bảng biến thiên ta có\\ $\heva{&d=1\\&a+b+c+d=0\\&c=0\\&3a+2b+c=0.}\Leftrightarrow \heva{&a=2\\&b=-3\\&c=0\\&d=1.}$\\
+			Vậy hàm số $y=f(x)$ có phương trình $y=2x^3-3x^2+1$.
+			Từ đó suy ra hàm số $y=|f(x)|$ có đồ thị như hình vẽ.\\
+			Để phương trình $|f(x)|=m$ có $4$ nghiệm phân biệt thỏa mãn $x_1<x_2<x_3<\dfrac{1}{2}<x_4$ thì $\dfrac{1}{2}<m<1$.
+		}
+		{
+			% Đồ thị hàm y=ax^3+bx^2+cx+d. Nếu hệ số lớn cần điều chỉnh hệ trục, vùng lưới, domain và lệnh \clip
+			\begin{tikzpicture}[>=stealth,x=1cm,y=1cm,scale=1]
+				\def\a{2} % Hệ số a phải khác 0
+				\def\b{-3}
+				\def\c{0}
+				\def\d{1}
+				\draw[->] (-2,0) -- (3,0)node[below]{\scriptsize $x$};
+				\draw[->] (0,-1) -- (0,3.5) node[left] {\scriptsize $y$};
+				\draw (0,0)node[below left]{\scriptsize $O$};
+				\draw (0,1)node[above left]{\scriptsize $1$};
+				\draw[dashed] (.5,0)node[below]{\scriptsize $\frac{1}{2}$}--(.5,.5)--(0,.5)node[left]{\scriptsize $\frac{1}{2}$};
+				\clip (-3,0)rectangle(3,3);
+				\draw[thick,samples=150,smooth,domain=-5:5] plot(\x,{\a*(\x)^3+(\b)*(\x)^2+(\c)*\x+(\d)});
+				\draw[thick,samples=150,smooth,domain=-5:5] plot(\x,{-2*(\x)^3+3*(\x)^2-1});
+				\fill (.5,.5) circle (1.5pt) (0,1) circle (1.5pt) ;
+			\end{tikzpicture}
+		}	
+	}
+\end{bt}
+
+% nguồn: 2026-11-16_12_2D1_TL_Ham_so (nhập 16/11/2026)
+\begin{bt}%[2D1V5-3]%[ma:1478c8bf]
+% nguon: Archive/2024/TaiLieuGiangDay/1.HamSo/1. K12 - 4in1 - Hamso/ThubaiGoc/Bai5-Dang4.tex #2247
+%[Bài giảng 12 mới, Lê Hồng Phi]
+Tìm $m$ để đường thẳng $y=m$ cắt đồ thị hàm số $y=\log_2\sqrt{1-x^2}$ tại hai điểm phân biệt.
+\loigiai
+{Phương trình hoành độ giao điểm giữa đồ thị và đường thẳng là $\log_2\sqrt{1-x^2}=m$.\quad $(*)$\\
+Điều kiện $1-x^2>0\Leftrightarrow -1<x<1$.\\
+Bài toán trở thành tìm $m$ để phương trình $(*)$ có hai nghiệm phân biệt thuộc $(-1;1)$.\\
+Hàm số $y=\log_2\sqrt{1-x^2}$ có $y'=\dfrac{-x}{(1-x^2)\ln 2}$ và $y'=0\Leftrightarrow x=0$.\\
+Bảng biến thiên của hàm số $y=\log_2\sqrt{1-x^2}$ trên $(-1;1)$ như sau
+\begin{center}
+\begin{tikzpicture}
+\tkzTabInit[nocadre=false, lgt=1.2, espcl=2.5, deltacl=0.6]{$x$/0.6,$y'$/0.6,$y$/2}
+{$-1$, $0$, $1$}
+\tkzTabLine {,+,0,-,}
+\tkzTabVar{-/$-\infty$, +/$0$, -/$-\infty$}
+\end{tikzpicture}
+\end{center}
+Từ bảng biến thiên ta có giá trị $m$ cần tìm là $m<0$.
+}
+\end{bt}
+
+% nguồn: 2026-11-16_12_2D1_TL_Ham_so (nhập 16/11/2026)
+\begin{bt}%[2D1V5-3]%[ma:50d43844]
+% nguon: Archive/SP_KhoLatex/ID6_old/DeThamKhao-01.tex #3646
+%[Dự án ĐGNL-ĐGTD-2022 GĐ1]%[Nguyễn Anh Quốc]
+	Cho hàm số $y=x^4-2x^2-1$ có đồ thị $(C)$.
+	\begin{enumerate}
+		\item Khảo sát sự biến thiên và vẽ đồ thị $(C)$.
+		\item Tìm tham số $m$ để phương trình $\big|x^4-2x^2-1\big|=2m$ có $6$ nghiệm phân biệt
+	\end{enumerate}
+	\loigiai{\begin{enumerate}
+			\item 	$\bullet$ Tập xác định: $\mathbb{R}$.
+			
+			$\bullet$ Sự biến thiên:\\
+			$y'=4x^3-4x^2=4x(x^2-1)$; $y'=0\Leftrightarrow \hoac{&x=0\\&x=-1\\&x=1}$.\\
+			$y'>0\Leftrightarrow x\in (-1; 0) \cup (0; +\infty)$.\\
+			$y'<0\Leftrightarrow x\in (-\infty; -1)\cup (0; 1)$.\\
+			Hàm số đồng biến trên các khoảng $(-1; 0)$ và $(1; +\infty)$.\\
+			Hàm số nghịch biến trên các khoảng $(-\infty; -1)$ và $(0; 1)$.\\
+			+ Cực trị\\
+			Hàm số đạt cực đại tại $x=0, y_{\text{CĐ}}=y(0)=-1$.\\
+			Hàm số đạt cực tiểu tại $x=- 1$ và $x=1$, $y_{\text{CT}}=y(\pm 1)=-2$.\\
+			+ Giới hạn tại vô cực $\lim\limits_{x \to \pm \infty}y=+\infty$.\\
+			+ Bảng biến thiên		
+			\begin{center}
+				\begin{tikzpicture}
+					\tkzTabInit[lgt=1,espcl=3]{$x$/1,$y'$ /1, $y$ /2}
+					{$-\infty$ , $-1$,  $0$ , $1$, $+\infty$}
+					\tkzTabLine{,-,0 ,+, 0,-,0 ,+, }
+					\tkzTabVar {+/$+\infty$, -/$-2$,  +/$-1$/, -/$-2$, +/$+\infty$}
+				
+\end{tikzpicture}
+			\end{center}
+			
+			$\bullet$ Đồ thị:\\
+			\begin{center}		
+				\begin{tikzpicture}[line cap=round,line join=round,>=stealth,scale=1.2]
+					\draw[->,color=black] (-3,0) -- (3,0);
+					\foreach \x in {-1,1,2}
+					\draw[shift={(\x,0)},color=black] (0pt,1pt) -- (0pt,-1pt) node[above] {\footnotesize $\x$};
+					\foreach \x in {-2}
+					\draw[shift={(\x,0)},color=black] (0pt,1pt) -- (0pt,-1pt) node[above, xshift=-3pt] {\footnotesize $\x$};
+					\draw[color=black] (0pt,0) node[above right] {\footnotesize $O$};
+					\draw[->,color=black] (0,-2.5) -- (0,2);
+					\foreach \y in {-1}
+					\draw[shift={(0,\y)},color=black] (1pt,0pt) -- (-1pt,0pt) node[above left = -2.5pt and -2.5pt] {\footnotesize $\y$};
+					\foreach \y in {-2}
+					\draw[shift={(0,\y)},color=black] (1pt,0pt) -- (-1pt,0pt) node[below left = -1.5pt and -2.5pt] {\footnotesize $\y$};
+					\clip(-3,-2.5) rectangle (3,2);
+					\draw[line width=1.0pt, color=black, smooth, samples=100, domain=-2.5:2.5] plot(\x,{(\x)^4 - 2*(\x)^2 - 1});
+					\draw [dash pattern=on 2pt off 2pt] (-1,0) -- (-1,-2) -- (1,-2) -- (1,0);
+					\draw (2.8,0)  node[above] {$x$}; \draw (0,1.8)  node[right] {$y$};
+				
+\end{tikzpicture}
+			\end{center}
+			\item 
+			\immini{	Số nghiệm của phương trình (*) bằng số điểm chung của đồ thị$(C'): y=\big|x^4-2x^2-1\big|$ và đường thẳng $(d): y=2m$.\\
+				Vậy để phương trình (*) có $6$ nghiệm phân biệt thì $(d)$ phải cắt $(C')$ tại $6$ điểm phân biệt. \\
+				$\Leftrightarrow 1<2m<2 \Leftrightarrow \dfrac{1}{2}<m<1$.\\
+				Vậy $\dfrac{1}{2}<m<1$ thì phương trình (*) có 4 nghiệm phân biệt}{\begin{tikzpicture}[line cap=round,line join=round,>=stealth,scale=1.2]
+					\draw[->,color=black] (-3,0) -- (3,0);
+					\foreach \x in {-1,1,2}
+					\draw[shift={(\x,0)},color=black] (0pt,1pt) -- (0pt,-1pt) node[below] {\footnotesize $\x$};
+					\foreach \x in {-2}
+					\draw[shift={(\x,0)},color=black] (0pt,1pt) -- (0pt,-1pt) node[above, xshift=-3pt] {\footnotesize $\x$};
+					\draw[color=black] (0pt,0) node[above right] {\footnotesize $O$};
+					\draw[->,color=black] (0,-1) -- (0,3);
+					\foreach \y in {-1,1,2}
+					\draw[shift={(0,\y)},color=black] (1pt,0pt) -- (-1pt,0pt) node[below left = -2.5pt and -2.5pt] {\footnotesize $\y$};
+					\clip(-3,-2.5) rectangle (3,3);
+					\draw[line width=1.0pt, color=black, smooth, samples=100, domain=-2.5:-1.55] plot(\x,{(\x)^4 - 2*(\x)^2 - 1});
+					\draw[line width=1.0pt, color=black, smooth, samples=100, domain=-1.55:1.55] plot(\x,{-(\x)^4 + 2*(\x)^2 + 1});
+					\draw[line width=1.0pt, color=black, smooth, samples=100, domain=1.55:2.5] plot(\x,{(\x)^4 - 2*(\x)^2 - 1});
+					\draw [dash pattern=on 2pt off 2pt] (-1,0) -- (-1,2) -- (1,2) -- (1,0);
+					\draw (2.8,0)  node[above] {$x$}; \draw (0,2.8)  node[right] {$y$};
+			
+\end{tikzpicture}}
+		\end{enumerate}		
+	}
+\end{bt}
+
+% nguồn: 2026-11-16_12_2D1_TL_Ham_so (nhập 16/11/2026)
+\begin{bt}%[2D1H5-3]%[ma:17c4237e]
+% nguon: Archive/SP_KhoLatex/ID6_old/DeThamKhao-07.tex #3689
+%[Dự án ĐGNL-ĐGTD-2022 GĐ1]%[Dao-V- Thuy]
+	\immini[thm]{Cho hàm số $f(x)=ax^4+bx^2+c$ $(a,b,c\in\mathbb R)$. Đồ thị của hàm số $y=f(x)$ như hình vẽ bên. Số nghiệm thực của phương trình $4f(x)-3=0$ là
+	}
+	{
+\begin{tikzpicture}[>=stealth,line join=round,line cap=round,font=\footnotesize,scale=.91]
+			\clip(-2,-1) rectangle (2.1,2.1);
+			\draw[->] (-2,0) -- (2,0) node[below]{ $x$};
+			\draw[->] (0,-1) -- (0,2) node[left]{ $y$};
+			\draw[smooth,samples=100,domain=-1.8:1.8] plot(\x,{-(\x)^4+2*(\x)^2});
+			\draw [fill=black] (0,0) circle (1pt)node[below left]{\footnotesize $O$}(-1,1) circle (1pt)(1,1) circle (1pt);
+			\draw[dashed](-1,0)node[below]{\scriptsize $-1$}--(-1,1)--(0,1)node[above left]{\scriptsize $1$}--(1,1)--(1,0)node[below]{\scriptsize $1$};
+\end{tikzpicture}}
+\noindent\textit{Kết quả:} \tikz\draw (0,0) rectangle (3,0.6);
+	\loigiai{
+		\immini{Ta có $ 4f(x)-3=0\Leftrightarrow f(x)=\dfrac{3}{4} $.\\
+			Số nghiệm của phương trình là số giao điểm của đồ thị hàm số $ y=f(x) $ và đường thẳng $ y=\dfrac{3}{4} $.\\
+			Dựa vào đồ thị hàm số $ y=f(x) $, suy ra số nghiệm phương trình là $ 4 $.}{
+\begin{tikzpicture}[scale=1.2,font=\footnotesize,line join= round,line cap=round,>=stealth,x=1cm,y=1cm]
+				\clip(-2,-1) rectangle (2.1,2.1);
+				\draw[->] (-2,0) -- (2,0) node[below]{ $x$};
+				\draw[->] (0,-1) -- (0,2) node[left]{ $y$};
+				\draw (-2,0.75) node[above right]{ $y=\frac{3}{4}$} -- (2,0.75);
+				\draw[smooth,samples=100,domain=-1.8:1.8] plot(\x,{-(\x)^4+2*(\x)^2});
+				\draw [fill=black] (0,0) circle (1pt)node[below left]{\footnotesize $O$}(-1,1) circle (1pt)(1,1) circle (1pt);
+				\draw[dashed](-1,0)node[below]{\scriptsize $-1$}--(-1,1)--(0,1)node[above left]{\scriptsize $1$}--(1,1)--(1,0)node[below]{\scriptsize $1$};
+\end{tikzpicture}
+		}
+	}
+\end{bt}
+
+% nguồn: 2026-11-16_12_2D1_TL_Ham_so (nhập 16/11/2026)
+\begin{bt}%[2D1H5-3]%[ma:e1fffc46]
+% nguon: Archive/SP_KhoLatex/ID6_old/DeThamKhao-06.tex #3701
+%[Dự án ĐGNL-ĐGTD-2022 GĐ1]%[Bùi Mạnh Tiến]
+	Cho hàm số $y=f(x)$ có đồ thị như hình vẽ bên. Số nghiệm của phương trình $ 2f(x)+1=0$ là
+	\begin{center}
+		\begin{tikzpicture}[>=stealth,x=1cm,y=1cm,scale=2]
+			\def\a{1}
+			\def\b{-2}
+			\def\c{0}			
+			\draw[->] (-2,0) -- (2,0)node[below]{\scriptsize $x$};		
+			\draw[->] (0,-2) -- (0,1) node[left] {\scriptsize $y$};
+			\draw (0,0)node[above right]{\scriptsize $O$};
+			\draw (-1,0)node[above]{\scriptsize $-1$};
+			\draw (1,0)node[above]{\scriptsize $1$};
+			\draw (0,-1)node[below right]{\scriptsize $1$};
+			\draw[dashed] (-1,0)--(-1,-1)--(1,-1)--(1,0);
+			\clip (-2,-2)rectangle(2,1);
+			\draw[thick,samples=150,smooth,domain=-2:2] plot(\x,{\a*(\x)^4+(\b)*(\x)^2+(\c)});
+		\end{tikzpicture}
+	\end{center}
+	\textit{Kết quả:} \tikz\draw (0,0) rectangle (3,0.6);
+	\loigiai{ 
+		Phương trình: $f(x) = \dfrac{-1}{2}$. Ta tìm số giao điểm của đồ thị $y=f(x)$ và $y=\dfrac{-1}{2}$.
+		Dựa vào đồ thị, ta thấy số giao điểm là $4$. Suy ra số nghiệm phương trình là $4$.
+	}
+\end{bt}
+
+% nguồn: 2026-11-16_12_2D1_TL_Ham_so (nhập 16/11/2026)
+\begin{bt}%[2D1H5-3]%[ma:8e5fee28]
+% nguon: Archive/SP_KhoLatex/ID6_old/DeThamKhao-04.tex #3707
+%[ĐGNL-ĐGTD-2022, nguyễn hoàng thanh]
+\immini[thm]{Cho hàm số bậc ba $ y=f(x) $ có đồ thị là đường cong như hình vẽ bên. Phương trình $ 2f(x)-5=0 $ có bao nhiêu nghiệm thực?\\
+\textit{Kết quả:} \tikz\draw (0,0) rectangle (3,0.6);
+}
+{
+\begin{tikzpicture}[scale=.6, font=\footnotesize, line join=round, line cap=round,>=stealth]
+\def\a{1/16}
+\def\xmin{-3} \def\xmax{3}
+\def\ymin{-2} \def\ymax{4}
+\draw[->] (\xmin,0)--(\xmax,0) node [below]{$x$};
+\draw[->] (0,\ymin)--(0,\ymax) node [left]{$y$};
+\draw[fill=black] (0,0) circle (.5pt) node[above left]{\footnotesize $O$};
+\draw[fill=black] (1,-1) circle (.5pt);
+\draw[fill=black] (-1,3) circle (.5pt);
+\draw[fill=black] (-1,0) circle (.5pt) node[below]{\footnotesize $-1$};
+\draw[fill=black] (1,0) circle (.5pt) node[above]{\footnotesize $1$};
+\draw[fill=black] (0,3) circle (.5pt) node[right]{\footnotesize $3$};
+\draw[fill=black] (0,-1) circle (.5pt) node[left]{\footnotesize $-1$};
+\clip (\xmin+0.1,\ymin+0.1) rectangle (\xmax-0.1,\ymax-0.1);
+\draw[smooth,samples=300,domain=-3:3] plot(\x,{(\x)^3-3*(\x)+1});
+\draw[dashed] (-1,0) |- (-1,3) |- (0,3) (1,0) |- (1,-1) |- (0,-1);
+\end{tikzpicture}
+}
+\loigiai{
+\immini{
+Ta có $ 2f(x)-5=0 \Leftrightarrow f(x)=\dfrac{5}{2}$. $ \quad (1) $\\
+Số nghiệm thực của phương trình $ (1) $ là số giao điểm của đồ thị hàm số $ y=f(x) $ và đường thẳng $ y=\dfrac{5}{2} $.\\
+Dựa vào hình vẽ ta thấy đồ thị hàm số $ y=f(x) $ và đường thẳng $ y=\dfrac{5}{2} $ có $ 3 $ giao điểm. Vậy phương trình $ (1) $ có $ 3 $ nghiệm thực.
+}
+{
+\begin{tikzpicture}[scale=.65, font=\footnotesize, line join=round, line cap=round,>=stealth]
+\def\a{1/16}
+\def\xmin{-3} \def\xmax{3.5}
+\def\ymin{-2} \def\ymax{4}
+\draw[->] (\xmin,0)--(\xmax,0) node [below]{$x$};
+\draw[->] (0,\ymin)--(0,\ymax) node [left]{$y$};
+\draw[fill=black] (0,0) circle (.5pt) node[above left]{\footnotesize $O$};
+\draw[fill=black] (1,-1) circle (.5pt);
+\draw[fill=black] (-1,3) circle (.5pt);
+\node at (2.5,1.7) [above right]{$y=\frac{5}{2}$};
+\draw[fill=black] (-1,0) circle (.5pt) node[below]{\footnotesize $-1$};
+\draw[fill=black] (1,0) circle (.5pt) node[above]{\footnotesize $1$};
+\draw[fill=black] (0,3) circle (.5pt) node[right]{\footnotesize $3$};
+\draw[fill=black] (0,-1) circle (.5pt) node[left]{\footnotesize $-1$};
+\clip (\xmin+0.1,\ymin+0.1) rectangle (\xmax-0.1,\ymax-0.1);
+\draw[smooth,samples=300,domain=-3:3] plot(\x,{(\x)^3-3*(\x)+1});
+\draw[dashed] (-1,0) |- (-1,3) |- (0,3) (1,0) |- (1,-1) |- (0,-1);
+\draw (-3,2.5) |- (3,2.5);
+\end{tikzpicture}
+}
+}
+\end{bt}
+
+% nguồn: 2026-11-16_12_2D1_TL_Ham_so (nhập 16/11/2026)
+\begin{bt}%[2D1H5-3]%[ma:99148493]
+% nguon: Archive/SP_KhoLatex/ID6_old/DeThamKhao-05.tex #3720
+%[ĐGNL-ĐGTD-2022]
+\immini[thm]{$f(x)=ax^4+bx^2+c$ $(a,b,c\in\mathbb R)$. Đồ thị của hàm số $y=f(x)$ như hình vẽ bên. Số nghiệm thực của phương trình $4f(x)-3=0$ là bao nhiêu?\\
+\fbox{\textbf{Đáp số} $\ldots\ldots\ldots$}
+}
+{
+\begin{tikzpicture}[scale=.8,font=\footnotesize,line join= round,line cap=round,>=stealth,x=1cm,y=1cm]
+	\clip(-2,-1) rectangle (2.1,2.1);
+	\draw[->] (-2,0) -- (2,0) node[below]{ $x$};
+	\draw[->] (0,-1) -- (0,2) node[left]{ $y$};
+	\draw[smooth,samples=100,domain=-1.8:1.8] plot(\x,{-(\x)^4+2*(\x)^2});
+	\draw [fill=white] (0,0) circle (1pt)node[below left]{\footnotesize $O$}(-1,1) circle (1pt)(1,1) circle (1pt);
+	\draw[dashed](-1,0)node[below]{\scriptsize $-1$}--(-1,1)--(0,1)node[above left]{\scriptsize $1$}--(1,1)--(1,0)node[below]{\scriptsize $1$};
+\end{tikzpicture}
+}
+\loigiai{
+\immini{Ta có $ 4f(x)-3=0\Leftrightarrow f(x)=\dfrac{3}{4} $.\\
+	Số nghiệm của phương trình là số giao điểm của đồ thị hàm số $ y=f(x) $ và đường thẳng $ y=\dfrac{3}{4} $.\\
+	Dựa vào đồ thị hàm số $ y=f(x) $, suy ra số nghiệm phương trình là $ 4 $.}{
+	\begin{tikzpicture}[scale=1.2,font=\footnotesize,line join= round,line cap=round,>=stealth,x=1cm,y=1cm]
+		\clip(-2,-1) rectangle (2.1,2.1);
+		\draw[->] (-2,0) -- (2,0) node[below]{ $x$};
+		\draw[->] (0,-1) -- (0,2) node[left]{ $y$};
+		\draw (-2,0.75) node[above right]{ $y=\frac{3}{4}$} -- (2,0.75);
+		\draw[smooth,samples=100,domain=-1.8:1.8] plot(\x,{-(\x)^4+2*(\x)^2});
+		\draw [fill=white] (0,0) circle (1pt)node[below left]{\footnotesize $O$}(-1,1) circle (1pt)(1,1) circle (1pt);
+		\draw[dashed](-1,0)node[below]{\scriptsize $-1$}--(-1,1)--(0,1)node[above left]{\scriptsize $1$}--(1,1)--(1,0)node[below]{\scriptsize $1$};
+	\end{tikzpicture}
+}
+}
+\end{bt}

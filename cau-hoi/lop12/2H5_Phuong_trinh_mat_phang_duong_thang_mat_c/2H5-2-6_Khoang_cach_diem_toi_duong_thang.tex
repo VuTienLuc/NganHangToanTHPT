@@ -498,3 +498,57 @@
 		 Khi đó $d \equiv A' B\Rightarrow \mathrm{d}(A, d)=\mathrm{d}(A,(\alpha))=\left|\dfrac{2}{\sqrt{6}}\right|=\dfrac{\sqrt{6}}{3}$.
 	} 
 \end{bt}
+
+% nguồn: 2026-11-16_12_2H5_TL_PT_mat_phang_duong_thang_mat_cau (nhập 16/11/2026)
+\begin{bt}%[2H5C2-6]%[ma:ccad32c0]
+% nguon: Archive/2024/TaiLieuGiangDay/5.HH Oxyz/VDC_TDM_Dot2.tex #3177
+
+Trong không gian $Oxyz$, cho mặt cầu $(S)\colon  (x+2)^2 +(y-2)^2+(z-1)^2=21$ và hai mặt phẳng $
+(\alpha)\colon  3x -y - z -2  = 0$,  $(\beta)\colon -2x + y +4z -19  = 0.$ 
+Gọi $(C)$ là đường tròn giao tuyến của $(S)$ và $(\alpha)$. Gọi $M$ là điểm chạy trên $(C)$ và $N$ là điểm chạy trên $(\beta)$. 
+Hãy xác định khoảng cách $MN$ nhỏ nhất và xác định tọa độ $M$, $N$?
+\loigiai{
+\immini{Ta có $(S)\colon \heva{& \text{tâm } I(-2;2;1)\\ &R=\sqrt{21}.}$\\
+Đường tròn giao tuyến $(C)$ có tâm $J $ là hình chiếu của $I$ lên $(\alpha)$ và bán kính $r=\sqrt{R^2 - \mathrm {d}^2 (I, (\alpha))}$.\\
+Trong đó $\mathrm d(I, (\alpha ))=\dfrac{|3\cdot (-2) -2 -1-2|}{\sqrt{9+ 1+ 1}}=\sqrt{11}$. Suy ra $r = \sqrt{10}$.\\
+Ta có $IJ \colon \heva{& x= -2 + 3t\\ & y= 2-t \\&z=1-t}$ ($t \in \mathbb{R}$).}{	\begin{tikzpicture}[scale=0.7]
+	
+	% Lưới ô vuông (tuỳ chọn)
+	\draw[step=1cm,gray!30,very thin] (-2,-1) grid (10,7);
+	% Mặt phẳng alpha (hình bình hành dưới)
+	\coordinate (A) at (-1,0);
+	\coordinate (B) at (6,0);
+	\coordinate (C) at (8,3);
+	\coordinate (D) at ($(A)-(B)+(C)$);
+	\coordinate (J) at (3,1.5);
+	\coordinate (H) at (7,1.5);
+	\coordinate (N) at (6,4);
+	\draw[thick] (A) -- (B) -- (C) -- (D) -- cycle;
+	\path[name path=JH] (J)--(H);
+	% Elip nằm trong mặt phẳng alpha
+	\draw[name path=elip, thick] (J) ellipse (2cm and 0.6cm);
+	\path[name intersections={of=JH and elip, by=M}];
+	
+	% Mặt phẳng beta (hình thoi dựng đứng)
+	\coordinate (F) at (5,4);
+	\coordinate (E) at ($(C)-(B)+(F)$);
+	\draw pic[draw,angle radius=2mm] {right angle = M--H--B}; B
+	\draw pic[draw,angle radius=2mm] {right angle = M--N--H}; 
+	\draw[thick] (B) -- (F) -- (E) -- (C);
+	\draw[dashed, red] (J)--(H) (M)--(N);
+	\foreach \p/\r in {J/8-90,H/0, M/-80, N/0}
+	\fill (\p) circle (1.5pt) node[shift={(\r:3mm)}]{$\p$};
+	\end{tikzpicture}}
+\noindent	Suy ra $J(-2+3t; 2- t; 1-t)$. Mà $J \in (\alpha)$ nên $$3\cdot (-2+ 3t) - (2-t)-(1-t)-2=0 \Leftrightarrow t= 1.$$
+\noindent Suy ra $J(1;1;0)$.\\
+Gọi $d$ là giao tuyến của hai mặt phẳng $(\alpha)$ và $(\beta)$. Suy ra $d \colon \heva{& x= 3 + 3t \\ &y=1 +10t \\&z=6-t}$ ($ t \in \mathbb{R}$).\\
+Gọi  $H$ là hình chiếu của $J$ lên $d$. 
+Khi đó $MN$ ngắn nhất khi và chỉ khi $M$ là  giao điểm của đoạn thẳng $JH$ với $(C)$ và $N$ là hình chiếu của $M$ lên $(\beta)$.\\
+Gọi $H(3+ 3t; 1+10t ; 6-t) \in d$.\\
+Do  $\vec{JH} \perp \vec{u} $, với $\vec{u}= (3;10;-1)$ là một véc-tơ chỉ phương của $d$, nên $$ 3 \cdot (3t+2) +10 \cdot 10t  - 1 \cdot (6 - t)=0 \Leftrightarrow t= 0 \Rightarrow H \left(3;1; 6 \right).$$
+\noindent 
+Mặt khác $\vec{JM}= \dfrac{JM}{JH} \cdot \vec{JH}= \dfrac{\sqrt{10}}{\sqrt{\left( 3-1\right)^2+(1-1)^2)+ (6-0)^2   }} \cdot \vec{JN}$.\\
+Suy ra $\vec{JM}= \dfrac{1}{2} \cdot \vec{JH} \Rightarrow M \left(2;1;3 \right)$.\\
+Ta có $NM \colon \heva{& x= 2 -2t \\& y= 1+t \\ &z = 3 + 4t} $ ($t \in \mathbb{R}$).\\
+Suy ra $N(2-2t;1+t ; 3+4t )\in (\beta) \Rightarrow -2\cdot (2-2t) + 1+t + 4\cdot (3+4t)-19=0 \Rightarrow t=\dfrac{10}{21}.$\\  Vậy $N\left(\dfrac{22}{21};\dfrac{31}{21};\dfrac{103}{21}\right)$ và độ dài ngắn nhất của $MN$ là $\mathrm d(M, (\beta))= \dfrac{|-2 \cdot 2 +1 + 4 \cdot 3-19|}{\sqrt{4+1+ 16}}= \dfrac{10\sqrt{21}}{21}$.}
+\end{bt}
