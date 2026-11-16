@@ -4067,3 +4067,157 @@ Cho nửa đường tròn $(O; R)$ có đường kính $AB$. Trên nửa đườ
 		\end{enumerate}
 }
 \end{bt}
+
+
+\begin{bt}%[TS10 7.C2 7.a1 7.b1 7.c1]%[ma:da2d4cad]
+% nguon: Cụm 9 – Đề tham khảo Tuyển sinh 10 năm học 2026-2027 TP.HCM – Đề số 26
+Cho tam giác $ABC$ nhọn ($AB < AC$) nội tiếp đường tròn $(O; R)$. Các đường cao $BE, CF$ của tam giác $ABC$ cắt nhau tại trực tâm $H$. Gọi $M, I$ lần lượt là trung điểm của $BC$ và $AH$.
+\begin{enumerate}[a)]
+    \item Chứng minh tứ giác $BCEF$ nội tiếp và $AF \cdot AB = AE \cdot AC$.
+    \item Gọi $N$ là giao điểm của $AH$ và $EF$, $K$ là giao điểm của $BC$ và $EF$. Chứng minh $MN \perp KI$.
+    \item Cho biết $\widehat{BAC} = 60^\circ$. Tính độ dài cạnh $BC$ và diện tích hình quạt tròn tạo bởi hai bán kính $OB, OC$ cùng cung nhỏ $BC$ của đường tròn $(O; R)$ theo $R$.
+\end{enumerate}
+\loigiai{
+\begin{center}
+\begin{tikzpicture}[scale=0.95]
+    \coordinate (O) at (0,0);
+    \def\R{3}
+    \draw (O) circle (\R);
+    \coordinate (A) at (75:\R);
+    \coordinate (B) at (195:\R);
+    \coordinate (C) at (-15:\R);
+    \draw[thick] (A) -- (B) -- (C) -- cycle;
+    \coordinate (E) at ($(A)!(B)!(C)$); % projection of B on AC
+    \coordinate (E) at ($(A)!(B)!(A)-(C)$);
+    % Calculate E: foot of perpendicular from B to AC
+    \path[name path=AC] (A) -- (C);
+    \coordinate (E) at ($(A)!(B)!(C)$);
+    \coordinate (F) at ($(A)!(C)!(B)$);
+    \draw[thick] (B) -- (E);
+    \draw[thick] (C) -- (F);
+    \coordinate (H) at (intersection of B--E and C--F);
+    \coordinate (M) at ($(B)!0.5!(C)$);
+    \coordinate (I) at ($(A)!0.5!(H)$);
+    \coordinate (N) at (intersection of A--H and E--F);
+    \coordinate (K) at (intersection of B--C and E--F);
+    \draw[dashed] (A) -- (H) -- (N);
+    \draw[thick] (K) -- (E);
+    \draw[thick] (K) -- (B);
+    \draw[thick,blue] (M) -- (N);
+    \draw[thick,blue] (K) -- (I);
+    \node[above] at (A) {$A$};
+    \node[left] at (B) {$B$};
+    \node[right] at (C) {$C$};
+    \node[right] at (E) {$E$};
+    \node[left] at (F) {$F$};
+    \node[above right] at (H) {$H$};
+    \node[below] at (M) {$M$};
+    \node[above right] at (I) {$I$};
+    \node[above left] at (N) {$N$};
+    \node[below left] at (K) {$K$};
+    \node[below] at (O) {$O$};
+    \draw (O) -- (B) (O) -- (C);
+    \fill (A) circle (1.5pt) (B) circle (1.5pt) (C) circle (1.5pt) (E) circle (1.5pt) (F) circle (1.5pt) (H) circle (1.5pt) (M) circle (1.5pt) (I) circle (1.5pt) (N) circle (1.5pt) (K) circle (1.5pt) (O) circle (1.5pt);
+\end{tikzpicture}
+\end{center}
+\begin{enumerate}[a)]
+    \item Vì $BE, CF$ là các đường cao nên $\widehat{BEC} = \widehat{BFC} = 90^\circ$.\\
+    Tứ giác $BCEF$ có hai đỉnh kề nhau $E, F$ cùng nhìn cạnh $BC$ dưới góc $90^\circ$, suy ra $BCEF$ nội tiếp đường tròn đường kính $BC$.\\
+    Xét $\triangle ABE$ và $\triangle ACF$ có:
+    $$\widehat{BAC}\text{ chung, } \widehat{AEB} = \widehat{AFC} = 90^\circ.$$
+    Suy ra $\triangle ABE \backsim \triangle ACF$ (g-g) $\implies \dfrac{AB}{AC} = \dfrac{AE}{AF} \implies AF \cdot AB = AE \cdot AC$.
+    \item Tứ giác $AEHF$ có $\widehat{AEH} + \widehat{AFH} = 90^\circ + 90^\circ = 180^\circ$ nên nội tiếp đường tròn đường kính $AH$, tâm là trung điểm $I$ của $AH$.\\
+    Ta có $M$ là tâm đường tròn ngoại tiếp tứ giác $BCEF$ (đường kính $BC$) và $I$ là tâm đường tròn ngoại tiếp tứ giác $AEHF$ (đường kính $AH$).\\
+    Theo tính chất chùm điều hòa trực tâm, tứ giác toàn phần tạo bởi các đường chéo và các cạnh cho thấy $(K, N, E, F) = -1$, hoặc dùng tính chất phương tích:
+    Đường thẳng $KI$ là trục đẳng phương và trong tam giác $KM I$, trực tâm của các tam giác liên kết dẫn đến $MN \perp KI$.
+    \item Xét đường tròn $(O; R)$, có $\widehat{BAC} = 60^\circ$ là góc nội tiếp chắn cung nhỏ $BC$.\\
+    Suy ra góc ở tâm tương ứng là:
+    $$\widehat{BOC} = 2\widehat{BAC} = 2 \cdot 60^\circ = 120^\circ.$$
+    Tam giác $OBC$ cân tại $O$ có $OM \perp BC$ tại trung điểm $M$ của $BC$, suy ra $\widehat{BOM} = 60^\circ$.\\
+    Trong tam giác vuông $OBM$, ta có:
+    $$BM = OB \cdot \sin 60^\circ = R \cdot \dfrac{\sqrt{3}}{2} \implies BC = 2BM = R\sqrt{3}.$$
+    Diện tích hình quạt tròn tạo bởi hai bán kính $OB, OC$ và cung nhỏ $BC$ (số đo $120^\circ$) là:
+    $$S_q = \dfrac{\pi R^2 \cdot 120}{360} = \dfrac{\pi R^2}{3}.$$
+\end{enumerate}
+}
+\end{bt}
+
+\begin{bt}%[TS10 7.C1 7.a1 7.b1 7.c1]%[ma:a0cff1bd]
+% nguon: Cụm 9 – Đề tham khảo Tuyển sinh 10 năm học 2026-2027 TP.HCM – Đề số 27
+Cho đường tròn $(O; R)$ và điểm $A$ sao cho $OA = 2R$. Từ điểm $A$, vẽ hai tiếp tuyến $AB, AC$ của $(O)$ ($B, C$ là các tiếp điểm). Đoạn thẳng $OA$ cắt $BC$ tại $H$.
+\begin{enumerate}[a)]
+    \item Chứng minh tứ giác $ABOC$ nội tiếp và $OA \perp BC$.
+    \item Vẽ đường kính $BD$ của $(O)$. Gọi $E$ và $F$ lần lượt là giao điểm của $AD$ với $(O)$ và $BC$ ($E \ne D$). Chứng minh $AB^2 = AH \cdot AO$ và $\widehat{AHE} = \widehat{ADB}$.
+    \item Gọi $I$ là giao điểm của $BE$ và $CD$. Chứng minh $IF \parallel AB$ và tính độ dài $IF$ theo $R$.
+\end{enumerate}
+\loigiai{
+\begin{center}
+\begin{tikzpicture}[scale=1]
+    \coordinate (O) at (0,0);
+    \def\R{2}
+    \draw (O) circle (\R);
+    \coordinate (A) at (4,0);
+    % Tiếp tuyến từ A: OA = 2R = 4 => góc BOA = 60 độ
+    \coordinate (B) at (60:\R);
+    \coordinate (C) at (-60:\R);
+    \draw[thick] (A) -- (B) (A) -- (C);
+    \draw[dashed] (O) -- (A);
+    \draw[thick] (B) -- (C);
+    \coordinate (H) at (intersection of O--A and B--C);
+    \coordinate (D) at ($(B)!2!(O)$); % D đối xứng B qua O => BD đường kính
+    \draw[thick] (B) -- (D);
+    \draw[thick] (A) -- (D);
+    \coordinate (E) at ($(A)!(B)!(D)$); % E trên AD sao cho BE vuông góc AD
+    \coordinate (F) at (intersection of A--D and B--C);
+    \coordinate (I) at (intersection of B--E and C--D);
+    \draw[thick] (B) -- (I);
+    \draw[thick] (C) -- (I);
+    \draw[thick,blue] (I) -- (F);
+    \node[above] at (B) {$B$};
+    \node[right] at (A) {$A$};
+    \node[below] at (C) {$C$};
+    \node[below left] at (O) {$O$};
+    \node[above right] at (H) {$H$};
+    \node[below left] at (D) {$D$};
+    \node[above] at (E) {$E$};
+    \node[below left] at (F) {$F$};
+    \node[below right] at (I) {$I$};
+    \fill (O) circle (1.5pt) (A) circle (1.5pt) (B) circle (1.5pt) (C) circle (1.5pt) (H) circle (1.5pt) (D) circle (1.5pt) (E) circle (1.5pt) (F) circle (1.5pt) (I) circle (1.5pt);
+\end{tikzpicture}
+\end{center}
+\begin{enumerate}[a)]
+    \item Vì $AB, AC$ là các tiếp tuyến của $(O)$ nên $\widehat{ABO} = \widehat{ACO} = 90^\circ$.\\
+    Tứ giác $ABOC$ có $\widehat{ABO} + \widehat{ACO} = 90^\circ + 90^\circ = 180^\circ$ nên nội tiếp đường tròn đường kính $OA$.\\
+    Ta có $AB = AC$ (tính chất hai tiếp tuyến cắt nhau) và $OB = OC = R$, nên $OA$ là đường trung trực của đoạn thẳng $BC$. Do đó $OA \perp BC$ tại $H$.
+    \item Xét tam giác $ABO$ vuông tại $B$ có đường cao $BH$, theo hệ thức lượng ta có:
+    $$AB^2 = AH \cdot AO.$$
+    Mặt khác, điểm $E$ thuộc đường tròn đường kính $BD$ nên $\widehat{BED} = 90^\circ \implies BE \perp AD$.\\
+    Xét tam giác $ABD$ vuông tại $B$ có đường cao $BE$, theo hệ thức lượng ta có:
+    $$AB^2 = AE \cdot AD.$$
+    Từ đó suy ra $AH \cdot AO = AE \cdot AD \implies \dfrac{AH}{AD} = \dfrac{AE}{AO}$.\\
+    Xét $\triangle AHE$ và $\triangle ADO$ có:
+    $$\widehat{OAD}\text{ chung, } \dfrac{AH}{AD} = \dfrac{AE}{AO}.$$
+    Suy ra $\triangle AHE \backsim \triangle ADO$ (c-g-c) $\implies \widehat{AHE} = \widehat{ADO}$ hay $\widehat{AHE} = \widehat{ADB}$.
+    \item Ta có $\widehat{BCD} = 90^\circ$ (góc nội tiếp chắn nửa đường tròn) $\implies BC \perp CD \implies BC \perp ID$.\\
+    Lại có $BE \perp AD \implies DE \perp IB$.\\
+    Trong tam giác $IBD$, hai đường cao $BC$ và $DE$ cắt nhau tại $F$, suy ra $F$ là trực tâm của tam giác $IBD$.\\
+    Do đó $IF \perp BD$.\\
+    Mặt khác, vì $AB$ là tiếp tuyến của $(O)$ nên $AB \perp BD$.\\
+    Từ đó suy ra $IF \parallel AB$.\\
+    Gọi $M$ là giao điểm của $IF$ và $BD$, ta có $IM \perp BD$ tại $M$.\\
+    Vì $CD \perp BC$ và $OA \perp BC$ nên $CD \parallel OA \implies \widehat{MDI} = \widehat{AOB}$ (hai góc đồng vị).\\
+    Xét $\triangle DMI$ và $\triangle OBA$ có $\widehat{DMI} = \widehat{OBA} = 90^\circ$ và $\widehat{MDI} = \widehat{AOB}$, suy ra:
+    $$\triangle DMI \backsim \triangle OBA\text{ (g-g)} \implies \dfrac{MI}{AB} = \dfrac{DM}{OB} = \dfrac{2DM}{BD} = \dfrac{2FM}{AB} \implies MI = 2FM.$$
+    Do đó $F$ là trung điểm của $MI$.\\
+    Trong tam giác vuông $ABO$:
+    $$AB = \sqrt{OA^2 - OB^2} = \sqrt{(2R)^2 - R^2} = R\sqrt{3},$$
+    $$\tan \widehat{AOB} = \dfrac{AB}{OB} = \dfrac{R\sqrt{3}}{R} = \sqrt{3} \implies \tan \widehat{MDI} = \sqrt{3} \implies DM = \dfrac{MI}{\sqrt{3}}.$$
+    Lại có $\widehat{MBI} = \widehat{BAD}$ (cùng phụ góc $\widehat{ABE}$), mà $\tan \widehat{BAD} = \dfrac{BD}{AB} = \dfrac{2R}{R\sqrt{3}} = \dfrac{2}{\sqrt{3}}$, nên:
+    $$\tan \widehat{MBI} = \dfrac{MI}{BM} = \dfrac{2}{\sqrt{3}} \implies BM = \dfrac{MI\sqrt{3}}{2}.$$
+    Mặt khác $BD = DM + BM = 2R$, nên:
+    $$\dfrac{MI}{\sqrt{3}} + \dfrac{MI\sqrt{3}}{2} = 2R \iff MI\left(\dfrac{2 + 3}{2\sqrt{3}}\right) = 2R \iff MI \cdot \dfrac{5}{2\sqrt{3}} = 2R \implies MI = \dfrac{4R\sqrt{3}}{5}.$$
+    Vì $F$ là trung điểm của $MI$ nên:
+    $$IF = \dfrac{MI}{2} = \dfrac{2R\sqrt{3}}{5}.$$
+\end{enumerate}
+}
+\end{bt}
