@@ -428,3 +428,38 @@ def bien_dich_thu_muc(thu_muc_de, in_ra=print):
         ok_het &= ok
         in_ra(f"  {'✓' if ok else '✗ lỗi (xem tex/' + f[:-4] + '.log)'} {ten} - {duoi}.pdf")
     return ok_het
+
+
+_CHUNG = re.compile(r"\bnào\b|nào sau đây|khẳng định|mệnh đề|phát biểu|kết luận|đúng\s*\?|sai\s*\?|hình vẽ|đồ thị|bảng|phương án", re.I)
+
+
+def _rut_gon(t):
+    return re.sub(r"[\s{}\\$~.,;:]+", "", t or "").lower()
+
+
+def khoa_trung(noi_dung):
+    """Khoá so trùng: 2 câu khác mã nhưng cùng một bài toán → cùng khoá.
+    Đề dài, cụ thể: so theo đề bài. Đề chung chung ("…nào sau đây đúng?") hoặc ngắn: so cả 4 phương án (không kể thứ tự)."""
+    t = re.sub(r"(?<!\\)%[^\n]*", "", noi_dung or "")
+    m = re.search(r"\\(choice|choiceTF)\b", t)
+    pa = []
+    if m:
+        j = m.end()
+        for _ in range(4):
+            while j < len(t) and t[j] in " \t\r\n":
+                j += 1
+            if j >= len(t) or t[j] != "{":
+                break
+            try:
+                g, j = doc_nhom(t, j)
+            except Exception:
+                break
+            pa.append(_rut_gon(g.replace("\\True", "")))
+    de = re.split(r"\\(?:choice|choiceTF|loigiai|shortans)\b", t)[0]
+    de = re.sub(r"\\(?:begin|end)\{(?:ex|bt)\}", "", de)
+    k = _rut_gon(de)
+    if len(k) < 12 and not pa:
+        return ""                              # đề quá ngắn (chủ yếu là hình) → không dùng để so trùng
+    if pa and (len(k) < 60 or _CHUNG.search(de)):
+        k += "|" + "|".join(sorted(pa))
+    return k

@@ -180,7 +180,9 @@ def ung_vien(loai, yc):
 def lap_ke_hoach(so_ma, khac_cau):
     """Chọn câu cho mọi mã đề một lượt. Thiếu câu đúng mức thì bù mức cùng nhóm (N↔H, V↔C),
     rồi dạng khác cùng bài, rồi bài khác cùng chương. Nhiều mã đề khác câu: rải đều câu bù cho các mã."""
-    da_lay = set()
+    da_lay, da_nd = set(), set()                  # da_nd: khoá nội dung — câu khác mã nhưng cùng đề cũng tính là trùng
+    nd = lambda c: c.setdefault("_nd", khoa_trung(c.get("noi_dung")) or "#" + c["ma"])
+    tuyet_doi = bool(mt.get("khong_trung_cau")) and khac_cau     # không bao giờ dùng lại câu giữa các mã đề
     bo = [collections.OrderedDict() for _ in range(so_ma)]
     ghi_chu, thieu = [], []
     for phan in mt["phan"]:
@@ -194,9 +196,9 @@ def lap_ke_hoach(so_ma, khac_cau):
                 for c in ds:
                     if len(lay) >= can:
                         break
-                    if c["ma"] in da_lay or c["ma"] in co:
+                    if c["ma"] in da_lay or c["ma"] in co or nd(c) in da_nd:
                         continue
-                    lay.append((c, gc)); co.add(c["ma"])
+                    lay.append((c, gc)); co.add(c["ma"]); da_nd.add(nd(c))
                 if len(lay) >= can:
                     break
             da_lay |= co
@@ -207,7 +209,11 @@ def lap_ke_hoach(so_ma, khac_cau):
             if len(lay) < k:
                 thieu.append(f"{nhan}: cần {k}, kho (kể cả bù) chỉ có {len(lay)}")
             elif khac_cau and len(lay) < can:
-                ghi_chu.append(f"{nhan}: có {len(lay)} câu cho {so_ma} mã đề × {k} → vài câu dùng chung giữa các mã")
+                if tuyet_doi:
+                    thieu.append(f"{nhan}: chế độ không trùng cần {can} câu ({so_ma} đề × {k}), kho chỉ có {len(lay)} "
+                                 f"→ vài đề thiếu câu; giảm số đề hoặc bổ sung câu cho dạng này")
+                else:
+                    ghi_chu.append(f"{nhan}: có {len(lay)} câu cho {so_ma} mã đề × {k} → vài câu dùng chung giữa các mã")
             dong = [c for c, _ in lay]
             if not khac_cau:
                 for b in bo:
@@ -224,6 +230,8 @@ def lap_ke_hoach(so_ma, khac_cau):
                 for s_ in range(so_ma):
                     nguon = con                     # ưu tiên câu chưa chia cho mã nào
                     ung = [c for c in nguon if c["ma"] not in rieng[s_]]
+                    if not ung and tuyet_doi:       # chế độ không trùng: không dùng lại câu của mã khác
+                        continue
                     if not ung:                     # hết câu riêng → dùng lại câu đã chia (không trùng trong mã)
                         nguon = dong
                         ung = [c for c in nguon if c["ma"] not in rieng[s_]]
@@ -448,6 +456,9 @@ if khac_cau and so_ma > 1:
     chung = len(set.intersection(*tap))
     tong_rieng = len(set.union(*tap))
     print(f"  Mỗi mã đề một bộ câu: dùng {tong_rieng} câu khác nhau cho {so_ma} mã đề; số câu có mặt ở mọi mã: {chung}")
+    dem_ma = collections.Counter(c["ma"] for b in cac_bo for v in b.values() for c in v)
+    trung = sum(1 for v in dem_ma.values() if v > 1)
+    print(f"  Câu trùng giữa các đề: {trung}" + (" ✓ không trùng câu nào" if not trung else " (kho thiếu câu)"))
 if not TU_FILE:
   print(f"  Câu đã dùng ở đề trước: " + {"uu_tien": "ưu tiên câu chưa dùng", "loai_bo": "KHÔNG lấy lại",
       "khong": "không xét"}.get(CHE_DO_DA_DUNG, CHE_DO_DA_DUNG))

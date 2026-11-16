@@ -548,6 +548,7 @@ Tạo phiếu như cũ (📄 Phiếu bài học, kiểu trắc nghiệm hoặc t
 
 Bảng Ôn thi học kì có hàng **Xuất đề** (máy nhớ lựa chọn):
 - **Số đề mỗi lần** + **Mỗi đề câu khác nhau** (tắt: các mã chỉ trộn thứ tự cùng 22 câu).
+- **🚫 Tuyệt đối không trùng câu giữa các đề**: không dùng lại câu nào ở 2 đề — so cả *nội dung* (câu khác mã nhưng cùng bài toán, kho có ~800 nhóm như vậy). Kho không đủ thì báo ⚠ thiếu (đề đó ít câu hơn) để giảm số đề hoặc bổ sung câu; nhật ký luôn ghi "Câu trùng giữa các đề: 0". Đổi câu ở Xem trước cũng không lấy câu trùng nội dung.
 - **📚 Gộp PDF thành 1 cuốn đề cương**: quyển Câu hỏi (bìa, mục lục, mọi đề) + quyển Lời giải.
 - **📝 Left note**: bản đề có lề trái để học sinh ghi chú (Leftnote_101…).
 - **Lời giải từng đề file riêng** (De_101_LoiGiai.pdf…), **Beamer**, **Biên dịch PDF**.

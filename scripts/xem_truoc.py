@@ -84,8 +84,11 @@ def doi(ma, tranh, rng=None, da_dung="uu_tien"):
     if not c:
         return None
     tranh = set(tranh or []) | {ma}
+    from nh_core import khoa_trung
+    nd_tranh = {khoa_trung(K[m].get("noi_dung")) for m in tranh if m in K} - {""}
     ls = lich_su()
     cung = [x for x in K.values() if x["loai"] == c["loai"] and x["ma"] not in tranh and hop_le(x)
+            and (khoa_trung(x.get("noi_dung")) or "#") not in nd_tranh
             and not (da_dung == "loai_bo" and ls.get(x["ma"]))]
     bai = (c.get("dang_key") or "").split("-")[0]
     for loc, ghi in ((lambda x: x.get("dang_key") == c.get("dang_key") and x.get("muc_chuan") == c.get("muc_chuan"), ""),
