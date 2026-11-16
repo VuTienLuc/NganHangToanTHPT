@@ -29,8 +29,8 @@ async function tongHop(DB, d) {
   const hs = (await DB.prepare("SELECT ten, ho_ten, stt FROM tk WHERE vai = 'hs' AND UPPER(lop) = UPPER(?) ORDER BY stt, ten").bind(lop).all()).results;
   const bai = (await DB.prepare(`SELECT ${COT_BAI} FROM bai b JOIN tk t ON t.ten = b.tk WHERE UPPER(t.lop) = UPPER(?) AND b.nop_luc IS NOT NULL ORDER BY b.nop_luc`).bind(lop).all()).results;
   const coBai = new Set(bai.map(x => x.nhom));
-  const de = (await DB.prepare("SELECT slug, ten, lop, so_luot, tao_luc, trang_thai FROM de WHERE nhom = '' OR nhom IS NULL ORDER BY tao_luc").all()).results
-    .filter(x => coBai.has(x.slug) || (String(x.lop || '').trim() && lopKhop(x.lop, lop)));
+  const de = (await DB.prepare("SELECT slug, ten, lop, so_luot, tao_luc, trang_thai, giao FROM de WHERE nhom = '' OR nhom IS NULL ORDER BY tao_luc").all()).results
+    .filter(x => coBai.has(x.slug) || x.giao === 1 || (String(x.lop || '').trim() && lopKhop(x.lop, lop)));
   let nhan = [];
   try {
     nhan = (await DB.prepare(`SELECT n.id, n.tk, n.noi_dung, n.tao_luc, n.xem_luc FROM loi_nhan n JOIN tk t ON t.ten = n.tk
@@ -46,9 +46,15 @@ async function theoDoi(DB) {
   if (!hs.length) return { ok: true, hs: [], de: [], bai: [], nhan: [] };
   const ds = hs.map(h => h.ten), dau = ds.map(() => '?').join(',');
   const bai = (await DB.prepare(`SELECT ${COT_BAI} FROM bai b WHERE b.tk IN (${dau}) AND b.nop_luc IS NOT NULL ORDER BY b.nop_luc`).bind(...ds).all()).results;
-  const de = (await DB.prepare("SELECT slug, ten, lop, so_luot, tao_luc, trang_thai FROM de WHERE nhom = '' OR nhom IS NULL ORDER BY tao_luc").all()).results;
+  const de = (await DB.prepare("SELECT slug, ten, lop, so_luot, tao_luc, trang_thai, giao FROM de WHERE nhom = '' OR nhom IS NULL ORDER BY tao_luc").all()).results;
   const nhan = (await DB.prepare(`SELECT id, tk, noi_dung, tao_luc, xem_luc FROM loi_nhan WHERE tk IN (${dau}) ORDER BY id DESC LIMIT 300`).bind(...ds).all()).results;
   return { ok: true, hs, de, bai, nhan };
+}
+// thầy đánh dấu bài đã giao (tính vào tổng hợp) / chưa giao (chỉ là tự luyện thêm); null = tự động theo ô Lớp giao
+async function datGiao(DB, d) {
+  const g = d.giao === null || d.giao === undefined ? null : d.giao ? 1 : 0;
+  await DB.prepare('UPDATE de SET giao = ? WHERE slug = ?').bind(g, String(d.slug || '')).run();
+  return { ok: true };
 }
 async function datTheoDoi(DB, d) {
   const tk = String(d.tk || '').toLowerCase(); if (!tk) return { ok: false, loi: 'Thiếu tài khoản.' };
@@ -97,6 +103,7 @@ async function hocSinh(duong, d, env, req, url) {
     if (duong === 'gv/tong-hop') return json(await tongHop(env.DB, d));
     if (duong === 'gv/loi-nhan') return json(await guiLoiNhan(env.DB, d, ph.tk));
     if (duong === 'gv/theo-doi') return json(await theoDoi(env.DB));
+    if (duong === 'gv/de-giao') return json(await datGiao(env.DB, d));
     if (duong === 'gv/theo-doi-dat') return json(await datTheoDoi(env.DB, d));
     return json({ ok: false, loi: 'Không có chức năng này.' }, 404);
   }
@@ -217,6 +224,7 @@ async function quanTri(duong, d, env) {
   if (duong === 'tong-hop') return json(await tongHop(DB, d));
   if (duong === 'loi-nhan') return json(await guiLoiNhan(DB, d, 'gv'));
   if (duong === 'theo-doi') return json(await theoDoi(DB));
+  if (duong === 'de-giao') return json(await datGiao(DB, d));
   if (duong === 'theo-doi-dat') return json(await datTheoDoi(DB, d));
   if (duong === 'luot/them') {
     await DB.prepare(`INSERT INTO luot_them (tk, nhom, so) VALUES (?,?,?) ON CONFLICT(tk, nhom) DO UPDATE SET so = so + excluded.so`).bind(d.tk, d.nhom, d.so || 1).run();
@@ -238,7 +246,7 @@ export async function onRequest({ request: req, env, params }) {
       if (!env.ADMIN_TOKEN || req.headers.get('x-admin') !== env.ADMIN_TOKEN) return json({ ok: false, loi: 'Sai mã quản trị.' }, 403);
       return await quanTri(duong.slice(6), d, env);
     }
-    if (['nop', 'bat-dau', 'cam-xuc', 'goi-y', 'doi-mk', 'dang-nhap', 'dang-xuat', 'loi-nhan/da-xem', 'gv/loi-nhan', 'gv/theo-doi-dat'].includes(duong) && req.method !== 'POST') return json({ ok: false, loi: 'Dùng POST.' }, 405);
+    if (['nop', 'bat-dau', 'cam-xuc', 'goi-y', 'doi-mk', 'dang-nhap', 'dang-xuat', 'loi-nhan/da-xem', 'gv/loi-nhan', 'gv/theo-doi-dat', 'gv/de-giao'].includes(duong) && req.method !== 'POST') return json({ ok: false, loi: 'Dùng POST.' }, 405);
     return await hocSinh(duong, d, env, req, url);
   } catch (e) { return json({ ok: false, loi: String(e && e.message || e) }, 500); }
 }

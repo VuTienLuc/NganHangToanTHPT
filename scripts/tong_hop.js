@@ -39,6 +39,8 @@
 #th-hs .th-hs-noi{background:#fff;border-radius:14px;width:min(1000px,95vw);max-height:92vh;display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.3)}
 .th-td{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:10px}.th-td-the{border:1px solid #e2e8f0;border-radius:12px;padding:10px 12px;display:flex;flex-direction:column;gap:8px}
 .th-td-dau{display:flex;gap:6px;align-items:center;flex-wrap:wrap}.th-td-dau .th-ten{font-size:15px}.th-td-the textarea{min-height:70px!important;border-color:#fbcfe8!important}
+.th-giao{font-size:11px!important;min-height:0!important;padding:1px 6px!important;margin-top:3px!important;border-radius:999px!important;color:#64748b!important}
+.th-giao.bat{background:#dcfce7!important;border-color:#86efac!important;color:#15803d!important}.th-bang th.them,.th-bang td.them{background:#f8fafc;color:#94a3b8}
 @media (max-width:760px){.th-em{grid-template-columns:auto minmax(0,1fr)}.th-em textarea,.th-em .nut{grid-column:1/-1}}`;
   const e = s => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
   const F = v => v == null || isNaN(v) ? '—' : (Math.round(v * 10) / 10).toString().replace('.', ',');
@@ -102,6 +104,8 @@
 
   // ---------- tính toán ----------
   const lopKhop = (ds, lop) => !String(ds || '').trim() || String(ds).split(',').map(x => x.trim().toUpperCase()).filter(Boolean).includes(String(lop || '').trim().toUpperCase());
+  // bài “đã giao” mới tính hoàn thành / điểm TB; bài chưa giao em tự làm thì ghi nhận là tự luyện thêm
+  const daGiao = (d, lop) => d.giao === 1 || (d.giao == null && !!String(d.lop || '').trim() && lopKhop(d.lop, lop));
   function nhomBai(bai) {
     const theo = {};
     for (const b of bai) {
@@ -111,8 +115,9 @@
     return theo;
   }
   // một học sinh: điểm từng đợt (cao nhất), tiến bộ, lý do cần quan tâm
-  function motEm(h, de, m, nhan) {
+  function motEm(h, de, m, nhan, deThem) {
     m = m || {};
+    const them = (deThem || []).filter(d => m[d.slug]).map(d => ({ de: d, cao: Math.max(...m[d.slug].lan) }));
     const o = de.map(d => { const x = m[d.slug]; return x ? { cao: Math.max(...x.lan), dau: x.lan[0], so: x.lan.length, goi_y: x.goi_y, cx: x.cx, tab: x.tab, ds: x.ds } : null });
     const lam = o.filter(Boolean), diem = lam.map(x => x.cao), tb = diem.length ? diem.reduce((a, b) => a + b, 0) / diem.length : null;
     const xu = lam.length >= 2 ? (lam.slice(-2).reduce((a, x) => a + x.cao, 0) / 2 - lam.slice(0, 2).reduce((a, x) => a + x.cao, 0) / 2) : null;
@@ -127,14 +132,15 @@
     if (tb != null && tb < 5) ly.push(['diem_thap', `TB ${F(tb)}`]);
     if (xu != null && xu <= -1) ly.push(['giam', `Giảm ${F(-xu)} điểm`]);
     if (cuoi && (cuoi.cx === 'lo_lang' || cuoi.cx === 'met_moi')) ly.push(['cam_xuc', cuoi.cx === 'lo_lang' ? '😰 Đang lo lắng' : '😴 Đang mệt']);
-    return { ...h, de, n, o, lam: lam.length, tb, xu, sua, gy, cuoi, truoc, cuoiDe, caoNhat, chuaLam, moiNhat, nhan: nhan || [], ly, tuDong: ly.length > 0 };
+    return { ...h, de, n, o, them, lam: lam.length, tb, xu, sua, gy, cuoi, truoc, cuoiDe, caoNhat, chuaLam, moiNhat, nhan: nhan || [], ly, tuDong: ly.length > 0 };
   }
   function tinh(k) {
-    const de = k.de, theo = nhomBai(k.bai), nhan = {}; for (const m of k.nhan || []) (nhan[m.tk] ??= []).push(m);
+    const de = k.de.filter(d => daGiao(d, k.lop)), deThem = k.de.filter(d => !daGiao(d, k.lop)), theo = nhomBai(k.bai), nhan = {}; for (const m of k.nhan || []) (nhan[m.tk] ??= []).push(m);
     const td = Object.fromEntries((k.theo_doi || []).map(x => [x.tk, x]));
-    const hs = k.hs.map(h => Object.assign(motEm(h, de, theo[h.ten], nhan[h.ten]), { td: td[h.ten] || null, lop: k.lop }));
+    const hs = k.hs.map(h => Object.assign(motEm(h, de, theo[h.ten], nhan[h.ten], deThem), { td: td[h.ten] || null, lop: k.lop }));
     const dot = de.map((d, j) => { const v = hs.map(h => h.o[j]).filter(Boolean); return { ...d, so: v.length, tb: v.length ? v.reduce((a, x) => a + x.cao, 0) / v.length : null } });
-    return { de, hs, dot };
+    const them = deThem.map(d => ({ ...d, so: hs.filter(h => h.them.some(x => x.de.slug === d.slug)).length }));
+    return { de, hs, dot, them };
   }
   const canQT = h => st.danh[h.ten] != null ? st.danh[h.ten] : h.tuDong;
 
@@ -142,12 +148,14 @@
   function nxEm(h, n) {
     const t = goiTen(h), c = [];
     if (!n) return 'Chưa có đợt bài nào được giao.';
+    if (!h.lam && h.them && h.them.length) return `${t}: đã chủ động làm ${h.them.length} bài tự luyện — rất đáng khen! Em làm thêm các bài thầy giao nhé.`;
     if (!h.lam) return `${t}: chưa vào làm bài nào — thầy tin em sẽ bắt đầu ngay từ bài gần nhất, mỗi bài chỉ mất ít phút thôi!`;
     if (h.lam === n) c.push(`hoàn thành đủ ${n}/${n} bài, rất chăm chỉ và đều đặn`); else if (h.lam / n >= .7) c.push(`làm bài khá đều (${h.lam}/${n} bài)`); else c.push(`đã làm ${h.lam}/${n} bài, em cố gắng làm bù các bài còn lại nhé`);
     if (h.tb >= 8) c.push(`kết quả rất tốt (TB ${F(h.tb)})`); else if (h.tb >= 6.5) c.push(`nắm bài khá vững (TB ${F(h.tb)})`); else if (h.tb >= 5) c.push(`đã nắm được kiến thức cơ bản (TB ${F(h.tb)})`); else c.push('đang tích luỹ dần kiến thức nền — thầy tin em sẽ tiến bộ nếu ôn lại ví dụ mẫu');
     if (h.xu != null && h.xu >= 1) c.push(`tiến bộ rõ (+${F(h.xu)} điểm so với các bài đầu)`); else if (h.xu != null && h.xu > -.5 && h.tb >= 6.5) c.push('giữ phong độ ổn định');
     if (h.sua) c.push(`biết làm lại để sửa sai (${h.sua} bài lần sau cao hơn)`);
     if (h.gy) c.push('biết dùng Gợi ý AI để tự tìm cách giải');
+    if (h.them && h.them.length) c.push(`chủ động làm thêm ${h.them.length} bài tự luyện`);
     return `${t}: ${c.join('; ')}. Cố lên em!`;
   }
   function nxLop(lop, T) {
@@ -276,8 +284,8 @@
   // ---------- học sinh đang theo dõi (mọi lớp) ----------
   function veTD(k) {
     const theo = nhomBai(k.bai), nhan = {}; for (const m of k.nhan || []) (nhan[m.tk] ??= []).push(m);
-    const hs = k.hs.map(h => { const m = theo[h.ten] || {}; const de = k.de.filter(d => m[d.slug] || (String(d.lop || '').trim() && lopKhop(d.lop, h.lop)));
-      return Object.assign(motEm(h, de, m, nhan[h.ten]), { td: { ghi_chu: h.ghi_chu, tu_luc: h.tu_luc }, lop: h.lop }) });
+    const hs = k.hs.map(h => { const m = theo[h.ten] || {}; const de = k.de.filter(d => daGiao(d, h.lop)), deThem = k.de.filter(d => !daGiao(d, h.lop) && m[d.slug]);
+      return Object.assign(motEm(h, de, m, nhan[h.ten], deThem), { td: { ghi_chu: h.ghi_chu, tu_luc: h.tu_luc }, lop: h.lop }) });
     st.TD = hs; const than = document.getElementById('th-than');
     if (!hs.length) { than.innerHTML = `<div class="th-hop2 th-nx"><h3>⭐ Chưa theo dõi em nào</h3><p style="margin:0">Chọn một lớp → bấm ☆ ở cột “Theo dõi” (hoặc bấm tên em → ☆ Theo dõi em này). Gợi ý: những em có TB dưới 5 hoặc hay bỏ bài. Danh sách lưu trên máy chủ, dùng chung app và trang web.</p></div>`; return }
     const canNhac = hs.filter(h => ['chua_lam', 'thieu'].includes(kieuTD(h))).length, tienBo = hs.filter(h => kieuTD(h) === 'khen_tien_bo').length;
@@ -320,17 +328,25 @@
       <div class="th-hop2 th-qt" id="th-qt"><h3>⚑ Học sinh cần quan tâm — tin nhắn riêng (tích cực, vui)</h3><div id="th-qt-ds"></div></div>
       <div class="th-hop2 th-nx"><h3>💬 Nhận xét chung cho lớp (sửa được, chép gửi nhóm lớp)</h3><textarea id="th-nx-lop">${e(nxLop(k.lop, T))}</textarea></div>
       ${n ? `<div style="overflow:auto;max-height:55vh;border:1px solid #e2e8f0;border-radius:10px"><table class="th-bang"><thead><tr><th title="Đánh dấu cần quan tâm">⚑</th><th title="Theo dõi thường xuyên (lưu trên máy chủ)">⭐</th><th>STT</th><th class="ten">Họ tên</th>
-        ${T.dot.map((d, j) => `<th class="cot-dot" title="${e(d.ten)}">Đợt ${j + 1}<br><span style="font-weight:400;color:#64748b">${e(d.ten.length > 16 ? d.ten.slice(0, 15) + '…' : d.ten)}</span></th>`).join('')}
+        ${T.dot.map((d, j) => `<th class="cot-dot" title="${e(d.ten)}">Đợt ${j + 1}<br><span style="font-weight:400;color:#64748b">${e(d.ten.length > 16 ? d.ten.slice(0, 15) + '…' : d.ten)}</span><br><button class="th-giao bat" data-giao="${e(d.slug)}" data-v="0" title="Đang tính vào tổng hợp. Bấm nếu bài này chưa giao (chỉ tự luyện)">✓ Đã giao</button></th>`).join('')}
+        ${T.them.map(d => `<th class="cot-dot them" title="${e(d.ten)} — chưa giao, không tính vào hoàn thành / điểm TB">Tự luyện<br><span style="font-weight:400">${e(d.ten.length > 16 ? d.ten.slice(0, 15) + '…' : d.ten)}</span><br><button class="th-giao" data-giao="${e(d.slug)}" data-v="1" title="Bấm để tính bài này là bài đã giao">○ Chưa giao</button></th>`).join('')}
         <th>Hoàn thành</th><th>TB</th><th title="TB 2 bài gần nhất − TB 2 bài đầu">Tiến bộ</th><th class="ten">Nhận xét tích cực (bấm để sửa)</th></tr></thead><tbody>
         ${T.hs.map((h, i) => `<tr class="${canQT(h) ? 'qt' : ''}"><td><button class="th-co" data-tk="${e(h.ten)}" aria-pressed="${canQT(h)}" title="${h.ly.map(x => x[1]).join(' · ') || 'Bấm để đánh dấu cần quan tâm'}" aria-label="Đánh dấu ${e(h.ho_ten || h.ten)}">⚑</button></td>
           <td><button class="th-co th-sao" data-sao="${i}" aria-pressed="${!!h.td}" title="${h.td ? 'Đang theo dõi — bấm để bỏ' : 'Theo dõi em này thường xuyên'}" aria-label="Theo dõi ${e(h.ho_ten || h.ten)}">${h.td ? '★' : '☆'}</button></td>
           <td>${h.stt || ''}</td><td class="ten"><button class="th-ten" data-hs="${i}" title="Xem hồ sơ từng bài">${e(h.ho_ten || h.ten)}</button></td>
           ${h.o.map(x => `<td><span class="o-d ${mau(x && x.cao)}" title="${x ? `Cao nhất ${F(x.cao)} · ${x.so} lần${x.goi_y ? ` · 💡 ${x.goi_y}` : ''}` : 'Chưa làm'}">${x ? F(x.cao) : '—'}</span></td>`).join('')}
+          ${T.them.map(d => { const x = h.them.find(y => y.de.slug === d.slug); return `<td class="them">${x ? `<span class="o-d ${mau(x.cao)}">${F(x.cao)}</span>` : ''}</td>` }).join('')}
           <td>${h.lam}/${n}</td><td><b>${F(h.tb)}</b></td><td>${h.xu == null ? '' : h.xu >= .5 ? `<span class="th-len">▲ ${F(h.xu)}</span>` : h.xu <= -.5 ? `<span class="th-xuong">▼ ${F(-h.xu)}</span>` : '≈'}</td>
           <td class="nx" contenteditable data-i="${i}">${e(nxEm(h, n))}</td></tr>`).join('')}</tbody></table></div>
-        <p style="font-size:12px;color:#64748b;margin:6px 0 0">Mỗi ô là điểm cao nhất của em trong đợt (rê chuột xem số lần làm, số câu mở Gợi ý AI). Xanh lá ≥ 8 · xanh dương ≥ 6,5 · vàng ≥ 5 · đỏ &lt; 5 · “—” chưa làm. Bấm ⚑ để đánh dấu / bỏ đánh dấu em cần quan tâm · ☆ để theo dõi thường xuyên (xem ở mục ⭐ đầu danh sách lớp) · bấm tên em để xem hồ sơ từng bài.</p>`
-        : '<p>Lớp này chưa có đợt bài nào. Khi giao đề (ô Lớp giao), các đợt sẽ hiện ở đây.</p>'}`;
+        <p style="font-size:12px;color:#64748b;margin:6px 0 0">Mỗi ô là điểm cao nhất của em trong đợt (rê chuột xem số lần làm, số câu mở Gợi ý AI). Xanh lá ≥ 8 · xanh dương ≥ 6,5 · vàng ≥ 5 · đỏ &lt; 5 · “—” chưa làm. Chỉ bài <b>✓ Đã giao</b> mới tính hoàn thành, điểm TB, tiến bộ; bấm nút dưới tên đợt để đổi Đã giao ↔ Chưa giao (cột “Tự luyện” xám là bài em tự làm thêm, chỉ để khen). Bấm ⚑ để đánh dấu / bỏ đánh dấu em cần quan tâm · ☆ để theo dõi thường xuyên (xem ở mục ⭐ đầu danh sách lớp) · bấm tên em để xem hồ sơ từng bài.</p>`
+        : `<p>Lớp này chưa có bài nào được tính là <b>đã giao</b>. Bài có ô Lớp giao ghi lớp này tự tính là đã giao; bài khác bấm “○ Chưa giao” → đã giao.</p>${T.them.length ? `<p>Bài em tự làm (chưa giao): ${T.them.map(d => `${e(d.ten)} <button class="th-giao" data-giao="${e(d.slug)}" data-v="1">○ Chưa giao → tính đã giao</button>`).join(' · ')}</p>` : ''}`}`;
     veQT();
+    than.querySelectorAll('[data-giao]').forEach(b => b.onclick = async () => {
+      const v = b.dataset.v === '1', d = k.de.find(x => x.slug === b.dataset.giao);
+      if (!confirm(v ? `Tính “${d.ten}” là bài ĐÃ GIAO cho lớp ${k.lop}?\nEm chưa làm sẽ bị tính thiếu bài.` : `Đánh dấu “${d.ten}” là CHƯA GIAO?\nBài này không tính vào hoàn thành / điểm TB; em nào làm thì ghi nhận là tự luyện thêm.`)) return;
+      b.disabled = true; const r = await st.goi('de-giao', { slug: d.slug, giao: v ? 1 : 0 }).catch(x => ({ ok: false, loi: String(x) }));
+      if (!r.ok) { b.disabled = false; alert(r.loi || 'Chưa lưu được — thầy Đăng lại tất cả để máy chủ có chức năng này'); return }
+      toast(v ? '✓ Đã tính là bài đã giao' : 'Đã chuyển sang tự luyện (chưa giao)'); tai() });
     than.querySelectorAll('.th-bang [data-hs]').forEach(b => b.onclick = () => hoSo(T.hs[+b.dataset.hs]));
     than.querySelectorAll('[data-sao]').forEach(b => b.onclick = async () => { const h = T.hs[+b.dataset.sao], bat = !h.td;
       if (await datTD(h, bat)) { h.td = bat ? { ghi_chu: '' } : null; b.setAttribute('aria-pressed', bat); b.textContent = bat ? '★' : '☆'; toast(bat ? `⭐ Đã theo dõi ${h.ho_ten || h.ten}` : 'Đã bỏ theo dõi') } });
