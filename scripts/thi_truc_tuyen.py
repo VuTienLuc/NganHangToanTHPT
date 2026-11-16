@@ -552,6 +552,9 @@ def chuan_bi_may_chu(c, in_ra):
 
 def goi(duong, du_lieu=None, lan=0):
     """Gọi API quản trị trên trang (x-admin)."""
+    if not cau_hinh().get("d1_id"):
+        return {"ok": False, "chua_dung": True,
+                "loi": "Trang trên Cloudflare chưa được dựng. Bấm \"Dựng trang lần đầu\" (hoặc \"Đăng lại tất cả\") — máy sẽ mở trình duyệt để thầy đăng nhập Cloudflare."}
     url = goc_url() + "/api/admin/" + duong
     req = urllib.request.Request(url, data=json.dumps(du_lieu or {}).encode(), method="POST",
                                  headers={"content-type": "application/json", "x-admin": bi_mat()["admin"],
@@ -570,7 +573,7 @@ def goi(duong, du_lieu=None, lan=0):
             bi_mat(tao=True)
         return k
     except Exception as e:
-        return {"ok": False, "loi": f"Chưa kết nối được trang ({e}). Đã đăng lên Cloudflare chưa?"}
+        return {"ok": False, "loi": f"Chưa kết nối được trang {goc_url()} ({getattr(e, 'reason', e)}). Kiểm tra mạng; nếu vừa đăng lần đầu thì đợi 1–2 phút rồi thử lại."}
 
 
 def dong_bo_de(in_ra=print):
