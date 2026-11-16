@@ -232,6 +232,18 @@ class XuLy(BaseHTTPRequestHandler):
                                 "text/html; charset=utf-8")
             if u.path == "/api/ping":
                 return self.gui(200, {"ok": True, "ban": MA_KHOI, "cu": ma_ma_nguon() != MA_KHOI})
+            if u.path == "/tai":            # tải file đề đã xuất (chỉ trong de-da-ra)
+                from urllib.parse import quote
+                goc = os.path.realpath(os.path.join(GOC, "de-da-ra"))
+                f = os.path.realpath(os.path.join(GOC, (q.get("p") or [""])[0]))
+                if not f.startswith(goc + os.sep) or not os.path.isfile(f):
+                    return self.gui(404, {"loi": "không có file"})
+                b = open(f, "rb").read(); ten = os.path.basename(f)
+                loai = {".pdf": "application/pdf", ".xlsx": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                        ".docx": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"}.get(os.path.splitext(f)[1].lower(), "application/octet-stream")
+                self.send_response(200); self.send_header("Content-Type", loai); self.send_header("Content-Length", str(len(b)))
+                self.send_header("Content-Disposition", ("inline" if f.endswith(".pdf") and "xem" in q else "attachment") + "; filename*=UTF-8''" + quote(ten))
+                self.end_headers(); self.wfile.write(b); return
             self.gui(404, {"loi": "không có"})
         except Exception as e:
             self.gui(500, {"loi": str(e)})
@@ -280,6 +292,12 @@ class XuLy(BaseHTTPRequestHandler):
                         pass
                 return self.gui(200, {"ok": ok, "nhat_ky": log, "ten": mt["ten"], "thu_muc": rel, "bien_dich": dang_bd, "xem": bo,
                                       "ma_dung": ma_dung})
+            if u.path == "/api/tep-de":     # file PDF / Excel / Word ở gốc thư mục đề vừa xuất
+                thu = os.path.realpath(os.path.join(GOC, d.get("thu_muc") or ""))
+                if not thu.startswith(os.path.realpath(os.path.join(GOC, "de-da-ra")) + os.sep) or not os.path.isdir(thu):
+                    return self.gui(200, {"ok": False, "ds": []})
+                ds = sorted(f for f in os.listdir(thu) if os.path.splitext(f)[1].lower() in (".pdf", ".xlsx", ".docx"))
+                return self.gui(200, {"ok": True, "ds": [{"ten": f, "p": os.path.relpath(os.path.join(thu, f), GOC)} for f in ds]})
             if u.path == "/api/de-ai/kiem":
                 import de_ai
                 return self.gui(200, de_ai.kiem(d.get("van_ban") or "", d.get("can")))

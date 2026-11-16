@@ -513,3 +513,14 @@ Bộ đề lưu trong trình duyệt (đóng mở ứng dụng vẫn còn). Dòn
 Câu có dòng đầu chứa `% LOI_BIEN_DICH: <lý do>` bị **tạm loại khỏi chỉ mục** (không vào đề, phiếu, thống kê) — báo cáo kiểm tra liệt kê riêng.
 Sửa câu xong thì xoá đoạn `% LOI_BIEN_DICH: …` và bấm **Cập nhật kho**. Danh sách câu nhập từ Archive cần sửa: `cau-hoi/_CAU_CAN_SUA.md`.
 Nhập kho không còn đổi dấu phẩy trong hình TikZ thành `{,}` (lỗi cũ làm hỏng tọa độ `(1,2)`).
+
+## ⚡ Tạo nhanh theo bài
+
+Nút **⚡ Tạo nhanh theo bài** (đầu trang):
+1. **Chọn bài theo mục lục:** Lớp → Chương → tích một hoặc nhiều bài (nút **Cả chương** để kiểm tra cả chương). Mỗi bài hiện số câu trong kho theo mức NB/TH/VD/VDC.
+2. **Chế độ:**
+   - 📗 **Tìm hiểu bài** — dễ + trung bình (Nhận biết, Thông hiểu); mặc định 45 phút.
+   - 📘 **Chuẩn** — cơ bản + nâng cao (NB, TH, VD, VDC; TN 6–4–2, Đ/S 1–1–2, TLN 0–2–3–1); mặc định 60 phút.
+   - Số câu TN/Đ/S/TLN, số mã đề, thời gian sửa được; bảng phân bổ hiện *cần / kho*, ô cam = kho thiếu → tự bù mức cùng nhóm, rồi dạng/bài khác cùng chương.
+3. **Tạo gì:** Bài giảng online HTML (vào mục lục lớp, GV xem) · Bài kiểm tra online (giao lớp, số lượt; mỗi mã một link + link chung; cần đúng 12–4–6) · File PDF đề + lời giải · Đáp án Excel (mẫu Chấm Phiếu AI).
+4. **Chọn câu & xem trước** → đổi câu nếu muốn → **⚡ Tạo tất cả**. Xong hiện link + QR và nút tải từng file PDF / DapAn.xlsx (file cũng nằm trong `de-da-ra/`).
