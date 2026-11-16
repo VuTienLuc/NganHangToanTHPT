@@ -1928,13 +1928,15 @@ $("#gv-them").onclick=async()=>{const k=await api("/api/thi/gv-them",{ten:$("#gv
 async function moDiem(nhom,ten){const k=await api("/api/thi/diem",{nhom});
   if(!k.ok){alert(k.loi||"Chưa lấy được điểm");return}
   const them=Object.fromEntries((k.them||[]).map(x=>[x.tk,x.so])), f=v=>v==null?"":Number(v).toFixed(2).replace(".",",");
-  const dong=k.ds.map(x=>[x.lop||"",x.stt||"",x.ho_ten||x.tk,x.tk,x.de,x.lan,x.nop_luc?f(x.diem):"đang làm",x.thoi_gian?Math.round(x.thoi_gian/60)+" phút":"",x.chuyen_tab||0,x.nop_luc?new Date(x.nop_luc).toLocaleString("vi-VN"):""]);
+  const CX={tu_tin:"🤩 Tự tin",binh_thuong:"🙂 Bình thường",lo_lang:"😰 Lo lắng",met_moi:"😴 Mệt mỏi"};
+  const dong=k.ds.map(x=>[x.lop||"",x.stt||"",x.ho_ten||x.tk,x.tk,x.de,x.lan,x.nop_luc?f(x.diem):"đang làm",x.thoi_gian?Math.round(x.thoi_gian/60)+" phút":"",x.chuyen_tab||0,x.nop_luc?new Date(x.nop_luc).toLocaleString("vi-VN"):"",CX[x.cam_xuc]||""]);
+  const demCx={};k.ds.forEach(x=>{if(x.cam_xuc)demCx[x.cam_xuc]=(demCx[x.cam_xuc]||0)+1});
   const tb=k.ds.filter(x=>x.nop_luc);const cao={};tb.forEach(x=>{cao[x.tk]=Math.max(cao[x.tk]??-1,x.diem)});const vals=Object.values(cao);
-  const html=`<div style="margin-bottom:6px">${tb.length} bài đã nộp · ${vals.length} học sinh · điểm cao nhất mỗi em: TB ${vals.length?f(vals.reduce((a,b)=>a+b,0)/vals.length):"—"}</div>
-   <div style="max-height:52vh;overflow:auto"><table style="width:100%;border-collapse:collapse;font-size:12.5px"><tr><th>Lớp</th><th>STT</th><th align=left>Họ tên</th><th>Mã đề</th><th>Lần</th><th>Điểm</th><th>Thời gian</th><th>Rời tab</th><th>Nộp lúc</th><th></th></tr>`+
-   k.ds.map((x,i)=>`<tr style="border-bottom:1px solid #eef0f4"><td align=center>${esc(dong[i][0])}</td><td align=center>${dong[i][1]}</td><td>${esc(dong[i][2])}</td><td>${esc(x.de)}</td><td align=center>${x.lan}</td><td align=center><b>${dong[i][6]}</b></td><td align=center>${dong[i][7]}</td><td align=center>${dong[i][8]}</td><td>${dong[i][9]}</td>
+  const html=`<div style="margin-bottom:6px">${tb.length} bài đã nộp · ${vals.length} học sinh · điểm cao nhất mỗi em: TB ${vals.length?f(vals.reduce((a,b)=>a+b,0)/vals.length):"—"}${Object.keys(demCx).length?" · Cảm xúc: "+Object.entries(demCx).map(([c,n])=>(CX[c]||c)+" "+n).join(", "):""}</div>
+   <div style="max-height:52vh;overflow:auto"><table style="width:100%;border-collapse:collapse;font-size:12.5px"><tr><th>Lớp</th><th>STT</th><th align=left>Họ tên</th><th>Mã đề</th><th>Lần</th><th>Điểm</th><th>Thời gian</th><th>Rời tab</th><th>Cảm xúc</th><th>Nộp lúc</th><th></th></tr>`+
+   k.ds.map((x,i)=>`<tr style="border-bottom:1px solid #eef0f4"><td align=center>${esc(dong[i][0])}</td><td align=center>${dong[i][1]}</td><td>${esc(dong[i][2])}</td><td>${esc(x.de)}</td><td align=center>${x.lan}</td><td align=center><b>${dong[i][6]}</b></td><td align=center>${dong[i][7]}</td><td align=center>${dong[i][8]}</td><td>${dong[i][10]}</td><td>${dong[i][9]}</td>
      <td style="white-space:nowrap"><button data-tk="${esc(x.tk)}" data-v="them" style="font-size:11.5px">+1 lượt${them[x.tk]?" (đã +"+them[x.tk]+")":""}</button><button data-id="${x.id}" data-v="xoa" style="font-size:11.5px;color:#b91c1c">Xoá lần này</button></td></tr>`).join("")+"</table></div>";
-  hopThoai(`Điểm: ${ten}`,"",[["Tải bảng điểm (Excel/CSV)",()=>{const csv="\ufeff"+[["Lớp","STT","Họ tên","Tài khoản","Mã đề","Lần","Điểm","Thời gian","Rời tab","Nộp lúc"],...dong].map(r=>r.map(v=>`"${String(v).replace(/"/g,'""')}"`).join(",")).join("\n");
+  hopThoai(`Điểm: ${ten}`,"",[["Tải bảng điểm (Excel/CSV)",()=>{const csv="\ufeff"+[["Lớp","STT","Họ tên","Tài khoản","Mã đề","Lần","Điểm","Thời gian","Rời tab","Nộp lúc","Cảm xúc"],...dong].map(r=>r.map(v=>`"${String(v).replace(/"/g,'""')}"`).join(",")).join("\n");
      const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([csv],{type:"text/csv"}));a.download=`Diem_${nhom}.csv`;a.click()},true]]);
   $("#ht-noi").innerHTML=html;
   $("#ht-noi").querySelectorAll("button[data-v]").forEach(b=>b.onclick=async()=>{

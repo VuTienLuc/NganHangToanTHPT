@@ -217,6 +217,7 @@ như phần mềm cũ thì ghi `"khung": "DeThi"` trong file JSON.
   tên đăng nhập dạng `10a1-05`, mật khẩu lần đầu 6 số → **In phiếu** cắt phát. Lần đầu đăng nhập học sinh **bắt buộc đổi mật khẩu**.
   Đặt lại mật khẩu, khoá/mở, xoá; thêm tài khoản giáo viên (không phải đổi mật khẩu). Sai 5 lần → khoá 10 phút.
 - Đăng đề: ô **Giao cho lớp** (trống = mọi lớp) và **Số lượt làm mỗi em** (mặc định 2; 0 = không giới hạn) — sửa sau bằng nút **Lớp/lượt**.
+- **Chọn cảm xúc trước khi làm:** học sinh bấm Bắt đầu → chọn 1 trong 4 cảm xúc (🤩 Tự tin · 🙂 Bình thường · 😰 Lo lắng · 😴 Mệt mỏi) → hiện một câu động viên "Thầy Lực: …" ngẫu nhiên (50 câu mỗi loại, không lặp câu vừa xem) → **Vào làm bài**. Tiếp tục lần đang làm thì không hỏi lại. Cảm xúc hiện ở cột **Cảm xúc** trong bảng điểm và file CSV. Sửa câu động viên: `scripts/may_chu/dong_vien.json` rồi bấm **Đăng lại tất cả**.
 - Trang làm bài: lớp, STT, họ tên **tự điền theo tài khoản** (không sửa được); máy chủ cấp lượt, **máy chủ chấm** — trang làm bài
   không chứa đáp án; link chung chia mã đề cố định theo tài khoản (mở mã khác bị đưa về đúng mã).
 - Nút **Điểm** ở mỗi đề: bảng điểm (lớp, STT, họ tên, lần, điểm, thời gian, rời tab), **+1 lượt** cho em cần làm lại,
