@@ -294,14 +294,15 @@ def tao(cfg, in_ra=print, chi_tinh=False):
             r"\newcommand{\phanCon}[1]{\par\smallskip\noindent{\bfseries\color{mauPhieu}#1}\par}",
             r"\newcommand{\dangPhieu}[2]{\par\smallskip\noindent{\colorbox{mauDang!12}{\color{mauDang}\bfseries\small\ Dạng #1\ }\ \textit{#2}}\par\nopagebreak}",
             r"\newcommand{\nhanMuc}[2]{\par\smallskip\noindent{\colorbox{red!75!black}{\color{white}\bfseries\scriptsize\ #1\ }\ {\scriptsize\itshape\color{black!60}Dạng #2}}\par\nopagebreak}",
-            r"\newcommand{\dongKe}[1]{\par\foreach \i in {1,...,#1}{\noindent\makebox[\linewidth]{\color{black!35}\dotfill}\par}}",
+            r"\newcommand{\dongKe}[1]{\par\foreach \i in {1,...,#1}{\noindent\makebox[\linewidth]{\rule{0pt}{8mm}\color{black!35}\dotfill}\par}}",
             r"\pagestyle{fancy}\fancyhf{}\renewcommand{\headrulewidth}{0pt}\renewcommand{\footrulewidth}{0.4pt}",
             r"\fancyfoot[L]{\footnotesize GV: " + thoat(gv) + r"}\fancyfoot[C]{\footnotesize " + thoat(f"{nhan.title()}: {ten_ngan(ten)}") + r"}"
             r"\fancyfoot[R]{\footnotesize Trang \thepage/\pageref{trangCuoiPhieu}}",
             r"\fancypagestyle{plain}{\fancyhf{}\fancyfoot[L]{\footnotesize GV: " + thoat(gv) + r"}\fancyfoot[R]{\footnotesize Trang \thepage/\pageref{trangCuoiPhieu}}}"]
     if hai_cot:
         them += [r"\usepackage{multicol}\setlength{\columnsep}{0.55cm}\setlength{\columnseprule}{0.3pt}",
-                 r"\tikzset{every picture/.append style={scale=0.75,transform shape}}",
+                 # thu nhỏ hình CHỈ trong 2 cột — không ảnh hưởng khung tcolorbox (đầu phiếu, kiến thức trọng tâm) trải đủ khổ giấy
+                 r"\AtBeginEnvironment{multicols}{\tikzset{every picture/.append style={scale=0.75,transform shape}}}",
                  r"\renewcommand{\immini}[3][]{{\tieudehinh #2}\par\nopagebreak{\centering #3\par}}"]
     mau = mau.replace("\\begin{document}", "\n".join(them) + "\n\\begin{document}", 1)
     # ---------- đầu phiếu
@@ -322,14 +323,15 @@ def tao(cfg, in_ra=print, chi_tinh=False):
     # in_san: in sẵn nội dung đã soạn; dong_trong: khung dòng kẻ để học sinh tự ghi (nội dung soạn vẫn dùng cho Beamer)
     in_san = (cfg.get("kien_thuc_in") or "in_san") != "dong_trong"
     if kt and in_san:
-        kien = r"\begin{tcolorbox}[colback=white,colframe=mauPhieu!60,boxrule=0.5pt,arc=1mm,left=2mm,right=2mm,top=1mm,bottom=1mm,breakable]" + "\n" + kt + "\n\\end{tcolorbox}"
+        kien = (r"\begin{tcolorbox}[colback=white,colframe=mauPhieu!60,boxrule=0.5pt,arc=1mm,left=3mm,right=3mm,top=1.5mm,bottom=1.5mm,breakable,width=\linewidth]"
+                + "\n{\\setstretch{1.3}" + kt + "\\par}\n\\end{tcolorbox}")
     else:
-        dong = [r"\par\smallskip{\small\bfseries Kiến thức cần nhớ (định nghĩa, tính chất, công thức):}\dongKe{" + ("6" if tl >= 90 else "4") + "}"]
-        so_ke = "3" if tl >= 90 else "2"
+        dong = [r"\par\smallskip{\small\bfseries Kiến thức cần nhớ (định nghĩa, tính chất, công thức):}\dongKe{" + ("8" if tl >= 90 else "6") + "}"]
+        so_ke = "4" if tl >= 90 else "3"
         for j, d in enumerate(cac_dang, 1):
             dong.append(r"\dangPhieu{" + str(j) + "}{" + thoat((id_map.get(d, {}).get("type_name") or d).strip()) + r"}" "\n"
                         r"{\small Phương pháp:}\dongKe{" + so_ke + "}")
-        kien = (r"\begin{tcolorbox}[colback=white,colframe=mauPhieu!60,boxrule=0.5pt,arc=1mm,left=2mm,right=2mm,top=1mm,bottom=1mm,breakable]"
+        kien = (r"\begin{tcolorbox}[colback=white,colframe=mauPhieu!60,boxrule=0.5pt,arc=1mm,left=3mm,right=3mm,top=1.5mm,bottom=1.5mm,breakable,width=\linewidth]"
                 "\n{\\small\\itshape Học sinh tự ghi: tóm tắt kiến thức và phương pháp giải từng dạng.}\n" + "\n".join(dong) + "\n\\end{tcolorbox}")
     if tu_luan:
         return _ghi_tu_luan(locals())

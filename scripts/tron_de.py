@@ -537,7 +537,8 @@ if TIET_KIEM:
            "\\renewcommand{\\phanDe}[1]{\\par\\smallskip\\noindent #1\\par}"]
     if HAI_COT:
         gon += ["\\usepackage{multicol}\\setlength{\\columnsep}{0.55cm}\\setlength{\\columnseprule}{0.3pt}",
-                "\\tikzset{every picture/.append style={scale=0.75,transform shape}}",
+                # thu nhỏ hình chỉ trong 2 cột (bìa đề cương, khung tcolorbox giữ nguyên khổ)
+                "\\AtBeginEnvironment{multicols}{\\tikzset{every picture/.append style={scale=0.75,transform shape}}}",
                 # hình cạnh đề (\\immini) quá hẹp trong 2 cột → đặt hình xuống dưới, căn giữa
                 "\\renewcommand{\\immini}[3][]{{\\tieudehinh #2}\\par\\nopagebreak{\\centering #3\\par}}"]
     mau = mau.replace("\\begin{document}", "\n".join(gon) + "\n\\begin{document}", 1)
