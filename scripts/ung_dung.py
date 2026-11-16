@@ -355,6 +355,8 @@ class XuLy(BaseHTTPRequestHandler):
                     return self.gui(200, T.them_gv(d.get("ten"), d.get("ho_ten"), d.get("mk")))
                 if viec == "phieu":
                     return self.gui(200, {"ok": True, "html": T.phieu_tai_khoan(d.get("lop") or "")})
+                if viec == "tong-hop":
+                    return self.gui(200, T.goi("tong-hop", {"lop": d.get("lop") or ""}))
                 if viec == "diem":
                     return self.gui(200, T.goi("diem", {"nhom": d.get("nhom")}))
                 if viec == "luot-them":

@@ -210,6 +210,13 @@ như phần mềm cũ thì ghi `"khung": "DeThi"` trong file JSON.
 - Dữ liệu ở `thi-truc-tuyen/` (đồng bộ GitHub để máy nào cũng đăng được mà không mất đề cũ): `site/` = đúng những gì trên mạng,
   `du_lieu/*.goc.html` = bản gốc có đáp án. Đã cài wrangler riêng: đặt biến `NH_WRANGLER=wrangler`.
 
+### 📊 Tổng hợp quá trình học online (theo lớp)
+- Thi & học trực tuyến → Thư viện → **📊 Tổng hợp quá trình** → chọn lớp.
+- Thẻ số liệu: số đợt đã giao, số em tham gia, % lượt bài hoàn thành, điểm TB lớp, số em tiến bộ; biểu đồ số em nộp + điểm TB từng đợt.
+- Bảng mỗi em × mỗi đợt (điểm cao nhất, tô màu), hoàn thành x/y, TB, tiến bộ (TB 2 bài gần nhất − 2 bài đầu) và **nhận xét tích cực** tự soạn cho từng em (bấm để sửa).
+- **Nhận xét chung cho lớp** (khen chăm chỉ, tiến bộ, xuất sắc; nhắc nhẹ làm bù, không nêu tên em chưa làm) — sửa được, **Chép** gửi nhóm Zalo lớp.
+- **Tải bảng tổng hợp (Excel)** kèm nhận xét. Cần **Đăng lại tất cả** một lần sau khi cập nhật để máy chủ có chức năng này.
+
 ### Phiếu tự luận: chọn bố cục
 - Ô **Bố cục** (kiểu Chỉ tự luận): *Song song* (trái ví dụ mẫu – phải tự luyện) hoặc *Trên – dưới* (ví dụ mẫu + lời giải ở trên, các bài tự luyện bên dưới, dùng cả bề ngang giấy, dòng làm bài dài hơn).
 
