@@ -268,6 +268,11 @@ class XuLy(BaseHTTPRequestHandler):
                                          bool(d.get("an_dap_an", True)), d.get("phut"))
                     except Exception as e:
                         return self.gui(200, {"ok": False, "loi": str(e)})
+                    if d.get("dang_ngay", True):
+                        threading.Thread(target=dang_thi_nen, daemon=True).start()
+                    return self.gui(200, {"ok": True, "slug": slug, "url": T.goc_url() + "/" + slug + "/"})
+                if viec == "nhom":
+                    slug = T.them_nhom(d.get("slug"), (d.get("ten") or "Đề thi").strip(), d.get("con") or [])
                     threading.Thread(target=dang_thi_nen, daemon=True).start()
                     return self.gui(200, {"ok": True, "slug": slug, "url": T.goc_url() + "/" + slug + "/"})
                 if viec == "trang-thai":

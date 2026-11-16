@@ -216,7 +216,49 @@ def them_de(slug, ten, html_goc, an_dap_an=True, phut=None, ghi_de=False):
     return slug
 
 
+TRANG_NHOM = """<!DOCTYPE html><html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow"><title>{tieu}</title></head><body style="font:17px system-ui;text-align:center;padding-top:30vh;color:#1e3a8a">
+Đang mở đề…<script>(function(){{var ds={ds},k='nhom-de:{slug}',m=null;try{{m=localStorage.getItem(k)}}catch(e){{}}
+if(ds.indexOf(m)<0){{m=ds[Math.floor(Math.random()*ds.length)];try{{localStorage.setItem(k,m)}}catch(e){{}}}}
+location.replace('../'+m+'/');}})();</script></body></html>"""
+
+
+def trang_nhom(slug, ten, cac_con):
+    """Link chung: mỗi học sinh được chia ngẫu nhiên 1 mã đề (nhớ trên máy em đó, tải lại không đổi mã)."""
+    return TRANG_NHOM.format(tieu=ten.replace("<", "&lt;"), ds=json.dumps(cac_con), slug=slug)
+
+
+def them_nhom(slug, ten, cac_con):
+    slug = lam_slug(slug or ten)
+    ds = danh_sach(); goc, n = slug, 2
+    while any(x["slug"] == slug for x in ds):
+        slug = f"{goc}-{n}"; n += 1
+    ghi_site(); _dat_trang(slug, trang_nhom(slug, ten, cac_con))
+    for x in ds:
+        if x["slug"] in cac_con:
+            x["nhom"] = slug
+    ds.insert(0, {"slug": slug, "ten": ten, "tao_luc": datetime.datetime.now().strftime("%d/%m/%Y %H:%M"),
+                  "trang_thai": "dang_mo", "loai": "nhom", "con": cac_con, "so_cau": len(cac_con)})
+    luu_ds(ds)
+    return slug
+
+
 def doi_trang_thai(slug, tt):
+    x = next((y for y in danh_sach() if y["slug"] == slug), None)
+    if x and x.get("loai") == "nhom":      # link chung: áp cho mọi mã đề con
+        for con in x.get("con", []):
+            if any(y["slug"] == con for y in danh_sach()):
+                _doi_1(con, tt)
+        if tt == "xoa":
+            shutil.rmtree(os.path.join(SITE, slug), ignore_errors=True)
+            luu_ds([y for y in danh_sach() if y["slug"] != slug]); return
+        ds = danh_sach(); g = next(y for y in ds if y["slug"] == slug)
+        _dat_trang(slug, trang_dong(g["ten"]) if tt == "da_dong" else trang_nhom(slug, g["ten"], g["con"]))
+        g["trang_thai"] = tt; luu_ds(ds); return
+    _doi_1(slug, tt)
+
+
+def _doi_1(slug, tt):
     """tt: dang_mo (ẩn đáp án) | da_cong_bo (có đáp án + lời giải) | da_dong | xoa"""
     ds = danh_sach(); x = next((y for y in ds if y["slug"] == slug), None)
     if not x:

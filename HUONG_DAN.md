@@ -198,6 +198,9 @@ như phần mềm cũ thì ghi `"khung": "DeThi"` trong file JSON.
   URL nhận điểm Google Sheets (nếu dùng) → **Đăng lên Cloudflare**. Lần đầu trình duyệt mở trang Cloudflare: đăng nhập, bấm Allow.
 - Kết quả: link `https://<dự án>.pages.dev/<đường-dẫn>/` + mã QR (chiếu lên lớp). Bài kiểm tra đúng mẫu của ứng dụng trình chiếu
   (12–4–6, đồng hồ, tự chấm thang 10, gửi điểm Google Sheet).
+- **Nhiều mã đề một lần**: ra đề nhiều mã (ô Số mã đề) → hộp đăng chọn *Tất cả N mã đề*: mỗi mã một link `…/<đường-dẫn>-101/`, `-102/`…
+  (cùng bộ câu thì máy tự đảo thứ tự câu và phương án theo ô Đảo phương án / Đảo ý Đ-S). Tích **link chung** → thêm `…/<đường-dẫn>/`:
+  mỗi học sinh mở được chia ngẫu nhiên 1 mã (tải lại vẫn mã đó). Mở lời giải / Đóng / Xoá ở link chung áp cho cả nhóm.
 - **Ẩn đáp án**: bản đăng mạng mã hoá đáp án (SHA-256 có muối), bỏ lời giải; xem nguồn trang không thấy đáp án, máy vẫn chấm đúng.
 - Nút **🌐 Thi trực tuyến** (thanh trên): danh sách đề đã đăng — **Mở lời giải** (đăng bản có đáp án + lời giải ở đúng link),
   **Đóng đề**, **Mở lại**, **Xoá**, QR, chép link; Cài đặt tên dự án, địa chỉ trang, URL nhận điểm.
