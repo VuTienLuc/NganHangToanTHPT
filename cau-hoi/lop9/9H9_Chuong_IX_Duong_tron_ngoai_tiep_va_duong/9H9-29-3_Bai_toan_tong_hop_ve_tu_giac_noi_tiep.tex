@@ -2657,3 +2657,189 @@ Cho đường tròn $(O; R)$ và điểm $M$ nằm bên ngoài đường tròn s
 \end{enumerate}
 }
 \end{bt}
+
+% nguồn: 2026-11-16_05_cum3_de3_cum4_de1_26_27 (nhập 16/11/2026)
+\begin{bt}%[9H9C29-3]%[ma:c6107964]
+% nguon: Đề tham khảo Tuyển sinh 10 năm học 2026-2027 Sở GD&ĐT TP.HCM - Cụm 3 Đề 3 - Bài 7
+Cho tam giác nhọn $ABC$ ($AB < AC$) nội tiếp đường tròn tâm $O$ bán kính $R$. Các đường cao $AD, BE, CK$ của tam giác $ABC$ cắt nhau tại trực tâm $H$ ($D \in BC, E \in AC, K \in AB$). Đường thẳng $AD$ cắt đường tròn $(O)$ tại điểm $M$ ($M$ khác $A$).
+\begin{enumerate}[a)]
+	\item Chứng minh $\Delta ABD \backsim \Delta CBK$, từ đó suy ra $CB$ là tia phân giác của góc $\widehat{KCM}$.
+	\item Đường thẳng $BE$ cắt đường tròn $(O)$ tại $Q$ ($Q$ khác $B$). Gọi $I$ là trung điểm của $BC$, đường thẳng $IE$ cắt $AQ$ tại điểm $G$. Chứng minh $EG \perp AQ$.
+	\item Giả sử $\widehat{BAC} = 60^\circ$. Tính bán kính đường tròn ngoại tiếp tam giác $BOC$ theo $R$.
+\end{enumerate}
+\loigiai{
+\begin{center}
+	\begin{tikzpicture}[scale=0.9,>=stealth]
+		\coordinate (O) at (0,0);
+		\def\R{3.2}
+		\draw[thick] (O) circle (\R);
+		\coordinate (A) at (-0.6,{\R*sin(acos(-0.6/\R))});
+		\coordinate (B) at ({-3.2*cos(25)},{-3.2*sin(25)});
+		\coordinate (C) at ({3.2*cos(20)},{-3.2*sin(20)});
+		\coordinate (D) at ($(B)!(A)!(C)$);
+		\coordinate (E) at ($(A)!(B)!(C)$);
+		\coordinate (K) at ($(A)!(C)!(B)$);
+		\coordinate (H) at (intersection of A--D and B--E);
+		\coordinate (I) at ($(B)!0.5!(C)$);
+		% M la giao cua AD voi (O)
+		\coordinate (M) at (-0.6,{- \R*sin(acos(-0.6/\R))});
+		% Q la giao cua BE voi (O)
+		% Ta lay giao diem thu hai cua BE voi (O)
+		\path [name path=circle] (O) circle (\R);
+		\path [name path=BE] (B) -- ($(B)!2!(E)$);
+		\coordinate (Q) at (0.5,3.16);
+		\coordinate (G) at (intersection of I--E and A--Q);
+
+		\draw[thick] (A) -- (B) -- (C) -- cycle;
+		\draw[thick] (A) -- (M);
+		\draw[thick] (B) -- (Q);
+		\draw[thick] (C) -- (K);
+		\draw[thick] (C) -- (M);
+		\draw[thick] (A) -- (Q);
+		\draw[thick] (I) -- (G);
+		\draw[dashed] (O) -- (B);
+		\draw[dashed] (O) -- (C);
+		\draw[dashed] (O) -- (I);
+
+		\fill (A) circle (1.5pt) node[above] {$A$};
+		\fill (B) circle (1.5pt) node[below left] {$B$};
+		\fill (C) circle (1.5pt) node[below right] {$C$};
+		\fill (O) circle (1.5pt) node[below] {$O$};
+		\fill (D) circle (1.5pt) node[below] {$D$};
+		\fill (E) circle (1.5pt) node[right] {$E$};
+		\fill (K) circle (1.5pt) node[left] {$K$};
+		\fill (H) circle (1.5pt) node[above left] {$H$};
+		\fill (I) circle (1.5pt) node[below] {$I$};
+		\fill (M) circle (1.5pt) node[below] {$M$};
+		\fill (Q) circle (1.5pt) node[above right] {$Q$};
+		\fill (G) circle (1.5pt) node[above] {$G$};
+	\end{tikzpicture}
+\end{center}
+\begin{enumerate}[a)]
+	\item Xét $\Delta ABD$ và $\Delta CBK$ có:
+	\begin{itemize}
+		\item $\widehat{ADB} = \widehat{CKB} = 90^\circ$;
+		\item Góc $\widehat{B}$ chung.
+	\end{itemize}
+	Do đó $\Delta ABD \backsim \Delta CBK$ (g-g).\\
+	Suy ra $\widehat{BAD} = \widehat{BCK}$ (hai góc tương ứng).\\
+	Mặt khác, trong đường tròn $(O)$, ta có $\widehat{BAD} = \widehat{BAM} = \widehat{BCM}$ (hai góc nội tiếp cùng chắn cung $BM$).\\
+	Từ đó suy ra $\widehat{BCK} = \widehat{BCM}$, hay $CB$ là tia phân giác của góc $\widehat{KCM}$.
+	\item Tam giác $BEC$ vuông tại $E$ có $EI$ là đường trung tuyến ứng với cạnh huyền $BC$, suy ra:
+	$$IE = IC = \dfrac{1}{2}BC \implies \Delta IEC\text{ cân tại }I \implies \widehat{IEC} = \widehat{ACB}.$$
+	Mà $\widehat{AEG} = \widehat{IEC}$ (hai góc đối đỉnh), nên $\widehat{AEG} = \widehat{ACB}$.\\
+	Mặt khác, trong đường tròn $(O)$, ta có $\widehat{ACB} = \widehat{AQB} = \widehat{AQE}$ (cùng chắn cung $AB$).\\
+	Do đó $\widehat{AEG} = \widehat{AQE}$.\\
+	Xét $\Delta AEG$ và $\Delta AQE$ có:
+	\begin{itemize}
+		\item Góc $\widehat{EAQ}$ chung;
+		\item $\widehat{AEG} = \widehat{AQE}$ (chứng minh trên).
+	\end{itemize}
+	Suy ra $\Delta AEG \backsim \Delta AQE$ (g-g) $\implies \widehat{AGE} = \widehat{AEQ} = 90^\circ$.\\
+	Vậy $EG \perp AQ$.
+	\item Ta có $\widehat{BAC} = 60^\circ$ nên góc ở tâm $\widehat{BOC} = 2\widehat{BAC} = 2 \cdot 60^\circ = 120^\circ$.\\
+	Tam giác $OBC$ cân tại $O$ ($OB = OC = R$) có $OI$ là đường trung tuyến nên $OI$ đồng thời là đường phân giác của góc $\widehat{BOC}$ và đường trung trực của $BC$.\\
+	Suy ra $\widehat{BOI} = \dfrac{1}{2}\widehat{BOC} = 60^\circ$.\\
+	Gọi $O'$ là tâm đường tròn ngoại tiếp tam giác $BOC$.\\
+	Vì $O'B = O'C$ nên $O'$ thuộc đường trung trực của $BC$, tức là $O'$ nằm trên đường thẳng $OI$.\\
+	Do đó $\widehat{BOO'} = \widehat{BOI} = 60^\circ$.\\
+	Xét tam giác $O'BO$ có $O'B = O'O$ (cùng là bán kính của đường tròn ngoại tiếp $\Delta BOC$) nên tam giác $O'BO$ cân tại $O'$.\\
+	Tam giác cân có một góc bằng $60^\circ$ nên tam giác $O'BO$ là tam giác đều.\\
+	Suy ra bán kính đường tròn ngoại tiếp tam giác $BOC$ là:
+	$$R' = O'B = OB = R.$$
+\end{enumerate}
+}
+\end{bt}
+
+% nguồn: 2026-11-16_05_cum3_de3_cum4_de1_26_27 (nhập 16/11/2026)
+\begin{bt}%[9H9C29-3]%[ma:a0e58cf4]
+% nguon: Đề tham khảo Tuyển sinh 10 năm học 2026-2027 Sở GD&ĐT TP.HCM - Cụm 4 Đề 1 - Bài 7
+Cho đường tròn $(O)$ có $AB$ là một dây cung không đi qua tâm. Gọi $H$ là trung điểm của đoạn thẳng $AB$. Tiếp tuyến tại $A$ của đường tròn $(O)$ cắt tia $OH$ tại điểm $K$.
+\begin{enumerate}[a)]
+	\item Chứng minh $\widehat{KBO} = 90^\circ$ và tứ giác $KAOB$ là tứ giác nội tiếp.
+	\item Kẻ đường kính $AC$ của đường tròn $(O)$. Chứng minh $OH \cdot OK = OC^2$, từ đó suy ra $\widehat{OCH} = \widehat{OKC}$.
+	\item Tiếp tuyến tại $C$ của đường tròn $(O)$ cắt tia $AB$ tại điểm $E$. Gọi $I$ là giao điểm của $OE$ và $KC$. Tính bán kính đường tròn ngoại tiếp tứ giác $KHIE$ biết $\widehat{KAB} = 70^\circ$ và $HI = 6\text{ cm}$ (kết quả làm tròn đến chữ số thập phân thứ hai).
+\end{enumerate}
+\loigiai{
+\begin{center}
+	\begin{tikzpicture}[scale=0.9,>=stealth]
+		\coordinate (O) at (0,0);
+		\def\R{2.8}
+		\draw[thick] (O) circle (\R);
+		\coordinate (A) at ({-2.8*cos(40)},{2.8*sin(40)});
+		\coordinate (C) at ($(O)!-1!(A)$);
+		\coordinate (B) at ({-2.8*cos(40)},{-2.8*sin(40)});
+		\coordinate (H) at ($(A)!0.5!(B)$);
+		\coordinate (K) at ({-2.8/cos(40)},0);
+		\coordinate (E) at ({-2.8*cos(40)},{-2.8*(1+cos(40)*cos(40))/sin(40)});
+		\coordinate (I) at (intersection of O--E and K--C);
+
+		\draw[thick] (A) -- (C);
+		\draw[thick] (A) -- (B) -- (E);
+		\draw[thick] (K) -- (A);
+		\draw[thick] (K) -- (B);
+		\draw[thick] (K) -- (O);
+		\draw[thick] (K) -- (C);
+		\draw[thick] (O) -- (E);
+		\draw[thick] (C) -- (E);
+		\draw[dashed] (H) -- (I);
+
+		\fill (O) circle (1.5pt) node[above right] {$O$};
+		\fill (A) circle (1.5pt) node[above left] {$A$};
+		\fill (B) circle (1.5pt) node[below left] {$B$};
+		\fill (C) circle (1.5pt) node[below right] {$C$};
+		\fill (H) circle (1.5pt) node[above left] {$H$};
+		\fill (K) circle (1.5pt) node[left] {$K$};
+		\fill (E) circle (1.5pt) node[below] {$E$};
+		\fill (I) circle (1.5pt) node[above] {$I$};
+	\end{tikzpicture}
+\end{center}
+\begin{enumerate}[a)]
+	\item Tam giác $OAB$ cân tại $O$ ($OA = OB = R$) có $H$ là trung điểm dây cung $AB$ nên $OH$ đồng thời là đường cao và đường phân giác của góc $\widehat{AOB}$.\\
+	Suy ra $OH \perp AB$ và $\widehat{AOK} = \widehat{BOK}$.\\
+	Xét $\Delta KAO$ và $\Delta KBO$ có:
+	\begin{itemize}
+		\item $OA = OB = R$;
+		\item Góc $\widehat{AOK} = \widehat{BOK}$;
+		\item $OK$ là cạnh chung.
+	\end{itemize}
+	Do đó $\Delta KAO = \Delta KBO$ (c-g-c), suy ra $\widehat{KBO} = \widehat{KAO} = 90^\circ$ (do $KA$ là tiếp tuyến tại $A$).\\
+	Xét tứ giác $KAOB$ có $\widehat{KAO} + \widehat{KBO} = 90^\circ + 90^\circ = 180^\circ$, suy ra $KAOB$ là tứ giác nội tiếp đường tròn đường kính $OK$.
+	\item Tam giác $KAO$ vuông tại $A$ có $AH$ là đường cao ($AH \perp OK$ tại $H$), áp dụng hệ thức lượng ta có:
+	$$OA^2 = OH \cdot OK.$$
+	Vì $OA = OC = R$ nên $OC^2 = OH \cdot OK \implies \dfrac{OH}{OC} = \dfrac{OC}{OK}$.\\
+	Xét $\Delta OHC$ và $\Delta OCK$ có:
+	\begin{itemize}
+		\item Góc $\widehat{COK}$ chung;
+		\item $\dfrac{OH}{OC} = \dfrac{OC}{OK}$.
+	\end{itemize}
+	Do đó $\Delta OHC \backsim \Delta OCK$ (c-g-c), suy ra $\widehat{OCH} = \widehat{OKC}$.
+	\item Vì $CE$ là tiếp tuyến của $(O)$ nên $\widehat{OCE} = 90^\circ$.\\
+	Tam giác $OCE$ vuông tại $C$ và tam giác $OHE$ vuông tại $H$ đều nội tiếp đường tròn đường kính $OE$, suy ra tứ giác $OHEC$ nội tiếp đường tròn đường kính $OE$.\\
+	Do đó $\widehat{OEH} = \widehat{OCH}$ (hai góc nội tiếp cùng chắn cung $OH$).\\
+	Theo câu b, $\widehat{OCH} = \widehat{OKC}$ nên $\widehat{OEH} = \widehat{OKI}$.\\
+	Xét $\Delta OIK$ và $\Delta OHE$ có:
+	\begin{itemize}
+		\item Góc $\widehat{KOE}$ chung;
+		\item $\widehat{OKI} = \widehat{OEH}$.
+	\end{itemize}
+	Suy ra $\Delta OIK \backsim \Delta OHE$ (g-g) $\implies \widehat{OIK} = \widehat{OHE} = 90^\circ \implies KC \perp OE$ tại $I$.\\
+	Xét tứ giác $KHIE$ có $\widehat{KIE} = 90^\circ$ và $\widehat{KHE} = 90^\circ$, do đó $K, H, I, E$ cùng thuộc đường tròn đường kính $KE$.\\
+	Bán kính đường tròn ngoại tiếp tứ giác $KHIE$ là $r = \dfrac{KE}{2}$.\\
+	Ta có $\widehat{KAB} = \widehat{AOH} = 70^\circ$ (cùng phụ góc $\widehat{OAH}$). Trong tam giác vuông $OAH$:
+	$$AH = R \sin 70^\circ, \quad OH = R \cos 70^\circ.$$
+	Kẻ $CD \perp OH$ tại $D$. Ta có $\widehat{COD} = \widehat{AOH} = 70^\circ$ (đối đỉnh).\\
+	Trong tam giác vuông $OCD$: $OD = R \cos 70^\circ$, $CD = R \sin 70^\circ$.\\
+	Suy ra $HD = HO + OD = 2R \cos 70^\circ$.\\
+	Trong tam giác vuông $HCD$:
+	$$HC = \sqrt{CD^2 + HD^2} = R\sqrt{\sin^2 70^\circ + 4\cos^2 70^\circ}.$$
+	Hai tam giác $\Delta AHC$ và $\Delta AOE$ đồng dạng (g-g) vì có góc $\widehat{A}$ chung và $\widehat{ACH} = \widehat{AEO}$, suy ra:
+	$$OE = \dfrac{HC \cdot AO}{AH} = \dfrac{R\sqrt{\sin^2 70^\circ + 4\cos^2 70^\circ}}{\sin 70^\circ}.$$
+	Hai tam giác $\Delta OIH$ và $\Delta OKE$ đồng dạng (g-g), suy ra:
+	$$\dfrac{HI}{KE} = \dfrac{OH}{OE} \implies KE = HI \cdot \dfrac{OE}{OH}.$$
+	Do đó bán kính đường tròn ngoại tiếp tứ giác $KHIE$ là:
+	$$r = \dfrac{KE}{2} = \dfrac{HI}{2} \cdot \dfrac{OE}{OH} = \dfrac{6}{2} \cdot \dfrac{\sqrt{\sin^2 70^\circ + 4\cos^2 70^\circ}}{\sin 70^\circ \cdot \cos 70^\circ} \approx 3 \cdot \dfrac{1{,}1623}{0{,}9397 \cdot 0{,}3420} \approx 10{,}85\text{ (cm)}.$$
+	Vậy bán kính cần tìm là $10{,}85\text{ cm}$.
+\end{enumerate}
+}
+\end{bt}
