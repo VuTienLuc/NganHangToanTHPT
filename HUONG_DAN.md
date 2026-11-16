@@ -207,6 +207,14 @@ như phần mềm cũ thì ghi `"khung": "DeThi"` trong file JSON.
 - Dữ liệu ở `thi-truc-tuyen/` (đồng bộ GitHub để máy nào cũng đăng được mà không mất đề cũ): `site/` = đúng những gì trên mạng,
   `du_lieu/*.goc.html` = bản gốc có đáp án. Đã cài wrangler riêng: đặt biến `NH_WRANGLER=wrangler`.
 
+## Bài giảng trực tuyến + mục lục theo lớp
+- Nút **🌐 Thi trực tuyến** → thẻ **📚 Bài giảng** → **＋ Đăng bài giảng…**, nguồn:
+  *File đã xuất từ ứng dụng* (PDF phiếu / trình chiếu beamer / đề / lời giải trong `de-da-ra/`, và bài **trình chiếu HTML** đã chuyển —
+  file JSON trong `de-da-ra/TrinhChieu/` tự dựng lại thành trang trình chiếu) · *Chọn file trên máy* (HTML/PDF, tối đa 25 MB).
+- Từ **Xem trước** câu được chọn: **📚 Đăng bài giảng** → bộ câu thành trang trình chiếu HTML (có nút Đáp án, Xem lời giải).
+- Mỗi bài giảng một link `…pages.dev/bai-giang/<đường-dẫn>/` + QR; **mục lục lớp** `…pages.dev/toan10/` (toan6…toan12) tự cập nhật,
+  học sinh chỉ cần nhớ 1 link cả năm. Thao tác: Ẩn / Hiện / **Thay file…** (đăng bản mới ở đúng link cũ) / Xoá.
+
 ## Sang ứng dụng trình chiếu HTML (Soạn đề & trình chiếu Toán)
 - Điền ma trận → **Xem trước câu được chọn** → (đổi câu nếu cần) → **▶ Sang trình chiếu HTML**.
 - Bộ câu của mã đề đang xem được chuyển sang ứng dụng `khung/TrinhChieu/ung_dung_trinh_chieu.html`; trình duyệt mở ngay đề đó.

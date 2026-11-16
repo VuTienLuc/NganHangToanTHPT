@@ -260,8 +260,38 @@ class XuLy(BaseHTTPRequestHandler):
                     except Exception as e:
                         return self.gui(200, {"ok": False, "loi": str(e), "nhat_ky": "\n".join(nk)})
                     return self.gui(200, {"ok": True, "du_lieu": du, "nhat_ky": "\n".join(nk)})
+                if viec == "bg-nguon":
+                    return self.gui(200, {"ok": True, "ds": T.nguon_ung_dung()})
+                if viec == "bg-json":
+                    try:
+                        return self.gui(200, {"ok": True, "du_lieu": json.loads(T.doc_nguon(d["duong_dan"]).decode("utf-8"))})
+                    except Exception as e:
+                        return self.gui(200, {"ok": False, "loi": str(e)})
                 if cong_viec.get("dang_chay"):
                     return self.gui(200, {"ok": False, "loi": "Đang có việc chạy, đợi xong rồi bấm lại."})
+                if viec == "bg-dang":
+                    import base64
+                    try:
+                        if d.get("duong_dan"):
+                            noi = T.doc_nguon(d["duong_dan"])
+                        elif d.get("base64"):
+                            noi = base64.b64decode(d["base64"])
+                        else:
+                            noi = (d.get("html") or "").encode("utf-8")
+                        if not noi:
+                            raise RuntimeError("Chưa có nội dung bài giảng.")
+                        slug = T.them_bai_giang(d.get("slug"), (d.get("ten") or "Bài giảng").strip(), int(d.get("lop") or 10),
+                                                d.get("kieu") or "html", noi, bool(d.get("ghi_de")), d.get("nguon") or "")
+                    except Exception as e:
+                        return self.gui(200, {"ok": False, "loi": str(e)})
+                    threading.Thread(target=dang_thi_nen, daemon=True).start()
+                    return self.gui(200, {"ok": True, "slug": slug, "url": f"{T.goc_url()}/bai-giang/{slug}/",
+                                          "muc_luc": f"{T.goc_url()}/toan{int(d.get('lop') or 10)}/"})
+                if viec == "bg-trang-thai":
+                    sl, tt = d.get("slug"), d.get("tt")
+                    threading.Thread(target=dang_thi_nen, args=(lambda log: (T.doi_bai_giang(sl, tt),
+                                     log(f"Bài giảng {sl} → {tt}")),), daemon=True).start()
+                    return self.gui(200, {"ok": True})
                 if viec == "dang":
                     try:
                         slug = T.them_de(d.get("slug"), (d.get("ten") or "Đề thi").strip(), d["html"],

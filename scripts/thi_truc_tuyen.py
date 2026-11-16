@@ -180,7 +180,8 @@ def trang_dong(ten):
 
 def ghi_site():
     os.makedirs(SITE, exist_ok=True)
-    open(os.path.join(SITE, "index.html"), "w", encoding="utf-8").write(trang_chu())
+    if not any(x.get("loai") == "bai_giang" for x in danh_sach()):
+        open(os.path.join(SITE, "index.html"), "w", encoding="utf-8").write(trang_chu())
     open(os.path.join(SITE, "_headers"), "w", encoding="utf-8").write(
         "/*\n  X-Robots-Tag: noindex, nofollow\n  Cache-Control: no-cache\n")
     open(os.path.join(SITE, "404.html"), "w", encoding="utf-8").write(
@@ -198,7 +199,7 @@ def them_de(slug, ten, html_goc, an_dap_an=True, phut=None, ghi_de=False):
     ds = danh_sach()
     if not ghi_de:
         goc, n = slug, 2
-        while any(x["slug"] == slug for x in ds):
+        while any(x["slug"] == slug and x.get("loai") != "bai_giang" for x in ds):
             slug = f"{goc}-{n}"; n += 1
         # đổi examId theo slug mới (bản gốc)
     os.makedirs(DL, exist_ok=True)
@@ -209,7 +210,7 @@ def them_de(slug, ten, html_goc, an_dap_an=True, phut=None, ghi_de=False):
     open(os.path.join(DL, slug + ".goc.html"), "w", encoding="utf-8").write(html_goc)
     html, so = ban_truc_tuyen(html_goc, slug, an_dap_an)
     ghi_site(); _dat_trang(slug, html)
-    ds = [x for x in ds if x["slug"] != slug]
+    ds = [x for x in ds if x["slug"] != slug or x.get("loai") == "bai_giang"]
     ds.insert(0, {"slug": slug, "ten": ten, "tao_luc": datetime.datetime.now().strftime("%d/%m/%Y %H:%M"),
                   "trang_thai": "dang_mo" if an_dap_an else "da_cong_bo", "so_cau": so, "phut": phut})
     luu_ds(ds)
@@ -231,7 +232,7 @@ def trang_nhom(slug, ten, cac_con):
 def them_nhom(slug, ten, cac_con):
     slug = lam_slug(slug or ten)
     ds = danh_sach(); goc, n = slug, 2
-    while any(x["slug"] == slug for x in ds):
+    while any(x["slug"] == slug and x.get("loai") != "bai_giang" for x in ds):
         slug = f"{goc}-{n}"; n += 1
     ghi_site(); _dat_trang(slug, trang_nhom(slug, ten, cac_con))
     for x in ds:
@@ -244,15 +245,15 @@ def them_nhom(slug, ten, cac_con):
 
 
 def doi_trang_thai(slug, tt):
-    x = next((y for y in danh_sach() if y["slug"] == slug), None)
+    x = next((y for y in danh_sach() if y["slug"] == slug and y.get("loai") != "bai_giang"), None)
     if x and x.get("loai") == "nhom":      # link chung: áp cho mọi mã đề con
         for con in x.get("con", []):
-            if any(y["slug"] == con for y in danh_sach()):
+            if any(y["slug"] == con and y.get("loai") != "bai_giang" for y in danh_sach()):
                 _doi_1(con, tt)
         if tt == "xoa":
             shutil.rmtree(os.path.join(SITE, slug), ignore_errors=True)
-            luu_ds([y for y in danh_sach() if y["slug"] != slug]); return
-        ds = danh_sach(); g = next(y for y in ds if y["slug"] == slug)
+            luu_ds([y for y in danh_sach() if y["slug"] != slug or y.get("loai") == "bai_giang"]); return
+        ds = danh_sach(); g = next(y for y in ds if y["slug"] == slug and y.get("loai") != "bai_giang")
         _dat_trang(slug, trang_dong(g["ten"]) if tt == "da_dong" else trang_nhom(slug, g["ten"], g["con"]))
         g["trang_thai"] = tt; luu_ds(ds); return
     _doi_1(slug, tt)
@@ -260,7 +261,7 @@ def doi_trang_thai(slug, tt):
 
 def _doi_1(slug, tt):
     """tt: dang_mo (ẩn đáp án) | da_cong_bo (có đáp án + lời giải) | da_dong | xoa"""
-    ds = danh_sach(); x = next((y for y in ds if y["slug"] == slug), None)
+    ds = danh_sach(); x = next((y for y in ds if y["slug"] == slug and y.get("loai") != "bai_giang"), None)
     if not x:
         raise RuntimeError("Không có đề " + slug)
     p_goc = os.path.join(DL, slug + ".goc.html")
@@ -270,13 +271,139 @@ def _doi_1(slug, tt):
         cu = os.path.join(DL, "_da_xoa"); os.makedirs(cu, exist_ok=True)
         if os.path.exists(p_goc):
             shutil.move(p_goc, os.path.join(cu, slug + ".goc.html"))
-        luu_ds([y for y in ds if y["slug"] != slug]); return
+        luu_ds([y for y in ds if y["slug"] != slug or y.get("loai") == "bai_giang"]); return
     if tt == "da_dong":
         _dat_trang(slug, trang_dong(x["ten"]))
     else:
         goc = open(p_goc, encoding="utf-8").read()
         _dat_trang(slug, ban_truc_tuyen(goc, slug, tt == "dang_mo")[0])
     x["trang_thai"] = tt; luu_ds(ds)
+
+
+# ---------------------------------------------------------------- BÀI GIẢNG (HTML trình chiếu, PDF) + mục lục theo lớp
+GIOI_HAN = 25 * 1024 * 1024          # Cloudflare Pages: tối đa 25 MiB mỗi file
+AN = os.path.join(THU, "an")          # bài giảng đang ẩn (gỡ khỏi mạng, giữ file để hiện lại)
+
+TRANG_PDF = """<!DOCTYPE html><html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow"><title>{tieu}</title><style>body{{margin:0;font:16px system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:#eef3f9;color:#1f2937}}
+header{{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding:10px 16px;background:#1e3a8a;color:#fff}}header h1{{font-size:17px;margin:0;flex:1}}
+header a{{color:#1e3a8a;background:#fff;border-radius:8px;padding:6px 12px;text-decoration:none;font-weight:600;font-size:14px}}
+iframe{{border:0;width:100%;height:calc(100vh - 56px);display:block;background:#525659}}</style></head><body>
+<header><h1>{tieu}</h1><a href="{lop_url}">☰ Mục lục</a><a href="bai-giang.pdf" target="_blank">Mở toàn màn hình</a><a href="bai-giang.pdf" download>Tải PDF</a></header>
+<iframe src="bai-giang.pdf#view=FitH" title="{tieu}"></iframe></body></html>"""
+
+TRANG_LOP = """<!DOCTYPE html><html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow"><title>Bài giảng Toán {lop}</title><style>body{{margin:0;font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:#eef3f9;color:#1f2937}}
+.vo{{max-width:820px;margin:0 auto;padding:26px 16px}}h1{{color:#1e3a8a;margin:0 0 2px;font-size:26px}}.phu{{color:#6b7280;margin:0 0 18px}}
+a.bai{{display:flex;gap:12px;align-items:center;background:#fff;border-radius:12px;padding:13px 16px;margin:8px 0;text-decoration:none;color:#1f2937;box-shadow:0 2px 10px rgba(30,58,138,.07)}}
+a.bai:hover{{box-shadow:0 4px 18px rgba(30,58,138,.16)}}.nhan{{font-size:12px;font-weight:700;border-radius:7px;padding:3px 8px;white-space:nowrap}}
+.html{{background:#dbeafe;color:#1e40af}}.pdf{{background:#fee2e2;color:#991b1b}}.ten{{flex:1;font-weight:600}}.ngay{{color:#9ca3af;font-size:12.5px;white-space:nowrap}}
+</style></head><body><div class="vo"><h1>Bài giảng Toán {lop}</h1><p class="phu">Thầy Vũ Tiến Lực – Trường THPT Nguyễn Hữu Cảnh</p>{ds}</div></body></html>"""
+
+
+def _lop_slug(lop):
+    return f"toan{int(lop)}"
+
+
+def ghi_muc_luc():
+    """Viết lại trang mục lục mọi lớp có bài giảng: /toan10/, /toan11/…"""
+    ds = danh_sach()
+    cac_lop = sorted({int(x["lop"]) for x in ds if x.get("loai") == "bai_giang" and x.get("lop")})
+    for lop in cac_lop:
+        bg = [x for x in ds if x.get("loai") == "bai_giang" and int(x.get("lop") or 0) == lop and x.get("trang_thai") == "hien"]
+        dong = "".join(
+            f'<a class="bai" href="../bai-giang/{x["slug"]}/"><span class="nhan {x["kieu"]}">{"Trình chiếu" if x["kieu"] == "html" else "PDF"}</span>'
+            f'<span class="ten">{x["ten"].replace("<", "&lt;")}</span><span class="ngay">{x["tao_luc"][:10]}</span></a>' for x in bg) \
+            or '<p class="phu">Chưa có bài giảng.</p>'
+        _dat_trang(_lop_slug(lop), TRANG_LOP.format(lop=lop, ds=dong))
+    # trang chủ: link các mục lục
+    if cac_lop:
+        lk = " · ".join(f'<a href="{_lop_slug(l)}/">Toán {l}</a>' for l in cac_lop)
+        open(os.path.join(SITE, "index.html"), "w", encoding="utf-8").write(
+            TRANG.format(tieu="Trang học Toán", noi=f"<p>Thầy Vũ Tiến Lực – Trường THPT Nguyễn Hữu Cảnh</p><p><b>Bài giảng:</b> {lk}</p>"
+                                                   "<p>Đề thi: mở đúng đường link thầy gửi.</p>"))
+
+
+def them_bai_giang(slug, ten, lop, kieu, du_lieu, ghi_de=False, nguon=""):
+    """kieu: html | pdf; du_lieu: bytes. Trả slug."""
+    if kieu not in ("html", "pdf"):
+        raise RuntimeError("Chỉ nhận bài giảng HTML hoặc PDF.")
+    if len(du_lieu) > GIOI_HAN:
+        raise RuntimeError(f"File {len(du_lieu) / 1048576:.1f} MB — Cloudflare Pages chỉ nhận tối đa 25 MB mỗi file.")
+    slug = lam_slug(slug or ten)
+    ds = danh_sach()
+    if not ghi_de:
+        goc, n = slug, 2
+        while any(x["slug"] == slug and x.get("loai") == "bai_giang" for x in ds):
+            slug = f"{goc}-{n}"; n += 1
+    ghi_site()
+    d = os.path.join(SITE, "bai-giang", slug)
+    shutil.rmtree(d, ignore_errors=True); shutil.rmtree(os.path.join(AN, slug), ignore_errors=True)
+    os.makedirs(d, exist_ok=True)
+    if kieu == "html":
+        t = du_lieu.decode("utf-8", "ignore")
+        if "noindex" not in t:
+            t = re.sub(r"<head([^>]*)>", r'<head\1><meta name="robots" content="noindex,nofollow">', t, count=1)
+        open(os.path.join(d, "index.html"), "w", encoding="utf-8").write(t)
+    else:
+        open(os.path.join(d, "bai-giang.pdf"), "wb").write(du_lieu)
+        open(os.path.join(d, "index.html"), "w", encoding="utf-8").write(
+            TRANG_PDF.format(tieu=ten.replace("<", "&lt;"), lop_url=f"../../{_lop_slug(lop)}/"))
+    cu = next((x for x in ds if x["slug"] == slug and x.get("loai") == "bai_giang"), None)
+    ds = [x for x in ds if not (x["slug"] == slug and x.get("loai") == "bai_giang")]
+    ds.insert(0, {"slug": slug, "ten": ten, "loai": "bai_giang", "lop": int(lop), "kieu": kieu, "trang_thai": "hien",
+                  "tao_luc": (cu or {}).get("tao_luc") or datetime.datetime.now().strftime("%d/%m/%Y %H:%M"),
+                  "cap_nhat": datetime.datetime.now().strftime("%d/%m/%Y %H:%M"), "nguon": nguon,
+                  "kb": round(len(du_lieu) / 1024)})
+    luu_ds(ds); ghi_muc_luc()
+    return slug
+
+
+def doi_bai_giang(slug, tt):
+    """tt: hien | an | xoa"""
+    ds = danh_sach(); x = next((y for y in ds if y["slug"] == slug and y.get("loai") == "bai_giang"), None)
+    if not x:
+        raise RuntimeError("Không có bài giảng " + slug)
+    tren = os.path.join(SITE, "bai-giang", slug); cat = os.path.join(AN, slug)
+    if tt in ("an", "xoa") and os.path.isdir(tren):
+        shutil.rmtree(cat, ignore_errors=True); os.makedirs(AN, exist_ok=True); shutil.move(tren, cat)
+    if tt == "hien" and os.path.isdir(cat):
+        shutil.rmtree(tren, ignore_errors=True); os.makedirs(os.path.dirname(tren), exist_ok=True); shutil.move(cat, tren)
+    if tt == "an":
+        _dat_trang(os.path.join("bai-giang", slug), TRANG.format(tieu=x["ten"].replace("<", "&lt;"), noi="<p>Bài giảng đang tạm ẩn.</p>"))
+    if tt == "xoa":
+        xo = os.path.join(THU, "da_xoa"); os.makedirs(xo, exist_ok=True)
+        if os.path.isdir(cat):
+            shutil.rmtree(os.path.join(xo, slug), ignore_errors=True); shutil.move(cat, os.path.join(xo, slug))
+        ds = [y for y in ds if y is not x]
+    else:
+        x["trang_thai"] = tt
+    luu_ds(ds); ghi_site(); ghi_muc_luc()
+
+
+def nguon_ung_dung(gioi_han=400):
+    """File đã xuất từ ứng dụng (de-da-ra/): PDF + bài trình chiếu JSON (đổi sang HTML trình chiếu)."""
+    goc = os.path.join(GOC, "de-da-ra"); ra = []
+    for r, _, fs in os.walk(goc):
+        if "/tex" in r.replace("\\", "/") or os.path.basename(r).startswith("_"):
+            continue
+        for f in fs:
+            e = f.lower().rsplit(".", 1)[-1]
+            if e == "pdf" or (e == "json" and os.path.basename(r) == "TrinhChieu"):
+                p = os.path.join(r, f); st = os.stat(p)
+                ra.append({"duong_dan": os.path.relpath(p, GOC), "ten": f, "thu_muc": os.path.relpath(r, goc),
+                           "kieu": "pdf" if e == "pdf" else "json", "kb": round(st.st_size / 1024), "luc": st.st_mtime})
+    ra.sort(key=lambda x: -x["luc"])
+    for x in ra:
+        x["luc"] = datetime.datetime.fromtimestamp(x["luc"]).strftime("%d/%m/%Y %H:%M")
+    return ra[:gioi_han]
+
+
+def doc_nguon(duong_dan):
+    p = os.path.realpath(os.path.join(GOC, duong_dan))
+    if not p.startswith(os.path.realpath(os.path.join(GOC, "de-da-ra")) + os.sep):
+        raise RuntimeError("Chỉ lấy file trong de-da-ra/")
+    return open(p, "rb").read()
 
 
 # ---------------------------------------------------------------- đăng lên Cloudflare Pages

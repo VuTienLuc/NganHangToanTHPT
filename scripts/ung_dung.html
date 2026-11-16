@@ -206,6 +206,14 @@ footer .gian{flex:1}
 #kt-ds .tt{margin-left:auto;font-size:11px;white-space:nowrap}
 #kt-ds .co{color:#15803d}#kt-ds .chua{color:#b45309}
 #hop-kt .cot{display:flex;flex-direction:column;gap:8px;min-width:0;min-height:0}
+#hop-bg{position:fixed;inset:0;background:rgba(17,24,39,.35);display:none;align-items:center;justify-content:center;z-index:19}
+#hop-bg .noi{background:#fff;border-radius:14px;width:min(680px,96vw);max-height:92vh;display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.25)}
+#hop-bg h2{margin:0;padding:12px 18px;font-size:16px;border-bottom:1px solid var(--vien)}
+#hop-bg .than{overflow:auto;padding:12px 18px;display:flex;flex-direction:column;gap:9px;font-size:13px}
+#hop-bg .chan{padding:10px 18px;border-top:1px solid var(--vien);display:flex;gap:8px;align-items:center}
+#hop-bg label.o{display:flex;flex-direction:column;gap:3px;font-weight:600}#hop-bg label.o input,#hop-bg label.o select{font-weight:400;padding:6px 8px}
+#bg-ds{width:100%;font-size:12.5px}.the-thi{display:flex;gap:4px;margin-bottom:4px}.the-thi button{border-radius:8px 8px 0 0}.the-thi button.chon{background:#1e3a8a;color:#fff}
+#thi-ml a{margin-right:4px}
 #hop-thi,#hop-dthi{position:fixed;inset:0;background:rgba(17,24,39,.35);display:none;align-items:center;justify-content:center;z-index:18}
 #hop-thi .noi,#hop-dthi .noi{background:#fff;border-radius:14px;width:min(860px,96vw);max-height:92vh;display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.25)}
 #hop-dthi .noi{width:min(620px,96vw)}
@@ -573,11 +581,32 @@ tr.gop-h td{background:#dbeafe;text-align:left;font-weight:700;padding:8px 12px;
   <div class="chan"><span style="font-size:12px;color:#666">Cần đúng 12 TN · 4 Đ/S · 6 TLN.</span>
     <button id="dthi-ok" class="chinh" style="margin-left:auto">Đăng lên Cloudflare</button><button id="dthi-dong">Đóng</button></div>
 </div></div>
+<div id="hop-bg"><div class="noi">
+  <h2>📚 Đăng bài giảng lên mạng</h2>
+  <div class="than">
+    <div style="display:flex;gap:14px;flex-wrap:wrap">
+      <label id="bg-nguon-bo-l" style="display:none"><input type="radio" name="bg-nguon" value="bo"> Bộ câu đang xem → trình chiếu HTML (có đáp án, lời giải)</label>
+      <label><input type="radio" name="bg-nguon" value="ud" checked> File đã xuất từ ứng dụng</label>
+      <label><input type="radio" name="bg-nguon" value="may"> Chọn file trên máy (HTML / PDF)</label></div>
+    <div id="bg-ud"><input id="bg-loc" placeholder="Lọc theo tên… (PDF phiếu, trình chiếu beamer, đề; JSON trình chiếu → HTML)" style="width:100%;padding:6px 8px;box-sizing:border-box">
+      <select id="bg-ds" size="9"></select></div>
+    <div id="bg-may" style="display:none"><input type="file" id="bg-file" accept=".html,.htm,.pdf"></div>
+    <label class="o">Tên bài giảng (học sinh thấy) <input id="bg-ten"></label>
+    <div style="display:flex;gap:10px"><label class="o" style="flex:0 0 110px">Lớp <select id="bg-lop"><option value="6">Toán 6</option><option value="7">Toán 7</option><option value="8">Toán 8</option><option value="9">Toán 9</option><option value="10">Toán 10</option><option value="11">Toán 11</option><option value="12">Toán 12</option></select></label>
+      <label class="o" style="flex:1">Đường dẫn <input id="bg-slug"></label></div>
+    <div id="bg-link" style="color:#1e3a8a;font-size:12.5px"></div>
+    <label><input type="checkbox" id="bg-ghi-de"> Thay bản cũ ở đúng link này (học sinh giữ link cũ)</label>
+  </div>
+  <div class="chan"><span id="bg-tt" style="font-size:12px;color:#666"></span><button id="bg-ok" class="chinh" style="margin-left:auto">Đăng bài giảng</button><button id="bg-dong">Đóng</button></div>
+</div></div>
 <div id="hop-thi"><div class="noi">
-  <h2>Đề thi trực tuyến (Cloudflare Pages)</h2>
+  <h2>Thi &amp; học trực tuyến (Cloudflare Pages)</h2>
   <div class="than">
     <div id="thi-kq"></div>
+    <div class="the-thi"><button id="the-de" class="chon">Đề thi</button><button id="the-bg">📚 Bài giảng</button></div>
     <div id="thi-ds"></div>
+    <div id="bg-vung" style="display:none"><div id="thi-ml" style="margin-bottom:6px"></div>
+      <button id="bg-mo" class="chinh">＋ Đăng bài giảng…</button><div id="bg-bang" style="margin-top:6px"></div></div>
     <details><summary>Cài đặt</summary><div style="display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end;margin-top:8px">
       <label style="display:flex;flex-direction:column">Tên dự án Cloudflare <input id="thi-du-an" style="width:200px"></label>
       <label style="display:flex;flex-direction:column">Địa chỉ trang (tự điền sau lần đăng đầu) <input id="thi-mien" style="width:260px" placeholder="https://thi-toan-vtl.pages.dev"></label>
@@ -598,7 +627,7 @@ tr.gop-h td{background:#dbeafe;text-align:left;font-weight:700;padding:8px 12px;
   <div id="xt-than"></div>
   <div class="chan"><span style="font-size:12px;color:#666">“Đổi câu” lấy ngẫu nhiên câu khác cùng dạng, cùng mức (ưu tiên câu chưa dùng). Hài lòng thì bấm Xác nhận.</span>
     <button id="xt-random" style="margin-left:auto">↻ Random lại tất cả</button><button id="xt-nhatky">Nhật ký chọn câu</button>
-    <button id="xt-thi" title="Đưa bộ câu của mã đề đang xem lên mạng thành link cho học sinh làm bài (Cloudflare Pages), tự chấm, gửi điểm về Google Sheet">🌐 Link thi trực tuyến</button><button id="xt-tc" title="Đưa bộ câu của mã đề đang xem sang ứng dụng Soạn đề &amp; trình chiếu Toán (HTML): trình chiếu, bài kiểm tra cho học sinh, Word, thư viện Google Sheets…">▶ Sang trình chiếu HTML</button><button id="xt-ok" class="chinh">Xác nhận &amp; xuất đề</button><button id="xt-dong">Đóng</button></div>
+    <button id="xt-bg" title="Đăng bộ câu đang xem thành bài giảng trình chiếu HTML (có đáp án, lời giải) lên trang mục lục lớp">📚 Đăng bài giảng</button><button id="xt-thi" title="Đưa bộ câu của mã đề đang xem lên mạng thành link cho học sinh làm bài (Cloudflare Pages), tự chấm, gửi điểm về Google Sheet">🌐 Link thi trực tuyến</button><button id="xt-tc" title="Đưa bộ câu của mã đề đang xem sang ứng dụng Soạn đề &amp; trình chiếu Toán (HTML): trình chiếu, bài kiểm tra cho học sinh, Word, thư viện Google Sheets…">▶ Sang trình chiếu HTML</button><button id="xt-ok" class="chinh">Xác nhận &amp; xuất đề</button><button id="xt-dong">Đóng</button></div>
 </div></div>
 <div id="hop-ts"><div class="noi">
   <h2>Ngân hàng tuyển sinh 10 – Toán TP.HCM <span style="font-weight:400;font-size:12px;color:#666">7 bài · 10 điểm · 120 phút (cấu trúc đề Sở 2025–26, 2026–27)</span>
@@ -1817,6 +1846,92 @@ function veThi(r){
   });
 }
 async function moThi(){$("#hop-thi").style.display="flex";$("#thi-kq").innerHTML="";veThi(await api("/api/thi/ds",{}))}
+// ---------------- BÀI GIẢNG
+let BG={nguon:[],bo:null,goc:""};
+function theThi(bg){$("#the-de").classList.toggle("chon",!bg);$("#the-bg").classList.toggle("chon",bg);$("#thi-ds").style.display=bg?"none":"";$("#bg-vung").style.display=bg?"":"none"}
+$("#the-de").onclick=()=>theThi(false);$("#the-bg").onclick=()=>theThi(true);
+const qrUrl=(u,n=900)=>`https://api.qrserver.com/v1/create-qr-code/?size=${n}x${n}&margin=16&data=${encodeURIComponent(u)}`;
+function veBg(r){
+  BG.goc=r.goc; const bg=r.ds.filter(x=>x.loai==="bai_giang"), lop=[...new Set(bg.map(x=>x.lop))].sort((a,b)=>a-b);
+  $("#thi-ml").innerHTML=lop.length?"<b>Mục lục theo lớp:</b> "+lop.map(l=>`<a href="${r.goc}/toan${l}/" target="_blank">Toán ${l}</a> <button data-ml="${r.goc}/toan${l}/" style="font-size:11.5px;padding:2px 6px">QR</button>`).join(" · "):"";
+  $("#thi-ml").querySelectorAll("[data-ml]").forEach(b=>b.onclick=()=>window.open(qrUrl(b.dataset.ml)));
+  $("#bg-bang").innerHTML=!bg.length?'<p style="color:#666">Chưa có bài giảng.</p>':`<table style="width:100%;border-collapse:collapse">`+bg.map(x=>{const u=`${r.goc}/bai-giang/${x.slug}/`;
+    return `<tr style="border-bottom:1px solid #eef0f4"><td style="padding:6px"><span class="tt ${x.kieu==="pdf"?"da_dong":"da_cong_bo"}">Toán ${x.lop} · ${x.kieu==="pdf"?"PDF":"Trình chiếu"}</span> <b>${esc(x.ten)}</b><br>
+      <a href="${u}" target="_blank" style="font-size:12px">${u}</a><br><span style="color:#888;font-size:11.5px">${x.cap_nhat||x.tao_luc} · ${x.kb} KB${x.trang_thai==="an"?" · <b>đang ẩn</b>":""}</span></td>
+      <td style="padding:6px;white-space:nowrap"><button data-b="${x.slug}" data-v="qr">QR</button><button data-b="${x.slug}" data-v="chep">Chép link</button>
+      ${x.trang_thai==="an"?`<button data-b="${x.slug}" data-v="hien">Hiện</button>`:`<button data-b="${x.slug}" data-v="an">Ẩn</button>`}
+      <button data-b="${x.slug}" data-v="thay" data-ten="${esc(x.ten)}" data-lop="${x.lop}">Thay file…</button><button data-b="${x.slug}" data-v="xoa" style="color:#b91c1c">Xoá</button></td></tr>`}).join("")+"</table>";
+  $("#bg-bang").querySelectorAll("button[data-v]").forEach(b=>b.onclick=async()=>{const sl=b.dataset.b,v=b.dataset.v,u=`${r.goc}/bai-giang/${sl}/`;
+    if(v==="qr")return window.open(qrUrl(u)); if(v==="chep"){navigator.clipboard.writeText(u);b.textContent="Đã chép";return}
+    if(v==="thay")return moBg(null,{slug:sl,ten:b.dataset.ten,lop:b.dataset.lop});
+    if(v==="xoa"&&!confirm("Gỡ bài giảng này khỏi mạng? (file vẫn giữ trong thi-truc-tuyen/da_xoa)"))return;
+    const k=await api("/api/thi/bg-trang-thai",{slug:sl,tt:v});if(!k.ok){alert(k.loi);return} theoDoiThi(null,"")});
+}
+const _veThiCu=veThi; veThi=function(r){r={...r}; const bg=r.ds; r.ds=bg.filter(x=>x.loai!=="bai_giang"); _veThiCu(r); veBg({...r,ds:bg})};
+function doanLop(t){t=String(t||"");const m=/(?:to[aá]n|l[oớ]p|lop|L)\s*_?(1[0-2]|[6-9])\b/i.exec(t)||/\b(1[0-2])\b/.exec(t);return m?+m[1]:10}
+function veLinkBg(){const sl=boDauSlug($("#bg-slug").value)||"…";$("#bg-link").textContent=BG.goc?`Link: ${BG.goc}/bai-giang/${sl}/ · Mục lục: ${BG.goc}/toan${$("#bg-lop").value}/`:""}
+function nguonBg(){const v=document.querySelector('input[name="bg-nguon"]:checked').value;$("#bg-ud").style.display=v==="ud"?"":"none";$("#bg-may").style.display=v==="may"?"":"none";return v}
+document.querySelectorAll('input[name="bg-nguon"]').forEach(x=>x.onchange=nguonBg);
+function veNguonBg(){const q=boDau($("#bg-loc").value||"").toLowerCase();
+  $("#bg-ds").innerHTML=BG.nguon.filter(x=>!q||boDau(x.duong_dan).toLowerCase().includes(q)).map(x=>`<option value="${esc(x.duong_dan)}">${x.kieu==="pdf"?"📄":"📺"} ${esc(x.ten)} — ${esc(x.thu_muc)} · ${x.luc} · ${x.kb} KB</option>`).join("")}
+$("#bg-loc").oninput=veNguonBg;
+$("#bg-ds").onchange=()=>{const x=BG.nguon.find(y=>y.duong_dan===$("#bg-ds").value);if(!x||$("#bg-ghi-de").checked)return;
+  const ten=x.kieu==="json"?x.ten.replace(/_\d{8}_\d{4}\.json$/,"").replace(/_/g," "):x.ten.replace(/\.pdf$/i,"");
+  $("#bg-ten").value=ten;$("#bg-lop").value=doanLop(x.duong_dan);$("#bg-slug").value=boDauSlug(ten);veLinkBg()};
+$("#bg-file").onchange=()=>{const f=$("#bg-file").files[0];if(!f||$("#bg-ghi-de").checked)return;const ten=f.name.replace(/\.(html?|pdf)$/i,"").replace(/[_]+/g," ");
+  $("#bg-ten").value=ten;$("#bg-lop").value=doanLop(f.name);$("#bg-slug").value=boDauSlug(ten);veLinkBg()};
+$("#bg-slug").oninput=veLinkBg;$("#bg-lop").onchange=veLinkBg;
+async function moBg(bo,thay){
+  BG.bo=bo; $("#bg-nguon-bo-l").style.display=bo?"":"none";
+  document.querySelector(`input[name="bg-nguon"][value="${bo?"bo":"ud"}"]`).checked=true; nguonBg();
+  $("#bg-ghi-de").checked=!!thay; $("#bg-tt").textContent="";
+  if(bo){$("#bg-ten").value=bo.ten;$("#bg-lop").value=bo.lop;$("#bg-slug").value=boDauSlug(bo.ten)}
+  if(thay){$("#bg-ten").value=thay.ten;$("#bg-lop").value=thay.lop;$("#bg-slug").value=thay.slug}
+  $("#hop-bg").style.display="flex";
+  const r=await api("/api/thi/bg-nguon",{}); BG.nguon=r.ds||[]; veNguonBg();
+  if(!BG.goc){try{BG.goc=(await api("/api/thi/ds",{})).goc}catch(_){}} veLinkBg();
+}
+$("#bg-mo").onclick=()=>moBg(null,null);
+$("#bg-dong").onclick=()=>$("#hop-bg").style.display="none";
+$("#xt-bg").onclick=()=>{const b=XT.bo[Math.min(XT.tab,XT.bo.length-1)];
+  const ma=["TN","DS","TLN"].flatMap(l=>(b[l]||[]).filter(c=>!c.mat).map(c=>c.ma));
+  const ten=((XT.nguon&&XT.mt.ten_ky_thi)||$("#ten_ky_thi").value.trim()||"Bài giảng");
+  moBg({ma,ten,lop:XT.nguon?HK_LOP:doanLop(ten+" "+($("#mon").value||""))},null)};
+const docFile=(f,b64)=>new Promise((ok,loi)=>{const r=new FileReader();r.onload=()=>ok(b64?String(r.result).split(",")[1]:r.result);r.onerror=loi;b64?r.readAsDataURL(f):r.readAsText(f)});
+$("#bg-ok").onclick=async()=>{
+  const n=$("#bg-ok"), v=nguonBg(), ten=$("#bg-ten").value.trim(), lop=+$("#bg-lop").value, slug=boDauSlug($("#bg-slug").value||ten);
+  if(!ten){alert("Nhập tên bài giảng.");return}
+  const g={ten,lop,slug,ghi_de:$("#bg-ghi-de").checked};
+  n.disabled=true;
+  try{
+    if(v==="bo"){n.textContent="Đang dựng trình chiếu (vẽ hình)…";
+      const r=await api("/api/thi/du-lieu",{ma:BG.bo.ma,ten}); if(!r.ok) throw Error(r.loi);
+      const w=await appTrinhChieu(); Object.assign(g,{kieu:"html",html:w.createLegacy(r.du_lieu),nguon:"bộ câu ra đề"});}
+    else if(v==="ud"){const p=$("#bg-ds").value, x=BG.nguon.find(y=>y.duong_dan===p); if(!x) throw Error("Chọn một file trong danh sách.");
+      if(x.kieu==="pdf") Object.assign(g,{kieu:"pdf",duong_dan:p,nguon:p});
+      else{n.textContent="Đang dựng trình chiếu…";const r=await api("/api/thi/bg-json",{duong_dan:p}); if(!r.ok) throw Error(r.loi);
+        const w=await appTrinhChieu(); const d=r.du_lieu; d.title=ten; Object.assign(g,{kieu:"html",html:w.createLegacy(d),nguon:p});}}
+    else{const f=$("#bg-file").files[0]; if(!f) throw Error("Chọn file HTML hoặc PDF.");
+      if(f.size>25*1048576) throw Error("File lớn hơn 25 MB — Cloudflare không nhận.");
+      const pdf=/\.pdf$/i.test(f.name); Object.assign(g,pdf?{kieu:"pdf",base64:await docFile(f,true)}:{kieu:"html",html:await docFile(f,false)},{nguon:f.name});}
+    n.textContent="Đang đăng lên Cloudflare…";
+    const k=await api("/api/thi/bg-dang",g); if(!k.ok) throw Error(k.loi);
+    $("#hop-bg").style.display="none"; $("#hop-xt").style.display="none";
+    await moThi(); theThi(true); theoDoiBg(k.url,k.muc_luc,ten);
+  }catch(e){alert("Chưa đăng được: "+e.message)}
+  finally{n.disabled=false;n.textContent="Đăng bài giảng"}
+};
+async function theoDoiBg(url,ml,ten){
+  const s=await api("/api/trang-thai");
+  $("#thi-kq").innerHTML=`<pre style="white-space:pre-wrap;background:#f8fafc;border:1px solid var(--vien);border-radius:8px;padding:8px;max-height:200px;overflow:auto;margin:0">${esc(s.nhat_ky||"Đang chuẩn bị…")}</pre>`;
+  if(!s.xong){setTimeout(()=>theoDoiBg(url,ml,ten),1500);return}
+  veThi(await api("/api/thi/ds",{})); theThi(true);
+  if(s.thi_ok) $("#thi-kq").innerHTML=`<div class="thi-kq"><img alt="QR" src="${qrUrl(url,340)}"><div><div style="color:#047857;font-weight:700;margin-bottom:6px">✓ Đã đăng bài giảng: ${esc(ten)}</div>
+    <a href="${url}" target="_blank">${url}</a><div style="margin-top:6px;font-size:13px">Mục lục lớp: <a href="${ml}" target="_blank" style="font-size:13px">${ml}</a></div>
+    <div style="margin-top:8px;display:flex;gap:6px"><button onclick="navigator.clipboard.writeText('${url}');this.textContent='Đã chép'">Chép link</button><button onclick="window.open(qrUrl('${url}'))">QR khổ lớn</button>
+    <button onclick="window.open(qrUrl('${ml}'))">QR mục lục lớp</button></div></div></div>`;
+  else $("#thi-kq").innerHTML+=`<p style="color:#b91c1c"><b>Chưa đăng xong.</b> Xem nhật ký rồi bấm "Đăng lại tất cả".</p>`;
+}
 $("#nut-thi").onclick=moThi;
 $("#thi-dong").onclick=()=>$("#hop-thi").style.display="none";
 $("#thi-luu").onclick=async()=>{const r=await api("/api/thi/cau-hinh",{du_an:$("#thi-du-an").value.trim(),ten_mien:$("#thi-mien").value.trim(),script_url:$("#thi-sheet").value.trim()});veThi(await api("/api/thi/ds",{}));};
