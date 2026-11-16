@@ -220,6 +220,17 @@ như phần mềm cũ thì ghi `"khung": "DeThi"` trong file JSON.
 - **⚑ Học sinh cần quan tâm**: máy tự đánh dấu em chưa làm, thiếu bài, TB dưới 5, tụt từ 1 điểm, hoặc đang lo lắng/mệt (cảm xúc khi làm bài). Bấm ⚑ trong bảng để đánh dấu / bỏ đánh dấu thêm (nhớ theo lớp).
 - Mỗi em được đánh dấu có **tin nhắn riêng tích cực, vui** (sửa được, 🎲 đổi câu khác). **💌 Gửi vào trang học** → em thấy khung “💌 Thầy nhắn em” khi đăng nhập, bấm “Em đã đọc 👍”; bảng của thầy hiện “✓ em đã đọc”. Hoặc **Chép tin nhắn** để gửi Zalo.
 
+### ✓ Bài đã giao / chưa giao (để tổng hợp chính xác)
+- Chỉ bài **✓ Đã giao** mới tính vào hoàn thành, điểm TB, tiến bộ, ⚑ cần quan tâm. Mặc định: bài có ô **Lớp giao** ghi lớp đó là đã giao; bài để “mọi lớp” là chưa giao.
+- Trong bảng tổng hợp lớp, dưới tên mỗi đợt có nút **✓ Đã giao / ○ Chưa giao** — bấm để đổi (lưu trên máy chủ, Đăng lại tất cả không làm mất).
+- Bài chưa giao mà em vẫn tự làm hiện ở cột **Tự luyện** (xám): không trừ ai, chỉ để khen (“chủ động làm thêm 1 bài tự luyện”). Cần Đăng lại tất cả một lần (cơ sở dữ liệu bản 6).
+
+### 👤 Hồ sơ từng học sinh & ⭐ theo dõi học sinh yếu
+- Trong bảng tổng hợp lớp, **bấm tên em** → hồ sơ: mọi lần làm từng đợt (điểm, điểm từng phần TN · ĐS · TLN, thời gian, cảm xúc, 💡, rời tab, ngày nộp), biểu đồ điểm, tiến bộ, nhận xét, lịch sử lời nhắn (đã đọc / chưa) và ô **💌 Nhắn riêng**.
+- Bấm **☆** (cột ⭐) hoặc nút **☆ Theo dõi em này** trong hồ sơ để đưa em vào danh sách theo dõi (lưu trên máy chủ — app và trang web GV dùng chung), kèm ghi chú (vd “hổng kiến thức lớp 9”).
+- Ô Lớp → **⭐ Học sinh đang theo dõi (mọi lớp)**: mỗi em một thẻ có biểu đồ điểm, bài gần nhất, mấy ngày chưa nộp, ghi chú và **tin nhắn tự chọn đúng lúc**: vừa tiến bộ → khen 🎉, đã làm bài → ghi nhận sự chăm chỉ, chưa làm bài mới → nhắc vui, điểm thấp → động viên. 💌 Gửi một chạm.
+- Cần **Đăng lại tất cả** một lần (nâng cơ sở dữ liệu lên bản 5).
+
 ### Phiếu tự luận: chọn bố cục
 - Ô **Bố cục** (kiểu Chỉ tự luận): *Song song* (trái ví dụ mẫu – phải tự luyện) hoặc *Trên – dưới* (ví dụ mẫu + lời giải ở trên, các bài tự luyện bên dưới, dùng cả bề ngang giấy, dòng làm bài dài hơn).
 

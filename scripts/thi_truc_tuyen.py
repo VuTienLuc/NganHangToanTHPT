@@ -793,7 +793,7 @@ def co_node():
 MAY_CHU = os.path.join(os.path.dirname(os.path.abspath(__file__)), "may_chu")   # mã máy chủ (Functions + schema)
 P_BM = os.path.join(THU, "bi_mat.json")       # mã quản trị + khoá phiên (KHÔNG đồng bộ GitHub)
 TEN_DB = "thi-toan-db"
-PHIEN_BAN_SCHEMA = 4
+PHIEN_BAN_SCHEMA = 6
 
 
 def _luu_ch(c):

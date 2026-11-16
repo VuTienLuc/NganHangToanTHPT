@@ -8,3 +8,5 @@ CREATE INDEX IF NOT EXISTS bai_tk ON bai(tk, nhom);
 CREATE TABLE IF NOT EXISTS luot_them (tk TEXT, nhom TEXT, so INTEGER, PRIMARY KEY (tk, nhom));
 CREATE TABLE IF NOT EXISTS loi_nhan (id INTEGER PRIMARY KEY AUTOINCREMENT, tk TEXT, noi_dung TEXT, tu TEXT, tao_luc TEXT, xem_luc TEXT);
 CREATE INDEX IF NOT EXISTS loi_nhan_tk ON loi_nhan(tk);
+CREATE TABLE IF NOT EXISTS theo_doi (tk TEXT PRIMARY KEY, ghi_chu TEXT, tu_luc TEXT);
+ALTER TABLE de ADD COLUMN giao INTEGER;

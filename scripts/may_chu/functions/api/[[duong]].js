@@ -17,6 +17,8 @@ async function luot(env, tk, de) {
   return { nhom, dem, gioi, con_lai: gioi ? Math.max(0, gioi - dem) : null };
 }
 
+const COT_BAI = `b.tk, b.nhom, b.de, b.lan, b.diem, b.nop_luc, b.thoi_gian, b.chuyen_tab, b.cam_xuc, b.goi_y,
+  json_extract(b.cham, '$.parts.mcq') AS p1, json_extract(b.cham, '$.parts.tf') AS p2, json_extract(b.cham, '$.parts.short') AS p3`;
 // ---- tổng hợp quá trình học online theo lớp + lời nhắn của thầy (dùng chung cho app giáo viên và trang web GV)
 async function tongHop(DB, d) {
   const lop = String(d.lop || '').trim();
@@ -25,17 +27,41 @@ async function tongHop(DB, d) {
     return { ok: true, cac_lop: results };
   }
   const hs = (await DB.prepare("SELECT ten, ho_ten, stt FROM tk WHERE vai = 'hs' AND UPPER(lop) = UPPER(?) ORDER BY stt, ten").bind(lop).all()).results;
-  const bai = (await DB.prepare(`SELECT b.tk, b.nhom, b.lan, b.diem, b.nop_luc, b.thoi_gian, b.chuyen_tab, b.cam_xuc, b.goi_y
-    FROM bai b JOIN tk t ON t.ten = b.tk WHERE UPPER(t.lop) = UPPER(?) AND b.nop_luc IS NOT NULL ORDER BY b.nop_luc`).bind(lop).all()).results;
+  const bai = (await DB.prepare(`SELECT ${COT_BAI} FROM bai b JOIN tk t ON t.ten = b.tk WHERE UPPER(t.lop) = UPPER(?) AND b.nop_luc IS NOT NULL ORDER BY b.nop_luc`).bind(lop).all()).results;
   const coBai = new Set(bai.map(x => x.nhom));
-  const de = (await DB.prepare("SELECT slug, ten, lop, so_luot, tao_luc, trang_thai FROM de WHERE nhom = '' OR nhom IS NULL ORDER BY tao_luc").all()).results
-    .filter(x => coBai.has(x.slug) || (String(x.lop || '').trim() && lopKhop(x.lop, lop)));
+  const de = (await DB.prepare("SELECT slug, ten, lop, so_luot, tao_luc, trang_thai, giao FROM de WHERE nhom = '' OR nhom IS NULL ORDER BY tao_luc").all()).results
+    .filter(x => coBai.has(x.slug) || x.giao === 1 || (String(x.lop || '').trim() && lopKhop(x.lop, lop)));
   let nhan = [];
   try {
     nhan = (await DB.prepare(`SELECT n.id, n.tk, n.noi_dung, n.tao_luc, n.xem_luc FROM loi_nhan n JOIN tk t ON t.ten = n.tk
       WHERE UPPER(t.lop) = UPPER(?) ORDER BY n.id DESC LIMIT 400`).bind(lop).all()).results;
   } catch (_) {}
-  return { ok: true, lop, hs, de, bai, nhan };
+  let theo = [];
+  try { theo = (await DB.prepare('SELECT d.tk, d.ghi_chu, d.tu_luc FROM theo_doi d JOIN tk t ON t.ten = d.tk WHERE UPPER(t.lop) = UPPER(?)').bind(lop).all()).results; } catch (_) {}
+  return { ok: true, lop, hs, de, bai, nhan, theo_doi: theo };
+}
+// học sinh thầy chọn theo dõi (mọi lớp): bài làm, đề giao cho lớp các em, lời nhắn
+async function theoDoi(DB) {
+  const hs = (await DB.prepare(`SELECT t.ten, t.ho_ten, t.lop, t.stt, d.ghi_chu, d.tu_luc FROM theo_doi d JOIN tk t ON t.ten = d.tk ORDER BY t.lop, t.stt`).all()).results;
+  if (!hs.length) return { ok: true, hs: [], de: [], bai: [], nhan: [] };
+  const ds = hs.map(h => h.ten), dau = ds.map(() => '?').join(',');
+  const bai = (await DB.prepare(`SELECT ${COT_BAI} FROM bai b WHERE b.tk IN (${dau}) AND b.nop_luc IS NOT NULL ORDER BY b.nop_luc`).bind(...ds).all()).results;
+  const de = (await DB.prepare("SELECT slug, ten, lop, so_luot, tao_luc, trang_thai, giao FROM de WHERE nhom = '' OR nhom IS NULL ORDER BY tao_luc").all()).results;
+  const nhan = (await DB.prepare(`SELECT id, tk, noi_dung, tao_luc, xem_luc FROM loi_nhan WHERE tk IN (${dau}) ORDER BY id DESC LIMIT 300`).bind(...ds).all()).results;
+  return { ok: true, hs, de, bai, nhan };
+}
+// thầy đánh dấu bài đã giao (tính vào tổng hợp) / chưa giao (chỉ là tự luyện thêm); null = tự động theo ô Lớp giao
+async function datGiao(DB, d) {
+  const g = d.giao === null || d.giao === undefined ? null : d.giao ? 1 : 0;
+  await DB.prepare('UPDATE de SET giao = ? WHERE slug = ?').bind(g, String(d.slug || '')).run();
+  return { ok: true };
+}
+async function datTheoDoi(DB, d) {
+  const tk = String(d.tk || '').toLowerCase(); if (!tk) return { ok: false, loi: 'Thiếu tài khoản.' };
+  if (d.bat === false) await DB.prepare('DELETE FROM theo_doi WHERE tk = ?').bind(tk).run();
+  else await DB.prepare(`INSERT INTO theo_doi (tk, ghi_chu, tu_luc) VALUES (?,?,?) ON CONFLICT(tk) DO UPDATE SET ghi_chu = COALESCE(excluded.ghi_chu, theo_doi.ghi_chu)`)
+    .bind(tk, d.ghi_chu == null ? null : String(d.ghi_chu).slice(0, 300), BAY_GIO()).run();
+  return { ok: true };
 }
 async function guiLoiNhan(DB, d, tu) {
   const ds = (d.ds || []).filter(x => x && x.tk && String(x.noi_dung || '').trim()).slice(0, 80);
@@ -76,6 +102,9 @@ async function hocSinh(duong, d, env, req, url) {
     if (!ph || ph.vai !== 'gv') return json({ ok: false, loi: 'Chỉ dành cho giáo viên.' }, 403);
     if (duong === 'gv/tong-hop') return json(await tongHop(env.DB, d));
     if (duong === 'gv/loi-nhan') return json(await guiLoiNhan(env.DB, d, ph.tk));
+    if (duong === 'gv/theo-doi') return json(await theoDoi(env.DB));
+    if (duong === 'gv/de-giao') return json(await datGiao(env.DB, d));
+    if (duong === 'gv/theo-doi-dat') return json(await datTheoDoi(env.DB, d));
     return json({ ok: false, loi: 'Không có chức năng này.' }, 404);
   }
   if (duong === 'loi-nhan/da-xem') {
@@ -194,6 +223,9 @@ async function quanTri(duong, d, env) {
   }
   if (duong === 'tong-hop') return json(await tongHop(DB, d));
   if (duong === 'loi-nhan') return json(await guiLoiNhan(DB, d, 'gv'));
+  if (duong === 'theo-doi') return json(await theoDoi(DB));
+  if (duong === 'de-giao') return json(await datGiao(DB, d));
+  if (duong === 'theo-doi-dat') return json(await datTheoDoi(DB, d));
   if (duong === 'luot/them') {
     await DB.prepare(`INSERT INTO luot_them (tk, nhom, so) VALUES (?,?,?) ON CONFLICT(tk, nhom) DO UPDATE SET so = so + excluded.so`).bind(d.tk, d.nhom, d.so || 1).run();
     return json({ ok: true });
@@ -214,7 +246,7 @@ export async function onRequest({ request: req, env, params }) {
       if (!env.ADMIN_TOKEN || req.headers.get('x-admin') !== env.ADMIN_TOKEN) return json({ ok: false, loi: 'Sai mã quản trị.' }, 403);
       return await quanTri(duong.slice(6), d, env);
     }
-    if (['nop', 'bat-dau', 'cam-xuc', 'goi-y', 'doi-mk', 'dang-nhap', 'dang-xuat', 'loi-nhan/da-xem', 'gv/loi-nhan'].includes(duong) && req.method !== 'POST') return json({ ok: false, loi: 'Dùng POST.' }, 405);
+    if (['nop', 'bat-dau', 'cam-xuc', 'goi-y', 'doi-mk', 'dang-nhap', 'dang-xuat', 'loi-nhan/da-xem', 'gv/loi-nhan', 'gv/theo-doi-dat', 'gv/de-giao'].includes(duong) && req.method !== 'POST') return json({ ok: false, loi: 'Dùng POST.' }, 405);
     return await hocSinh(duong, d, env, req, url);
   } catch (e) { return json({ ok: false, loi: String(e && e.message || e) }, 500); }
 }
