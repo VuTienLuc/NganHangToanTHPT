@@ -239,10 +239,10 @@ class XuLy(BaseHTTPRequestHandler):
                 if not f.startswith(goc + os.sep) or not os.path.isfile(f):
                     return self.gui(404, {"loi": "không có file"})
                 b = open(f, "rb").read(); ten = os.path.basename(f)
-                loai = {".pdf": "application/pdf", ".xlsx": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                loai = {".html": "text/html; charset=utf-8", ".pdf": "application/pdf", ".xlsx": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
                         ".docx": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"}.get(os.path.splitext(f)[1].lower(), "application/octet-stream")
                 self.send_response(200); self.send_header("Content-Type", loai); self.send_header("Content-Length", str(len(b)))
-                self.send_header("Content-Disposition", ("inline" if f.endswith(".pdf") and "xem" in q else "attachment") + "; filename*=UTF-8''" + quote(ten))
+                self.send_header("Content-Disposition", ("inline" if f.endswith((".pdf", ".html")) and "xem" in q else "attachment") + "; filename*=UTF-8''" + quote(ten))
                 self.end_headers(); self.wfile.write(b); return
             self.gui(404, {"loi": "không có"})
         except Exception as e:
@@ -383,6 +383,31 @@ class XuLy(BaseHTTPRequestHandler):
                         threading.Thread(target=dang_thi_nen, daemon=True).start()
                     return self.gui(200, {"ok": True, "slug": slug, "url": f"{T.goc_url()}/bai-giang/{slug}/",
                                           "muc_luc": f"{T.goc_url()}/toan{int(d.get('lop') or 10)}/"})
+                if viec == "bg-hs":
+                    try:
+                        T.dat_hs(d.get("slug"), bool(d.get("hs")))
+                    except Exception as e:
+                        return self.gui(200, {"ok": False, "loi": str(e)})
+                    threading.Thread(target=dang_thi_nen, daemon=True).start()
+                    return self.gui(200, {"ok": True})
+                if viec == "phieu-web":      # phiếu học tập → HTML (+ đăng lên web: chỉ GV hoặc cho HS khối lớp)
+                    import phieu_web
+                    dong = []
+                    try:
+                        p, P = phieu_web.ghi(d.get("thu_muc") or "", dong.append)
+                        ra = {"ok": True, "tep": os.path.relpath(p, GOC), "nhat_ky": "\n".join(dong)}
+                        if d.get("dang") in ("gv", "hs"):
+                            ten = (d.get("ten") or P.get("ten") or "Phiếu học tập").strip()
+                            ten = ten if ten.lower().startswith("phiếu") else ("Phiếu tự luận – " if P.get("kieu") == "tu_luan" else "Phiếu học tập – ") + ten
+                            lop = int(re.sub(r"\D", "", str(P.get("lop") or "")) or 10)
+                            slug = T.them_bai_giang(d.get("slug") or ("phieu-" + T.lam_slug(P.get("ten") or ten) + ("-tl" if P.get("kieu") == "tu_luan" else "")),
+                                                    ten, lop, "html", open(p, "rb").read(), True, "phiếu học tập",
+                                                    P.get("chuong") or "", P.get("ten") or "", 0, hs=d["dang"] == "hs", loai_bg="phieu")
+                            threading.Thread(target=dang_thi_nen, daemon=True).start()
+                            ra.update(slug=slug, url=f"{T.goc_url()}/bai-giang/{slug}/")
+                    except Exception as e:
+                        return self.gui(200, {"ok": False, "loi": str(e), "nhat_ky": "\n".join(dong)})
+                    return self.gui(200, ra)
                 if viec == "bg-pdf":
                     threading.Thread(target=dang_thi_nen, args=(lambda log: bai_giang_pdf(d, log),), daemon=True).start()
                     return self.gui(200, {"ok": True})

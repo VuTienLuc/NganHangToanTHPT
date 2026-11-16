@@ -9,7 +9,20 @@ export async function onRequest({ request: req, env, next }) {
   const veDangNhap = () => Response.redirect(`${u.origin}/dang-nhap/?ve=${encodeURIComponent(p)}`, 302);
   if (seg === 'bai-giang' || /^toan\d+$/.test(seg)) {
     if (!ph) return veDangNhap();
-    if (ph.vai !== 'gv') return trang('Chỉ dành cho giáo viên', '<p>Bài giảng chỉ mở cho tài khoản giáo viên.</p><p><a href="/">Về trang chính</a></p>', 403);
+    if (ph.vai !== 'gv') {
+      const s2 = decodeURIComponent(p.split('/')[2] || '');
+      if (seg === 'bai-giang' && s2 === 'hs.json') return next();
+      if (seg === 'bai-giang' && s2 && env.ASSETS) {          // phiếu / bài thầy cho học sinh xem: đúng khối lớp
+        let ds = [];
+        try { const r = await env.ASSETS.fetch(new URL('/bai-giang/hs.json', u.origin)); if (r.ok) ds = await r.json(); } catch (_) {}
+        const x = ds.find(y => y.slug === s2), k = parseInt(ph.lop || '', 10);
+        if (x && (!k || x.lop === k)) {
+          if (ph.doi_mk) return Response.redirect(`${u.origin}/dang-nhap/?doi=1&ve=${encodeURIComponent(p)}`, 302);
+          return next();
+        }
+      }
+      return trang('Chưa mở cho em', '<p>Bài này thầy chưa mở cho lớp em. Các phiếu học tập dành cho em có ở trang chính.</p><p><a href="/">Về trang chính</a></p>', 403);
+    }
     return next();
   }
   if (!env.DB) return next();

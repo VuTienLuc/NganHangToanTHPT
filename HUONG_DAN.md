@@ -533,3 +533,13 @@ Mở trang chính của site thi (vd https://thi-toan-vtl.pages.dev/) bằng tà
 - **Đề kiểm tra** (cột phải): thẻ Đang mở / Đã công bố / Đã đóng, số HS nộp + điểm TB, nút Làm thử, Chép link.
 - Link mục lục cũ `/toan10/`… tự chuyển về trang này, lọc sẵn lớp.
 - Bài giảng tạo bằng ⚡ Tạo nhanh tự ghi chương/bài nên xếp đúng mục lục; bài cũ xếp theo "Bài N" trong tên.
+
+## 📝 Phiếu học tập → trang HTML trên web
+
+Tạo phiếu như cũ (📄 Phiếu bài học, kiểu trắc nghiệm hoặc tự luận) → hộp "Đã tạo phiếu" có nút **🌐 Phiếu HTML lên web…**:
+- **👥 Đăng – học sinh khối lớp xem được**: học sinh cùng khối (vd mọi lớp 10) đăng nhập thấy ở trang chính mục *Phiếu học tập*; lớp khác không mở được.
+- **🧑‍🏫 Đăng – chỉ giáo viên** (như bài giảng) · **Chỉ tạo file HTML** (`PhieuHocTap_Web.html` trong thư mục phiếu).
+- Trang gồm: I. Kiến thức trọng tâm · trắc nghiệm (bấm chọn → chấm ngay), Đúng/Sai (chọn Đ/S → Kiểm tra), trả lời ngắn (nhập đáp số) · phiếu tự luận: ví dụ mẫu có lời giải, bài tự luyện bấm *Xem đáp số / Xem lời giải*. Thanh tiến độ, mục lục bên trái, A−/A+, In (không kèm lời giải), máy nhớ bài đã làm.
+- Hình TikZ tự đổi sang SVG (máy cần LaTeX như khi xuất PDF).
+- Bài giảng bất kỳ cũng cho HS xem được: 🌐 Thi trực tuyến → thẻ Bài giảng → nút **Cho HS xem / Thôi cho HS**.
+- Phiếu tạo từ bản cũ (trước khi có tính năng) cần tạo lại phiếu để có dữ liệu web.
