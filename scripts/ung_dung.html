@@ -2162,6 +2162,8 @@ $("#nh-xem").onclick=async()=>{
     if(!r.ok||!r.xem){hopThoai("Chưa chọn được câu",r.nhat_ky);return}
     const tc={bg:$("#nh-bg").checked,thi:$("#nh-thi").checked,pdf:$("#nh-pdf").checked,xlsx:$("#nh-xlsx").checked,
       lop_giao:$("#nh-lop-giao").value.trim(),so_luot:+$("#nh-luot").value,phut:+$("#nh-phut").value||45};
+    const dsB=nhTenBai();
+    tc.chuong=dsB.length?dsB[0].ten_chuong:""; tc.chuong_so=dsB.length?dsB[0].chuong:0; tc.bai=dsB.map(d=>`Bài ${d.bai}. ${d.ten_bai}`).join("; ");
     XT={...r.xem,nhat_ky:r.nhat_ky,mt,tab:0,nguon:{nhanh:true,lop:NH.lop,tc,dong:()=>{$("#hop-nhanh").style.display="flex"}}};
     $("#hop-nhanh").style.display="none"; veXT();
   }finally{n.disabled=false;n.textContent="Chọn câu & xem trước →"}
@@ -2181,7 +2183,7 @@ $("#xt-nhanh").onclick=async()=>{
       let ds={};try{ds=(await api("/api/thi/ds",{})).cau_hinh||{}}catch(_){}
       if(tc.bg){ghi("• Dựng bài giảng HTML…");
         const r=await api("/api/thi/du-lieu",{ma:boMa(XT.bo[0]),ten:ten+" – bài giảng"}); if(!r.ok) throw Error(r.loi);
-        const g=await api("/api/thi/bg-dang",{slug:goc+"-bg",ten:ten+" – bài giảng",lop,kieu:"html",html:w.createLegacy(r.du_lieu),ghi_de:true,nguon:"tạo nhanh theo bài",dang_ngay:false});
+        const g=await api("/api/thi/bg-dang",{slug:goc+"-bg",ten:ten+" – bài giảng",lop,kieu:"html",html:w.createLegacy(r.du_lieu),ghi_de:true,nguon:"tạo nhanh theo bài",dang_ngay:false,chuong:tc.chuong,bai:tc.bai,chuong_so:tc.chuong_so});
         if(!g.ok) throw Error("Bài giảng: "+g.loi); kq.bg=g.url; co_dang=true; ghi("  ✓ bài giảng "+g.url)}
       if(tc.thi){
         const b0=XT.bo[0], dung=["TN","DS","TLN"].every((l,k)=>(b0[l]||[]).length===[12,4,6][k]);

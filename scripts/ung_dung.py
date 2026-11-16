@@ -375,7 +375,8 @@ class XuLy(BaseHTTPRequestHandler):
                         if not noi:
                             raise RuntimeError("Chưa có nội dung bài giảng.")
                         slug = T.them_bai_giang(d.get("slug"), (d.get("ten") or "Bài giảng").strip(), int(d.get("lop") or 10),
-                                                d.get("kieu") or "html", noi, bool(d.get("ghi_de")), d.get("nguon") or "")
+                                                d.get("kieu") or "html", noi, bool(d.get("ghi_de")), d.get("nguon") or "",
+                                                d.get("chuong") or "", d.get("bai") or "", d.get("chuong_so") or 0)
                     except Exception as e:
                         return self.gui(200, {"ok": False, "loi": str(e)})
                     if d.get("dang_ngay", True):
