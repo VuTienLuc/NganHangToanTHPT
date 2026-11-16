@@ -550,6 +550,26 @@ def chuan_bi_may_chu(c, in_ra):
         _dat_bi_mat(c, in_ra)
 
 
+def _ssl():
+    """Python tải từ python.org trên macOS thường thiếu bộ chứng chỉ → dùng certifi hoặc /etc/ssl/cert.pem của macOS."""
+    import ssl
+    for f in ((__import__("certifi").where() if _co_certifi() else None), "/etc/ssl/cert.pem", "/private/etc/ssl/cert.pem"):
+        if f and os.path.exists(f):
+            try:
+                return ssl.create_default_context(cafile=f)
+            except Exception:
+                pass
+    return ssl.create_default_context()
+
+
+def _co_certifi():
+    try:
+        import certifi  # noqa
+        return True
+    except Exception:
+        return False
+
+
 def goi(duong, du_lieu=None, lan=0):
     """Gọi API quản trị trên trang (x-admin)."""
     if not cau_hinh().get("d1_id"):
@@ -560,7 +580,7 @@ def goi(duong, du_lieu=None, lan=0):
                                  headers={"content-type": "application/json", "x-admin": bi_mat()["admin"],
                                           "user-agent": "NganHangCaNhan"})
     try:
-        with urllib.request.urlopen(req, timeout=40) as r:
+        with urllib.request.urlopen(req, timeout=40, context=_ssl() if url.startswith("https") else None) as r:
             return json.loads(r.read().decode())
     except urllib.error.HTTPError as e:
         try:
