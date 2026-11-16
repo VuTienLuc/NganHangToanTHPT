@@ -222,6 +222,7 @@ như phần mềm cũ thì ghi `"khung": "DeThi"` trong file JSON.
 
 ### ✓ Bài đã giao / chưa giao (để tổng hợp chính xác)
 - Chỉ bài **✓ Đã giao** mới tính vào hoàn thành, điểm TB, tiến bộ, ⚑ cần quan tâm. Mặc định: bài có ô **Lớp giao** ghi lớp đó là đã giao; bài để “mọi lớp” là chưa giao.
+- Ngay trong **Thư viện**, mỗi đề có nhãn và nút **✓ Đã giao / ○ Chưa giao** (bấm → xác nhận); lọc nhanh bằng chip Trạng thái “✓ Đã giao / ○ Chưa giao”.
 - Trong bảng tổng hợp lớp, dưới tên mỗi đợt có nút **✓ Đã giao / ○ Chưa giao** — bấm để đổi (lưu trên máy chủ, Đăng lại tất cả không làm mất).
 - Bài chưa giao mà em vẫn tự làm hiện ở cột **Tự luyện** (xám): không trừ ai, chỉ để khen (“chủ động làm thêm 1 bài tự luyện”). Cần Đăng lại tất cả một lần (cơ sở dữ liệu bản 6).
 
