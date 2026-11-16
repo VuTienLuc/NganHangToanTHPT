@@ -151,6 +151,20 @@ async function quanTri(duong, d, env) {
     const them = (await DB.prepare('SELECT tk, so FROM luot_them WHERE nhom = ?').bind(nhom).all()).results;
     return json({ ok: true, ds: results, them });
   }
+  if (duong === 'tong-hop') {         // quá trình học online của một lớp: các đợt giao, mỗi em mỗi đợt
+    const lop = String(d.lop || '').trim();
+    if (!lop) {
+      const { results } = await DB.prepare("SELECT lop, COUNT(*) AS n FROM tk WHERE vai = 'hs' AND lop <> '' GROUP BY lop ORDER BY lop").all();
+      return json({ ok: true, cac_lop: results });
+    }
+    const hs = (await DB.prepare("SELECT ten, ho_ten, stt FROM tk WHERE vai = 'hs' AND UPPER(lop) = UPPER(?) ORDER BY stt, ten").bind(lop).all()).results;
+    const bai = (await DB.prepare(`SELECT b.tk, b.nhom, b.lan, b.diem, b.nop_luc, b.thoi_gian, b.chuyen_tab, b.cam_xuc, b.goi_y
+      FROM bai b JOIN tk t ON t.ten = b.tk WHERE UPPER(t.lop) = UPPER(?) AND b.nop_luc IS NOT NULL ORDER BY b.nop_luc`).bind(lop).all()).results;
+    const coBai = new Set(bai.map(x => x.nhom));
+    const de = (await DB.prepare("SELECT slug, ten, lop, so_luot, tao_luc, trang_thai FROM de WHERE nhom = '' OR nhom IS NULL ORDER BY tao_luc").all()).results
+      .filter(x => coBai.has(x.slug) || (String(x.lop || '').trim() && lopKhop(x.lop, lop)));
+    return json({ ok: true, lop, hs, de, bai });
+  }
   if (duong === 'luot/them') {
     await DB.prepare(`INSERT INTO luot_them (tk, nhom, so) VALUES (?,?,?) ON CONFLICT(tk, nhom) DO UPDATE SET so = so + excluded.so`).bind(d.tk, d.nhom, d.so || 1).run();
     return json({ ok: true });
