@@ -454,10 +454,31 @@ def trang_dong(ten):
     return TRANG.format(tieu=ten.replace("<", "&lt;"), noi="<p><b>Bài thi đã đóng.</b></p><p>Liên hệ thầy nếu em cần làm lại.</p>")
 
 
+def ghi_nang_cap_phieu():
+    """site/_phieu/tc.css + tc.js: phần trình chiếu slide + nền sáng/tối lấy từ mẫu phiếu mới nhất.
+    Máy chủ (middleware) tự chèn vào các phiếu HTML đăng từ bản cũ chưa có nút ▶ Trình chiếu."""
+    import phieu_web
+    t = phieu_web.TRANG
+    css = t[t.index(":root[data-nen=toi]"):t.index("*{box-sizing:border-box}")]
+    sang = re.search(r":root\{(--bg:[^}]*)\}", t).group(1)
+    css = ":root[data-nen=sang]{" + sang + "}\n" + css
+    js = t[t.index("// ================= TRÌNH CHIẾU TỪNG SLIDE"):t.rindex("</script>")]
+    dau = ("(()=>{const v=document.querySelector('.thanh .vo');if(v&&!document.getElementById('nut-tc'))v.insertAdjacentHTML('beforeend',"
+           "'<button class=\"nut\" id=\"nut-nen\" title=\"Nền trang: Tự động / Sáng / Tối\">🌓 Tự động</button>"
+           "<button class=\"nut\" id=\"nut-tc\" title=\"Trình chiếu từng slide (phím P)\" style=\"background:#1e40af;color:#fff;border-color:#1e40af\">▶ Trình chiếu</button>')})();\n")
+    d = os.path.join(SITE, "_phieu"); os.makedirs(d, exist_ok=True)
+    open(os.path.join(d, "tc.css"), "w", encoding="utf-8").write(css)
+    open(os.path.join(d, "tc.js"), "w", encoding="utf-8").write(dau + js)
+
+
 def ghi_site():
     os.makedirs(SITE, exist_ok=True)
     open(os.path.join(SITE, "index.html"), "w", encoding="utf-8").write(trang_chu())
     _dat_trang("dang-nhap", TRANG_DN)
+    try:
+        ghi_nang_cap_phieu()
+    except Exception:
+        pass
     open(os.path.join(SITE, "_headers"), "w", encoding="utf-8").write(
         "/*\n  X-Robots-Tag: noindex, nofollow\n  Cache-Control: no-cache\n")
     open(os.path.join(SITE, "404.html"), "w", encoding="utf-8").write(

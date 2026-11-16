@@ -219,7 +219,7 @@ như phần mềm cũ thì ghi `"khung": "DeThi"` trong file JSON.
 - Mỗi mục có nút **📤 Gửi HS**: link, nút Chép link, QR chiếu lớp, Mở thử và **tin nhắn mẫu** (sửa được) để dán vào Zalo/Messenger. Nếu đề đang đóng hoặc bài chỉ cho GV xem, hộp này nhắc trước khi gửi.
 - Đầu mỗi khối có **🔗 Chép link trang Toán N** (trang học sinh của khối, thấy mọi đề và bài đã mở) và QR.
 - Nút **⋯** mở các thao tác ít dùng: lớp giao/số lượt, mở/ẩn lời giải, đóng/mở đề, bật/tắt 💡 Gợi ý AI, ẩn/hiện, cho HS xem, thay file, xoá. Link chung nhiều mã đề có nút **N mã ▾** để chép link từng mã.
-- Phiếu đã đăng từ bản cũ (chưa có ▶ Trình chiếu, nền sáng/tối): ⋯ → **⟳ Làm lại bằng mẫu mới** — app tự tìm thư mục phiếu gốc, dựng lại trang và đăng lại (giữ nguyên link, quyền HS).
+- Phiếu đã đăng từ bản cũ tự có nút ▶ Trình chiếu và 🌓 nền sáng/tối trên web (máy chủ chèn phần nâng cấp /_phieu/tc.js, cần Đăng lại tất cả một lần). Muốn dựng lại cả trang bằng mẫu mới: ⋯ → **⟳ Làm lại bằng mẫu mới** — app tự tìm thư mục phiếu gốc, dựng lại trang và đăng lại (giữ nguyên link, quyền HS).
 
 ## Đăng nhập học sinh / giáo viên (thi trực tuyến)
 - Máy chủ nhỏ trên Cloudflare (Pages Functions + cơ sở dữ liệu D1, miễn phí) tự dựng ở lần **Đăng** đầu tiên.
