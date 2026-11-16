@@ -46,6 +46,10 @@ async function hocSinh(duong, d, env, req, url) {
   }
   if (duong === 'toi') {
     const ra = { ok: true, tk: ph.tk, ho_ten: ph.ho_ten, lop: ph.lop, stt: ph.stt, vai: ph.vai, doi_mk: !!ph.doi_mk };
+    if (ph.vai === 'gv') {
+      const { results } = await env.DB.prepare("SELECT slug, ten, lop, so_luot, trang_thai FROM de WHERE nhom IS NULL OR nhom = '' ORDER BY tao_luc DESC").all();
+      ra.de = results;
+    }
     if (ph.vai !== 'gv') {
       const { results } = await env.DB.prepare("SELECT slug, ten, lop, so_luot, nhom, trang_thai FROM de WHERE (nhom IS NULL OR nhom = '') AND trang_thai != 'da_dong' ORDER BY tao_luc DESC").all();
       ra.de = [];

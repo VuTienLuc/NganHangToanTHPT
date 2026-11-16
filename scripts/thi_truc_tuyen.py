@@ -205,7 +205,9 @@ fetch('/api/toi',{credentials:'same-origin'}).then(r=>r.json()).then(t=>{
  if(!t.ok){nd.innerHTML='<p>Học sinh đăng nhập bằng tài khoản thầy cấp để làm bài kiểm tra.</p><a href="/dang-nhap/"><button>Đăng nhập</button></a>';return}
  if(t.doi_mk){location.href='/dang-nhap/?doi=1';return}
  let h='<p>Xin chào <b>'+e(t.ho_ten||t.tk)+'</b>'+(t.lop?' — lớp '+e(t.lop):'')+' · <a href="#" id="thoat">Đăng xuất</a></p>';
- if(t.vai==='gv'){h+='<h3>Bài giảng</h3>'+(LOP.length?LOP.map(l=>'<a class="de" href="/toan'+l+'/"><b>Toán '+l+'</b><span class="nho">mục lục</span></a>').join(''):'<p class="phu">Chưa có bài giảng.</p>')}
+ if(t.vai==='gv'){const TT={dang_mo:'đang mở',da_cong_bo:'đã công bố lời giải',da_dong:'đã đóng'};
+  h+='<h3>Đề thi — làm thử (không giới hạn lượt, không lưu điểm)</h3>'+((t.de||[]).length?t.de.map(x=>'<a class="de" href="/'+e(x.slug)+'/"><b>'+e(x.ten)+'</b><span class="nho">'+(x.lop||'mọi lớp')+' · '+(TT[x.trang_thai]||'')+'</span></a>').join(''):'<p class="phu">Chưa đăng đề nào.</p>');
+  h+='<h3>Bài giảng</h3>'+(LOP.length?LOP.map(l=>'<a class="de" href="/toan'+l+'/"><b>Toán '+l+'</b><span class="nho">mục lục</span></a>').join(''):'<p class="phu">Chưa có bài giảng.</p>')}
  else{h+='<h3>Bài kiểm tra của em</h3>'+((t.de||[]).length?t.de.map(x=>'<a class="de" href="/'+e(x.slug)+'/"><b>'+e(x.ten)+'</b><span class="nho">'+
   (x.da_lam?'Đã làm '+x.da_lam+' lần'+(x.cao_nhat!=null?' · cao nhất '+Number(x.cao_nhat).toFixed(2).replace('.',','):''):'Chưa làm')+(x.con_lai!=null?' · còn '+x.con_lai+' lượt':'')+(x.cong_bo?' · có lời giải':'')+'</span></a>').join(''):'<p class="phu">Hiện chưa có bài kiểm tra nào cho lớp em.</p>')}
  nd.innerHTML=h;document.getElementById('thoat').onclick=async ev=>{ev.preventDefault();await fetch('/api/dang-xuat',{method:'POST'});location.href='/dang-nhap/'};
