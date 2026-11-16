@@ -3320,3 +3320,189 @@ Từ điểm $M$ nằm bên ngoài đường tròn $(O; R)$, kẻ hai tiếp tuy
 		\end{enumerate}
 }
 \end{bt}
+
+
+\begin{bt}%[TS10 7.C4 7.a1 7.b1 7.c1]%[ma:356eed9e]
+% nguon: Đề tham khảo Tuyển sinh 10 năm học 2026-2027 Sở GD&ĐT TP.HCM - Cụm 6 Đề 3, Bài 7
+Cho nửa đường tròn tâm $O$ đường kính $AB$. Trên tiếp tuyến tại $B$ của nửa đường tròn lấy điểm $M$. Qua $M$ kẻ tiếp tuyến tại $C$ của nửa đường tròn ($C$ khác $B$). Đoạn thẳng $AM$ cắt nửa đường tròn tại $D$ ($D$ khác $A$). Gọi $I$ là trung điểm của $AD$, $H$ là giao điểm của $OM$ và $BC$.
+	\begin{enumerate}[a)]
+		\item Chứng minh tứ giác $MCOB$ và tứ giác $MCIO$ là các tứ giác nội tiếp.
+		\item Gọi $K$ là giao điểm của tia $OI$ và đường thẳng $BC$. Chứng minh $OH \cdot OM = OC^2$ và $KD$ là tiếp tuyến của nửa đường tròn tâm $O$.
+		\item Giả sử $BM = AB = 2R$. Tính diện tích phần của tam giác $KAD$ không thuộc nửa đường tròn tâm $O$ theo $R$.
+	\end{enumerate}
+\loigiai{
+\begin{center}
+			\begin{tikzpicture}[>=stealth, scale=1]
+				\coordinate (A) at (-2.5,0);
+				\coordinate (B) at (2.5,0);
+				\coordinate (O) at (0,0);
+				\def\r{2.5}
+				\draw (A) -- (B);
+				\draw (A) arc (180:0:\r);
+				\coordinate (M) at (2.5,5);
+				\draw (B) -- (M);
+				\pgfmathsetmacro{\distOM}{sqrt(2.5^2 + 5^2)}
+				\pgfmathsetmacro{\angOM}{atan2(5,2.5)}
+				\pgfmathsetmacro{\alphaVal}{acos(\r/\distOM)}
+				\coordinate (C) at ({\angOM + \alphaVal}:\r);
+				\draw (M) -- (C);
+				\draw (O) -- (C);
+				\draw (O) -- (M);
+				\draw (B) -- (C);
+				\coordinate (H) at (intersection of O--M and B--C);
+				\draw (A) -- (M);
+				% D là giao AM với đường tròn (O)
+				% A=(-2.5,0), M=(2.5,5) => vector AM=(5,5) => D có tọa độ: x^2+y^2=r^2 và y=x+2.5
+				% x^2 + (x+2.5)^2 = 2.5^2 => 2x^2 + 5x = 0 => x = -2.5 (A) hoặc x = 0 => D=(0, 2.5)
+				\coordinate (D) at (0,2.5);
+				\coordinate (I) at ($(A)!0.5!(D)$);
+				\draw (O) -- (I);
+				% K là giao của tia OI và đường thẳng BC
+				\coordinate (K) at (intersection of O--I and B--C);
+				\draw (I) -- (K);
+				\draw (K) -- (D);
+				\draw (K) -- (A);
+				\node at (A) [below left] {$A$};
+				\node at (B) [below right] {$B$};
+				\node at (O) [below] {$O$};
+				\node at (M) [above right] {$M$};
+				\node at (C) [above] {$C$};
+				\node at (D) [above left] {$D$};
+				\node at (I) [above left] {$I$};
+				\node at (H) [right] {$H$};
+				\node at (K) [below left] {$K$};
+				\fill (A) circle (1.5pt) (B) circle (1.5pt) (O) circle (1.5pt) (M) circle (1.5pt) (C) circle (1.5pt) (D) circle (1.5pt) (I) circle (1.5pt) (H) circle (1.5pt) (K) circle (1.5pt);
+			\end{tikzpicture}
+		\end{center}
+		\begin{enumerate}[a)]
+			\item Vì $MC, MB$ là hai tiếp tuyến của $(O)$ nên $\widehat{MCO} = 90^\circ$ và $\widehat{MBO} = 90^\circ$.
+			
+			Tứ giác $MCOB$ có $\widehat{MCO} + \widehat{MBO} = 90^\circ + 90^\circ = 180^\circ$, suy ra $MCOB$ nội tiếp đường tròn đường kính $MO$.
+			
+			Vì $I$ là trung điểm của dây cung $AD$ nên $OI \perp AD \implies \widehat{MIO} = 90^\circ$.
+			
+			Tứ giác $MCIO$ có $\widehat{MCO} = \widehat{MIO} = 90^\circ$, do đó $C$ và $I$ cùng nhìn đoạn $MO$ dưới góc vuông.
+			
+			Suy ra $MCIO$ nội tiếp đường tròn đường kính $MO$.
+			\item Vì $MC = MB$ và $OC = OB = R$ nên $OM$ là đường trung trực của $BC \implies OM \perp BC$ tại $H$.
+			
+			Tam giác $MCO$ vuông tại $C$ có đường cao $CH$, theo hệ thức lượng:
+			$$OH \cdot OM = OC^2 = R^2 = OD^2.$$
+			Xét $\Delta OHK$ và $\Delta OIM$ có:
+			$$\widehat{HOM}\text{ chung},\quad \widehat{OHK} = \widehat{OIM} = 90^\circ.$$
+			Do đó $\Delta OHK \backsim \Delta OIM\text{ (g-g)}$, suy ra:
+			$$\dfrac{OH}{OI} = \dfrac{OK}{OM} \implies OH \cdot OM = OI \cdot OK.$$
+			Từ đó suy ra $OI \cdot OK = OD^2 \iff \dfrac{OI}{OD} = \dfrac{OD}{OK}$.
+			
+			Xét $\Delta OID$ và $\Delta ODK$ có:
+			$$\widehat{DOK}\text{ chung},\quad \dfrac{OI}{OD} = \dfrac{OD}{OK}.$$
+			Do đó $\Delta OID \backsim \Delta ODK\text{ (c-g-c)} \implies \widehat{ODK} = \widehat{OID} = 90^\circ$.
+			
+			Suy ra $KD \perp OD$ tại $D \in (O)$, nên $KD$ là tiếp tuyến của nửa đường tròn $(O)$.
+			\item Khi $BM = AB = 2R$:
+			
+			Tam giác $ABM$ vuông tại $B$ có $AB = BM = 2R$ nên $\Delta ABM$ vuông cân tại $B \implies \widehat{MAB} = 45^\circ$.
+			
+			Tam giác $OAD$ cân tại $O$ (vì $OA = OD = R$) có $\widehat{OAD} = 45^\circ$ nên $\Delta OAD$ vuông cân tại $O$, do đó $\widehat{AOD} = 90^\circ$.
+			
+			Do $KA, KD$ là hai tiếp tuyến cắt nhau tại $K$ nên $KA = KD$ và $\widehat{OAK} = \widehat{ODK} = 90^\circ$.
+			
+			Tứ giác $AKDO$ có $\widehat{AOD} = \widehat{OAK} = \widehat{ODK} = 90^\circ$ và $OA = OD = R$ nên $AKDO$ là hình vuông cạnh $R$.
+			
+			Diện tích hình vuông $AKDO$ là:
+			$$S_{AKDO} = R^2.$$
+			Diện tích hình quạt tròn $AOD$ (ứng với góc ở tâm $90^\circ$) là:
+			$$S_{\text{quạt}} = \dfrac{\pi R^2 \cdot 90^\circ}{360^\circ} = \dfrac{\pi R^2}{4}.$$
+			Phần diện tích của tam giác $KAD$ không thuộc nửa đường tròn $(O)$ chính là diện tích hình vuông $AKDO$ trừ đi diện tích hình quạt $AOD$:
+			$$S = S_{AKDO} - S_{\text{quạt}} = R^2 - \dfrac{\pi R^2}{4}.$$
+			Vậy diện tích cần tìm là $R^2 - \dfrac{\pi R^2}{4}$.
+		\end{enumerate}
+}
+\end{bt}
+
+\begin{bt}%[TS10 7.C1 7.a1 7.b1 7.c1]%[ma:e9f685d1]
+% nguon: Đề tham khảo Tuyển sinh 10 năm học 2026-2027 Sở GD&ĐT TP.HCM - Cụm 7 Đề 1, Bài 7
+Từ điểm $M$ nằm ngoài đường tròn $(O; R)$, vẽ hai tiếp tuyến $MA, MB$ với $(O)$ ($A, B$ là hai tiếp điểm). Gọi $H$ là giao điểm của $MO$ và $AB$. Vẽ đường kính $AC$ của đường tròn $(O)$.
+	\begin{enumerate}[a)]
+		\item Chứng minh bốn điểm $M, A, O, B$ cùng thuộc một đường tròn và xác định tâm $I$ của đường tròn này.
+		\item Chứng minh $OM \parallel BC$ và $AM \cdot AC = OM \cdot AB$.
+		\item Cho $OM = 2R$. Tính diện tích phần chung của hai hình tròn $(O)$ và $(I)$ theo $R$.
+	\end{enumerate}
+\loigiai{
+\begin{center}
+			\begin{tikzpicture}[>=stealth, scale=1]
+				\coordinate (O) at (0,0);
+				\def\r{2.2}
+				\draw (O) circle (\r);
+				\coordinate (M) at (4.4,0);
+				\pgfmathsetmacro{\distM}{4.4}
+				\pgfmathsetmacro{\alphaM}{acos(\r/\distM)}
+				\coordinate (A) at ({\alphaM}:\r);
+				\coordinate (B) at ({-\alphaM}:\r);
+				\draw (M) -- (A);
+				\draw (M) -- (B);
+				\draw (O) -- (A);
+				\draw (O) -- (B);
+				\draw (O) -- (M);
+				\draw (A) -- (B);
+				\coordinate (H) at (intersection of O--M and A--B);
+				% AC là đường kính
+				\coordinate (C) at ($(A)!2!(O)$);
+				\draw (A) -- (C);
+				\draw (B) -- (C);
+				\coordinate (I) at ($(O)!0.5!(M)$);
+				\draw (I) circle (\r);
+				\node at (O) [below left] {$O$};
+				\node at (M) [right] {$M$};
+				\node at (A) [above] {$A$};
+				\node at (B) [below] {$B$};
+				\node at (C) [left] {$C$};
+				\node at (H) [above right] {$H$};
+				\node at (I) [above right] {$I$};
+				\fill (O) circle (1.5pt) (M) circle (1.5pt) (A) circle (1.5pt) (B) circle (1.5pt) (C) circle (1.5pt) (H) circle (1.5pt) (I) circle (1.5pt);
+			\end{tikzpicture}
+		\end{center}
+		\begin{enumerate}[a)]
+			\item Vì $MA, MB$ là hai tiếp tuyến của $(O)$ nên $\widehat{MAO} = 90^\circ$ và $\widehat{MBO} = 90^\circ$.
+			
+			Xét tứ giác $MAOB$ có $\widehat{MAO} + \widehat{MBO} = 90^\circ + 90^\circ = 180^\circ$, do đó $MAOB$ nội tiếp đường tròn đường kính $MO$.
+			
+			Tâm $I$ của đường tròn này là trung điểm của đoạn thẳng $MO$.
+			\item Ta có $MA = MB$ (tính chất hai tiếp tuyến cắt nhau) và $OA = OB = R$ nên $OM$ là đường trung trực của $AB$, suy ra $OM \perp AB$ tại $H$.
+			
+			Mặt khác, $\widehat{ABC} = 90^\circ$ (góc nội tiếp chắn nửa đường tròn đường kính $AC$), suy ra $BC \perp AB$.
+			
+			Do đó $OM \parallel BC$ (vì cùng vuông góc với $AB$).
+			
+			Vì $H$ là trung điểm của $AB$ nên $AB = 2AH$.
+			
+			Vì $AC$ là đường kính nên $AC = 2AO$.
+			
+			Xét $\Delta MAO$ và $\Delta AHO$ có:
+			$$\widehat{AOM}\text{ chung},\quad \widehat{MAO} = \widehat{AHO} = 90^\circ.$$
+			Do đó $\Delta MAO \backsim \Delta AHO\text{ (g-g)}$, suy ra:
+			$$\dfrac{MA}{AH} = \dfrac{MO}{AO} \implies MA \cdot AO = MO \cdot AH \implies MA \cdot (2AO) = MO \cdot (2AH) \implies AM \cdot AC = OM \cdot AB.$$
+			\item Trong tam giác vuông $MAO$ tại $A$ có $OM = 2R, OA = R$:
+			$$\cos\widehat{AOM} = \dfrac{OA}{OM} = \dfrac{R}{2R} = \dfrac{1}{2} \implies \widehat{AOM} = 60^\circ.$$
+			Do tính chất hai tiếp tuyến cắt nhau nên $\widehat{AOB} = 2\widehat{AOM} = 120^\circ$.
+			
+			Đường tròn $(I)$ ngoại tiếp tứ giác $MAOB$ có bán kính:
+			$$R_I = \dfrac{MO}{2} = \dfrac{2R}{2} = R.$$
+			Do đó hai đường tròn $(O)$ và $(I)$ có cùng bán kính $R$. Khoảng cách hai tâm là $OI = R$.
+			
+			Hai đường tròn cắt nhau tại hai điểm $A$ và $B$. Phần diện tích chung bằng tổng diện tích hai hình viên phân cung $AB$ bằng nhau của hai đường tròn.
+			
+			Diện tích hình quạt tròn $OAB$ của $(O)$ ứng với góc ở tâm $120^\circ$ là:
+			$$S_{\text{quạt}} = \dfrac{\pi R^2 \cdot 120^\circ}{360^\circ} = \dfrac{\pi R^2}{3}.$$
+			Trong tam giác cân $OAB$ có $OA = OB = R, \widehat{AOB} = 120^\circ$:
+			$$OH = OA \cdot \cos 60^\circ = \dfrac{R}{2},\quad AB = 2 \cdot OA \cdot \sin 60^\circ = 2 \cdot \dfrac{R\sqrt{3}}{2} = R\sqrt{3}.$$
+			Diện tích tam giác $OAB$ là:
+			$$S_{\Delta OAB} = \dfrac{1}{2} AB \cdot OH = \dfrac{1}{2} \cdot R\sqrt{3} \cdot \dfrac{R}{2} = \dfrac{R^2\sqrt{3}}{4}.$$
+			Diện tích hình viên phân giới hạn bởi dây $AB$ và cung nhỏ $AB$ là:
+			$$S_{\text{vp}} = S_{\text{quạt}} - S_{\Delta OAB} = \dfrac{\pi R^2}{3} - \dfrac{R^2\sqrt{3}}{4}.$$
+			Do tính đối xứng, diện tích phần chung của hai hình tròn là:
+			$$S = 2 \cdot S_{\text{vp}} = 2\left(\dfrac{\pi R^2}{3} - \dfrac{R^2\sqrt{3}}{4}\right) = R^2\left(\dfrac{2\pi}{3} - \dfrac{\sqrt{3}}{2}\right).$$
+			Vậy diện tích cần tìm là $R^2\left(\dfrac{2\pi}{3} - \dfrac{\sqrt{3}}{2}\right)$.
+		\end{enumerate}
+}
+\end{bt}
