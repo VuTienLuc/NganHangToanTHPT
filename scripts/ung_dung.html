@@ -2053,7 +2053,7 @@ const tvBo=s=>[...String(s||"")].map(c=>c.normalize("NFD").replace(/[̀-ͯ]/g,""
 function tvHl(s,tk){s=String(s||"");if(!tk.length)return esc(s);const n=tvBo(s),d=new Array(s.length).fill(0);
   for(const k of tk){let i=n.indexOf(k);while(i>=0){for(let j=i;j<i+k.length;j++)d[j]=1;i=n.indexOf(k,i+k.length)}}
   let o="",m=0;for(let i=0;i<s.length;i++){if(d[i]&&!m){o+="<mark>";m=1}if(!d[i]&&m){o+="</mark>";m=0}o+=esc(s[i])}return o+(m?"</mark>":"")}
-function tvDaGiao(x){const g=(TV.giao||{})[x.slug];return g===1||(g==null&&!!String(x.lop_giao||"").trim())}
+function tvDaGiao(x){return (TV.giao||{})[x.slug]===1}   // chỉ bài thầy đã xác nhận giao
 function tvLoai(x){return x.loai==="bai_giang"?(x.loai_bg==="phieu"?"phieu":"bg"):"de"}
 function veThi(r){
   TV.r=r;$("#thi-du-an").value=r.cau_hinh.du_an;$("#thi-mien").value=r.cau_hinh.ten_mien||"";$("#thi-sheet").value=r.cau_hinh.script_url||"";
@@ -2114,7 +2114,7 @@ function tvMuc(x,tk){
   const meta=[tt,pl.bai?esc(pl.bai):"",lo==="de"?`Lớp giao: ${esc(x.lop_giao||"mọi lớp")}`:`Toán ${x.lop||pl.lop||"?"}`,
     lo==="de"?(x.so_luot===0?"không giới hạn lượt":(x.so_luot??2)+" lượt/em"):(x.kieu==="pdf"?"PDF":"Trình chiếu HTML"),
     x.loai==="nhom"?`${(x.con||[]).length} mã đề`:(lo==="de"&&x.so_cau?x.so_cau+" câu"+(x.phut?" · "+x.phut+" phút":""):""),
-    x.goi_y_ai?'<span class="the gy">💡 Gợi ý AI</span>':"",lo==="de"?(tvDaGiao(x)?`<span class="the giao" title="${(TV.giao||{})[x.slug]==null?"Tự động: có ghi lớp giao":"Thầy đã xác nhận"} — tính vào tổng hợp quá trình">✓ Đã giao</span>`:`<span class="the cg" title="Không tính vào hoàn thành / điểm TB; em tự làm thì ghi nhận là tự luyện">○ Chưa giao</span>`):"",esc((x.cap_nhat||x.tao_luc||"").slice(0,10))].filter(Boolean).join(" · ");
+    x.goi_y_ai?'<span class="the gy">💡 Gợi ý AI</span>':"",lo==="de"?(tvDaGiao(x)?`<span class="the giao" title="Thầy đã xác nhận — tính vào tổng hợp quá trình">✓ Đã giao</span>`:`<span class="the cg" title="Chưa xác nhận giao: không tính vào hoàn thành / điểm TB; em tự làm thì ghi nhận là tự luyện">○ Chưa giao</span>`):"",esc((x.cap_nhat||x.tao_luc||"").slice(0,10))].filter(Boolean).join(" · ");
   let them="";
   if(lo==="de"){them=`<button data-v="sua">Lớp giao / số lượt</button>`+(x.trang_thai!=="da_cong_bo"?`<button data-v="da_cong_bo">Mở lời giải</button>`:`<button data-v="dang_mo">Ẩn lời giải</button>`)+
       (x.trang_thai!=="da_dong"?`<button data-v="da_dong">Đóng đề</button>`:`<button data-v="dang_mo">Mở lại</button>`)+
@@ -2126,7 +2126,7 @@ function tvMuc(x,tk){
     <div class="tv-ic ${lo==="de"?"":lo==="phieu"?"ph":x.kieu==="pdf"?"pdf":"bg"}" aria-hidden="true">${ic}</div>
     <div style="min-width:0"><div class="tv-ten" title="${esc(x.ten)}">${tvHl(x.ten,tk)}</div><div class="tv-meta">${meta}</div></div>
     <div class="tv-nut"><button class="gui" data-v="gui" title="Link, QR, tin nhắn mẫu để gửi học sinh">📤 Gửi HS</button>
-      ${lo==="de"?`<button data-v="giao" class="nut-giao ${tvDaGiao(x)?"bat":""}" title="Đánh dấu bài đã giao (tính vào tổng hợp) / chưa giao">${tvDaGiao(x)?"✓ Đã giao":"○ Chưa giao"}</button><button data-v="diem">Điểm</button>`:`<button data-v="xem">Xem</button>`}
+      ${lo==="de"?`<button data-v="giao" class="nut-giao ${tvDaGiao(x)?"bat":""}" title="Đánh dấu bài đã giao (tính vào tổng hợp) / chưa giao">${tvDaGiao(x)?"✓ Đã giao":"Xác nhận đã giao"}</button><button data-v="diem">Điểm</button>`:`<button data-v="xem">Xem</button>`}
       ${con.length?`<button data-v="con">${con.length} mã ▾</button>`:""}<button data-v="them" aria-label="Thêm thao tác">⋯</button></div>
     <div class="tv-gui"></div>
     ${con.length?`<div class="tv-con">${con.map(y=>`<div class="dong-con" data-s="${esc(y.slug)}"><b>${esc(y.ten)}</b><span style="color:#64748b">${({dang_mo:"đang mở",da_cong_bo:"đã công bố",da_dong:"đã đóng"})[y.trang_thai]||""}</span>
