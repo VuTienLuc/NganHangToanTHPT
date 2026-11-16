@@ -3162,3 +3162,161 @@ Từ điểm $A$ nằm ngoài đường tròn $(O; R)$, vẽ tiếp tuyến $AB$
 \end{enumerate}
 }
 \end{bt}
+
+
+\begin{bt}%[TS10 7.C1 7.a1 7.b1 7.c1]%[ma:8cc45a39]
+% nguon: Đề tham khảo Tuyển sinh 10 năm học 2026-2027 Sở GD&ĐT TP.HCM - Cụm 6 Đề 1, Bài 7
+Cho đường tròn $(O; R)$ và đường thẳng $d$ không cắt đường tròn $(O)$. Kẻ $OH \perp d$ tại $H$. Lấy điểm $K$ tùy ý trên đường thẳng $d$ ($K$ không trùng với $H$). Từ $K$ kẻ hai tiếp tuyến $KA, KB$ với $(O)$ ($A, B$ là hai tiếp điểm). Dây $AB$ cắt đoạn thẳng $OH$ tại $I$.
+	\begin{enumerate}[a)]
+		\item Chứng minh bốn điểm $K, A, O, H$ cùng thuộc một đường tròn.
+		\item Chứng minh $IA \cdot IB = IH \cdot IO$.
+		\item Cho biết $OK = 2R$ và $OH = R\sqrt{3}$. Tính diện tích tam giác $KAB$ theo $R$.
+	\end{enumerate}
+\loigiai{
+\begin{center}
+			\begin{tikzpicture}[>=stealth, scale=0.9]
+				\coordinate (O) at (0,0);
+				\def\r{2.2}
+				\draw (O) circle (\r);
+				\coordinate (H) at (0,-3.5);
+				\draw[thick] (-2.5,-3.5) -- (4,-3.5) node[right] {$d$};
+				\coordinate (K) at (3,-3.5);
+				\node at (O) [above left] {$O$};
+				\node at (H) [below left] {$H$};
+				\node at (K) [below right] {$K$};
+				\pgfmathsetmacro{\distOK}{sqrt(3^2 + 3.5^2)}
+				\pgfmathsetmacro{\angOK}{atan2(-3.5,3)}
+				\pgfmathsetmacro{\alphaVal}{acos(\r/\distOK)}
+				\coordinate (A) at ({\angOK + \alphaVal}:\r);
+				\coordinate (B) at ({\angOK - \alphaVal}:\r);
+				\draw (K) -- (A) node[above left] {$A$};
+				\draw (K) -- (B) node[below right] {$B$};
+				\draw (O) -- (A);
+				\draw (O) -- (B);
+				\draw (O) -- (K);
+				\draw (O) -- (H);
+				\draw (A) -- (B);
+				\coordinate (I) at (intersection of A--B and O--H);
+				\node at (I) [above left] {$I$};
+				\fill (O) circle (1.5pt) (H) circle (1.5pt) (K) circle (1.5pt) (A) circle (1.5pt) (B) circle (1.5pt) (I) circle (1.5pt);
+			\end{tikzpicture}
+		\end{center}
+		\begin{enumerate}[a)]
+			\item Vì $KA$ là tiếp tuyến của $(O)$ nên $KA \perp OA \implies \widehat{KAO} = 90^\circ$.
+			
+			Vì $OH \perp d$ tại $H$ và $K \in d$ nên $\widehat{KHO} = 90^\circ$.
+			
+			Tứ giác $KAOH$ có $\widehat{KAO} = \widehat{KHO} = 90^\circ$, do đó hai đỉnh $A$ và $H$ cùng nhìn đoạn $KO$ dưới một góc vuông.
+			
+			Suy ra bốn điểm $K, A, O, H$ cùng thuộc đường tròn đường kính $KO$.
+			\item Gọi $M$ là giao điểm của $OK$ và $AB$.
+			
+			Vì $KA, KB$ là hai tiếp tuyến cắt nhau nên $KA = KB$ và $OA = OB = R$.
+			
+			Do đó $OK$ là đường trung trực của đoạn thẳng $AB$, suy ra $OK \perp AB$ tại $M$.
+			
+			Xét $\Delta OMI$ và $\Delta OHK$ có:
+			$$\widehat{OMI} = \widehat{OHK} = 90^\circ,\quad \widehat{KOH}\text{ chung}.$$
+			Do đó $\Delta OMI \backsim \Delta OHK\text{ (g-g)}$, suy ra:
+			$$\dfrac{OI}{OK} = \dfrac{OM}{OH} \implies OI \cdot OH = OM \cdot OK.$$
+			Trong tam giác vuông $OAK$ có đường cao $AM$, ta có hệ thức lượng:
+			$$OM \cdot OK = OA^2 = R^2.$$
+			Suy ra $OI \cdot OH = R^2$.
+			
+			Mặt khác, theo phương tích của điểm $I$ đối với đường tròn $(O)$, ta có:
+			$$IA \cdot IB = R^2 - OI^2.$$
+			Thay $R^2 = OI \cdot OH$ vào, ta được:
+			$$IA \cdot IB = OI \cdot OH - OI^2 = OI(OH - OI) = OI \cdot IH = IH \cdot IO.$$
+			\item Khi $OK = 2R$:
+			
+			Trong tam giác vuông $OAK$ tại $A$:
+			$$KA = \sqrt{OK^2 - OA^2} = \sqrt{(2R)^2 - R^2} = R\sqrt{3}.$$
+			Vì $AM \perp OK$ nên:
+			$$AM = \dfrac{OA \cdot KA}{OK} = \dfrac{R \cdot R\sqrt{3}}{2R} = \dfrac{R\sqrt{3}}{2}.$$
+			Do $M$ là trung điểm của $AB$ nên:
+			$$AB = 2AM = 2 \cdot \dfrac{R\sqrt{3}}{2} = R\sqrt{3}.$$
+			Ta lại có:
+			$$KM = \dfrac{KA^2}{OK} = \dfrac{(R\sqrt{3})^2}{2R} = \dfrac{3R}{2}.$$
+			Diện tích tam giác $KAB$ là:
+			$$S_{KAB} = \dfrac{1}{2} KM \cdot AB = \dfrac{1}{2} \cdot \dfrac{3R}{2} \cdot R\sqrt{3} = \dfrac{3R^2\sqrt{3}}{4}.$$
+		\end{enumerate}
+}
+\end{bt}
+
+\begin{bt}%[TS10 7.C1 7.a1 7.b1 7.c1]%[ma:76649cd8]
+% nguon: Đề tham khảo Tuyển sinh 10 năm học 2026-2027 Sở GD&ĐT TP.HCM - Cụm 6 Đề 2, Bài 7
+Từ điểm $M$ nằm bên ngoài đường tròn $(O; R)$, kẻ hai tiếp tuyến $MP, MQ$ với đường tròn ($P, Q$ là hai tiếp điểm). Kẻ cát tuyến $MAB$ không đi qua tâm $O$ sao cho $A$ nằm giữa $M$ và $B$. Gọi $I$ là trung điểm của dây cung $AB$. Đoạn thẳng $PQ$ cắt đoạn thẳng $AB$ tại điểm $E$.
+	\begin{enumerate}[a)]
+		\item Chứng minh bốn điểm $M, P, O, Q$ cùng thuộc một đường tròn và $OM \perp PQ$.
+		\item Chứng minh $MP^2 = MI \cdot ME$.
+		\item Giả sử $PB = a$ và $A$ là trung điểm của đoạn thẳng $MB$. Tính độ dài đoạn thẳng $PA$ theo $a$.
+	\end{enumerate}
+\loigiai{
+\begin{center}
+			\begin{tikzpicture}[>=stealth, scale=0.9]
+				\coordinate (O) at (0,0);
+				\def\r{2.2}
+				\draw (O) circle (\r);
+				\coordinate (M) at (-5,0);
+				\pgfmathsetmacro{\distM}{5}
+				\pgfmathsetmacro{\alphaM}{acos(\r/\distM)}
+				\coordinate (P) at ({\alphaM}:\r);
+				\coordinate (Q) at ({-\alphaM}:\r);
+				\draw (M) -- (P) node[above] {$P$};
+				\draw (M) -- (Q) node[below] {$Q$};
+				\draw (O) -- (P);
+				\draw (O) -- (Q);
+				\draw (O) -- (M);
+				\draw (P) -- (Q);
+				\coordinate (A) at (-2.5, 1.25);
+				\path (M) -- (A) coordinate[pos=2] (B);
+				\draw (M) -- (B);
+				\coordinate (I) at ($(A)!0.5!(B)$);
+				\coordinate (E) at (intersection of P--Q and M--B);
+				\draw (P) -- (A) node[above left] {$A$};
+				\draw (P) -- (B) node[right] {$B$};
+				\draw (O) -- (I);
+				\node at (O) [below right] {$O$};
+				\node at (M) [left] {$M$};
+				\node at (I) [above] {$I$};
+				\node at (E) [below left] {$E$};
+				\fill (O) circle (1.5pt) (M) circle (1.5pt) (P) circle (1.5pt) (Q) circle (1.5pt) (A) circle (1.5pt) (B) circle (1.5pt) (I) circle (1.5pt) (E) circle (1.5pt);
+			\end{tikzpicture}
+		\end{center}
+		\begin{enumerate}[a)]
+			\item Vì $MP, MQ$ là hai tiếp tuyến của $(O)$ nên $\widehat{MPO} = 90^\circ$ và $\widehat{MQO} = 90^\circ$.
+			
+			Xét tứ giác $MPOQ$ có $\widehat{MPO} + \widehat{MQO} = 90^\circ + 90^\circ = 180^\circ$, do đó $MPOQ$ là tứ giác nội tiếp đường tròn đường kính $MO$.
+			
+			Lại có $MP = MQ$ (tính chất hai tiếp tuyến cắt nhau) và $OP = OQ = R$ nên $OM$ là đường trung trực của đoạn thẳng $PQ$.
+			
+			Suy ra $OM \perp PQ$.
+			\item Gọi $H$ là giao điểm của $OM$ và $PQ$. Trong tam giác vuông $MPO$ có đường cao $PH$, ta có hệ thức lượng:
+			$$MP^2 = MH \cdot MO.$$
+			Vì $I$ là trung điểm của dây cung $AB$ nên $OI \perp AB \implies \widehat{MIO} = 90^\circ$.
+			
+			Xét tứ giác $OIEH$ có $\widehat{MIO} = 90^\circ$ và $\widehat{MHE} = 90^\circ$.
+			
+			Do đó $\Delta MHE \backsim \Delta MIO\text{ (g-g)}$ (vì có $\widehat{OMI}$ chung và $\widehat{MHE} = \widehat{MIO} = 90^\circ$).
+			
+			Suy ra:
+			$$\dfrac{MH}{MI} = \dfrac{ME}{MO} \implies MH \cdot MO = MI \cdot ME.$$
+			Từ đó suy ra $MP^2 = MI \cdot ME$.
+			\item Xét $\Delta MPA$ và $\Delta MBP$ có:
+			$$\widehat{PMB}\text{ chung};$$
+			$\widehat{MPA} = \widehat{MBP}$ (góc tạo bởi tia tiếp tuyến và dây cung và góc nội tiếp cùng chắn cung $AP$).
+			
+			Do đó $\Delta MPA \backsim \Delta MBP\text{ (g-g)}$.
+			
+			Suy ra:
+			$$\dfrac{MP}{MB} = \dfrac{MA}{MP} = \dfrac{PA}{PB} \implies MP^2 = MA \cdot MB.$$
+			Theo giả thiết, $A$ là trung điểm của đoạn thẳng $MB$ nên $MB = 2MA$.
+			
+			Thay vào hệ thức trên, ta được:
+			$$MP^2 = MA \cdot (2MA) = 2MA^2 \implies MP = MA\sqrt{2}.$$
+			Từ tỉ số đồng dạng $\dfrac{MA}{MP} = \dfrac{PA}{PB}$, ta có:
+			$$PA = PB \cdot \dfrac{MA}{MP} = a \cdot \dfrac{MA}{MA\sqrt{2}} = \dfrac{a}{\sqrt{2}} = \dfrac{a\sqrt{2}}{2}.$$
+			Vậy $PA = \dfrac{a\sqrt{2}}{2}$.
+		\end{enumerate}
+}
+\end{bt}
