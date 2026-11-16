@@ -433,6 +433,19 @@ def tao(cfg, in_ra=print, chi_tinh=False):
                          phan_ve_nha="II" if khong_kt else "III")
     ghi(os.path.join(out, "_ten_phieu.txt"), ten_tep(f"{nhan.title()} - {ten_ngan(ten, 55)}", 90))
     json.dump(cfg, open(os.path.join(out, "cau_hinh_phieu.json"), "w", encoding="utf-8"), ensure_ascii=False, indent=1)
+    ten_d = lambda d: f"Dạng {so_dang.get(d, '')}. " + (id_map.get(d, {}).get("type_name") or d).strip()
+    web_phan = []
+    for muc, tieu in (("LT", danh_so("II. LUYỆN TẬP")), ("BTVN", danh_so("III. BÀI TẬP VỀ NHÀ"))):
+        nhom = [{"tieu": f"{TEN_PHAN[l]}", "cau": [{"ma": c["ma"], "dang": ten_d(c["dang_key"])} for c in kq[muc][l]]}
+                for l in CAC_LOAI if kq[muc][l]]
+        if kq[muc].get("VD"):
+            nhom.append({"tieu": "Vận dụng – Vận dụng cao", "cau": [{"ma": c["ma"], "dang": ten_d(c["dang_key"]), "nhan": c.get("_muc_nc")}
+                                                                    for c in kq[muc]["VD"]]})
+        if nhom:
+            web_phan.append({"tieu": tieu, "nhom": nhom})
+    _ghi_web(out, {"kieu": "trac_nghiem", "nhan": nhan, "ten": ten, "lop": lop, "chuong": chuong, "thoi_luong": tl,
+                   "giao_vien": gv, "kien_thuc": "" if khong_kt else kt, "phan": web_phan,
+                   "bai": [b for b in cfg.get("pham_vi") or []]})
     so_lt = {l: len(kq["LT"][l]) for l in CAC_LOAI}; so_bt = {l: len(kq["BTVN"][l]) for l in CAC_LOAI}
     in_ra(f"{nhan}: {ten} — {len(cac_dang)} dạng · Luyện tập TN {so_lt['TN']}, ĐS {so_lt['DS']}, TLN {so_lt['TLN']}"
           f" · Bài tập về nhà TN {so_bt['TN']}, ĐS {so_bt['DS']}, TLN {so_bt['TLN']}")
@@ -443,6 +456,14 @@ def tao(cfg, in_ra=print, chi_tinh=False):
     rel = os.path.relpath(out_goc, GOC)
     in_ra(f"THU_MUC:{rel}")
     return out_goc
+
+def _ghi_web(out, du_lieu):
+    """Dữ liệu phiếu cho bản HTML trên web (phieu_web.py)."""
+    try:
+        json.dump(du_lieu, open(os.path.join(out, "phieu_web.json"), "w", encoding="utf-8"), ensure_ascii=False)
+    except Exception:
+        pass
+
 
 def _ghi_tu_luan(L):
     import phieu_tu_luan
@@ -486,6 +507,13 @@ def _ghi_tu_luan(L):
         beamer_phieu.tao(out, ten, nhan + " – TỰ LUẬN", dict(L["tt"], giao_vien=L["gv"]), L["lop"], tl, cac_dang, ten_dang,
                          {"LT": {}, "BTVN": {}}, L["kt"], cau_theo_dang=ctd,
                          loi_ket=r"Hoàn thành các bài \textbf{tự luyện} còn lại trên phiếu")
+    loai_tl = lambda c: "TL" if c["loai"] == "TL" or not c["_tl"]["dap"] else "TLN"
+    _ghi_web(out, {"kieu": "tu_luan", "nhan": nhan, "ten": ten, "lop": L["lop"], "chuong": L["chuong"], "thoi_luong": tl,
+                   "giao_vien": L["gv"], "kien_thuc": "" if kt_in == "khong" else (L["kt"] or ""), "bai": cfg.get("pham_vi") or [],
+                   "dang": [{"ten": f"Dạng {j}. {ten_dang.get(d, d)}",
+                             "vi_du": dict(kq_tl[d]["vd"]["_tl"], loai=loai_tl(kq_tl[d]["vd"]), ma=kq_tl[d]["vd"]["ma"]),
+                             "tu_luyen": [dict(c["_tl"], loai=loai_tl(c), vai=c["_vai"], ma=c["ma"]) for c in kq_tl[d]["tu_luyen"]]}
+                            for j, d in enumerate(cac_dang, 1) if d in kq_tl]})
     n_tl = sum(len(v["tu_luyen"]) for v in kq_tl.values())
     in_ra(f"{nhan} – TỰ LUẬN: {ten} — {len(kq_tl)} dạng · {len(kq_tl)} ví dụ mẫu · {n_tl} bài tự luyện")
     for t in thieu:

@@ -1680,10 +1680,29 @@ $("#ph-tao").onclick=async()=>{
     $("#hop-phieu").style.display="none";
     hopThoai(`Đã tạo phiếu: ${r.thu_muc}`,r.nhat_ky+(r.bien_dich?"\nĐang biên dịch PDF…":"")+
       (r.bo_sung?"\n\nNgân hàng còn thiếu câu cho phiếu này → bấm “Prompt AI bổ sung câu thiếu…”, nhập câu AI trả về, rồi tạo lại phiếu.":""),
-      [["Mở thư mục",()=>api("/api/mo",{duong_dan:r.thu_muc}),!r.bo_sung],...nutBS]);
+      [["🌐 Phiếu HTML lên web…",()=>phieuWeb(r.thu_muc),!r.bo_sung],["Mở thư mục",()=>api("/api/mo",{duong_dan:r.thu_muc})],...nutBS]);
     if(r.bien_dich) theoDoi(r.nhat_ky);}
   finally{b.disabled=false;b.textContent="Tạo phiếu"}
 };
+
+// ---------------- PHIẾU HỌC TẬP → HTML TRÊN WEB
+function phieuWeb(thu_muc){
+  const chay=async dang=>{
+    $("#ht-nut").querySelectorAll("button").forEach(b=>b.disabled=true);
+    $("#ht-noi").textContent="Đang dựng trang HTML (vẽ hình TikZ → SVG có thể mất vài chục giây)…";
+    const r=await api("/api/thi/phieu-web",{thu_muc,dang});
+    if(!r.ok){hopThoai("Chưa tạo được phiếu HTML",(r.loi||"")+"\n"+(r.nhat_ky||""));return}
+    const tai=`/tai?p=${encodeURIComponent(r.tep)}`;
+    hopThoai(r.url?"Đã đăng phiếu lên web":"Đã tạo phiếu HTML",
+      (r.url?`Link: ${r.url}\n${dang==="hs"?"Học sinh cùng khối đăng nhập là thấy phiếu ở trang chính (mục Phiếu học tập).":"Chỉ tài khoản giáo viên mở được."}\nĐang đăng lên Cloudflare — xem tiến độ ở 🌐 Thi trực tuyến.\n\n`:"")+
+      `File: ${r.tep}\n${r.nhat_ky||""}`,
+      [...(r.url?[["Chép link",e=>{navigator.clipboard.writeText(r.url);e.target.textContent="Đã chép ✓"},true],["QR",()=>window.open(qrUrl(r.url))]]:[]),
+       ["Xem thử",()=>window.open(tai.replace("/tai?","/tai?xem=1&"))],["Tải file HTML",()=>{const a=document.createElement("a");a.href=tai;a.download="";a.click()}]]);
+  };
+  hopThoai("Phiếu học tập → trang HTML trên web",
+    "Trang HTML gồm: I. Kiến thức trọng tâm · bài tập trắc nghiệm (chọn là chấm ngay), Đúng/Sai, trả lời ngắn · bài tự luận (ví dụ mẫu có lời giải, tự luyện bấm xem đáp số / lời giải). Mở tốt trên điện thoại, máy chiếu, in được.\n\nAi được xem?",
+    [["👥 Đăng – học sinh khối lớp xem được",()=>chay("hs"),true],["🧑‍🏫 Đăng – chỉ giáo viên",()=>chay("gv")],["Chỉ tạo file HTML",()=>chay("")]]);
+}
 
 // ---------------- KHO KIẾN THỨC TRỌNG TÂM
 let KT_DS=[], KT_BAI=null;
@@ -2004,14 +2023,15 @@ function veBg(r){
   $("#thi-ml").innerHTML=lop.length?"<b>Mục lục theo lớp:</b> "+lop.map(l=>`<a href="${r.goc}/toan${l}/" target="_blank">Toán ${l}</a> <button data-ml="${r.goc}/toan${l}/" style="font-size:11.5px;padding:2px 6px">QR</button>`).join(" · "):"";
   $("#thi-ml").querySelectorAll("[data-ml]").forEach(b=>b.onclick=()=>window.open(qrUrl(b.dataset.ml)));
   $("#bg-bang").innerHTML=!bg.length?'<p style="color:#666">Chưa có bài giảng.</p>':`<table style="width:100%;border-collapse:collapse">`+bg.map(x=>{const u=`${r.goc}/bai-giang/${x.slug}/`;
-    return `<tr style="border-bottom:1px solid #eef0f4"><td style="padding:6px"><span class="tt ${x.kieu==="pdf"?"da_dong":"da_cong_bo"}">Toán ${x.lop} · ${x.kieu==="pdf"?"PDF":"Trình chiếu"}</span> <b>${esc(x.ten)}</b><br>
+    return `<tr style="border-bottom:1px solid #eef0f4"><td style="padding:6px"><span class="tt ${x.kieu==="pdf"?"da_dong":"da_cong_bo"}">Toán ${x.lop} · ${x.loai_bg==="phieu"?"Phiếu học tập":x.kieu==="pdf"?"PDF":"Trình chiếu"}</span>${x.hs?' <span class="tt dang_mo">👥 HS xem</span>':""} <b>${esc(x.ten)}</b><br>
       <a href="${u}" target="_blank" style="font-size:12px">${u}</a><br><span style="color:#888;font-size:11.5px">${x.cap_nhat||x.tao_luc} · ${x.kb} KB${x.trang_thai==="an"?" · <b>đang ẩn</b>":""}</span></td>
-      <td style="padding:6px;white-space:nowrap"><button data-b="${x.slug}" data-v="qr">QR</button><button data-b="${x.slug}" data-v="chep">Chép link</button>
+      <td style="padding:6px;white-space:nowrap"><button data-b="${x.slug}" data-v="qr">QR</button><button data-b="${x.slug}" data-v="chep">Chép link</button><button data-b="${x.slug}" data-v="hs" data-hs="${x.hs?1:0}" title="Cho học sinh cùng khối (đã đăng nhập) mở bài này">${x.hs?"Thôi cho HS":"Cho HS xem"}</button>
       ${x.trang_thai==="an"?`<button data-b="${x.slug}" data-v="hien">Hiện</button>`:`<button data-b="${x.slug}" data-v="an">Ẩn</button>`}
       <button data-b="${x.slug}" data-v="thay" data-ten="${esc(x.ten)}" data-lop="${x.lop}">Thay file…</button><button data-b="${x.slug}" data-v="xoa" style="color:#b91c1c">Xoá</button></td></tr>`}).join("")+"</table>";
   $("#bg-bang").querySelectorAll("button[data-v]").forEach(b=>b.onclick=async()=>{const sl=b.dataset.b,v=b.dataset.v,u=`${r.goc}/bai-giang/${sl}/`;
     if(v==="qr")return window.open(qrUrl(u)); if(v==="chep"){navigator.clipboard.writeText(u);b.textContent="Đã chép";return}
     if(v==="thay")return moBg(null,{slug:sl,ten:b.dataset.ten,lop:b.dataset.lop});
+    if(v==="hs"){const k=await api("/api/thi/bg-hs",{slug:sl,hs:b.dataset.hs!=="1"});if(!k.ok){alert(k.loi);return} return theoDoiThi(null,"")}
     if(v==="xoa"&&!confirm("Gỡ bài giảng này khỏi mạng? (file vẫn giữ trong thi-truc-tuyen/da_xoa)"))return;
     const k=await api("/api/thi/bg-trang-thai",{slug:sl,tt:v});if(!k.ok){alert(k.loi);return} theoDoiThi(null,"")});
 }

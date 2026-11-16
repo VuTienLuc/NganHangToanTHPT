@@ -258,11 +258,11 @@ body.gv h1,body.gv .phu.dau{display:none}
 .g-card{position:relative;display:flex;flex-direction:column;gap:6px;padding:var(--s3) var(--s3) var(--s3) var(--s4);min-height:92px;border:1px solid var(--border);border-radius:12px;
  background:var(--surface-2);text-decoration:none;color:var(--text);transition:transform .15s ease-out,box-shadow .15s,border-color .15s}
 .g-card:hover{transform:translateY(-2px);box-shadow:var(--shadow);border-color:var(--primary)}
-.g-card::before{content:"";position:absolute;left:0;top:10px;bottom:10px;width:4px;border-radius:4px;background:var(--primary)}.g-card.pdf::before{background:var(--pdf)}
+.g-card::before{content:"";position:absolute;left:0;top:10px;bottom:10px;width:4px;border-radius:4px;background:var(--primary)}.g-card.pdf::before{background:var(--pdf)}.g-card.phieu::before{background:#0d9488}
 .g-card .t{font-weight:650;line-height:1.35;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;padding-right:30px}
 .g-card .m{display:flex;gap:6px;align-items:center;flex-wrap:wrap;font-size:12px;color:var(--muted);margin-top:auto}
 .nhan{font-size:11px;font-weight:800;border-radius:6px;padding:2px 7px;background:var(--primary-soft);color:var(--primary)}.nhan.pdf{background:var(--pdf-soft);color:var(--pdf)}
-.nhan.cd{background:var(--warn-soft);color:var(--warn)}
+.nhan.cd{background:var(--warn-soft);color:var(--warn)}.nhan.ph{background:#ccfbf1;color:#0f766e}.nhan.hs{background:var(--ok-soft);color:var(--ok)}
 .ghim{position:absolute;top:6px;right:6px;width:36px;height:36px;margin:0;padding:0;border:0;border-radius:8px;background:none;color:var(--muted);font-size:18px;cursor:pointer}
 .ghim:hover{background:var(--border)}.ghim[aria-pressed=true]{color:#eab308}
 mark{background:#fde68a;color:inherit;border-radius:3px;padding:0 1px}
@@ -304,7 +304,7 @@ GV_JS = r"""function veGV(t){
  function veLoc(){const lops=[...new Set(BG.map(x=>x.lop).concat(DE.map(x=>parseInt(x.lop)).filter(Boolean)))].filter(Boolean).sort((a,b)=>a-b);
   if(st.lop&&!lops.includes(+st.lop))st.lop='';
   const chip=(k,v,nhan)=>`<button class="chip" data-k="${k}" data-v="${v}" aria-pressed="${String(st[k])===String(v)}">${nhan}</button>`;
-  $('loc').innerHTML=chip('lop','','Mọi lớp')+lops.map(l=>chip('lop',l,'Toán '+l)).join('')+'<span style="width:8px"></span>'+chip('kieu','','Tất cả')+chip('kieu','html','▶ Trình chiếu')+chip('kieu','pdf','PDF')+
+  $('loc').innerHTML=chip('lop','','Mọi lớp')+lops.map(l=>chip('lop',l,'Toán '+l)).join('')+'<span style="width:8px"></span>'+chip('kieu','','Tất cả')+chip('kieu','html','▶ Trình chiếu')+chip('kieu','phieu','📝 Phiếu học tập')+chip('kieu','pdf','PDF')+
    `<select id="xep" aria-label="Sắp xếp"><option value="muc_luc">Theo mục lục</option><option value="moi">Mới nhất</option><option value="az">A → Z</option></select>`;
   $('xep').value=st.xep; $('xep').onchange=e=>{st.xep=e.target.value;S('xep',st.xep);veBG()};
   $('loc').querySelectorAll('.chip').forEach(b=>b.onclick=()=>{st[b.dataset.k]=b.dataset.v;if(b.dataset.k==='lop')S('lop',st.lop);veLoc();veBG();veDe()})}
@@ -312,10 +312,10 @@ GV_JS = r"""function veGV(t){
   for(const k of tk){let i=n.indexOf(k);while(i>=0){for(let j=i;j<i+k.length;j++)dau[j]=1;i=n.indexOf(k,i+k.length)}}
   let o='',m=0;for(let i=0;i<s.length;i++){if(dau[i]&&!m){o+='<mark>';m=1}if(!dau[i]&&m){o+='</mark>';m=0}o+=e(s[i])}return o+(m?'</mark>':'')};
  function the(x,tk){const g=ghim.includes(x.slug);
-  return `<a class="g-card ${x.kieu}" href="/bai-giang/${encodeURIComponent(x.slug)}/" target="_blank" rel="noopener" data-s="${e(x.slug)}">
-   <span class="t" title="${e(x.ten)}">${hl(String(x.ten).replace(/^Toán\s*\d+\s*[–-]\s*/,''),tk||[])}</span><span class="m"><span class="nhan ${x.kieu}">${x.kieu==='pdf'?'PDF':'▶ Trình chiếu'}</span>${x.chua_de?'<span class="nhan cd">Chữa đề</span>':''}<span class="g-lop">${x.lop}</span>${x.bai_so?'<span>Bài '+x.bai_so+'</span>':''}<span>${ngay(x.ngay)}</span></span>
+  return `<a class="g-card ${x.loai_bg==='phieu'?'phieu':x.kieu}" href="/bai-giang/${encodeURIComponent(x.slug)}/" target="_blank" rel="noopener" data-s="${e(x.slug)}">
+   <span class="t" title="${e(x.ten)}">${hl(String(x.ten).replace(/^Toán\s*\d+\s*[–-]\s*/,''),tk||[])}</span><span class="m"><span class="nhan ${x.loai_bg==='phieu'?'ph':x.kieu}">${x.loai_bg==='phieu'?'📝 Phiếu':x.kieu==='pdf'?'PDF':'▶ Trình chiếu'}</span>${x.hs?'<span class="nhan hs" title="Học sinh khối '+x.lop+' đăng nhập xem được">👥 HS xem</span>':''}${x.chua_de?'<span class="nhan cd">Chữa đề</span>':''}<span class="g-lop">${x.lop}</span>${x.bai_so?'<span>Bài '+x.bai_so+'</span>':''}<span>${ngay(x.ngay)}</span></span>
    <button class="ghim" data-g="${e(x.slug)}" aria-pressed="${g}" aria-label="${g?'Bỏ ghim':'Ghim'} ${e(x.ten)}" title="${g?'Bỏ ghim':'Ghim lên đầu'}">${g?'★':'☆'}</button></a>`}
- function locBG(){return BG.filter(x=>(!st.lop||x.lop==st.lop)&&(!st.kieu||x.kieu===st.kieu))}
+ function locBG(){return BG.filter(x=>(!st.lop||x.lop==st.lop)&&(!st.kieu||(st.kieu==='phieu'?x.loai_bg==='phieu':x.kieu===st.kieu&&x.loai_bg!=='phieu')))}
  function veBG(){
   const tk=bo(st.q).split(/\s+/).filter(Boolean), ds=locBG(); let h='';
   if(tk.length){const kq=ds.map(x=>{const ten=bo(x.ten),hay=bo([x.ten,x.chuong,x.bai].join(' '));if(!tk.every(k=>hay.includes(k)))return null;
@@ -378,7 +378,11 @@ fetch('/api/toi',{credentials:'same-origin'}).then(r=>r.json()).then(t=>{
   h+='<h3>Đề thi — làm thử (không giới hạn lượt, không lưu điểm)</h3>'+((t.de||[]).length?t.de.map(x=>'<a class="de" href="/'+e(x.slug)+'/"><b>'+e(x.ten)+'</b><span class="nho">'+(x.lop||'mọi lớp')+' · '+(TT[x.trang_thai]||'')+'</span></a>').join(''):'<p class="phu">Chưa đăng đề nào.</p>');
   h+='<h3>Bài giảng</h3>'+(LOP.length?LOP.map(l=>'<a class="de" href="/toan'+l+'/"><b>Toán '+l+'</b><span class="nho">mục lục</span></a>').join(''):'<p class="phu">Chưa có bài giảng.</p>')}
  else{h+='<h3>Bài kiểm tra của em</h3>'+((t.de||[]).length?t.de.map(x=>'<a class="de" href="/'+e(x.slug)+'/"><b>'+e(x.ten)+'</b><span class="nho">'+
-  (x.da_lam?'Đã làm '+x.da_lam+' lần'+(x.cao_nhat!=null?' · cao nhất '+Number(x.cao_nhat).toFixed(2).replace('.',','):''):'Chưa làm')+(x.con_lai!=null?' · còn '+x.con_lai+' lượt':'')+(x.cong_bo?' · có lời giải':'')+'</span></a>').join(''):'<p class="phu">Hiện chưa có bài kiểm tra nào cho lớp em.</p>')}
+  (x.da_lam?'Đã làm '+x.da_lam+' lần'+(x.cao_nhat!=null?' · cao nhất '+Number(x.cao_nhat).toFixed(2).replace('.',','):''):'Chưa làm')+(x.con_lai!=null?' · còn '+x.con_lai+' lượt':'')+(x.cong_bo?' · có lời giải':'')+'</span></a>').join(''):'<p class="phu">Hiện chưa có bài kiểm tra nào cho lớp em.</p>');
+  h+='<div id="hs-phieu"></div>';
+  fetch('/bai-giang/hs.json',{credentials:'same-origin',cache:'no-store'}).then(r=>r.ok?r.json():[]).catch(()=>[]).then(ds=>{
+   const k=parseInt(t.lop||'');ds=(ds||[]).filter(x=>!k||x.lop===k);if(!ds.length)return;
+   document.getElementById('hs-phieu').innerHTML='<h3>Phiếu học tập &amp; bài học</h3>'+ds.map(x=>'<a class="de" href="/bai-giang/'+encodeURIComponent(x.slug)+'/"><b>'+e(x.ten)+'</b><span class="nho">'+(x.loai_bg==='phieu'?'Phiếu học tập':x.kieu==='pdf'?'PDF':'Bài giảng')+'</span></a>').join('')})}
  nd.innerHTML=h;document.getElementById('thoat').onclick=async ev=>{ev.preventDefault();await fetch('/api/dang-xuat',{method:'POST'});location.href='/dang-nhap/'};
 }).catch(()=>{nd.innerHTML='<p>Không kết nối được máy chủ.</p>'});
 </script></body></html>"""
@@ -534,8 +538,11 @@ def ghi_muc_luc():
             or '<p class="phu">Chưa có bài giảng.</p>'
         _dat_trang(_lop_slug(lop), TRANG_LOP.format(lop=lop, ds=dong))
     os.makedirs(os.path.join(SITE, "bai-giang"), exist_ok=True)
-    json.dump([_the_bg(x) for x in ds if x.get("loai") == "bai_giang" and x.get("trang_thai") == "hien"],
-              open(os.path.join(SITE, "bai-giang", "muc-luc.json"), "w", encoding="utf-8"), ensure_ascii=False)
+    the = [_the_bg(x) for x in ds if x.get("loai") == "bai_giang" and x.get("trang_thai") == "hien"]
+    json.dump(the, open(os.path.join(SITE, "bai-giang", "muc-luc.json"), "w", encoding="utf-8"), ensure_ascii=False)
+    # học sinh: chỉ những bài thầy cho phép (phiếu học tập…), theo khối lớp
+    json.dump([{k: x[k] for k in ("slug", "ten", "lop", "loai_bg", "kieu", "ngay", "chuong", "bai_so")} for x in the if x.get("hs")],
+              open(os.path.join(SITE, "bai-giang", "hs.json"), "w", encoding="utf-8"), ensure_ascii=False)
     open(os.path.join(SITE, "index.html"), "w", encoding="utf-8").write(trang_chu())
 
 
@@ -556,10 +563,20 @@ def _the_bg(x):
     return {"slug": x["slug"], "ten": ten, "lop": int(x.get("lop") or 0), "kieu": x.get("kieu") or "html",
             "chuong": x.get("chuong") or "", "chuong_so": x.get("chuong_so") or so_ch, "bai": x.get("bai") or "",
             "bai_so": int(m.group(1)) if m else None, "chua_de": chua_de,
-            "ngay": _ngay_iso(x.get("cap_nhat") or x.get("tao_luc")), "kb": x.get("kb")}
+            "ngay": _ngay_iso(x.get("cap_nhat") or x.get("tao_luc")), "kb": x.get("kb"),
+            "hs": bool(x.get("hs")), "loai_bg": x.get("loai_bg") or ""}
 
 
-def them_bai_giang(slug, ten, lop, kieu, du_lieu, ghi_de=False, nguon="", chuong="", bai="", chuong_so=0):
+def dat_hs(slug, hs):
+    """Cho / thôi cho học sinh (đúng khối lớp, đã đăng nhập) mở bài giảng / phiếu này."""
+    ds = danh_sach()
+    x = next((y for y in ds if y["slug"] == slug and y.get("loai") == "bai_giang"), None)
+    if not x:
+        raise RuntimeError("Không có bài giảng " + slug)
+    x["hs"] = bool(hs); luu_ds(ds); ghi_muc_luc()
+
+
+def them_bai_giang(slug, ten, lop, kieu, du_lieu, ghi_de=False, nguon="", chuong="", bai="", chuong_so=0, hs=None, loai_bg=""):
     """kieu: html | pdf; du_lieu: bytes. Trả slug."""
     if kieu not in ("html", "pdf"):
         raise RuntimeError("Chỉ nhận bài giảng HTML hoặc PDF.")
@@ -590,6 +607,8 @@ def them_bai_giang(slug, ten, lop, kieu, du_lieu, ghi_de=False, nguon="", chuong
                   "tao_luc": (cu or {}).get("tao_luc") or datetime.datetime.now().strftime("%d/%m/%Y %H:%M"),
                   "cap_nhat": datetime.datetime.now().strftime("%d/%m/%Y %H:%M"), "nguon": nguon,
                   "kb": round(len(du_lieu) / 1024),
+                  **({"hs": bool(hs)} if hs is not None else ({"hs": True} if (cu or {}).get("hs") else {})),
+                  **({"loai_bg": loai_bg} if loai_bg else ({"loai_bg": cu["loai_bg"]} if (cu or {}).get("loai_bg") else {})),
                   **({"chuong": chuong} if chuong else {}), **({"bai": bai} if bai else {}), **({"chuong_so": int(chuong_so)} if chuong_so else {})})
     luu_ds(ds); ghi_muc_luc()
     return slug
