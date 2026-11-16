@@ -4797,3 +4797,174 @@ Cho đường tròn $(O; R)$ có đường kính $AB$. Vẽ hai tiếp tuyến $
 \end{enumerate}
 }
 \end{bt}
+
+% nguồn: 2026-11-16_18_cum12_de2_cum12_de3_35_36 (nhập 16/11/2026)
+\begin{bt}%[9H9C29-3]%[ma:e2005176]
+% nguon: Đề tham khảo Tuyển sinh 10 năm học 2026-2027 Sở GD&ĐT TP.HCM - Cụm 12 Đề 2 (Đề số 35)
+Cho đường tròn $(O; R)$ và điểm $S$ nằm ngoài đường tròn. Từ $S$ kẻ các tiếp tuyến $SA$, $SB$ với đường tròn ($A, B$ là các tiếp điểm). Kẻ đường kính $BF$ của $(O; R)$. Một đường thẳng qua $S$ (không đi qua tâm $O$) cắt đường tròn $(O; R)$ tại hai điểm $M$ và $N$ ($M$ nằm giữa $S$ và $N$).
+\begin{enumerate}[a)]
+	\item Chứng minh $\widehat{BMF} = 90^\circ$ và tứ giác $SAOB$ nội tiếp.
+	\item Chứng minh $SB^2 = SM \cdot SN$.
+	\item Cho biết $SO = R\sqrt{5}$ và $MN = R\sqrt{2}$. Kẻ $OE$ vuông góc với $MN$ ($E$ thuộc $MN$). Tính độ dài đoạn thẳng $OE$ và diện tích tam giác $SOM$ theo $R$.
+\end{enumerate}
+\loigiai{
+\begin{center}
+\begin{tikzpicture}[>=stealth,scale=1]
+	% Tọa độ O, B, F
+	\coordinate (O) at (0,0);
+	\def\R{2.2}
+	\draw[thick] (O) circle (\R);
+	\coordinate (B) at (0,-\R);
+	\coordinate (F) at (0,\R);
+	\draw (B) -- (F);
+	% Điểm S sao cho SB tiếp tuyến tại B -> SB nằm ngang vuông góc OB
+	\coordinate (S) at (-4.92,-\R);
+	\draw (S) -- (B);
+	% Tiếp tuyến SA
+	\path let \p1=($(O)-(S)$), \n1={veclen(\x1,\y1)}, \n2={acos(\R/\n1)} in
+		coordinate (A) at ($(S)!{\R*tan(\n2)}!{-\n2}:(O)$);
+	\draw (S) -- (A) -- (O) -- (B);
+	% Cát tuyến SMN
+	\coordinate (M) at (-1.77,0.72);
+	\coordinate (N) at (1.08,1.91);
+	\draw (S) -- (N);
+	\draw (B) -- (M) -- (F);
+	\draw (B) -- (N);
+	% E vuông góc MN
+	\coordinate (E) at ($(M)!0.5!(N)$);
+	\draw (O) -- (E);
+	\draw (O) -- (M);
+	\draw (O) -- (S);
+	% Ký hiệu
+	\fill (O) circle (1.5pt) node[right] {$O$}
+		  (B) circle (1.5pt) node[below] {$B$}
+		  (F) circle (1.5pt) node[above] {$F$}
+		  (S) circle (1.5pt) node[left] {$S$}
+		  (A) circle (1.5pt) node[above left] {$A$}
+		  (M) circle (1.5pt) node[above left] {$M$}
+		  (N) circle (1.5pt) node[above right] {$N$}
+		  (E) circle (1.5pt) node[above] {$E$};
+\end{tikzpicture}
+\end{center}
+\begin{enumerate}[a)]
+	\item Ta có $\widehat{BMF} = 90^\circ$ (góc nội tiếp chắn nửa đường tròn đường kính $BF$).
+	Vì $SA, SB$ là các tiếp tuyến của $(O)$ nên $SA \perp OA$ và $SB \perp OB$, do đó:
+	$$\widehat{SAO} = 90^\circ \text{ và } \widehat{SBO} = 90^\circ.$$
+	Tứ giác $SAOB$ có $\widehat{SAO} + \widehat{SBO} = 90^\circ + 90^\circ = 180^\circ$, suy ra tứ giác $SAOB$ nội tiếp đường tròn đường kính $SO$.
+	\item Ta có $BF$ là đường kính nên $\triangle BMF$ vuông tại $M$, do đó:
+	$$\widehat{SBM} = \widehat{MFB} \text{ (cùng phụ với } \widehat{MBF}\text{)}.$$
+	Mặt khác, trong đường tròn $(O)$, $\widehat{MFB} = \widehat{SNB}$ (hai góc nội tiếp cùng chắn cung $BM$).
+	Suy ra $\widehat{SBM} = \widehat{SNB}$.
+	Xét $\triangle SBM$ và $\triangle SNB$ có:
+	\begin{itemize}
+		\item $\widehat{BSN}$ là góc chung;
+		\item $\widehat{SBM} = \widehat{SNB}$ (chứng minh trên).
+	\end{itemize}
+	Do đó $\triangle SBM \sim \triangle SNB$ (g-g).
+	Suy ra $\dfrac{SB}{SN} = \dfrac{SM}{SB} \implies SB^2 = SM \cdot SN$.
+	\item Ta có $OM = ON = R$ nên tam giác $OMN$ cân tại $O$.
+	Đoạn thẳng $OE \perp MN$ nên $OE$ đồng thời là đường trung tuyến của tam giác $OMN$.
+	Do đó $E$ là trung điểm của $MN$:
+	$$EM = EN = \dfrac{MN}{2} = \dfrac{R\sqrt{2}}{2}.$$
+	Áp dụng định lý Pythagore trong tam giác vuông $OEM$, ta có:
+	$$OE^2 = OM^2 - EM^2 = R^2 - \left(\dfrac{R\sqrt{2}}{2}\right)^2 = R^2 - \dfrac{R^2}{2} = \dfrac{R^2}{2} \implies OE = \dfrac{R\sqrt{2}}{2}.$$
+	Áp dụng định lý Pythagore trong tam giác vuông $OES$, ta có:
+	$$SE^2 = SO^2 - OE^2 = (R\sqrt{5})^2 - \left(\dfrac{R\sqrt{2}}{2}\right)^2 = 5R^2 - \dfrac{R^2}{2} = \dfrac{9R^2}{2} \implies SE = \dfrac{3R\sqrt{2}}{2}.$$
+	Vì điểm $M$ nằm giữa $S$ và $N$, và $E$ là trung điểm $MN$ nên $M$ nằm giữa $S$ và $E$.
+	Độ dài đoạn thẳng $SM$ là:
+	$$SM = SE - EM = \dfrac{3R\sqrt{2}}{2} - \dfrac{R\sqrt{2}}{2} = R\sqrt{2}.$$
+	Diện tích tam giác $SOM$ là:
+	$$S_{\triangle SOM} = \dfrac{1}{2} OE \cdot SM = \dfrac{1}{2} \cdot \dfrac{R\sqrt{2}}{2} \cdot R\sqrt{2} = \dfrac{R^2}{2}.$$
+	Vậy $OE = \dfrac{R\sqrt{2}}{2}$ và $S_{\triangle SOM} = \dfrac{R^2}{2}$.
+\end{enumerate}
+}
+\end{bt}
+
+% nguồn: 2026-11-16_18_cum12_de2_cum12_de3_35_36 (nhập 16/11/2026)
+\begin{bt}%[9H9C29-3]%[ma:4742fc9d]
+% nguon: Đề tham khảo Tuyển sinh 10 năm học 2026-2027 Sở GD&ĐT TP.HCM - Cụm 12 Đề 3 (Đề số 36)
+Cho đường tròn $(O)$ đường kính $AB$. Gọi $H$ là điểm nằm giữa $O$ và $B$. Kẻ dây $CD$ vuông góc với $AB$ tại $H$. Trên cung nhỏ $AC$ lấy điểm $E$, kẻ $CK$ vuông góc với $AE$ tại $K$. Đường thẳng $DE$ cắt $CK$ tại $F$.
+\begin{enumerate}[a)]
+	\item Chứng minh tứ giác $AHCK$ là tứ giác nội tiếp.
+	\item Chứng minh rằng $AH \cdot AB = AD^2$.
+	\item Giả sử $H$ là trung điểm của $OB$. Tính độ dài đoạn thẳng $AF$ theo $R$.
+\end{enumerate}
+\loigiai{
+\begin{center}
+\begin{tikzpicture}[>=stealth,scale=1.1]
+	\def\R{2.5}
+	\coordinate (O) at (0,0);
+	\draw[thick] (O) circle (\R);
+	\coordinate (A) at (-\R,0);
+	\coordinate (B) at (\R,0);
+	\draw (A) -- (B);
+	% H trung điểm OB -> xH = R/2
+	\coordinate (H) at (0.5*\R,0);
+	% CD vuông góc AB tại H
+	\path let \n1={sqrt(\R*\R - (0.5*\R)*(0.5*\R))} in
+		coordinate (C) at (0.5*\R,\n1)
+		coordinate (D) at (0.5*\R,-\n1);
+	\draw (C) -- (D);
+	% E trên cung nhỏ AC
+	\coordinate (E) at (-0.6*\R,0.8*\R);
+	\draw (A) -- (E);
+	% K là hình chiếu C lên AE
+	\coordinate (K) at ($(A)!(C)!(E)$);
+	\draw (C) -- (K);
+	% F là giao điểm DE và CK
+	\coordinate (F) at (intersection of D--E and C--K);
+	\draw (D) -- (F);
+	\draw (K) -- (F);
+	\draw (A) -- (F);
+	\draw (A) -- (C);
+	\draw (A) -- (D);
+	\draw (B) -- (D);
+	\draw (H) -- (K);
+	% Ký hiệu
+	\fill (O) circle (1.5pt) node[below] {$O$}
+		  (A) circle (1.5pt) node[left] {$A$}
+		  (B) circle (1.5pt) node[right] {$B$}
+		  (H) circle (1.5pt) node[below right] {$H$}
+		  (C) circle (1.5pt) node[above] {$C$}
+		  (D) circle (1.5pt) node[below] {$D$}
+		  (E) circle (1.5pt) node[above left] {$E$}
+		  (K) circle (1.5pt) node[above] {$K$}
+		  (F) circle (1.5pt) node[above] {$F$};
+\end{tikzpicture}
+\end{center}
+\begin{enumerate}[a)]
+	\item Ta có $CD \perp AB$ tại $H$ nên $\widehat{AHC} = 90^\circ$.
+	Lại có $CK \perp AE$ tại $K$ nên $\widehat{AKC} = 90^\circ$.
+	Xét tứ giác $AHCK$ có hai đỉnh kề $H$ và $K$ cùng nhìn cạnh $AC$ dưới một góc vuông:
+	$$\widehat{AHC} = \widehat{AKC} = 90^\circ.$$
+	Do đó tứ giác $AHCK$ nội tiếp đường tròn đường kính $AC$.
+	\item Ta có $\widehat{ADB} = 90^\circ$ (góc nội tiếp chắn nửa đường tròn $(O)$ đường kính $AB$).
+	Xét $\triangle ADH$ và $\triangle ABD$ có:
+	\begin{itemize}
+		\item $\widehat{DAB}$ là góc chung;
+		\item $\widehat{AHD} = \widehat{ADB} = 90^\circ$.
+	\end{itemize}
+	Do đó $\triangle ADH \sim \triangle ABD$ (g-g).
+	Suy ra $\dfrac{AD}{AB} = \dfrac{AH}{AD} \implies AH \cdot AB = AD^2$.
+	\item Tứ giác $AHCK$ nội tiếp nên:
+	$$\widehat{CHK} = \widehat{CAK} \text{ (hai góc nội tiếp cùng chắn cung } CK\text{)}.$$
+	Mặt khác, trong đường tròn $(O)$, ta có:
+	$$\widehat{CDE} = \widehat{CAE} \text{ (hai góc nội tiếp cùng chắn cung } CE\text{)}.$$
+	Suy ra $\widehat{CHK} = \widehat{CDE}$.
+	Mà hai góc này ở vị trí đồng vị nên $HK \parallel DE$, hay $HK \parallel FD$.
+	Vì đường kính $AB$ vuông góc với dây $CD$ tại $H$ nên $H$ là trung điểm của dây $CD$.
+	Xét tam giác $CFD$ có $H$ là trung điểm của $CD$ và $HK \parallel FD$ nên $K$ là trung điểm của $CF$ (tính chất đường trung bình).
+	Xét tam giác $AFC$ có $AK$ vừa là đường cao ($AK \perp CF$ tại $K$), vừa là đường trung tuyến ($K$ là trung điểm của $CF$), nên $\triangle AFC$ cân tại $A$.
+	Suy ra:
+	$$AF = AC.$$
+	Lại có $AB$ là đường trung trực của đoạn thẳng $CD$ (vì $AB \perp CD$ tại trung điểm $H$ của $CD$), suy ra $AC = AD$.
+	Do đó $AF = AC = AD$.
+	Vì $H$ là trung điểm của đoạn thẳng $OB$ nên $OH = \dfrac{R}{2}$.
+	Độ dài đoạn thẳng $AH$ là:
+	$$AH = AO + OH = R + \dfrac{R}{2} = \dfrac{3R}{2}.$$
+	Theo kết quả câu b, ta có:
+	$$AD^2 = AH \cdot AB = \dfrac{3R}{2} \cdot 2R = 3R^2 \implies AD = R\sqrt{3}.$$
+	Vậy $AF = AD = R\sqrt{3}$.
+\end{enumerate}
+}
+\end{bt}
