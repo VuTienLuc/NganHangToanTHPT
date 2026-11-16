@@ -198,6 +198,61 @@ def chon_cau(cau_hinh_phieu, rng):
                 THIEU_CAU.append((None, loai, "H", can - len(v)))
     return cac_dang, kq, thieu
 
+_TOAN_KT = re.compile(r"\$\$.*?\$\$|\$(?:\\.|[^$\\])+\$|\\\(.*?\\\)|\\\[.*?\\\]", re.S)
+
+
+def _can_bang(t):
+    t2 = re.sub(r"\\[{}%]", "", re.sub(r"(?<!\\)%[^\n]*", "", t))
+    if t2.count("{") != t2.count("}"):
+        return False
+    return all(t2.count("\\begin{%s}" % e) == t2.count("\\end{%s}" % e) for e in set(re.findall(r"\\begin\{([^}]+)\}", t2)))
+
+
+def _chu_an_toan(dong):
+    """Một dòng chữ thường: giữ công thức $…$, thoát ký tự đặc biệt của LaTeX bên ngoài, **đậm** → \textbf."""
+    giu = []
+    def g(m):
+        giu.append(m.group(0)); return f"\x00{len(giu) - 1}\x00"
+    dong = _TOAN_KT.sub(g, dong)
+    dong = dong.replace("\\", r"\textbackslash{}")
+    for a, b in (("&", r"\&"), ("%", r"\%"), ("#", r"\#"), ("_", r"\_"), ("^", r"\^{}"), ("~", r"\~{}")):
+        dong = dong.replace(a, b)
+    dong = re.sub(r"\*\*(.+?)\*\*", r"\\textbf{\1}", dong)
+    dong = re.sub(r"(?<![\w*])\*(?!\s)(.+?)(?<!\s)\*(?![\w*])", r"\\textit{\1}", dong)
+    return re.sub(r"\x00(\d+)\x00", lambda m: giu[int(m.group(1))], dong)
+
+
+def chuan_kien_thuc(t):
+    r"""Kiến thức trọng tâm thầy nhập: LaTeX (\begin, \item, \textbf…) giữ nguyên, chỉ sửa '50%' thành '50\%';
+    chữ thường / markdown (gạch đầu dòng -, •, 1., **đậm**) → LaTeX in được, mỗi dòng một dòng."""
+    t = (t or "").replace("\r\n", "\n").replace("\r", "\n").strip()
+    if not t:
+        return t
+    if re.search(r"\\(?:begin|item|textbf|textit|par|section|subsection)\b|\\\\", t) and _can_bang(t):
+        return re.sub(r"(?<=[0-9A-Za-zÀ-ỹ])(?<!\\)%", r"\\%", t)
+    ra, ds = [], None                 # ds: "itemize" | "enumerate" đang mở
+    def dong_ds():
+        nonlocal ds
+        if ds:
+            ra.append(f"\\end{{{ds}}}"); ds = None
+    for l in t.split("\n"):
+        s = l.strip()
+        if not s:
+            dong_ds(); ra.append(r"\par\smallskip"); continue
+        m_g = re.match(r"^[-•+*▪◦·]\s+(.*)$", s)
+        m_s = re.match(r"^(\d+)[.)]\s+(.*)$", s)
+        if m_g or m_s:
+            loai = "itemize" if m_g else "enumerate"
+            if ds != loai:
+                dong_ds(); ra.append(f"\\begin{{{loai}}}" + ("[label=\\arabic*.]" if loai == "enumerate" else "")); ds = loai
+            ra.append(r"\item " + _chu_an_toan(m_g.group(1) if m_g else m_s.group(2)))
+            continue
+        dong_ds()
+        ra.append(_chu_an_toan(s) + r"\par")
+    dong_ds()
+    return "\n".join(ra)
+
+
 def ten_ngan(ten, n=46):
     """Tên ngắn cho chân trang / tiêu đề phụ khi phiếu gộp nhiều bài (tên dài lấn chân trang)."""
     ten = re.sub(r"\s+", " ", ten or "").strip()
@@ -320,11 +375,12 @@ def tao(cfg, in_ra=print, chi_tinh=False):
     kt = (cfg.get("kien_thuc") or "").strip()
     if kt:
         luu_kien_thuc(cfg["pham_vi"], kt)
+        kt = chuan_kien_thuc(kt)          # chữ thường / markdown → LaTeX an toàn để in PDF
     # in_san: in sẵn nội dung đã soạn; dong_trong: khung dòng kẻ để học sinh tự ghi (nội dung soạn vẫn dùng cho Beamer)
     in_san = (cfg.get("kien_thuc_in") or "in_san") != "dong_trong"
     if kt and in_san:
         kien = (r"\begin{tcolorbox}[colback=white,colframe=mauPhieu!60,boxrule=0.5pt,arc=1mm,left=3mm,right=3mm,top=1.5mm,bottom=1.5mm,breakable,width=\linewidth]"
-                + "\n{\\setstretch{1.3}" + kt + "\\par}\n\\end{tcolorbox}")
+                + "\n{\\setstretch{1.3}\n" + kt + "\n\\par}\n\\end{tcolorbox}")
     else:
         dong = [r"\par\smallskip{\small\bfseries Kiến thức cần nhớ (định nghĩa, tính chất, công thức):}\dongKe{" + ("8" if tl >= 90 else "6") + "}"]
         so_ke = "4" if tl >= 90 else "3"
