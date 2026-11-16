@@ -331,23 +331,6 @@ tr.gop-h td{background:#dbeafe;text-align:left;font-weight:700;padding:8px 12px;
 .tv mark{background:#fde68a;border-radius:3px;padding:0 1px}
 @media (max-width:700px){.tv-muc{grid-template-columns:auto minmax(0,1fr);margin-left:4px}.tv-nut{grid-column:1/-1;flex-wrap:wrap}}
 
-#hop-th{position:fixed;inset:0;background:rgba(15,23,42,.45);display:none;align-items:center;justify-content:center;z-index:60}
-#hop-th .noi{background:#fff;border-radius:14px;width:min(1200px,97vw);max-height:94vh;display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.25)}
-#hop-th .dau-th{display:flex;align-items:center;gap:10px;padding:12px 16px;border-bottom:1px solid #e2e8f0;flex-wrap:wrap}#hop-th .dau-th h2{margin:0;font-size:17px;flex:1}
-#hop-th .than-th{overflow:auto;padding:12px 16px}#hop-th .chan-th{display:flex;gap:8px;padding:10px 16px;border-top:1px solid #e2e8f0;flex-wrap:wrap;justify-content:flex-end}
-.th-the{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin-bottom:10px}
-.th-the>div{border:1px solid #e2e8f0;border-radius:10px;padding:8px 10px}.th-the b{display:block;font-size:22px;color:#1e40af;font-variant-numeric:tabular-nums}.th-the span{font-size:12px;color:#64748b}
-.th-nx{background:#f0fdf4;border:1px solid #bbf7d0;border-radius:10px;padding:10px 12px;margin-bottom:10px}.th-nx h3{margin:0 0 6px;font-size:14px;color:#15803d}
-.th-nx textarea{font-family:inherit;width:100%;box-sizing:border-box;min-height:110px;border:1px solid #bbf7d0;border-radius:8px;padding:8px;font-size:13.5px;line-height:1.5;resize:vertical;background:#fff}
-.th-bd{margin-bottom:10px}.th-bd svg{width:100%;height:150px}
-.th-bang{border-collapse:collapse;font-size:12.5px;width:100%}.th-bang th,.th-bang td{border-bottom:1px solid #eef0f4;padding:5px 6px;text-align:center}
-.th-bang th{position:sticky;top:0;background:#f8fafc;font-weight:700;color:#334155;z-index:1}.th-bang th.de{max-width:90px;font-weight:600;font-size:11.5px;writing-mode:horizontal-tb}
-.th-bang td.ten,.th-bang th.ten{text-align:left;white-space:nowrap}.th-bang td.nx{text-align:left;min-width:260px;font-size:12.5px;color:#14532d}
-.th-bang td.nx[contenteditable]:focus{outline:2px solid #86efac;background:#f0fdf4}
-.o-d{display:inline-block;min-width:34px;border-radius:6px;padding:1px 4px;font-weight:700;font-variant-numeric:tabular-nums}
-.o-d.g{background:#dcfce7;color:#15803d}.o-d.k{background:#dbeafe;color:#1e40af}.o-d.tb{background:#fef3c7;color:#b45309}.o-d.y{background:#fee2e2;color:#b91c1c}.o-d.c{color:#cbd5e1;font-weight:400}
-.th-len{color:#15803d;font-weight:700}.th-xuong{color:#b45309;font-weight:700}
-
 </style>
 </head>
 <body>
@@ -733,10 +716,6 @@ tr.gop-h td{background:#dbeafe;text-align:left;font-weight:700;padding:8px 12px;
   </div>
   <div class="chan"><span id="bg-tt" style="font-size:12px;color:#666"></span><button id="bg-ok" class="chinh" style="margin-left:auto">Đăng bài giảng</button><button id="bg-dong">Đóng</button></div>
 </div></div>
-<div id="hop-th" role="dialog" aria-modal="true" aria-labelledby="th-tieu"><div class="noi">
-  <div class="dau-th"><h2 id="th-tieu">📊 Tổng hợp quá trình học online</h2><label>Lớp <select id="th-lop" style="width:auto;min-width:130px"></select></label><button id="th-tai" title="Lấy lại số liệu mới nhất">↻ Làm mới</button></div>
-  <div class="than-th" id="th-than"></div>
-  <div class="chan-th"><button id="th-chep">💬 Chép nhận xét lớp</button><button id="th-chep-em">Chép nhận xét từng em</button><button id="th-xuat" class="chinh">⬇ Tải bảng tổng hợp (Excel)</button><button id="th-dong">Đóng</button></div></div></div>
 <div id="hop-thi"><div class="noi">
   <h2>Thi &amp; học trực tuyến (Cloudflare Pages)</h2>
   <div class="than">
@@ -814,6 +793,7 @@ tr.gop-h td{background:#dbeafe;text-align:left;font-weight:700;padding:8px 12px;
 </div></div>
 <div id="hop-thoai"><div class="noi"><h2 id="ht-tieu">…</h2><pre id="ht-noi"></pre><div class="nut" id="ht-nut"></div></div></div>
 
+<script src="/tong_hop.js"></script>
 <script>
 const LOAI=["TN","DS","TLN","TL"], MUC=["N","H","V","C"];
 const TEN_LOAI={TN:"Trắc nghiệm",DS:"Đúng/Sai",TLN:"Trả lời ngắn",TL:"Tự luận"};
@@ -2196,100 +2176,8 @@ async function hanhDongBg(x,v,b){const sl=x.slug;
   const k=await api("/api/thi/bg-trang-thai",{slug:sl,tt:v});if(!k.ok){alert(k.loi);return} theoDoiThi(null,"");
 }
 
-// ---------------- TỔNG HỢP QUÁ TRÌNH HỌC ONLINE THEO LỚP
-const TH={};
-async function moTongHop(lop){
-  $("#hop-th").style.display="flex";$("#th-than").innerHTML="Đang lấy danh sách lớp…";
-  if(!TH.lop){const k=await api("/api/thi/tong-hop",{});if(!k.ok){$("#th-than").innerHTML=`<p style="color:#b45309">${esc(k.loi||"Chưa kết nối máy chủ")}</p>`;return}TH.lop=k.cac_lop||[]}
-  $("#th-lop").innerHTML=TH.lop.length?TH.lop.map(x=>`<option value="${esc(x.lop)}">${esc(x.lop)} (${x.n} em)</option>`).join(""):'<option value="">Chưa có lớp</option>';
-  if(!TH.lop.length){$("#th-than").innerHTML="<p>Chưa có tài khoản học sinh. Tab 👥 Tài khoản học sinh → nhập danh sách lớp.</p>";return}
-  const chon=lop&&TH.lop.find(x=>x.lop.toUpperCase()===String(lop).toUpperCase())?TH.lop.find(x=>x.lop.toUpperCase()===String(lop).toUpperCase()).lop:(localStorage.getItem("th_lop")||TH.lop[0].lop);
-  $("#th-lop").value=TH.lop.some(x=>x.lop===chon)?chon:TH.lop[0].lop;taiTongHop();
-}
-async function taiTongHop(){const lop=$("#th-lop").value;try{localStorage.setItem("th_lop",lop)}catch(_){}
-  $("#th-than").innerHTML=`Đang tổng hợp lớp ${esc(lop)}…`;const k=await api("/api/thi/tong-hop",{lop});
-  if(!k.ok){$("#th-than").innerHTML=`<p style="color:#b45309">${esc(k.loi||"Lỗi")}</p>`;return}TH.k=k;veTongHop()}
-const thF=v=>v==null||isNaN(v)?"—":(Math.round(v*10)/10).toString().replace(".",",");
-const thMau=v=>v==null?"c":v>=8?"g":v>=6.5?"k":v>=5?"tb":"y";
-function thTinh(k){
-  const ten=Object.fromEntries((TH.r?.ds||[]).map(x=>[x.slug,x.ten])), de=k.de.map(x=>({...x,ten:ten[x.slug]||x.ten||x.slug}));
-  const theo={};for(const b of k.bai){const o=(theo[b.tk]??={})[b.nhom]??={lan:[],goi_y:0,cx:""};o.lan.push(b.diem);o.goi_y+=b.goi_y||0;if(b.cam_xuc)o.cx=b.cam_xuc}
-  const hs=k.hs.map(h=>{const m=theo[h.ten]||{};const o=de.map(d=>{const x=m[d.slug];return x?{cao:Math.max(...x.lan),dau:x.lan[0],so:x.lan.length,goi_y:x.goi_y,cx:x.cx}:null});
-    const lam=o.filter(Boolean),diem=lam.map(x=>x.cao),tb=diem.length?diem.reduce((a,b)=>a+b,0)/diem.length:null;
-    const xu=lam.length>=2?(lam.slice(-2).reduce((a,x)=>a+x.cao,0)/2-lam.slice(0,2).reduce((a,x)=>a+x.cao,0)/2):null;
-    const sua=lam.filter(x=>x.so>1&&x.cao>x.dau).length,gy=lam.reduce((a,x)=>a+x.goi_y,0);
-    return {...h,o,lam:lam.length,tb,xu,sua,gy}});
-  const dot=de.map((d,j)=>{const v=hs.map(h=>h.o[j]).filter(Boolean);return {...d,so:v.length,tb:v.length?v.reduce((a,x)=>a+x.cao,0)/v.length:null}});
-  return {de,hs,dot};
-}
-function thNhanXetEm(h,n){
-  const t=h.ho_ten?h.ho_ten.trim().split(/\s+/).pop():"Em",c=[];
-  if(!n)return "Chưa có đợt bài nào được giao.";
-  if(!h.lam)return `${t} chưa vào làm bài nào — thầy tin em sẽ bắt đầu ngay từ bài gần nhất, mỗi bài chỉ mất ít phút thôi!`;
-  if(h.lam===n)c.push(`Hoàn thành đủ ${n}/${n} bài, rất chăm chỉ và đều đặn`);else if(h.lam/n>=.7)c.push(`Làm bài khá đều (${h.lam}/${n} bài)`);else c.push(`Đã làm ${h.lam}/${n} bài, em cố gắng làm bù các bài còn lại nhé`);
-  if(h.tb>=8)c.push(`kết quả rất tốt (TB ${thF(h.tb)})`);else if(h.tb>=6.5)c.push(`nắm bài khá vững (TB ${thF(h.tb)})`);else if(h.tb>=5)c.push(`đã nắm được kiến thức cơ bản (TB ${thF(h.tb)})`);else c.push(`đang tích luỹ dần kiến thức nền — thầy tin em sẽ tiến bộ nếu ôn lại ví dụ mẫu`);
-  if(h.xu!=null&&h.xu>=1)c.push(`tiến bộ rõ (+${thF(h.xu)} điểm so với các bài đầu)`);else if(h.xu!=null&&h.xu>-.5&&h.tb>=6.5)c.push("giữ phong độ ổn định");
-  if(h.sua)c.push(`biết làm lại để sửa sai (${h.sua} bài lần sau cao hơn)`);
-  if(h.gy)c.push("biết dùng Gợi ý AI để tự tìm cách giải");
-  const s=c.join("; ");return t+": "+s.charAt(0).toLowerCase()+s.slice(1)+". Cố lên em!";
-}
-function thNhanXetLop(lop,T){
-  const n=T.de.length,s=T.hs.length;if(!n)return `Lớp ${lop} chưa có đợt bài online nào.`;
-  const coLam=T.hs.filter(h=>h.lam),du=T.hs.filter(h=>h.lam===n),tlHt=s?T.hs.reduce((a,h)=>a+h.lam,0)/(s*n):0;
-  const diem=coLam.map(h=>h.tb),tb=diem.length?diem.reduce((a,b)=>a+b,0)/diem.length:null;
-  const d1=T.dot.find(d=>d.tb!=null),d2=[...T.dot].reverse().find(d=>d.tb!=null);
-  const tienBo=T.hs.filter(h=>h.xu!=null&&h.xu>=1).sort((a,b)=>b.xu-a.xu),gioi=coLam.filter(h=>h.tb>=8).sort((a,b)=>b.tb-a.tb);
-  const ten=h=>(h.ho_ten||h.ten).trim();const ds=a=>a.slice(0,5).map(ten).join(", ")+(a.length>5?` và ${a.length-5} bạn khác`:"");
-  const c=[`📊 Tổng kết học online lớp ${lop} (${n} đợt bài, ${s} học sinh)`];
-  c.push(`• Cả lớp đã hoàn thành ${Math.round(tlHt*100)}% lượt bài được giao${du.length?`, ${du.length} bạn làm đủ tất cả các đợt — rất đáng khen!`:"."}`);
-  if(tb!=null)c.push(`• Điểm trung bình lớp: ${thF(tb)}${d1&&d2&&d1!==d2?(d2.tb-d1.tb>=.3?` — tăng từ ${thF(d1.tb)} (đợt đầu) lên ${thF(d2.tb)} (đợt gần nhất), lớp đang tiến bộ rõ`:d2.tb-d1.tb>-.3?`, giữ ổn định qua các đợt`:`; các đợt sau khó hơn, các em xem lại lời giải để vững vàng hơn nhé`):""}.`);
-  if(du.length)c.push(`• Chăm chỉ, đều đặn: ${ds(du)}.`);
-  if(tienBo.length)c.push(`• Tiến bộ nổi bật: ${ds(tienBo)}.`);
-  if(gioi.length)c.push(`• Kết quả xuất sắc (TB từ 8): ${ds(gioi)}.`);
-  const chua=s-coLam.length,thieu=T.hs.filter(h=>h.lam&&h.lam<n).length;
-  if(chua||thieu)c.push(`• ${chua?`Còn ${chua} bạn chưa bắt đầu`:""}${chua&&thieu?", ":""}${thieu?`${thieu} bạn còn thiếu bài`:""} — các em vào làm bù nhé, link vẫn mở.`);
-  c.push("Thầy rất vui với tinh thần tự học của lớp. Tiếp tục giữ nhịp mỗi tuần một chút, kết quả sẽ đến! 💪");
-  return c.join("\n");
-}
-function veTongHop(){
-  const k=TH.k,T=thTinh(k),n=T.de.length;TH.T=T;
-  const s=T.hs.length,coLam=T.hs.filter(h=>h.lam).length,tl=s&&n?Math.round(T.hs.reduce((a,h)=>a+h.lam,0)/(s*n)*100):0;
-  const diem=T.hs.filter(h=>h.tb!=null).map(h=>h.tb),tb=diem.length?diem.reduce((a,b)=>a+b,0)/diem.length:null;
-  const tienBo=T.hs.filter(h=>h.xu!=null&&h.xu>=1).length;
-  // biểu đồ: cột = tỉ lệ nộp, đường = điểm TB từng đợt
-  const W=1000,H=150,p=28,bw=n?(W-2*p)/n:0;
-  const svg=n?`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Tỉ lệ nộp và điểm trung bình theo đợt">
-    ${[0,5,10].map(v=>`<line x1="${p}" x2="${W-p}" y1="${H-20-(v/10)*(H-40)}" y2="${H-20-(v/10)*(H-40)}" stroke="#eef0f4"/><text x="4" y="${H-16-(v/10)*(H-40)}" font-size="10" fill="#94a3b8">${v}</text>`).join("")}
-    ${T.dot.map((d,j)=>`<rect x="${p+j*bw+bw*.2}" y="${H-20-(d.so/(s||1))*(H-40)}" width="${bw*.6}" height="${(d.so/(s||1))*(H-40)}" fill="#bfdbfe" rx="3"><title>${esc(d.ten)}: ${d.so}/${s} em nộp</title></rect>
-      <text x="${p+j*bw+bw/2}" y="${H-5}" font-size="10" fill="#64748b" text-anchor="middle">Đợt ${j+1}</text>`).join("")}
-    <polyline fill="none" stroke="#15803d" stroke-width="2.5" points="${T.dot.map((d,j)=>d.tb==null?"":`${p+j*bw+bw/2},${H-20-(d.tb/10)*(H-40)}`).filter(Boolean).join(" ")}"/>
-    ${T.dot.map((d,j)=>d.tb==null?"":`<circle cx="${p+j*bw+bw/2}" cy="${H-20-(d.tb/10)*(H-40)}" r="4" fill="#15803d"><title>${esc(d.ten)}: TB ${thF(d.tb)}</title></circle>`).join("")}</svg>
-    <div style="font-size:12px;color:#64748b"><span style="display:inline-block;width:10px;height:10px;background:#bfdbfe;border-radius:2px"></span> Số em nộp &nbsp; <span style="color:#15803d;font-weight:700">●—</span> Điểm TB (điểm cao nhất mỗi em)</div>`:"";
-  $("#th-than").innerHTML=`<div class="th-the"><div><b>${n}</b><span>đợt bài đã giao</span></div><div><b>${coLam}/${s}</b><span>em đã tham gia</span></div>
-    <div><b>${tl}%</b><span>lượt bài hoàn thành</span></div><div><b>${thF(tb)}</b><span>điểm TB lớp</span></div><div><b>${tienBo}</b><span>em tiến bộ ≥ 1 điểm</span></div></div>
-    ${n?`<div class="th-bd">${svg}</div>`:""}
-    <div class="th-nx"><h3>💬 Nhận xét chung cho lớp (sửa được, chép gửi nhóm lớp)</h3><textarea id="th-nx-lop">${esc(thNhanXetLop(k.lop,T))}</textarea></div>
-    ${n?`<div style="overflow:auto;max-height:55vh;border:1px solid #e2e8f0;border-radius:10px"><table class="th-bang"><thead><tr><th>STT</th><th class="ten">Họ tên</th>
-      ${T.dot.map((d,j)=>`<th class="de" title="${esc(d.ten)}">Đợt ${j+1}<br><span style="font-weight:400;color:#64748b">${esc(d.ten.length>16?d.ten.slice(0,15)+"…":d.ten)}</span></th>`).join("")}
-      <th>Hoàn thành</th><th>TB</th><th title="TB 2 bài gần nhất − TB 2 bài đầu">Tiến bộ</th><th class="ten">Nhận xét tích cực (bấm để sửa)</th></tr></thead><tbody>
-      ${T.hs.map((h,i)=>`<tr><td>${h.stt||""}</td><td class="ten">${esc(h.ho_ten||h.ten)}</td>
-        ${h.o.map(x=>`<td><span class="o-d ${thMau(x&&x.cao)}" title="${x?`Cao nhất ${thF(x.cao)} · ${x.so} lần${x.goi_y?` · 💡 ${x.goi_y}`:""}`:"Chưa làm"}">${x?thF(x.cao):"—"}</span></td>`).join("")}
-        <td>${h.lam}/${n}</td><td><b>${thF(h.tb)}</b></td><td>${h.xu==null?"":h.xu>=.5?`<span class="th-len">▲ ${thF(h.xu)}</span>`:h.xu<=-.5?`<span class="th-xuong">▼ ${thF(-h.xu)}</span>`:"≈"}</td>
-        <td class="nx" contenteditable data-i="${i}">${esc(thNhanXetEm(h,n))}</td></tr>`).join("")}</tbody></table></div>
-      <p style="font-size:12px;color:#64748b;margin:6px 0 0">Mỗi ô là điểm cao nhất của em trong đợt đó (rê chuột xem số lần làm, số câu mở Gợi ý AI). Màu: xanh lá ≥ 8 · xanh dương ≥ 6,5 · vàng ≥ 5 · đỏ &lt; 5 · “—” chưa làm.</p>`
-      :`<p>Lớp này chưa có đợt bài nào. Khi giao đề (ô Lớp giao), các đợt sẽ hiện ở đây.</p>`}`;
-}
-function thXuat(){const T=TH.T,k=TH.k;if(!T)return;
-  $("#th-than").querySelectorAll("td.nx").forEach(td=>{T.hs[+td.dataset.i].nx=td.innerText.trim()});
-  const dau=["STT","Họ tên","Tài khoản",...T.dot.map((d,j)=>`Đợt ${j+1}: ${d.ten}`),"Số bài đã làm","Tổng số đợt","Điểm TB","Tiến bộ","Số bài làm lại cao hơn","Số câu mở Gợi ý AI","Nhận xét"];
-  const dong=T.hs.map(h=>[h.stt||"",h.ho_ten||"",h.ten,...h.o.map(x=>x?thF(x.cao):""),h.lam,T.de.length,thF(h.tb),h.xu==null?"":thF(h.xu),h.sua,h.gy,h.nx||thNhanXetEm(h,T.de.length)]);
-  const csv="﻿"+[dau,...dong,[],["Nhận xét lớp"],[$("#th-nx-lop").value]].map(r=>r.map(v=>`"${String(v).replace(/"/g,'""')}"`).join(",")).join("\n");
-  const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([csv],{type:"text/csv"}));a.download=`TongHop_${k.lop}_${new Date().toISOString().slice(0,10)}.csv`;a.click()}
-$("#th-lop").onchange=taiTongHop;$("#th-tai").onclick=()=>{TH.lop=null;moTongHop($("#th-lop").value)};
-$("#th-dong").onclick=()=>$("#hop-th").style.display="none";$("#th-xuat").onclick=thXuat;
-$("#th-chep").onclick=e=>{navigator.clipboard.writeText($("#th-nx-lop").value);e.target.textContent="✓ Đã chép";setTimeout(()=>e.target.textContent="💬 Chép nhận xét lớp",1500)};
-$("#th-chep-em").onclick=e=>{const T=TH.T;if(!T)return;const nx=[...$("#th-than").querySelectorAll("td.nx")].map(td=>td.innerText.trim());
-  navigator.clipboard.writeText(nx.join("\n"));e.target.textContent="✓ Đã chép";setTimeout(()=>e.target.textContent="Chép nhận xét từng em",1500)};
+// ---------------- TỔNG HỢP QUÁ TRÌNH HỌC ONLINE (mã dùng chung: scripts/tong_hop.js)
+function moTongHop(lop){TongHop.mo({goi:(v,d)=>api("/api/thi/"+v,d),lop})}
 
 async function moThi(){$("#hop-thi").style.display="flex";$("#thi-kq").innerHTML="";veThi(await api("/api/thi/ds",{}))}
 // ---------------- BÀI GIẢNG

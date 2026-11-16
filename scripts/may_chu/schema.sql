@@ -6,3 +6,5 @@ CREATE TABLE IF NOT EXISTS bai (id INTEGER PRIMARY KEY AUTOINCREMENT, tk TEXT, d
   nop_luc TEXT, tra_loi TEXT, diem REAL, cham TEXT, chuyen_tab INTEGER DEFAULT 0, thoi_gian INTEGER, cam_xuc TEXT, goi_y INTEGER DEFAULT 0);
 CREATE INDEX IF NOT EXISTS bai_tk ON bai(tk, nhom);
 CREATE TABLE IF NOT EXISTS luot_them (tk TEXT, nhom TEXT, so INTEGER, PRIMARY KEY (tk, nhom));
+CREATE TABLE IF NOT EXISTS loi_nhan (id INTEGER PRIMARY KEY AUTOINCREMENT, tk TEXT, noi_dung TEXT, tu TEXT, tao_luc TEXT, xem_luc TEXT);
+CREATE INDEX IF NOT EXISTS loi_nhan_tk ON loi_nhan(tk);

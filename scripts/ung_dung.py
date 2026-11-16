@@ -219,6 +219,8 @@ class XuLy(BaseHTTPRequestHandler):
         try:
             if u.path in ("/", "/index.html"):
                 return self.gui(200, open(os.path.join(SCRIPTS, "ung_dung.html"), "rb").read(), "text/html; charset=utf-8")
+            if u.path == "/tong_hop.js":
+                return self.gui(200, open(os.path.join(SCRIPTS, "tong_hop.js"), "rb").read(), "text/javascript; charset=utf-8")
             if u.path == "/api/du-lieu":
                 return self.gui(200, du_lieu_cay())
             if u.path == "/api/ma-tran":
@@ -355,6 +357,8 @@ class XuLy(BaseHTTPRequestHandler):
                     return self.gui(200, T.them_gv(d.get("ten"), d.get("ho_ten"), d.get("mk")))
                 if viec == "phieu":
                     return self.gui(200, {"ok": True, "html": T.phieu_tai_khoan(d.get("lop") or "")})
+                if viec == "loi-nhan":
+                    return self.gui(200, T.goi("loi-nhan", {"ds": d.get("ds") or []}))
                 if viec == "tong-hop":
                     return self.gui(200, T.goi("tong-hop", {"lop": d.get("lop") or ""}))
                 if viec == "diem":

@@ -216,6 +216,9 @@ như phần mềm cũ thì ghi `"khung": "DeThi"` trong file JSON.
 - Bảng mỗi em × mỗi đợt (điểm cao nhất, tô màu), hoàn thành x/y, TB, tiến bộ (TB 2 bài gần nhất − 2 bài đầu) và **nhận xét tích cực** tự soạn cho từng em (bấm để sửa).
 - **Nhận xét chung cho lớp** (khen chăm chỉ, tiến bộ, xuất sắc; nhắc nhẹ làm bù, không nêu tên em chưa làm) — sửa được, **Chép** gửi nhóm Zalo lớp.
 - **Tải bảng tổng hợp (Excel)** kèm nhận xét. Cần **Đăng lại tất cả** một lần sau khi cập nhật để máy chủ có chức năng này.
+- Có cả trên **trang giáo viên** (thi-toan-vtl.pages.dev, đăng nhập GV) → nút **📊 Tổng hợp quá trình** — xem được trên điện thoại.
+- **⚑ Học sinh cần quan tâm**: máy tự đánh dấu em chưa làm, thiếu bài, TB dưới 5, tụt từ 1 điểm, hoặc đang lo lắng/mệt (cảm xúc khi làm bài). Bấm ⚑ trong bảng để đánh dấu / bỏ đánh dấu thêm (nhớ theo lớp).
+- Mỗi em được đánh dấu có **tin nhắn riêng tích cực, vui** (sửa được, 🎲 đổi câu khác). **💌 Gửi vào trang học** → em thấy khung “💌 Thầy nhắn em” khi đăng nhập, bấm “Em đã đọc 👍”; bảng của thầy hiện “✓ em đã đọc”. Hoặc **Chép tin nhắn** để gửi Zalo.
 
 ### Phiếu tự luận: chọn bố cục
 - Ô **Bố cục** (kiểu Chỉ tự luận): *Song song* (trái ví dụ mẫu – phải tự luyện) hoặc *Trên – dưới* (ví dụ mẫu + lời giải ở trên, các bài tự luyện bên dưới, dùng cả bề ngang giấy, dòng làm bài dài hơn).

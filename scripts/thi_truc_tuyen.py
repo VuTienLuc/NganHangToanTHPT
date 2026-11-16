@@ -257,7 +257,9 @@ input{width:100%;box-sizing:border-box;padding:11px 12px;font-size:16px;border:1
 button{width:100%;margin-top:16px;padding:12px;font-size:16px;font-weight:700;border:0;border-radius:10px;background:#1e3a8a;color:#fff;cursor:pointer}
 button:disabled{opacity:.6}.loi{color:#b91c1c;min-height:1.4em;margin:8px 0 0}a{color:#1d4ed8}
 .de{display:flex;gap:10px;align-items:center;padding:12px 14px;border:1px solid #e5e7eb;border-radius:12px;margin:8px 0;text-decoration:none;color:#1f2937}
-.de:hover{background:#f8fafc}.de b{flex:1}.nho{font-size:12.5px;color:#6b7280;white-space:nowrap}</style>"""
+.de:hover{background:#f8fafc}.de b{flex:1}.nho{font-size:12.5px;color:#6b7280;white-space:nowrap}
+.ln{background:linear-gradient(135deg,#fdf2f8,#eff6ff);border:1px solid #fbcfe8;border-radius:14px;padding:12px 14px;margin:0 0 12px}.ln-dau{font-weight:800;color:#be185d;display:flex;justify-content:space-between;gap:8px}
+.ln-noi{margin:6px 0 2px;line-height:1.55}.ln-ok{width:auto;margin-top:8px;padding:8px 14px;font-size:14px;background:#db2777}</style>"""
 
 TRANG_DN = """<!DOCTYPE html><html lang="vi"><head>""" + KIEU + """<title>Đăng nhập — Toán thầy Lực</title></head><body><div class="vo"><div class="the">
 <div id="dn"><h1>Đăng nhập</h1><p class="phu">Thầy Vũ Tiến Lực – Trường THPT Nguyễn Hữu Cảnh. Dùng tài khoản thầy cấp trên phiếu.</p>
@@ -346,7 +348,7 @@ GV_JS = r"""function veGV(t){
  const st={q:'',lop:q0.get('lop')||L('lop')||'',kieu:'',xep:L('xep')||'muc_luc',tab:'dang_mo'};
  let BG=[], DE=t.de||[], ghim=L('ghim')||[], gan=L('gan')||[];
  nd.innerHTML=`<div class="g-top"><h2>Bàn làm việc giáo viên<small>Bài giảng trình chiếu · đề kiểm tra trực tuyến</small></h2>
-  <a class="g-btn" href="#" id="thoat">Đăng xuất</a></div>
+  <button class="g-btn" id="g-th" style="background:#1e40af;color:#fff;border-color:#1e40af">📊 Tổng hợp quá trình</button><a class="g-btn" href="#" id="thoat">Đăng xuất</a></div>
   <div class="g-stat" id="g-stat"></div>
   <div class="g-luoi"><section class="g-khoi" aria-labelledby="h-bg"><h3 id="h-bg">📚 Bài giảng <span class="dem" id="bg-dem"></span></h3>
    <div class="g-tim"><div class="o"><span class="kinh" aria-hidden="true">🔍</span><input id="tim" type="search" placeholder="Tìm bài giảng: tên bài, chương, dạng…" aria-label="Tìm bài giảng" autocomplete="off"><kbd>/</kbd></div>
@@ -416,6 +418,8 @@ GV_JS = r"""function veGV(t){
  $('tim').oninput=e=>{st.q=e.target.value.trim();veBG()};
  $('tim').onkeydown=e=>{if(e.key==='Enter'){const a=$('bg').querySelector('.g-cards .g-card');if(a)a.click()}if(e.key==='Escape'){e.target.value='';st.q='';veBG()}};
  document.addEventListener('keydown',e=>{if(e.key==='/'&&document.activeElement!==$('tim')&&!/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName)){e.preventDefault();$('tim').focus()}});
+ $('g-th').onclick=()=>{const chay=()=>TongHop.mo({goi:(v,d)=>fetch('/api/gv/'+v,{method:'POST',credentials:'same-origin',headers:{'content-type':'application/json'},body:JSON.stringify(d||{})}).then(r=>r.json())});
+  if(window.TongHop)return chay();const sc=document.createElement('script');sc.src='/_gv/tong_hop.js?v='+Date.now();sc.onload=chay;sc.onerror=()=>toast('Chưa tải được — thầy Đăng lại tất cả trong ứng dụng');document.head.appendChild(sc)};
  document.getElementById('thoat').onclick=async ev=>{ev.preventDefault();await fetch('/api/dang-xuat',{method:'POST'});location.href='/dang-nhap/'};
  veStat();veLoc();veBG();veDe();
  $('bg').innerHTML='<div class="g-rong">Đang tải bài giảng…</div>';
@@ -437,10 +441,13 @@ fetch('/api/toi',{credentials:'same-origin'}).then(r=>r.json()).then(t=>{
  else{h+='<h3>Bài kiểm tra của em</h3>'+((t.de||[]).length?t.de.map(x=>'<a class="de" href="/'+e(x.slug)+'/"><b>'+e(x.ten)+'</b><span class="nho">'+
   (x.da_lam?'Đã làm '+x.da_lam+' lần'+(x.cao_nhat!=null?' · cao nhất '+Number(x.cao_nhat).toFixed(2).replace('.',','):''):'Chưa làm')+(x.con_lai!=null?' · còn '+x.con_lai+' lượt':'')+(x.cong_bo?' · có lời giải':'')+'</span></a>').join(''):'<p class="phu">Hiện chưa có bài kiểm tra nào cho lớp em.</p>');
   h+='<div id="hs-phieu"></div>';
+  if((t.loi_nhan||[]).length)h='<div id="loi-nhan">'+t.loi_nhan.map(m=>'<div class="ln" data-id="'+m.id+'"><div class="ln-dau">💌 Thầy nhắn em <span class="nho">'+new Date(m.tao_luc).toLocaleDateString('vi-VN')+'</span></div><div class="ln-noi">'+e(m.noi_dung).replace(/\\n/g,'<br>')+'</div><button class="ln-ok">Em đã đọc 👍</button></div>').join('')+'</div>'+h;
   fetch('/bai-giang/hs.json',{credentials:'same-origin',cache:'no-store'}).then(r=>r.ok?r.json():[]).catch(()=>[]).then(ds=>{
    const k=parseInt(t.lop||'');ds=(ds||[]).filter(x=>!k||x.lop===k);if(!ds.length)return;
    document.getElementById('hs-phieu').innerHTML='<h3>Phiếu học tập &amp; bài học</h3>'+ds.map(x=>'<a class="de" href="/bai-giang/'+encodeURIComponent(x.slug)+'/"><b>'+e(x.ten)+'</b><span class="nho">'+(x.loai_bg==='phieu'?'Phiếu học tập':x.kieu==='pdf'?'PDF':'Bài giảng')+'</span></a>').join('')})}
- nd.innerHTML=h;document.getElementById('thoat').onclick=async ev=>{ev.preventDefault();await fetch('/api/dang-xuat',{method:'POST'});location.href='/dang-nhap/'};
+ nd.innerHTML=h;nd.querySelectorAll('.ln-ok').forEach(b=>b.onclick=async()=>{const x=b.closest('.ln');b.disabled=true;b.textContent='Cảm ơn em! 💪';
+  await fetch('/api/loi-nhan/da-xem',{method:'POST',credentials:'same-origin',headers:{'content-type':'application/json'},body:JSON.stringify({id:+x.dataset.id})}).catch(()=>{});setTimeout(()=>x.remove(),900)});
+ document.getElementById('thoat').onclick=async ev=>{ev.preventDefault();await fetch('/api/dang-xuat',{method:'POST'});location.href='/dang-nhap/'};
 }).catch(()=>{nd.innerHTML='<p>Không kết nối được máy chủ.</p>'});
 </script></body></html>"""
 
@@ -479,6 +486,8 @@ def ghi_site():
         ghi_nang_cap_phieu()
     except Exception:
         pass
+    os.makedirs(os.path.join(SITE, "_gv"), exist_ok=True)
+    shutil.copy(os.path.join(os.path.dirname(os.path.abspath(__file__)), "tong_hop.js"), os.path.join(SITE, "_gv", "tong_hop.js"))
     open(os.path.join(SITE, "_headers"), "w", encoding="utf-8").write(
         "/*\n  X-Robots-Tag: noindex, nofollow\n  Cache-Control: no-cache\n")
     open(os.path.join(SITE, "404.html"), "w", encoding="utf-8").write(
@@ -784,7 +793,7 @@ def co_node():
 MAY_CHU = os.path.join(os.path.dirname(os.path.abspath(__file__)), "may_chu")   # mã máy chủ (Functions + schema)
 P_BM = os.path.join(THU, "bi_mat.json")       # mã quản trị + khoá phiên (KHÔNG đồng bộ GitHub)
 TEN_DB = "thi-toan-db"
-PHIEN_BAN_SCHEMA = 3
+PHIEN_BAN_SCHEMA = 4
 
 
 def _luu_ch(c):
