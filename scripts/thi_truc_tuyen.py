@@ -348,7 +348,7 @@ GV_JS = r"""function veGV(t){
  const st={q:'',lop:q0.get('lop')||L('lop')||'',kieu:'',xep:L('xep')||'muc_luc',tab:'dang_mo'};
  let BG=[], DE=t.de||[], ghim=L('ghim')||[], gan=L('gan')||[];
  nd.innerHTML=`<div class="g-top"><h2>Bàn làm việc giáo viên<small>Bài giảng trình chiếu · đề kiểm tra trực tuyến</small></h2>
-  <button class="g-btn" id="g-th" style="background:#1e40af;color:#fff;border-color:#1e40af">📊 Tổng hợp quá trình</button><a class="g-btn" href="#" id="thoat">Đăng xuất</a></div>
+  <button class="g-btn" id="g-bd">📋 Bảng điểm</button>  <button class="g-btn" id="g-th" style="background:#1e40af;color:#fff;border-color:#1e40af">📊 Tổng hợp quá trình</button><a class="g-btn" href="#" id="thoat">Đăng xuất</a></div>
   <div class="g-stat" id="g-stat"></div>
   <div class="g-luoi"><section class="g-khoi" aria-labelledby="h-bg"><h3 id="h-bg">📚 Bài giảng <span class="dem" id="bg-dem"></span></h3>
    <div class="g-tim"><div class="o"><span class="kinh" aria-hidden="true">🔍</span><input id="tim" type="search" placeholder="Tìm bài giảng: tên bài, chương, dạng…" aria-label="Tìm bài giảng" autocomplete="off"><kbd>/</kbd></div>
@@ -412,14 +412,17 @@ GV_JS = r"""function veGV(t){
   const v=ds.filter(x=>x.trang_thai===st.tab);
   $('de').innerHTML=v.length?v.map(x=>`<div class="g-de"><span class="t">${e(x.ten)}</span><span class="m"><span>${x.lop?'Lớp '+e(x.lop):'Mọi lớp'}</span><span>${x.so_luot?x.so_luot+' lượt/em':'không giới hạn lượt'}</span>
     <span>${x.so_hs?x.so_hs+' HS nộp · TB '+so(x.tb||0):'chưa có bài nộp'}</span></span>
-    <span class="n"><a class="g-btn" href="/${encodeURIComponent(x.slug)}/" target="_blank" rel="noopener">▶ Làm thử</a><button class="g-btn" data-l="${e(location.origin+'/'+x.slug+'/')}">Chép link</button></span></div>`).join('')
+    <span class="n"><a class="g-btn" href="/${encodeURIComponent(x.slug)}/" target="_blank" rel="noopener">▶ Làm thử</a><button class="g-btn" data-bd="${e(x.slug)}" title="Điểm, số phút, số lần rời tab của từng lượt">📋 Điểm</button><button class="g-btn" data-l="${e(location.origin+'/'+x.slug+'/')}">Chép link</button></span></div>`).join('')
    :`<div class="g-rong"><b>Không có đề ${TT[st.tab][0].toLowerCase()}</b>Đăng đề từ ứng dụng ra đề (🌐 Link thi trực tuyến).</div>`;
+  $('de').querySelectorAll('[data-bd]').forEach(b=>b.onclick=()=>thTai(()=>TongHop.bangDiem({goi:goiGV,nhom:b.dataset.bd})));
   $('de').querySelectorAll('[data-l]').forEach(b=>b.onclick=()=>{navigator.clipboard.writeText(b.dataset.l).then(()=>toast('Đã chép link'))})}
  $('tim').oninput=e=>{st.q=e.target.value.trim();veBG()};
  $('tim').onkeydown=e=>{if(e.key==='Enter'){const a=$('bg').querySelector('.g-cards .g-card');if(a)a.click()}if(e.key==='Escape'){e.target.value='';st.q='';veBG()}};
  document.addEventListener('keydown',e=>{if(e.key==='/'&&document.activeElement!==$('tim')&&!/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName)){e.preventDefault();$('tim').focus()}});
- $('g-th').onclick=()=>{const chay=()=>TongHop.mo({goi:(v,d)=>fetch('/api/gv/'+v,{method:'POST',credentials:'same-origin',headers:{'content-type':'application/json'},body:JSON.stringify(d||{})}).then(r=>r.json())});
-  if(window.TongHop)return chay();const sc=document.createElement('script');sc.src='/_gv/tong_hop.js?v='+Date.now();sc.onload=chay;sc.onerror=()=>toast('Chưa tải được — thầy Đăng lại tất cả trong ứng dụng');document.head.appendChild(sc)};
+ const goiGV=(v,d)=>fetch('/api/gv/'+v,{method:'POST',credentials:'same-origin',headers:{'content-type':'application/json'},body:JSON.stringify(d||{})}).then(r=>r.json());
+ const thTai=f=>{if(window.TongHop)return f();const sc=document.createElement('script');sc.src='/_gv/tong_hop.js?v='+Date.now();sc.onload=f;sc.onerror=()=>toast('Chưa tải được — thầy Đăng lại tất cả trong ứng dụng');document.head.appendChild(sc)};
+ $('g-th').onclick=()=>thTai(()=>TongHop.mo({goi:goiGV}));
+ $('g-bd').onclick=()=>thTai(()=>TongHop.bangDiem({goi:goiGV}));
  document.getElementById('thoat').onclick=async ev=>{ev.preventDefault();await fetch('/api/dang-xuat',{method:'POST'});location.href='/dang-nhap/'};
  veStat();veLoc();veBG();veDe();
  $('bg').innerHTML='<div class="g-rong">Đang tải bài giảng…</div>';
