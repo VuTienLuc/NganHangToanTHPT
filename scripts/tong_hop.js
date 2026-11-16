@@ -105,7 +105,7 @@
   // ---------- tính toán ----------
   const lopKhop = (ds, lop) => !String(ds || '').trim() || String(ds).split(',').map(x => x.trim().toUpperCase()).filter(Boolean).includes(String(lop || '').trim().toUpperCase());
   // bài “đã giao” mới tính hoàn thành / điểm TB; bài chưa giao em tự làm thì ghi nhận là tự luyện thêm
-  const daGiao = (d, lop) => d.giao === 1 || (d.giao == null && !!String(d.lop || '').trim() && lopKhop(d.lop, lop));
+  const daGiao = (d, lop) => d.giao === 1 && lopKhop(d.lop, lop);   // chỉ bài thầy đã XÁC NHẬN giao mới tính
   function nhomBai(bai) {
     const theo = {};
     for (const b of bai) {
@@ -139,8 +139,8 @@
     const td = Object.fromEntries((k.theo_doi || []).map(x => [x.tk, x]));
     const hs = k.hs.map(h => Object.assign(motEm(h, de, theo[h.ten], nhan[h.ten], deThem), { td: td[h.ten] || null, lop: k.lop }));
     const dot = de.map((d, j) => { const v = hs.map(h => h.o[j]).filter(Boolean); return { ...d, so: v.length, tb: v.length ? v.reduce((a, x) => a + x.cao, 0) / v.length : null } });
-    const them = deThem.map(d => ({ ...d, so: hs.filter(h => h.them.some(x => x.de.slug === d.slug)).length }));
-    return { de, hs, dot, them };
+    const them0 = deThem.map(d => ({ ...d, so: hs.filter(h => h.them.some(x => x.de.slug === d.slug)).length }));
+    return { de, hs, dot, them: them0.filter(d => d.so), chuaGiao: them0 };
   }
   const canQT = h => st.danh[h.ten] != null ? st.danh[h.ten] : h.tuDong;
 
@@ -327,6 +327,8 @@
       ${n ? `<div class="th-bd">${svg}</div>` : ''}
       <div class="th-hop2 th-qt" id="th-qt"><h3>⚑ Học sinh cần quan tâm — tin nhắn riêng (tích cực, vui)</h3><div id="th-qt-ds"></div></div>
       <div class="th-hop2 th-nx"><h3>💬 Nhận xét chung cho lớp (sửa được, chép gửi nhóm lớp)</h3><textarea id="th-nx-lop">${e(nxLop(k.lop, T))}</textarea></div>
+      ${T.chuaGiao.length ? `<div class="th-hop2" style="background:#f8fafc;border:1px dashed #cbd5e1"><h3 style="color:#334155">○ Bài chưa xác nhận giao cho lớp ${e(k.lop)} — không tính vào tổng hợp</h3>
+        <div style="display:flex;flex-direction:column;gap:4px">${T.chuaGiao.map(d => `<div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"><span style="flex:1;min-width:200px">${e(d.ten)} <span style="color:#64748b;font-size:12px">· ${d.so ? d.so + ' em tự làm' : 'chưa em nào làm'}</span></span><button class="th-giao" data-giao="${e(d.slug)}" data-v="1">✓ Xác nhận đã giao</button></div>`).join('')}</div></div>` : ''}
       ${n ? `<div style="overflow:auto;max-height:55vh;border:1px solid #e2e8f0;border-radius:10px"><table class="th-bang"><thead><tr><th title="Đánh dấu cần quan tâm">⚑</th><th title="Theo dõi thường xuyên (lưu trên máy chủ)">⭐</th><th>STT</th><th class="ten">Họ tên</th>
         ${T.dot.map((d, j) => `<th class="cot-dot" title="${e(d.ten)}">Đợt ${j + 1}<br><span style="font-weight:400;color:#64748b">${e(d.ten.length > 16 ? d.ten.slice(0, 15) + '…' : d.ten)}</span><br><button class="th-giao bat" data-giao="${e(d.slug)}" data-v="0" title="Đang tính vào tổng hợp. Bấm nếu bài này chưa giao (chỉ tự luyện)">✓ Đã giao</button></th>`).join('')}
         ${T.them.map(d => `<th class="cot-dot them" title="${e(d.ten)} — chưa giao, không tính vào hoàn thành / điểm TB">Tự luyện<br><span style="font-weight:400">${e(d.ten.length > 16 ? d.ten.slice(0, 15) + '…' : d.ten)}</span><br><button class="th-giao" data-giao="${e(d.slug)}" data-v="1" title="Bấm để tính bài này là bài đã giao">○ Chưa giao</button></th>`).join('')}
@@ -338,12 +340,12 @@
           ${T.them.map(d => { const x = h.them.find(y => y.de.slug === d.slug); return `<td class="them">${x ? `<span class="o-d ${mau(x.cao)}">${F(x.cao)}</span>` : ''}</td>` }).join('')}
           <td>${h.lam}/${n}</td><td><b>${F(h.tb)}</b></td><td>${h.xu == null ? '' : h.xu >= .5 ? `<span class="th-len">▲ ${F(h.xu)}</span>` : h.xu <= -.5 ? `<span class="th-xuong">▼ ${F(-h.xu)}</span>` : '≈'}</td>
           <td class="nx" contenteditable data-i="${i}">${e(nxEm(h, n))}</td></tr>`).join('')}</tbody></table></div>
-        <p style="font-size:12px;color:#64748b;margin:6px 0 0">Mỗi ô là điểm cao nhất của em trong đợt (rê chuột xem số lần làm, số câu mở Gợi ý AI). Xanh lá ≥ 8 · xanh dương ≥ 6,5 · vàng ≥ 5 · đỏ &lt; 5 · “—” chưa làm. Chỉ bài <b>✓ Đã giao</b> mới tính hoàn thành, điểm TB, tiến bộ; bấm nút dưới tên đợt để đổi Đã giao ↔ Chưa giao (cột “Tự luyện” xám là bài em tự làm thêm, chỉ để khen). Bấm ⚑ để đánh dấu / bỏ đánh dấu em cần quan tâm · ☆ để theo dõi thường xuyên (xem ở mục ⭐ đầu danh sách lớp) · bấm tên em để xem hồ sơ từng bài.</p>`
-        : `<p>Lớp này chưa có bài nào được tính là <b>đã giao</b>. Bài có ô Lớp giao ghi lớp này tự tính là đã giao; bài khác bấm “○ Chưa giao” → đã giao.</p>${T.them.length ? `<p>Bài em tự làm (chưa giao): ${T.them.map(d => `${e(d.ten)} <button class="th-giao" data-giao="${e(d.slug)}" data-v="1">○ Chưa giao → tính đã giao</button>`).join(' · ')}</p>` : ''}`}`;
+        <p style="font-size:12px;color:#64748b;margin:6px 0 0">Mỗi ô là điểm cao nhất của em trong đợt (rê chuột xem số lần làm, số câu mở Gợi ý AI). Xanh lá ≥ 8 · xanh dương ≥ 6,5 · vàng ≥ 5 · đỏ &lt; 5 · “—” chưa làm. Chỉ bài thầy đã <b>xác nhận ✓ Đã giao</b> mới tính hoàn thành, điểm TB, tiến bộ; bấm nút dưới tên đợt để chuyển về Chưa giao (cột “Tự luyện” xám là bài em tự làm thêm, chỉ để khen). Bấm ⚑ để đánh dấu / bỏ đánh dấu em cần quan tâm · ☆ để theo dõi thường xuyên (xem ở mục ⭐ đầu danh sách lớp) · bấm tên em để xem hồ sơ từng bài.</p>`
+        : `<p>Lớp này chưa có bài nào được <b>xác nhận đã giao</b>. Thầy bấm “✓ Xác nhận đã giao” ở danh sách trên (hoặc nút ○ Chưa giao trong Thư viện) — chỉ bài đã xác nhận mới tính hoàn thành, điểm TB, tiến bộ.</p>`}`;
     veQT();
     than.querySelectorAll('[data-giao]').forEach(b => b.onclick = async () => {
       const v = b.dataset.v === '1', d = k.de.find(x => x.slug === b.dataset.giao);
-      if (!confirm(v ? `Tính “${d.ten}” là bài ĐÃ GIAO cho lớp ${k.lop}?\nEm chưa làm sẽ bị tính thiếu bài.` : `Đánh dấu “${d.ten}” là CHƯA GIAO?\nBài này không tính vào hoàn thành / điểm TB; em nào làm thì ghi nhận là tự luyện thêm.`)) return;
+      if (!confirm(v ? `Xác nhận “${d.ten}” là bài ĐÃ GIAO?\nEm chưa làm sẽ bị tính thiếu bài.` : `Đánh dấu “${d.ten}” là CHƯA GIAO?\nBài này không tính vào hoàn thành / điểm TB; em nào làm thì ghi nhận là tự luyện thêm.`)) return;
       b.disabled = true; const r = await st.goi('de-giao', { slug: d.slug, giao: v ? 1 : 0 }).catch(x => ({ ok: false, loi: String(x) }));
       if (!r.ok) { b.disabled = false; alert(r.loi || 'Chưa lưu được — thầy Đăng lại tất cả để máy chủ có chức năng này'); return }
       toast(v ? '✓ Đã tính là bài đã giao' : 'Đã chuyển sang tự luyện (chưa giao)'); tai() });
