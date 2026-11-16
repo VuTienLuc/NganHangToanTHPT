@@ -201,11 +201,24 @@ như phần mềm cũ thì ghi `"khung": "DeThi"` trong file JSON.
 - **Nhiều mã đề một lần**: ra đề nhiều mã (ô Số mã đề) → hộp đăng chọn *Tất cả N mã đề*: mỗi mã một link `…/<đường-dẫn>-101/`, `-102/`…
   (cùng bộ câu thì máy tự đảo thứ tự câu và phương án theo ô Đảo phương án / Đảo ý Đ-S). Tích **link chung** → thêm `…/<đường-dẫn>/`:
   mỗi học sinh mở được chia ngẫu nhiên 1 mã (tải lại vẫn mã đó). Mở lời giải / Đóng / Xoá ở link chung áp cho cả nhóm.
-- **Ẩn đáp án**: bản đăng mạng mã hoá đáp án (SHA-256 có muối), bỏ lời giải; xem nguồn trang không thấy đáp án, máy vẫn chấm đúng.
+- **Ẩn đáp án**: trang làm bài không chứa đáp án, lời giải; máy chủ chấm (xem mục Đăng nhập học sinh).
 - Nút **🌐 Thi trực tuyến** (thanh trên): danh sách đề đã đăng — **Mở lời giải** (đăng bản có đáp án + lời giải ở đúng link),
   **Đóng đề**, **Mở lại**, **Xoá**, QR, chép link; Cài đặt tên dự án, địa chỉ trang, URL nhận điểm.
 - Dữ liệu ở `thi-truc-tuyen/` (đồng bộ GitHub để máy nào cũng đăng được mà không mất đề cũ): `site/` = đúng những gì trên mạng,
   `du_lieu/*.goc.html` = bản gốc có đáp án. Đã cài wrangler riêng: đặt biến `NH_WRANGLER=wrangler`.
+
+## Đăng nhập học sinh / giáo viên (thi trực tuyến)
+- Máy chủ nhỏ trên Cloudflare (Pages Functions + cơ sở dữ liệu D1, miễn phí) tự dựng ở lần **Đăng** đầu tiên.
+- **Học sinh chỉ đăng nhập để làm bài thi**; **bài giảng + mục lục lớp chỉ tài khoản giáo viên** mở được.
+- Thẻ **👥 Tài khoản**: dán từ Excel (*STT ⇥ Họ tên*, ô Lớp; hoặc *Lớp ⇥ STT ⇥ Họ tên*) → **Tạo / cập nhật tài khoản**:
+  tên đăng nhập dạng `10a1-05`, mật khẩu lần đầu 6 số → **In phiếu** cắt phát. Lần đầu đăng nhập học sinh **bắt buộc đổi mật khẩu**.
+  Đặt lại mật khẩu, khoá/mở, xoá; thêm tài khoản giáo viên (không phải đổi mật khẩu). Sai 5 lần → khoá 10 phút.
+- Đăng đề: ô **Giao cho lớp** (trống = mọi lớp) và **Số lượt làm mỗi em** (mặc định 2; 0 = không giới hạn) — sửa sau bằng nút **Lớp/lượt**.
+- Trang làm bài: lớp, STT, họ tên **tự điền theo tài khoản** (không sửa được); máy chủ cấp lượt, **máy chủ chấm** — trang làm bài
+  không chứa đáp án; link chung chia mã đề cố định theo tài khoản (mở mã khác bị đưa về đúng mã).
+- Nút **Điểm** ở mỗi đề: bảng điểm (lớp, STT, họ tên, lần, điểm, thời gian, rời tab), **+1 lượt** cho em cần làm lại,
+  **Xoá lần này**, **Tải bảng điểm (Excel/CSV)**. Học sinh xem điểm các lần ở trang chính `…pages.dev/`.
+- Bí mật (mã quản trị, mật khẩu lần đầu) ở `thi-truc-tuyen/bi_mat.json`, `mat_khau_dau.json` — không đồng bộ GitHub.
 
 ## Bài giảng trực tuyến + mục lục theo lớp
 - Nút **🌐 Thi trực tuyến** → thẻ **📚 Bài giảng** → **＋ Đăng bài giảng…**, nguồn:

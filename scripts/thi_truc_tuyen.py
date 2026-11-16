@@ -11,7 +11,7 @@
     danh_sach.json, cau_hinh.json
 - Đăng bằng wrangler (Node.js):  npx wrangler pages deploy … (lần đầu mở trình duyệt để thầy đăng nhập Cloudflare).
 """
-import os, re, json, time, shutil, secrets, hashlib, unicodedata, subprocess, datetime
+import os, re, json, time, shutil, secrets, subprocess, datetime, urllib.request, urllib.error
 from nh_core import GOC, ten_khong_dau
 
 THU = os.path.join(GOC, "thi-truc-tuyen")
@@ -59,49 +59,49 @@ def goc_url(c=None):
     return (c.get("ten_mien") or f"https://{c['du_an']}.pages.dev").rstrip("/")
 
 
+def chuan_lop(s):
+    """"10a1, 10A2 ;10a3" → "10A1,10A2,10A3" (trống = mọi lớp)."""
+    return ",".join(dict.fromkeys(x.strip().upper() for x in re.split(r"[,;\s]+", s or "") if x.strip()))
+
+
 def lam_slug(s):
     s = ten_khong_dau(s or "", 80).lower()
     s = re.sub(r"[^a-z0-9]+", "-", s).strip("-")[:60]
     return s or "de-thi"
 
 
-# ---------------------------------------------------------------- mã hoá đáp án
-def _so(v):   # = examNumber() của bài kiểm tra
-    s = str(v if v is not None else "").strip()
-    s = re.sub(r"\\[()\[\]]|\$", "", s).replace("{,}", ".").replace("\\,", "").replace(",", ".").replace("−", "-")
-    s = re.sub(r"\s", "", s)
-    if not s or not re.fullmatch(r"[+-]?(?:\d+(?:\.\d*)?|\.\d+)", s):
-        return None
-    return float(s)
-
-
-def chuan_dap_so(v):
-    n = _so(v)
-    if n is None:
-        return unicodedata.normalize("NFC", str(v if v is not None else "").strip())
-    x = round(n * 1e9) / 1e9
-    if x == 0:
-        x = 0.0
-    return ("%.9f" % x).rstrip("0").rstrip(".")
-
-
-def bam(muoi, khoa, gia_tri):
-    return hashlib.sha256(f"{muoi}:{khoa}:{gia_tri}".encode("utf-8")).hexdigest()[:20]
-
-
-JS_THEM = r"""
-function __sha(ascii){function rr(v,a){return (v>>>a)|(v<<(32-a))}var P=Math.pow,M=P(2,32),i,j,r='',w=[],L=ascii.length*8,h=__sha.h=__sha.h||[],k=__sha.k=__sha.k||[],pc=k.length,c={};for(var n=2;pc<64;n++){if(!c[n]){for(i=0;i<313;i+=n)c[i]=n;h[pc]=(P(n,.5)*M)|0;k[pc++]=(P(n,1/3)*M)|0}}ascii+='\x80';while(ascii.length%64-56)ascii+='\x00';for(i=0;i<ascii.length;i++){j=ascii.charCodeAt(i);if(j>>8)return'';w[i>>2]|=j<<((3-i)%4)*8}w[w.length]=((L/M)|0);w[w.length]=L;for(j=0;j<w.length;){var W=w.slice(j,j+=16),o=h;h=h.slice(0,8);for(i=0;i<64;i++){var a=W[i-15],b=W[i-2],A=h[0],E=h[4],t1=h[7]+(rr(E,6)^rr(E,11)^rr(E,25))+((E&h[5])^((~E)&h[6]))+k[i]+(W[i]=(i<16)?W[i]:(W[i-16]+(rr(a,7)^rr(a,18)^(a>>>3))+W[i-7]+(rr(b,17)^rr(b,19)^(b>>>10)))|0),t2=(rr(A,2)^rr(A,13)^rr(A,22))+((A&h[1])^(A&h[2])^(h[1]&h[2]));h=[(t1+t2)|0].concat(h);h[4]=(h[4]+t1)|0}for(i=0;i<8;i++)h[i]=(h[i]+o[i])|0}for(i=0;i<8;i++)for(j=3;j+1;j--){var x=(h[i]>>(j*8))&255;r+=((x<16)?0:'')+x.toString(16)}return r}
-function __bam(d,khoa,v){return __sha(unescape(encodeURIComponent(d.settings.__s+':'+khoa+':'+v))).slice(0,20)}
-function __chuan(v){const n=examNumber(v);if(n===null)return String(v??'').trim().normalize('NFC');let x=Math.round(n*1e9)/1e9;if(x===0)x=0;return x.toFixed(9).replace(/0+$/,'').replace(/\.$/,'')}
-"""
-
-GRADE_MOI = r"""function examGrade(d,answers){const points={mcq:0,tf:0,short:0},right={mcq:0,tf:0,short:0};let blank=0;const rows=d.questions.map((q,i)=>{const a=answers[i];let cents=0,correct=0,answered=false;if(q.type==='mcq'){answered=Number.isInteger(a)&&a>=0&&a<=3;correct=answered&&(q.h?__bam(d,i,a)===q.h:a===q.answer)?1:0;cents=correct*25;}else if(q.type==='tf'){const arr=Array.isArray(a)?a:[];answered=arr.some(x=>typeof x==='boolean');correct=[0,1,2,3].reduce((n,j)=>n+(typeof arr[j]==='boolean'&&(q.h?__bam(d,i+'.'+j,arr[j])===q.h[j]:arr[j]===q.answer[j])?1:0),0);cents=[0,10,25,50,100][correct];}else{answered=typeof a==='string'&&a.trim()!=='';correct=answered&&(q.h?__bam(d,i,__chuan(a))===q.h:examShortEqual(a,q.answer))?1:0;cents=correct*50;}if(!answered)blank++;points[q.type]+=cents;right[q.type]+=q.type==='tf'?(correct===4?1:0):correct;return {index:i,type:q.type,correct,answered,points:cents/100,max:q.type==='mcq'?.25:q.type==='tf'?1:.5};});return {score:(points.mcq+points.tf+points.short)/100,parts:{mcq:points.mcq/100,tf:points.tf/100,short:points.short/100},right,blank,rows};}"""
-
-VA = [  # (tìm, thay) trong mã bài kiểm tra; thiếu một chỗ → không đăng (tránh lộ đáp án)
-    ("correct=q.type==='mcq'?'ABCD'[q.answer]:", "correct=q.h?'(thầy chưa công bố)':q.type==='mcq'?'ABCD'[q.answer]:"),
+# ---------------------------------------------------------------- vá bài kiểm tra cho chế độ đăng nhập
+VA = [  # (tìm, thay) trong mã bài kiểm tra; thiếu một chỗ → không đăng (tránh lộ đáp án / hỏng chấm)
+    ("correct=q.type==='mcq'?'ABCD'[q.answer]:", "correct=q.answer==null?'(thầy chưa công bố)':q.type==='mcq'?'ABCD'[q.answer]:"),
     ("latex(q.solution||'Chưa có lời giải.',q,'solution',false)",
-     "latex(q.solution||(q.h?'Thầy sẽ công bố lời giải sau khi kết thúc bài thi.':'Chưa có lời giải.'),q,'solution',false)"),
+     "latex(q.solution||(q.answer==null?'Thầy sẽ công bố lời giải sau khi kết thúc bài thi.':'Chưa có lời giải.'),q,'solution',false)"),
+    ("$('loginForm').onsubmit=e=>{e.preventDefault();try{$('loginError').textContent='';enter();}catch(err){$('loginError').textContent=err.message;}};",
+     "$('loginForm').onsubmit=async e=>{e.preventDefault();$('loginError').textContent='';try{const k=await __goi('bat-dau',{de:__DE});"
+     "if(!k.ok){let m=k.loi||'Chưa được làm bài.';if(k.het){try{const r=await __goi('ket-qua?de='+encodeURIComponent(__DE));"
+     "if(r.ds&&r.ds.length)m+=' Điểm các lần: '+r.ds.map(x=>'lần '+x.lan+': '+(x.cham?x.cham.score.toFixed(2).replace('.',','):'—')).join(' · ')+'.'}catch(_){}}"
+     "$('loginError').textContent=m;return}if(k.thong_bao)notice(k.thong_bao);enter();}"
+     "catch(err){$('loginError').textContent=err.message||'Lỗi mạng — thử lại.';}};"),
+    ("function showResult(){",
+     "function showResult(){const k=JSON.stringify(attempt.answers),at=attempt;if(at.daNopMayChu&&__CHAM[k])return __showResult0();"
+     "__goi('nop',{de:__DE,answers:attempt.answers,chuyen_tab:attempt.tabSwitchCount||0,thoi_gian:Math.floor(examElapsed(attempt,attempt.submittedAt,limit)/1000)})"
+     ".then(j=>{if(j.ok&&j.cham){__CHAM[k]=j.cham;at.daNopMayChu=true;save();}else notice(j.loi||'Máy chủ chưa nhận bài.');__showResult0();})"
+     ".catch(()=>{notice('Chưa gửi được bài lên máy chủ — kiểm tra mạng rồi tải lại trang (bài vẫn được giữ trên máy).');__showResult0();});}\n function __showResult0(){"),
+    ("function examGrade(", "function __examGrade0("),
 ]
+
+JS_DANG_NHAP = r"""
+const __DE=decodeURIComponent(location.pathname.split('/')[1]||''),__CHAM={};
+async function __goi(duong,du_lieu){const r=await fetch('/api/'+duong,du_lieu?{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify(du_lieu),credentials:'same-origin'}:{credentials:'same-origin'});if(r.status===401){location.href='/dang-nhap/?ve='+encodeURIComponent(location.pathname);throw Error('Cần đăng nhập lại.')}return r.json()}
+function examGrade(d,answers){const c=__CHAM[JSON.stringify(answers)];if(c)return c;if(d.questions.every(q=>q.answer!=null))return __examGrade0(d,answers);
+ return {score:0,parts:{mcq:0,tf:0,short:0},right:{mcq:0,tf:0,short:0},blank:0,rows:d.questions.map((q,i)=>({index:i,type:q.type,correct:0,answered:false,points:0,max:q.type==='mcq'?.25:q.type==='tf'?1:.5}))};}
+async function __khoiDong(){
+ try{const t=await __goi('toi');if(t.ok){const dat=(id,v)=>{const e=document.getElementById(id);if(e){e.value=v;e.readOnly=true;e.style.background='#f1f5f9'}};
+  dat('studentClass',t.lop||'GV');dat('studentId',String(t.stt||t.tk));dat('studentName',t.ho_ten||t.tk);
+  const m=document.querySelector('#login .muted');if(m)m.innerHTML='Đăng nhập: <b>'+(t.ho_ten||t.tk)+'</b> ('+t.tk+'). Bấm nút bên dưới để bắt đầu — số lượt làm do thầy quy định. <a href="/">Trang chính</a> · <a href="#" id="__thoat">Đăng xuất</a>';
+  const th=document.getElementById('__thoat');if(th)th.onclick=async e=>{e.preventDefault();await __goi('dang-xuat',{});location.href='/dang-nhap/'}}}catch(e){}
+ try{const k=await __goi('ket-qua?de='+encodeURIComponent(__DE));(k.ds||[]).forEach(x=>{if(x.cham)__CHAM[JSON.stringify(x.tra_loi)]=x.cham})}catch(e){}
+}
+"""
 VA_ID = ("id=examFingerprint(d)", "id=(d.settings.studentExam&&d.settings.studentExam.examId)||examFingerprint(d)")
 KHOI_DL = re.compile(r'(<script type="application/json" id="exam-data">)(.*?)(</script>)', re.S)
 
@@ -123,7 +123,8 @@ def _thay_ham(html, ten, moi):
 
 
 def ban_truc_tuyen(html, slug, an_dap_an=True):
-    """HTML bài kiểm tra gốc → bản đăng mạng (mã hoá đáp án, bỏ lời giải). Trả (html, số câu)."""
+    """HTML bài kiểm tra gốc → bản đăng mạng có đăng nhập: tự điền học sinh theo tài khoản, xin lượt ở máy chủ,
+    nộp bài để MÁY CHỦ chấm. an_dap_an: bỏ hẳn đáp án + lời giải khỏi trang (trang không còn đáp án). Trả (html, số câu)."""
     m = KHOI_DL.search(html)
     if not m:
         raise RuntimeError("Không thấy dữ liệu đề (exam-data) trong bài kiểm tra")
@@ -131,27 +132,18 @@ def ban_truc_tuyen(html, slug, an_dap_an=True):
     d.setdefault("settings", {}).setdefault("studentExam", {})["examId"] = slug
     if VA_ID[0] in html:
         html = html.replace(VA_ID[0], VA_ID[1], 1)
+    for a, b in VA:
+        if a not in html:
+            raise RuntimeError("Bài kiểm tra khác phiên bản (không tìm thấy: " + a[:40] + "…) — chưa đăng để tránh lỗi chấm/lộ đáp án.")
+        html = html.replace(a, b, 1)
     if an_dap_an:
-        for a, b in VA:
-            if a not in html:
-                raise RuntimeError("Không tìm thấy chỗ cần sửa để ẩn đáp án (ứng dụng trình chiếu đã đổi phiên bản) — chưa đăng để tránh lộ đáp án.")
-            html = html.replace(a, b)
-        muoi = secrets.token_hex(8)
-        d["settings"]["__s"] = muoi
-        for i, q in enumerate(d["questions"]):
-            if q["type"] == "mcq":
-                q["h"] = bam(muoi, i, q["answer"])
-            elif q["type"] == "tf":
-                q["h"] = [bam(muoi, f"{i}.{j}", "true" if v else "false") for j, v in enumerate(q["answer"])]
-            else:
-                q["h"] = bam(muoi, i, chuan_dap_so(q["answer"]))
+        for q in d["questions"]:
             q["answer"] = None
             q["solution"] = ""
             for k in [k for k in (q.get("figures") or {}) if k.startswith("solution:")]:
                 del q["figures"][k]
-        html = _thay_ham(html, "examGrade", GRADE_MOI)
-        i = html.rfind("examRuntime();")
-        html = html[:i] + JS_THEM + "\n" + html[i:]
+    i = html.rfind("examRuntime();")
+    html = html[:i] + JS_DANG_NHAP + "\n__khoiDong().then(()=>examRuntime());" + html[i + len("examRuntime();"):]
     for q in d["questions"]:
         for k in ("ma", "ma_dang", "ten_dang"):
             q.pop(k, None)
@@ -162,6 +154,12 @@ def ban_truc_tuyen(html, slug, an_dap_an=True):
     return html, len(d["questions"])
 
 
+def khoa_dap_an(html_goc):
+    """Đáp án để máy chủ chấm: [{type, answer}] theo đúng thứ tự câu."""
+    d = json.loads(KHOI_DL.search(html_goc).group(2))
+    return [{"type": q["type"], "answer": q["answer"]} for q in d["questions"]]
+
+
 # ---------------------------------------------------------------- trang phụ
 TRANG = """<!DOCTYPE html><html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex,nofollow"><title>{tieu}</title><style>body{{margin:0;min-height:100vh;display:grid;place-items:center;
@@ -170,8 +168,54 @@ padding:34px 38px;max-width:520px;box-shadow:0 12px 40px rgba(30,58,138,.12);tex
 p{{margin:6px 0;color:#4b5563}}</style></head><body><div class="the"><h1>{tieu}</h1>{noi}</div></body></html>"""
 
 
+KIEU = """<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow">
+<style>body{margin:0;min-height:100vh;font:16px/1.55 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:#eef3f9;color:#1f2937}
+.vo{max-width:560px;margin:0 auto;padding:7vh 16px}.the{background:#fff;border-radius:18px;padding:26px 28px;box-shadow:0 12px 40px rgba(30,58,138,.12)}
+h1{font-size:22px;color:#1e3a8a;margin:0 0 4px}.phu{color:#6b7280;margin:0 0 16px;font-size:14px}label{display:block;font-weight:600;margin:10px 0 4px}
+input{width:100%;box-sizing:border-box;padding:11px 12px;font-size:16px;border:1px solid #cbd5e1;border-radius:10px}
+button{width:100%;margin-top:16px;padding:12px;font-size:16px;font-weight:700;border:0;border-radius:10px;background:#1e3a8a;color:#fff;cursor:pointer}
+button:disabled{opacity:.6}.loi{color:#b91c1c;min-height:1.4em;margin:8px 0 0}a{color:#1d4ed8}
+.de{display:flex;gap:10px;align-items:center;padding:12px 14px;border:1px solid #e5e7eb;border-radius:12px;margin:8px 0;text-decoration:none;color:#1f2937}
+.de:hover{background:#f8fafc}.de b{flex:1}.nho{font-size:12.5px;color:#6b7280;white-space:nowrap}</style>"""
+
+TRANG_DN = """<!DOCTYPE html><html lang="vi"><head>""" + KIEU + """<title>Đăng nhập — Toán thầy Lực</title></head><body><div class="vo"><div class="the">
+<div id="dn"><h1>Đăng nhập</h1><p class="phu">Thầy Vũ Tiến Lực – Trường THPT Nguyễn Hữu Cảnh. Dùng tài khoản thầy cấp trên phiếu.</p>
+<form id="f1"><label>Tên đăng nhập</label><input id="tk" autocomplete="username" autocapitalize="none" required>
+<label>Mật khẩu</label><input id="mk" type="password" autocomplete="current-password" required><button>Đăng nhập</button><p class="loi" id="l1"></p></form></div>
+<div id="dm" hidden><h1>Đổi mật khẩu</h1><p class="phu">Lần đầu đăng nhập: em đặt mật khẩu riêng (ít nhất 6 ký tự) và ghi nhớ. Quên thì báo thầy đặt lại.</p>
+<form id="f2"><label>Mật khẩu hiện tại (trên phiếu)</label><input id="cu" type="password" autocomplete="current-password" required>
+<label>Mật khẩu mới</label><input id="moi" type="password" autocomplete="new-password" minlength="6" required>
+<label>Nhập lại mật khẩu mới</label><input id="moi2" type="password" autocomplete="new-password" minlength="6" required><button>Lưu mật khẩu</button><p class="loi" id="l2"></p></form></div>
+</div></div><script>
+const q=new URLSearchParams(location.search),ve=(q.get('ve')||'/').startsWith('/')?(q.get('ve')||'/'):'/',$=id=>document.getElementById(id);
+const goi=(d,b)=>fetch('/api/'+d,{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify(b),credentials:'same-origin'}).then(r=>r.json());
+function doiMk(){$('dn').hidden=true;$('dm').hidden=false;if($('mk').value)$('cu').value=$('mk').value;$('moi').focus()}
+if(q.get('doi'))doiMk();
+$('f1').onsubmit=async e=>{e.preventDefault();const b=e.submitter||e.target.querySelector('button');b.disabled=true;$('l1').textContent='';
+ try{const r=await goi('dang-nhap',{tk:$('tk').value.trim(),mk:$('mk').value});if(!r.ok){$('l1').textContent=r.loi;return}
+  if(r.doi_mk)return doiMk();location.href=ve}catch(x){$('l1').textContent='Lỗi mạng — thử lại.'}finally{b.disabled=false}};
+$('f2').onsubmit=async e=>{e.preventDefault();$('l2').textContent='';if($('moi').value!==$('moi2').value){$('l2').textContent='Hai lần nhập mật khẩu mới chưa khớp.';return}
+ const r=await goi('doi-mk',{cu:$('cu').value,moi:$('moi').value});if(!r.ok){$('l2').textContent=r.loi;return}location.href=ve};
+</script></body></html>"""
+
+TRANG_CHU = """<!DOCTYPE html><html lang="vi"><head>""" + KIEU + """<title>Toán — thầy Vũ Tiến Lực</title></head><body><div class="vo"><div class="the">
+<h1>Trang học Toán</h1><p class="phu">Thầy Vũ Tiến Lực – Trường THPT Nguyễn Hữu Cảnh</p><div id="nd">Đang tải…</div></div></div><script>
+const LOP=__LOP__,nd=document.getElementById('nd'),e=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+fetch('/api/toi',{credentials:'same-origin'}).then(r=>r.json()).then(t=>{
+ if(!t.ok){nd.innerHTML='<p>Học sinh đăng nhập bằng tài khoản thầy cấp để làm bài kiểm tra.</p><a href="/dang-nhap/"><button>Đăng nhập</button></a>';return}
+ if(t.doi_mk){location.href='/dang-nhap/?doi=1';return}
+ let h='<p>Xin chào <b>'+e(t.ho_ten||t.tk)+'</b>'+(t.lop?' — lớp '+e(t.lop):'')+' · <a href="#" id="thoat">Đăng xuất</a></p>';
+ if(t.vai==='gv'){h+='<h3>Bài giảng</h3>'+(LOP.length?LOP.map(l=>'<a class="de" href="/toan'+l+'/"><b>Toán '+l+'</b><span class="nho">mục lục</span></a>').join(''):'<p class="phu">Chưa có bài giảng.</p>')}
+ else{h+='<h3>Bài kiểm tra của em</h3>'+((t.de||[]).length?t.de.map(x=>'<a class="de" href="/'+e(x.slug)+'/"><b>'+e(x.ten)+'</b><span class="nho">'+
+  (x.da_lam?'Đã làm '+x.da_lam+' lần'+(x.cao_nhat!=null?' · cao nhất '+Number(x.cao_nhat).toFixed(2).replace('.',','):''):'Chưa làm')+(x.con_lai!=null?' · còn '+x.con_lai+' lượt':'')+(x.cong_bo?' · có lời giải':'')+'</span></a>').join(''):'<p class="phu">Hiện chưa có bài kiểm tra nào cho lớp em.</p>')}
+ nd.innerHTML=h;document.getElementById('thoat').onclick=async ev=>{ev.preventDefault();await fetch('/api/dang-xuat',{method:'POST'});location.href='/dang-nhap/'};
+}).catch(()=>{nd.innerHTML='<p>Không kết nối được máy chủ.</p>'});
+</script></body></html>"""
+
+
 def trang_chu():
-    return TRANG.format(tieu="Trang thi Toán", noi="<p>Thầy Vũ Tiến Lực – Trường THPT Nguyễn Hữu Cảnh</p><p>Mở đúng đường link đề thi thầy gửi để làm bài.</p>")
+    lop = sorted({int(x["lop"]) for x in danh_sach() if x.get("loai") == "bai_giang" and x.get("trang_thai") == "hien" and x.get("lop")})
+    return TRANG_CHU.replace("__LOP__", json.dumps(lop))
 
 
 def trang_dong(ten):
@@ -180,8 +224,8 @@ def trang_dong(ten):
 
 def ghi_site():
     os.makedirs(SITE, exist_ok=True)
-    if not any(x.get("loai") == "bai_giang" for x in danh_sach()):
-        open(os.path.join(SITE, "index.html"), "w", encoding="utf-8").write(trang_chu())
+    open(os.path.join(SITE, "index.html"), "w", encoding="utf-8").write(trang_chu())
+    _dat_trang("dang-nhap", TRANG_DN)
     open(os.path.join(SITE, "_headers"), "w", encoding="utf-8").write(
         "/*\n  X-Robots-Tag: noindex, nofollow\n  Cache-Control: no-cache\n")
     open(os.path.join(SITE, "404.html"), "w", encoding="utf-8").write(
@@ -194,7 +238,7 @@ def _dat_trang(slug, noi_dung):
 
 
 # ---------------------------------------------------------------- tạo / đổi trạng thái
-def them_de(slug, ten, html_goc, an_dap_an=True, phut=None, ghi_de=False):
+def them_de(slug, ten, html_goc, an_dap_an=True, phut=None, ghi_de=False, lop_giao="", so_luot=2):
     slug = lam_slug(slug or ten)
     ds = danh_sach()
     if not ghi_de:
@@ -212,7 +256,8 @@ def them_de(slug, ten, html_goc, an_dap_an=True, phut=None, ghi_de=False):
     ghi_site(); _dat_trang(slug, html)
     ds = [x for x in ds if x["slug"] != slug or x.get("loai") == "bai_giang"]
     ds.insert(0, {"slug": slug, "ten": ten, "tao_luc": datetime.datetime.now().strftime("%d/%m/%Y %H:%M"),
-                  "trang_thai": "dang_mo" if an_dap_an else "da_cong_bo", "so_cau": so, "phut": phut})
+                  "trang_thai": "dang_mo" if an_dap_an else "da_cong_bo", "so_cau": so, "phut": phut,
+                  "lop_giao": chuan_lop(lop_giao), "so_luot": int(so_luot)})
     luu_ds(ds)
     return slug
 
@@ -229,7 +274,7 @@ def trang_nhom(slug, ten, cac_con):
     return TRANG_NHOM.format(tieu=ten.replace("<", "&lt;"), ds=json.dumps(cac_con), slug=slug)
 
 
-def them_nhom(slug, ten, cac_con):
+def them_nhom(slug, ten, cac_con, lop_giao="", so_luot=2):
     slug = lam_slug(slug or ten)
     ds = danh_sach(); goc, n = slug, 2
     while any(x["slug"] == slug and x.get("loai") != "bai_giang" for x in ds):
@@ -239,7 +284,8 @@ def them_nhom(slug, ten, cac_con):
         if x["slug"] in cac_con:
             x["nhom"] = slug
     ds.insert(0, {"slug": slug, "ten": ten, "tao_luc": datetime.datetime.now().strftime("%d/%m/%Y %H:%M"),
-                  "trang_thai": "dang_mo", "loai": "nhom", "con": cac_con, "so_cau": len(cac_con)})
+                  "trang_thai": "dang_mo", "loai": "nhom", "con": cac_con, "so_cau": len(cac_con),
+                  "lop_giao": chuan_lop(lop_giao), "so_luot": int(so_luot)})
     luu_ds(ds)
     return slug
 
@@ -316,12 +362,7 @@ def ghi_muc_luc():
             f'<span class="ten">{x["ten"].replace("<", "&lt;")}</span><span class="ngay">{x["tao_luc"][:10]}</span></a>' for x in bg) \
             or '<p class="phu">Chưa có bài giảng.</p>'
         _dat_trang(_lop_slug(lop), TRANG_LOP.format(lop=lop, ds=dong))
-    # trang chủ: link các mục lục
-    if cac_lop:
-        lk = " · ".join(f'<a href="{_lop_slug(l)}/">Toán {l}</a>' for l in cac_lop)
-        open(os.path.join(SITE, "index.html"), "w", encoding="utf-8").write(
-            TRANG.format(tieu="Trang học Toán", noi=f"<p>Thầy Vũ Tiến Lực – Trường THPT Nguyễn Hữu Cảnh</p><p><b>Bài giảng:</b> {lk}</p>"
-                                                   "<p>Đề thi: mở đúng đường link thầy gửi.</p>"))
+    open(os.path.join(SITE, "index.html"), "w", encoding="utf-8").write(trang_chu())
 
 
 def them_bai_giang(slug, ten, lop, kieu, du_lieu, ghi_de=False, nguon=""):
@@ -438,10 +479,230 @@ def co_node():
     return bool(shutil.which(WRANGLER[0], path=_env()["PATH"]))
 
 
+MAY_CHU = os.path.join(os.path.dirname(os.path.abspath(__file__)), "may_chu")   # mã máy chủ (Functions + schema)
+P_BM = os.path.join(THU, "bi_mat.json")       # mã quản trị + khoá phiên (KHÔNG đồng bộ GitHub)
+TEN_DB = "thi-toan-db"
+PHIEN_BAN_SCHEMA = 1
+
+
+def _luu_ch(c):
+    json.dump(c, open(P_CH, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
+
+
+def bi_mat(tao=False):
+    try:
+        b = json.load(open(P_BM, encoding="utf-8"))
+    except Exception:
+        b = {}
+    if tao or not b.get("admin"):
+        b = {"admin": secrets.token_urlsafe(32), "phien": secrets.token_urlsafe(32), "chua_dat": True}
+        os.makedirs(THU, exist_ok=True); json.dump(b, open(P_BM, "w"), indent=1)
+    return b
+
+
+def _chep_may_chu():
+    """Chép functions/ + schema.sql + wrangler.toml vào thi-truc-tuyen/ (thư mục chạy wrangler)."""
+    c = cau_hinh()
+    shutil.rmtree(os.path.join(THU, "functions"), ignore_errors=True)
+    shutil.copytree(os.path.join(MAY_CHU, "functions"), os.path.join(THU, "functions"))
+    shutil.copy(os.path.join(MAY_CHU, "schema.sql"), os.path.join(THU, "schema.sql"))
+    toml = (f'name = "{c["du_an"]}"\npages_build_output_dir = "./site"\ncompatibility_date = "2024-09-23"\n\n'
+            f'[[d1_databases]]\nbinding = "DB"\ndatabase_name = "{TEN_DB}"\ndatabase_id = "{c.get("d1_id") or "chua-co"}"\n')
+    open(os.path.join(THU, "wrangler.toml"), "w", encoding="utf-8").write(toml)
+
+
+def _dat_bi_mat(c, in_ra):
+    b = bi_mat()
+    for ten, gt in (("ADMIN_TOKEN", b["admin"]), ("SESSION_SECRET", b["phien"])):
+        p = subprocess.run(WRANGLER + ["pages", "secret", "put", ten, "--project-name", c["du_an"]], cwd=THU, env=_env(),
+                           input=gt + "\n", capture_output=True, text=True, errors="ignore", timeout=180)
+        if p.returncode != 0:
+            raise RuntimeError(f"Chưa đặt được khoá {ten}: {(p.stdout + p.stderr)[-300:]}")
+    b.pop("chua_dat", None); json.dump(b, open(P_BM, "w"), indent=1)
+    in_ra("   đã đặt mã quản trị và khoá phiên đăng nhập trên Cloudflare")
+
+
+def chuan_bi_may_chu(c, in_ra):
+    """Lần đầu: tạo cơ sở dữ liệu D1, bảng, khoá bí mật. Các lần sau bỏ qua phần đã có."""
+    if not c.get("d1_id"):
+        in_ra(f"Tạo cơ sở dữ liệu tài khoản/điểm \"{TEN_DB}\" (chỉ lần đầu)…")
+        rc, ra = _chay(["d1", "create", TEN_DB], in_ra, 180)
+        m = re.search(r'database_id\s*=\s*"([0-9a-f-]{36})"', ra) or re.search(r'"database_id"\s*:\s*"([0-9a-f-]{36})"', ra)
+        if not m:
+            rc, ra = _chay(["d1", "list", "--json"], lambda *_: None, 120)
+            try:
+                for x in json.loads(ra[ra.find("["):ra.rfind("]") + 1]):
+                    if x.get("name") == TEN_DB:
+                        m = re.match(r"(.*)", x.get("uuid") or x.get("database_id") or "")
+            except Exception:
+                pass
+        if not m or not m.group(1):
+            raise RuntimeError("Chưa tạo được cơ sở dữ liệu D1 (xem nhật ký).")
+        c["d1_id"] = m.group(1); _luu_ch(c)
+    _chep_may_chu()
+    if c.get("schema") != PHIEN_BAN_SCHEMA:
+        in_ra("Tạo bảng tài khoản, đề, bài làm…")
+        rc, ra = _chay(["d1", "execute", TEN_DB, "--remote", "--file", "schema.sql", "--yes"], in_ra, 240)
+        if rc != 0:
+            raise RuntimeError("Chưa tạo được bảng dữ liệu (xem nhật ký).")
+        c["schema"] = PHIEN_BAN_SCHEMA; _luu_ch(c)
+    if bi_mat().get("chua_dat"):
+        _dat_bi_mat(c, in_ra)
+
+
+def goi(duong, du_lieu=None, lan=0):
+    """Gọi API quản trị trên trang (x-admin)."""
+    url = goc_url() + "/api/admin/" + duong
+    req = urllib.request.Request(url, data=json.dumps(du_lieu or {}).encode(), method="POST",
+                                 headers={"content-type": "application/json", "x-admin": bi_mat()["admin"],
+                                          "user-agent": "NganHangCaNhan"})
+    try:
+        with urllib.request.urlopen(req, timeout=40) as r:
+            return json.loads(r.read().decode())
+    except urllib.error.HTTPError as e:
+        try:
+            k = json.loads(e.read().decode())
+        except Exception:
+            k = {"ok": False, "loi": f"HTTP {e.code}"}
+        if e.code == 403 and lan == 0:
+            k["loi"] = ("Mã quản trị trên máy này khác mã trên Cloudflare (đã đăng từ máy khác?). "
+                        "Bấm \"Đăng lại tất cả\" để đặt lại mã rồi thử lại.")
+            bi_mat(tao=True)
+        return k
+    except Exception as e:
+        return {"ok": False, "loi": f"Chưa kết nối được trang ({e}). Đã đăng lên Cloudflare chưa?"}
+
+
+def dong_bo_de(in_ra=print):
+    """Đẩy danh sách đề (lớp được giao, số lượt, nhóm mã, ĐÁP ÁN) lên cơ sở dữ liệu để máy chủ chấm."""
+    ds = [x for x in danh_sach() if x.get("loai") != "bai_giang"]
+    loi = 0
+    for x in ds:
+        g = {"slug": x["slug"], "ten": x["ten"], "lop": x.get("lop_giao", ""), "so_luot": int(x.get("so_luot", 2)),
+             "nhom": x.get("nhom", ""), "trang_thai": x.get("trang_thai", "dang_mo")}
+        if x.get("loai") == "nhom":
+            g["con"] = x.get("con", [])
+        else:
+            p = os.path.join(DL, x["slug"] + ".goc.html")
+            if os.path.exists(p):
+                g["khoa"] = khoa_dap_an(open(p, encoding="utf-8").read())
+        k = goi("de/luu", g)
+        if not k.get("ok"):
+            loi += 1; in_ra(f"   ✗ đề {x['slug']}: {k.get('loi')}")
+    in_ra(f"   đồng bộ {len(ds) - loi}/{len(ds)} đề lên máy chủ chấm")
+    return loi == 0
+
+
+# ---------------------------------------------------------------- tài khoản học sinh / giáo viên
+P_MK = os.path.join(THU, "mat_khau_dau.json")   # mật khẩu lần đầu để in phiếu (KHÔNG đồng bộ GitHub)
+
+
+def _mk_dau():
+    try:
+        return json.load(open(P_MK, encoding="utf-8"))
+    except Exception:
+        return {}
+
+
+def _luu_mk_dau(m):
+    os.makedirs(THU, exist_ok=True); json.dump(m, open(P_MK, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
+
+
+def mk_moi():
+    return "".join(str(secrets.randbelow(10)) for _ in range(6))
+
+
+def ten_tk(lop, stt):
+    return f"{re.sub(r'[^a-z0-9]', '', ten_khong_dau(lop, 20).lower())}-{int(stt):02d}"
+
+
+def doc_danh_sach_hs(van_ban, lop_mac_dinh=""):
+    """Dán từ Excel: "Lớp  STT  Họ tên" hoặc "STT  Họ tên" (lớp lấy ô Lớp). Bỏ dòng tiêu đề/trống."""
+    ra, loi = [], []
+    for i, dong in enumerate((van_ban or "").splitlines(), 1):
+        o = [x.strip() for x in re.split(r"\t|;|\s{2,}", dong.strip()) if x.strip()]
+        if not o:
+            continue
+        if len(o) >= 3 and re.fullmatch(r"\d{1,2}[A-Za-zĐđ]\w*", o[0]) and o[1].isdigit():
+            lop, stt, ten = o[0], o[1], " ".join(o[2:])
+        elif len(o) >= 2 and o[0].isdigit():
+            lop, stt, ten = lop_mac_dinh, o[0], " ".join(o[1:])
+        else:
+            if i > 1 or not re.search(r"(?i)stt|họ|ten|lớp", dong):
+                loi.append(f"dòng {i}: {dong[:40]}")
+            continue
+        if not lop:
+            loi.append(f"dòng {i}: thiếu lớp"); continue
+        ra.append({"ten": ten_tk(lop, stt), "ho_ten": re.sub(r"\s+", " ", ten), "lop": lop.strip().upper(), "stt": int(stt), "vai": "hs"})
+    return ra, loi
+
+
+def nhap_hs(van_ban, lop_mac_dinh=""):
+    ds, loi = doc_danh_sach_hs(van_ban, lop_mac_dinh)
+    if not ds:
+        return {"ok": False, "loi": "Không đọc được dòng nào (cần: STT ⇥ Họ tên, hoặc Lớp ⇥ STT ⇥ Họ tên).", "dong_loi": loi}
+    co = {x["ten"] for x in (goi("tk/ds").get("ds") or [])}
+    mk = _mk_dau()
+    for x in ds:
+        if x["ten"] not in co:            # tài khoản mới → mật khẩu lần đầu; có rồi → chỉ cập nhật tên/lớp
+            x["mk"] = mk[x["ten"]] = mk_moi()
+    k = goi("tk/nhap", {"ds": ds})
+    if not k.get("ok"):
+        return k
+    _luu_mk_dau(mk)
+    return {"ok": True, "moi": sum(1 for x in ds if x.get("mk")), "cap_nhat": sum(1 for x in ds if not x.get("mk")), "dong_loi": loi}
+
+
+def dat_lai_mk(ten):
+    mk = mk_moi()
+    t = next((x for x in (goi("tk/ds").get("ds") or []) if x["ten"] == ten), None)
+    if not t:
+        return {"ok": False, "loi": "Không có tài khoản " + ten}
+    k = goi("tk/nhap", {"ds": [{**t, "mk": mk}]})
+    if k.get("ok"):
+        m = _mk_dau(); m[ten] = mk; _luu_mk_dau(m)
+        return {"ok": True, "mk": mk}
+    return k
+
+
+def them_gv(ten, ho_ten, mk):
+    ten = re.sub(r"[^a-z0-9._-]", "", (ten or "").lower())
+    if not ten or len(mk or "") < 6:
+        return {"ok": False, "loi": "Tên đăng nhập (chữ thường, số) và mật khẩu ít nhất 6 ký tự."}
+    k = goi("tk/nhap", {"ds": [{"ten": ten, "ho_ten": ho_ten or ten, "lop": "", "stt": 0, "vai": "gv", "mk": mk}]})
+    return k
+
+
+PHIEU = """<!DOCTYPE html><html lang="vi"><head><meta charset="utf-8"><title>Phiếu tài khoản</title><style>
+@page{{size:A4;margin:10mm}}body{{font:13px/1.45 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;margin:0}}
+.luoi{{display:grid;grid-template-columns:1fr 1fr;gap:0}}.p{{border:1px dashed #94a3b8;padding:10px 12px;break-inside:avoid;height:46mm;box-sizing:border-box}}
+.p h3{{margin:0 0 4px;font-size:13.5px;color:#1e3a8a}}.p .u{{font-size:11.5px;color:#475569;word-break:break-all}}
+.p b.k{{font:700 15px ui-monospace,Menlo,monospace;letter-spacing:.5px}}.p .g{{font-size:11px;color:#64748b;margin-top:4px}}
+.nut{{position:fixed;top:8px;right:8px}}@media print{{.nut{{display:none}}}}</style></head><body>
+<button class="nut" onclick="print()">In phiếu</button><div class="luoi">{the}</div></body></html>"""
+
+
+def phieu_tai_khoan(lop=""):
+    ds = goi("tk/ds").get("ds") or []
+    mk = _mk_dau(); url = goc_url()
+    the = []
+    for x in ds:
+        if x["vai"] != "hs" or (lop and x["lop"].upper() != lop.upper()):
+            continue
+        m = mk.get(x["ten"]) if x.get("doi_mk") else None
+        dong_mk = (f'<div>Mật khẩu lần đầu: <b class="k">{m}</b></div>' if m
+                   else '<div>Mật khẩu: <i>em đã tự đổi — quên thì báo thầy đặt lại</i></div>')
+        the.append(f'<div class="p"><h3>Trang học Toán — thầy Vũ Tiến Lực</h3><div class="u">{url}</div>'
+                   f'<div>Lớp <b>{x["lop"]}</b> · STT <b>{x["stt"]}</b> · {x["ho_ten"]}</div>'
+                   f'<div>Tên đăng nhập: <b class="k">{x["ten"]}</b></div>' + dong_mk +
+                   '<div class="g">Lần đầu đăng nhập máy sẽ yêu cầu đổi mật khẩu. Không cho bạn khác mượn tài khoản.</div></div>')
+    return PHIEU.format(the="".join(the) or "<p>Chưa có tài khoản học sinh.</p>")
+
+
 def dang(in_ra=print):
     if not co_node():
         raise RuntimeError("Máy chưa có Node.js (lệnh npx). Cài bản LTS ở https://nodejs.org rồi bấm Đăng lại.")
-    c = cau_hinh(); ghi_site()
+    c = cau_hinh(); ghi_site(); ghi_muc_luc()
     in_ra("Kiểm tra đăng nhập Cloudflare…")
     rc, ra = _chay(["whoami"], lambda *_: None, 120)
     if rc != 0 or "not authenticated" in ra.lower() or "You are not" in ra:
@@ -453,20 +714,28 @@ def dang(in_ra=print):
         in_ra(f"Tạo dự án Cloudflare Pages \"{c['du_an']}\" (chỉ lần đầu)…")
         rc, ra = _chay(["pages", "project", "create", c["du_an"], "--production-branch", "main"], in_ra, 180)
         m = re.search(r"https://[a-z0-9-]+\.pages\.dev", ra)
-        if rc == 0 or "already exists" in ra.lower() or "A project with this name already exists" in ra:
+        if rc == 0 or "already exists" in ra.lower():
             c["da_tao_du_an"] = True
             if m and not c.get("ten_mien"):
                 c["ten_mien"] = m.group(0)
-            json.dump(c, open(P_CH, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
+            _luu_ch(c)
         else:
             raise RuntimeError("Chưa tạo được dự án Cloudflare Pages (xem nhật ký). Có thể đổi tên dự án khác rồi thử lại.")
-    in_ra("Đang đưa đề lên Cloudflare Pages…")
+    chuan_bi_may_chu(c, in_ra)
+    in_ra("Đang đưa trang lên Cloudflare Pages…")
     rc, ra = _chay(["pages", "deploy", SITE, "--project-name", c["du_an"], "--branch", "main", "--commit-dirty=true"], in_ra, 600)
     if rc != 0:
         raise RuntimeError("Đăng chưa thành công (xem nhật ký phía trên).")
     m = re.search(r"https://[a-z0-9]+\.([a-z0-9-]+)\.pages\.dev", ra)
     if m and not c.get("ten_mien"):
-        c["ten_mien"] = f"https://{m.group(1)}.pages.dev"
-        json.dump(c, open(P_CH, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
+        c["ten_mien"] = f"https://{m.group(1)}.pages.dev"; _luu_ch(c)
+    for lan in range(6):                      # trang mới cần vài giây để chạy
+        time.sleep(3 if lan else 5)
+        if goi("ping").get("ok"):
+            break
+    else:
+        in_ra("   ⚠ máy chủ chưa trả lời — đợi 1 phút rồi bấm \"Đăng lại tất cả\" để đồng bộ đề.")
+        return goc_url(c)
+    dong_bo_de(in_ra)
     in_ra(f"✓ Đã đăng. Trang gốc: {goc_url(c)}")
     return goc_url(c)

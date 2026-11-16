@@ -260,6 +260,36 @@ class XuLy(BaseHTTPRequestHandler):
                     except Exception as e:
                         return self.gui(200, {"ok": False, "loi": str(e), "nhat_ky": "\n".join(nk)})
                     return self.gui(200, {"ok": True, "du_lieu": du, "nhat_ky": "\n".join(nk)})
+                if viec == "tk-ds":
+                    return self.gui(200, T.goi("tk/ds"))
+                if viec == "tk-nhap":
+                    return self.gui(200, T.nhap_hs(d.get("van_ban") or "", d.get("lop") or ""))
+                if viec == "tk-dat-lai":
+                    return self.gui(200, T.dat_lai_mk(d.get("ten") or ""))
+                if viec == "tk-khoa":
+                    return self.gui(200, T.goi("tk/khoa", {"ten": d.get("ten"), "khoa": bool(d.get("khoa"))}))
+                if viec == "tk-xoa":
+                    return self.gui(200, T.goi("tk/xoa", {"ten": d.get("ten")}))
+                if viec == "gv-them":
+                    return self.gui(200, T.them_gv(d.get("ten"), d.get("ho_ten"), d.get("mk")))
+                if viec == "phieu":
+                    return self.gui(200, {"ok": True, "html": T.phieu_tai_khoan(d.get("lop") or "")})
+                if viec == "diem":
+                    return self.gui(200, T.goi("diem", {"nhom": d.get("nhom")}))
+                if viec == "luot-them":
+                    return self.gui(200, T.goi("luot/them", {"tk": d.get("tk"), "nhom": d.get("nhom"), "so": int(d.get("so") or 1)}))
+                if viec == "bai-xoa":
+                    return self.gui(200, T.goi("bai/xoa", {"id": d.get("id")}))
+                if viec == "de-sua":
+                    ds = T.danh_sach()
+                    for x in ds:
+                        if x["slug"] == d.get("slug") and x.get("loai") != "bai_giang":
+                            x["lop_giao"] = T.chuan_lop(d.get("lop_giao") or ""); x["so_luot"] = int(d.get("so_luot") or 0)
+                            for y in ds:      # nhóm: áp cho mã con
+                                if y.get("nhom") == x["slug"]:
+                                    y["lop_giao"], y["so_luot"] = x["lop_giao"], x["so_luot"]
+                    T.luu_ds(ds)
+                    return self.gui(200, {"ok": T.dong_bo_de(lambda *_: None)})
                 if viec == "bg-nguon":
                     return self.gui(200, {"ok": True, "ds": T.nguon_ung_dung()})
                 if viec == "bg-json":
@@ -295,14 +325,16 @@ class XuLy(BaseHTTPRequestHandler):
                 if viec == "dang":
                     try:
                         slug = T.them_de(d.get("slug"), (d.get("ten") or "Đề thi").strip(), d["html"],
-                                         bool(d.get("an_dap_an", True)), d.get("phut"))
+                                         bool(d.get("an_dap_an", True)), d.get("phut"), lop_giao=d.get("lop_giao") or "",
+                                         so_luot=int(d.get("so_luot") if d.get("so_luot") is not None else 2))
                     except Exception as e:
                         return self.gui(200, {"ok": False, "loi": str(e)})
                     if d.get("dang_ngay", True):
                         threading.Thread(target=dang_thi_nen, daemon=True).start()
                     return self.gui(200, {"ok": True, "slug": slug, "url": T.goc_url() + "/" + slug + "/"})
                 if viec == "nhom":
-                    slug = T.them_nhom(d.get("slug"), (d.get("ten") or "Đề thi").strip(), d.get("con") or [])
+                    slug = T.them_nhom(d.get("slug"), (d.get("ten") or "Đề thi").strip(), d.get("con") or [],
+                                       d.get("lop_giao") or "", int(d.get("so_luot") if d.get("so_luot") is not None else 2))
                     threading.Thread(target=dang_thi_nen, daemon=True).start()
                     return self.gui(200, {"ok": True, "slug": slug, "url": T.goc_url() + "/" + slug + "/"})
                 if viec == "trang-thai":
