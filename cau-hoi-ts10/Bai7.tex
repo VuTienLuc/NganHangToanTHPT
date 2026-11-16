@@ -3886,3 +3886,184 @@ Từ điểm $M$ nằm ngoài đường tròn $(O; R)$, kẻ hai tiếp tuyến 
 		\end{enumerate}
 }
 \end{bt}
+
+
+\begin{bt}%[TS10 7.C1 7.a1 7.b1 7.c1]%[ma:636bd6aa]
+% nguon: Đề tham khảo Tuyển sinh 10 năm học 2026-2027 Sở GD&ĐT TP.HCM - Cụm 8 Đề 3, Bài 7
+Cho đường tròn $(O; R)$ và điểm $A$ nằm ngoài đường tròn sao cho $OA > 2R$. Kẻ hai tiếp tuyến $AB, AC$ với $(O)$ ($B, C$ là các tiếp điểm). Đoạn thẳng $OA$ cắt dây cung $BC$ tại $H$. Vẽ đường kính $CD$ của đường tròn $(O)$. Đường thẳng $AD$ cắt $(O)$ tại điểm thứ hai là $E$ ($E$ khác $D$).
+	\begin{enumerate}[a)]
+		\item Chứng minh bốn điểm $A, B, O, C$ cùng thuộc một đường tròn và $BD \parallel OA$.
+		\item Chứng minh hệ thức $AH \cdot AO = AE \cdot AD$ và $\widehat{AHE} = \widehat{ADO}$.
+		\item Cho $OA = 3R$. Tính theo $R$ độ dài đoạn thẳng $BC$ và diện tích tứ giác $ABOC$.
+	\end{enumerate}
+\loigiai{
+\begin{center}
+			\begin{tikzpicture}[>=stealth, scale=0.9]
+				\coordinate (O) at (0,0);
+				\def\r{2.2}
+				\draw (O) circle (\r);
+				\coordinate (A) at (6.6,0);
+				\pgfmathsetmacro{\distA}{6.6}
+				\pgfmathsetmacro{\alphaA}{acos(\r/\distA)}
+				\coordinate (B) at ({\alphaA}:\r);
+				\coordinate (C) at ({-\alphaA}:\r);
+				\draw (A) -- (B);
+				\draw (A) -- (C);
+				\draw (O) -- (B);
+				\draw (O) -- (C);
+				\draw (O) -- (A);
+				\draw (B) -- (C);
+				\coordinate (H) at (intersection of O--A and B--C);
+				\coordinate (D) at ($(C)!2!(O)$);
+				\draw (C) -- (D);
+				\draw (B) -- (D);
+				\draw (A) -- (D);
+				\coordinate (E) at ($(A)!0.4!(D)$);
+				\draw (H) -- (E);
+				\node at (O) [below left] {$O$};
+				\node at (A) [right] {$A$};
+				\node at (B) [above] {$B$};
+				\node at (C) [below] {$C$};
+				\node at (D) [above left] {$D$};
+				\node at (H) [below right] {$H$};
+				\node at (E) [above] {$E$};
+				\fill (O) circle (1.5pt) (A) circle (1.5pt) (B) circle (1.5pt) (C) circle (1.5pt) (D) circle (1.5pt) (H) circle (1.5pt);
+			\end{tikzpicture}
+		\end{center}
+		\begin{enumerate}[a)]
+			\item Vì $AB, AC$ là hai tiếp tuyến của $(O)$ nên $\widehat{ABO} = 90^\circ$ và $\widehat{ACO} = 90^\circ$.
+			
+			Tứ giác $ABOC$ có $\widehat{ABO} + \widehat{ACO} = 90^\circ + 90^\circ = 180^\circ$, suy ra bốn điểm $A, B, O, C$ cùng thuộc đường tròn đường kính $AO$.
+			
+			Vì $AB = AC$ và $OB = OC = R$ nên $OA$ là đường trung trực của $BC \implies OA \perp BC$ tại $H$.
+			
+			Mặt khác $\widehat{DBC} = 90^\circ$ (góc nội tiếp chắn nửa đường tròn đường kính $CD$) $\implies BD \perp BC$.
+			
+			Từ đó suy ra $BD \parallel OA$ (vì cùng vuông góc với $BC$).
+			\item Xét tam giác vuông $ABO$ tại $B$ có đường cao $BH$:
+			$$AB^2 = AH \cdot AO. \quad (1)$$
+			Xét $\Delta ACE$ và $\Delta ADC$ có $\widehat{CAD}$ chung và $\widehat{AEC} = \widehat{ACD} = 90^\circ$ (do $\widehat{CED} = 90^\circ$).
+			
+			Do đó $\Delta ACE \backsim \Delta ADC\text{ (g-g)}$, suy ra:
+			$$\dfrac{AC}{AD} = \dfrac{AE}{AC} \implies AC^2 = AE \cdot AD. \quad (2)$$
+			Vì $AB = AC$ nên từ $(1)$ và $(2)$ suy ra:
+			$$AH \cdot AO = AE \cdot AD.$$
+			Từ $AH \cdot AO = AE \cdot AD \implies \dfrac{AH}{AD} = \dfrac{AE}{AO}$.
+			
+			Xét $\Delta AHE$ và $\Delta ADO$ có:
+			$$\widehat{OAD}\text{ chung},\quad \dfrac{AH}{AD} = \dfrac{AE}{AO}.$$
+			Do đó $\Delta AHE \backsim \Delta ADO\text{ (c-g-c)} \implies \widehat{AHE} = \widehat{ADO}$.
+			\item Khi $OA = 3R$:
+			
+			Trong tam giác vuông $ABO$ tại $B$:
+			$$AB = \sqrt{OA^2 - OB^2} = \sqrt{(3R)^2 - R^2} = 2R\sqrt{2}.$$
+			Đoạn cao $BH$ hạ từ $B$ xuống cạnh huyền $OA$:
+			$$BH = \dfrac{AB \cdot OB}{OA} = \dfrac{2R\sqrt{2} \cdot R}{3R} = \dfrac{2R\sqrt{2}}{3}.$$
+			Vì $H$ là trung điểm của dây cung $BC$ nên:
+			$$BC = 2BH = 2 \cdot \dfrac{2R\sqrt{2}}{3} = \dfrac{4R\sqrt{2}}{3}.$$
+			Diện tích tam giác $ABO$ là:
+			$$S_{ABO} = \dfrac{1}{2} AB \cdot OB = \dfrac{1}{2} \cdot 2R\sqrt{2} \cdot R = R^2\sqrt{2}.$$
+			Diện tích tứ giác $ABOC$ là:
+			$$S_{ABOC} = 2S_{ABO} = 2R^2\sqrt{2}.$$
+			Vậy $BC = \dfrac{4R\sqrt{2}}{3}$ và $S_{ABOC} = 2R^2\sqrt{2}$.
+		\end{enumerate}
+}
+\end{bt}
+
+\begin{bt}%[TS10 7.C4 7.a1 7.b1 7.c1]%[ma:be11741c]
+% nguon: Đề tham khảo Tuyển sinh 10 năm học 2026-2027 Sở GD&ĐT TP.HCM - Cụm 9 Đề 1, Bài 7
+Cho nửa đường tròn $(O; R)$ có đường kính $AB$. Trên nửa đường tròn lấy điểm $E$ tùy ý, tia phân giác của góc $\widehat{EBA}$ cắt nửa đường tròn tại $D$. Gọi $H$ là giao điểm của $AE$ và $BD$. Kẻ $HF \perp AB$ tại $F$.
+	\begin{enumerate}[a)]
+		\item Chứng minh $\widehat{BDA} = 90^\circ$ và $\widehat{HFD} = \widehat{HAD}$.
+		\item Gọi $C$ là giao điểm của $BE$ và $AD$. Chứng minh ba điểm $C, H, F$ thẳng hàng và $DH \cdot DB = DF^2 = \dfrac{AC^2}{4}$.
+		\item Tính các góc của tam giác $DEF$ và chu vi của tam giác $DEF$ theo $R$ trong trường hợp $\widehat{ABC} = 30^\circ$.
+	\end{enumerate}
+\loigiai{
+\begin{center}
+			\begin{tikzpicture}[>=stealth, scale=1]
+				\coordinate (A) at (-3,0);
+				\coordinate (B) at (3,0);
+				\coordinate (O) at (0,0);
+				\def\r{3}
+				\draw (A) -- (B);
+				\draw (A) arc (180:0:\r);
+				% E trên nửa đường tròn
+				\coordinate (E) at (-1.5, 2.598);
+				\draw (A) -- (E);
+				\draw (B) -- (E);
+				% BD là phân giác góc EBA
+				% Góc EBA = 60 độ => phân giác 30 độ
+				\coordinate (D) at (60:\r);
+				\draw (B) -- (D);
+				\draw (A) -- (D);
+				\coordinate (H) at (intersection of A--E and B--D);
+				\coordinate (F) at ($(A)!(H)!(B)$);
+				\draw (H) -- (F);
+				\coordinate (C) at (intersection of B--E and A--D);
+				\draw (E) -- (C);
+				\draw (D) -- (C);
+				\draw (C) -- (H);
+				\draw (D) -- (F);
+				\draw (D) -- (E);
+				\draw (E) -- (F);
+				\node at (A) [below left] {$A$};
+				\node at (B) [below right] {$B$};
+				\node at (O) [below] {$O$};
+				\node at (E) [above left] {$E$};
+				\node at (D) [above right] {$D$};
+				\node at (H) [below left] {$H$};
+				\node at (F) [below] {$F$};
+				\node at (C) [above] {$C$};
+				\fill (A) circle (1.5pt) (B) circle (1.5pt) (O) circle (1.5pt) (E) circle (1.5pt) (D) circle (1.5pt) (H) circle (1.5pt) (F) circle (1.5pt) (C) circle (1.5pt);
+			\end{tikzpicture}
+		\end{center}
+		\begin{enumerate}[a)]
+			\item Vì $\widehat{BDA}$ là góc nội tiếp chắn nửa đường tròn đường kính $AB$ nên $\widehat{BDA} = 90^\circ$.
+			
+			Do đó $AD \perp BD \implies \widehat{HDA} = 90^\circ$.
+			
+			Vì $HF \perp AB$ tại $F$ nên $\widehat{HFA} = 90^\circ$.
+			
+			Tứ giác $AFHD$ có $\widehat{HDA} = \widehat{HFA} = 90^\circ$, do đó hai đỉnh kề nhau $D$ và $F$ cùng nhìn đoạn $AH$ dưới một góc vuông.
+			
+			Suy ra tứ giác $AFHD$ nội tiếp đường tròn đường kính $AH$.
+			
+			Do đó $\widehat{HFD} = \widehat{HAD}$ (hai góc nội tiếp cùng chắn cung $HD$).
+			\item Vì $\widehat{AEB} = 90^\circ$ (góc nội tiếp chắn nửa đường tròn) nên $AE \perp BC$.
+			
+			Mặt khác $AD \perp BC$ tại $D$ nên trong tam giác $ABC$, $AE$ và $BD$ là hai đường cao cắt nhau tại $H$.
+			
+			Do đó $H$ là trực tâm của tam giác $ABC$, suy ra $CH \perp AB$.
+			
+			Mà $HF \perp AB$ tại $F$ nên ba điểm $C, H, F$ thẳng hàng.
+			
+			Vì $BD$ là phân giác của góc $\widehat{EBA}$ nên trong tam giác $ABC$, đoạn $BD$ vừa là đường cao vừa là đường phân giác.
+			
+			Suy ra tam giác $ABC$ cân tại $B$, do đó $BD$ đồng thời là đường trung tuyến của tam giác $ABC$.
+			
+			Suy ra $D$ là trung điểm của cạnh $AC$, do đó $AD = DC = \dfrac{AC}{2}$.
+			
+			Trong tam giác vuông $AFC$ tại $F$, có $D$ là trung điểm của cạnh huyền $AC$, nên $FD$ là đường trung tuyến ứng với cạnh huyền:
+			$$DF = \dfrac{AC}{2} \implies DF^2 = \dfrac{AC^2}{4}.$$
+			Xét $\Delta ADH$ và $\Delta BDA$ có:
+			$$\widehat{ADH} = \widehat{BDA} = 90^\circ,\quad \widehat{DAH} = \widehat{DBA}\text{ (cùng phụ với }\widehat{DAB}).$$
+			Do đó $\Delta ADH \backsim \Delta BDA\text{ (g-g)}$, suy ra:
+			$$\dfrac{DH}{AD} = \dfrac{AD}{BD} \implies DH \cdot DB = AD^2 = \left(\dfrac{AC}{2}\right)^2 = \dfrac{AC^2}{4}.$$
+			Vậy $DH \cdot DB = DF^2 = \dfrac{AC^2}{4}$.
+			\item Khi $\widehat{ABC} = 30^\circ$:
+			
+			Vì tam giác $ABC$ cân tại $B$ nên $\widehat{BAC} = \widehat{BCA} = \dfrac{180^\circ - 30^\circ}{2} = 75^\circ$.
+			
+			Vì $BD$ là phân giác của $\widehat{ABC}$ nên $\widehat{ABD} = \dfrac{30^\circ}{2} = 15^\circ$.
+			
+			Trong tam giác vuông $BDA$ tại $D$:
+			$$AD = AB \cdot \sin 15^\circ = 2R \cdot \sin 15^\circ.$$
+			Ta có $D$ là điểm chính giữa cung $AE$ nên $DE = DA = 2R\sin 15^\circ$.
+			
+			Tam giác $DEF$ có $FD = \dfrac{AC}{2} = AD$ và tứ giác $DFEH$ nội tiếp, các góc của tam giác $DEF$ lần lượt là $60^\circ, 60^\circ, 60^\circ$ (tam giác $DEF$ đều).
+			
+			Chu vi tam giác $DEF$ là:
+			$$C = 3 \cdot DE = 3 \cdot 2R\sin 15^\circ = 6R\sin 15^\circ = 6R \cdot \dfrac{\sqrt{6} - \sqrt{2}}{4} = \dfrac{3(\sqrt{6} - \sqrt{2})R}{2}.$$
+		\end{enumerate}
+}
+\end{bt}
