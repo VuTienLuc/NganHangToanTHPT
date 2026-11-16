@@ -117,7 +117,8 @@
   // một học sinh: điểm từng đợt (cao nhất), tiến bộ, lý do cần quan tâm
   function motEm(h, de, m, nhan, deThem) {
     m = m || {};
-    const them = (deThem || []).filter(d => m[d.slug]).map(d => ({ de: d, cao: Math.max(...m[d.slug].lan) }));
+    const them = (deThem || []).filter(d => m[d.slug]).map(d => ({ de: d, cao: Math.max(...m[d.slug].lan), ds: m[d.slug].ds }));
+    const tbThem = them.length ? them.reduce((a, x) => a + x.cao, 0) / them.length : null;
     const o = de.map(d => { const x = m[d.slug]; return x ? { cao: Math.max(...x.lan), dau: x.lan[0], so: x.lan.length, goi_y: x.goi_y, cx: x.cx, tab: x.tab, ds: x.ds } : null });
     const lam = o.filter(Boolean), diem = lam.map(x => x.cao), tb = diem.length ? diem.reduce((a, b) => a + b, 0) / diem.length : null;
     const xu = lam.length >= 2 ? (lam.slice(-2).reduce((a, x) => a + x.cao, 0) / 2 - lam.slice(0, 2).reduce((a, x) => a + x.cao, 0) / 2) : null;
@@ -132,7 +133,7 @@
     if (tb != null && tb < 5) ly.push(['diem_thap', `TB ${F(tb)}`]);
     if (xu != null && xu <= -1) ly.push(['giam', `Giảm ${F(-xu)} điểm`]);
     if (cuoi && (cuoi.cx === 'lo_lang' || cuoi.cx === 'met_moi')) ly.push(['cam_xuc', cuoi.cx === 'lo_lang' ? '😰 Đang lo lắng' : '😴 Đang mệt']);
-    return { ...h, de, n, o, them, lam: lam.length, tb, xu, sua, gy, cuoi, truoc, cuoiDe, caoNhat, chuaLam, moiNhat, nhan: nhan || [], ly, tuDong: ly.length > 0 };
+    return { ...h, de, n, o, them, tbThem, lam: lam.length, tb, xu, sua, gy, cuoi, truoc, cuoiDe, caoNhat, chuaLam, moiNhat, nhan: nhan || [], ly, tuDong: ly.length > 0 };
   }
   function tinh(k) {
     const de = k.de.filter(d => daGiao(d, k.lop)), deThem = k.de.filter(d => !daGiao(d, k.lop)), theo = nhomBai(k.bai), nhan = {}; for (const m of k.nhan || []) (nhan[m.tk] ??= []).push(m);
@@ -140,7 +141,7 @@
     const hs = k.hs.map(h => Object.assign(motEm(h, de, theo[h.ten], nhan[h.ten], deThem), { td: td[h.ten] || null, lop: k.lop }));
     const dot = de.map((d, j) => { const v = hs.map(h => h.o[j]).filter(Boolean); return { ...d, so: v.length, tb: v.length ? v.reduce((a, x) => a + x.cao, 0) / v.length : null } });
     const them0 = deThem.map(d => ({ ...d, so: hs.filter(h => h.them.some(x => x.de.slug === d.slug)).length }));
-    return { de, hs, dot, them: them0.filter(d => d.so), chuaGiao: them0 };
+    return { de, hs, dot, them: them0, chuaGiao: them0 };
   }
   const canQT = h => st.danh[h.ten] != null ? st.danh[h.ten] : h.tuDong;
 
@@ -264,6 +265,8 @@
           ${h.de.map((d, j) => { const v = h.o[j]; if (!v) return `<tr><td class="ten">${e(d.ten)}</td><td colspan="8" style="color:#b91c1c;text-align:left">Chưa làm</td></tr>`;
             return v.ds.map((b, q) => `<tr>${q ? '' : `<td class="ten" rowspan="${v.ds.length}">${e(d.ten)}</td>`}<td>${b.lan}</td><td><span class="o-d ${mau(b.diem)}">${F(b.diem)}</span></td>
               <td>${[b.p1, b.p2, b.p3].map(F).join(' · ')}</td><td>${b.thoi_gian ? Math.round(b.thoi_gian / 60) + '′' : ''}</td><td>${CX[b.cam_xuc] || ''}</td><td>${b.goi_y || ''}</td><td>${b.chuyen_tab || ''}</td><td>${ngayVN(b.nop_luc)}</td></tr>`).join('') }).join('')}
+          ${(h.them || []).map(x => x.ds.map((b, q) => `<tr class="them" style="color:#64748b">${q ? '' : `<td class="ten" rowspan="${x.ds.length}">${e(x.de.ten)} <span class="th-ly" style="color:#64748b;border-color:#cbd5e1">tự luyện</span></td>`}<td>${b.lan}</td><td><span class="o-d ${mau(b.diem)}">${F(b.diem)}</span></td>
+              <td>${[b.p1, b.p2, b.p3].map(F).join(' · ')}</td><td>${b.thoi_gian ? Math.round(b.thoi_gian / 60) + '′' : ''}</td><td>${CX[b.cam_xuc] || ''}</td><td>${b.goi_y || ''}</td><td>${b.chuyen_tab || ''}</td><td>${ngayVN(b.nop_luc)}</td></tr>`).join('')).join('')}
         </tbody></table></div>
         <div class="th-hop2 th-nx"><h3>📝 Nhận xét</h3><div style="color:#14532d">${e(nxEm(h, h.n))}</div></div>
         <div class="th-hop2 th-qt"><h3>💌 Nhắn riêng cho em <button data-doi title="Đổi câu khác">🎲</button></h3>
@@ -327,20 +330,19 @@
       ${n ? `<div class="th-bd">${svg}</div>` : ''}
       <div class="th-hop2 th-qt" id="th-qt"><h3>⚑ Học sinh cần quan tâm — tin nhắn riêng (tích cực, vui)</h3><div id="th-qt-ds"></div></div>
       <div class="th-hop2 th-nx"><h3>💬 Nhận xét chung cho lớp (sửa được, chép gửi nhóm lớp)</h3><textarea id="th-nx-lop">${e(nxLop(k.lop, T))}</textarea></div>
-      ${T.chuaGiao.length ? `<div class="th-hop2" style="background:#f8fafc;border:1px dashed #cbd5e1"><h3 style="color:#334155">○ Bài chưa xác nhận giao cho lớp ${e(k.lop)} — không tính vào tổng hợp</h3>
-        <div style="display:flex;flex-direction:column;gap:4px">${T.chuaGiao.map(d => `<div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"><span style="flex:1;min-width:200px">${e(d.ten)} <span style="color:#64748b;font-size:12px">· ${d.so ? d.so + ' em tự làm' : 'chưa em nào làm'}</span></span><button class="th-giao" data-giao="${e(d.slug)}" data-v="1">✓ Xác nhận đã giao</button></div>`).join('')}</div></div>` : ''}
-      ${n ? `<div style="overflow:auto;max-height:55vh;border:1px solid #e2e8f0;border-radius:10px"><table class="th-bang"><thead><tr><th title="Đánh dấu cần quan tâm">⚑</th><th title="Theo dõi thường xuyên (lưu trên máy chủ)">⭐</th><th>STT</th><th class="ten">Họ tên</th>
+      ${!n && T.chuaGiao.length ? `<div class="th-hop2" style="background:#fffbeb;border:1px solid #fde68a"><h3 style="color:#b45309">Chưa có bài nào được xác nhận giao cho lớp ${e(k.lop)}</h3><div style="font-size:13px">Bảng dưới vẫn hiện điểm mọi bài (cột xám = chưa giao). Thầy bấm <b>✓ Xác nhận đã giao</b> dưới tên bài nào đã thật sự giao — bài đó mới tính hoàn thành, điểm TB, tiến bộ.</div></div>` : ''}
+      ${n || T.chuaGiao.length ? `<div style="overflow:auto;max-height:55vh;border:1px solid #e2e8f0;border-radius:10px"><table class="th-bang"><thead><tr><th title="Đánh dấu cần quan tâm">⚑</th><th title="Theo dõi thường xuyên (lưu trên máy chủ)">⭐</th><th>STT</th><th class="ten">Họ tên</th>
         ${T.dot.map((d, j) => `<th class="cot-dot" title="${e(d.ten)}">Đợt ${j + 1}<br><span style="font-weight:400;color:#64748b">${e(d.ten.length > 16 ? d.ten.slice(0, 15) + '…' : d.ten)}</span><br><button class="th-giao bat" data-giao="${e(d.slug)}" data-v="0" title="Đang tính vào tổng hợp. Bấm nếu bài này chưa giao (chỉ tự luyện)">✓ Đã giao</button></th>`).join('')}
-        ${T.them.map(d => `<th class="cot-dot them" title="${e(d.ten)} — chưa giao, không tính vào hoàn thành / điểm TB">Tự luyện<br><span style="font-weight:400">${e(d.ten.length > 16 ? d.ten.slice(0, 15) + '…' : d.ten)}</span><br><button class="th-giao" data-giao="${e(d.slug)}" data-v="1" title="Bấm để tính bài này là bài đã giao">○ Chưa giao</button></th>`).join('')}
+        ${T.them.map(d => `<th class="cot-dot them" title="${e(d.ten)} — chưa giao, không tính vào hoàn thành / điểm TB">○ Chưa giao<br><span style="font-weight:400">${e(d.ten.length > 16 ? d.ten.slice(0, 15) + '…' : d.ten)}</span><br><button class="th-giao" data-giao="${e(d.slug)}" data-v="1" title="Bấm để xác nhận bài này đã giao — tính vào tổng hợp">✓ Xác nhận đã giao</button></th>`).join('')}
         <th>Hoàn thành</th><th>TB</th><th title="TB 2 bài gần nhất − TB 2 bài đầu">Tiến bộ</th><th class="ten">Nhận xét tích cực (bấm để sửa)</th></tr></thead><tbody>
         ${T.hs.map((h, i) => `<tr class="${canQT(h) ? 'qt' : ''}"><td><button class="th-co" data-tk="${e(h.ten)}" aria-pressed="${canQT(h)}" title="${h.ly.map(x => x[1]).join(' · ') || 'Bấm để đánh dấu cần quan tâm'}" aria-label="Đánh dấu ${e(h.ho_ten || h.ten)}">⚑</button></td>
           <td><button class="th-co th-sao" data-sao="${i}" aria-pressed="${!!h.td}" title="${h.td ? 'Đang theo dõi — bấm để bỏ' : 'Theo dõi em này thường xuyên'}" aria-label="Theo dõi ${e(h.ho_ten || h.ten)}">${h.td ? '★' : '☆'}</button></td>
           <td>${h.stt || ''}</td><td class="ten"><button class="th-ten" data-hs="${i}" title="Xem hồ sơ từng bài">${e(h.ho_ten || h.ten)}</button></td>
           ${h.o.map(x => `<td><span class="o-d ${mau(x && x.cao)}" title="${x ? `Cao nhất ${F(x.cao)} · ${x.so} lần${x.goi_y ? ` · 💡 ${x.goi_y}` : ''}` : 'Chưa làm'}">${x ? F(x.cao) : '—'}</span></td>`).join('')}
           ${T.them.map(d => { const x = h.them.find(y => y.de.slug === d.slug); return `<td class="them">${x ? `<span class="o-d ${mau(x.cao)}">${F(x.cao)}</span>` : ''}</td>` }).join('')}
-          <td>${h.lam}/${n}</td><td><b>${F(h.tb)}</b></td><td>${h.xu == null ? '' : h.xu >= .5 ? `<span class="th-len">▲ ${F(h.xu)}</span>` : h.xu <= -.5 ? `<span class="th-xuong">▼ ${F(-h.xu)}</span>` : '≈'}</td>
+          <td>${n ? h.lam + '/' + n : '—'}</td><td>${n ? `<b>${F(h.tb)}</b>` : `<span style="color:#94a3b8" title="TB các bài chưa giao em đã làm">${F(h.tbThem)}</span>`}</td><td>${h.xu == null ? '' : h.xu >= .5 ? `<span class="th-len">▲ ${F(h.xu)}</span>` : h.xu <= -.5 ? `<span class="th-xuong">▼ ${F(-h.xu)}</span>` : '≈'}</td>
           <td class="nx" contenteditable data-i="${i}">${e(nxEm(h, n))}</td></tr>`).join('')}</tbody></table></div>
-        <p style="font-size:12px;color:#64748b;margin:6px 0 0">Mỗi ô là điểm cao nhất của em trong đợt (rê chuột xem số lần làm, số câu mở Gợi ý AI). Xanh lá ≥ 8 · xanh dương ≥ 6,5 · vàng ≥ 5 · đỏ &lt; 5 · “—” chưa làm. Chỉ bài thầy đã <b>xác nhận ✓ Đã giao</b> mới tính hoàn thành, điểm TB, tiến bộ; bấm nút dưới tên đợt để chuyển về Chưa giao (cột “Tự luyện” xám là bài em tự làm thêm, chỉ để khen). Bấm ⚑ để đánh dấu / bỏ đánh dấu em cần quan tâm · ☆ để theo dõi thường xuyên (xem ở mục ⭐ đầu danh sách lớp) · bấm tên em để xem hồ sơ từng bài.</p>`
+        <p style="font-size:12px;color:#64748b;margin:6px 0 0">Mỗi ô là điểm cao nhất của em trong đợt (rê chuột xem số lần làm, số câu mở Gợi ý AI). Xanh lá ≥ 8 · xanh dương ≥ 6,5 · vàng ≥ 5 · đỏ &lt; 5 · “—” chưa làm. Chỉ bài thầy đã <b>xác nhận ✓ Đã giao</b> mới tính hoàn thành, điểm TB, tiến bộ; bấm nút dưới tên đợt để chuyển về Chưa giao (cột xám “○ Chưa giao” vẫn hiện điểm em đã làm nhưng không tính, chỉ để khen). Bấm ⚑ để đánh dấu / bỏ đánh dấu em cần quan tâm · ☆ để theo dõi thường xuyên (xem ở mục ⭐ đầu danh sách lớp) · bấm tên em để xem hồ sơ từng bài.</p>`
         : `<p>Lớp này chưa có bài nào được <b>xác nhận đã giao</b>. Thầy bấm “✓ Xác nhận đã giao” ở danh sách trên (hoặc nút ○ Chưa giao trong Thư viện) — chỉ bài đã xác nhận mới tính hoàn thành, điểm TB, tiến bộ.</p>`}`;
     veQT();
     than.querySelectorAll('[data-giao]').forEach(b => b.onclick = async () => {
@@ -391,8 +393,8 @@
   function xuat() {
     const T = st.T, k = st.k; if (!T) return;
     const nx = {}; hop.querySelectorAll('td.nx').forEach(td => { nx[+td.dataset.i] = td.innerText.trim() });
-    const dau = ['STT', 'Họ tên', 'Tài khoản', ...T.dot.map((d, j) => `Đợt ${j + 1}: ${d.ten}`), 'Số bài đã làm', 'Tổng số đợt', 'Điểm TB', 'Tiến bộ', 'Số bài làm lại cao hơn', 'Số câu mở Gợi ý AI', 'Cần quan tâm', 'Theo dõi', 'Lý do', 'Nhận xét'];
-    const dong = T.hs.map((h, i) => [h.stt || '', h.ho_ten || '', h.ten, ...h.o.map(x => x ? F(x.cao) : ''), h.lam, T.de.length, F(h.tb), h.xu == null ? '' : F(h.xu), h.sua, h.gy,
+    const dau = ['STT', 'Họ tên', 'Tài khoản', ...T.dot.map((d, j) => `Đợt ${j + 1}: ${d.ten}`), ...T.them.map(d => `(Chưa giao) ${d.ten}`), 'Số bài đã làm', 'Tổng số đợt', 'Điểm TB', 'Tiến bộ', 'Số bài làm lại cao hơn', 'Số câu mở Gợi ý AI', 'Cần quan tâm', 'Theo dõi', 'Lý do', 'Nhận xét'];
+    const dong = T.hs.map((h, i) => [h.stt || '', h.ho_ten || '', h.ten, ...h.o.map(x => x ? F(x.cao) : ''), ...T.them.map(d => { const x = h.them.find(y => y.de.slug === d.slug); return x ? F(x.cao) : '' }), h.lam, T.de.length, F(h.tb), h.xu == null ? '' : F(h.xu), h.sua, h.gy,
       canQT(h) ? 'x' : '', h.td ? 'x' : '', h.ly.map(x => x[1]).join('; '), nx[i] || nxEm(h, T.de.length)]);
     const csv = '﻿' + [dau, ...dong, [], ['Nhận xét lớp'], [document.getElementById('th-nx-lop').value]].map(r => r.map(v => `"${String(v).replace(/"/g, '""')}"`).join(',')).join('\n');
     const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv' })); a.download = `TongHop_${k.lop}_${new Date().toISOString().slice(0, 10)}.csv`; a.click();
