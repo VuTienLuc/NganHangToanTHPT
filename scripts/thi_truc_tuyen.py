@@ -946,7 +946,10 @@ def phan_loai(x, ds=None):
     m_lop = re.search(r"(?:toán|lớp|lop)\s*(1[0-2]|[6-9])\b", ten, re.I) or re.search(r"\b(1[0-2]|[6-9])[A-Z]\d", x.get("lop_giao") or "")
     if x.get("loai") == "bai_giang":
         t = _the_bg(x)
-        return _ten_chuong({"lop": t["lop"] or (int(m_lop.group(1)) if m_lop else 0), "chuong": t["chuong"], "chuong_so": t["chuong_so"] or 0,
+        lop_bg = t["lop"] or (int(m_lop.group(1)) if m_lop else 0)
+        if not t["chuong_so"] and t["chuong"]:
+            t["chuong_so"] = _so_chuong(lop_bg, t["chuong"])
+        return _ten_chuong({"lop": lop_bg, "chuong": t["chuong"], "chuong_so": t["chuong_so"] or 0,
                 "bai": t["bai"], "bai_so": t["bai_so"] or 0})
     if x.get("loai") == "nhom":
         con = next((y for y in (ds or danh_sach()) if y["slug"] in (x.get("con") or [])), None)
@@ -984,6 +987,21 @@ def phan_loai(x, ds=None):
     r = _ten_chuong(r)
     _PL[khoa] = r
     return r
+
+
+_CH = {}
+
+
+def _so_chuong(lop, ten):
+    """Số chương theo tên chương (lấy từ danh mục mã dạng), để phiếu/bài giảng gộp đúng nhóm với đề cùng chương."""
+    from nh_core import tai_id_map, lop_tu_so, ten_khong_dau
+    if not _CH:
+        for k, v in tai_id_map().items():
+            m = re.match(r"(\d)[A-Z](\d)", k)
+            if m and v.get("chap_name"):
+                _CH.setdefault((lop_tu_so(m.group(1)), ten_khong_dau(v["chap_name"]).lower().strip()), int(m.group(2)))
+    ten = ten_khong_dau(re.sub(r"^\s*Chương\s+[IVX\d]+\s*[.:–-]?\s*", "", ten)).lower().strip()
+    return _CH.get((int(lop or 0), ten), 0)
 
 
 def _ten_chuong(r):

@@ -225,6 +225,7 @@ async function quanTri(duong, d, env) {
   if (duong === 'loi-nhan') return json(await guiLoiNhan(DB, d, 'gv'));
   if (duong === 'theo-doi') return json(await theoDoi(DB));
   if (duong === 'de-giao') return json(await datGiao(DB, d));
+  if (duong === 'de-giao-ds') return json({ ok: true, ds: (await DB.prepare("SELECT slug, giao FROM de WHERE nhom = '' OR nhom IS NULL").all()).results });
   if (duong === 'theo-doi-dat') return json(await datTheoDoi(DB, d));
   if (duong === 'luot/them') {
     await DB.prepare(`INSERT INTO luot_them (tk, nhom, so) VALUES (?,?,?) ON CONFLICT(tk, nhom) DO UPDATE SET so = so + excluded.so`).bind(d.tk, d.nhom, d.so || 1).run();
