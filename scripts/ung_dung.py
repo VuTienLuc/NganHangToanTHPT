@@ -420,11 +420,30 @@ class XuLy(BaseHTTPRequestHandler):
                             slug = T.them_bai_giang(d.get("slug") or ("phieu-" + T.lam_slug(P.get("ten") or ten) + ("-tl" if P.get("kieu") == "tu_luan" else "")),
                                                     ten, lop, "html", open(p, "rb").read(), True, "phiếu học tập",
                                                     P.get("chuong") or "", P.get("ten") or "", 0, hs=d["dang"] == "hs", loai_bg="phieu")
+                            T.dat_thu_muc(slug, os.path.relpath(os.path.dirname(p), GOC))
                             threading.Thread(target=dang_thi_nen, daemon=True).start()
                             ra.update(slug=slug, url=f"{T.goc_url()}/bai-giang/{slug}/")
                     except Exception as e:
                         return self.gui(200, {"ok": False, "loi": str(e), "nhat_ky": "\n".join(dong)})
                     return self.gui(200, ra)
+                if viec == "phieu-lam-lai":   # phiếu đã đăng → dựng lại HTML bằng mẫu mới nhất (trình chiếu, nền sáng/tối…)
+                    import phieu_web
+                    x = next((y for y in T.danh_sach() if y["slug"] == d.get("slug") and y.get("loai") == "bai_giang"), None)
+                    if not x:
+                        return self.gui(200, {"ok": False, "loi": "Không thấy bài này."})
+                    tm = T.tim_thu_muc_phieu(x)
+                    if not tm:
+                        return self.gui(200, {"ok": False, "loi": "Không tìm thấy thư mục phiếu gốc trong de-da-ra. Thầy mở Phiếu bài học → 🌐 Phiếu HTML lên web… và chọn lại thư mục phiếu."})
+                    dong = []
+                    try:
+                        p, P = phieu_web.ghi(tm, dong.append)
+                        T.them_bai_giang(x["slug"], x["ten"], x.get("lop") or 10, "html", open(p, "rb").read(), True, x.get("nguon") or "phiếu học tập",
+                                         x.get("chuong") or "", x.get("bai") or "", x.get("chuong_so") or 0, hs=bool(x.get("hs")), loai_bg="phieu")
+                        T.dat_thu_muc(x["slug"], os.path.relpath(tm, GOC))
+                    except Exception as e:
+                        return self.gui(200, {"ok": False, "loi": str(e), "nhat_ky": "\n".join(dong)})
+                    threading.Thread(target=dang_thi_nen, daemon=True).start()
+                    return self.gui(200, {"ok": True, "nhat_ky": "\n".join(dong)})
                 if viec == "bg-pdf":
                     threading.Thread(target=dang_thi_nen, args=(lambda log: bai_giang_pdf(d, log),), daemon=True).start()
                     return self.gui(200, {"ok": True})
