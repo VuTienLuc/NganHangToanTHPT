@@ -1,10 +1,23 @@
 // Gác cổng: bài giảng + mục lục lớp chỉ giáo viên; đề thi phải đăng nhập, đúng lớp, chia mã đề theo tài khoản
 import { docPhien, trang, soBam, lopKhop } from './_lib.js';
 
-export async function onRequest({ request: req, env, next }) {
+// Phiếu HTML đăng từ bản cũ (chưa có ▶ Trình chiếu, nền sáng/tối): chèn phần nâng cấp dùng chung /_phieu/tc.*
+async function nangCapPhieu(r) {
+  if (!r || r.status !== 200 || !(r.headers.get('content-type') || '').includes('text/html')) return r;
+  const t = await r.text();
+  if (t.includes('id="nut-tc"') || !t.includes('<header class="dau">') || !t.includes('nav class="muc"'))
+    return new Response(t, r);
+  const moi = t.replace('</head>', '<link rel="stylesheet" href="/_phieu/tc.css"></head>')
+               .replace(/<\/body>(?![\s\S]*<\/body>)/, '<script src="/_phieu/tc.js"></script></body>');
+  const h = new Headers(r.headers); h.delete('content-length'); h.delete('etag');
+  return new Response(moi, { status: 200, headers: h });
+}
+
+export async function onRequest({ request: req, env, next: tiep }) {
   const u = new URL(req.url), p = u.pathname, seg = decodeURIComponent(p.split('/')[1] || '');
   if (!seg || seg === 'index.html' || seg === 'api' || seg === 'dang-nhap' || seg === '404.html' || seg.startsWith('_') || seg === 'favicon.ico')
     return next();
+  const next = seg === 'bai-giang' ? async () => nangCapPhieu(await tiep()) : tiep;
   const ph = await docPhien(env, req);
   const veDangNhap = () => Response.redirect(`${u.origin}/dang-nhap/?ve=${encodeURIComponent(p)}`, 302);
   if (seg === 'bai-giang' || /^toan\d+$/.test(seg)) {
