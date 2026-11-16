@@ -4286,3 +4286,148 @@ Cho đường tròn $(O; R)$ và điểm $A$ sao cho $OA = 2R$. Từ điểm $A$
 \end{enumerate}
 }
 \end{bt}
+
+% nguồn: 2026-11-16_14_cum10_de1_cum10_de2_28_29 (nhập 16/11/2026)
+\begin{bt}%[9H9C29-3]%[ma:2e37e775]
+% nguon: Cụm 10 – Đề tham khảo Tuyển sinh 10 năm học 2026-2027 TP.HCM – Đề số 28
+Cho nửa đường tròn $(O)$ đường kính $AB = 2R$. Vẽ các tiếp tuyến $Ax, By$ của nửa đường tròn $(O)$ (cùng thuộc một nửa mặt phẳng bờ $AB$). Qua điểm $M$ thuộc nửa đường tròn $(O)$ ($M$ khác $A$ và $B$), kẻ tiếp tuyến với nửa đường tròn, cắt $Ax, By$ lần lượt tại $E$ và $F$.
+\begin{enumerate}[a)]
+    \item Chứng minh tứ giác $AEMO$ nội tiếp một đường tròn. Xác định tâm và bán kính của đường tròn này.
+    \item Chứng minh $\triangle EOF$ là tam giác vuông và $MA \cdot OF = MB \cdot OE$.
+    \item Gọi $K$ là giao điểm của $AF$ và $BE$. Giả sử $MB = \sqrt{3}MA$, hãy tính diện tích tam giác $KAB$ theo $R$.
+\end{enumerate}
+\loigiai{
+\begin{center}
+\begin{tikzpicture}[scale=1]
+    \coordinate (O) at (0,0);
+    \def\R{2.5}
+    \coordinate (A) at (-\R,0);
+    \coordinate (B) at (\R,0);
+    \draw[thick] (A) -- (B);
+    \draw[thick] (B) arc (0:180:\R);
+    \coordinate (M) at (60:\R);
+    \coordinate (E) at (-\R,{ \R*tan(30) }); % Tiếp tuyến Ax tại A
+    % Tiếp tuyến qua M: góc AOM = 120 độ => E(-R, R*tan(60/2) = R/sqrt(3)...)
+    % Cụ thể: góc xOE = 60 độ, góc yOF = 30 độ
+    \coordinate (E) at (-\R,{ \R*sqrt(3) });
+    \coordinate (F) at (\R,{ \R/sqrt(3) });
+    \draw[thick] (A) -- (E);
+    \draw[thick] (B) -- (F);
+    \draw[thick] (E) -- (F);
+    \draw[dashed] (O) -- (M) (O) -- (E) (O) -- (F);
+    \coordinate (K) at (intersection of A--F and B--E);
+    \draw[thick] (A) -- (F) (B) -- (E);
+    \coordinate (H) at ($(A)!(K)!(B)$);
+    \draw[dashed,blue] (K) -- (H);
+    \node[below] at (O) {$O$};
+    \node[below left] at (A) {$A$};
+    \node[below right] at (B) {$B$};
+    \node[above] at (M) {$M$};
+    \node[left] at (E) {$E$};
+    \node[right] at (F) {$F$};
+    \node[above right] at (K) {$K$};
+    \node[below] at (H) {$H$};
+    \fill (O) circle (1.5pt) (A) circle (1.5pt) (B) circle (1.5pt) (M) circle (1.5pt) (E) circle (1.5pt) (F) circle (1.5pt) (K) circle (1.5pt) (H) circle (1.5pt);
+\end{tikzpicture}
+\end{center}
+\begin{enumerate}[a)]
+    \item Vì $Ax$ là tiếp tuyến của $(O)$ tại $A$ nên $\widehat{EAO} = 90^\circ$, suy ra tam giác $EAO$ nội tiếp đường tròn đường kính $EO$.\\
+    Vì $EF$ là tiếp tuyến của $(O)$ tại $M$ nên $\widehat{EMO} = 90^\circ$, suy ra tam giác $EMO$ nội tiếp đường tròn đường kính $EO$.\\
+    Do đó, $4$ điểm $A, E, M, O$ cùng thuộc đường tròn đường kính $EO$.\\
+    Vậy tứ giác $AEMO$ nội tiếp đường tròn có tâm là trung điểm của $EO$ và bán kính bằng $\dfrac{EO}{2}$.
+    \item Theo tính chất hai tiếp tuyến cắt nhau, ta có $OE$ là phân giác của $\widehat{AOM}$ và $OF$ là phân giác của $\widehat{BOM}$.\\
+    Do đó:
+    $$\widehat{EOF} = \widehat{EOM} + \widehat{FOM} = \dfrac{\widehat{AOM} + \widehat{BOM}}{2} = \dfrac{180^\circ}{2} = 90^\circ.$$
+    Vậy $\triangle EOF$ vuông tại $O$.\\
+    Tứ giác $AEMO$ nội tiếp nên $\widehat{MAB} = \widehat{OEF}$ (cùng chắn cung $MO$).\\
+    Lại có $\widehat{AMB} = 90^\circ$ (góc nội tiếp chắn nửa đường tròn), nên xét $\triangle MAB$ và $\triangle OEF$ có:
+    $$\widehat{AMB} = \widehat{EOF} = 90^\circ, \quad \widehat{MAB} = \widehat{OEF}.$$
+    Suy ra $\triangle MAB \backsim \triangle OEF$ (g-g) $\implies \dfrac{MA}{OE} = \dfrac{MB}{OF} \implies MA \cdot OF = MB \cdot OE$.
+    \item Trong tam giác vuông $AMB$, ta có:
+    $$\tan \widehat{MAB} = \dfrac{MB}{MA} = \sqrt{3} \implies \widehat{MAB} = 60^\circ.$$
+    Suy ra $\widehat{AOM} = 2\widehat{MAB} = 120^\circ \implies \widehat{AOE} = 60^\circ$, $\widehat{BOF} = 30^\circ$.\\
+    Trong tam giác vuông $OAE$: $AE = OA \cdot \tan 60^\circ = R\sqrt{3}$.\\
+    Trong tam giác vuông $OBF$: $BF = OB \cdot \tan 30^\circ = \dfrac{R}{\sqrt{3}}$.\\
+    Vì $AE \perp AB$ và $BF \perp AB$ nên $AE \parallel BF$.\\
+    Áp dụng định lý Ta-lét trong tam giác $KBF$ có $AE \parallel BF$:
+    $$\dfrac{AK}{KF} = \dfrac{AE}{BF} = \dfrac{R\sqrt{3}}{\dfrac{R}{\sqrt{3}}} = 3 \implies \dfrac{AK}{AF} = \dfrac{3}{3 + 1} = \dfrac{3}{4}.$$
+    Kẻ $KH \perp AB$ tại $H$. Vì $KH \parallel BF$ nên:
+    $$\dfrac{KH}{BF} = \dfrac{AK}{AF} = \dfrac{3}{4} \implies KH = \dfrac{3}{4}BF = \dfrac{3}{4} \cdot \dfrac{R}{\sqrt{3}} = \dfrac{R\sqrt{3}}{4}.$$
+    Diện tích tam giác $KAB$ là:
+    $$S_{KAB} = \dfrac{1}{2} \cdot AB \cdot KH = \dfrac{1}{2} \cdot 2R \cdot \dfrac{R\sqrt{3}}{4} = \dfrac{R^2\sqrt{3}}{4}.$$
+\end{enumerate}
+}
+\end{bt}
+
+% nguồn: 2026-11-16_14_cum10_de1_cum10_de2_28_29 (nhập 16/11/2026)
+\begin{bt}%[9H9C29-3]%[ma:ec8f38ac]
+% nguon: Cụm 10 – Đề tham khảo Tuyển sinh 10 năm học 2026-2027 TP.HCM – Đề số 29
+Cho đường tròn tâm $O$ đường kính $BC$. Điểm $A$ nằm ngoài đường tròn sao cho tam giác $ABC$ nhọn ($\widehat{BAC} < 90^\circ$). Gọi $M, N$ lần lượt là giao điểm của $AB, AC$ với đường tròn $(O)$ ($M \ne B, N \ne C$). Hai đoạn thẳng $BN$ và $CM$ cắt nhau tại $I$.
+\begin{enumerate}[a)]
+    \item Chứng minh $AI \perp BC$ và tứ giác $AM I N$ nội tiếp một đường tròn.
+    \item Gọi $D$ là điểm chính giữa của cung nhỏ $MN$. $BD$ cắt $CM$ tại $P$, $CD$ cắt $BN$ tại $Q$. Chứng minh rằng $DQ \cdot CD = BD \cdot DP$ và $\widehat{IPD} = \widehat{IQD}$.
+    \item Giả sử $\widehat{BAC} = 60^\circ$ và $BC = 10\text{ cm}$. Tính độ dài đoạn thẳng $MN$ và chu vi đường tròn ngoại tiếp tam giác $MIN$.
+\end{enumerate}
+\loigiai{
+\begin{center}
+\begin{tikzpicture}[scale=0.95]
+    \coordinate (B) at (-3,0);
+    \coordinate (C) at (3,0);
+    \coordinate (O) at (0,0);
+    \def\R{3}
+    \draw (O) circle (\R);
+    \coordinate (A) at (0.5,4.5);
+    \coordinate (M) at ($(A)!(C)!(B)$);
+    \coordinate (N) at ($(A)!(B)!(C)$);
+    \draw[thick] (A) -- (B) -- (C) -- cycle;
+    \draw[thick] (B) -- (N);
+    \draw[thick] (C) -- (M);
+    \coordinate (I) at (intersection of B--N and C--M);
+    \coordinate (H) at ($(B)!(A)!(C)$);
+    \draw[dashed] (A) -- (H);
+    \node[above] at (A) {$A$};
+    \node[below left] at (B) {$B$};
+    \node[below right] at (C) {$C$};
+    \node[below] at (O) {$O$};
+    \node[above left] at (M) {$M$};
+    \node[above right] at (N) {$N$};
+    \node[below] at (I) {$I$};
+    \node[below] at (H) {$H$};
+    \fill (A) circle (1.5pt) (B) circle (1.5pt) (C) circle (1.5pt) (M) circle (1.5pt) (N) circle (1.5pt) (I) circle (1.5pt) (H) circle (1.5pt);
+\end{tikzpicture}
+\end{center}
+\begin{enumerate}[a)]
+    \item Ta có $\widehat{BMC} = 90^\circ$ và $\widehat{BNC} = 90^\circ$ (các góc nội tiếp chắn nửa đường tròn đường kính $BC$).\\
+    Suy ra $CM \perp AB$ và $BN \perp AC$.\\
+    Trong tam giác $ABC$, hai đường cao $BN$ và $CM$ cắt nhau tại $I$, do đó $I$ là trực tâm của tam giác $ABC$.\\
+    Suy ra $AI \perp BC$.\\
+    Tứ giác $AM I N$ có $\widehat{AM I} = \widehat{AN I} = 90^\circ$, nên $\widehat{AM I} + \widehat{AN I} = 180^\circ$.\\
+    Do đó tứ giác $AM I N$ nội tiếp đường tròn đường kính $AI$.
+    \item Vì $D$ là điểm chính giữa của cung nhỏ $MN$ nên số đo cung $DM$ bằng số đo cung $DN$.\\
+    Suy ra $\widehat{DBM} = \widehat{DCN}$ (hai góc nội tiếp chắn hai cung bằng nhau).\\
+    Xét $\triangle PBM$ và $\triangle QCN$ có:
+    $$\widehat{PMB} = \widehat{QNC} = 90^\circ, \quad \widehat{PBM} = \widehat{QCN}.$$
+    Suy ra $\triangle PBM \backsim \triangle QCN$ (g-g) $\implies \widehat{BPM} = \widehat{CQN}$.\\
+    Mà $\widehat{DPC} = \widehat{BPM}$ và $\widehat{DQB} = \widehat{CQN}$ (các cặp góc đối đỉnh), nên $\widehat{DPC} = \widehat{DQB}$.\\
+    Xét $\triangle DPC$ và $\triangle DQB$ có:
+    $$\widehat{BDC}\text{ chung, } \widehat{DPC} = \widehat{DQB}.$$
+    Suy ra $\triangle DPC \backsim \triangle DQB$ (g-g) $\implies \dfrac{DP}{DQ} = \dfrac{DC}{DB} \implies DQ \cdot CD = BD \cdot DP$.\\
+    Từ $\triangle DPC \backsim \triangle DQB$ ta có $\widehat{DPC} = \widehat{DQB}$, suy ra $\widehat{IPD} = \widehat{IQD}$.
+    \item Xét $\triangle AMN$ và $\triangle ACB$ có:
+    $$\widehat{BAC}\text{ chung, } \widehat{AMN} = \widehat{ACB}\text{ (cùng bù với góc } \widehat{BMN}\text{)}.$$
+    Suy ra $\triangle AMN \backsim \triangle ACB$ (g-g) $\implies \dfrac{MN}{BC} = \dfrac{AM}{AC}$.\\
+    Trong tam giác vuông $AMC$, ta có $\dfrac{AM}{AC} = \cos \widehat{BAC} = \cos 60^\circ = \dfrac{1}{2}$.\\
+    Do đó:
+    $$MN = \dfrac{1}{2}BC = \dfrac{1}{2} \cdot 10 = 5\text{ (cm)}.$$
+    Vì tứ giác $AM I N$ nội tiếp đường tròn đường kính $AI$ nên đường tròn ngoại tiếp tam giác $MIN$ cũng chính là đường tròn đường kính $AI$.\\
+    Xét $\triangle AMI$ và $\triangle CMB$ có:
+    $$\widehat{AMI} = \widehat{CMB} = 90^\circ, \quad \widehat{MAI} = \widehat{MCB}\text{ (cùng phụ } \widehat{ABC}\text{)}.$$
+    Suy ra $\triangle AMI \backsim \triangle CMB$ (g-g) $\implies \dfrac{AI}{BC} = \dfrac{AM}{CM}$.\\
+    Trong tam giác vuông $AMC$, ta có $\dfrac{AM}{CM} = \cot \widehat{BAC} = \cot 60^\circ = \dfrac{\sqrt{3}}{3}$.\\
+    Suy ra:
+    $$AI = BC \cdot \dfrac{\sqrt{3}}{3} = 10 \cdot \dfrac{\sqrt{3}}{3} = \dfrac{10\sqrt{3}}{3}\text{ (cm)}.$$
+    Chu vi của đường tròn ngoại tiếp tam giác $MIN$ là:
+    $$C = \pi \cdot AI = \pi \cdot \dfrac{10\sqrt{3}}{3} = \dfrac{10\pi\sqrt{3}}{3}\text{ (cm)}.$$
+\end{enumerate}
+}
+\end{bt}
