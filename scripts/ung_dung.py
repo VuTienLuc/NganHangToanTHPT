@@ -292,6 +292,17 @@ class XuLy(BaseHTTPRequestHandler):
                         pass
                 return self.gui(200, {"ok": ok, "nhat_ky": log, "ten": mt["ten"], "thu_muc": rel, "bien_dich": dang_bd, "xem": bo,
                                       "ma_dung": ma_dung})
+            if u.path == "/api/thu-muc-de":  # cây thư mục đề + sắp xếp thư mục cũ theo lớp / chương / kỳ
+                import sap_xep_de as SX
+                v = d.get("viec") or "xem"
+                dong = []
+                if v == "lam":
+                    SX.lam(dong.append)
+                elif v == "hoan_tac":
+                    SX.hoan_tac(dong.append)
+                import glob as _g
+                return self.gui(200, {"ok": True, "cay": SX.cay(), "ke_hoach": SX.ke_hoach(), "nhat_ky": "\n".join(dong),
+                                      "co_hoan_tac": bool(_g.glob(os.path.join(SX.NHAT_KY, "*.json")))})
             if u.path == "/api/tep-de":     # file PDF / Excel / Word ở gốc thư mục đề vừa xuất
                 thu = os.path.realpath(os.path.join(GOC, d.get("thu_muc") or ""))
                 if not thu.startswith(os.path.realpath(os.path.join(GOC, "de-da-ra")) + os.sep) or not os.path.isdir(thu):

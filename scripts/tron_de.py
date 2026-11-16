@@ -10,7 +10,7 @@ Tuỳ chọn:
   --bien-dich    gọi pdflatex biên dịch luôn (cần LaTeX có gói vietnam)
   --so-ma-de 4   --ten GHK1_12A   (ghi đè giá trị trong ma trận)
 
-Kết quả: thư mục de-da-ra/<Tên kỳ thi> - <dd-mm-yyyy>/ gồm
+Kết quả: thư mục de-da-ra/Lớp N/<chương | Đề kiểm tra – Ôn thi/<kỳ>>/<yyyy-mm-dd> <Tên kỳ thi>/ gồm
   De_101.pdf…  LoiGiai_101.pdf…   (khi có --bien-dich và máy có pdflatex)
   DapAn.xlsx                      đáp án mọi mã đề theo mẫu Chấm Phiếu AI (sheet "Đáp án")
   tex/                            De_101.tex, De_101_LoiGiai.tex, TatCa_De.tex, khung LaTeX, dap_an.csv
@@ -506,11 +506,14 @@ def ten_thu_muc(s):
 import unicodedata
 ngay = time.strftime("%d-%m-%Y")
 goc_ten = ten_thu_muc(f"{mt['ten_ky_thi']} - {ngay}")
-out_goc, i = os.path.join(GOC, "de-da-ra", goc_ten), 2
 if mt.get("thu_muc_ra"):                               # bộ đề nhiều lần: mỗi lần một thư mục con định sẵn
     out_goc = os.path.join(GOC, mt["thu_muc_ra"]); goc_ten = os.path.basename(out_goc)
-while os.path.exists(out_goc):
-    out_goc = os.path.join(GOC, "de-da-ra", f"{goc_ten} ({i})"); i += 1
+    _g, i = out_goc, 2
+    while os.path.exists(out_goc):
+        out_goc = f"{_g} ({i})"; i += 1
+else:                                                  # de-da-ra/Lớp N/<chương | Đề kiểm tra – Ôn thi/<kỳ>>/<ngày> <tên>
+    out_goc = thu_muc_xuat(mt["ten_ky_thi"], [c.get("dang_key") for b in cac_bo for v in b.values() for c in v], "de")
+    goc_ten = os.path.basename(out_goc)
 out = os.path.join(out_goc, "tex")                        # mã nguồn LaTeX + khung
 os.makedirs(out_goc)
 shutil.copytree(src, out, ignore=shutil.ignore_patterns("mau_de.tex", "*.bat"))

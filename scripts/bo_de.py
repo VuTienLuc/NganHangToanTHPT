@@ -8,7 +8,7 @@ rồi xuất một lượt:
 CLI: python3 scripts/bo_de.py bo.json [--bien-dich]
 """
 import os, re, sys, json, time, subprocess, datetime, shutil
-from nh_core import GOC, tim_pdflatex, bien_dich_thu_muc, ten_khong_dau
+from nh_core import GOC, tim_pdflatex, bien_dich_thu_muc, ten_khong_dau, thu_muc_xuat
 
 SCRIPTS = os.path.dirname(os.path.abspath(__file__))
 
@@ -28,10 +28,8 @@ def chay(cfg, in_ra=print, bien_dich=False):
         raise ValueError("Bộ đề chưa có lần nào có số câu.")
     ten = ten_tm(cfg.get("ten") or "Bộ đề ôn tập")
     ngay = datetime.date.today().strftime("%d-%m-%Y")
-    goc = os.path.join(GOC, "de-da-ra", f"{ten} - {ngay}")
-    out, n = goc, 2
-    while os.path.exists(out):
-        out = f"{goc} ({n})"; n += 1
+    khoa = [k for l in lan for p in l["ma_tran"].get("phan", []) for y in p.get("yeu_cau", []) for k in re.split(r"[+,;]", str(y.get("dang") or ""))]
+    out = thu_muc_xuat(ten, khoa, "de")                  # de-da-ra/Lớp N/…/<ngày> <tên>
     os.makedirs(out)
     ma = int(cfg.get("ma_de_bat_dau") or 101)
     khong_lap = cfg.get("khong_lap", True)

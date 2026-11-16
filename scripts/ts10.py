@@ -11,7 +11,7 @@ NGÂN HÀNG TUYỂN SINH 10 – TOÁN TP.HCM (cấu trúc 7 bài, 10 điểm, 12
   • Tạo đề: mỗi bài lấy 1 mục trong kho (theo dạng chỉ định hoặc ngẫu nhiên theo tỉ lệ đề thật), nhiều đề không trùng bài.
 """
 import os, re, json, random, hashlib, datetime, collections, shutil, subprocess
-from nh_core import GOC, tim_pdflatex
+from nh_core import GOC, tim_pdflatex, thu_muc_xuat
 
 P_DANG = os.path.join(GOC, "du-lieu", "ts10_dang.json")
 P_KHO = os.path.join(GOC, "cau-hoi-ts10")      # ngoài cau-hoi/ để chỉ mục câu lẻ không đọc nhầm
@@ -331,10 +331,7 @@ def tao(cfg, in_ra=print, chon_san=None):
         bo, thieu = chon_bo(cfg)
     ngay = datetime.date.today().strftime("%d-%m-%Y")
     ten = re.sub(r'[\\/:*?"<>|]', "", cfg.get("ten") or "Đề luyện tuyển sinh 10")[:70].strip()
-    goc = os.path.join(GOC, "de-da-ra", f"Tuyển sinh 10 - {ten} - {ngay}")
-    out_goc, n = goc, 2
-    while os.path.exists(out_goc):
-        out_goc = f"{goc} ({n})"; n += 1
+    out_goc = thu_muc_xuat(ten, [], "ts10")             # de-da-ra/Tuyển sinh 10/<ngày> <tên>
     tex = os.path.join(out_goc, "tex"); os.makedirs(tex)
     chan = thoat(f"GV: {tt['giao_vien']}  ·  {ten}")
     for i, mot in enumerate(bo, 1):

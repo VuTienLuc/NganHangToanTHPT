@@ -463,3 +463,80 @@ def khoa_trung(noi_dung):
     if pa and (len(k) < 60 or _CHUNG.search(de)):
         k += "|" + "|".join(sorted(pa))
     return k
+
+
+# ---------------------------------------------------------------- THƯ MỤC XUẤT: de-da-ra/<Lớp>/<Chương | Đề kiểm tra – Ôn thi/<kỳ>>/<ngày> <tên>
+RA = os.path.join(GOC, "de-da-ra")
+_THU_TU_MON = "DHC"
+
+
+def _sach_ten(s, toi_da=110):
+    import unicodedata
+    s = unicodedata.normalize("NFC", unicodedata.normalize("NFKC", (s or "").replace("--", "–")))
+    s = re.sub(r'[\\/:*?"<>|\n\r\t]+', " ", s)
+    return re.sub(r"\s+", " ", s).strip(" .")[:toi_da].strip(" .") or "De"
+
+
+def _cac_chuong(lop):
+    """Thứ tự chương của một lớp (theo SGK: Đại số → Hình → …) → {khoá chương 3 ký tự: (số thứ tự, tên)}."""
+    id_map = tai_id_map()
+    ds = {}
+    for k, v in id_map.items():
+        m = re.match(r"(\d)([A-Z])(\d+)\?(\d+)-", k)
+        if not m or lop_tu_so(m.group(1)) != lop:
+            continue
+        ck = k[:3]
+        key = (0, int(m.group(4))) if lop <= 9 else (_THU_TU_MON.find(m.group(2)), int(m.group(3)))
+        if ck not in ds or key < ds[ck][0]:
+            ds[ck] = (key, (v.get("chap_name") or f"Chương {m.group(3)}").strip())
+    return {ck: (i, ten) for i, (ck, (_, ten)) in enumerate(sorted(ds.items(), key=lambda x: x[1][0]), 1)}
+
+
+def ky_thi(ten):
+    t = (ten or "").lower()
+    m = re.search(r"(giữa|cuối)\s*(?:học\s*)?k[ìỳiy]\s*(ii|i|2|1)\b", t)
+    if m:
+        return f"{m.group(1).capitalize()} học kì {'II' if m.group(2) in ('ii', '2') else 'I'}"
+    if "tuyển sinh" in t:
+        return "Tuyển sinh"
+    return "Đề kiểm tra khác"
+
+
+def nhom_thu_muc(dang_keys, loai="de", ten=""):
+    """→ đường dẫn tương đối trong de-da-ra (chưa gồm tên thư mục đề)."""
+    if loai == "ts10":
+        return "Tuyển sinh 10"
+    keys = [k for k in (dang_keys or []) if k and re.match(r"\d[A-Z]\d+", k)]
+    if not keys:
+        return "Khác"
+    lop = collections.Counter(lop_tu_so(k[0]) for k in keys).most_common(1)[0][0]
+    cua_lop = [k for k in keys if lop_tu_so(k[0]) == lop]
+    chuong = collections.Counter(k[:3] for k in cua_lop)
+    goc = f"Lớp {lop}"
+    ky = ky_thi(ten)
+    if loai == "de" and ky.endswith(("kì I", "kì II")):      # đề giữa kì / cuối kì: luôn về mục Đề kiểm tra – Ôn thi
+        return os.path.join(goc, "Đề kiểm tra – Ôn thi", ky)
+    if len(chuong) == 1 or (loai != "de" and chuong.most_common(1)[0][1] / len(cua_lop) >= 0.8):
+        ck = chuong.most_common(1)[0][0]
+        so, ten_ch = _cac_chuong(lop).get(ck, (0, ck))
+        return os.path.join(goc, _sach_ten(ten_ch, 70))
+    if loai == "de":
+        return os.path.join(goc, "Đề kiểm tra – Ôn thi", ky_thi(ten))
+    return os.path.join(goc, "Ôn tập nhiều chương")
+
+
+def ten_thu_muc_moi(ten, ngay=None):
+    """'<yyyy-mm-dd> <tên>' — sắp theo ngày, dễ tìm."""
+    import datetime
+    ngay = ngay or datetime.date.today()
+    ten = re.sub(r"\s*-\s*\d{2}-\d{2}-\d{4}\s*$", "", ten or "")
+    return _sach_ten(f"{ngay:%Y-%m-%d} {ten}")
+
+
+def thu_muc_xuat(ten, dang_keys=None, loai="de", ngay=None):
+    """Thư mục đề mới (chưa tạo, không trùng): de-da-ra/<nhóm>/<yyyy-mm-dd> <tên>[ (n)]."""
+    goc = os.path.join(RA, nhom_thu_muc(dang_keys, loai, ten), ten_thu_muc_moi(ten, ngay))
+    out, i = goc, 2
+    while os.path.exists(out):
+        out = f"{goc} ({i})"; i += 1
+    return out
