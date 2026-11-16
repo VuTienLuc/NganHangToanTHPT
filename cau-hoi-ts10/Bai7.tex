@@ -2983,3 +2983,182 @@ Cho đường tròn $(O; R)$ có đường kính $AB = 2R$. Gọi $C$ là trung 
 \end{enumerate}
 }
 \end{bt}
+
+
+\begin{bt}%[TS10 7.C3 7.a1 7.b1 7.c2]%[ma:aabd689f]
+% nguon: Đề tham khảo Tuyển sinh 10 năm học 2026-2027 Sở GD&ĐT TP.HCM - Cụm 5 Đề 1 - Bài 7
+Cho đường tròn $(O; R)$ có hai đường kính $AB$ và $CD$ vuông góc với nhau tại $O$. Gọi $I$ là trung điểm của bán kính $OB$. Tia $CI$ cắt đường tròn $(O)$ tại điểm $E$ ($E$ khác $C$). Gọi $H$ là giao điểm của $AE$ và $CD$.
+\begin{enumerate}[a)]
+	\item Chứng minh bốn điểm $O, I, E, D$ cùng thuộc một đường tròn và $CO \cdot CD = CI \cdot CE$.
+	\item Chứng minh $AH \cdot AE = 2R^2$ và $OA = 3 \cdot OH$.
+	\item Gọi $K$ là hình chiếu của $O$ trên đoạn thẳng $BD$, $Q$ là giao điểm của $AD$ và $BE$. Chứng minh ba điểm $Q, K, I$ thẳng hàng.
+\end{enumerate}
+\loigiai{
+\begin{center}
+	\begin{tikzpicture}[scale=0.9,>=stealth]
+		\coordinate (O) at (0,0);
+		\def\R{2.8}
+		\draw[thick] (O) circle (\R);
+		\coordinate (A) at (-\R,0);
+		\coordinate (B) at (\R,0);
+		\coordinate (C) at (0,\R);
+		\coordinate (D) at (0,-\R);
+		\coordinate (I) at ($(O)!0.5!(B)$);
+		% E la giao diem cua CI va (O)
+		% Toa do I(1.4, 0), C(0, 2.8)
+		% Vector CI: (1.4, -2.8). Phuong trinh duong thang CI: y - 2.8 = -2x => y = -2x + 2.8
+		% x^2 + (-2x + 2.8)^2 = R^2 = 7.84 => 5x^2 - 11.2x = 0 => x = 11.2 / 5 = 2.24
+		\coordinate (E) at (2.24, -1.68);
+		\coordinate (H) at (intersection of A--E and C--D);
+		\coordinate (K) at ($(B)!(O)!(D)$);
+		\coordinate (Q) at (intersection of A--D and B--E);
+
+		\draw[thick] (A) -- (B);
+		\draw[thick] (C) -- (D);
+		\draw[thick] (C) -- (E);
+		\draw[thick] (A) -- (E);
+		\draw[thick] (A) -- (Q);
+		\draw[thick] (B) -- (Q);
+		\draw[thick] (B) -- (D);
+		\draw[thick] (O) -- (K);
+		\draw[dashed] (E) -- (D);
+		\draw[dashed] (Q) -- (I);
+
+		\fill (O) circle (1.5pt) node[below left] {$O$};
+		\fill (A) circle (1.5pt) node[left] {$A$};
+		\fill (B) circle (1.5pt) node[right] {$B$};
+		\fill (C) circle (1.5pt) node[above] {$C$};
+		\fill (D) circle (1.5pt) node[below] {$D$};
+		\fill (I) circle (1.5pt) node[above] {$I$};
+		\fill (E) circle (1.5pt) node[below right] {$E$};
+		\fill (H) circle (1.5pt) node[above left] {$H$};
+		\fill (K) circle (1.5pt) node[above right] {$K$};
+		\fill (Q) circle (1.5pt) node[below left] {$Q$};
+	\end{tikzpicture}
+\end{center}
+\begin{enumerate}[a)]
+	\item Vì $AB \perp CD$ tại $O$ nên tam giác $IOD$ vuông tại $O$, do đó $O$ thuộc đường tròn đường kính $ID$.\\
+	Ta có $\widehat{CED} = 90^\circ$ (góc nội tiếp chắn nửa đường tròn đường kính $CD$), nên tam giác $IED$ vuông tại $E$, do đó $E$ thuộc đường tròn đường kính $ID$.\\
+	Vậy bốn điểm $O, I, E, D$ cùng thuộc đường tròn đường kính $ID$.\\
+	Xét $\Delta COI$ và $\Delta CED$ có:
+	\begin{itemize}
+		\item Góc $\widehat{OCE}$ chung;
+		\item $\widehat{COI} = \widehat{CED} = 90^\circ$.
+	\end{itemize}
+	Do đó $\Delta COI \backsim \Delta CED$ (g-g) $\implies \dfrac{CO}{CE} = \dfrac{CI}{CD} \implies CO \cdot CD = CI \cdot CE$.
+	\item Ta có $\widehat{AEB} = 90^\circ$ (góc nội tiếp chắn nửa đường tròn đường kính $AB$).\\
+	Xét $\Delta AOH$ và $\Delta AEB$ có:
+	\begin{itemize}
+		\item Góc $\widehat{EAB}$ chung;
+		\item $\widehat{AOH} = \widehat{AEB} = 90^\circ$.
+	\end{itemize}
+	Do đó $\Delta AOH \backsim \Delta AEB$ (g-g) $\implies \dfrac{AO}{AE} = \dfrac{AH}{AB} \implies AH \cdot AE = AO \cdot AB$.\\
+	Vì $AO = R$ và $AB = 2R$ nên:
+	$$AH \cdot AE = R \cdot 2R = 2R^2.$$
+	Vì $I$ là trung điểm của $OB$ nên $IB = \dfrac{R}{2}$, do đó $IA = AB - IB = 2R - \dfrac{R}{2} = \dfrac{3R}{2}$.\\
+	Suy ra $\dfrac{IA}{IB} = \dfrac{\dfrac{3R}{2}}{\dfrac{R}{2}} = 3$ (1).\\
+	Mặt khác, tam giác $OCD$ vuông cân tại $O$ ($OC = OD = R$) nên $\widehat{CDB} = 45^\circ$.\\
+	Suy ra $\widehat{CEB} = \widehat{CDB} = 45^\circ$ (cùng chắn cung $CB$).\\
+	Vì $\widehat{AEB} = 90^\circ$ nên $\widehat{AEI} = 90^\circ - \widehat{IEB} = 90^\circ - 45^\circ = 45^\circ$.\\
+	Suy ra $\widehat{AEI} = \widehat{IEB} = 45^\circ$, tức là $EI$ là tia phân giác của góc $\widehat{AEB}$ trong $\Delta AEB$.\\
+	Áp dụng tính chất đường phân giác:
+	$$\dfrac{EA}{EB} = \dfrac{IA}{IB} = 3\text{ (theo (1))}.$$
+	Từ $\Delta AOH \backsim \Delta AEB$, ta có $\dfrac{OA}{OH} = \dfrac{AE}{EB} = 3 \implies OA = 3 \cdot OH$.
+	\item Tam giác $ABD$ có $DO$ là đường trung tuyến ứng với cạnh $AB$. Vì $OA = OD = R$ nên $OD = 3 \cdot OH \implies OH = \dfrac{1}{3}OD$, suy ra $H$ là trọng tâm của tam giác $ABD$.\\
+	Tam giác $OBD$ cân tại $O$ ($OB = OD = R$) có đường cao $OK$, nên $OK$ cũng là đường trung tuyến, suy ra $K$ là trung điểm của $BD$.\\
+	Do đó $AK$ là đường trung tuyến của tam giác $ABD$, nên đường trung tuyến $AK$ phải đi qua trọng tâm $H$.\\
+	Mà $A, E, H$ thẳng hàng nên bốn điểm $A, H, E, K$ thẳng hàng.\\
+	Trong tam giác $QAB$, hai đường cao $BD$ và $AE$ (tức $AK$) cắt nhau tại $K$, nên $K$ là trực tâm của tam giác $QAB$.\\
+	Suy ra $QK \perp AB$ (3).\\
+	Mặt khác, xét tam giác $OBD$ có $I$ là trung điểm $OB$ và $K$ là trung điểm $BD$, nên $IK$ là đường trung bình của tam giác $OBD$.\\
+	Suy ra $IK \parallel OD$. Mà $OD \perp AB$ tại $O$, nên $IK \perp AB$ (4).\\
+	Từ (3) và (4), suy ra ba điểm $Q, K, I$ thẳng hàng.
+\end{enumerate}
+}
+\end{bt}
+
+\begin{bt}%[TS10 7.C3 7.a1 7.b1 7.c1]%[ma:57578275]
+% nguon: Đề tham khảo Tuyển sinh 10 năm học 2026-2027 Sở GD&ĐT TP.HCM - Cụm 5 Đề 2 - Bài 7
+Từ điểm $A$ nằm ngoài đường tròn $(O; R)$, vẽ tiếp tuyến $AB$ với đường tròn ($B$ là tiếp điểm) và đường kính $BC$. Đoạn thẳng $AC$ cắt đường tròn $(O)$ tại điểm $D$ ($D$ khác $C$). Kẻ $BH \perp AO$ tại $H$.
+\begin{enumerate}[a)]
+	\item Chứng minh $BD \perp AC$ tại $D$ và bốn điểm $A, B, H, D$ cùng thuộc một đường tròn.
+	\item Chứng minh $OB^2 = OH \cdot OA$ và $\widehat{OHC} = \widehat{AHD}$.
+	\item Khi $AH = 12\text{ cm}$ và $OH = 9\text{ cm}$, hãy tính diện tích hình viên phân giới hạn bởi cung nhỏ $BD$ và dây cung $BD$ (kết quả làm tròn đến chữ số thập phân thứ hai).
+\end{enumerate}
+\loigiai{
+\begin{center}
+	\begin{tikzpicture}[scale=0.9,>=stealth]
+		\coordinate (O) at (0,0);
+		\def\R{2.8}
+		\draw[thick] (O) circle (\R);
+		\coordinate (B) at (-\R,0);
+		\coordinate (C) at (\R,0);
+		% Tiep tuyen tai B thang dung: x = -R
+		% Cho A co toa do (-R, 4.2)
+		\coordinate (A) at (-\R,3.8);
+		\coordinate (H) at ($(A)!(B)!(O)$);
+		% Giao diem D cua AC voi (O)
+		\path [name path=circle] (O) circle (\R);
+		\path [name path=AC] (A) -- (C);
+		\coordinate (D) at (0.97,2.62);
+
+		\draw[thick] (B) -- (C);
+		\draw[thick] (A) -- (B);
+		\draw[thick] (A) -- (C);
+		\draw[thick] (B) -- (D);
+		\draw[thick] (A) -- (O);
+		\draw[thick] (B) -- (H);
+		\draw[dashed] (O) -- (D);
+		\draw[dashed] (H) -- (C);
+		\draw[dashed] (H) -- (D);
+
+		\fill (O) circle (1.5pt) node[below] {$O$};
+		\fill (B) circle (1.5pt) node[left] {$B$};
+		\fill (C) circle (1.5pt) node[right] {$C$};
+		\fill (A) circle (1.5pt) node[above left] {$A$};
+		\fill (H) circle (1.5pt) node[above right] {$H$};
+		\fill (D) circle (1.5pt) node[above] {$D$};
+	\end{tikzpicture}
+\end{center}
+\begin{enumerate}[a)]
+	\item Ta có $\widehat{BDC} = 90^\circ$ (góc nội tiếp chắn nửa đường tròn đường kính $BC$).\\
+	Suy ra $BD \perp AC$ tại $D$.\\
+	Xét tứ giác $ABHD$:
+	\begin{itemize}
+		\item Vì $BH \perp AO$ tại $H$ nên $\widehat{AHB} = 90^\circ$, do đó tam giác $ABH$ vuông tại $H$ nội tiếp đường tròn đường kính $AB$;
+		\item Vì $BD \perp AC$ tại $D$ nên $\widehat{ADB} = 90^\circ$, do đó tam giác $ADB$ vuông tại $D$ nội tiếp đường tròn đường kính $AB$.
+	\end{itemize}
+	Vậy bốn điểm $A, B, H, D$ cùng thuộc đường tròn đường kính $AB$.
+	\item Vì $AB$ là tiếp tuyến tại $B$ của $(O)$ nên $AB \perp OB$ tại $B$.\\
+	Tam giác $ABO$ vuông tại $B$ có đường cao $BH$ ($BH \perp AO$), áp dụng hệ thức lượng ta có:
+	$$OB^2 = OH \cdot OA.$$
+	Vì $OB = OC = R$ nên $OC^2 = OH \cdot OA \implies \dfrac{OH}{OC} = \dfrac{OC}{OA}$.\\
+	Xét $\Delta OHC$ và $\Delta OCA$ có:
+	\begin{itemize}
+		\item Góc $\widehat{COA}$ chung;
+		\item $\dfrac{OH}{OC} = \dfrac{OC}{OA}$.
+	\end{itemize}
+	Do đó $\Delta OHC \backsim \Delta OCA$ (c-g-c) $\implies \widehat{OHC} = \widehat{OCA}$ (1).\\
+	Trong tam giác vuông $ABC$ (vuông tại $B$): $\widehat{OCA} = \widehat{BCA} = 90^\circ - \widehat{BAC} = \widehat{ABD}$ (2).\\
+	Mặt khác, tứ giác $ABHD$ nội tiếp nên $\widehat{ABD} = \widehat{AHD}$ (hai góc nội tiếp cùng chắn cung $AD$) (3).\\
+	Từ (1), (2) và (3) suy ra $\widehat{OHC} = \widehat{AHD}$.
+	\item Khi $AH = 12\text{ cm}$ và $OH = 9\text{ cm}$, ta có:
+	$$OA = AH + OH = 12 + 9 = 21\text{ (cm)}.$$
+	Theo câu b:
+	$$R^2 = OB^2 = OH \cdot OA = 9 \cdot 21 = 189 \implies R = \sqrt{189} = 3\sqrt{21}\text{ (cm)}.$$
+	Tam giác $ABO$ vuông tại $B$ có:
+	$$AB = \sqrt{OA^2 - OB^2} = \sqrt{21^2 - 189} = \sqrt{441 - 189} = \sqrt{252} = 6\sqrt{7}\text{ (cm)}.$$
+	Tam giác $ABC$ vuông tại $B$ có đường cao $BD$:
+	$$BD = \dfrac{AB \cdot BC}{AC} = \dfrac{AB \cdot 2R}{\sqrt{AB^2 + (2R)^2}} = \dfrac{6\sqrt{7} \cdot 6\sqrt{21}}{\sqrt{252 + 756}} = \dfrac{252\sqrt{3}}{\sqrt{1008}} = \dfrac{252\sqrt{3}}{12\sqrt{7}} = 3\sqrt{21}\text{ (cm)}.$$
+	Nhận thấy $BD = OB = OD = R = 3\sqrt{21}\text{ cm}$, do đó tam giác $OBD$ là tam giác đều.\\
+	Suy ra góc ở tâm $\widehat{BOD} = 60^\circ$.\\
+	Diện tích hình quạt tròn giới hạn bởi cung nhỏ $BD$ là:
+	$$S_q = \dfrac{\pi R^2 \cdot 60^\circ}{360^\circ} = \dfrac{\pi \cdot 189}{6} = \dfrac{63\pi}{2} \approx 98{,}96\text{ (cm}^2\text{)}.$$
+	Diện tích tam giác đều $OBD$ là:
+	$$S_{\Delta OBD} = \dfrac{R^2\sqrt{3}}{4} = \dfrac{189\sqrt{3}}{4} \approx 81{,}84\text{ (cm}^2\text{)}.$$
+	Diện tích hình viên phân cần tìm là:
+	$$S = S_q - S_{\Delta OBD} \approx 98{,}96 - 81{,}84 = 17{,}12\text{ (cm}^2\text{)}.$$
+	Vậy diện tích hình viên phân là $17{,}12\text{ cm}^2$.
+\end{enumerate}
+}
+\end{bt}
