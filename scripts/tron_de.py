@@ -175,7 +175,31 @@ def ung_vien(loai, yc):
             them([c for c in co_ban if c["dang_key"].startswith(tt_chuong) and not rx.match(c["dang_key"])
                   and not (tt_bai and c["dang_key"].startswith(tt_bai))
                   and (not mm or c["muc_chuan"] in mm)], "bài khác cùng chương")
+    if mt.get("bu_khac_muc") and muc:
+        # vẫn thiếu (thường khi nhiều đề không trùng câu): lấy câu cùng nhóm bài/chương ở MỨC GẦN NHẤT
+        da_xet = set(muc) | (nhom if mt.get("bu_cung_nhom", True) else set())
+        bai_k, chuong_k = set(), set()
+        for k in tach_gop(yc["dang"]):
+            mb = re.match(r"(\d[A-Z]\d+)[?A-Z](\d+)", k); mc = re.match(r"(\d[A-Z]\d+)", k)
+            if mb: bai_k.add(f"{mb.group(1)}?{mb.group(2)}-")
+            if mc: chuong_k.add(mc.group(1) + "?")
+        bai_k, chuong_k = tuple(bai_k), tuple(chuong_k)
+        vi = {m: THU_MUC_BU[m] for m in "NHVC"}
+        for d in (1, 2, 3):
+            muc_d = {m for m in "NHVC" if m not in da_xet and min(abs(vi[m] - vi[x]) for x in muc if x in vi) == d}
+            if not muc_d:
+                continue
+            ten_muc = "/".join(TEN_MUC_BU[m] for m in sorted(muc_d, key=vi.get))
+            if bai_k:
+                them([c for c in co_ban if c["dang_key"].startswith(bai_k) and c["muc_chuan"] in muc_d],
+                     f"cùng bài, mức {ten_muc}")
+            if chuong_k:
+                them([c for c in co_ban if c["dang_key"].startswith(chuong_k) and not (bai_k and c["dang_key"].startswith(bai_k))
+                      and c["muc_chuan"] in muc_d], f"cùng chương, mức {ten_muc}")
     return tang
+
+THU_MUC_BU = {"N": 0, "H": 1, "V": 2, "C": 3}
+TEN_MUC_BU = {"N": "NB", "H": "TH", "V": "VD", "C": "VDC"}
 
 def lap_ke_hoach(so_ma, khac_cau):
     """Chọn câu cho mọi mã đề một lượt. Thiếu câu đúng mức thì bù mức cùng nhóm (N↔H, V↔C),
