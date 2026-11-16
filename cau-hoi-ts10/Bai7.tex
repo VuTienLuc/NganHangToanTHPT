@@ -5231,3 +5231,160 @@ Từ điểm $S$ nằm ngoài đường tròn $(O; R)$ vẽ hai tiếp tuyến $
 \end{enumerate}
 }
 \end{bt}
+
+
+\begin{bt}%[TS10 7.C1 7.a1 7.b1 7.c1]%[ma:019e54b3]
+% nguon: Đề tham khảo Tuyển sinh 10 năm học 2026-2027 Sở GD&ĐT TP.HCM - Cụm 14 Đề 2 (Đề số 41)
+Cho đường tròn $(O; R)$ và đường thẳng $d$ không cắt $(O)$. Dựng đường thẳng $OH$ vuông góc với $d$ tại $H$. Trên đường thẳng $d$ lấy điểm $K$ ($K$ khác $H$), qua $K$ vẽ hai tiếp tuyến $KA, KB$ của $(O)$ ($A, B$ là các tiếp điểm) sao cho $A$ và $H$ nằm về hai phía của đường thẳng $OK$.
+\begin{enumerate}[a)]
+	\item Chứng minh tứ giác $KAOH$ nội tiếp đường tròn.
+	\item Đường thẳng $AB$ cắt đường thẳng $OH$ tại $I$. Chứng minh $IA \cdot IB = IH \cdot IO$.
+	\item Khi $OK = 2R$ và $OH = R\sqrt{3}$, hãy tính diện tích tam giác $KAB$ theo $R$.
+\end{enumerate}
+\loigiai{
+\begin{center}
+\begin{tikzpicture}[>=stealth,scale=1.1]
+	\def\R{2.2}
+	\coordinate (O) at (0,0);
+	\draw[thick] (O) circle (\R);
+	% K ở (3.5, 0.5)
+	\coordinate (K) at (3.5,0.5);
+	\coordinate (H) at (0,-2.6);
+	\draw (O) -- (0,-3.2);
+	\draw (-2,-2.6) -- (4.5,-2.6) node[right] {$d$};
+	\draw (O) -- (K);
+	% Tiếp tuyến KA, KB
+	\coordinate (A) at ({2.2*cos(59.6)},{2.2*sin(59.6)});
+	\coordinate (B) at ({2.2*cos(-43.4)},{2.2*sin(-43.4)});
+	\draw (K) -- (A) -- (O) -- (B) -- (K);
+	\draw (A) -- (B);
+	\draw (K) -- (H);
+	\coordinate (M) at (intersection of O--K and A--B);
+	% Giao điểm I của AB và đường thẳng OH (trục tung)
+	\coordinate (I) at (intersection of A--B and O--H);
+	\draw (B) -- (I);
+	\draw (O) -- (I);
+	% Ký hiệu
+	\fill (O) circle (1.5pt) node[above left] {$O$}
+		  (K) circle (1.5pt) node[right] {$K$}
+		  (H) circle (1.5pt) node[below left] {$H$}
+		  (A) circle (1.5pt) node[above] {$A$}
+		  (B) circle (1.5pt) node[below right] {$B$}
+		  (M) circle (1.5pt) node[above right] {$M$}
+		  (I) circle (1.5pt) node[left] {$I$};
+\end{tikzpicture}
+\end{center}
+\begin{enumerate}[a)]
+	\item Vì $KA$ là tiếp tuyến của $(O)$ tại $A$ nên $KA \perp OA \implies \widehat{KAO} = 90^\circ$.
+	Tam giác $KAO$ vuông tại $A$ nên nội tiếp đường tròn đường kính $KO$.
+	Lại có $OH \perp d$ tại $H$ nên $\widehat{KHO} = 90^\circ$.
+	Tam giác $KHO$ vuông tại $H$ nên nội tiếp đường tròn đường kính $KO$.
+	Suy ra bốn điểm $K, A, O, H$ cùng thuộc đường tròn đường kính $KO$, do đó tứ giác $KAOH$ nội tiếp.
+	\item Vì $KB$ là tiếp tuyến của $(O)$ tại $B$ nên $KB \perp OB \implies \widehat{KBO} = 90^\circ$.
+	Tam giác $KBO$ vuông tại $B$ nên nội tiếp đường tròn đường kính $KO$.
+	Kết hợp với câu a, ta có $5$ điểm $K, A, O, B, H$ cùng thuộc đường tròn đường kính $KO$.
+	Suy ra tứ giác $AOHB$ nội tiếp.
+	Xét $\triangle IAH$ và $\triangle IOB$ có:
+	\begin{itemize}
+		\item $\widehat{AIH} = \widehat{OIB}$ (hai góc đối đỉnh);
+		\item $\widehat{IAH} = \widehat{IOB}$ (hai góc nội tiếp cùng chắn cung $BH$).
+	\end{itemize}
+	Do đó $\triangle IAH \sim \triangle IOB$ (g-g).
+	Suy ra $\dfrac{IA}{IO} = \dfrac{IH}{IB} \implies IA \cdot IB = IH \cdot IO$.
+	\item Gọi $M$ là giao điểm của $OK$ và $AB$.
+	Theo tính chất hai tiếp tuyến cắt nhau, ta có $KA = KB$ và $OA = OB = R$, nên $OK$ là đường trung trực của đoạn thẳng $AB$, do đó $OK \perp AB$ tại $M$.
+	Xét tam giác vuông $OAK$ tại $A$, có đường cao $AM$:
+	$$AK = \sqrt{OK^2 - OA^2} = \sqrt{(2R)^2 - R^2} = R\sqrt{3}.$$
+	Áp dụng hệ thức lượng trong tam giác vuông $OAK$, ta có:
+	$$OM = \dfrac{OA^2}{OK} = \dfrac{R^2}{2R} = \dfrac{R}{2}.$$
+	$$AM = \dfrac{OA \cdot AK}{OK} = \dfrac{R \cdot R\sqrt{3}}{2R} = \dfrac{R\sqrt{3}}{2}.$$
+	Vì $OK$ là trung trực của $AB$ nên $M$ là trung điểm của $AB$, suy ra:
+	$$AB = 2AM = 2 \cdot \dfrac{R\sqrt{3}}{2} = R\sqrt{3}.$$
+	Độ dài đoạn thẳng $KM$ là:
+	$$KM = OK - OM = 2R - \dfrac{R}{2} = \dfrac{3R}{2}.$$
+	Diện tích tam giác $KAB$ là:
+	$$S_{\triangle KAB} = \dfrac{1}{2} KM \cdot AB = \dfrac{1}{2} \cdot \dfrac{3R}{2} \cdot R\sqrt{3} = \dfrac{3R^2\sqrt{3}}{4}.$$
+	Vậy diện tích tam giác $KAB$ là $\dfrac{3R^2\sqrt{3}}{4}$.
+\end{enumerate}
+}
+\end{bt}
+
+\begin{bt}%[TS10 7.C1 7.a1 7.b1 7.c1]%[ma:24dcd7e6]
+% nguon: Đề tham khảo Tuyển sinh 10 năm học 2026-2027 Sở GD&ĐT TP.HCM - Cụm 14 Đề 3 (Đề số 42)
+Từ điểm $M$ nằm ngoài đường tròn $(O)$, kẻ đến $(O)$ các tiếp tuyến $MP, MQ$ và cát tuyến $MAB$ không đi qua tâm ($A, B, P, Q$ thuộc $(O)$, $A$ nằm giữa $M$ và $B$). Gọi $I$ là trung điểm của dây $AB$, $E$ là giao điểm của $PQ$ và $AB$.
+\begin{enumerate}[a)]
+	\item Chứng minh tứ giác $MPOQ$ nội tiếp và $OM \perp PQ$.
+	\item Chứng minh $MP^2 = MI \cdot ME$.
+	\item Giả sử $PB = a$ và $A$ là trung điểm của đoạn thẳng $MB$. Tính độ dài đoạn thẳng $AP$ theo $a$.
+\end{enumerate}
+\loigiai{
+\begin{center}
+\begin{tikzpicture}[>=stealth,scale=1.1]
+	\def\R{2.2}
+	\coordinate (O) at (0,0);
+	\draw[thick] (O) circle (\R);
+	\coordinate (M) at (-4.5,0);
+	% Tiếp tuyến MP, MQ với MO = 4.5, R = 2.2 -> góc khoảng 60.7 độ
+	\coordinate (P) at ({2.2*cos(119.3)},{2.2*sin(119.3)});
+	\coordinate (Q) at ({2.2*cos(240.7)},{2.2*sin(240.7)});
+	\draw (M) -- (P) -- (O) -- (Q) -- (M);
+	\draw (P) -- (Q);
+	\draw (O) -- (M);
+	% Cát tuyến MAB sao cho A nằm giữa M và B
+	\coordinate (A) at (-1.8,1.26);
+	\coordinate (B) at (0.9,2.0);
+	\draw (M) -- (B);
+	\coordinate (I) at ($(A)!0.5!(B)$);
+	\draw (O) -- (I);
+	\coordinate (E) at (intersection of P--Q and M--B);
+	\draw (P) -- (B);
+	\draw (P) -- (A);
+	% Ký hiệu
+	\fill (O) circle (1.5pt) node[below] {$O$}
+		  (M) circle (1.5pt) node[left] {$M$}
+		  (P) circle (1.5pt) node[above left] {$P$}
+		  (Q) circle (1.5pt) node[below left] {$Q$}
+		  (A) circle (1.5pt) node[above left] {$A$}
+		  (B) circle (1.5pt) node[above right] {$B$}
+		  (I) circle (1.5pt) node[above] {$I$}
+		  (E) circle (1.5pt) node[below right] {$E$};
+\end{tikzpicture}
+\end{center}
+\begin{enumerate}[a)]
+	\item Vì $MP, MQ$ là hai tiếp tuyến của $(O)$ nên $MP \perp OP$ và $MQ \perp OQ$, suy ra:
+	$$\widehat{MPO} = 90^\circ \text{ và } \widehat{MQO} = 90^\circ.$$
+	Tứ giác $MPOQ$ có $\widehat{MPO} + \widehat{MQO} = 90^\circ + 90^\circ = 180^\circ$, do đó tứ giác $MPOQ$ nội tiếp đường tròn đường kính $MO$.
+	Lại có $MP = MQ$ (tính chất hai tiếp tuyến cắt nhau) và $OP = OQ = R$ nên $OM$ là đường trung trực của đoạn thẳng $PQ$, suy ra $OM \perp PQ$.
+	\item Vì $I$ là trung điểm của dây cung $AB$ không đi qua tâm nên $OI \perp AB$ tại $I \implies \widehat{MIO} = 90^\circ$.
+	Tam giác $MIO$ vuông tại $I$ nên nội tiếp đường tròn đường kính $MO$.
+	Suy ra $5$ điểm $M, P, I, O, Q$ cùng thuộc đường tròn đường kính $MO$.
+	Khi đó:
+	$$\widehat{MIP} = \widehat{MQP} \text{ (hai góc nội tiếp cùng chắn cung } MP\text{)}.$$
+	Mà tam giác $MPQ$ cân tại $M$ (do $MP = MQ$) nên $\widehat{MQP} = \widehat{MPQ}$.
+	Suy ra $\widehat{MIP} = \widehat{MPE}$.
+	Xét $\triangle MPE$ và $\triangle MIP$ có:
+	\begin{itemize}
+		\item $\widehat{PME}$ là góc chung;
+		\item $\widehat{MPE} = \widehat{MIP}$ (chứng minh trên).
+	\end{itemize}
+	Do đó $\triangle MPE \sim \triangle MIP$ (g-g).
+	Suy ra $\dfrac{MP}{MI} = \dfrac{ME}{MP} \implies MP^2 = MI \cdot ME$.
+	\item Xét $\triangle MPA$ và $\triangle MBP$ có:
+	\begin{itemize}
+		\item $\widehat{PMB}$ là góc chung;
+		\item $\widehat{MPA} = \widehat{MBP}$ (góc tạo bởi tia tiếp tuyến và dây cung bằng góc nội tiếp cùng chắn cung $PA$).
+	\end{itemize}
+	Do đó $\triangle MPA \sim \triangle MBP$ (g-g).
+	Suy ra:
+	$$\dfrac{MP}{MB} = \dfrac{MA}{MP} = \dfrac{PA}{BP} \implies MP^2 = MA \cdot MB.$$
+	Vì $A$ là trung điểm của đoạn thẳng $MB$ nên $MB = 2MA$.
+	Do đó:
+	$$MP^2 = MA \cdot 2MA = 2MA^2 \implies MP = MA\sqrt{2}.$$
+	Mặt khác, từ tỉ số đồng dạng ta có:
+	$$\dfrac{PA}{BP} = \dfrac{MA}{MP} = \dfrac{MA}{MA\sqrt{2}} = \dfrac{1}{\sqrt{2}}.$$
+	Suy ra:
+	$$PA = \dfrac{BP}{\sqrt{2}} = \dfrac{a}{\sqrt{2}} = \dfrac{a\sqrt{2}}{2}.$$
+	Vậy $AP = \dfrac{a\sqrt{2}}{2}$.
+\end{enumerate}
+}
+\end{bt}
