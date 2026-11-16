@@ -2786,3 +2786,200 @@ Cho đường tròn $(O)$ có $AB$ là một dây cung không đi qua tâm. Gọ
 \end{enumerate}
 }
 \end{bt}
+
+
+\begin{bt}%[TS10 7.C1 7.a2 7.b4 7.c3]%[ma:b32cdb2d]
+% nguon: Đề tham khảo Tuyển sinh 10 năm học 2026-2027 Sở GD&ĐT TP.HCM - Cụm 4 Đề 2 - Bài 7
+Từ một điểm $A$ nằm ngoài đường tròn $(O; R)$, kẻ hai tiếp tuyến $AB, AC$ với đường tròn ($B, C$ là hai tiếp điểm). Vẽ đường kính $BS$ của đường tròn $(O)$. Đoạn thẳng $OA$ cắt đường tròn $(O)$ tại điểm $I$.
+\begin{enumerate}[a)]
+	\item Chứng minh $OA \perp BC$ tại $H$ và $BC^2 = 2 \cdot SC \cdot HA$.
+	\item Gọi $r$ là bán kính đường tròn nội tiếp tam giác $ABC$. Tính độ dài đoạn thẳng $CS$ theo $R$ và $r$.
+	\item Vẽ $HD \perp AB$ tại $D$. Lấy $F$ là trung điểm của đoạn thẳng $OB$, gọi $E$ là giao điểm của $AF$ với $CD$. Chứng minh bốn điểm $C, H, E, A$ cùng thuộc một đường tròn.
+\end{enumerate}
+\loigiai{
+\begin{center}
+	\begin{tikzpicture}[scale=0.9,>=stealth]
+		\coordinate (O) at (0,0);
+		\def\R{2.8}
+		\draw[thick] (O) circle (\R);
+		\coordinate (B) at (0,\R);
+		\coordinate (S) at (0,-\R);
+		% Tiep tuyen tai B la duong ngang y = R
+		% Cho A nam ben trai: A(-4, R)
+		\coordinate (A) at (-4,\R);
+		% Tiep tuyen AC: C nam tren (O). goc AOB vuong tai B
+		% OA vuong goc BC tai H
+		% De ve AC: C la doi xung cua B qua OA
+		\coordinate (H) at ($(A)!(O)!(B)$); % tam
+		% Do AB la tiep tuyen tai B nen goc ABO = 90. A(-4, R), B(0, R), O(0,0) => ABO vuong tai B.
+		\coordinate (M) at ($(A)!0.5!(O)$);
+		\path [name path=circle] (O) circle (\R);
+		\coordinate (C) at (-2.15,-1.79);
+		\coordinate (H) at ($(B)!0.5!(C)$);
+		\coordinate (I) at ($(O)!{\R/sqrt(16+\R*\R)}!(A)$);
+		\coordinate (D) at ($(A)!(H)!(B)$);
+		\coordinate (F) at ($(O)!0.5!(B)$);
+		\coordinate (E) at (intersection of A--F and C--D);
+
+		\draw[thick] (A) -- (B) -- (S);
+		\draw[thick] (A) -- (C);
+		\draw[thick] (B) -- (C) -- (S);
+		\draw[thick] (O) -- (A);
+		\draw[thick] (H) -- (D);
+		\draw[thick] (A) -- (E);
+		\draw[thick] (C) -- (E);
+		\draw[dashed] (O) -- (C);
+
+		\fill (O) circle (1.5pt) node[right] {$O$};
+		\fill (B) circle (1.5pt) node[above] {$B$};
+		\fill (S) circle (1.5pt) node[below] {$S$};
+		\fill (A) circle (1.5pt) node[left] {$A$};
+		\fill (C) circle (1.5pt) node[below left] {$C$};
+		\fill (H) circle (1.5pt) node[above left] {$H$};
+		\fill (I) circle (1.5pt) node[above right] {$I$};
+		\fill (D) circle (1.5pt) node[above] {$D$};
+		\fill (F) circle (1.5pt) node[right] {$F$};
+		\fill (E) circle (1.5pt) node[left] {$E$};
+	\end{tikzpicture}
+\end{center}
+\begin{enumerate}[a)]
+	\item Ta có $AB = AC$ (tính chất hai tiếp tuyến cắt nhau) và $OB = OC = R$ (bán kính của $(O)$).\\
+	Suy ra $OA$ là đường trung trực của đoạn thẳng $BC$, do đó $OA \perp BC$ tại $H$ và $H$ là trung điểm của $BC$.\\
+	Xét tam giác $SBC$ có $O$ là trung điểm của $SB$ và $H$ là trung điểm của $BC$, nên $OH$ là đường trung bình của tam giác $SBC$.\\
+	Suy ra $SC = 2 \cdot OH$.\\
+	Xét tam giác $ABO$ vuông tại $B$ có đường cao $BH$ ($BH \perp OA$ tại $H$), áp dụng hệ thức lượng ta có:
+	$$BH^2 = AH \cdot OH.$$
+	Vì $H$ là trung điểm của $BC$ nên $BC = 2 \cdot BH \implies BC^2 = 4 \cdot BH^2$.\\
+	Do đó:
+	$$BC^2 = 4 \cdot AH \cdot OH = 2 \cdot HA \cdot (2 \cdot OH) = 2 \cdot SC \cdot HA.$$
+	\item Tam giác $OCI$ có $OC = OI = R$ nên tam giác $OCI$ cân tại $O$, suy ra $\widehat{OCI} = \widehat{OIC}$.\\
+	Vì $AC$ là tiếp tuyến của $(O)$ tại $C$ nên $AC \perp OC \implies \widehat{ACI} = 90^\circ - \widehat{OCI}$.\\
+	Trong tam giác $HIC$ vuông tại $H$, ta có $\widehat{HCI} = 90^\circ - \widehat{HIC}$.\\
+	Mà $\widehat{OCI} = \widehat{OIC} = \widehat{HIC}$, do đó $\widehat{ACI} = \widehat{HCI}$, tức là $CI$ là tia phân giác của góc $\widehat{ACB}$.\\
+	Mặt khác, $AI$ là tia phân giác của góc $\widehat{BAC}$ (tính chất hai tiếp tuyến cắt nhau).\\
+	Do đó $I$ là giao điểm các đường phân giác trong tam giác $ABC$, tức $I$ là tâm đường tròn nội tiếp tam giác $ABC$.\\
+	Vì $IH \perp BC$ nên $IH = r$ (bán kính đường tròn nội tiếp $\Delta ABC$).\\
+	Độ dài đoạn thẳng $OH$ là:
+	$$OH = OI - IH = R - r.$$
+	Vì $SC = 2 \cdot OH$ nên:
+	$$CS = 2(R - r).$$
+	\item Kẻ $CK \perp AB$ tại $K$. Vì $HD \perp AB$ nên $HD \parallel CK$.\\
+	Xét tam giác $BCK$ có $H$ là trung điểm $BC$ và $HD \parallel CK$ nên $D$ là trung điểm của đoạn thẳng $BK$.\\
+	Ta có $\widehat{AOB} = \widehat{CBK}$ (vì cùng phụ với góc $\widehat{OBH}$).\\
+	Xét hai tam giác vuông $\Delta ABO$ và $\Delta CKB$ có:
+	$$\widehat{ABO} = \widehat{CKB} = 90^\circ, \quad \widehat{AOB} = \widehat{CBK}.$$
+	Do đó $\Delta ABO \backsim \Delta CKB$ (g-g) $\implies \dfrac{AB}{CK} = \dfrac{BO}{KB}$.\\
+	Vì $F$ là trung điểm $OB \implies BO = 2BF$ và $D$ là trung điểm $BK \implies KB = 2KD$, nên:
+	$$\dfrac{AB}{CK} = \dfrac{2BF}{2KD} = \dfrac{BF}{KD} \implies \dfrac{AB}{BF} = \dfrac{CK}{KD}.$$
+	Xét $\Delta ABF$ và $\Delta CKD$ có:
+	$$\widehat{ABF} = \widehat{CKD} = 90^\circ, \quad \dfrac{AB}{BF} = \dfrac{CK}{KD}.$$
+	Do đó $\Delta ABF \backsim \Delta CKD$ (c-g-c) $\implies \widehat{BFA} = \widehat{CDK}$.\\
+	Trong tam giác vuông $ABF$ vuông tại $B$, ta có $\widehat{BFA} + \widehat{BAF} = 90^\circ$.\\
+	Suy ra $\widehat{CDK} + \widehat{BAF} = 90^\circ$, điều này chứng tỏ trong tam giác $ADE$, góc $\widehat{AED} = 90^\circ$ hay $AF \perp CD$ tại $E$.\\
+	Tam giác $AEC$ vuông tại $E$ nên nội tiếp đường tròn đường kính $AC$.\\
+	Tam giác $AHC$ vuông tại $H$ nên nội tiếp đường tròn đường kính $AC$.\\
+	Vậy bốn điểm $C, H, E, A$ cùng thuộc một đường tròn (đường tròn đường kính $AC$).
+\end{enumerate}
+}
+\end{bt}
+
+\begin{bt}%[TS10 7.C3 7.a1 7.b1 7.c1]%[ma:ce64ebec]
+% nguon: Đề tham khảo Tuyển sinh 10 năm học 2026-2027 Sở GD&ĐT TP.HCM - Cụm 4 Đề 3 - Bài 7
+Cho đường tròn $(O; R)$ có đường kính $AB = 2R$. Gọi $C$ là trung điểm của đoạn thẳng $AO$. Vẽ đường thẳng $Cx \perp AB$ tại $C$, $Cx$ cắt đường tròn $(O)$ tại điểm $I$. Gọi $K$ là trung điểm của đoạn thẳng $CI$, tia $AK$ cắt đường tròn $(O)$ tại điểm $M$ ($M$ khác $A$). Đường thẳng $Cx$ cắt đường thẳng $BM$ tại $D$. Vẽ tiếp tuyến tại $M$ của đường tròn $(O)$, tiếp tuyến này cắt $Cx$ tại $N$, tia $BK$ cắt $DA$ tại điểm $H$.
+\begin{enumerate}[a)]
+	\item Chứng minh $4$ điểm $B, M, K, C$ cùng thuộc một đường tròn và $BH \perp AD$.
+	\item Chứng minh $NK = NM$ và $AK \cdot AM = R^2$.
+	\item Tính diện tích tam giác $ABD$ theo $R$.
+\end{enumerate}
+\loigiai{
+\begin{center}
+	\begin{tikzpicture}[scale=0.9,>=stealth]
+		\coordinate (O) at (0,0);
+		\def\R{3.0}
+		\draw[thick] (O) circle (\R);
+		\coordinate (A) at (-\R,0);
+		\coordinate (B) at (\R,0);
+		\coordinate (C) at ($(A)!0.5!(O)$);
+		% C co toa do (-R/2, 0) = (-1.5, 0)
+		% Cx vuong goc AB: x = -1.5
+		% I la giao cua Cx voi (O): x = -1.5 => y = sqrt(R^2 - 1.5^2) = sqrt(9 - 2.25) = sqrt(6.75) = 2.598
+		\coordinate (I) at (-1.5,2.598);
+		\coordinate (K) at ($(C)!0.5!(I)$);
+		% AK cat (O) tai M
+		% Vector A(-3, 0), K(-1.5, 1.299)
+		\coordinate (M) at (0.9,2.86); % xap xi
+		\coordinate (D) at (intersection of C--I and B--M);
+		\coordinate (N) at (-1.5,4.2);
+		\coordinate (H) at (intersection of B--K and D--A);
+
+		\draw[thick] (A) -- (B);
+		\draw[thick] (C) -- (D);
+		\draw[thick] (B) -- (D);
+		\draw[thick] (A) -- (M);
+		\draw[thick] (A) -- (D);
+		\draw[thick] (B) -- (H);
+		\draw[dashed] (O) -- (M);
+		\draw[dashed] (M) -- (N);
+		\draw[dashed] (O) -- (I);
+
+		\fill (O) circle (1.5pt) node[below] {$O$};
+		\fill (A) circle (1.5pt) node[left] {$A$};
+		\fill (B) circle (1.5pt) node[right] {$B$};
+		\fill (C) circle (1.5pt) node[below] {$C$};
+		\fill (I) circle (1.5pt) node[above left] {$I$};
+		\fill (K) circle (1.5pt) node[left] {$K$};
+		\fill (M) circle (1.5pt) node[above right] {$M$};
+		\fill (D) circle (1.5pt) node[above] {$D$};
+		\fill (H) circle (1.5pt) node[above left] {$H$};
+	\end{tikzpicture}
+\end{center}
+\begin{enumerate}[a)]
+	\item Ta có $\widehat{AMB} = 90^\circ$ (góc nội tiếp chắn nửa đường tròn đường kính $AB$).\\
+	Suy ra tam giác $KMB$ vuông tại $M$, do đó $M$ thuộc đường tròn đường kính $KB$ (1).\\
+	Mặt khác, $Cx \perp AB$ tại $C$ nên $\widehat{KCB} = 90^\circ$, do đó $C$ thuộc đường tròn đường kính $KB$ (2).\\
+	Từ (1) và (2) suy ra $4$ điểm $B, M, K, C$ cùng thuộc đường tròn đường kính $KB$.\\
+	Trong tam giác $ABD$, ta có:
+	\begin{itemize}
+		\item $DC \perp AB$ tại $C$ (vì $Cx \perp AB$), nên $DC$ là đường cao của tam giác $ABD$;
+		\item $AM \perp BD$ tại $M$ (vì $\widehat{AMB} = 90^\circ$), nên $AM$ là đường cao thứ hai của tam giác $ABD$.
+	\end{itemize}
+	Mà $DC$ và $AM$ cắt nhau tại điểm $K$, suy ra $K$ là trực tâm của tam giác $ABD$.\\
+	Do đó đường thẳng $BK$ chứa đường cao thứ ba, tức là $BK \perp AD$ tại $H$ hay $BH \perp AD$.
+	\item Ta chứng minh $NK = NM$ và $AK \cdot AM = R^2$:
+	\begin{itemize}
+		\item Vì $MN$ là tiếp tuyến tại $M$ của đường tròn $(O)$ nên $MN \perp OM$, suy ra $\widehat{NMK} + \widehat{KMO} = 90^\circ$.\\
+		Tam giác $OMA$ cân tại $O$ ($OM = OA = R$) nên $\widehat{KMO} = \widehat{MAO}$.\\
+		Do đó $\widehat{NMK} + \widehat{MAO} = 90^\circ$.\\
+		Trong tam giác $ACK$ vuông tại $C$, ta có $\widehat{AKC} + \widehat{CAK} = 90^\circ$.\\
+		Suy ra $\widehat{NMK} = \widehat{AKC}$.\\
+		Mà $\widehat{AKC} = \widehat{NKM}$ (hai góc đối đỉnh), nên $\widehat{NMK} = \widehat{NKM}$.\\
+		Suy ra tam giác $NKM$ cân tại $N$, do đó $NK = NM$.
+		\item Xét $\Delta ACK$ và $\Delta AMB$ có:
+		\begin{itemize}
+			\item Góc $\widehat{MAB}$ chung;
+			\item $\widehat{ACK} = \widehat{AMB} = 90^\circ$.
+		\end{itemize}
+		Do đó $\Delta ACK \backsim \Delta AMB$ (g-g) $\implies \dfrac{AC}{AM} = \dfrac{AK}{AB} \implies AK \cdot AM = AC \cdot AB$.\\
+		Vì $C$ là trung điểm của bán kính $AO$ nên $AC = \dfrac{AO}{2} = \dfrac{R}{2}$.\\
+		Mà đường kính $AB = 2R$, nên:
+		$$AK \cdot AM = \dfrac{R}{2} \cdot 2R = R^2.$$
+	\end{itemize}
+	\item Tam giác $OCI$ vuông tại $C$ (do $Cx \perp AB$), áp dụng định lí Pythagore:
+	$$CI = \sqrt{OI^2 - OC^2} = \sqrt{R^2 - \left(\dfrac{R}{2}\right)^2} = \sqrt{R^2 - \dfrac{R^2}{4}} = \dfrac{R\sqrt{3}}{2}.$$
+	Vì $K$ là trung điểm của $CI$ nên:
+	$$CK = \dfrac{CI}{2} = \dfrac{R\sqrt{3}}{4}.$$
+	Xét $\Delta ACK$ và $\Delta DCB$ có:
+	\begin{itemize}
+		\item $\widehat{ACK} = \widehat{DCB} = 90^\circ$;
+		\item $\widehat{CAK} = \widehat{CDB}$ (vì cùng phụ với góc $\widehat{ABC}$).
+	\end{itemize}
+	Do đó $\Delta ACK \backsim \Delta DCB$ (g-g) $\implies \dfrac{AC}{DC} = \dfrac{CK}{CB} \implies DC = \dfrac{AC \cdot CB}{CK}$.\\
+	Ta có $CB = CO + OB = \dfrac{R}{2} + R = \dfrac{3R}{2}$.\\
+	Thay vào, ta tính được độ dài $DC$:
+	$$DC = \dfrac{\dfrac{R}{2} \cdot \dfrac{3R}{2}}{\dfrac{R\sqrt{3}}{4}} = \dfrac{\dfrac{3R^2}{4}}{\dfrac{R\sqrt{3}}{4}} = \dfrac{3R}{\sqrt{3}} = R\sqrt{3}.$$
+	Diện tích tam giác $ABD$ có đường cao $DC$ ứng với đáy $AB$ là:
+	$$S_{ABD} = \dfrac{1}{2} \cdot DC \cdot AB = \dfrac{1}{2} \cdot R\sqrt{3} \cdot 2R = R^2\sqrt{3}.$$
+	Vậy diện tích tam giác $ABD$ bằng $R^2\sqrt{3}$.
+\end{enumerate}
+}
+\end{bt}
