@@ -524,3 +524,12 @@ Nút **⚡ Tạo nhanh theo bài** (đầu trang):
    - Số câu TN/Đ/S/TLN, số mã đề, thời gian sửa được; bảng phân bổ hiện *cần / kho*, ô cam = kho thiếu → tự bù mức cùng nhóm, rồi dạng/bài khác cùng chương.
 3. **Tạo gì:** Bài giảng online HTML (vào mục lục lớp, GV xem) · Bài kiểm tra online (giao lớp, số lượt; mỗi mã một link + link chung; cần đúng 12–4–6) · File PDF đề + lời giải · Đáp án Excel (mẫu Chấm Phiếu AI).
 4. **Chọn câu & xem trước** → đổi câu nếu muốn → **⚡ Tạo tất cả**. Xong hiện link + QR và nút tải từng file PDF / DapAn.xlsx (file cũng nằm trong `de-da-ra/`).
+
+## 🧑‍🏫 Bàn làm việc giáo viên (trang chính khi GV đăng nhập)
+
+Mở trang chính của site thi (vd https://thi-toan-vtl.pages.dev/) bằng tài khoản giáo viên:
+- **Hàng số liệu:** số bài giảng (trình chiếu / PDF), đề đang mở, đề đã đăng, số học sinh đã nộp bài.
+- **Bài giảng:** ô tìm kiếm (phím `/`, gõ không dấu được, Enter mở bài đầu tiên, Esc xoá), lọc theo lớp, Trình chiếu/PDF, xếp *Theo mục lục* (lớp → chương → bài, nhóm "Chữa đề kiểm tra" riêng) / Mới nhất / A→Z. ☆ **Ghim** bài hay dùng lên đầu; **Mở gần đây** tự nhớ trên máy đó.
+- **Đề kiểm tra** (cột phải): thẻ Đang mở / Đã công bố / Đã đóng, số HS nộp + điểm TB, nút Làm thử, Chép link.
+- Link mục lục cũ `/toan10/`… tự chuyển về trang này, lọc sẵn lớp.
+- Bài giảng tạo bằng ⚡ Tạo nhanh tự ghi chương/bài nên xếp đúng mục lục; bài cũ xếp theo "Bài N" trong tên.
