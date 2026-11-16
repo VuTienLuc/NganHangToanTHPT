@@ -223,6 +223,7 @@ như phần mềm cũ thì ghi `"khung": "DeThi"` trong file JSON.
 ### 📋 Bảng điểm từng lượt (trang giáo viên trên web)
 - Đăng nhập GV tại thi-toan-vtl.pages.dev → nút **📋 Bảng điểm** (mọi đợt) hoặc **📋 Điểm** ở từng đề (một đợt). Trong app: Tổng hợp quá trình → **📋 Bảng điểm từng lượt**.
 - Mỗi lượt: lớp, STT, họ tên, đợt, mã đề, lần, **điểm, số phút làm bài, số lần rời tab**, cảm xúc, số câu mở 💡, giờ nộp. Rời tab ≥ 3 tô đỏ, làm dưới 3 phút tô vàng.
+- Khi chọn **một đợt**: 3 khung thống kê, mỗi khung có dãy **số thứ tự cách nhau dấu phẩy** + nút **📋 Chép STT**: 🏆 điểm cao → thấp (điểm cao nhất mỗi em), ⏳ em chưa làm đợt này (kèm số bài đã giao em đã bỏ), 🔁 em hay bỏ bài (≥ 2 bài đã giao chưa làm). Nhiều lớp thì dãy STT tách theo lớp.
 - Chọn đợt / lớp, tìm tên, “Chỉ lần điểm cao nhất mỗi em”, bấm tiêu đề cột để sắp xếp, **Tải Excel (CSV)**. Cần Đăng lại tất cả một lần.
 
 ### ✓ Bài đã giao / chưa giao (để tổng hợp chính xác)
