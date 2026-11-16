@@ -3506,3 +3506,194 @@ Từ điểm $M$ nằm ngoài đường tròn $(O; R)$, vẽ hai tiếp tuyến 
 		\end{enumerate}
 }
 \end{bt}
+
+
+\begin{bt}%[TS10 7.C1 7.a1 7.b1 7.c1]%[ma:fb2b4eee]
+% nguon: Đề tham khảo Tuyển sinh 10 năm học 2026-2027 Sở GD&ĐT TP.HCM - Cụm 7 Đề 2, Bài 7
+Từ điểm $A$ nằm ngoài đường tròn $(O; R)$, kẻ hai tiếp tuyến $AB, AC$ đến $(O)$ ($B, C$ là hai tiếp điểm). Gọi $H$ là giao điểm của $OA$ và $BC$.
+	\begin{enumerate}[a)]
+		\item Chứng minh $OA$ là đường trung trực của đoạn thẳng $BC$ và tứ giác $OBAC$ là tứ giác nội tiếp.
+		\item Chứng minh $R = \dfrac{(AB + AC) \cdot OH}{BC}$.
+		\item Trên đoạn $AH$ lấy điểm $D$ sao cho $HB = HD$. Qua $D$ kẻ đường thẳng vuông góc với $OA$ cắt $AB$ tại $E$. Gọi $I$ là trung điểm của đoạn thẳng $OE$. Cho $R = 5\text{ cm}$, hãy tính số đo của góc $\widehat{BHI}$ và độ dài cạnh $BE$.
+	\end{enumerate}
+\loigiai{
+\begin{center}
+			\begin{tikzpicture}[>=stealth, scale=0.9]
+				\coordinate (O) at (0,0);
+				\def\r{2.5}
+				\draw (O) circle (\r);
+				\coordinate (A) at (5,0);
+				\pgfmathsetmacro{\distA}{5}
+				\pgfmathsetmacro{\alphaA}{acos(\r/\distA)}
+				\coordinate (B) at ({\alphaA}:\r);
+				\coordinate (C) at ({-\alphaA}:\r);
+				\draw (A) -- (B);
+				\draw (A) -- (C);
+				\draw (O) -- (B);
+				\draw (O) -- (C);
+				\draw (O) -- (A);
+				\draw (B) -- (C);
+				\coordinate (H) at (intersection of O--A and B--C);
+				% D thuộc AH sao cho HD = HB
+				% H có tọa độ xH = r*cos(alpha) = 2.5*0.5 = 1.25. HB = r*sin(60) = 2.5*sqrt(3)/2 ~ 2.165
+				% A ở (5,0), H ở (1.25,0), D ở (1.25 + 2.165, 0) = (3.415, 0)
+				\pgfmathsetmacro{\hbVal}{\r*sin(\alphaA)}
+				\coordinate (D) at ($(H)+(\hbVal,0)$);
+				% DE vuông góc OA => đường thẳng thẳng đứng qua D, cắt AB tại E
+				\coordinate (E) at (intersection of D--+(0,3) and A--B);
+				\draw (D) -- (E);
+				\draw (O) -- (E);
+				\coordinate (I) at ($(O)!0.5!(E)$);
+				\draw (H) -- (I);
+				\node at (O) [left] {$O$};
+				\node at (A) [right] {$A$};
+				\node at (B) [above] {$B$};
+				\node at (C) [below] {$C$};
+				\node at (H) [below left] {$H$};
+				\node at (D) [below] {$D$};
+				\node at (E) [above] {$E$};
+				\node at (I) [above left] {$I$};
+				\fill (O) circle (1.5pt) (A) circle (1.5pt) (B) circle (1.5pt) (C) circle (1.5pt) (H) circle (1.5pt) (D) circle (1.5pt) (E) circle (1.5pt) (I) circle (1.5pt);
+			\end{tikzpicture}
+		\end{center}
+		\begin{enumerate}[a)]
+			\item Vì $AB, AC$ là hai tiếp tuyến của $(O)$ nên $AB = AC$ và $\widehat{ABO} = \widehat{ACO} = 90^\circ$.
+			
+			Lại có $OB = OC = R$ nên $OA$ là đường trung trực của đoạn thẳng $BC$, suy ra $OA \perp BC$ tại $H$.
+			
+			Tứ giác $OBAC$ có $\widehat{ABO} + \widehat{ACO} = 90^\circ + 90^\circ = 180^\circ$, do đó $OBAC$ là tứ giác nội tiếp đường tròn đường kính $OA$.
+			\item Vì $OA$ là đường trung trực của $BC$ nên $H$ là trung điểm của $BC \implies BC = 2BH$.
+			
+			Xét tam giác vuông $OBA$ tại $B$ có đường cao $BH$, theo hệ thức lượng trong tam giác vuông hoặc tam giác đồng dạng ($\Delta OHB \backsim \Delta OBA$):
+			$$\dfrac{OH}{OB} = \dfrac{BH}{AB} \implies OH \cdot AB = OB \cdot BH \iff R \cdot BH = AB \cdot OH \iff R = \dfrac{AB \cdot OH}{BH}.$$
+			Nhân cả tử và mẫu với $2$, ta có:
+			$$R = \dfrac{2AB \cdot OH}{2BH} = \dfrac{(AB + AB) \cdot OH}{BC}.$$
+			Vì $AB = AC$ nên ta suy ra:
+			$$R = \dfrac{(AB + AC) \cdot OH}{BC}.$$
+			\item Xét tam giác vuông $OBE$ tại $B$ có $I$ là trung điểm của cạnh huyền $OE \implies IB = \dfrac{1}{2}OE$.
+			
+			Tam giác $ODE$ vuông tại $D$ (do $DE \perp OA$) có $I$ là trung điểm cạnh huyền $OE \implies ID = \dfrac{1}{2}OE$.
+			
+			Suy ra $IB = ID$.
+			
+			Xét $\Delta HBI$ và $\Delta HDI$ có:
+			$$HB = HD\text{ (giả thiết)},\quad HI\text{ chung},\quad IB = ID.$$
+			Do đó $\Delta HBI = \Delta HDI\text{ (c-c-c)} \implies \widehat{BHI} = \widehat{DHI}$.
+			
+			Suy ra $HI$ là tia phân giác của $\widehat{BHD}$.
+			
+			Vì $OA \perp BC$ nên $\widehat{BHD} = 90^\circ \implies \widehat{BHI} = \dfrac{90^\circ}{2} = 45^\circ$.
+			
+			Mặt khác, $\Delta HBD$ vuông cân tại $H$ (vì $HB = HD$ và $\widehat{BHD} = 90^\circ$) nên $\widehat{HDB} = 45^\circ$.
+			
+			Tứ giác $OBED$ có $\widehat{OBE} = \widehat{ODE} = 90^\circ$ nên là tứ giác nội tiếp đường tròn đường kính $OE$.
+			
+			Suy ra $\widehat{OEB} = \widehat{ODB} = \widehat{HDB} = 45^\circ$ (cùng chắn cung $OB$).
+			
+			Do đó tam giác $OBE$ vuông cân tại $B$, suy ra $BE = OB = R = 5\text{ cm}$.
+			
+			Vậy $\widehat{BHI} = 45^\circ$ và $BE = 5\text{ cm}$.
+		\end{enumerate}
+}
+\end{bt}
+
+\begin{bt}%[TS10 7.C3 7.a1 7.b3 7.c1]%[ma:76677eab]
+% nguon: Đề tham khảo Tuyển sinh 10 năm học 2026-2027 Sở GD&ĐT TP.HCM - Cụm 7 Đề 3, Bài 7
+Trên đường tròn $(O)$ đường kính $AB$, lấy điểm $M$ sao cho $MA < MB$. Tiếp tuyến tại $A$ và tiếp tuyến tại $M$ của đường tròn $(O)$ cắt nhau tại $E$. Kẻ $MP \perp AB$ tại $P$, $MQ \perp AE$ tại $Q$. Gọi $I$ là trung điểm của $PQ$.
+	\begin{enumerate}[a)]
+		\item Chứng minh tứ giác $APMQ$ là hình chữ nhật và ba điểm $O, E, I$ thẳng hàng.
+		\item Gọi $K$ là giao điểm của $EB$ và $MP$. Chứng minh $\Delta EAO \backsim \Delta MPB$, suy ra $K$ là trung điểm của $MP$.
+		\item Trong trường hợp $\widehat{MAB} = 60^\circ$ và $AB = 4\text{ cm}$, hãy tính độ dài đoạn thẳng $IK$ và diện tích tứ giác $AIKB$.
+	\end{enumerate}
+\loigiai{
+\begin{center}
+			\begin{tikzpicture}[>=stealth, scale=1.2]
+				\coordinate (A) at (-2,0);
+				\coordinate (B) at (2,0);
+				\coordinate (O) at (0,0);
+				\def\r{2}
+				\draw (A) -- (B);
+				\draw (A) arc (180:0:\r);
+				% M sao cho góc MAB = 60 độ
+				\coordinate (M) at (-1, 1.732);
+				\draw (A) -- (M);
+				\draw (B) -- (M);
+				% Tiếp tuyến tại A và M
+				% Tiếp tuyến tại A là đường thẳng đứng x = -2
+				% Tiếp tuyến tại M vuông góc OM
+				% E là giao điểm
+				\coordinate (E) at (-2, 3.464);
+				\draw (A) -- (E);
+				\draw (M) -- (E);
+				\draw (O) -- (E);
+				\draw (O) -- (M);
+				% MP vuông góc AB tại P
+				\coordinate (P) at (-1,0);
+				\draw (M) -- (P);
+				% MQ vuông góc AE tại Q
+				\coordinate (Q) at (-2, 1.732);
+				\draw (M) -- (Q);
+				\coordinate (I) at ($(A)!0.5!(M)$);
+				\draw (P) -- (Q);
+				% K = EB giao MP
+				\draw (E) -- (B);
+				\coordinate (K) at (intersection of E--B and M--P);
+				\draw (I) -- (K);
+				\node at (A) [below left] {$A$};
+				\node at (B) [below right] {$B$};
+				\node at (O) [below] {$O$};
+				\node at (M) [above] {$M$};
+				\node at (E) [above left] {$E$};
+				\node at (P) [below] {$P$};
+				\node at (Q) [left] {$Q$};
+				\node at (I) [above right] {$I$};
+				\node at (K) [right] {$K$};
+				\fill (A) circle (1.2pt) (B) circle (1.2pt) (O) circle (1.2pt) (M) circle (1.2pt) (E) circle (1.2pt) (P) circle (1.2pt) (Q) circle (1.2pt) (I) circle (1.2pt) (K) circle (1.2pt);
+			\end{tikzpicture}
+		\end{center}
+		\begin{enumerate}[a)]
+			\item Vì $EA$ là tiếp tuyến của $(O)$ tại $A$ nên $EA \perp AB \implies \widehat{EAO} = 90^\circ$ hay $\widehat{QAP} = 90^\circ$.
+			
+			Ta có $MP \perp AB$ tại $P \implies \widehat{MPA} = 90^\circ$.
+			
+			Ta có $MQ \perp AE$ tại $Q \implies \widehat{MQA} = 90^\circ$.
+			
+			Tứ giác $APMQ$ có ba góc vuông $\widehat{QAP} = \widehat{MPA} = \widehat{MQA} = 90^\circ$ nên là hình chữ nhật.
+			
+			Trong hình chữ nhật $APMQ$, hai đường chéo $AM$ và $PQ$ cắt nhau tại trung điểm của mỗi đường. Mà $I$ là trung điểm của $PQ$ nên $I$ cũng là trung điểm của $AM$.
+			
+			Lại có $EA = EM$ (tính chất hai tiếp tuyến cắt nhau) và $OA = OM = R$ nên $OE$ là đường trung trực của $AM$, suy ra $OE$ đi qua trung điểm $I$ của $AM$.
+			
+			Do đó ba điểm $O, E, I$ thẳng hàng.
+			\item Ta có $\widehat{AMB} = 90^\circ$ (góc nội tiếp chắn nửa đường tròn) $\implies AM \perp MB$.
+			
+			Vì $OE \perp AM$ nên $OE \parallel MB$, suy ra $\widehat{AOE} = \widehat{MBP}$ (hai góc đồng vị).
+			
+			Xét $\Delta EAO$ và $\Delta MPB$ có:
+			$$\widehat{EAO} = \widehat{MPB} = 90^\circ,\quad \widehat{AOE} = \widehat{MBP}.$$
+			Do đó $\Delta EAO \backsim \Delta MPB\text{ (g-g)}$, suy ra:
+			$$\dfrac{EA}{MP} = \dfrac{AO}{PB} = \dfrac{\dfrac{AB}{2}}{PB} = \dfrac{AB}{2PB} \implies \dfrac{PB}{AB} = \dfrac{MP}{2EA}. \quad (1)$$
+			Mặt khác, vì $MP \parallel EA$ (cùng vuông góc với $AB$) nên trong tam giác $EAB$, theo định lí Thales ta có:
+			$$\dfrac{PK}{EA} = \dfrac{BP}{BA} = \dfrac{PB}{AB}. \quad (2)$$
+			Từ $(1)$ và $(2)$ suy ra:
+			$$\dfrac{PK}{EA} = \dfrac{MP}{2EA} \implies PK = \dfrac{MP}{2}.$$
+			Vì $K$ thuộc đoạn thẳng $MP$ nên $K$ là trung điểm của $MP$.
+			\item Trong tam giác vuông $AMB$ tại $M$:
+			$$AM = AB \cdot \cos\widehat{MAB} = 4 \cdot \cos 60^\circ = 4 \cdot \dfrac{1}{2} = 2\text{ (cm)}.$$
+			Trong tam giác vuông $AMP$ tại $P$:
+			$$AP = AM \cdot \cos 60^\circ = 2 \cdot \dfrac{1}{2} = 1\text{ (cm)};$$
+			$$MP = AM \cdot \sin 60^\circ = 2 \cdot \dfrac{\sqrt{3}}{2} = \sqrt{3}\text{ (cm)}.$$
+			Xét $\Delta AMP$ có $I$ là trung điểm của $AM$ và $K$ là trung điểm của $MP$ nên $IK$ là đường trung bình của tam giác $AMP$.
+			
+			Suy ra $IK \parallel AP$ và:
+			$$IK = \dfrac{AP}{2} = \dfrac{1}{2} = 0{,}5\text{ (cm)}.$$
+			Vì $IK \parallel AP$ hay $IK \parallel AB$ nên tứ giác $AIKB$ là hình thang.
+			
+			Vì $KP \perp AB$ tại $P$ nên đoạn thẳng $KP$ là chiều cao của hình thang $AIKB$. Ta có:
+			$$KP = \dfrac{MP}{2} = \dfrac{\sqrt{3}}{2}\text{ (cm)}.$$
+			Diện tích của hình thang $AIKB$ là:
+			$$S_{AIKB} = \dfrac{(IK + AB) \cdot KP}{2} = \dfrac{\left(\dfrac{1}{2} + 4\right) \cdot \dfrac{\sqrt{3}}{2}}{2} = \dfrac{\dfrac{9}{2} \cdot \dfrac{\sqrt{3}}{2}}{2} = \dfrac{9\sqrt{3}}{8}\text{ (cm}^2).$$
+			Vậy $IK = 0{,}5\text{ cm}$ và $S_{AIKB} = \dfrac{9\sqrt{3}}{8}\text{ cm}^2$.
+		\end{enumerate}
+}
+\end{bt}
