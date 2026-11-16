@@ -206,6 +206,27 @@ footer .gian{flex:1}
 #kt-ds .tt{margin-left:auto;font-size:11px;white-space:nowrap}
 #kt-ds .co{color:#15803d}#kt-ds .chua{color:#b45309}
 #hop-kt .cot{display:flex;flex-direction:column;gap:8px;min-width:0;min-height:0}
+#hop-bg{position:fixed;inset:0;background:rgba(17,24,39,.35);display:none;align-items:center;justify-content:center;z-index:19}
+#hop-bg .noi{background:#fff;border-radius:14px;width:min(680px,96vw);max-height:92vh;display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.25)}
+#hop-bg h2{margin:0;padding:12px 18px;font-size:16px;border-bottom:1px solid var(--vien)}
+#hop-bg .than{overflow:auto;padding:12px 18px;display:flex;flex-direction:column;gap:9px;font-size:13px}
+#hop-bg .chan{padding:10px 18px;border-top:1px solid var(--vien);display:flex;gap:8px;align-items:center}
+#hop-bg label.o{display:flex;flex-direction:column;gap:3px;font-weight:600}#hop-bg label.o input,#hop-bg label.o select{font-weight:400;padding:6px 8px}
+#bg-ds{width:100%;font-size:12.5px}.the-thi{display:flex;gap:4px;margin-bottom:4px}.the-thi button{border-radius:8px 8px 0 0}.the-thi button.chon{background:#1e3a8a;color:#fff}
+#thi-ml a{margin-right:4px}
+#hop-thi,#hop-dthi{position:fixed;inset:0;background:rgba(17,24,39,.35);display:none;align-items:center;justify-content:center;z-index:18}
+#hop-thi .noi,#hop-dthi .noi{background:#fff;border-radius:14px;width:min(860px,96vw);max-height:92vh;display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.25)}
+#hop-dthi .noi{width:min(620px,96vw)}
+#hop-thi h2,#hop-dthi h2{margin:0;padding:12px 18px;font-size:16px;border-bottom:1px solid var(--vien)}
+#hop-thi .than,#hop-dthi .than{overflow:auto;padding:12px 18px;display:flex;flex-direction:column;gap:9px;font-size:13px}
+#hop-dthi label{display:flex;flex-direction:column;gap:3px;font-weight:600}#hop-dthi label input,#hop-dthi label select{font-weight:400;padding:6px 8px}
+#hop-dthi .hang{display:flex;gap:10px}#hop-dthi .hang>label{flex:1}
+#hop-thi .chan,#hop-dthi .chan{padding:10px 18px;border-top:1px solid var(--vien);display:flex;gap:8px;align-items:center}
+#thi-ds table{width:100%;border-collapse:collapse}#thi-ds td,#thi-ds th{border-bottom:1px solid #eef0f4;padding:6px;text-align:left;vertical-align:top}
+#thi-ds .tt{font-size:12px;padding:2px 7px;border-radius:9px;white-space:nowrap}.tt.dang_mo{background:#dcfce7;color:#166534}.tt.da_cong_bo{background:#dbeafe;color:#1e40af}.tt.da_dong{background:#f3f4f6;color:#6b7280}
+#thi-ds button{font-size:12px;padding:3px 7px;margin:1px}
+.thi-kq{display:flex;gap:16px;align-items:center}.thi-kq img{width:170px;height:170px;border:1px solid var(--vien);border-radius:8px}
+.thi-kq a{font-size:16px;font-weight:700;word-break:break-all}
 #hop-gop{position:fixed;inset:0;background:rgba(17,24,39,.35);display:none;align-items:center;justify-content:center;z-index:15}
 #hop-gop .noi{background:#fff;border-radius:14px;width:min(760px,96vw);max-height:90vh;display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.25)}
 #hop-gop h2{margin:0;padding:12px 18px;font-size:16px;border-bottom:1px solid var(--vien)}
@@ -270,6 +291,7 @@ tr.gop-h td{background:#dbeafe;text-align:left;font-weight:700;padding:8px 12px;
   <button id="nut-ts10" title="Ngân hàng đề tuyển sinh 10 Toán TP.HCM: 7 bài theo bảng dạng 135 đề, tạo đề ngẫu nhiên tự luận + lời giải">Tuyển sinh 10</button>
   <button id="nut-kt" title="Kho kiến thức trọng tâm từng bài (lớp 6 – 12): xem, sửa, soạn bằng AI, nhập nhiều bài một lần">Kho kiến thức</button>
   <button id="nut-phieu" title="Phiếu bài học / chuyên đề / ôn tập chương: kiến thức trọng tâm, luyện tập, bài tập về nhà — tự lấy câu theo dạng">Phiếu bài học</button>
+  <button id="nut-thi" title="Đề thi trực tuyến đã đăng: link, mã QR, mở lời giải, đóng đề">🌐 Thi trực tuyến</button>
   <button id="nut-on-thi" title="Ma trận đề ôn thi học kì 12–4–6: lấy câu từ ngân hàng hoặc sinh prompt cho AI tạo đề">Ôn thi học kì</button>
   <button id="nut-lac" title="Tìm câu có nội dung không khớp bài/dạng đang gắn; chuyển sang đúng dạng hoặc xoá">Câu lạc bài</button>
   <button id="nut-trung" title="Dò câu trùng / gần giống trong ngân hàng và xoá bản thừa">Câu trùng</button>
@@ -540,6 +562,72 @@ tr.gop-h td{background:#dbeafe;text-align:left;font-weight:700;padding:8px 12px;
   </div>
   <div class="chan"><span style="font-size:12px;color:#666">Lưu ở du-lieu/kien_thuc/ (phương pháp từng dạng tách sang du-lieu/phuong_phap/ cho Beamer)</span><button id="kt-dong" style="margin-left:auto">Đóng</button></div>
 </div></div>
+<div id="hop-dthi"><div class="noi">
+  <h2>🌐 Tạo link thi trực tuyến</h2>
+  <div class="than">
+    <div id="dthi-tt" style="color:#555"></div>
+    <label>Tên đề (học sinh thấy) <input id="dthi-ten"></label>
+    <div class="hang"><label>Đường dẫn <input id="dthi-slug" placeholder="10a1-hk1-lan2"></label>
+      <label style="flex:0 0 120px">Thời gian (phút) <input id="dthi-phut" type="number" min="1" max="240" value="90"></label></div>
+    <div id="dthi-nhieu" style="display:none;background:#f5f7ff;border-radius:8px;padding:8px 10px">
+      <label style="flex-direction:row;align-items:center;gap:8px">Đăng <select id="dthi-pham-vi"><option value="tat_ca">Tất cả mã đề</option><option value="mot">Chỉ mã đề đang xem</option></select></label>
+      <label style="flex-direction:row;align-items:center;gap:8px;font-weight:400"><input type="checkbox" id="dthi-chung" checked> Kèm <b>1 link chung</b>: mỗi học sinh mở link được chia ngẫu nhiên một mã đề (tải lại trang không đổi mã)</label>
+    </div>
+    <div id="dthi-xem" style="color:#1e3a8a;font-size:12.5px"></div>
+    <div class="hang"><label>Giao cho lớp <input id="dthi-lop" placeholder="10A1, 10A2 (để trống = mọi lớp)"></label>
+      <label style="flex:0 0 150px">Số lượt làm mỗi em <input id="dthi-luot" type="number" min="0" max="20" value="2" title="0 = không giới hạn"></label></div>
+    <label>Cách mở phương án <select id="dthi-lat"><option value="select">Lật phương án nào → chọn phương án đó</option><option value="reveal">Lật để xem → bấm chọn đáp án</option><option value="off">Hiện sẵn tất cả phương án</option></select></label>
+    <label>URL nhận điểm Google Sheets (không bắt buộc) <input id="dthi-sheet" placeholder="https://script.google.com/macros/s/…/exec"></label>
+    <label style="flex-direction:row;align-items:center;gap:8px;font-weight:400"><input type="checkbox" id="dthi-an" checked> <b>Ẩn đáp án &amp; lời giải</b> — trang làm bài không chứa đáp án, máy chủ chấm; thi xong bấm "Mở lời giải"</label>
+    <div style="color:#555;font-size:12px">Học sinh phải <b>đăng nhập</b> bằng tài khoản thầy cấp (thẻ 👥 Tài khoản); lớp, STT, họ tên tự điền theo tài khoản.</div>
+  </div>
+  <div class="chan"><span style="font-size:12px;color:#666">Cần đúng 12 TN · 4 Đ/S · 6 TLN.</span>
+    <button id="dthi-ok" class="chinh" style="margin-left:auto">Đăng lên Cloudflare</button><button id="dthi-dong">Đóng</button></div>
+</div></div>
+<div id="hop-bg"><div class="noi">
+  <h2>📚 Đăng bài giảng lên mạng</h2>
+  <div class="than">
+    <div style="display:flex;gap:14px;flex-wrap:wrap">
+      <label id="bg-nguon-bo-l" style="display:none"><input type="radio" name="bg-nguon" value="bo"> Bộ câu đang xem → trình chiếu HTML (có đáp án, lời giải)</label>
+      <label><input type="radio" name="bg-nguon" value="ud" checked> File đã xuất từ ứng dụng</label>
+      <label><input type="radio" name="bg-nguon" value="may"> Chọn file trên máy (HTML / PDF)</label></div>
+    <div id="bg-ud"><input id="bg-loc" placeholder="Lọc theo tên… (PDF phiếu, trình chiếu beamer, đề; JSON trình chiếu → HTML)" style="width:100%;padding:6px 8px;box-sizing:border-box">
+      <select id="bg-ds" size="9"></select></div>
+    <div id="bg-may" style="display:none"><input type="file" id="bg-file" accept=".html,.htm,.pdf"></div>
+    <label class="o">Tên bài giảng (học sinh thấy) <input id="bg-ten"></label>
+    <div style="display:flex;gap:10px"><label class="o" style="flex:0 0 110px">Lớp <select id="bg-lop"><option value="6">Toán 6</option><option value="7">Toán 7</option><option value="8">Toán 8</option><option value="9">Toán 9</option><option value="10">Toán 10</option><option value="11">Toán 11</option><option value="12">Toán 12</option></select></label>
+      <label class="o" style="flex:1">Đường dẫn <input id="bg-slug"></label></div>
+    <div id="bg-link" style="color:#1e3a8a;font-size:12.5px"></div>
+    <label><input type="checkbox" id="bg-ghi-de"> Thay bản cũ ở đúng link này (học sinh giữ link cũ)</label>
+  </div>
+  <div class="chan"><span id="bg-tt" style="font-size:12px;color:#666"></span><button id="bg-ok" class="chinh" style="margin-left:auto">Đăng bài giảng</button><button id="bg-dong">Đóng</button></div>
+</div></div>
+<div id="hop-thi"><div class="noi">
+  <h2>Thi &amp; học trực tuyến (Cloudflare Pages)</h2>
+  <div class="than">
+    <div id="thi-kq"></div>
+    <div class="the-thi"><button id="the-de" class="chon">Đề thi</button><button id="the-bg">📚 Bài giảng</button><button id="the-tk">👥 Tài khoản</button></div>
+    <div id="thi-ds"></div>
+    <div id="tk-vung" style="display:none">
+      <div style="display:flex;gap:14px;flex-wrap:wrap;align-items:flex-start">
+        <div style="flex:1;min-width:300px"><b>Nhập học sinh</b> (dán từ Excel: <i>STT ⇥ Họ tên</i> hoặc <i>Lớp ⇥ STT ⇥ Họ tên</i>)
+          <div style="display:flex;gap:6px;margin:4px 0"><input id="tk-lop" placeholder="Lớp, vd 10A1" style="width:110px"><button id="tk-nhap" class="chinh">Tạo / cập nhật tài khoản</button></div>
+          <textarea id="tk-van" style="width:100%;height:110px;box-sizing:border-box;font:12px ui-monospace,Menlo,monospace" placeholder="1	Nguyễn Văn An&#10;2	Trần Thị Bình"></textarea></div>
+        <div style="width:250px"><b>Phiếu tài khoản</b><div style="display:flex;gap:6px;margin:4px 0"><select id="tk-loc-lop"><option value="">Mọi lớp</option></select><button id="tk-phieu">In phiếu</button></div>
+          <b>Giáo viên</b> (xem bài giảng, làm thử đề)<div style="display:flex;flex-direction:column;gap:4px;margin-top:4px"><input id="gv-ten" placeholder="tên đăng nhập, vd vutienluc"><input id="gv-ho" placeholder="Họ tên"><input id="gv-mk" type="password" placeholder="Mật khẩu (≥ 6 ký tự)"><button id="gv-them">Thêm / đổi mật khẩu GV</button></div></div>
+      </div>
+      <div id="tk-bang" style="margin-top:8px"></div></div>
+    <div id="bg-vung" style="display:none"><div id="thi-ml" style="margin-bottom:6px"></div>
+      <button id="bg-mo" class="chinh">＋ Đăng bài giảng…</button><div id="bg-bang" style="margin-top:6px"></div></div>
+    <details><summary>Cài đặt</summary><div style="display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end;margin-top:8px">
+      <label style="display:flex;flex-direction:column">Tên dự án Cloudflare <input id="thi-du-an" style="width:200px"></label>
+      <label style="display:flex;flex-direction:column">Địa chỉ trang (tự điền sau lần đăng đầu) <input id="thi-mien" style="width:260px" placeholder="https://thi-toan-vtl.pages.dev"></label>
+      <label style="display:flex;flex-direction:column">URL nhận điểm Google Sheets <input id="thi-sheet" style="width:320px"></label>
+      <button id="thi-luu">Lưu cài đặt</button></div>
+      <p style="color:#666">Lần đầu đăng: máy cần Node.js (nodejs.org). Trình duyệt mở trang Cloudflare để thầy đăng nhập, bấm Allow. Các đề lưu ở <code>thi-truc-tuyen/</code> (đồng bộ GitHub).</p></details>
+  </div>
+  <div class="chan"><span id="thi-node" style="font-size:12px;color:#b45309"></span><button id="thi-dang-lai" style="margin-left:auto">Đăng lại tất cả</button><button id="thi-dong">Đóng</button></div>
+</div></div>
 <div id="hop-gop"><div class="noi">
   <h2>Gộp bài — một dòng ma trận lấy ngẫu nhiên câu từ nhiều bài</h2>
   <div id="gop-than"></div>
@@ -551,7 +639,7 @@ tr.gop-h td{background:#dbeafe;text-align:left;font-weight:700;padding:8px 12px;
   <div id="xt-than"></div>
   <div class="chan"><span style="font-size:12px;color:#666">“Đổi câu” lấy ngẫu nhiên câu khác cùng dạng, cùng mức (ưu tiên câu chưa dùng). Hài lòng thì bấm Xác nhận.</span>
     <button id="xt-random" style="margin-left:auto">↻ Random lại tất cả</button><button id="xt-nhatky">Nhật ký chọn câu</button>
-    <button id="xt-tc" title="Đưa bộ câu của mã đề đang xem sang ứng dụng Soạn đề &amp; trình chiếu Toán (HTML): trình chiếu, bài kiểm tra cho học sinh, Word, thư viện Google Sheets…">▶ Sang trình chiếu HTML</button><button id="xt-ok" class="chinh">Xác nhận &amp; xuất đề</button><button id="xt-dong">Đóng</button></div>
+    <button id="xt-bg" title="Đăng bộ câu đang xem thành bài giảng trình chiếu HTML (có đáp án, lời giải) lên trang mục lục lớp">📚 Đăng bài giảng</button><button id="xt-thi" title="Đưa bộ câu của mã đề đang xem lên mạng thành link cho học sinh làm bài (Cloudflare Pages), tự chấm, gửi điểm về Google Sheet">🌐 Link thi trực tuyến</button><button id="xt-tc" title="Đưa bộ câu của mã đề đang xem sang ứng dụng Soạn đề &amp; trình chiếu Toán (HTML): trình chiếu, bài kiểm tra cho học sinh, Word, thư viện Google Sheets…">▶ Sang trình chiếu HTML</button><button id="xt-ok" class="chinh">Xác nhận &amp; xuất đề</button><button id="xt-dong">Đóng</button></div>
 </div></div>
 <div id="hop-ts"><div class="noi">
   <h2>Ngân hàng tuyển sinh 10 – Toán TP.HCM <span style="font-weight:400;font-size:12px;color:#666">7 bài · 10 điểm · 120 phút (cấu trúc đề Sở 2025–26, 2026–27)</span>
@@ -1655,6 +1743,257 @@ $("#xt-tc").onclick=async()=>{
       r.ok?[["Mở thư mục",()=>api("/api/mo",{duong_dan:r.thu_muc}),true]]:[]);}
   finally{n.disabled=false;n.textContent="▶ Sang trình chiếu HTML"}
 };
+// ---------------- THI TRỰC TUYẾN (Cloudflare Pages)
+let DTHI=null;
+function boDauSlug(s){return String(s||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/đ/g,"d").replace(/Đ/g,"D").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"").slice(0,60)}
+function appTrinhChieu(){return new Promise((ok,loi)=>{
+  let f=$("#tc-app"); if(f&&f.contentWindow&&f.contentWindow.createExam) return ok(f.contentWindow);
+  if(!f){f=document.createElement("iframe");f.id="tc-app";f.style.cssText="position:absolute;width:10px;height:10px;left:-9999px;visibility:hidden";f.src="/trinh-chieu-app";document.body.append(f)}
+  let n=0;const t=setInterval(()=>{n++;const w=f.contentWindow;if(w&&w.createExam&&w.examSettings){clearInterval(t);ok(w)}else if(n>100){clearInterval(t);loi(Error("Không mở được ứng dụng trình chiếu (khung/TrinhChieu)."))}},150);
+})}
+$("#xt-thi").onclick=async()=>{
+  const b=XT.bo[Math.min(XT.tab,XT.bo.length-1)];
+  const ma=["TN","DS","TLN"].flatMap(l=>(b[l]||[]).filter(c=>!c.mat).map(c=>c.ma));
+  const dem={TN:(b.TN||[]).length,DS:(b.DS||[]).length,TLN:(b.TLN||[]).length};
+  const nhieu=XT.bo.length>1, so=(+$("#ma_de_bat_dau").value||101)+Math.min(XT.tab,XT.bo.length-1);
+  const ten=((XT.nguon&&XT.mt.ten_ky_thi)||$("#ten_ky_thi").value.trim()||"Bài kiểm tra Toán")+(nhieu?` - Mã ${so}`:"");
+  const soMa=XT.bo.length>1?XT.bo.length:Math.max(1,+$("#so_ma_de").value||1), dao=XT.bo.length===1&&soMa>1;
+  DTHI={ma,ten,nhieu:soMa>1,soMa,dao,goc_ten:((XT.nguon&&XT.mt.ten_ky_thi)||$("#ten_ky_thi").value.trim()||"Bài kiểm tra Toán"),bat_dau:(+$("#ma_de_bat_dau").value||101)};
+  $("#dthi-nhieu").style.display=nhieu?"block":"none";
+  if(nhieu){$("#dthi-pham-vi").options[0].textContent=`Tất cả ${soMa} mã đề (mỗi mã một link)`+(dao?" — cùng câu, đảo thứ tự câu và phương án":"");
+    $("#dthi-pham-vi").options[1].textContent=dao?"Chỉ 1 đề (không đảo)":"Chỉ mã đề đang xem";$("#dthi-pham-vi").value="tat_ca";}
+  $("#dthi-ten").value=nhieu?DTHI.goc_ten:ten; $("#dthi-slug").value=boDauSlug(nhieu?DTHI.goc_ten:ten); $("#dthi-phut").value=parseInt(XT.mt.thoi_gian)||90;
+  const ok=dem.TN===12&&dem.DS===4&&dem.TLN===6;
+  $("#dthi-tt").innerHTML=`Bộ câu mã đề đang xem: TN ${dem.TN} · Đ/S ${dem.DS} · TLN ${dem.TLN} `+(ok?'<b style="color:#047857">✓ đúng cấu trúc</b>':'<b style="color:#b91c1c">✗ bài kiểm tra trực tuyến cần đúng 12–4–6</b>');
+  $("#dthi-ok").disabled=!ok;
+  try{const r=await api("/api/thi/ds",{});$("#dthi-sheet").value=r.cau_hinh.script_url||"";DTHI.goc=r.goc;veLinkDthi();
+    if(!r.co_node) $("#dthi-tt").innerHTML+='<br><b style="color:#b45309">Máy chưa có Node.js — cài bản LTS ở nodejs.org trước khi đăng.</b>';}catch(_){}
+  $("#hop-dthi").style.display="flex";
+};
+function veLinkDthi(){if(!DTHI||!DTHI.goc){$("#dthi-xem").textContent="";return}
+  const sl=boDauSlug($("#dthi-slug").value)||"…", tat=DTHI.nhieu&&$("#dthi-pham-vi").value==="tat_ca";
+  $("#dthi-xem").textContent=!DTHI.nhieu?`Link: ${DTHI.goc}/${sl}/`:!tat?`Link: ${DTHI.goc}/${sl}-${DTHI.bat_dau+Math.min(XT.tab,XT.bo.length-1)}/`
+    :`Link từng mã: ${DTHI.goc}/${sl}-${DTHI.bat_dau}/ … ${sl}-${DTHI.bat_dau+DTHI.soMa-1}/`+($("#dthi-chung").checked?` · Link chung: ${DTHI.goc}/${sl}/`:"")}
+$("#dthi-pham-vi").onchange=()=>{$("#dthi-chung").disabled=$("#dthi-pham-vi").value!=="tat_ca";veLinkDthi()};$("#dthi-chung").onchange=veLinkDthi;
+$("#dthi-slug").oninput=veLinkDthi; $("#dthi-ten").oninput=()=>{};
+$("#dthi-dong").onclick=()=>$("#hop-dthi").style.display="none";
+$("#dthi-ok").onclick=async()=>{
+  const n=$("#dthi-ok"), phut=+$("#dthi-phut").value, ten=$("#dthi-ten").value.trim()||DTHI.ten, sheet=$("#dthi-sheet").value.trim();
+  if(!(phut>=1&&phut<=240)){alert("Thời gian 1–240 phút.");return}
+  if(sheet&&!/^https:\/\/script\.google\.com\/macros\/s\/[A-Za-z0-9_-]+\/exec$/.test(sheet)){alert("URL nhận điểm phải dạng https://script.google.com/macros/s/…/exec");return}
+  n.disabled=true;n.textContent="Đang dựng bài kiểm tra (vẽ hình)…";
+  try{
+    if(sheet) await api("/api/thi/cau-hinh",{script_url:sheet});
+    const w=await appTrinhChieu(), goc=boDauSlug($("#dthi-slug").value||ten);
+    const tat=DTHI.nhieu&&$("#dthi-pham-vi").value==="tat_ca";
+    const cac=tat?[...Array(DTHI.soMa).keys()]:[DTHI.dao?0:Math.min(XT.tab,XT.bo.length-1)];
+    const boCua=i=>DTHI.dao?XT.bo[0]:XT.bo[i];
+    for(const i of cac){const b=boCua(i); if(["TN","DS","TLN"].some((l,k)=>(b[l]||[]).length!==[12,4,6][k])) throw Error(`Mã ${DTHI.bat_dau+i} không đúng cấu trúc 12–4–6.`)}
+    const ra=[];
+    for(const i of cac){
+      const b=boCua(i), ma=["TN","DS","TLN"].flatMap(l=>(b[l]||[]).filter(c=>!c.mat).map(c=>c.ma));
+      const mot=!tat&&DTHI.dao, so=DTHI.bat_dau+i, teni=DTHI.nhieu&&!mot?`${ten} - Mã ${so}`:ten, slugi=DTHI.nhieu&&!mot?`${goc}-${so}`:goc;
+      n.textContent=`Đang dựng ${DTHI.nhieu?"mã "+so:"bài kiểm tra"} (${ra.length+1}/${cac.length})…`;
+      const r=await api("/api/thi/du-lieu",{ma,ten:teni}); if(!r.ok) throw Error(r.loi+"\n"+(r.nhat_ky||""));
+      let d=r.du_lieu;
+      if(DTHI.dao&&tat) d=daoDe(d,so*7919+13,$("#xao_phuong_an").checked,$("#xao_y_dung_sai").checked);
+      d.settings={examMinutes:phut,studentExam:w.examSettings({flipMode:$("#dthi-lat").value,scriptUrl:sheet,examId:slugi})};
+      const r2=await api("/api/thi/dang",{slug:slugi,ten:teni,html:w.createExam(d),an_dap_an:$("#dthi-an").checked,phut,dang_ngay:false,lop_giao:$("#dthi-lop").value,so_luot:+$("#dthi-luot").value});
+      if(!r2.ok) throw Error(r2.loi); ra.push(r2.slug);
+    }
+    n.textContent="Đang đăng lên Cloudflare…";
+    let chinh=ra[0];
+    if(tat&&$("#dthi-chung").checked){const g=await api("/api/thi/nhom",{slug:goc,ten,con:ra,lop_giao:$("#dthi-lop").value,so_luot:+$("#dthi-luot").value}); if(!g.ok) throw Error(g.loi); chinh=g.slug}
+    else{const k=await api("/api/thi/dang-lai",{}); if(!k.ok) throw Error(k.loi)}
+    $("#hop-dthi").style.display="none"; $("#hop-xt").style.display="none";
+    await moThi(); theoDoiThi(chinh,ten,ra.length>1?ra:null);
+  }catch(e){alert("Chưa tạo được link: "+e.message)}
+  finally{n.disabled=false;n.textContent="Đăng lên Cloudflare"}
+};
+// Đảo thứ tự câu trong từng phần + đảo phương án (TN) / ý (Đ/S), giữ đúng đáp án và hình theo phương án
+function daoDe(d,seed,xaoPA,xaoDS){
+  let x=seed>>>0||1; const rnd=()=>((x=Math.imul(x^x>>>15,2246822519)+0x6D2B79F5>>>0)%1e6)/1e6;
+  const tron=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(rnd()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+  const dao=q=>{q=JSON.parse(JSON.stringify(q)); if(q.type==="short"||!(q.type==="mcq"?xaoPA:xaoDS)) return q;
+    const p=q.type==="tf"?tron([0,1,2]).concat(3):tron([0,1,2,3]); q.options=p.map(k=>q.options[k]);
+    if(q.type==="mcq") q.answer=p.indexOf(q.answer); else q.answer=p.map(k=>q.answer[k]);
+    if(q.figures){const f={};for(const [k,v] of Object.entries(q.figures)){const m=/^option(\d):(\d+)$/.exec(k);f[m?`option${p.indexOf(+m[1])}:${m[2]}`:k]=v}q.figures=f}
+    return q};
+  const ra=[]; for(const t of ["mcq","tf","short"]) ra.push(...tron(d.questions.filter(q=>q.type===t)).map(dao));
+  return {...d,questions:ra};
+}
+async function theoDoiThi(slug,ten,cacMa){
+  const s=await api("/api/trang-thai");
+  $("#thi-kq").innerHTML=`<pre style="white-space:pre-wrap;background:#f8fafc;border:1px solid var(--vien);border-radius:8px;padding:8px;max-height:220px;overflow:auto;margin:0">${esc(s.nhat_ky||"Đang chuẩn bị…")}</pre>`;
+  if(!s.xong){setTimeout(()=>theoDoiThi(slug,ten,cacMa),1500);return}
+  const r=await api("/api/thi/ds",{}); veThi(r);
+  if(s.thi_ok&&slug){const url=`${r.goc}/${slug}/`;
+    $("#thi-kq").innerHTML=`<div class="thi-kq"><img alt="QR" src="https://api.qrserver.com/v1/create-qr-code/?size=340x340&margin=8&data=${encodeURIComponent(url)}">
+      <div><div style="color:#047857;font-weight:700;margin-bottom:6px">✓ Đã đăng: ${esc(ten||"")}</div><a href="${url}" target="_blank">${url}</a>
+      <div style="margin-top:8px;display:flex;gap:6px"><button onclick="navigator.clipboard.writeText('${url}');this.textContent='Đã chép'">Chép link</button>
+      <button onclick="window.open('https://api.qrserver.com/v1/create-qr-code/?size=900x900&margin=20&data=${encodeURIComponent(url)}')">QR khổ lớn (chiếu lớp)</button></div>
+      <div style="color:#666;margin-top:6px;font-size:12px">Link mới có thể cần 1–2 phút để chạy ở mọi nơi.</div>
+      ${cacMa?`<div style="margin-top:8px;font-size:12.5px">${slug!==cacMa[0]?"<b>Link chung</b> ở trên chia ngẫu nhiên mã đề. ":""}Link từng mã:<br>${cacMa.map(x=>`<a href="${r.goc}/${x}/" target="_blank" style="font-size:12.5px;font-weight:400">${r.goc}/${x}/</a>`).join("<br>")}</div>`:""}</div></div>`;}
+  else if(!s.thi_ok) $("#thi-kq").innerHTML+=`<p style="color:#b91c1c"><b>Chưa đăng xong.</b> Sửa theo nhật ký rồi bấm "Đăng lại tất cả".</p>`;
+}
+const TT_TEN={dang_mo:"Đang mở · ẩn đáp án",da_cong_bo:"Đã công bố lời giải",da_dong:"Đã đóng"};
+function veThi(r){
+  $("#thi-du-an").value=r.cau_hinh.du_an;$("#thi-mien").value=r.cau_hinh.ten_mien||"";$("#thi-sheet").value=r.cau_hinh.script_url||"";
+  $("#thi-node").textContent=r.co_node?"":"Máy chưa có Node.js — cài ở nodejs.org để đăng được.";
+  if(!r.ds.length){$("#thi-ds").innerHTML='<p style="color:#666">Chưa có đề nào. Vào Xem trước câu được chọn → 🌐 Link thi trực tuyến.</p>';return}
+  $("#thi-ds").innerHTML=`<table><tr><th>Đề</th><th>Trạng thái</th><th>Thao tác</th></tr>`+r.ds.map(x=>{const url=`${r.goc}/${x.slug}/`;
+    return `<tr${x.nhom?' style="opacity:.8"':''}><td>${x.loai==="nhom"?'<span class="tt da_cong_bo">Link chung · '+(x.con||[]).length+' mã</span> ':''}${x.nhom?'↳ ':''}<b>${esc(x.ten)}</b><br><a href="${url}" target="_blank" style="font-size:12px">${url}</a><br><span style="color:#1e3a8a;font-size:11.5px">Lớp: ${x.lop_giao||"mọi lớp"} · ${x.so_luot===0?"không giới hạn lượt":(x.so_luot??2)+" lượt/em"}</span><br><span style="color:#888;font-size:11.5px">${x.tao_luc}${x.loai==="nhom"?" · chia ngẫu nhiên: "+(x.con||[]).join(", "):` · ${x.so_cau} câu`+(x.phut?" · "+x.phut+" phút":"")}</span></td>
+    <td><span class="tt ${x.trang_thai}">${TT_TEN[x.trang_thai]||x.trang_thai}</span></td>
+    <td>${x.nhom?"":`<button data-s="${x.slug}" data-v="diem" class="chinh">Điểm</button><button data-s="${x.slug}" data-v="sua" data-lop="${x.lop_giao||""}" data-luot="${x.so_luot??2}">Lớp/lượt</button>`}<button data-s="${x.slug}" data-v="qr">QR</button><button data-s="${x.slug}" data-v="chep">Chép link</button>
+    ${x.trang_thai!=="da_cong_bo"?`<button data-s="${x.slug}" data-v="da_cong_bo" title="Đăng lại bản có đáp án + lời giải ở đúng link">Mở lời giải</button>`:`<button data-s="${x.slug}" data-v="dang_mo" title="Ẩn lại đáp án, lời giải">Ẩn lời giải</button>`}
+    ${x.trang_thai!=="da_dong"?`<button data-s="${x.slug}" data-v="da_dong">Đóng đề</button>`:`<button data-s="${x.slug}" data-v="dang_mo">Mở lại</button>`}
+    <button data-s="${x.slug}" data-v="xoa" style="color:#b91c1c">Xoá</button></td></tr>`}).join("")+"</table>";
+  $("#thi-ds").querySelectorAll("button[data-v]").forEach(b=>b.onclick=async()=>{
+    const sl=b.dataset.s,v=b.dataset.v,url=`${r.goc}/${sl}/`;
+    if(v==="chep"){navigator.clipboard.writeText(url);b.textContent="Đã chép";return}
+    if(v==="qr"){window.open(`https://api.qrserver.com/v1/create-qr-code/?size=900x900&margin=20&data=${encodeURIComponent(url)}`);return}
+    if(v==="diem"){moDiem(sl,b.closest("tr").querySelector("b").textContent);return}
+    if(v==="sua"){const lop=prompt("Giao cho lớp (cách nhau dấu phẩy; trống = mọi lớp):",b.dataset.lop);if(lop===null)return;
+      const luot=prompt("Số lượt làm mỗi em (0 = không giới hạn):",b.dataset.luot);if(luot===null)return;
+      const k=await api("/api/thi/de-sua",{slug:sl,lop_giao:lop,so_luot:+luot||0});alert(k.ok?"Đã cập nhật trên máy chủ.":"Đã lưu trên máy; máy chủ chưa nhận — bấm Đăng lại tất cả.");veThi(await api("/api/thi/ds",{}));return}
+    if(v==="xoa"&&!confirm("Gỡ đề này khỏi mạng? (bản gốc vẫn giữ trong thi-truc-tuyen/du_lieu/_da_xoa)"))return;
+    const k=await api("/api/thi/trang-thai",{slug:sl,tt:v}); if(!k.ok){alert(k.loi);return}
+    theoDoiThi(v==="xoa"?null:sl,"");
+  });
+}
+async function moThi(){$("#hop-thi").style.display="flex";$("#thi-kq").innerHTML="";veThi(await api("/api/thi/ds",{}))}
+// ---------------- BÀI GIẢNG
+let BG={nguon:[],bo:null,goc:""};
+function theThi(v){v=v===true?"bg":v===false?"de":v;["de","bg","tk"].forEach(k=>$("#the-"+k).classList.toggle("chon",k===v));
+  $("#thi-ds").style.display=v==="de"?"":"none";$("#bg-vung").style.display=v==="bg"?"":"none";$("#tk-vung").style.display=v==="tk"?"":"none";if(v==="tk")taiTk()}
+$("#the-de").onclick=()=>theThi("de");$("#the-bg").onclick=()=>theThi("bg");$("#the-tk").onclick=()=>theThi("tk");
+// ---------------- TÀI KHOẢN
+async function taiTk(){$("#tk-bang").innerHTML="Đang tải danh sách tài khoản từ máy chủ…";const r=await api("/api/thi/tk-ds",{});
+  if(!r.ok){$("#tk-bang").innerHTML=`<p style="color:#b45309">${esc(r.loi||"Chưa kết nối máy chủ")} — lần đầu cần bấm "Đăng lại tất cả" để dựng máy chủ.</p>`;return}
+  const ds=r.ds, lop=[...new Set(ds.filter(x=>x.vai==="hs").map(x=>x.lop))].sort();
+  $("#tk-loc-lop").innerHTML='<option value="">Mọi lớp</option>'+lop.map(l=>`<option>${esc(l)}</option>`).join("");
+  $("#tk-bang").innerHTML=`<div style="color:#555;margin-bottom:4px">${ds.filter(x=>x.vai==="hs").length} học sinh · ${lop.length} lớp · ${ds.filter(x=>x.vai==="gv").length} giáo viên</div>
+   <table style="width:100%;border-collapse:collapse;font-size:12.5px"><tr><th align=left>Tài khoản</th><th align=left>Họ tên</th><th>Lớp</th><th>STT</th><th>Trạng thái</th><th>Lần cuối</th><th></th></tr>`+
+   ds.map(x=>`<tr style="border-bottom:1px solid #eef0f4"><td><code>${esc(x.ten)}</code>${x.vai==="gv"?' <span class="tt da_cong_bo">GV</span>':""}</td><td>${esc(x.ho_ten)}</td><td align=center>${esc(x.lop)}</td><td align=center>${x.stt||""}</td>
+     <td align=center>${x.khoa?'<span class="tt da_dong">Khoá</span>':x.doi_mk?'<span class="tt">Chưa đổi MK</span>':'<span class="tt dang_mo">Đã đổi MK</span>'}</td>
+     <td style="color:#888">${x.lan_cuoi?new Date(x.lan_cuoi).toLocaleString("vi-VN"):""}</td>
+     <td style="white-space:nowrap"><button data-t="${esc(x.ten)}" data-v="dat">Đặt lại MK</button><button data-t="${esc(x.ten)}" data-v="${x.khoa?"mo":"khoa"}">${x.khoa?"Mở":"Khoá"}</button><button data-t="${esc(x.ten)}" data-v="xoa" style="color:#b91c1c">Xoá</button></td></tr>`).join("")+"</table>";
+  $("#tk-bang").querySelectorAll("button[data-v]").forEach(b=>b.onclick=async()=>{const t=b.dataset.t,v=b.dataset.v;
+    if(v==="dat"){if(!confirm("Đặt lại mật khẩu "+t+"?"))return;const k=await api("/api/thi/tk-dat-lai",{ten:t});alert(k.ok?`Mật khẩu mới của ${t}: ${k.mk}\n(em đăng nhập xong sẽ phải đổi mật khẩu)`:k.loi);}
+    else if(v==="xoa"){if(!confirm("Xoá tài khoản "+t+"? Điểm đã nộp vẫn giữ."))return;await api("/api/thi/tk-xoa",{ten:t});}
+    else await api("/api/thi/tk-khoa",{ten:t,khoa:v==="khoa"});
+    taiTk()});
+}
+$("#tk-nhap").onclick=async()=>{const b=$("#tk-nhap");b.disabled=true;try{const k=await api("/api/thi/tk-nhap",{van_ban:$("#tk-van").value,lop:$("#tk-lop").value.trim()});
+  alert(k.ok?`Tạo mới ${k.moi} · cập nhật ${k.cap_nhat} tài khoản.`+(k.dong_loi&&k.dong_loi.length?`\nBỏ qua: ${k.dong_loi.join("; ")}`:"")+"\nBấm In phiếu để phát cho học sinh.":k.loi+(k.dong_loi?"\n"+k.dong_loi.join("; "):""));
+  if(k.ok){$("#tk-van").value="";taiTk()}}finally{b.disabled=false}};
+$("#tk-phieu").onclick=async()=>{const k=await api("/api/thi/phieu",{lop:$("#tk-loc-lop").value});const w=window.open("","_blank");w.document.write(k.html);w.document.close()};
+$("#gv-them").onclick=async()=>{const k=await api("/api/thi/gv-them",{ten:$("#gv-ten").value.trim(),ho_ten:$("#gv-ho").value.trim(),mk:$("#gv-mk").value});
+  alert(k.ok?"Đã lưu tài khoản giáo viên.":k.loi);if(k.ok){$("#gv-mk").value="";taiTk()}};
+// ---------------- ĐIỂM
+async function moDiem(nhom,ten){const k=await api("/api/thi/diem",{nhom});
+  if(!k.ok){alert(k.loi||"Chưa lấy được điểm");return}
+  const them=Object.fromEntries((k.them||[]).map(x=>[x.tk,x.so])), f=v=>v==null?"":Number(v).toFixed(2).replace(".",",");
+  const dong=k.ds.map(x=>[x.lop||"",x.stt||"",x.ho_ten||x.tk,x.tk,x.de,x.lan,x.nop_luc?f(x.diem):"đang làm",x.thoi_gian?Math.round(x.thoi_gian/60)+" phút":"",x.chuyen_tab||0,x.nop_luc?new Date(x.nop_luc).toLocaleString("vi-VN"):""]);
+  const tb=k.ds.filter(x=>x.nop_luc);const cao={};tb.forEach(x=>{cao[x.tk]=Math.max(cao[x.tk]??-1,x.diem)});const vals=Object.values(cao);
+  const html=`<div style="margin-bottom:6px">${tb.length} bài đã nộp · ${vals.length} học sinh · điểm cao nhất mỗi em: TB ${vals.length?f(vals.reduce((a,b)=>a+b,0)/vals.length):"—"}</div>
+   <div style="max-height:52vh;overflow:auto"><table style="width:100%;border-collapse:collapse;font-size:12.5px"><tr><th>Lớp</th><th>STT</th><th align=left>Họ tên</th><th>Mã đề</th><th>Lần</th><th>Điểm</th><th>Thời gian</th><th>Rời tab</th><th>Nộp lúc</th><th></th></tr>`+
+   k.ds.map((x,i)=>`<tr style="border-bottom:1px solid #eef0f4"><td align=center>${esc(dong[i][0])}</td><td align=center>${dong[i][1]}</td><td>${esc(dong[i][2])}</td><td>${esc(x.de)}</td><td align=center>${x.lan}</td><td align=center><b>${dong[i][6]}</b></td><td align=center>${dong[i][7]}</td><td align=center>${dong[i][8]}</td><td>${dong[i][9]}</td>
+     <td style="white-space:nowrap"><button data-tk="${esc(x.tk)}" data-v="them" style="font-size:11.5px">+1 lượt${them[x.tk]?" (đã +"+them[x.tk]+")":""}</button><button data-id="${x.id}" data-v="xoa" style="font-size:11.5px;color:#b91c1c">Xoá lần này</button></td></tr>`).join("")+"</table></div>";
+  hopThoai(`Điểm: ${ten}`,"",[["Tải bảng điểm (Excel/CSV)",()=>{const csv="\ufeff"+[["Lớp","STT","Họ tên","Tài khoản","Mã đề","Lần","Điểm","Thời gian","Rời tab","Nộp lúc"],...dong].map(r=>r.map(v=>`"${String(v).replace(/"/g,'""')}"`).join(",")).join("\n");
+     const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([csv],{type:"text/csv"}));a.download=`Diem_${nhom}.csv`;a.click()},true]]);
+  $("#ht-noi").innerHTML=html;
+  $("#ht-noi").querySelectorAll("button[data-v]").forEach(b=>b.onclick=async()=>{
+    if(b.dataset.v==="them"){await api("/api/thi/luot-them",{tk:b.dataset.tk,nhom,so:1});}
+    else{if(!confirm("Xoá lần làm này? Em đó được thêm lại 1 lượt."))return;await api("/api/thi/bai-xoa",{id:+b.dataset.id});}
+    moDiem(nhom,ten)});
+}
+const qrUrl=(u,n=900)=>`https://api.qrserver.com/v1/create-qr-code/?size=${n}x${n}&margin=16&data=${encodeURIComponent(u)}`;
+function veBg(r){
+  BG.goc=r.goc; const bg=r.ds.filter(x=>x.loai==="bai_giang"), lop=[...new Set(bg.map(x=>x.lop))].sort((a,b)=>a-b);
+  $("#thi-ml").innerHTML=lop.length?"<b>Mục lục theo lớp:</b> "+lop.map(l=>`<a href="${r.goc}/toan${l}/" target="_blank">Toán ${l}</a> <button data-ml="${r.goc}/toan${l}/" style="font-size:11.5px;padding:2px 6px">QR</button>`).join(" · "):"";
+  $("#thi-ml").querySelectorAll("[data-ml]").forEach(b=>b.onclick=()=>window.open(qrUrl(b.dataset.ml)));
+  $("#bg-bang").innerHTML=!bg.length?'<p style="color:#666">Chưa có bài giảng.</p>':`<table style="width:100%;border-collapse:collapse">`+bg.map(x=>{const u=`${r.goc}/bai-giang/${x.slug}/`;
+    return `<tr style="border-bottom:1px solid #eef0f4"><td style="padding:6px"><span class="tt ${x.kieu==="pdf"?"da_dong":"da_cong_bo"}">Toán ${x.lop} · ${x.kieu==="pdf"?"PDF":"Trình chiếu"}</span> <b>${esc(x.ten)}</b><br>
+      <a href="${u}" target="_blank" style="font-size:12px">${u}</a><br><span style="color:#888;font-size:11.5px">${x.cap_nhat||x.tao_luc} · ${x.kb} KB${x.trang_thai==="an"?" · <b>đang ẩn</b>":""}</span></td>
+      <td style="padding:6px;white-space:nowrap"><button data-b="${x.slug}" data-v="qr">QR</button><button data-b="${x.slug}" data-v="chep">Chép link</button>
+      ${x.trang_thai==="an"?`<button data-b="${x.slug}" data-v="hien">Hiện</button>`:`<button data-b="${x.slug}" data-v="an">Ẩn</button>`}
+      <button data-b="${x.slug}" data-v="thay" data-ten="${esc(x.ten)}" data-lop="${x.lop}">Thay file…</button><button data-b="${x.slug}" data-v="xoa" style="color:#b91c1c">Xoá</button></td></tr>`}).join("")+"</table>";
+  $("#bg-bang").querySelectorAll("button[data-v]").forEach(b=>b.onclick=async()=>{const sl=b.dataset.b,v=b.dataset.v,u=`${r.goc}/bai-giang/${sl}/`;
+    if(v==="qr")return window.open(qrUrl(u)); if(v==="chep"){navigator.clipboard.writeText(u);b.textContent="Đã chép";return}
+    if(v==="thay")return moBg(null,{slug:sl,ten:b.dataset.ten,lop:b.dataset.lop});
+    if(v==="xoa"&&!confirm("Gỡ bài giảng này khỏi mạng? (file vẫn giữ trong thi-truc-tuyen/da_xoa)"))return;
+    const k=await api("/api/thi/bg-trang-thai",{slug:sl,tt:v});if(!k.ok){alert(k.loi);return} theoDoiThi(null,"")});
+}
+const _veThiCu=veThi; veThi=function(r){r={...r}; const bg=r.ds; r.ds=bg.filter(x=>x.loai!=="bai_giang"); _veThiCu(r); veBg({...r,ds:bg})};
+function doanLop(t){t=String(t||"");const m=/(?:to[aá]n|l[oớ]p|lop|L)\s*_?(1[0-2]|[6-9])\b/i.exec(t)||/\b(1[0-2])\b/.exec(t);return m?+m[1]:10}
+function veLinkBg(){const sl=boDauSlug($("#bg-slug").value)||"…";$("#bg-link").textContent=BG.goc?`Link: ${BG.goc}/bai-giang/${sl}/ · Mục lục: ${BG.goc}/toan${$("#bg-lop").value}/`:""}
+function nguonBg(){const v=document.querySelector('input[name="bg-nguon"]:checked').value;$("#bg-ud").style.display=v==="ud"?"":"none";$("#bg-may").style.display=v==="may"?"":"none";return v}
+document.querySelectorAll('input[name="bg-nguon"]').forEach(x=>x.onchange=nguonBg);
+function veNguonBg(){const q=boDau($("#bg-loc").value||"").toLowerCase();
+  $("#bg-ds").innerHTML=BG.nguon.filter(x=>!q||boDau(x.duong_dan).toLowerCase().includes(q)).map(x=>`<option value="${esc(x.duong_dan)}">${x.kieu==="pdf"?"📄":"📺"} ${esc(x.ten)} — ${esc(x.thu_muc)} · ${x.luc} · ${x.kb} KB</option>`).join("")}
+$("#bg-loc").oninput=veNguonBg;
+$("#bg-ds").onchange=()=>{const x=BG.nguon.find(y=>y.duong_dan===$("#bg-ds").value);if(!x||$("#bg-ghi-de").checked)return;
+  const ten=x.kieu==="json"?x.ten.replace(/_\d{8}_\d{4}\.json$/,"").replace(/_/g," "):x.ten.replace(/\.pdf$/i,"");
+  $("#bg-ten").value=ten;$("#bg-lop").value=doanLop(x.duong_dan);$("#bg-slug").value=boDauSlug(ten);veLinkBg()};
+$("#bg-file").onchange=()=>{const f=$("#bg-file").files[0];if(!f||$("#bg-ghi-de").checked)return;const ten=f.name.replace(/\.(html?|pdf)$/i,"").replace(/[_]+/g," ");
+  $("#bg-ten").value=ten;$("#bg-lop").value=doanLop(f.name);$("#bg-slug").value=boDauSlug(ten);veLinkBg()};
+$("#bg-slug").oninput=veLinkBg;$("#bg-lop").onchange=veLinkBg;
+async function moBg(bo,thay){
+  BG.bo=bo; $("#bg-nguon-bo-l").style.display=bo?"":"none";
+  document.querySelector(`input[name="bg-nguon"][value="${bo?"bo":"ud"}"]`).checked=true; nguonBg();
+  $("#bg-ghi-de").checked=!!thay; $("#bg-tt").textContent="";
+  if(bo){$("#bg-ten").value=bo.ten;$("#bg-lop").value=bo.lop;$("#bg-slug").value=boDauSlug(bo.ten)}
+  if(thay){$("#bg-ten").value=thay.ten;$("#bg-lop").value=thay.lop;$("#bg-slug").value=thay.slug}
+  $("#hop-bg").style.display="flex";
+  const r=await api("/api/thi/bg-nguon",{}); BG.nguon=r.ds||[]; veNguonBg();
+  if(!BG.goc){try{BG.goc=(await api("/api/thi/ds",{})).goc}catch(_){}} veLinkBg();
+}
+$("#bg-mo").onclick=()=>moBg(null,null);
+$("#bg-dong").onclick=()=>$("#hop-bg").style.display="none";
+$("#xt-bg").onclick=()=>{const b=XT.bo[Math.min(XT.tab,XT.bo.length-1)];
+  const ma=["TN","DS","TLN"].flatMap(l=>(b[l]||[]).filter(c=>!c.mat).map(c=>c.ma));
+  const ten=((XT.nguon&&XT.mt.ten_ky_thi)||$("#ten_ky_thi").value.trim()||"Bài giảng");
+  moBg({ma,ten,lop:XT.nguon?HK_LOP:doanLop(ten+" "+($("#mon").value||""))},null)};
+const docFile=(f,b64)=>new Promise((ok,loi)=>{const r=new FileReader();r.onload=()=>ok(b64?String(r.result).split(",")[1]:r.result);r.onerror=loi;b64?r.readAsDataURL(f):r.readAsText(f)});
+$("#bg-ok").onclick=async()=>{
+  const n=$("#bg-ok"), v=nguonBg(), ten=$("#bg-ten").value.trim(), lop=+$("#bg-lop").value, slug=boDauSlug($("#bg-slug").value||ten);
+  if(!ten){alert("Nhập tên bài giảng.");return}
+  const g={ten,lop,slug,ghi_de:$("#bg-ghi-de").checked};
+  n.disabled=true;
+  try{
+    if(v==="bo"){n.textContent="Đang dựng trình chiếu (vẽ hình)…";
+      const r=await api("/api/thi/du-lieu",{ma:BG.bo.ma,ten}); if(!r.ok) throw Error(r.loi);
+      const w=await appTrinhChieu(); Object.assign(g,{kieu:"html",html:w.createLegacy(r.du_lieu),nguon:"bộ câu ra đề"});}
+    else if(v==="ud"){const p=$("#bg-ds").value, x=BG.nguon.find(y=>y.duong_dan===p); if(!x) throw Error("Chọn một file trong danh sách.");
+      if(x.kieu==="pdf") Object.assign(g,{kieu:"pdf",duong_dan:p,nguon:p});
+      else{n.textContent="Đang dựng trình chiếu…";const r=await api("/api/thi/bg-json",{duong_dan:p}); if(!r.ok) throw Error(r.loi);
+        const w=await appTrinhChieu(); const d=r.du_lieu; d.title=ten; Object.assign(g,{kieu:"html",html:w.createLegacy(d),nguon:p});}}
+    else{const f=$("#bg-file").files[0]; if(!f) throw Error("Chọn file HTML hoặc PDF.");
+      if(f.size>25*1048576) throw Error("File lớn hơn 25 MB — Cloudflare không nhận.");
+      const pdf=/\.pdf$/i.test(f.name); Object.assign(g,pdf?{kieu:"pdf",base64:await docFile(f,true)}:{kieu:"html",html:await docFile(f,false)},{nguon:f.name});}
+    n.textContent="Đang đăng lên Cloudflare…";
+    const k=await api("/api/thi/bg-dang",g); if(!k.ok) throw Error(k.loi);
+    $("#hop-bg").style.display="none"; $("#hop-xt").style.display="none";
+    await moThi(); theThi(true); theoDoiBg(k.url,k.muc_luc,ten);
+  }catch(e){alert("Chưa đăng được: "+e.message)}
+  finally{n.disabled=false;n.textContent="Đăng bài giảng"}
+};
+async function theoDoiBg(url,ml,ten){
+  const s=await api("/api/trang-thai");
+  $("#thi-kq").innerHTML=`<pre style="white-space:pre-wrap;background:#f8fafc;border:1px solid var(--vien);border-radius:8px;padding:8px;max-height:200px;overflow:auto;margin:0">${esc(s.nhat_ky||"Đang chuẩn bị…")}</pre>`;
+  if(!s.xong){setTimeout(()=>theoDoiBg(url,ml,ten),1500);return}
+  veThi(await api("/api/thi/ds",{})); theThi(true);
+  if(s.thi_ok) $("#thi-kq").innerHTML=`<div class="thi-kq"><img alt="QR" src="${qrUrl(url,340)}"><div><div style="color:#047857;font-weight:700;margin-bottom:6px">✓ Đã đăng bài giảng: ${esc(ten)}</div>
+    <a href="${url}" target="_blank">${url}</a><div style="margin-top:6px;font-size:13px">Mục lục lớp: <a href="${ml}" target="_blank" style="font-size:13px">${ml}</a></div>
+    <div style="margin-top:8px;display:flex;gap:6px"><button onclick="navigator.clipboard.writeText('${url}');this.textContent='Đã chép'">Chép link</button><button onclick="window.open(qrUrl('${url}'))">QR khổ lớn</button>
+    <button onclick="window.open(qrUrl('${ml}'))">QR mục lục lớp</button></div></div></div>`;
+  else $("#thi-kq").innerHTML+=`<p style="color:#b91c1c"><b>Chưa đăng xong.</b> Xem nhật ký rồi bấm "Đăng lại tất cả".</p>`;
+}
+$("#nut-thi").onclick=moThi;
+$("#thi-dong").onclick=()=>$("#hop-thi").style.display="none";
+$("#thi-luu").onclick=async()=>{const r=await api("/api/thi/cau-hinh",{du_an:$("#thi-du-an").value.trim(),ten_mien:$("#thi-mien").value.trim(),script_url:$("#thi-sheet").value.trim()});veThi(await api("/api/thi/ds",{}));};
+$("#thi-dang-lai").onclick=async()=>{const k=await api("/api/thi/dang-lai",{});if(!k.ok){alert(k.loi);return}theoDoiThi(null,"")};
 $("#xt-ok").onclick=async()=>{
   const cs=XT.bo.map(b=>Object.fromEntries(Object.entries(b).map(([l,ds])=>[l,ds.filter(c=>!c.mat).map(c=>c.ma)])));
   $("#hop-xt").style.display="none"; await xuat(false,cs,XT.nguon?XT.mt:null,XT.nguon);

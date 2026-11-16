@@ -165,9 +165,8 @@ def ve_hinh(cau, in_ra=print):
     return len(manh), so_ok
 
 
-def tao(cac_ma, ten="Đề trình chiếu", in_ra=print, ve=True, lop=None):
-    if not os.path.exists(UNG_DUNG):
-        raise RuntimeError("Chưa có ứng dụng trình chiếu: cần file khung/TrinhChieu/ung_dung_trinh_chieu.html")
+def lap_du_lieu(cac_ma, ten="Đề trình chiếu", in_ra=print, ve=True, lop=None):
+    """Mã câu ngân hàng → dữ liệu "math-exam-v1" (hình TikZ/bảng đã thành SVG)."""
     k = kho()
     cau, bo = [], []
     for ma in cac_ma:
@@ -194,6 +193,14 @@ def tao(cac_ma, ten="Đề trình chiếu", in_ra=print, ve=True, lop=None):
     d = {"format": "math-exam-v1", "title": ten, "teacher": GIAO_VIEN, "questions": cau}
     if lop:
         d["grade"] = str(lop)
+    return d
+
+
+def tao(cac_ma, ten="Đề trình chiếu", in_ra=print, ve=True, lop=None):
+    if not os.path.exists(UNG_DUNG):
+        raise RuntimeError("Chưa có ứng dụng trình chiếu: cần file khung/TrinhChieu/ung_dung_trinh_chieu.html")
+    d = lap_du_lieu(cac_ma, ten, in_ra, ve, lop)
+    cau = d["questions"]
     os.makedirs(THU_MUC_RA, exist_ok=True)
     goc = re.sub(r"[^\w\-]+", "_", ten_khong_dau(ten, 60)).strip("_") or "De"
     goc = f"{goc}_{time.strftime('%Y%m%d_%H%M')}"

@@ -192,6 +192,42 @@ như phần mềm cũ thì ghi `"khung": "DeThi"` trong file JSON.
 - Khi ra đề: câu lấy ngẫu nhiên trong các bài đã gộp, **rải đều giữa các bài** (6 câu gộp 3 bài → mỗi bài khoảng 2 câu); nhiều mã đề khác câu thì mỗi mã cũng chia đều các bài.
 - Trong file ma trận: `"dang": "0D1?1+0D1?2+0H5?3"` (CSV: cột `ma_dang` ghi y như vậy). Lưu ma trận, mở lại, Bộ đề nhiều lần đều giữ dòng gộp.
 
+## Thi trực tuyến (link cho học sinh làm bài — Cloudflare Pages)
+- Chuẩn bị 1 lần: tài khoản Cloudflare (miễn phí) + Node.js trên máy (nodejs.org, kiểm tra `node -v`).
+- Ra đề (ma trận / ôn thi học kì) → **Xem trước** → **🌐 Link thi trực tuyến**: đặt tên đề, đường dẫn, thời gian, cách lật phương án,
+  URL nhận điểm Google Sheets (nếu dùng) → **Đăng lên Cloudflare**. Lần đầu trình duyệt mở trang Cloudflare: đăng nhập, bấm Allow.
+- Kết quả: link `https://<dự án>.pages.dev/<đường-dẫn>/` + mã QR (chiếu lên lớp). Bài kiểm tra đúng mẫu của ứng dụng trình chiếu
+  (12–4–6, đồng hồ, tự chấm thang 10, gửi điểm Google Sheet).
+- **Nhiều mã đề một lần**: ra đề nhiều mã (ô Số mã đề) → hộp đăng chọn *Tất cả N mã đề*: mỗi mã một link `…/<đường-dẫn>-101/`, `-102/`…
+  (cùng bộ câu thì máy tự đảo thứ tự câu và phương án theo ô Đảo phương án / Đảo ý Đ-S). Tích **link chung** → thêm `…/<đường-dẫn>/`:
+  mỗi học sinh mở được chia ngẫu nhiên 1 mã (tải lại vẫn mã đó). Mở lời giải / Đóng / Xoá ở link chung áp cho cả nhóm.
+- **Ẩn đáp án**: trang làm bài không chứa đáp án, lời giải; máy chủ chấm (xem mục Đăng nhập học sinh).
+- Nút **🌐 Thi trực tuyến** (thanh trên): danh sách đề đã đăng — **Mở lời giải** (đăng bản có đáp án + lời giải ở đúng link),
+  **Đóng đề**, **Mở lại**, **Xoá**, QR, chép link; Cài đặt tên dự án, địa chỉ trang, URL nhận điểm.
+- Dữ liệu ở `thi-truc-tuyen/` (đồng bộ GitHub để máy nào cũng đăng được mà không mất đề cũ): `site/` = đúng những gì trên mạng,
+  `du_lieu/*.goc.html` = bản gốc có đáp án. Đã cài wrangler riêng: đặt biến `NH_WRANGLER=wrangler`.
+
+## Đăng nhập học sinh / giáo viên (thi trực tuyến)
+- Máy chủ nhỏ trên Cloudflare (Pages Functions + cơ sở dữ liệu D1, miễn phí) tự dựng ở lần **Đăng** đầu tiên.
+- **Học sinh chỉ đăng nhập để làm bài thi**; **bài giảng + mục lục lớp chỉ tài khoản giáo viên** mở được.
+- Thẻ **👥 Tài khoản**: dán từ Excel (*STT ⇥ Họ tên*, ô Lớp; hoặc *Lớp ⇥ STT ⇥ Họ tên*) → **Tạo / cập nhật tài khoản**:
+  tên đăng nhập dạng `10a1-05`, mật khẩu lần đầu 6 số → **In phiếu** cắt phát. Lần đầu đăng nhập học sinh **bắt buộc đổi mật khẩu**.
+  Đặt lại mật khẩu, khoá/mở, xoá; thêm tài khoản giáo viên (không phải đổi mật khẩu). Sai 5 lần → khoá 10 phút.
+- Đăng đề: ô **Giao cho lớp** (trống = mọi lớp) và **Số lượt làm mỗi em** (mặc định 2; 0 = không giới hạn) — sửa sau bằng nút **Lớp/lượt**.
+- Trang làm bài: lớp, STT, họ tên **tự điền theo tài khoản** (không sửa được); máy chủ cấp lượt, **máy chủ chấm** — trang làm bài
+  không chứa đáp án; link chung chia mã đề cố định theo tài khoản (mở mã khác bị đưa về đúng mã).
+- Nút **Điểm** ở mỗi đề: bảng điểm (lớp, STT, họ tên, lần, điểm, thời gian, rời tab), **+1 lượt** cho em cần làm lại,
+  **Xoá lần này**, **Tải bảng điểm (Excel/CSV)**. Học sinh xem điểm các lần ở trang chính `…pages.dev/`.
+- Bí mật (mã quản trị, mật khẩu lần đầu) ở `thi-truc-tuyen/bi_mat.json`, `mat_khau_dau.json` — không đồng bộ GitHub.
+
+## Bài giảng trực tuyến + mục lục theo lớp
+- Nút **🌐 Thi trực tuyến** → thẻ **📚 Bài giảng** → **＋ Đăng bài giảng…**, nguồn:
+  *File đã xuất từ ứng dụng* (PDF phiếu / trình chiếu beamer / đề / lời giải trong `de-da-ra/`, và bài **trình chiếu HTML** đã chuyển —
+  file JSON trong `de-da-ra/TrinhChieu/` tự dựng lại thành trang trình chiếu) · *Chọn file trên máy* (HTML/PDF, tối đa 25 MB).
+- Từ **Xem trước** câu được chọn: **📚 Đăng bài giảng** → bộ câu thành trang trình chiếu HTML (có nút Đáp án, Xem lời giải).
+- Mỗi bài giảng một link `…pages.dev/bai-giang/<đường-dẫn>/` + QR; **mục lục lớp** `…pages.dev/toan10/` (toan6…toan12) tự cập nhật,
+  học sinh chỉ cần nhớ 1 link cả năm. Thao tác: Ẩn / Hiện / **Thay file…** (đăng bản mới ở đúng link cũ) / Xoá.
+
 ## Sang ứng dụng trình chiếu HTML (Soạn đề & trình chiếu Toán)
 - Điền ma trận → **Xem trước câu được chọn** → (đổi câu nếu cần) → **▶ Sang trình chiếu HTML**.
 - Bộ câu của mã đề đang xem được chuyển sang ứng dụng `khung/TrinhChieu/ung_dung_trinh_chieu.html`; trình duyệt mở ngay đề đó.

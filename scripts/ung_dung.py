@@ -142,6 +142,23 @@ def bien_dich_ts10(out):
     ghi_log("Xong.")
     cong_viec.update(dang_chay=False, xong=True)
 
+def dang_thi_nen(viec=None):
+    """Đổi đề (nếu có) rồi đăng thư mục thi-truc-tuyen/site lên Cloudflare Pages."""
+    import thi_truc_tuyen as T
+    cong_viec.update(dang_chay=True, xong=False, nhat_ky="", thi_url="")
+    def ghi_log(x):
+        cong_viec["nhat_ky"] += x + "\n"
+    try:
+        if viec:
+            viec(ghi_log)
+        cong_viec["thi_url"] = T.dang(ghi_log)
+        cong_viec["thi_ok"] = True
+    except Exception as e:
+        cong_viec["thi_ok"] = False
+        ghi_log(f"✗ {e}")
+    ghi_log("Xong.")
+    cong_viec.update(dang_chay=False, xong=True)
+
 class XuLy(BaseHTTPRequestHandler):
     def log_message(self, *a):
         pass
@@ -170,6 +187,9 @@ class XuLy(BaseHTTPRequestHandler):
                 return self.gui(200, tom_tat_lich_su())
             if u.path == "/api/trang-thai":
                 return self.gui(200, cong_viec)
+            if u.path == "/trinh-chieu-app":
+                return self.gui(200, open(os.path.join(GOC, "khung", "TrinhChieu", "ung_dung_trinh_chieu.html"), "rb").read(),
+                                "text/html; charset=utf-8")
             if u.path == "/api/ping":
                 return self.gui(200, {"ok": True})
             self.gui(404, {"loi": "không có"})
@@ -223,6 +243,108 @@ class XuLy(BaseHTTPRequestHandler):
             if u.path == "/api/de-ai/kiem":
                 import de_ai
                 return self.gui(200, de_ai.kiem(d.get("van_ban") or "", d.get("can")))
+            if u.path.startswith("/api/thi/"):
+                import thi_truc_tuyen as T
+                viec = u.path.rsplit("/", 1)[1]
+                if viec == "ds":
+                    return self.gui(200, {"ok": True, "ds": T.danh_sach(), "cau_hinh": T.cau_hinh(), "goc": T.goc_url(),
+                                          "co_node": T.co_node()})
+                if viec == "cau-hinh":
+                    c = T.luu_cau_hinh(d)
+                    return self.gui(200, {"ok": True, "cau_hinh": c, "goc": T.goc_url(c)})
+                if viec == "du-lieu":
+                    import trinh_chieu
+                    nk = []
+                    try:
+                        du = trinh_chieu.lap_du_lieu(d.get("ma") or [], (d.get("ten") or "Đề thi").strip(), in_ra=nk.append)
+                    except Exception as e:
+                        return self.gui(200, {"ok": False, "loi": str(e), "nhat_ky": "\n".join(nk)})
+                    return self.gui(200, {"ok": True, "du_lieu": du, "nhat_ky": "\n".join(nk)})
+                if viec == "tk-ds":
+                    return self.gui(200, T.goi("tk/ds"))
+                if viec == "tk-nhap":
+                    return self.gui(200, T.nhap_hs(d.get("van_ban") or "", d.get("lop") or ""))
+                if viec == "tk-dat-lai":
+                    return self.gui(200, T.dat_lai_mk(d.get("ten") or ""))
+                if viec == "tk-khoa":
+                    return self.gui(200, T.goi("tk/khoa", {"ten": d.get("ten"), "khoa": bool(d.get("khoa"))}))
+                if viec == "tk-xoa":
+                    return self.gui(200, T.goi("tk/xoa", {"ten": d.get("ten")}))
+                if viec == "gv-them":
+                    return self.gui(200, T.them_gv(d.get("ten"), d.get("ho_ten"), d.get("mk")))
+                if viec == "phieu":
+                    return self.gui(200, {"ok": True, "html": T.phieu_tai_khoan(d.get("lop") or "")})
+                if viec == "diem":
+                    return self.gui(200, T.goi("diem", {"nhom": d.get("nhom")}))
+                if viec == "luot-them":
+                    return self.gui(200, T.goi("luot/them", {"tk": d.get("tk"), "nhom": d.get("nhom"), "so": int(d.get("so") or 1)}))
+                if viec == "bai-xoa":
+                    return self.gui(200, T.goi("bai/xoa", {"id": d.get("id")}))
+                if viec == "de-sua":
+                    ds = T.danh_sach()
+                    for x in ds:
+                        if x["slug"] == d.get("slug") and x.get("loai") != "bai_giang":
+                            x["lop_giao"] = T.chuan_lop(d.get("lop_giao") or ""); x["so_luot"] = int(d.get("so_luot") or 0)
+                            for y in ds:      # nhóm: áp cho mã con
+                                if y.get("nhom") == x["slug"]:
+                                    y["lop_giao"], y["so_luot"] = x["lop_giao"], x["so_luot"]
+                    T.luu_ds(ds)
+                    return self.gui(200, {"ok": T.dong_bo_de(lambda *_: None)})
+                if viec == "bg-nguon":
+                    return self.gui(200, {"ok": True, "ds": T.nguon_ung_dung()})
+                if viec == "bg-json":
+                    try:
+                        return self.gui(200, {"ok": True, "du_lieu": json.loads(T.doc_nguon(d["duong_dan"]).decode("utf-8"))})
+                    except Exception as e:
+                        return self.gui(200, {"ok": False, "loi": str(e)})
+                if cong_viec.get("dang_chay"):
+                    return self.gui(200, {"ok": False, "loi": "Đang có việc chạy, đợi xong rồi bấm lại."})
+                if viec == "bg-dang":
+                    import base64
+                    try:
+                        if d.get("duong_dan"):
+                            noi = T.doc_nguon(d["duong_dan"])
+                        elif d.get("base64"):
+                            noi = base64.b64decode(d["base64"])
+                        else:
+                            noi = (d.get("html") or "").encode("utf-8")
+                        if not noi:
+                            raise RuntimeError("Chưa có nội dung bài giảng.")
+                        slug = T.them_bai_giang(d.get("slug"), (d.get("ten") or "Bài giảng").strip(), int(d.get("lop") or 10),
+                                                d.get("kieu") or "html", noi, bool(d.get("ghi_de")), d.get("nguon") or "")
+                    except Exception as e:
+                        return self.gui(200, {"ok": False, "loi": str(e)})
+                    threading.Thread(target=dang_thi_nen, daemon=True).start()
+                    return self.gui(200, {"ok": True, "slug": slug, "url": f"{T.goc_url()}/bai-giang/{slug}/",
+                                          "muc_luc": f"{T.goc_url()}/toan{int(d.get('lop') or 10)}/"})
+                if viec == "bg-trang-thai":
+                    sl, tt = d.get("slug"), d.get("tt")
+                    threading.Thread(target=dang_thi_nen, args=(lambda log: (T.doi_bai_giang(sl, tt),
+                                     log(f"Bài giảng {sl} → {tt}")),), daemon=True).start()
+                    return self.gui(200, {"ok": True})
+                if viec == "dang":
+                    try:
+                        slug = T.them_de(d.get("slug"), (d.get("ten") or "Đề thi").strip(), d["html"],
+                                         bool(d.get("an_dap_an", True)), d.get("phut"), lop_giao=d.get("lop_giao") or "",
+                                         so_luot=int(d.get("so_luot") if d.get("so_luot") is not None else 2))
+                    except Exception as e:
+                        return self.gui(200, {"ok": False, "loi": str(e)})
+                    if d.get("dang_ngay", True):
+                        threading.Thread(target=dang_thi_nen, daemon=True).start()
+                    return self.gui(200, {"ok": True, "slug": slug, "url": T.goc_url() + "/" + slug + "/"})
+                if viec == "nhom":
+                    slug = T.them_nhom(d.get("slug"), (d.get("ten") or "Đề thi").strip(), d.get("con") or [],
+                                       d.get("lop_giao") or "", int(d.get("so_luot") if d.get("so_luot") is not None else 2))
+                    threading.Thread(target=dang_thi_nen, daemon=True).start()
+                    return self.gui(200, {"ok": True, "slug": slug, "url": T.goc_url() + "/" + slug + "/"})
+                if viec == "trang-thai":
+                    sl, tt = d.get("slug"), d.get("tt")
+                    threading.Thread(target=dang_thi_nen, args=(lambda log: (T.doi_trang_thai(sl, tt),
+                                     log(f"Đã đổi đề {sl} → {tt}")),), daemon=True).start()
+                    return self.gui(200, {"ok": True})
+                if viec == "dang-lai":
+                    threading.Thread(target=dang_thi_nen, daemon=True).start()
+                    return self.gui(200, {"ok": True})
             if u.path == "/api/trinh-chieu":
                 import trinh_chieu
                 nk = []

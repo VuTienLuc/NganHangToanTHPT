@@ -174,6 +174,9 @@ def tao(out_tex, ten, nhan, tt, lop, tl, cac_dang, ten_dang, kq, kien_thuc, cac_
     """Ghi out_tex/PhieuBeamer.tex. ten_dang: {mã: tên}. kq: {LT:{loai:[câu]}, …}."""
     chung, pp = tach_phuong_phap(kien_thuc, cac_dang)
     luu_pp(pp)
+    from phieu_bai_hoc import ten_ngan
+    ten_day = ten
+    ten = ten_ngan(ten_day, 50)            # tiêu đề phụ mỗi slide + chân trang: tên ngắn (phiếu gộp nhiều bài)
     tt2 = dict(tt, ten_ky_thi=f"GV: {tt.get('giao_vien') or ''}  ·  {nhan.title()}: {ten}")
     dau = dau_beamer(out_tex, "xanh", tt2, "", "2/3")
     dau = dau.replace(r"\begin{document}", GIAO_DIEN + r"\begin{document}", 1)
@@ -185,7 +188,9 @@ def tao(out_tex, ten, nhan, tt, lop, tl, cac_dang, ten_dang, kq, kien_thuc, cac_
     f.append(r"\begin{frame}[plain]\nenTrangTri\centering\vfill" "\n"
              r"{\small " + tho(tt.get("truong") or "") + r"}\par\bigskip" "\n"
              r"\begin{tcolorbox}[enhanced,colback=mauHT,colframe=mauHT,coltext=white,arc=4mm,boxrule=0pt,interior style={left color=mauHT,right color=mauHT!55!white},halign=center,width=0.86\linewidth,drop fuzzy shadow]"
-             r"{\large\bfseries " + nhan + r"}\par\smallskip{\LARGE\bfseries " + tho(ten.upper()) + r"}\end{tcolorbox}\par\medskip" "\n"
+             r"{\large\bfseries " + nhan + r"}\par\smallskip" + (r"{\LARGE\bfseries " + tho(ten_day.upper()) + "}" if len(ten_day) <= 50 else
+                 r"{\large\bfseries " + r" \,\textbullet\, ".join(tho(x.strip()) for x in re.split(r"\s+[–—]\s+|\s*;\s*", ten_day) if x.strip()) + "}")
+             + r"\end{tcolorbox}\par\medskip" "\n"
              r"{\normalsize Toán " + str(lop) + r" \,·\, Thời lượng " + str(tl) + r" phút \,·\, " + str(len(cac_dang)) + r" dạng toán}\par\vfill" "\n"
              r"{\small GV: " + tho(tt.get("giao_vien") or "") + r"}\par\vspace*{0.6cm}\end{frame}" "\n")
     # ---------- nội dung: các dạng
