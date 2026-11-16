@@ -19,7 +19,7 @@ cau_hinh_phieu.json: {"pham_vi": ["0D1?1", "0D1?2"] (bài) hoặc ["0D1"] (cả 
 """
 import os, sys, re, json, time, random, shutil, collections, unicodedata
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from nh_core import GOC, doc, ghi, cau_hinh, tai_id_map, lop_tu_so
+from nh_core import GOC, doc, ghi, cau_hinh, tai_id_map, lop_tu_so, thu_muc_xuat
 
 CAC_LOAI = ["TN", "DS", "TLN"]
 TEN_PHAN = {"TN": "Trắc nghiệm nhiều phương án lựa chọn", "DS": "Trắc nghiệm đúng sai", "TLN": "Trả lời ngắn"}
@@ -268,9 +268,7 @@ def tao(cfg, in_ra=print, chi_tinh=False):
     # ---------- thư mục ra
     ngay = time.strftime("%d-%m-%Y")
     goc_ten = ten_tep(f"{nhan.title()}{' Tự Luận' if tu_luan else ''} - {ten_ngan(ten, 55)} - {ngay}", 90)
-    out_goc, i = os.path.join(GOC, "de-da-ra", goc_ten), 2
-    while os.path.exists(out_goc):
-        out_goc = os.path.join(GOC, "de-da-ra", f"{goc_ten} ({i})"); i += 1
+    out_goc = thu_muc_xuat(goc_ten, list(cac_dang) or list(cfg.get("pham_vi") or []), "phieu")   # de-da-ra/Lớp N/<chương>/…
     out = os.path.join(out_goc, "tex")
     os.makedirs(out_goc)
     src = os.path.join(GOC, "khung", "DeThiChinhThuc")

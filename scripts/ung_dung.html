@@ -316,6 +316,7 @@ tr.gop-h td{background:#dbeafe;text-align:left;font-weight:700;padding:8px 12px;
   <button id="nut-bang-ma" title="Tra cứu mã dạng %[..] theo lớp – chương – bài – dạng">Bảng mã dạng</button>
   <button id="nut-nhap" title="Thêm câu từ file .tex / .txt / .json (đúng cấu trúc \\begin{ex}…, hoặc JSON các trường Nội dung, Lựa chọn, Đáp án, Lời giải) vào ngân hàng">Nhập câu hỏi</button>
   <input type="file" id="tep-nhap" accept=".tex,.txt,.md,.json" multiple hidden>
+  <button id="nut-thu-muc" title="Thư mục đề đã xuất: xếp theo Lớp → Chương / Đề kiểm tra – Ôn thi → ngày; sắp xếp lại thư mục cũ">🗂 Thư mục đề</button>
   <button id="nut-lich-su" title="Các đề đã ra và số câu đã dùng">Lịch sử đã dùng</button>
   <button id="nut-luu">Lưu ma trận</button>
   <button id="nut-cap-nhat" title="Đọc lại cau-hoi/ sau khi thầy thêm/sửa câu">Cập nhật kho</button>
@@ -1035,6 +1036,20 @@ async function moLichSu(){
   hopThoai("Lịch sử câu đã dùng",noi,nut);
 }
 $("#nut-lich-su").onclick=moLichSu;
+async function moThuMuc(r){
+  r=r||await api("/api/thu-muc-de",{viec:"xem"});
+  const cay=r.cay.map(([p,n])=>{const sau=p.split("/").length-1;return "   ".repeat(sau)+"📁 "+p.split("/").pop()+`  (${n})`}).join("\n")||"(chưa có)";
+  const kh=r.ke_hoach;
+  hopThoai("🗂 Thư mục đề — de-da-ra/",
+    (r.nhat_ky?r.nhat_ky+"\n\n":"")+
+    "Từ nay mọi đề, phiếu, bài kiểm tra xuất ra tự vào đúng chỗ:\n  Lớp N / <Tên chương> / <ngày> <tên>            — phiếu, đề 1 chương, tạo nhanh theo bài\n  Lớp N / Đề kiểm tra – Ôn thi / <Giữa|Cuối học kì I|II> / <ngày> <tên>\n  Tuyển sinh 10 / <ngày> <tên>   ·   Khác / … (không xác định được lớp)\n\n"+
+    "HIỆN CÓ:\n"+cay+(kh.length?`\n\nTHƯ MỤC CŨ CHƯA SẮP XẾP (${kh.length}) — bấm “Sắp xếp” để chuyển (không xoá gì, hoàn tác được):\n`+kh.slice(0,60).map(x=>"• "+x.cu+"\n     → "+x.moi).join("\n")+(kh.length>60?`\n… và ${kh.length-60} thư mục nữa`:""):"\n\nKhông còn thư mục cũ nào cần sắp xếp."),
+    [...(kh.length?[[`Sắp xếp ${kh.length} thư mục cũ`,async()=>{if(!confirm(`Chuyển ${kh.length} thư mục vào cấu trúc mới? (chỉ di chuyển, bấm Hoàn tác được)`))return;
+        moThuMuc(await api("/api/thu-muc-de",{viec:"lam"}));tai()},true]]:[]),
+     ...(r.co_hoan_tac?[["↶ Hoàn tác lần sắp xếp trước",async()=>{if(!confirm("Trả các thư mục về chỗ cũ?"))return;moThuMuc(await api("/api/thu-muc-de",{viec:"hoan_tac"}));tai()}]]:[]),
+     ["📂 Mở thư mục de-da-ra",()=>api("/api/mo",{duong_dan:"de-da-ra"})]]);
+}
+$("#nut-thu-muc").onclick=()=>moThuMuc();
 $("#nut-prompt").onclick=()=>hopThoai("Prompt cho AI — chọn việc cần làm",
   "• Gõ lại đề thi: đính kèm đề (PDF/ảnh/Word) → AI gõ lại từng câu đúng định dạng kho, gắn mã dạng.\n"
   +"  (Tích các chương của đề ở cột trái trước để prompt ngắn gọn.)\n\n"

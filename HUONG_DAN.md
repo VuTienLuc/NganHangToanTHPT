@@ -561,3 +561,20 @@ Nút cạnh "Tránh câu đã ra ở lần khác":
 - **Reset bộ này / cả lớp**: xoá câu đã ra của bộ (hoặc mọi bộ của lớp) khỏi danh sách đã ra và lịch sử dùng câu → được rút lại.
 - **Reset toàn bộ lịch sử lớp**: mọi câu lớp đó từng dùng ở bất kỳ đề nào.
 Mỗi lần reset đều sao lưu `du-lieu/_cu/lich_su_dung_<ngày-giờ>.json`, có nút **↶ Hoàn tác**.
+
+## 🗂 Thư mục đề (de-da-ra) — xếp theo lớp, chương, kỳ thi
+
+Mọi đề / phiếu / bài kiểm tra xuất ra tự vào đúng chỗ, tên bắt đầu bằng ngày (sắp xếp, tìm kiếm dễ):
+```
+de-da-ra/
+  Lớp 10/
+    Mệnh đề. Tập hợp/                     ← phiếu bài học, đề 1 chương, tạo nhanh theo bài
+      2026-11-16 Phiếu Bài Học - Mệnh đề/
+    Đề kiểm tra – Ôn thi/
+      Giữa học kì I/  ·  Cuối học kì I/     ← đề giữa kì, cuối kì, ôn thi HK (nhiều chương)
+        2026-11-16 ĐỀ ÔN THI CUỐI HỌC KÌ I – TOÁN 10/
+  Lớp 11/ … Lớp 12/ … Lớp 8, 9/ …
+  Tuyển sinh 10/2026-11-15 Đề luyện tuyển sinh 10/
+  Khác/                                    ← không xác định được lớp
+```
+Nút **🗂 Thư mục đề**: xem cây thư mục, **Sắp xếp N thư mục cũ** vào cấu trúc mới (chỉ di chuyển, lịch sử dùng câu đổi tên theo), **↶ Hoàn tác**, **Mở thư mục**.
