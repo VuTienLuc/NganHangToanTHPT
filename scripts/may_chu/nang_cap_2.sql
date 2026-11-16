@@ -1,0 +1,1 @@
+ALTER TABLE bai ADD COLUMN cam_xuc TEXT;

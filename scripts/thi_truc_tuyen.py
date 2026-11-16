@@ -79,7 +79,7 @@ VA = [  # (tìm, thay) trong mã bài kiểm tra; thiếu một chỗ → không
      "$('loginForm').onsubmit=async e=>{e.preventDefault();$('loginError').textContent='';try{const k=await __goi('bat-dau',{de:__DE});"
      "if(!k.ok){let m=k.loi||'Chưa được làm bài.';if(k.het){try{const r=await __goi('ket-qua?de='+encodeURIComponent(__DE));"
      "if(r.ds&&r.ds.length)m+=' Điểm các lần: '+r.ds.map(x=>'lần '+x.lan+': '+(x.cham?x.cham.score.toFixed(2).replace('.',','):'—')).join(' · ')+'.'}catch(_){}}"
-     "$('loginError').textContent=m;return}if(k.thong_bao)notice(k.thong_bao);enter();}"
+     "$('loginError').textContent=m;return}await __camXuc(k);if(k.thong_bao)notice(k.thong_bao);enter();}"
      "catch(err){$('loginError').textContent=err.message||'Lỗi mạng — thử lại.';}};"),
     ("function showResult(){",
      "function showResult(){const k=JSON.stringify(attempt.answers),at=attempt;if(at.daNopMayChu&&__CHAM[k])return __showResult0();"
@@ -94,10 +94,33 @@ const __DE=decodeURIComponent(location.pathname.split('/')[1]||''),__CHAM={};
 async function __goi(duong,du_lieu){const r=await fetch('/api/'+duong,du_lieu?{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify(du_lieu),credentials:'same-origin'}:{credentials:'same-origin'});if(r.status===401){location.href='/dang-nhap/?ve='+encodeURIComponent(location.pathname);throw Error('Cần đăng nhập lại.')}return r.json()}
 function examGrade(d,answers){const c=__CHAM[JSON.stringify(answers)];if(c)return c;if(d.questions.every(q=>q.answer!=null))return __examGrade0(d,answers);
  return {score:0,parts:{mcq:0,tf:0,short:0},right:{mcq:0,tf:0,short:0},blank:0,rows:d.questions.map((q,i)=>({index:i,type:q.type,correct:0,answered:false,points:0,max:q.type==='mcq'?.25:q.type==='tf'?1:.5}))};}
+const __DV=__DONG_VIEN__;
+function __camXuc(k){if(k&&k.tiep)return Promise.resolve();return new Promise(xong=>{
+ const st=document.createElement('style');st.textContent=`.__cx{position:fixed;inset:0;z-index:9999;background:rgba(15,23,42,.55);display:grid;place-items:center;padding:16px;animation:__mo .25s}
+ @keyframes __mo{from{opacity:0}to{opacity:1}}@keyframes __bay{from{transform:translateY(14px) scale(.96);opacity:0}to{transform:none;opacity:1}}
+ .__cx .h{background:#fff;border-radius:22px;max-width:560px;width:100%;padding:24px 22px;box-shadow:0 24px 70px rgba(0,0,0,.3);animation:__bay .3s;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+ .__cx h2{margin:0 0 4px;font-size:21px;color:#1e3a8a;text-align:center}.__cx .p{margin:0 0 16px;color:#64748b;text-align:center;font-size:14px}
+ .__cx .l{display:grid;grid-template-columns:1fr 1fr;gap:10px}.__cx .l button{border:2px solid #e2e8f0;background:#f8fafc;border-radius:16px;padding:14px 8px;cursor:pointer;font-size:15px;font-weight:600;color:#334155;transition:.15s}
+ .__cx .l button:hover{transform:translateY(-3px);box-shadow:0 8px 20px rgba(0,0,0,.08)}.__cx .l b{display:block;font-size:44px;line-height:1.15;margin-bottom:4px}
+ .__cx .bong{display:flex;gap:12px;align-items:flex-start;margin:4px 0 18px;animation:__bay .35s}.__cx .av{font-size:42px;line-height:1}
+ .__cx .noi{background:#eff6ff;border-radius:4px 18px 18px 18px;padding:14px 16px;font-size:17px;line-height:1.55;color:#1e293b}.__cx .noi strong{color:#1e3a8a}
+ .__cx .vao{width:100%;border:0;border-radius:14px;padding:14px;font-size:18px;font-weight:800;color:#fff;cursor:pointer}.__cx .doi{display:block;margin:10px auto 0;background:none;border:0;color:#64748b;cursor:pointer;text-decoration:underline;font-size:13px}`;
+ const o=document.createElement('div');o.className='__cx';document.body.append(st,o);
+ const chon=()=>{o.innerHTML='<div class="h"><h2>Trước khi làm bài, em đang thấy thế nào?</h2><p class="p">Chọn một cảm xúc — thầy có lời nhắn riêng cho em</p><div class="l">'+
+  Object.entries(__DV).map(([k,v])=>'<button data-k="'+k+'" style="border-color:'+v.mau+'33"><b>'+v.icon+'</b>'+v.ten+'</button>').join('')+'</div></div>';
+  o.querySelectorAll('[data-k]').forEach(b=>b.onclick=()=>nhan(b.dataset.k))};
+ const nhan=k=>{const v=__DV[k],n=v.cau.length;let cu=-1;try{cu=+localStorage.getItem('__dv_'+k)}catch(_){}
+  let i=Math.floor(Math.random()*n);if(n>1&&i===cu)i=(i+1+Math.floor(Math.random()*(n-1)))%n;try{localStorage.setItem('__dv_'+k,i)}catch(_){}
+  const c=v.cau[i].replace(/^Thầy Lực:\s*/,'');
+  o.innerHTML='<div class="h"><div class="bong"><div class="av">👨‍🏫</div><div class="noi"><strong>Thầy Lực:</strong> '+c.replace(/[<>]/g,'')+'</div></div>'+
+   '<button class="vao" style="background:'+v.mau+'">'+v.icon+' Vào làm bài 🚀</button><button class="doi">← chọn lại cảm xúc</button></div>';
+  o.querySelector('.doi').onclick=chon;
+  o.querySelector('.vao').onclick=()=>{__goi('cam-xuc',{de:__DE,cam_xuc:k}).catch(()=>{});o.remove();st.remove();xong()}};
+ chon();})}
 async function __khoiDong(){
- try{const t=await __goi('toi');if(t.ok){const dat=(id,v)=>{const e=document.getElementById(id);if(e){e.value=v;e.readOnly=true;e.style.background='#f1f5f9'}};
-  dat('studentClass',t.lop||'GV');dat('studentId',String(t.stt||t.tk));dat('studentName',t.ho_ten||t.tk);
-  const m=document.querySelector('#login .muted');if(m)m.innerHTML='Đăng nhập: <b>'+(t.ho_ten||t.tk)+'</b> ('+t.tk+'). Bấm nút bên dưới để bắt đầu — số lượt làm do thầy quy định. <a href="/">Trang chính</a> · <a href="#" id="__thoat">Đăng xuất</a>';
+ try{const t=await __goi('toi');if(t.ok){const gv=t.vai==='gv',dat=(id,v)=>{const e=document.getElementById(id);if(e){e.value=v;e.readOnly=true;e.style.background='#f1f5f9'}};
+  dat('studentClass',gv?'GV':(t.lop||''));dat('studentId',gv?'0':String(t.stt||''));dat('studentName',gv?'Giáo viên (làm thử)':(t.ho_ten||''));
+  const m=document.querySelector('#login .muted');if(m)m.innerHTML=(gv?'Chế độ làm thử của giáo viên.':'Thông tin lấy theo tài khoản đã đăng nhập.')+' Bấm nút bên dưới để bắt đầu. <a href="/">Trang chính</a> · <a href="#" id="__thoat">Đăng xuất</a>';
   const th=document.getElementById('__thoat');if(th)th.onclick=async e=>{e.preventDefault();await __goi('dang-xuat',{});location.href='/dang-nhap/'}}}catch(e){}
  try{const k=await __goi('ket-qua?de='+encodeURIComponent(__DE));(k.ds||[]).forEach(x=>{if(x.cham)__CHAM[JSON.stringify(x.tra_loi)]=x.cham})}catch(e){}
 }
@@ -143,7 +166,8 @@ def ban_truc_tuyen(html, slug, an_dap_an=True):
             for k in [k for k in (q.get("figures") or {}) if k.startswith("solution:")]:
                 del q["figures"][k]
     i = html.rfind("examRuntime();")
-    html = html[:i] + JS_DANG_NHAP + "\n__khoiDong().then(()=>examRuntime());" + html[i + len("examRuntime();"):]
+    dv = json.dumps(json.load(open(os.path.join(MAY_CHU, "dong_vien.json"), encoding="utf-8")), ensure_ascii=False).replace("<", "\\u003c")
+    html = html[:i] + JS_DANG_NHAP.replace("__DONG_VIEN__", dv) + "\n__khoiDong().then(()=>examRuntime());" + html[i + len("examRuntime();"):]
     for q in d["questions"]:
         for k in ("ma", "ma_dang", "ten_dang"):
             q.pop(k, None)
@@ -204,7 +228,7 @@ const LOP=__LOP__,nd=document.getElementById('nd'),e=s=>String(s??'').replace(/[
 fetch('/api/toi',{credentials:'same-origin'}).then(r=>r.json()).then(t=>{
  if(!t.ok){nd.innerHTML='<p>Học sinh đăng nhập bằng tài khoản thầy cấp để làm bài kiểm tra.</p><a href="/dang-nhap/"><button>Đăng nhập</button></a>';return}
  if(t.doi_mk){location.href='/dang-nhap/?doi=1';return}
- let h='<p>Xin chào <b>'+e(t.ho_ten||t.tk)+'</b>'+(t.lop?' — lớp '+e(t.lop):'')+' · <a href="#" id="thoat">Đăng xuất</a></p>';
+ let h='<p>'+(t.vai==='gv'?'Tài khoản giáo viên':'Xin chào <b>'+e(t.ho_ten||'')+'</b>'+(t.lop?' — lớp '+e(t.lop):''))+' · <a href="#" id="thoat">Đăng xuất</a></p>';
  if(t.vai==='gv'){const TT={dang_mo:'đang mở',da_cong_bo:'đã công bố lời giải',da_dong:'đã đóng'};
   h+='<h3>Đề thi — làm thử (không giới hạn lượt, không lưu điểm)</h3>'+((t.de||[]).length?t.de.map(x=>'<a class="de" href="/'+e(x.slug)+'/"><b>'+e(x.ten)+'</b><span class="nho">'+(x.lop||'mọi lớp')+' · '+(TT[x.trang_thai]||'')+'</span></a>').join(''):'<p class="phu">Chưa đăng đề nào.</p>');
   h+='<h3>Bài giảng</h3>'+(LOP.length?LOP.map(l=>'<a class="de" href="/toan'+l+'/"><b>Toán '+l+'</b><span class="nho">mục lục</span></a>').join(''):'<p class="phu">Chưa có bài giảng.</p>')}
@@ -484,7 +508,7 @@ def co_node():
 MAY_CHU = os.path.join(os.path.dirname(os.path.abspath(__file__)), "may_chu")   # mã máy chủ (Functions + schema)
 P_BM = os.path.join(THU, "bi_mat.json")       # mã quản trị + khoá phiên (KHÔNG đồng bộ GitHub)
 TEN_DB = "thi-toan-db"
-PHIEN_BAN_SCHEMA = 1
+PHIEN_BAN_SCHEMA = 2
 
 
 def _luu_ch(c):
@@ -543,10 +567,19 @@ def chuan_bi_may_chu(c, in_ra):
         c["d1_id"] = m.group(1); _luu_ch(c)
     _chep_may_chu()
     if c.get("schema") != PHIEN_BAN_SCHEMA:
-        in_ra("Tạo bảng tài khoản, đề, bài làm…")
-        rc, ra = _chay(["d1", "execute", TEN_DB, "--remote", "--file", "schema.sql", "--yes"], in_ra, 240)
-        if rc != 0:
-            raise RuntimeError("Chưa tạo được bảng dữ liệu (xem nhật ký).")
+        if not c.get("schema"):
+            in_ra("Tạo bảng tài khoản, đề, bài làm…")
+            rc, ra = _chay(["d1", "execute", TEN_DB, "--remote", "--file", "schema.sql", "--yes"], in_ra, 240)
+            if rc != 0:
+                raise RuntimeError("Chưa tạo được bảng dữ liệu (xem nhật ký).")
+        else:
+            for v in range(int(c["schema"]) + 1, PHIEN_BAN_SCHEMA + 1):
+                f = f"nang_cap_{v}.sql"
+                shutil.copy(os.path.join(MAY_CHU, f), os.path.join(THU, f))
+                in_ra(f"Nâng cấp cơ sở dữ liệu lên bản {v}…")
+                rc, ra = _chay(["d1", "execute", TEN_DB, "--remote", "--file", f, "--yes"], in_ra, 240)
+                if rc != 0 and "duplicate column" not in ra.lower():
+                    raise RuntimeError("Chưa nâng cấp được cơ sở dữ liệu (xem nhật ký).")
         c["schema"] = PHIEN_BAN_SCHEMA; _luu_ch(c)
     if bi_mat().get("chua_dat"):
         _dat_bi_mat(c, in_ra)
@@ -599,6 +632,22 @@ def goi(duong, du_lieu=None, lan=0):
         return k
     except Exception as e:
         return {"ok": False, "loi": f"Chưa kết nối được trang {goc_url()} ({getattr(e, 'reason', e)}). Kiểm tra mạng; nếu vừa đăng lần đầu thì đợi 1–2 phút rồi thử lại."}
+
+
+def lam_lai_trang_de(in_ra=print):
+    """Dựng lại mọi trang đề từ bản gốc theo mã vá mới nhất (sửa lỗi/giao diện áp cho cả đề đã đăng)."""
+    n = 0
+    for x in danh_sach():
+        if x.get("loai") in ("bai_giang", "nhom") or x.get("trang_thai") == "da_dong":
+            continue
+        p = os.path.join(DL, x["slug"] + ".goc.html")
+        if os.path.exists(p):
+            try:
+                _dat_trang(x["slug"], ban_truc_tuyen(open(p, encoding="utf-8").read(), x["slug"], x.get("trang_thai") != "da_cong_bo")[0]); n += 1
+            except Exception as e:
+                in_ra(f"   ⚠ chưa dựng lại được đề {x['slug']}: {e}")
+    if n:
+        in_ra(f"   cập nhật giao diện {n} trang đề")
 
 
 def dong_bo_de(in_ra=print):
@@ -750,6 +799,7 @@ def dang(in_ra=print):
         else:
             raise RuntimeError("Chưa tạo được dự án Cloudflare Pages (xem nhật ký). Có thể đổi tên dự án khác rồi thử lại.")
     chuan_bi_may_chu(c, in_ra)
+    lam_lai_trang_de(in_ra)
     in_ra("Đang đưa trang lên Cloudflare Pages…")
     rc, ra = _chay(["pages", "deploy", SITE, "--project-name", c["du_an"], "--branch", "main", "--commit-dirty=true"], in_ra, 600)
     if rc != 0:
