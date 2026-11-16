@@ -1,0 +1,1 @@
+CREATE TABLE IF NOT EXISTS theo_doi (tk TEXT PRIMARY KEY, ghi_chu TEXT, tu_luc TEXT);
