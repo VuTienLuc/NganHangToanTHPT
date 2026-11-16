@@ -609,6 +609,15 @@ def _ngay_iso(s):
     return f"{m.group(3)}-{m.group(2)}-{m.group(1)}T{m.group(4) or '00:00'}" if m else (s or "")
 
 
+def _so_la_ma(v):
+    if v.isdigit():
+        return int(v)
+    g = {"I": 1, "V": 5, "X": 10}; t = 0
+    for i, c in enumerate(v):
+        t += -g[c] if i + 1 < len(v) and g[v[i + 1]] > g[c] else g[c]
+    return t
+
+
 def _the_bg(x):
     """Mục bài giảng cho trang tổng quan giáo viên: lớp, chương, bài (số) để xếp theo mục lục."""
     ten = x.get("ten") or ""
@@ -617,7 +626,7 @@ def _the_bg(x):
     mc = re.search(r"\bChương\s+([IVX\d]+)", x.get("chuong") or "")
     so_ch = 0
     if mc:
-        v = mc.group(1); so_ch = int(v) if v.isdigit() else sum({"I": 1, "V": 5, "X": 10}[c] for c in v)
+        so_ch = _so_la_ma(mc.group(1))
     return {"slug": x["slug"], "ten": ten, "lop": int(x.get("lop") or 0), "kieu": x.get("kieu") or "html",
             "chuong": x.get("chuong") or "", "chuong_so": x.get("chuong_so") or so_ch, "bai": x.get("bai") or "",
             "bai_so": int(m.group(1)) if m else None, "chua_de": chua_de,
@@ -895,6 +904,64 @@ def lam_lai_trang_de(in_ra=print):
                 in_ra(f"   ⚠ chưa dựng lại được đề {x['slug']}: {e}")
     if n:
         in_ra(f"   cập nhật giao diện {n} trang đề")
+
+
+_PL = {}
+
+
+def phan_loai(x, ds=None):
+    """Khối / chương / bài của một đề hoặc bài giảng (để xếp thư viện theo mục lục)."""
+    from nh_core import tai_id_map, lop_tu_so, ky_thi
+    ten = x.get("ten") or ""
+    m_lop = re.search(r"(?:toán|lớp|lop)\s*(1[0-2]|[6-9])\b", ten, re.I) or re.search(r"\b(1[0-2]|[6-9])[A-Z]\d", x.get("lop_giao") or "")
+    if x.get("loai") == "bai_giang":
+        t = _the_bg(x)
+        return _ten_chuong({"lop": t["lop"] or (int(m_lop.group(1)) if m_lop else 0), "chuong": t["chuong"], "chuong_so": t["chuong_so"] or 0,
+                "bai": t["bai"], "bai_so": t["bai_so"] or 0})
+    if x.get("loai") == "nhom":
+        con = next((y for y in (ds or danh_sach()) if y["slug"] in (x.get("con") or [])), None)
+        r = dict(phan_loai(con, ds)) if con else {"lop": 0, "chuong": "", "chuong_so": 0, "bai": "", "bai_so": 0}
+        return r
+    p = os.path.join(DL, x["slug"] + ".goc.html")
+    khoa = (x["slug"], os.path.getmtime(p) if os.path.exists(p) else 0)
+    if khoa in _PL:
+        return _PL[khoa]
+    keys = []
+    if os.path.exists(p):
+        try:
+            d = json.loads(KHOI_DL.search(open(p, encoding="utf-8").read()).group(2))
+            keys = [q.get("ma_dang") for q in d.get("questions", []) if q.get("ma_dang")]
+        except Exception:
+            keys = []
+    r = {"lop": int(m_lop.group(1)) if m_lop else 0, "chuong": "", "chuong_so": 0, "bai": "", "bai_so": 0}
+    if keys:
+        import collections as C
+        idm = tai_id_map()
+        lop = C.Counter(lop_tu_so(k[0]) for k in keys).most_common(1)[0][0]
+        cua = [k for k in keys if lop_tu_so(k[0]) == lop]
+        ch = C.Counter(k[:3] for k in cua); bai = C.Counter(k.split("-")[0] for k in cua)
+        r["lop"] = lop
+        if len(ch) == 1:
+            v = idm.get(cua[0], {})
+            r["chuong"] = (v.get("chap_name") or "").strip(); r["chuong_so"] = int(cua[0][2])
+            if len(bai) == 1:
+                mb = re.match(r"\d[A-Z]\d+\?(\d+)", cua[0]); r["bai_so"] = int(mb.group(1)) if mb else 0
+                r["bai"] = f"Bài {r['bai_so']}. " + (v.get("lesson_name") or "").strip()
+        else:
+            r["chuong_so"] = 99; r["chuong"] = "Đề kiểm tra – Ôn thi" + ("" if ky_thi(ten) == "Đề kiểm tra khác" else " · " + ky_thi(ten))
+    if not r["chuong"] and ky_thi(ten) != "Đề kiểm tra khác":
+        r["chuong_so"] = 99; r["chuong"] = "Đề kiểm tra – Ôn thi · " + ky_thi(ten)
+    r = _ten_chuong(r)
+    _PL[khoa] = r
+    return r
+
+
+def _ten_chuong(r):
+    """Cùng một kiểu tên chương cho đề và bài giảng: 'Chương N. Tên' (để gộp đúng một nhóm)."""
+    so, ten = r.get("chuong_so") or 0, re.sub(r"^\s*Chương\s+[IVX\d]+\s*[.:–-]?\s*", "", r.get("chuong") or "")
+    if 0 < so < 99 and ten:
+        r["chuong"] = f"Chương {so}. {ten}"
+    return r
 
 
 def dat_goi_y(slug, bat):

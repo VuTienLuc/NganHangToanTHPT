@@ -322,7 +322,13 @@ class XuLy(BaseHTTPRequestHandler):
                 import thi_truc_tuyen as T
                 viec = u.path.rsplit("/", 1)[1]
                 if viec == "ds":
-                    return self.gui(200, {"ok": True, "ds": T.danh_sach(), "cau_hinh": T.cau_hinh(), "goc": T.goc_url(),
+                    ds = T.danh_sach()
+                    for x in ds:
+                        try:
+                            x["pl"] = T.phan_loai(x, ds)
+                        except Exception:
+                            x["pl"] = {"lop": 0, "chuong": "", "chuong_so": 0, "bai": "", "bai_so": 0}
+                    return self.gui(200, {"ok": True, "ds": ds, "cau_hinh": T.cau_hinh(), "goc": T.goc_url(),
                                           "co_node": T.co_node()})
                 if viec == "cau-hinh":
                     c = T.luu_cau_hinh(d)

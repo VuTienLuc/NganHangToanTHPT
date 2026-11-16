@@ -210,6 +210,13 @@ như phần mềm cũ thì ghi `"khung": "DeThi"` trong file JSON.
 - Dữ liệu ở `thi-truc-tuyen/` (đồng bộ GitHub để máy nào cũng đăng được mà không mất đề cũ): `site/` = đúng những gì trên mạng,
   `du_lieu/*.goc.html` = bản gốc có đáp án. Đã cài wrangler riêng: đặt biến `NH_WRANGLER=wrangler`.
 
+### Thư viện đề & bài giảng (hộp Thi & học trực tuyến)
+- Mọi đề thi, bài giảng, phiếu học tập nằm chung một danh sách, xếp **Khối → Chương → Bài** (đề tự nhận chương/bài từ mã dạng của câu; đề nhiều chương xếp vào "Đề kiểm tra – Ôn thi · <kỳ>").
+- Ô tìm trên cùng gõ không dấu được (vd `phuong trinh`, `10a1`, `bai 6`). Lọc nhanh theo Khối, Loại (Đề thi / Bài giảng / Phiếu), Trạng thái; bộ lọc được nhớ cho lần sau.
+- Mỗi mục có nút **📤 Gửi HS**: link, nút Chép link, QR chiếu lớp, Mở thử và **tin nhắn mẫu** (sửa được) để dán vào Zalo/Messenger. Nếu đề đang đóng hoặc bài chỉ cho GV xem, hộp này nhắc trước khi gửi.
+- Đầu mỗi khối có **🔗 Chép link trang Toán N** (trang học sinh của khối, thấy mọi đề và bài đã mở) và QR.
+- Nút **⋯** mở các thao tác ít dùng: lớp giao/số lượt, mở/ẩn lời giải, đóng/mở đề, bật/tắt 💡 Gợi ý AI, ẩn/hiện, cho HS xem, thay file, xoá. Link chung nhiều mã đề có nút **N mã ▾** để chép link từng mã.
+
 ## Đăng nhập học sinh / giáo viên (thi trực tuyến)
 - Máy chủ nhỏ trên Cloudflare (Pages Functions + cơ sở dữ liệu D1, miễn phí) tự dựng ở lần **Đăng** đầu tiên.
 - **Học sinh chỉ đăng nhập để làm bài thi**; **bài giảng + mục lục lớp chỉ tài khoản giáo viên** mở được.
