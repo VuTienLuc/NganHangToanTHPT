@@ -638,14 +638,34 @@ class XuLy(BaseHTTPRequestHandler):
                 return self.gui(200, {"ok": True, "so_cau": so, "nhat_ky": "\n".join(dong)})
             if u.path == "/api/lich-su":
                 p = os.path.join(GOC, "du-lieu", "lich_su_dung.json")
+                cu_dir = os.path.join(GOC, "du-lieu", "_cu")
+                if d.get("hoan_tac"):            # trả lại bản lịch sử trước lần reset
+                    f = os.path.join(cu_dir, os.path.basename(d["hoan_tac"]))
+                    if not os.path.isfile(f):
+                        return self.gui(200, {"ok": False, "loi": "Không còn bản sao lưu để hoàn tác."})
+                    shutil.copy(f, p)
+                    return self.gui(200, {"ok": True, **tom_tat_lich_su()})
                 ls = doc_lich_su()
+                os.makedirs(cu_dir, exist_ok=True)
+                sao = f"lich_su_dung_{time.strftime('%Y%m%d-%H%M%S')}.json"
+                json.dump(ls, open(os.path.join(cu_dir, sao), "w", encoding="utf-8"), ensure_ascii=False)
+                truoc = len(ls)
                 if d.get("xoa_het"):
                     ls = {}
                 elif d.get("bo_de"):
                     ls = {k: [x for x in v if x != d["bo_de"]] for k, v in ls.items()}
                     ls = {k: v for k, v in ls.items() if v}
+                elif d.get("bo_ma") is not None:  # cho lấy lại các câu này (reset câu đã rút của bộ đề)
+                    bo = set(d["bo_ma"])
+                    ls = {k: v for k, v in ls.items() if k not in bo}
+                elif d.get("bo_lop"):            # reset mọi câu đã dùng của một lớp
+                    ma_lop = {"10": "0", "11": "1", "12": "2"}.get(str(d["bo_lop"]), str(d["bo_lop"]))
+                    lop_cua = {}
+                    for dong in open(os.path.join(GOC, "du-lieu", "chi_muc.jsonl"), encoding="utf-8"):
+                        c = json.loads(dong); lop_cua[c["ma"]] = (c.get("dang_key") or "")[:1]
+                    ls = {k: v for k, v in ls.items() if lop_cua.get(k) != ma_lop}
                 json.dump(ls, open(p, "w", encoding="utf-8"), ensure_ascii=False)
-                return self.gui(200, {"ok": True, **tom_tat_lich_su()})
+                return self.gui(200, {"ok": True, "da_xoa": truoc - len(ls), "sao_luu": sao, **tom_tat_lich_su()})
             if u.path == "/api/lap-chi-muc":
                 rc, log = chay([os.path.join(SCRIPTS, "lap_chi_muc.py")])
                 return self.gui(200, {"ok": rc == 0, "nhat_ky": log})

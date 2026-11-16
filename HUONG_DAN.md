@@ -543,3 +543,21 @@ Tạo phiếu như cũ (📄 Phiếu bài học, kiểu trắc nghiệm hoặc t
 - Hình TikZ tự đổi sang SVG (máy cần LaTeX như khi xuất PDF).
 - Bài giảng bất kỳ cũng cho HS xem được: 🌐 Thi trực tuyến → thẻ Bài giảng → nút **Cho HS xem / Thôi cho HS**.
 - Phiếu tạo từ bản cũ (trước khi có tính năng) cần tạo lại phiếu để có dữ liệu web.
+
+## Ôn thi học kì — hàng "Xuất đề"
+
+Bảng Ôn thi học kì có hàng **Xuất đề** (máy nhớ lựa chọn):
+- **Số đề mỗi lần** + **Mỗi đề câu khác nhau** (tắt: các mã chỉ trộn thứ tự cùng 22 câu).
+- **🚫 Tuyệt đối không trùng câu giữa các đề**: không dùng lại câu nào ở 2 đề — so cả *nội dung* (câu khác mã nhưng cùng bài toán, kho có ~800 nhóm như vậy). Kho không đủ thì báo ⚠ thiếu (đề đó ít câu hơn) để giảm số đề hoặc bổ sung câu; nhật ký luôn ghi "Câu trùng giữa các đề: 0". Đổi câu ở Xem trước cũng không lấy câu trùng nội dung.
+- **Thiếu câu → lấy câu cùng nhóm (mức gần nhất)**: thứ tự bù khi kho thiếu: mức cùng nhóm (NB↔TH, VD↔VDC) → dạng khác cùng bài → bài khác cùng chương → **cùng bài, mức gần nhất** → **cùng chương, mức gần nhất**. Nhật ký ghi rõ đã bù bao nhiêu câu, từ nhóm nào.
+- **📚 Gộp PDF thành 1 cuốn đề cương**: quyển Câu hỏi (bìa, mục lục, mọi đề) + quyển Lời giải.
+- **📝 Left note**: bản đề có lề trái để học sinh ghi chú (Leftnote_101…).
+- **Lời giải từng đề file riêng** (De_101_LoiGiai.pdf…), **Beamer**, **Biên dịch PDF**.
+Áp dụng cho cả *Ra đề từ ngân hàng* và *Xem trước & đổi câu → Xác nhận*.
+
+### ↺ Lấy lại câu đã rút (Ôn thi HK)
+Nút cạnh "Tránh câu đã ra ở lần khác":
+- **Chỉ lần xuất tới (không xoá)**: tạm bỏ qua câu đã rút.
+- **Reset bộ này / cả lớp**: xoá câu đã ra của bộ (hoặc mọi bộ của lớp) khỏi danh sách đã ra và lịch sử dùng câu → được rút lại.
+- **Reset toàn bộ lịch sử lớp**: mọi câu lớp đó từng dùng ở bất kỳ đề nào.
+Mỗi lần reset đều sao lưu `du-lieu/_cu/lich_su_dung_<ngày-giờ>.json`, có nút **↶ Hoàn tác**.

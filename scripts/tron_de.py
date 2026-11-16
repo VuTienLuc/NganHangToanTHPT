@@ -175,12 +175,38 @@ def ung_vien(loai, yc):
             them([c for c in co_ban if c["dang_key"].startswith(tt_chuong) and not rx.match(c["dang_key"])
                   and not (tt_bai and c["dang_key"].startswith(tt_bai))
                   and (not mm or c["muc_chuan"] in mm)], "bài khác cùng chương")
+    if mt.get("bu_khac_muc") and muc:
+        # vẫn thiếu (thường khi nhiều đề không trùng câu): lấy câu cùng nhóm bài/chương ở MỨC GẦN NHẤT
+        da_xet = set(muc) | (nhom if mt.get("bu_cung_nhom", True) else set())
+        bai_k, chuong_k = set(), set()
+        for k in tach_gop(yc["dang"]):
+            mb = re.match(r"(\d[A-Z]\d+)[?A-Z](\d+)", k); mc = re.match(r"(\d[A-Z]\d+)", k)
+            if mb: bai_k.add(f"{mb.group(1)}?{mb.group(2)}-")
+            if mc: chuong_k.add(mc.group(1) + "?")
+        bai_k, chuong_k = tuple(bai_k), tuple(chuong_k)
+        vi = {m: THU_MUC_BU[m] for m in "NHVC"}
+        for d in (1, 2, 3):
+            muc_d = {m for m in "NHVC" if m not in da_xet and min(abs(vi[m] - vi[x]) for x in muc if x in vi) == d}
+            if not muc_d:
+                continue
+            ten_muc = "/".join(TEN_MUC_BU[m] for m in sorted(muc_d, key=vi.get))
+            if bai_k:
+                them([c for c in co_ban if c["dang_key"].startswith(bai_k) and c["muc_chuan"] in muc_d],
+                     f"cùng bài, mức {ten_muc}")
+            if chuong_k:
+                them([c for c in co_ban if c["dang_key"].startswith(chuong_k) and not (bai_k and c["dang_key"].startswith(bai_k))
+                      and c["muc_chuan"] in muc_d], f"cùng chương, mức {ten_muc}")
     return tang
+
+THU_MUC_BU = {"N": 0, "H": 1, "V": 2, "C": 3}
+TEN_MUC_BU = {"N": "NB", "H": "TH", "V": "VD", "C": "VDC"}
 
 def lap_ke_hoach(so_ma, khac_cau):
     """Chọn câu cho mọi mã đề một lượt. Thiếu câu đúng mức thì bù mức cùng nhóm (N↔H, V↔C),
     rồi dạng khác cùng bài, rồi bài khác cùng chương. Nhiều mã đề khác câu: rải đều câu bù cho các mã."""
-    da_lay = set()
+    da_lay, da_nd = set(), set()                  # da_nd: khoá nội dung — câu khác mã nhưng cùng đề cũng tính là trùng
+    nd = lambda c: c.setdefault("_nd", khoa_trung(c.get("noi_dung")) or "#" + c["ma"])
+    tuyet_doi = bool(mt.get("khong_trung_cau")) and khac_cau     # không bao giờ dùng lại câu giữa các mã đề
     bo = [collections.OrderedDict() for _ in range(so_ma)]
     ghi_chu, thieu = [], []
     for phan in mt["phan"]:
@@ -194,9 +220,9 @@ def lap_ke_hoach(so_ma, khac_cau):
                 for c in ds:
                     if len(lay) >= can:
                         break
-                    if c["ma"] in da_lay or c["ma"] in co:
+                    if c["ma"] in da_lay or c["ma"] in co or nd(c) in da_nd:
                         continue
-                    lay.append((c, gc)); co.add(c["ma"])
+                    lay.append((c, gc)); co.add(c["ma"]); da_nd.add(nd(c))
                 if len(lay) >= can:
                     break
             da_lay |= co
@@ -207,7 +233,11 @@ def lap_ke_hoach(so_ma, khac_cau):
             if len(lay) < k:
                 thieu.append(f"{nhan}: cần {k}, kho (kể cả bù) chỉ có {len(lay)}")
             elif khac_cau and len(lay) < can:
-                ghi_chu.append(f"{nhan}: có {len(lay)} câu cho {so_ma} mã đề × {k} → vài câu dùng chung giữa các mã")
+                if tuyet_doi:
+                    thieu.append(f"{nhan}: chế độ không trùng cần {can} câu ({so_ma} đề × {k}), kho chỉ có {len(lay)} "
+                                 f"→ vài đề thiếu câu; giảm số đề hoặc bổ sung câu cho dạng này")
+                else:
+                    ghi_chu.append(f"{nhan}: có {len(lay)} câu cho {so_ma} mã đề × {k} → vài câu dùng chung giữa các mã")
             dong = [c for c, _ in lay]
             if not khac_cau:
                 for b in bo:
@@ -224,6 +254,8 @@ def lap_ke_hoach(so_ma, khac_cau):
                 for s_ in range(so_ma):
                     nguon = con                     # ưu tiên câu chưa chia cho mã nào
                     ung = [c for c in nguon if c["ma"] not in rieng[s_]]
+                    if not ung and tuyet_doi:       # chế độ không trùng: không dùng lại câu của mã khác
+                        continue
                     if not ung:                     # hết câu riêng → dùng lại câu đã chia (không trùng trong mã)
                         nguon = dong
                         ung = [c for c in nguon if c["ma"] not in rieng[s_]]
@@ -448,6 +480,9 @@ if khac_cau and so_ma > 1:
     chung = len(set.intersection(*tap))
     tong_rieng = len(set.union(*tap))
     print(f"  Mỗi mã đề một bộ câu: dùng {tong_rieng} câu khác nhau cho {so_ma} mã đề; số câu có mặt ở mọi mã: {chung}")
+    dem_ma = collections.Counter(c["ma"] for b in cac_bo for v in b.values() for c in v)
+    trung = sum(1 for v in dem_ma.values() if v > 1)
+    print(f"  Câu trùng giữa các đề: {trung}" + (" ✓ không trùng câu nào" if not trung else " (kho thiếu câu)"))
 if not TU_FILE:
   print(f"  Câu đã dùng ở đề trước: " + {"uu_tien": "ưu tiên câu chưa dùng", "loai_bo": "KHÔNG lấy lại",
       "khong": "không xét"}.get(CHE_DO_DA_DUNG, CHE_DO_DA_DUNG))
@@ -517,7 +552,8 @@ for s in range(so_ma):
     than, cuoi, rows = soan_ma_de(bo, ma_de)
     tat_ca_dap_an += rows
     ghi(os.path.join(out, f"De_{ma_de}.tex"), tai_lieu(than, False))
-    ghi(os.path.join(out, f"De_{ma_de}_LoiGiai.tex"), tai_lieu(than + "\n\n" + cuoi, True))
+    if mt.get("loi_giai_rieng", True):     # lời giải từng đề: file riêng De_xxx_LoiGiai
+        ghi(os.path.join(out, f"De_{ma_de}_LoiGiai.tex"), tai_lieu(than + "\n\n" + cuoi, True))
     gop_de.append(than); gop_lg.append(than + "\n\n" + cuoi); gop_cuoi.append(cuoi)
 ghi(os.path.join(out, "TatCa_De.tex"), tai_lieu("\n\n\\newpage\n".join(gop_de), False))
 ghi(os.path.join(out, "TatCa_LoiGiai.tex"), tai_lieu("\n\n\\newpage\n".join(gop_lg), True))

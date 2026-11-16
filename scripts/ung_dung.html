@@ -469,6 +469,7 @@ tr.gop-h td{background:#dbeafe;text-align:left;font-weight:700;padding:8px 12px;
     <button id="hk-sao" title="Sao chép bộ đang xem thành bộ mới (Lần 2, 3…) để sửa thêm/bớt rồi ra đề tiếp">⧉ Sao chép thành lần mới</button>
     <button id="hk-doi-ten" title="Đổi tên bộ">✎</button><button id="hk-xoa-bo" title="Xoá bộ khỏi danh sách">✕</button>
     <label class="hop" title="Không lấy lại câu đã ra ở các lần khác của lớp này"><input type="checkbox" id="hk-tranh" checked> Tránh câu đã ra ở lần khác</label>
+    <button id="hk-reset" title="Cho lấy lại những câu đã rút ra cho bộ đề này / lớp này (xoá khỏi danh sách đã ra và lịch sử dùng câu, có sao lưu để hoàn tác)">↺ Lấy lại câu đã rút</button>
     <label title="Lịch sử rút câu của cả ngân hàng: câu đã ra ở bất kỳ đề nào trước đây">Câu đã ra ở đề trước <select id="hk-da-dung"><option value="uu_tien">Ưu tiên câu chưa dùng</option><option value="loai_bo">Không lấy lại (ẩn câu đã ra)</option><option value="khong">Không xét</option></select></label>
     <label>Tên đề <input type="text" id="hk-ten"></label>
     <label>Kỳ <select id="hk-ky"><option>Giữa học kì I</option><option selected>Cuối học kì I</option><option>Giữa học kì II</option><option>Cuối học kì II</option></select></label>
@@ -478,6 +479,19 @@ tr.gop-h td{background:#dbeafe;text-align:left;font-weight:700;padding:8px 12px;
     <label class="hop"><input type="checkbox" id="hk-phan-bien" checked> Tự phản biện, kiểm tra chéo</label>
     <button id="hk-khop" title="Chọn lại bài trong kho theo chữ ở cột Chủ đề (dùng khi thầy đã sửa nhiều chủ đề)">Tự khớp bài theo chủ đề</button>
     <button id="hk-mac-dinh" title="Trả bảng về ma trận mặc định của lớp">Ma trận mặc định</button>
+  </div>
+  <div class="cai" id="hk-xuat" style="background:#eaf3ff">
+    <b style="color:#1e3a8a">Xuất đề:</b>
+    <label title="Mỗi lần bấm Ra đề / Xác nhận xuất ra bấy nhiêu đề">Số đề mỗi lần <input type="number" id="hk-so-de" min="1" max="20" value="4" style="width:58px"></label>
+    <label class="hop" title="Bật: mỗi đề là bộ câu khác nhau (cùng ma trận). Tắt: các mã đề chỉ trộn thứ tự cùng 22 câu"><input type="checkbox" id="hk-khac" checked> Mỗi đề câu khác nhau</label>
+    <label class="hop" title="Không bao giờ dùng lại một câu ở 2 đề (kể cả câu khác mã nhưng cùng đề bài). Kho thiếu thì báo để bổ sung câu, không lấy trùng"><input type="checkbox" id="hk-khong-trung" checked> 🚫 Tuyệt đối không trùng câu giữa các đề</label>
+    <label class="hop" title="Khi kho không đủ câu đúng mức (nhất là nhiều đề không trùng): lấy câu cùng bài rồi cùng chương ở mức gần nhất (VD thiếu → TH/VDC), thay vì để đề thiếu câu hoặc lấy trùng"><input type="checkbox" id="hk-bu-muc" checked> Thiếu câu → lấy câu cùng nhóm (mức gần nhất)</label>
+    <label class="hop" title="Quyển Câu hỏi (bìa, mục lục, tất cả đề) + quyển Lời giải — 2 file PDF"><input type="checkbox" id="hk-de-cuong" checked> 📚 Gộp PDF thành 1 cuốn đề cương</label>
+    <label class="hop" title="Bản đề có lề trái rộng để học sinh ghi chú (file Leftnote)"><input type="checkbox" id="hk-leftnote"> 📝 Left note (lề ghi chú)</label>
+    <label class="hop" title="Mỗi đề một file lời giải riêng: De_101_LoiGiai.pdf…"><input type="checkbox" id="hk-lg-rieng" checked> Lời giải từng đề file riêng</label>
+    <label class="hop" title="Beamer sửa bài (trắng + xanh)"><input type="checkbox" id="hk-beamer"> Beamer</label>
+    <label class="hop"><input type="checkbox" id="hk-pdf" checked> Biên dịch PDF</label>
+    <span id="hk-xuat-tt" style="color:#555;font-size:12px"></span>
   </div>
   <div id="hk-bang-wrap"><table id="hk-bang"><thead><tr><th style="width:52px">Câu</th><th style="width:21%">Chủ đề (sửa được)</th><th style="width:24%">Bài trong ngân hàng</th>
     <th style="width:108px">Mức</th><th style="width:130px">Ngữ cảnh thực tế</th><th>Câu mẫu (tuỳ chọn, cho đề AI)</th></tr></thead><tbody></tbody></table></div>
@@ -1420,6 +1434,28 @@ $("#hk-khop").onclick=()=>{if(HK_LOP<10)return;hkDs().forEach(r=>r.bai=khopBai(r
 $("#hk-mac-dinh").onclick=()=>{if(!confirm("Trả bảng lớp này về ma trận mặc định?"))return;hkBo().hang=hkMacDinh(HK_LOP);hkLuu();veHK()};
 $("#hk-bo").onchange=()=>{hkLop().i=+$("#hk-bo").value;hkLuu();veHK()};
 $("#hk-tranh").onchange=()=>veHK();
+$("#hk-reset").onclick=()=>{
+  const L=hkLop(), bo=hkBo(), lop=HK_LOP, cuaBo=[...new Set(bo.da_dung||[])], cuaLop=[...new Set(L.bo.flatMap(b=>b.da_dung||[]))];
+  const xong=(r,tieu)=>{hkLuu();veBoHK();veHK();tai();
+    hopThoai(tieu,`Đã cho lấy lại câu: bỏ ${r.da_xoa} câu khỏi lịch sử dùng câu của ngân hàng.\nLần ra đề tới sẽ được rút lại những câu này.\n\nSao lưu lịch sử cũ: du-lieu/_cu/${r.sao_luu}`,
+      [["↶ Hoàn tác",async()=>{const k=await api("/api/lich-su",{hoan_tac:r.sao_luu});if(!k.ok){alert(k.loi);return}
+        L.bo.forEach((b,i)=>b.da_dung=luuDa[i]); hkLuu();veBoHK();veHK();tai();
+        hopThoai("Đã hoàn tác","Lịch sử dùng câu và danh sách câu đã ra đã trở lại như trước.")}]])};
+  const luuDa=L.bo.map(b=>[...(b.da_dung||[])]);
+  hopThoai(`Lấy lại câu đã rút — Toán ${lop}`,
+    `Bộ đang xem: ${bo.ten} — đã ra ${cuaBo.length} câu.\nCả lớp ${lop} (${L.bo.length} bộ: ${L.bo.map(b=>b.ten).join(", ")}) — đã ra ${cuaLop.length} câu.\n\n`+
+    `• Chỉ lần xuất tới: không xoá gì, tạm bỏ qua câu đã rút (bỏ tick “Tránh câu đã ra ở lần khác”, đặt “Câu đã ra ở đề trước: Không xét”).\n`+
+    `• Reset bộ này / cả lớp: xoá các câu đó khỏi danh sách đã ra và khỏi lịch sử dùng câu của ngân hàng → được rút lại bình thường. Có sao lưu, bấm Hoàn tác được.\n`+
+    `• Reset toàn bộ lịch sử lớp ${lop}: mọi câu lớp ${lop} từng dùng ở bất kỳ đề nào (kể cả đề kiểm tra, tạo nhanh…) đều được rút lại.`,
+    [["Chỉ lần xuất tới (không xoá)",()=>{$("#hk-tranh").checked=false;$("#hk-da-dung").value="khong";$("#hk-da-dung").onchange();veHK();
+        hopThoai("Đã tạm bỏ qua câu đã rút","Lần xuất tới được lấy cả câu đã rút. Muốn tránh lại thì tick “Tránh câu đã ra ở lần khác” và chọn “Ưu tiên câu chưa dùng”.")},true],
+     [`Reset bộ “${bo.ten}” (${cuaBo.length} câu)`,async()=>{if(!cuaBo.length){alert("Bộ này chưa ra câu nào.");return}
+        const r=await api("/api/lich-su",{bo_ma:cuaBo});if(!r.ok){alert(r.loi||"Lỗi");return} bo.da_dung=[]; xong(r,`Đã reset bộ ${bo.ten}`)}],
+     [`Reset cả lớp ${lop} (${cuaLop.length} câu)`,async()=>{if(!cuaLop.length){alert("Lớp này chưa ra câu nào.");return}
+        const r=await api("/api/lich-su",{bo_ma:cuaLop});if(!r.ok){alert(r.loi||"Lỗi");return} L.bo.forEach(b=>b.da_dung=[]); xong(r,`Đã reset các bộ lớp ${lop}`)}],
+     [`Reset toàn bộ lịch sử lớp ${lop}`,async()=>{if(!confirm(`Cho rút lại MỌI câu lớp ${lop} đã từng dùng (mọi đề)? Có sao lưu để hoàn tác.`))return;
+        const r=await api("/api/lich-su",{bo_lop:lop});if(!r.ok){alert(r.loi||"Lỗi");return} L.bo.forEach(b=>b.da_dung=[]); xong(r,`Đã reset toàn bộ lịch sử lớp ${lop}`)}]]);
+};
 try{$("#hk-da-dung").value=localStorage.getItem("hk_da_dung")||"uu_tien"}catch(_){}
 $("#hk-da-dung").onchange=()=>{try{localStorage.setItem("hk_da_dung",$("#hk-da-dung").value)}catch(_){}};
 $("#hk-sao").onclick=()=>{
@@ -1433,6 +1469,15 @@ $("#hk-xoa-bo").onclick=()=>{const L=hkLop(); if(L.bo.length<2) return;
   if(!confirm(`Xoá bộ "${hkBo().ten}" khỏi danh sách? (Đề đã xuất trong de-da-ra/ vẫn còn.)`)) return;
   L.bo.splice(L.i,1); L.i=Math.max(0,L.i-1); hkLuu(); veBoHK(); veHK()};
 // 1) lấy câu từ ngân hàng: mỗi dòng = 1 câu (bài + mức) → xuất đề như nút Xuất đề
+// ---- tuỳ chọn xuất đề của bảng Ôn thi HK (nhớ trên máy)
+const HK_XUAT_ID={so:"hk-so-de",khac:"hk-khac",khong_trung:"hk-khong-trung",bu_muc:"hk-bu-muc",de_cuong:"hk-de-cuong",leftnote:"hk-leftnote",lg_rieng:"hk-lg-rieng",beamer:"hk-beamer",pdf:"hk-pdf"};
+function hkXuat(){const o={};for(const [k,id] of Object.entries(HK_XUAT_ID)){const e=$("#"+id);o[k]=e.type==="checkbox"?e.checked:Math.max(1,Math.min(20,+e.value||1))}return o}
+function hkXuatVe(){const x=hkXuat();
+  $("#hk-xuat-tt").textContent=`→ ${x.so} đề`+(x.so>1?(x.khac?(x.khong_trung?" khác câu, không trùng câu nào":" khác câu"):" trộn từ cùng câu"):"")+`${x.de_cuong?" · 2 cuốn đề cương":""}${x.leftnote?" · Left note":""}${x.lg_rieng?" · lời giải riêng từng đề":""}`;
+  try{localStorage.setItem("hk_xuat",JSON.stringify(x))}catch(_){}}
+(()=>{let x=null;try{x=JSON.parse(localStorage.getItem("hk_xuat")||"null")}catch(_){}
+  if(x)for(const [k,id] of Object.entries(HK_XUAT_ID)){const e=$("#"+id);if(!e||x[k]==null)continue;if(e.type==="checkbox")e.checked=!!x[k];else e.value=x[k]}
+  Object.values(HK_XUAT_ID).forEach(id=>$("#"+id).addEventListener("input",hkXuatVe));Object.values(HK_XUAT_ID).forEach(id=>$("#"+id).addEventListener("change",hkXuatVe));hkXuatVe()})();
 function mtHK(){
   const ds=hkDs(), thieu=ds.map((r,i)=>[r,i]).filter(([r])=>!r.bai);
   if(thieu.length){alert(`Còn ${thieu.length} câu chưa chọn "Bài trong ngân hàng" (vd: ${thieu.slice(0,3).map(([r])=>r.chu_de).join("; ")}).`);return null}
@@ -1445,6 +1490,9 @@ function mtHK(){
     ten_ky_thi:($("#hk-ten").value.trim()||"ĐỀ ÔN THI HỌC KÌ")+(nhieu?` (${bo.ten})`:""),
     mon:`TOÁN – Lớp ${HK_LOP}`,bu_cung_nhom:true,mo_rong_dang_khac:true});
   const tr=hkTranh(); if(tr.length) mt.tranh_ma=tr; else delete mt.tranh_ma;
+  const x=hkXuat(); Object.assign(mt,{so_ma_de:x.so,moi_ma_de_cau_khac_nhau:x.khac&&x.so>1,khong_trung_cau:x.khac&&x.khong_trung,bu_khac_muc:x.bu_muc,de_cuong:x.de_cuong,xuat_leftnote:x.leftnote,
+    loi_giai_rieng:x.lg_rieng,xuat_beamer:x.beamer});
+  $("#bien_dich").checked=x.pdf;
   mt.cau_da_dung=$("#hk-da-dung").value; mt.tranh_cau_da_dung=mt.cau_da_dung!=="khong";
   return mt;
 }
