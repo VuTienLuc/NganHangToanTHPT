@@ -553,6 +553,9 @@ def chuan_bi_may_chu(c, in_ra):
 def _ssl():
     """Python tải từ python.org trên macOS thường thiếu bộ chứng chỉ → dùng certifi hoặc /etc/ssl/cert.pem của macOS."""
     import ssl
+    ctx = ssl.create_default_context()
+    if ctx.cert_store_stats().get("x509_ca"):        # Python có sẵn bộ chứng chỉ → dùng luôn
+        return ctx
     for f in ((__import__("certifi").where() if _co_certifi() else None), "/etc/ssl/cert.pem", "/private/etc/ssl/cert.pem"):
         if f and os.path.exists(f):
             try:
