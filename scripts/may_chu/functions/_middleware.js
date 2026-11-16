@@ -19,7 +19,7 @@ export async function onRequest({ request: req, env, next }) {
   if (ph.vai === 'gv') return next();
   if (ph.doi_mk) return Response.redirect(`${u.origin}/dang-nhap/?doi=1&ve=${encodeURIComponent(p)}`, 302);
   if (de.trang_thai === 'da_dong') return next();
-  if (!lopKhop(de.lop, ph.lop)) return trang('Đề không giao cho lớp em', `<p>Tài khoản <b>${ph.tk}</b> (lớp ${ph.lop}) không làm được đề này.</p><p><a href="/">Về trang chính</a></p>`, 403);
+  if (!lopKhop(de.lop, ph.lop)) return trang('Đề không giao cho lớp em', `<p>Lớp ${ph.lop} không được giao đề này.</p><p><a href="/">Về trang chính</a></p>`, 403);
   const chon = ds => ds[soBam(ph.tk + '|' + (de.nhom || de.slug)) % ds.length];
   if (de.con) {                                    // link chung → mã đề cố định theo tài khoản
     const ds = JSON.parse(de.con); if (ds.length) return Response.redirect(`${u.origin}/${chon(ds)}/`, 302);

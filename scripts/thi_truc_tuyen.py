@@ -95,9 +95,9 @@ async function __goi(duong,du_lieu){const r=await fetch('/api/'+duong,du_lieu?{m
 function examGrade(d,answers){const c=__CHAM[JSON.stringify(answers)];if(c)return c;if(d.questions.every(q=>q.answer!=null))return __examGrade0(d,answers);
  return {score:0,parts:{mcq:0,tf:0,short:0},right:{mcq:0,tf:0,short:0},blank:0,rows:d.questions.map((q,i)=>({index:i,type:q.type,correct:0,answered:false,points:0,max:q.type==='mcq'?.25:q.type==='tf'?1:.5}))};}
 async function __khoiDong(){
- try{const t=await __goi('toi');if(t.ok){const dat=(id,v)=>{const e=document.getElementById(id);if(e){e.value=v;e.readOnly=true;e.style.background='#f1f5f9'}};
-  dat('studentClass',t.lop||'GV');dat('studentId',String(t.stt||t.tk));dat('studentName',t.ho_ten||t.tk);
-  const m=document.querySelector('#login .muted');if(m)m.innerHTML='Đăng nhập: <b>'+(t.ho_ten||t.tk)+'</b> ('+t.tk+'). Bấm nút bên dưới để bắt đầu — số lượt làm do thầy quy định. <a href="/">Trang chính</a> · <a href="#" id="__thoat">Đăng xuất</a>';
+ try{const t=await __goi('toi');if(t.ok){const gv=t.vai==='gv',dat=(id,v)=>{const e=document.getElementById(id);if(e){e.value=v;e.readOnly=true;e.style.background='#f1f5f9'}};
+  dat('studentClass',gv?'GV':(t.lop||''));dat('studentId',gv?'0':String(t.stt||''));dat('studentName',gv?'Giáo viên (làm thử)':(t.ho_ten||''));
+  const m=document.querySelector('#login .muted');if(m)m.innerHTML=(gv?'Chế độ làm thử của giáo viên.':'Thông tin lấy theo tài khoản đã đăng nhập.')+' Bấm nút bên dưới để bắt đầu. <a href="/">Trang chính</a> · <a href="#" id="__thoat">Đăng xuất</a>';
   const th=document.getElementById('__thoat');if(th)th.onclick=async e=>{e.preventDefault();await __goi('dang-xuat',{});location.href='/dang-nhap/'}}}catch(e){}
  try{const k=await __goi('ket-qua?de='+encodeURIComponent(__DE));(k.ds||[]).forEach(x=>{if(x.cham)__CHAM[JSON.stringify(x.tra_loi)]=x.cham})}catch(e){}
 }
@@ -204,7 +204,7 @@ const LOP=__LOP__,nd=document.getElementById('nd'),e=s=>String(s??'').replace(/[
 fetch('/api/toi',{credentials:'same-origin'}).then(r=>r.json()).then(t=>{
  if(!t.ok){nd.innerHTML='<p>Học sinh đăng nhập bằng tài khoản thầy cấp để làm bài kiểm tra.</p><a href="/dang-nhap/"><button>Đăng nhập</button></a>';return}
  if(t.doi_mk){location.href='/dang-nhap/?doi=1';return}
- let h='<p>Xin chào <b>'+e(t.ho_ten||t.tk)+'</b>'+(t.lop?' — lớp '+e(t.lop):'')+' · <a href="#" id="thoat">Đăng xuất</a></p>';
+ let h='<p>'+(t.vai==='gv'?'Tài khoản giáo viên':'Xin chào <b>'+e(t.ho_ten||'')+'</b>'+(t.lop?' — lớp '+e(t.lop):''))+' · <a href="#" id="thoat">Đăng xuất</a></p>';
  if(t.vai==='gv'){const TT={dang_mo:'đang mở',da_cong_bo:'đã công bố lời giải',da_dong:'đã đóng'};
   h+='<h3>Đề thi — làm thử (không giới hạn lượt, không lưu điểm)</h3>'+((t.de||[]).length?t.de.map(x=>'<a class="de" href="/'+e(x.slug)+'/"><b>'+e(x.ten)+'</b><span class="nho">'+(x.lop||'mọi lớp')+' · '+(TT[x.trang_thai]||'')+'</span></a>').join(''):'<p class="phu">Chưa đăng đề nào.</p>');
   h+='<h3>Bài giảng</h3>'+(LOP.length?LOP.map(l=>'<a class="de" href="/toan'+l+'/"><b>Toán '+l+'</b><span class="nho">mục lục</span></a>').join(''):'<p class="phu">Chưa có bài giảng.</p>')}
@@ -601,6 +601,22 @@ def goi(duong, du_lieu=None, lan=0):
         return {"ok": False, "loi": f"Chưa kết nối được trang {goc_url()} ({getattr(e, 'reason', e)}). Kiểm tra mạng; nếu vừa đăng lần đầu thì đợi 1–2 phút rồi thử lại."}
 
 
+def lam_lai_trang_de(in_ra=print):
+    """Dựng lại mọi trang đề từ bản gốc theo mã vá mới nhất (sửa lỗi/giao diện áp cho cả đề đã đăng)."""
+    n = 0
+    for x in danh_sach():
+        if x.get("loai") in ("bai_giang", "nhom") or x.get("trang_thai") == "da_dong":
+            continue
+        p = os.path.join(DL, x["slug"] + ".goc.html")
+        if os.path.exists(p):
+            try:
+                _dat_trang(x["slug"], ban_truc_tuyen(open(p, encoding="utf-8").read(), x["slug"], x.get("trang_thai") != "da_cong_bo")[0]); n += 1
+            except Exception as e:
+                in_ra(f"   ⚠ chưa dựng lại được đề {x['slug']}: {e}")
+    if n:
+        in_ra(f"   cập nhật giao diện {n} trang đề")
+
+
 def dong_bo_de(in_ra=print):
     """Đẩy danh sách đề (lớp được giao, số lượt, nhóm mã, ĐÁP ÁN) lên cơ sở dữ liệu để máy chủ chấm."""
     ds = [x for x in danh_sach() if x.get("loai") != "bai_giang"]
@@ -750,6 +766,7 @@ def dang(in_ra=print):
         else:
             raise RuntimeError("Chưa tạo được dự án Cloudflare Pages (xem nhật ký). Có thể đổi tên dự án khác rồi thử lại.")
     chuan_bi_may_chu(c, in_ra)
+    lam_lai_trang_de(in_ra)
     in_ra("Đang đưa trang lên Cloudflare Pages…")
     rc, ra = _chay(["pages", "deploy", SITE, "--project-name", c["du_an"], "--branch", "main", "--commit-dirty=true"], in_ra, 600)
     if rc != 0:
