@@ -5729,3 +5729,168 @@ Cho tam giác $ABC$ nhọn ($AC > BC$). Đường tròn $(O; R)$ có đường k
 \end{enumerate}
 }
 \end{bt}
+
+
+\begin{bt}%[TS10 7.C4 7.a1 7.b1 7.c1]%[ma:f31fa4aa]
+% nguon: Đề tham khảo Tuyển sinh 10 năm học 2026-2027 Sở GD&ĐT TP.HCM - Cụm 16 - Đề 2 - Bài 7
+Cho nửa đường tròn $(O; R)$ có đường kính $AB$. Cùng phía với nửa đường tròn, vẽ lần lượt các tia tiếp tuyến $Ax, By$ với $(O; R)$ tại $A$ và $B$. Gọi $I$ là trung điểm của đoạn thẳng $AO$. Lấy hai điểm $C \in Ax$ và $D \in By$ sao cho $\widehat{CID} = 90^\circ$. Gọi $H$ là hình chiếu vuông góc của $I$ lên $CD$.
+\begin{enumerate}[a)]
+	\item Chứng minh tứ giác $ACHI$ nội tiếp và $\widehat{AHB} = 90^\circ$.
+	\item Gọi $E$ là giao điểm của $AH$ và $IC$, $F$ là giao điểm của $BH$ và $ID$. Chứng minh $EF \parallel AB$ và tích $AC \cdot BD$ không đổi.
+	\item Xác định vị trí các điểm $C$ trên $Ax$ và $D$ trên $By$ để diện tích tam giác $CID$ đạt giá trị nhỏ nhất.
+\end{enumerate}
+\loigiai{
+\begin{center}
+	\begin{tikzpicture}[>=stealth, scale=1.3]
+		\coordinate (O) at (0,0);
+		\coordinate (A) at (-2,0);
+		\coordinate (B) at (2,0);
+		\coordinate (I) at (-1,0);
+		\draw[thick] (2,0) arc (0:180:2);
+		\draw[thick] (A) -- (B);
+		\coordinate (C) at (-2,1);
+		\coordinate (D) at (2,3);
+		\coordinate (H) at (-1.6,1.2);
+		\coordinate (E) at (-1.75,0.75);
+		\coordinate (F) at (-0.25,0.75);
+		\draw[thick] (A) -- (-2,3.5) node[left] {$x$};
+		\draw[thick] (B) -- (2,3.5) node[right] {$y$};
+		\draw[thick] (C) -- (D);
+		\draw (I) -- (C) (I) -- (D) (I) -- (H);
+		\draw (A) -- (H) -- (B);
+		\draw[thick, blue] (E) -- (F);
+		\fill (O) circle (1.5pt) node[below] {$O$};
+		\fill (A) circle (1.5pt) node[below] {$A$};
+		\fill (B) circle (1.5pt) node[below] {$B$};
+		\fill (I) circle (1.5pt) node[below] {$I$};
+		\fill (C) circle (1.5pt) node[left] {$C$};
+		\fill (D) circle (1.5pt) node[right] {$D$};
+		\fill (H) circle (1.5pt) node[above] {$H$};
+		\fill (E) circle (1.5pt) node[left] {$E$};
+		\fill (F) circle (1.5pt) node[right] {$F$};
+	\end{tikzpicture}
+\end{center}
+\begin{enumerate}[a)]
+	\item Ta có $Ax$ là tiếp tuyến của $(O)$ tại $A$ nên $Ax \perp AB \implies \widehat{CAI} = 90^\circ$.\\
+	Vì $H$ là hình chiếu của $I$ lên $CD$ nên $IH \perp CD \implies \widehat{CHI} = 90^\circ$.\\
+	Hai đỉnh $A$ và $H$ kề nhau cùng nhìn đoạn $CI$ dưới góc $90^\circ$, suy ra tứ giác $ACHI$ nội tiếp đường tròn đường kính $CI$.\\
+	Chứng minh tương tự: Vì $By \perp AB$ nên $\widehat{DBI} = 90^\circ$; và $\widehat{DHI} = 90^\circ$, do đó tứ giác $BDIH$ nội tiếp đường tròn đường kính $DI$.\\
+	Từ tứ giác $ACHI$ nội tiếp, ta có $\widehat{AHI} = \widehat{ACI}$ (hai góc nội tiếp cùng chắn cung $AI$).\\
+	Từ tứ giác $BDIH$ nội tiếp, ta có $\widehat{IHB} = \widehat{IDB}$ (hai góc nội tiếp cùng chắn cung $IB$).\\
+	Do đó:
+	$$\widehat{AHB} = \widehat{AHI} + \widehat{IHB} = \widehat{ACI} + \widehat{IDB}.$$
+	Mặt khác, trong tam giác $CAI$ vuông tại $A$, ta có $\widehat{ACI} + \widehat{AIC} = 90^\circ$.\\
+	Lại có $\widehat{AIC} + \widehat{CID} + \widehat{DIB} = 180^\circ \implies \widehat{AIC} + \widehat{DIB} = 180^\circ - 90^\circ = 90^\circ$.\\
+	Suy ra $\widehat{ACI} = \widehat{DIB}$ (cùng phụ với $\widehat{AIC}$).\\
+	Trong tam giác $DBI$ vuông tại $B$, ta có $\widehat{DIB} + \widehat{IDB} = 90^\circ \implies \widehat{ACI} + \widehat{IDB} = 90^\circ$.\\
+	Vậy $\widehat{AHB} = 90^\circ$.
+	\item Tam giác $EHF$ có $\widehat{EHF} = \widehat{AHB} = 90^\circ$, tam giác $EIF$ có $\widehat{EIF} = \widehat{CID} = 90^\circ$.\\
+	Do đó hai điểm $H$ và $I$ cùng nhìn đoạn $EF$ dưới góc vuông, suy ra tứ giác $IEHF$ nội tiếp đường tròn đường kính $EF$.\\
+	Suy ra $\widehat{IEF} = \widehat{IHF}$ (hai góc nội tiếp cùng chắn cung $IF$).\\
+	Mà $\widehat{IHF} = \widehat{IHB} = \widehat{IDB} = \widehat{AIC}$.\\
+	Do đó $\widehat{IEF} = \widehat{AIC}$. Mà hai góc này ở vị trí so le trong nên $EF \parallel AB$.\\
+	Xét $\triangle CAI$ và $\triangle IBD$ có:
+	$$\widehat{CAI} = \widehat{IBD} = 90^\circ,\quad \widehat{ACI} = \widehat{DIB}\text{ (chứng minh trên)}.$$
+	Suy ra $\triangle CAI \sim \triangle IBD$ (g.g), do đó:
+	$$\dfrac{AC}{IB} = \dfrac{AI}{BD} \implies AC \cdot BD = AI \cdot IB.$$
+	Vì $I$ là trung điểm của $AO$ nên $AI = \dfrac{R}{2}$, do đó:
+	$$IB = AB - AI = 2R - \dfrac{R}{2} = \dfrac{3R}{2}.$$
+	Suy ra:
+	$$AC \cdot BD = \dfrac{R}{2} \cdot \dfrac{3R}{2} = \dfrac{3R^2}{4}.$$
+	Vì $R$ không đổi nên tích $AC \cdot BD$ không đổi.
+	\item Tam giác $CID$ vuông tại $I$ nên diện tích là:
+	$$S_{\triangle CID} = \dfrac{1}{2} IC \cdot ID.$$
+	Vì $\triangle CAI \sim \triangle IBD \implies \dfrac{IC}{ID} = \dfrac{AC}{IB} \implies ID = \dfrac{IB \cdot IC}{AC}$.\\
+	Do đó:
+	$$S_{\triangle CID} = \dfrac{1}{2} IC \cdot \dfrac{IB \cdot IC}{AC} = \dfrac{1}{2} \cdot \dfrac{IB}{AC} \cdot IC^2.$$
+	Trong tam giác $CAI$ vuông tại $A$, ta có $IC^2 = AC^2 + AI^2$. Suy ra:
+	$$S_{\triangle CID} = \dfrac{1}{2} \cdot \dfrac{IB}{AC} (AC^2 + AI^2) = \dfrac{1}{2} IB \left(AC + \dfrac{AI^2}{AC}\right).$$
+	Áp dụng bất đẳng thức Cô-si cho hai số dương $AC$ và $\dfrac{AI^2}{AC}$:
+	$$AC + \dfrac{AI^2}{AC} \ge 2\sqrt{AC \cdot \dfrac{AI^2}{AC}} = 2AI.$$
+	Suy ra:
+	$$S_{\triangle CID} \ge \dfrac{1}{2} IB \cdot 2AI = AI \cdot IB = \dfrac{3R^2}{4}.$$
+	Dấu ``='' xảy ra khi và chỉ khi:
+	$$AC = \dfrac{AI^2}{AC} \iff AC = AI = \dfrac{R}{2}.$$
+	Khi đó $BD = \dfrac{3R^2}{4} : AC = \dfrac{3R^2}{4} : \dfrac{R}{2} = \dfrac{3R}{2}$.\\
+	Vậy diện tích tam giác $CID$ đạt giá trị nhỏ nhất bằng $\dfrac{3R^2}{4}$ khi điểm $C$ thuộc tia $Ax$ sao cho $AC = \dfrac{R}{2}$ và điểm $D$ thuộc tia $By$ sao cho $BD = \dfrac{3R}{2}$.
+\end{enumerate}
+}
+\end{bt}
+
+\begin{bt}%[TS10 7.C3 7.a1 7.b1 7.c1]%[ma:1048e784]
+% nguon: Đề tham khảo Tuyển sinh 10 năm học 2026-2027 Sở GD&ĐT TP.HCM - Cụm 16 - Đề 3 - Bài 7
+Cho đường tròn tâm $O$ đường kính $BC$. Điểm $A$ nằm ngoài đường tròn sao cho tam giác $ABC$ nhọn ($\widehat{BAC} < 90^\circ$). Gọi $M, N$ lần lượt là giao điểm của $AB, AC$ với đường tròn $(O)$ ($M \ne B, N \ne C$). Hai đường thẳng $BN$ và $CM$ cắt nhau tại $I$.
+\begin{enumerate}[a)]
+	\item Chứng minh $AI \perp BC$ và tứ giác $MANI$ là tứ giác nội tiếp.
+	\item Gọi $D$ là điểm chính giữa của cung nhỏ $MN$. Giao điểm của $BD$ và $CM$ là $P$, giao điểm của $CD$ và $BN$ là $Q$. Chứng minh $DQ \cdot CD = BD \cdot DP$ và $\widehat{IPD} = \widehat{IQD}$.
+	\item Giả sử $\widehat{BAC} = 60^\circ$ và $BC = 10\text{ cm}$. Tính độ dài đoạn thẳng $MN$ và chu vi đường tròn ngoại tiếp tam giác $MIN$.
+\end{enumerate}
+\loigiai{
+\begin{center}
+	\begin{tikzpicture}[>=stealth, scale=1.2]
+		\coordinate (O) at (0,0);
+		\coordinate (B) at (-2.5,0);
+		\coordinate (C) at (2.5,0);
+		\draw[thick] (O) circle (2.5);
+		\coordinate (A) at (-0.5,3.8);
+		\coordinate (M) at (-1.7,1.83);
+		\coordinate (N) at (1.5,2);
+		\coordinate (I) at (-0.5,1.2);
+		\coordinate (H) at (-0.5,0);
+		\draw[thick] (A) -- (B) -- (C) -- cycle;
+		\draw (B) -- (N) (C) -- (M);
+		\draw[thick, dashed] (A) -- (H);
+		\fill (O) circle (1.5pt) node[below] {$O$};
+		\fill (B) circle (1.5pt) node[below left] {$B$};
+		\fill (C) circle (1.5pt) node[below right] {$C$};
+		\fill (A) circle (1.5pt) node[above] {$A$};
+		\fill (M) circle (1.5pt) node[left] {$M$};
+		\fill (N) circle (1.5pt) node[right] {$N$};
+		\fill (I) circle (1.5pt) node[above] {$I$};
+		\fill (H) circle (1.5pt) node[below] {$H$};
+	\end{tikzpicture}
+\end{center}
+\begin{enumerate}[a)]
+	\item Vì $M, N$ thuộc đường tròn đường kính $BC$ nên:
+	$$\widehat{BMC} = 90^\circ \implies CM \perp AB;\quad \widehat{BNC} = 90^\circ \implies BN \perp AC.$$
+	Trong tam giác $ABC$, hai đường cao $BN$ và $CM$ cắt nhau tại $I$, do đó $I$ là trực tâm của tam giác $ABC$.\\
+	Suy ra $AI$ là đường cao thứ ba, do đó $AI \perp BC$.\\
+	Xét tứ giác $MANI$ có:
+	$$\widehat{AMI} = 90^\circ\text{ (do } CM \perp AB\text{)},\quad \widehat{ANI} = 90^\circ\text{ (do } BN \perp AC\text{)}.$$
+	Suy ra $\widehat{AMI} + \widehat{ANI} = 90^\circ + 90^\circ = 180^\circ$.\\
+	Vậy $MANI$ là tứ giác nội tiếp đường tròn đường kính $AI$.
+	\item Vì $D$ là điểm chính giữa của cung nhỏ $MN$ nên hai cung bằng nhau: cung $DM = \text{cung } DN$.\\
+	Suy ra $\widehat{DBM} = \widehat{DCN}$ (hai góc nội tiếp cùng chắn hai cung bằng nhau).\\
+	Xét $\triangle PBM$ và $\triangle QCN$ có:
+	$$\widehat{PMB} = \widehat{QNC} = 90^\circ,\quad \widehat{PBM} = \widehat{QCN}.$$
+	Suy ra $\triangle PBM \sim \triangle QCN$ (g.g) $\implies \widehat{BPM} = \widehat{CQN}$.\\
+	Mặt khác, $\widehat{DPC} = \widehat{BPM}$ (đối đỉnh) và $\widehat{DQB} = \widehat{CQN}$ (đối đỉnh).\\
+	Suy ra $\widehat{DPC} = \widehat{DQB}$.\\
+	Xét $\triangle DPC$ và $\triangle DQB$ có:
+	$$\widehat{BDC}\text{ là góc chung},\quad \widehat{DPC} = \widehat{DQB}.$$
+	Suy ra $\triangle DPC \sim \triangle DQB$ (g.g).\\
+	Từ đó ta có tỉ số đồng dạng:
+	$$\dfrac{DP}{DQ} = \dfrac{DC}{DB} \implies DQ \cdot CD = BD \cdot DP.$$
+	Vì $\widehat{IPD}$ kề bù với $\widehat{DPC}$ và $\widehat{IQD}$ kề bù với $\widehat{DQB}$, mà $\widehat{DPC} = \widehat{DQB}$ nên suy ra:
+	$$\widehat{IPD} = \widehat{IQD}.$$
+	\item Xét $\triangle AMN$ và $\triangle ACB$ có:
+	$$\widehat{BAC}\text{ là góc chung},\quad \widehat{AMN} = \widehat{ACB}\text{ (cùng bù với }\widehat{BMN}\text{ do tứ giác } BMNC \text{ nội tiếp)}.$$
+	Suy ra $\triangle AMN \sim \triangle ACB$ (g.g).\\
+	Do đó $\dfrac{MN}{BC} = \dfrac{AM}{AC}$.\\
+	Trong tam giác $AMC$ vuông tại $M$, ta có:
+	$$\dfrac{AM}{AC} = \cos \widehat{BAC} = \cos 60^\circ = \dfrac{1}{2}.$$
+	Suy ra:
+	$$MN = \dfrac{1}{2} BC = \dfrac{1}{2} \cdot 10 = 5\text{ (cm)}.$$
+	Vì tứ giác $MANI$ nội tiếp đường tròn đường kính $AI$ nên đường tròn ngoại tiếp tam giác $MIN$ chính là đường tròn đường kính $AI$.\\
+	Xét $\triangle AMI$ và $\triangle CMB$ có:
+	$$\widehat{AMI} = \widehat{CMB} = 90^\circ,\quad \widehat{MAI} = \widehat{MCB}\text{ (cùng phụ với }\widehat{ABC}\text{)}.$$
+	Suy ra $\triangle AMI \sim \triangle CMB$ (g.g) $\implies \dfrac{AI}{BC} = \dfrac{AM}{CM}$.\\
+	Trong tam giác $AMC$ vuông tại $M$, ta có:
+	$$\dfrac{AM}{CM} = \cot \widehat{BAC} = \cot 60^\circ = \dfrac{\sqrt{3}}{3}.$$
+	Suy ra:
+	$$AI = BC \cdot \dfrac{\sqrt{3}}{3} = 10 \cdot \dfrac{\sqrt{3}}{3} = \dfrac{10\sqrt{3}}{3}\text{ (cm)}.$$
+	Chu vi đường tròn ngoại tiếp tam giác $MIN$ là:
+	$$C = \pi \cdot AI = \dfrac{10\sqrt{3}\pi}{3}\text{ (cm)}.$$
+\end{enumerate}
+}
+\end{bt}
