@@ -50,6 +50,20 @@ async function theoDoi(DB) {
   const nhan = (await DB.prepare(`SELECT id, tk, noi_dung, tao_luc, xem_luc FROM loi_nhan WHERE tk IN (${dau}) ORDER BY id DESC LIMIT 300`).bind(...ds).all()).results;
   return { ok: true, hs, de, bai, nhan };
 }
+// bảng điểm từng lượt làm: một đợt (nhom) hoặc mọi đợt, lọc theo lớp
+async function bangDiem(DB, d) {
+  const nhom = String(d.nhom || ''), lop = String(d.lop || '').trim(), b = [];
+  let sql = `SELECT b.id, b.tk, b.de, b.nhom, b.lan, b.diem, b.bat_dau, b.nop_luc, b.thoi_gian, b.chuyen_tab, b.cam_xuc, b.goi_y,
+    t.ho_ten, t.lop, t.stt, g.ten AS ten_de, g.tao_luc AS ngay_de
+    FROM bai b LEFT JOIN tk t ON t.ten = b.tk LEFT JOIN de g ON g.slug = b.nhom WHERE (t.vai IS NULL OR t.vai = 'hs')`;
+  if (nhom) { sql += ' AND b.nhom = ?'; b.push(nhom); }
+  if (lop) { sql += ' AND UPPER(t.lop) = UPPER(?)'; b.push(lop); }
+  sql += ' ORDER BY g.tao_luc DESC, t.lop, t.stt, b.lan LIMIT 6000';
+  const ds = (await DB.prepare(sql).bind(...b).all()).results;
+  const de = (await DB.prepare("SELECT slug, ten, lop, tao_luc FROM de WHERE nhom = '' OR nhom IS NULL ORDER BY tao_luc DESC").all()).results;
+  const cac_lop = (await DB.prepare("SELECT lop, COUNT(*) AS n FROM tk WHERE vai = 'hs' AND lop <> '' GROUP BY lop ORDER BY lop").all()).results;
+  return { ok: true, ds, de, cac_lop };
+}
 // thầy đánh dấu bài đã giao (tính vào tổng hợp) / chưa giao (chỉ là tự luyện thêm); null = tự động theo ô Lớp giao
 async function datGiao(DB, d) {
   const g = d.giao === null || d.giao === undefined ? null : d.giao ? 1 : 0;
@@ -104,6 +118,7 @@ async function hocSinh(duong, d, env, req, url) {
     if (duong === 'gv/loi-nhan') return json(await guiLoiNhan(env.DB, d, ph.tk));
     if (duong === 'gv/theo-doi') return json(await theoDoi(env.DB));
     if (duong === 'gv/de-giao') return json(await datGiao(env.DB, d));
+    if (duong === 'gv/bang-diem') return json(await bangDiem(env.DB, d));
     if (duong === 'gv/theo-doi-dat') return json(await datTheoDoi(env.DB, d));
     return json({ ok: false, loi: 'Không có chức năng này.' }, 404);
   }
@@ -225,6 +240,7 @@ async function quanTri(duong, d, env) {
   if (duong === 'loi-nhan') return json(await guiLoiNhan(DB, d, 'gv'));
   if (duong === 'theo-doi') return json(await theoDoi(DB));
   if (duong === 'de-giao') return json(await datGiao(DB, d));
+  if (duong === 'bang-diem') return json(await bangDiem(DB, d));
   if (duong === 'de-giao-ds') return json({ ok: true, ds: (await DB.prepare("SELECT slug, giao FROM de WHERE nhom = '' OR nhom IS NULL").all()).results });
   if (duong === 'theo-doi-dat') return json(await datTheoDoi(DB, d));
   if (duong === 'luot/them') {

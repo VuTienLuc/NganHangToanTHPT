@@ -3,7 +3,8 @@
 (function () {
   const KY = '— Thầy Vũ Tiến Lực';
   const CSS = `
-#th-hop{position:fixed;inset:0;background:rgba(15,23,42,.5);display:none;align-items:center;justify-content:center;z-index:9000;font:14px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:#0f172a}
+#th-hop,#bd-hop{position:fixed;inset:0;background:rgba(15,23,42,.5);display:none;align-items:center;justify-content:center;z-index:9000;font:14px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:#0f172a}
+#bd-hop{z-index:9050;font:14px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:#0f172a}#bd-hop *{box-sizing:border-box}#bd-hop button,#bd-hop select{font:inherit;font-size:13.5px;border:1px solid #cbd5e1;background:#fff;color:#0f172a;border-radius:8px;padding:6px 11px;min-height:36px;cursor:pointer;width:auto;margin:0}#bd-hop button.chinh{background:#1e40af;border-color:#1e40af;color:#fff;font-weight:700}#bd-hop label{display:inline-flex;align-items:center;gap:6px;font-weight:600;margin:0}#bd-hop input[type=checkbox]{width:18px;height:18px;padding:0}#bd-hop table{display:table}#bd-hop th,#bd-hop td{display:table-cell}#bd-hop .th-noi{background:#fff;border-radius:14px;width:min(1200px,97vw);max-height:94vh;display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.3)}#bd-hop .th-dau{display:flex;align-items:center;gap:10px;padding:12px 16px;border-bottom:1px solid #e2e8f0;flex-wrap:wrap}#bd-hop .th-dau h2{margin:0;font-size:17px;flex:1;min-width:220px}#bd-hop .th-than{overflow:auto;padding:12px 16px}#bd-hop .th-chan{display:flex;gap:8px;padding:10px 16px;border-top:1px solid #e2e8f0;flex-wrap:wrap;align-items:center;justify-content:flex-end}
 #th-hop *{box-sizing:border-box}#th-hop table{display:table}#th-hop th,#th-hop td{display:table-cell}#th-hop button{width:auto;margin:0}#th-hop label{display:inline-flex;align-items:center;gap:6px;font-weight:600;margin:0}#th-hop input[type=checkbox]{width:18px;height:18px;padding:0}#th-hop button,#th-hop select{font:inherit;font-size:13.5px;border:1px solid #cbd5e1;background:#fff;color:#0f172a;border-radius:8px;padding:6px 11px;min-height:36px;cursor:pointer}
 #th-hop button:hover{border-color:#1e40af}#th-hop button:focus-visible,#th-hop select:focus-visible{outline:3px solid #93c5fd;outline-offset:1px}
 #th-hop button.chinh{background:#1e40af;border-color:#1e40af;color:#fff;font-weight:700}#th-hop button.hong{background:#db2777;border-color:#db2777;color:#fff;font-weight:700}
@@ -58,13 +59,14 @@
       <label>Lớp <select id="th-lop" style="min-width:130px"></select></label><button id="th-tai" title="Lấy số liệu mới nhất">↻ Làm mới</button></div>
       <div class="th-than" id="th-than"></div>
       <div class="th-chan"><button id="th-chep">💬 Chép nhận xét lớp</button><button id="th-chep-em">Chép nhận xét từng em</button>
-      <button id="th-xuat" class="chinh">⬇ Tải bảng tổng hợp (Excel)</button><button id="th-dong">Đóng</button></div></div><div class="th-toast" id="th-toast" role="status"></div>`;
+      <button id="th-bd">📋 Bảng điểm từng lượt</button><button id="th-xuat" class="chinh">⬇ Tải bảng tổng hợp (Excel)</button><button id="th-dong">Đóng</button></div></div><div class="th-toast" id="th-toast" role="status"></div>`;
     document.body.appendChild(hop);
     const $ = id => document.getElementById(id);
     $('th-dong').onclick = () => { hop.style.display = 'none' };
     hop.addEventListener('keydown', ev => { if (ev.key === 'Escape') hop.style.display = 'none' });
     $('th-lop').onchange = tai; $('th-tai').onclick = () => { st.lop = null; mo({ goi: st.goi, lop: $('th-lop').value }) };
     $('th-xuat').onclick = xuat;
+    $('th-bd').onclick = () => { const l = $('th-lop').value; bangDiem({ goi: st.goi, lop: l === '__td' ? '' : l }) };
     $('th-chep').onclick = () => chep($('th-nx-lop')?.value || '', 'Đã chép nhận xét lớp');
     $('th-chep-em').onclick = () => chep([...hop.querySelectorAll('td.nx')].map(td => td.innerText.trim()).join('\n'), 'Đã chép nhận xét từng em');
   }
@@ -399,5 +401,79 @@
     const csv = '﻿' + [dau, ...dong, [], ['Nhận xét lớp'], [document.getElementById('th-nx-lop').value]].map(r => r.map(v => `"${String(v).replace(/"/g, '""')}"`).join(',')).join('\n');
     const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv' })); a.download = `TongHop_${k.lop}_${new Date().toISOString().slice(0, 10)}.csv`; a.click();
   }
-  window.TongHop = { mo };
+  // ---------- BẢNG ĐIỂM TỪNG LƯỢT: tất cả đợt hoặc một đợt ----------
+  const BD = { goi: null, nhom: '', lop: '', q: '', cao: false, xep: 'mac_dinh', nguoc: false, k: null };
+  let bdHop;
+  function bdDung() {
+    dung(); if (bdHop) return;
+    bdHop = document.createElement('div'); bdHop.id = 'bd-hop'; bdHop.setAttribute('role', 'dialog'); bdHop.setAttribute('aria-modal', 'true'); bdHop.setAttribute('aria-labelledby', 'bd-tieu');
+    bdHop.innerHTML = `<div class="th-noi"><div class="th-dau"><h2 id="bd-tieu">📋 Bảng điểm từng lượt làm bài</h2>
+      <label>Đợt <select id="bd-de" style="max-width:340px"></select></label><label>Lớp <select id="bd-lop"></select></label><button id="bd-tai" title="Lấy số liệu mới nhất">↻</button></div>
+      <div class="th-than"><div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:8px">
+        <input id="bd-q" type="search" placeholder="Tìm học sinh…" aria-label="Tìm học sinh" style="flex:1;min-width:200px;padding:8px 10px;border:1px solid #cbd5e1;border-radius:8px;font:inherit;width:auto">
+        <label><input type="checkbox" id="bd-cao"> Chỉ lần điểm cao nhất mỗi em</label></div>
+        <div class="th-the" id="bd-the"></div><div id="bd-bang"></div></div>
+      <div class="th-chan"><span style="margin-right:auto;font-size:12px;color:#64748b">Rời tab ≥ 3 lần tô đỏ · làm dưới 3 phút tô vàng (nên xem lại) · bấm tiêu đề cột để sắp xếp</span>
+        <button id="bd-xuat" class="chinh">⬇ Tải Excel (CSV)</button><button id="bd-dong">Đóng</button></div></div>`;
+    hop.parentNode.appendChild(bdHop);
+    const $ = id => document.getElementById(id);
+    $('bd-dong').onclick = () => { bdHop.style.display = 'none' };
+    bdHop.addEventListener('keydown', ev => { if (ev.key === 'Escape') bdHop.style.display = 'none' });
+    $('bd-de').onchange = ev => { BD.nhom = ev.target.value; bdTai() };
+    $('bd-lop').onchange = ev => { BD.lop = ev.target.value; bdTai() };
+    $('bd-tai').onclick = bdTai; $('bd-q').oninput = ev => { BD.q = ev.target.value; bdVe() };
+    $('bd-cao').onchange = ev => { BD.cao = ev.target.checked; bdVe() };
+    $('bd-xuat').onclick = bdXuat;
+  }
+  async function bangDiem(o) {
+    bdDung(); BD.goi = o.goi; BD.nhom = o.nhom || ''; BD.lop = o.lop || ''; BD.q = ''; document.getElementById('bd-q').value = '';
+    bdHop.style.display = 'flex'; bdTai();
+  }
+  async function bdTai() {
+    const $ = id => document.getElementById(id); $('bd-bang').innerHTML = 'Đang tải bảng điểm…'; $('bd-the').innerHTML = '';
+    const k = await BD.goi('bang-diem', { nhom: BD.nhom, lop: BD.lop }).catch(x => ({ ok: false, loi: String(x) }));
+    if (!k.ok) { $('bd-bang').innerHTML = `<p style="color:#b45309">${e(k.loi || 'Lỗi')} — nếu máy chủ chưa có chức năng này, thầy bấm Đăng lại tất cả trong ứng dụng.</p>`; return }
+    BD.k = k;
+    $('bd-de').innerHTML = '<option value="">Tất cả các đợt</option>' + k.de.map(d => `<option value="${e(d.slug)}">${e(d.ten)}</option>`).join(''); $('bd-de').value = BD.nhom;
+    $('bd-lop').innerHTML = '<option value="">Mọi lớp</option>' + k.cac_lop.map(x => `<option value="${e(x.lop)}">${e(x.lop)}</option>`).join(''); $('bd-lop').value = BD.lop;
+    bdVe();
+  }
+  const CXB = { tu_tin: '🤩 Tự tin', binh_thuong: '🙂 Bình thường', lo_lang: '😰 Lo lắng', met_moi: '😴 Mệt mỏi' };
+  function bdLoc() {
+    let ds = BD.k.ds.slice(); const q = BD.q.trim().toLowerCase();
+    if (q) ds = ds.filter(x => [x.ho_ten, x.tk, x.lop].join(' ').toLowerCase().includes(q));
+    if (BD.cao) { const m = new Map(); for (const x of ds) { if (!x.nop_luc) continue; const kh = x.tk + '|' + x.nhom, c = m.get(kh); if (!c || x.diem > c.diem) m.set(kh, x) } ds = [...m.values()] }
+    const ham = { ten: x => (x.lop || '') + String(x.stt || 0).padStart(3, '0'), dot: x => x.ngay_de || '', diem: x => x.nop_luc ? x.diem : -1, phut: x => x.thoi_gian || 0, tab: x => x.chuyen_tab || 0, nop: x => x.nop_luc || '' }[BD.xep];
+    if (ham) ds.sort((a, b) => { const u = ham(a), v = ham(b); return (u < v ? -1 : u > v ? 1 : 0) * (BD.nguoc ? -1 : 1) });
+    return ds;
+  }
+  function bdVe() {
+    const ds = bdLoc(), nop = ds.filter(x => x.nop_luc), $ = id => document.getElementById(id);
+    const hs = new Set(nop.map(x => x.tk)).size, tb = nop.length ? nop.reduce((a, x) => a + x.diem, 0) / nop.length : null;
+    const ph = nop.filter(x => x.thoi_gian).map(x => x.thoi_gian / 60), tbp = ph.length ? ph.reduce((a, b) => a + b, 0) / ph.length : null;
+    const tab = nop.filter(x => (x.chuyen_tab || 0) >= 3).length;
+    $('bd-the').innerHTML = `<div><b>${nop.length}</b><span>lượt đã nộp${ds.length > nop.length ? ` (+${ds.length - nop.length} đang làm)` : ''}</span></div><div><b>${hs}</b><span>học sinh</span></div>
+      <div><b>${F(tb)}</b><span>điểm TB các lượt</span></div><div><b>${tbp == null ? '—' : Math.round(tbp) + '′'}</b><span>số phút TB mỗi lượt</span></div><div class="qt"><b>${tab}</b><span>lượt rời tab ≥ 3 lần</span></div>`;
+    const tat = !BD.nhom, cot = (k2, t, cls) => `<th class="${cls || ''}" data-xep="${k2}" style="cursor:pointer" title="Sắp xếp">${t}${BD.xep === k2 ? (BD.nguoc ? ' ▼' : ' ▲') : ''}</th>`;
+    if (!ds.length) { $('bd-bang').innerHTML = '<div style="padding:24px;text-align:center;color:#64748b"><b style="display:block;color:#0f172a">Chưa có lượt làm bài nào</b>Thử chọn “Tất cả các đợt” hoặc “Mọi lớp”.</div>'; return }
+    $('bd-bang').innerHTML = `<div style="overflow:auto;max-height:60vh;border:1px solid #e2e8f0;border-radius:10px"><table class="th-bang"><thead><tr>
+      <th>Lớp</th>${cot('ten', 'STT')}<th class="ten">Họ tên</th>${tat ? cot('dot', 'Đợt', 'ten') : ''}<th>Mã đề</th><th>Lần</th>${cot('diem', 'Điểm')}${cot('phut', 'Số phút')}${cot('tab', 'Rời tab')}<th>Cảm xúc</th><th title="Số câu mở Gợi ý AI">💡</th>${cot('nop', 'Nộp lúc')}</tr></thead><tbody>
+      ${ds.map(x => { const p = x.thoi_gian ? x.thoi_gian / 60 : null, tb2 = x.chuyen_tab || 0;
+        return `<tr><td>${e(x.lop || '')}</td><td>${x.stt || ''}</td><td class="ten">${e(x.ho_ten || x.tk)}</td>${tat ? `<td class="ten" title="${e(x.ten_de || x.nhom)}">${e(String(x.ten_de || x.nhom).slice(0, 38))}</td>` : ''}
+          <td>${e(x.de === x.nhom ? '' : x.de)}</td><td>${x.lan}</td><td>${x.nop_luc ? `<span class="o-d ${mau(x.diem)}">${F(x.diem)}</span>` : '<span style="color:#64748b">đang làm</span>'}</td>
+          <td style="${p != null && p < 3 && x.nop_luc ? 'background:#fef3c7;font-weight:700' : ''}">${p == null ? '' : Math.max(1, Math.round(p)) + '′'}</td>
+          <td style="${tb2 >= 3 ? 'background:#fee2e2;color:#b91c1c;font-weight:700' : ''}">${tb2 || ''}</td><td>${CXB[x.cam_xuc] || ''}</td><td>${x.goi_y || ''}</td>
+          <td>${x.nop_luc ? new Date(x.nop_luc).toLocaleString('vi-VN', { dateStyle: 'short', timeStyle: 'short' }) : ''}</td></tr>` }).join('')}</tbody></table></div>`;
+    $('bd-bang').querySelectorAll('[data-xep]').forEach(th => th.onclick = () => { const k2 = th.dataset.xep; BD.nguoc = BD.xep === k2 ? !BD.nguoc : k2 === 'diem' || k2 === 'nop'; BD.xep = k2; bdVe() });
+  }
+  function bdXuat() {
+    const ds = bdLoc(), dau = ['Lớp', 'STT', 'Họ tên', 'Tài khoản', 'Đợt', 'Mã đề', 'Lần', 'Điểm', 'Số phút', 'Rời tab', 'Cảm xúc', 'Số câu mở Gợi ý AI', 'Bắt đầu', 'Nộp lúc'];
+    const t = s2 => s2 ? new Date(s2).toLocaleString('vi-VN') : '';
+    const csv = '﻿' + [dau, ...ds.map(x => [x.lop || '', x.stt || '', x.ho_ten || '', x.tk, x.ten_de || x.nhom, x.de, x.lan, x.nop_luc ? F(x.diem) : 'đang làm',
+      x.thoi_gian ? Math.round(x.thoi_gian / 60) : '', x.chuyen_tab || 0, CXB[x.cam_xuc] || '', x.goi_y || 0, t(x.bat_dau), t(x.nop_luc)])]
+      .map(r => r.map(v => `"${String(v).replace(/"/g, '""')}"`).join(',')).join('\n');
+    const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv' }));
+    a.download = `BangDiem_${BD.nhom || 'tat-ca-dot'}${BD.lop ? '_' + BD.lop : ''}_${new Date().toISOString().slice(0, 10)}.csv`; a.click();
+  }
+  window.TongHop = { mo, bangDiem };
 })();

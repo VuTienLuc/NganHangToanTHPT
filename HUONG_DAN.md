@@ -220,6 +220,11 @@ như phần mềm cũ thì ghi `"khung": "DeThi"` trong file JSON.
 - **⚑ Học sinh cần quan tâm**: máy tự đánh dấu em chưa làm, thiếu bài, TB dưới 5, tụt từ 1 điểm, hoặc đang lo lắng/mệt (cảm xúc khi làm bài). Bấm ⚑ trong bảng để đánh dấu / bỏ đánh dấu thêm (nhớ theo lớp).
 - Mỗi em được đánh dấu có **tin nhắn riêng tích cực, vui** (sửa được, 🎲 đổi câu khác). **💌 Gửi vào trang học** → em thấy khung “💌 Thầy nhắn em” khi đăng nhập, bấm “Em đã đọc 👍”; bảng của thầy hiện “✓ em đã đọc”. Hoặc **Chép tin nhắn** để gửi Zalo.
 
+### 📋 Bảng điểm từng lượt (trang giáo viên trên web)
+- Đăng nhập GV tại thi-toan-vtl.pages.dev → nút **📋 Bảng điểm** (mọi đợt) hoặc **📋 Điểm** ở từng đề (một đợt). Trong app: Tổng hợp quá trình → **📋 Bảng điểm từng lượt**.
+- Mỗi lượt: lớp, STT, họ tên, đợt, mã đề, lần, **điểm, số phút làm bài, số lần rời tab**, cảm xúc, số câu mở 💡, giờ nộp. Rời tab ≥ 3 tô đỏ, làm dưới 3 phút tô vàng.
+- Chọn đợt / lớp, tìm tên, “Chỉ lần điểm cao nhất mỗi em”, bấm tiêu đề cột để sắp xếp, **Tải Excel (CSV)**. Cần Đăng lại tất cả một lần.
+
 ### ✓ Bài đã giao / chưa giao (để tổng hợp chính xác)
 - Chỉ bài **✓ Đã giao** mới tính vào hoàn thành, điểm TB, tiến bộ, ⚑ cần quan tâm. Mặc định **mọi bài là chưa giao** cho tới khi thầy **xác nhận đã giao** (nút trong Thư viện, hoặc danh sách “○ Bài chưa xác nhận giao” trong bảng tổng hợp). Bài xác nhận giao tính cho các lớp ghi ở ô Lớp giao (để trống = mọi lớp).
 - Ngay trong **Thư viện**, mỗi đề có nhãn và nút **✓ Đã giao / ○ Chưa giao** (bấm → xác nhận); lọc nhanh bằng chip Trạng thái “✓ Đã giao / ○ Chưa giao”.
