@@ -30,6 +30,14 @@ export async function bamMk(mk, muoi) {
 }
 export const muoiMoi = () => b64u(crypto.getRandomValues(new Uint8Array(12)));
 export const soBam = s => { let h = 2166136261; for (const c of String(s)) h = Math.imul(h ^ c.charCodeAt(0), 16777619); return h >>> 0; };
+// lớp phụ đạo theo khối: học sinh thầy đánh dấu ⭐ (bảng theo_doi) thuộc thêm lớp PD<khối>, vd PD10
+export const khoiCua = l => (String(l || '').match(/^\s*(\d{1,2})/) || [])[1] || '';
+export async function cacLop(env, ph) {
+  const ds = [ph.lop];
+  try { if (khoiCua(ph.lop) && await env.DB.prepare('SELECT 1 AS c FROM theo_doi WHERE tk = ?').bind(ph.tk).first()) ds.push('PD' + khoiCua(ph.lop)); } catch (_) {}
+  return ds;
+}
+export const lopKhopDs = (dsLop, lops) => lops.some(l => lopKhop(dsLop, l));
 export const lopKhop = (dsLop, lop) => !dsLop || String(dsLop).split(',').map(x => x.trim().toUpperCase()).filter(Boolean)
   .some(x => x === String(lop || '').trim().toUpperCase());
 

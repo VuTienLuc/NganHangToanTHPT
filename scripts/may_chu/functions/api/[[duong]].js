@@ -1,5 +1,5 @@
 // API: học sinh (đăng nhập, đổi mật khẩu, bắt đầu, nộp bài, kết quả) và quản trị (x-admin: ADMIN_TOKEN)
-import { docPhien, kyPhien, cookiePhien, json, bamMk, muoiMoi, cham, lopKhop } from '../_lib.js';
+import { docPhien, kyPhien, cookiePhien, json, bamMk, muoiMoi, cham, lopKhop, cacLop, lopKhopDs, khoiCua } from '../_lib.js';
 
 const BAY_GIO = () => new Date().toISOString();
 const NGAY30 = 30 * 86400;
@@ -20,25 +20,36 @@ async function luot(env, tk, de) {
 const COT_BAI = `b.tk, b.nhom, b.de, b.lan, b.diem, b.nop_luc, b.thoi_gian, b.chuyen_tab, b.cam_xuc, b.goi_y,
   json_extract(b.cham, '$.parts.mcq') AS p1, json_extract(b.cham, '$.parts.tf') AS p2, json_extract(b.cham, '$.parts.short') AS p3`;
 // ---- tổng hợp quá trình học online theo lớp + lời nhắn của thầy (dùng chung cho app giáo viên và trang web GV)
+const LA_PD = l => /^PD\d{1,2}$/i.test(String(l || '').trim());
+// mọi học sinh + lớp phụ đạo (PD<khối>) của em nào đang được theo dõi
+async function dsHocSinh(DB) {
+  const hs = (await DB.prepare("SELECT ten, ho_ten, lop, stt FROM tk WHERE vai = 'hs' ORDER BY lop, stt, ten").all()).results;
+  let td = new Set(); try { td = new Set((await DB.prepare('SELECT tk FROM theo_doi').all()).results.map(x => x.tk)); } catch (_) {}
+  for (const h of hs) { h.pd = td.has(h.ten) && khoiCua(h.lop) ? 'PD' + khoiCua(h.lop) : ''; h.cac = [h.lop, h.pd].filter(Boolean); }
+  return hs;
+}
+const thuocLop = (h, lop) => h.cac.some(l => l.toUpperCase() === String(lop || '').trim().toUpperCase());
+function demLop(hs) {
+  const m = new Map(); for (const h of hs) for (const l of h.cac) if (l) m.set(l, (m.get(l) || 0) + 1);
+  return [...m].map(([lop, n]) => ({ lop, n, phu_dao: LA_PD(lop) })).sort((a, b) => a.phu_dao - b.phu_dao || a.lop.localeCompare(b.lop, 'vi', { numeric: true }));
+}
 async function tongHop(DB, d) {
-  const lop = String(d.lop || '').trim();
-  if (!lop) {
-    const { results } = await DB.prepare("SELECT lop, COUNT(*) AS n FROM tk WHERE vai = 'hs' AND lop <> '' GROUP BY lop ORDER BY lop").all();
-    return { ok: true, cac_lop: results };
-  }
-  const hs = (await DB.prepare("SELECT ten, ho_ten, stt FROM tk WHERE vai = 'hs' AND UPPER(lop) = UPPER(?) ORDER BY stt, ten").bind(lop).all()).results;
-  const bai = (await DB.prepare(`SELECT ${COT_BAI} FROM bai b JOIN tk t ON t.ten = b.tk WHERE UPPER(t.lop) = UPPER(?) AND b.nop_luc IS NOT NULL ORDER BY b.nop_luc`).bind(lop).all()).results;
+  const lop = String(d.lop || '').trim(), tat = await dsHocSinh(DB);
+  if (!lop) return { ok: true, cac_lop: demLop(tat) };
+  const pd = LA_PD(lop), hsL = tat.filter(h => thuocLop(h, lop)), tks = new Set(hsL.map(h => h.ten));
+  const hs = hsL.map(h => ({ ten: h.ten, ho_ten: h.ho_ten, stt: h.stt, lop_chinh: h.lop }));
+  const bai = (pd ? (await DB.prepare(`SELECT ${COT_BAI} FROM bai b WHERE b.nop_luc IS NOT NULL AND b.tk IN (SELECT tk FROM theo_doi) ORDER BY b.nop_luc`).all()).results
+    : (await DB.prepare(`SELECT ${COT_BAI} FROM bai b JOIN tk t ON t.ten = b.tk WHERE UPPER(t.lop) = UPPER(?) AND b.nop_luc IS NOT NULL ORDER BY b.nop_luc`).bind(lop).all()).results)
+    .filter(x => tks.has(x.tk));
   const coBai = new Set(bai.map(x => x.nhom));
   const de = (await DB.prepare("SELECT slug, ten, lop, so_luot, tao_luc, trang_thai, giao FROM de WHERE nhom = '' OR nhom IS NULL ORDER BY tao_luc").all()).results
-    .filter(x => coBai.has(x.slug) || x.giao === 1 || (String(x.lop || '').trim() && lopKhop(x.lop, lop)));
+    .filter(x => pd ? (String(x.lop || '').trim() && lopKhop(x.lop, lop))       // lớp phụ đạo: chỉ đề ra riêng cho lớp này
+      : coBai.has(x.slug) || x.giao === 1 || (String(x.lop || '').trim() && lopKhop(x.lop, lop)));
   let nhan = [];
-  try {
-    nhan = (await DB.prepare(`SELECT n.id, n.tk, n.noi_dung, n.tao_luc, n.xem_luc FROM loi_nhan n JOIN tk t ON t.ten = n.tk
-      WHERE UPPER(t.lop) = UPPER(?) ORDER BY n.id DESC LIMIT 400`).bind(lop).all()).results;
-  } catch (_) {}
+  try { nhan = (await DB.prepare('SELECT id, tk, noi_dung, tao_luc, xem_luc FROM loi_nhan ORDER BY id DESC LIMIT 2000').all()).results.filter(x => tks.has(x.tk)); } catch (_) {}
   let theo = [];
-  try { theo = (await DB.prepare('SELECT d.tk, d.ghi_chu, d.tu_luc FROM theo_doi d JOIN tk t ON t.ten = d.tk WHERE UPPER(t.lop) = UPPER(?)').bind(lop).all()).results; } catch (_) {}
-  return { ok: true, lop, hs, de, bai, nhan, theo_doi: theo };
+  try { theo = (await DB.prepare('SELECT tk, ghi_chu, tu_luc FROM theo_doi').all()).results.filter(x => tks.has(x.tk)); } catch (_) {}
+  return { ok: true, lop, phu_dao: pd, hs, de, bai, nhan, theo_doi: theo };
 }
 // học sinh thầy chọn theo dõi (mọi lớp): bài làm, đề giao cho lớp các em, lời nhắn
 async function theoDoi(DB) {
@@ -57,21 +68,22 @@ async function bangDiem(DB, d) {
     t.ho_ten, t.lop, t.stt, g.ten AS ten_de, g.tao_luc AS ngay_de
     FROM bai b LEFT JOIN tk t ON t.ten = b.tk LEFT JOIN de g ON g.slug = b.nhom WHERE (t.vai IS NULL OR t.vai = 'hs')`;
   if (nhom) { sql += ' AND b.nhom = ?'; b.push(nhom); }
-  if (lop) { sql += ' AND UPPER(t.lop) = UPPER(?)'; b.push(lop); }
+  const tat = await dsHocSinh(DB), pdLoc = LA_PD(lop);
+  if (lop && !pdLoc) { sql += ' AND UPPER(t.lop) = UPPER(?)'; b.push(lop); }
   sql += ' ORDER BY g.tao_luc DESC, t.lop, t.stt, b.lan LIMIT 6000';
-  const ds = (await DB.prepare(sql).bind(...b).all()).results;
+  let ds = (await DB.prepare(sql).bind(...b).all()).results;
+  if (pdLoc) { const tks = new Set(tat.filter(h => thuocLop(h, lop)).map(h => h.ten)); ds = ds.filter(x => tks.has(x.tk)); }
   const de = (await DB.prepare("SELECT slug, ten, lop, tao_luc FROM de WHERE nhom = '' OR nhom IS NULL ORDER BY tao_luc DESC").all()).results;
-  const cac_lop = (await DB.prepare("SELECT lop, COUNT(*) AS n FROM tk WHERE vai = 'hs' AND lop <> '' GROUP BY lop ORDER BY lop").all()).results;
+  const cac_lop = demLop(tat);
   let hs = [];
   if (nhom) {          // danh sách lớp của đợt này + số bài ĐÃ GIAO mỗi em đã bỏ (lịch sử chưa làm)
     const g = await DB.prepare('SELECT lop, giao FROM de WHERE slug = ?').bind(nhom).first();
     const lops = lop ? [lop] : String(g?.lop || '').split(',').map(x => x.trim()).filter(Boolean);
-    hs = (await DB.prepare("SELECT ten, ho_ten, lop, stt FROM tk WHERE vai = 'hs' ORDER BY lop, stt").all()).results
-      .filter(h => lops.length ? lops.some(l => l.toUpperCase() === String(h.lop || '').toUpperCase()) : true);
+    hs = tat.filter(h => lops.length ? lops.some(l => thuocLop(h, l)) : true);
     const giao = (await DB.prepare("SELECT slug, lop FROM de WHERE (nhom = '' OR nhom IS NULL) AND giao = 1").all()).results;
     const lam = new Set((await DB.prepare('SELECT DISTINCT tk, nhom FROM bai WHERE nop_luc IS NOT NULL').all()).results.map(x => x.tk + '|' + x.nhom));
     for (const h of hs) {
-      const cua = giao.filter(x => lopKhop(x.lop, h.lop));
+      const cua = giao.filter(x => lopKhopDs(x.lop, h.cac));
       h.so_giao = cua.length; h.bo = cua.filter(x => !lam.has(h.ten + '|' + x.slug)).length;
       h.lam_dot = lam.has(h.ten + '|' + nhom);
     }
@@ -149,7 +161,8 @@ async function hocSinh(duong, d, env, req, url) {
     if (ph.vai !== 'gv') {
       const { results } = await env.DB.prepare("SELECT slug, ten, lop, so_luot, nhom, trang_thai FROM de WHERE (nhom IS NULL OR nhom = '') AND trang_thai != 'da_dong' ORDER BY tao_luc DESC").all();
       ra.de = [];
-      for (const x of results.filter(x => lopKhop(x.lop, ph.lop))) {
+      const lops = await cacLop(env, ph); ra.lop_phu = lops.slice(1);
+      for (const x of results.filter(x => lopKhopDs(x.lop, lops))) {
         const l = await luot(env, ph.tk, x);
         const tot = await env.DB.prepare('SELECT MAX(diem) AS d FROM bai WHERE tk = ? AND nhom = ? AND nop_luc IS NOT NULL').bind(ph.tk, l.nhom).first();
         ra.de.push({ slug: x.slug, ten: x.ten, da_lam: l.dem, con_lai: l.con_lai, cao_nhat: tot?.d ?? null, cong_bo: x.trang_thai === 'da_cong_bo' });
@@ -163,7 +176,7 @@ async function hocSinh(duong, d, env, req, url) {
   const slug = String(d.de || url.searchParams.get('de') || '');
   const de = await env.DB.prepare('SELECT * FROM de WHERE slug = ?').bind(slug).first();
   if (!de) return json({ ok: false, loi: 'Không có đề này.' }, 404);
-  if (ph.vai !== 'gv' && !lopKhop(de.lop, ph.lop)) return json({ ok: false, loi: 'Đề không giao cho lớp em.' }, 403);
+  if (ph.vai !== 'gv' && !lopKhopDs(de.lop, await cacLop(env, ph))) return json({ ok: false, loi: 'Đề không giao cho lớp em.' }, 403);
   if (duong === 'ket-qua') {
     const { results } = await env.DB.prepare('SELECT lan, tra_loi, cham FROM bai WHERE tk = ? AND de = ? AND nop_luc IS NOT NULL ORDER BY lan').bind(ph.tk, slug).all();
     return json({ ok: true, ds: results.map(x => ({ lan: x.lan, tra_loi: JSON.parse(x.tra_loi || '{}'), cham: JSON.parse(x.cham || 'null') })) });

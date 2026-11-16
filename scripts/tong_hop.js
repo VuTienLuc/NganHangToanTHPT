@@ -90,7 +90,7 @@
       st.lop = k.cac_lop || [];
     }
     if (!st.lop.length) { $('th-lop').innerHTML = ''; than.innerHTML = '<p>Chưa có tài khoản học sinh. Nhập danh sách lớp ở mục 👥 Tài khoản học sinh trong ứng dụng ra đề.</p>'; return }
-    $('th-lop').innerHTML = '<option value="__td">⭐ Học sinh đang theo dõi (mọi lớp)</option>' + st.lop.map(x => `<option value="${e(x.lop)}">${e(x.lop)} (${x.n} em)</option>`).join('');
+    $('th-lop').innerHTML = '<option value="__td">⭐ Học sinh đang theo dõi (mọi lớp)</option>' + st.lop.map(x => `<option value="${e(x.lop)}">${e(tenLop(x.lop))} (${x.n} em)</option>`).join('');
     const muon = String(o.lop || doc('lop') || '').toUpperCase(), co = st.lop.find(x => x.lop.toUpperCase() === muon);
     $('th-lop').value = muon === '__TD' ? '__td' : co ? co.lop : st.lop[0].lop; $('th-lop').focus(); tai();
   }
@@ -112,7 +112,10 @@
   // ---------- tính toán ----------
   const lopKhop = (ds, lop) => !String(ds || '').trim() || String(ds).split(',').map(x => x.trim().toUpperCase()).filter(Boolean).includes(String(lop || '').trim().toUpperCase());
   // bài “đã giao” mới tính hoàn thành / điểm TB; bài chưa giao em tự làm thì ghi nhận là tự luyện thêm
-  const daGiao = (d, lop) => d.giao === 1 && lopKhop(d.lop, lop);   // chỉ bài thầy đã XÁC NHẬN giao mới tính
+  const laPD = l => /^PD\d{1,2}$/i.test(String(l || '').trim());
+  // chỉ bài thầy đã XÁC NHẬN giao mới tính; đề ra riêng cho lớp phụ đạo (Lớp giao PD10…) tự tính là đã giao
+  const daGiao = (d, lop) => (d.giao === 1 && lopKhop(d.lop, lop)) || (laPD(lop) && d.giao !== 0 && !!String(d.lop || '').trim() && lopKhop(d.lop, lop));
+  const tenLop = l => laPD(l) ? `🎯 Phụ đạo khối ${String(l).slice(2)} (${l})` : l;
   function nhomBai(bai) {
     const theo = {};
     for (const b of bai) {
@@ -173,7 +176,7 @@
     const d1 = T.dot.find(d => d.tb != null), d2 = [...T.dot].reverse().find(d => d.tb != null);
     const tienBo = T.hs.filter(h => h.xu != null && h.xu >= 1).sort((a, b) => b.xu - a.xu), gioi = coLam.filter(h => h.tb >= 8).sort((a, b) => b.tb - a.tb);
     const ten = h => (h.ho_ten || h.ten).trim(), ds = a => a.slice(0, 5).map(ten).join(', ') + (a.length > 5 ? ` và ${a.length - 5} bạn khác` : '');
-    const c = [`📊 Tổng kết học online lớp ${lop} (${n} đợt bài, ${s} học sinh)`];
+    const c = [`📊 Tổng kết học online ${laPD(lop) ? 'lớp phụ đạo khối ' + lop.slice(2) : 'lớp ' + lop} (${n} đợt bài, ${s} học sinh)`];
     c.push(`• Cả lớp đã hoàn thành ${Math.round(tl * 100)}% lượt bài được giao${du.length ? `, ${du.length} bạn làm đủ tất cả các đợt — rất đáng khen!` : '.'}`);
     if (tb != null) c.push(`• Điểm trung bình lớp: ${F(tb)}${d1 && d2 && d1 !== d2 ? (d2.tb - d1.tb >= .3 ? ` — tăng từ ${F(d1.tb)} (đợt đầu) lên ${F(d2.tb)} (đợt gần nhất), lớp đang tiến bộ rõ` : d2.tb - d1.tb > -.3 ? ', giữ ổn định qua các đợt' : '; các đợt sau khó hơn, các em xem lại lời giải để vững vàng hơn nhé') : ''}.`);
     if (du.length) c.push(`• Chăm chỉ, đều đặn: ${ds(du)}.`);
@@ -299,7 +302,10 @@
     st.TD = hs; const than = document.getElementById('th-than');
     if (!hs.length) { than.innerHTML = `<div class="th-hop2 th-nx"><h3>⭐ Chưa theo dõi em nào</h3><p style="margin:0">Chọn một lớp → bấm ☆ ở cột “Theo dõi” (hoặc bấm tên em → ☆ Theo dõi em này). Gợi ý: những em có TB dưới 5 hoặc hay bỏ bài. Danh sách lưu trên máy chủ, dùng chung app và trang web.</p></div>`; return }
     const canNhac = hs.filter(h => ['chua_lam', 'thieu'].includes(kieuTD(h))).length, tienBo = hs.filter(h => kieuTD(h) === 'khen_tien_bo').length;
-    than.innerHTML = `<div class="th-the"><div><b>${hs.length}</b><span>em đang theo dõi</span></div><div><b>${tienBo}</b><span>🎉 vừa tiến bộ — khen ngay!</span></div><div class="qt"><b>${canNhac}</b><span>chưa làm bài mới</span></div>
+    const pdDs = [...new Set(hs.map(h => (String(h.lop).match(/^\s*(\d{1,2})/) || [])[1]).filter(Boolean))].sort((a, b) => a - b);
+    than.innerHTML = `<div class="th-hop2" style="background:#eef2ff;border:1px solid #c7d2fe;font-size:13px"><b style="color:#3730a3">🎯 Các em ⭐ theo dõi thuộc thêm lớp phụ đạo theo khối:</b> ${pdDs.map(k2 => `<b>PD${k2}</b> (${hs.filter(h => String(h.lop).startsWith(k2)).length} em)`).join(' · ')}.
+      Ra đề thêm cho riêng các em: ô <b>Lớp giao</b> ghi <b>PD10</b>, <b>PD11</b>… Xem tổng hợp riêng: chọn “🎯 Phụ đạo khối …” ở ô Lớp.</div>
+    <div class="th-the"><div><b>${hs.length}</b><span>em đang theo dõi</span></div><div><b>${tienBo}</b><span>🎉 vừa tiến bộ — khen ngay!</span></div><div class="qt"><b>${canNhac}</b><span>chưa làm bài mới</span></div>
       <div><b>${hs.filter(h => h.moiNhat && Date.now() - new Date(h.moiNhat) < 7 * 864e5).length}</b><span>có nộp bài trong 7 ngày</span></div></div>
       <div class="th-td">${hs.map((h, i) => { const kieu = kieuTD(h); return `<div class="th-td-the" data-i="${i}">
         <div class="th-td-dau"><button class="th-ten" data-hs="${i}">${e(h.ho_ten || h.ten)}</button><span class="th-ly">${e(h.lop)}</span>
@@ -334,6 +340,9 @@
     than.innerHTML = `<div class="th-the"><div><b>${n}</b><span>đợt bài đã giao</span></div><div><b>${coLam}/${s}</b><span>em đã tham gia</span></div>
       <div><b>${tl}%</b><span>lượt bài hoàn thành</span></div><div><b>${F(tb)}</b><span>điểm TB lớp</span></div><div><b>${tienBo}</b><span>em tiến bộ ≥ 1 điểm</span></div>
       <div class="qt"><b>${qt.length}</b><span>⚑ em cần quan tâm</span></div></div>
+      ${laPD(k.lop) ? `<div class="th-hop2" style="background:#eef2ff;border:1px solid #c7d2fe"><h3 style="color:#3730a3">🎯 Lớp phụ đạo khối ${e(k.lop.slice(2))} — ${T.hs.length} em (các em đang ⭐ theo dõi)</h3><div style="font-size:13px">
+        Ra đề thêm cho riêng các em: khi đăng đề, ghi ô <b>Lớp giao</b> là <code style="background:#fff;padding:1px 6px;border-radius:5px;font-weight:700">${e(k.lop)}</code> <button data-chep-pd="${e(k.lop)}" style="font-size:12px!important;min-height:0!important;padding:2px 8px!important">📋 Chép</button> — chỉ các em trong lớp phụ đạo thấy và làm được, đề tự tính vào tổng hợp này.
+        Thêm / bớt em: bấm ☆/★ ở bảng tổng hợp lớp chính, hoặc nút 🎯 trong khung ⚑ cần quan tâm.</div></div>` : ''}
       ${n ? `<div class="th-bd">${svg}</div>` : ''}
       <div class="th-hop2 th-qt" id="th-qt"><h3>⚑ Học sinh cần quan tâm — tin nhắn riêng (tích cực, vui)</h3><div id="th-qt-ds"></div></div>
       <div class="th-hop2 th-nx"><h3>💬 Nhận xét chung cho lớp (sửa được, chép gửi nhóm lớp)</h3><textarea id="th-nx-lop">${e(nxLop(k.lop, T))}</textarea></div>
@@ -344,7 +353,7 @@
         <th>Hoàn thành</th><th>TB</th><th title="TB 2 bài gần nhất − TB 2 bài đầu">Tiến bộ</th><th class="ten">Nhận xét tích cực (bấm để sửa)</th></tr></thead><tbody>
         ${T.hs.map((h, i) => `<tr class="${canQT(h) ? 'qt' : ''}"><td><button class="th-co" data-tk="${e(h.ten)}" aria-pressed="${canQT(h)}" title="${h.ly.map(x => x[1]).join(' · ') || 'Bấm để đánh dấu cần quan tâm'}" aria-label="Đánh dấu ${e(h.ho_ten || h.ten)}">⚑</button></td>
           <td><button class="th-co th-sao" data-sao="${i}" aria-pressed="${!!h.td}" title="${h.td ? 'Đang theo dõi — bấm để bỏ' : 'Theo dõi em này thường xuyên'}" aria-label="Theo dõi ${e(h.ho_ten || h.ten)}">${h.td ? '★' : '☆'}</button></td>
-          <td>${h.stt || ''}</td><td class="ten"><button class="th-ten" data-hs="${i}" title="Xem hồ sơ từng bài">${e(h.ho_ten || h.ten)}</button></td>
+          <td>${h.stt || ''}</td><td class="ten"><button class="th-ten" data-hs="${i}" title="Xem hồ sơ từng bài">${e(h.ho_ten || h.ten)}</button>${h.lop_chinh && laPD(k.lop) ? ` <small style="color:#64748b">${e(h.lop_chinh)}</small>` : ''}</td>
           ${h.o.map(x => `<td><span class="o-d ${mau(x && x.cao)}" title="${x ? `Cao nhất ${F(x.cao)} · ${x.so} lần${x.goi_y ? ` · 💡 ${x.goi_y}` : ''}` : 'Chưa làm'}">${x ? F(x.cao) : '—'}</span></td>`).join('')}
           ${T.them.map(d => { const x = h.them.find(y => y.de.slug === d.slug); return `<td class="them">${x ? `<span class="o-d ${mau(x.cao)}">${F(x.cao)}</span>` : ''}</td>` }).join('')}
           <td>${n ? h.lam + '/' + n : '—'}</td><td>${n ? `<b>${F(h.tb)}</b>` : `<span style="color:#94a3b8" title="TB các bài chưa giao em đã làm">${F(h.tbThem)}</span>`}</td><td>${h.xu == null ? '' : h.xu >= .5 ? `<span class="th-len">▲ ${F(h.xu)}</span>` : h.xu <= -.5 ? `<span class="th-xuong">▼ ${F(-h.xu)}</span>` : '≈'}</td>
@@ -352,6 +361,7 @@
         <p style="font-size:12px;color:#64748b;margin:6px 0 0">Mỗi ô là điểm cao nhất của em trong đợt (rê chuột xem số lần làm, số câu mở Gợi ý AI). Xanh lá ≥ 8 · xanh dương ≥ 6,5 · vàng ≥ 5 · đỏ &lt; 5 · “—” chưa làm. Chỉ bài thầy đã <b>xác nhận ✓ Đã giao</b> mới tính hoàn thành, điểm TB, tiến bộ; bấm nút dưới tên đợt để chuyển về Chưa giao (cột xám “○ Chưa giao” vẫn hiện điểm em đã làm nhưng không tính, chỉ để khen). Bấm ⚑ để đánh dấu / bỏ đánh dấu em cần quan tâm · ☆ để theo dõi thường xuyên (xem ở mục ⭐ đầu danh sách lớp) · bấm tên em để xem hồ sơ từng bài.</p>`
         : `<p>Lớp này chưa có bài nào được <b>xác nhận đã giao</b>. Thầy bấm “✓ Xác nhận đã giao” ở danh sách trên (hoặc nút ○ Chưa giao trong Thư viện) — chỉ bài đã xác nhận mới tính hoàn thành, điểm TB, tiến bộ.</p>`}`;
     veQT();
+    than.querySelectorAll('[data-chep-pd]').forEach(b => b.onclick = () => chep(b.dataset.chepPd, 'Đã chép ' + b.dataset.chepPd));
     than.querySelectorAll('[data-giao]').forEach(b => b.onclick = async () => {
       const v = b.dataset.v === '1', d = k.de.find(x => x.slug === b.dataset.giao);
       if (!confirm(v ? `Xác nhận “${d.ten}” là bài ĐÃ GIAO?\nEm chưa làm sẽ bị tính thiếu bài.` : `Đánh dấu “${d.ten}” là CHƯA GIAO?\nBài này không tính vào hoàn thành / điểm TB; em nào làm thì ghi nhận là tự luyện thêm.`)) return;
@@ -374,11 +384,12 @@
     if (!ds.length) { hop2.innerHTML = '<p style="margin:0;color:#64748b">Không có em nào cần nhắc riêng 🎉 Bấm ⚑ trong bảng để đánh dấu thêm nếu thầy muốn nhắn riêng.</p>'; return }
     hop2.innerHTML = `<p style="margin:0 0 6px;font-size:12.5px;color:#9d174d">Máy tự đánh dấu em chưa làm, thiếu bài, TB dưới 5, tụt từ 1 điểm, hoặc đang lo lắng/mệt. Tin nhắn gửi vào <b>trang học của em</b> (hiện khung “💌 Thầy nhắn em” khi em đăng nhập) — sửa được, 🎲 để đổi câu khác.</p>
       ${ds.map(h => { const cu = h.nhan[0]; return `<div class="th-em" data-tk="${e(h.ten)}"><input type="checkbox" checked aria-label="Chọn ${e(h.ho_ten || h.ten)}">
-        <div><div class="ten">${e(h.ho_ten || h.ten)}</div><div class="ly">${(h.ly.length ? h.ly : [['tay', 'Thầy đánh dấu']]).map(x => `<span class="th-ly">${e(x[1])}</span>`).join('')}</div>
+        <div><div class="ten">${e(h.ho_ten || h.ten)}${h.td && !laPD(st.k.lop) ? ' <span class="th-ly" style="color:#3730a3;border-color:#c7d2fe">🎯 phụ đạo</span>' : ''}</div><div class="ly">${(h.ly.length ? h.ly : [['tay', 'Thầy đánh dấu']]).map(x => `<span class="th-ly">${e(x[1])}</span>`).join('')}</div>
           ${cu ? `<div class="da">Đã nhắn ${ngay(cu.tao_luc)} · ${cu.xem_luc ? '✓ em đã đọc' : 'em chưa đọc'}</div>` : ''}</div>
         <textarea aria-label="Tin nhắn cho ${e(h.ho_ten || h.ten)}">${e(tinNhan(h, n, st.bien[h.ten] || 0))}</textarea>
         <div class="nut"><button data-doi title="Đổi câu khác">🎲</button></div></div>` }).join('')}
       <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px"><button class="hong" id="th-gui">💌 Gửi vào trang học của các em đã chọn</button>
+        ${laPD(st.k.lop) ? '' : `<button id="th-pd" title="Đưa các em đã chọn vào lớp phụ đạo khối (⭐ theo dõi) để ra đề thêm riêng">🎯 Đưa các em đã chọn vào lớp phụ đạo</button>`}
         <button id="th-chep-qt">Chép tin nhắn (Zalo / Messenger)</button><label style="display:flex;align-items:center;gap:6px;font-size:13px"><input type="checkbox" id="th-tat-ca" checked> Chọn tất cả</label></div>`;
     hop2.querySelectorAll('[data-doi]').forEach(b => b.onclick = () => {
       const r = b.closest('.th-em'), h = T.hs.find(x => x.ten === r.dataset.tk); st.bien[h.ten] = (st.bien[h.ten] || 0) + 1;
@@ -386,6 +397,15 @@
     document.getElementById('th-tat-ca').onchange = ev => hop2.querySelectorAll('.th-em input[type=checkbox]').forEach(c => c.checked = ev.target.checked);
     const chon = () => [...hop2.querySelectorAll('.th-em')].filter(r => r.querySelector('input').checked)
       .map(r => ({ tk: r.dataset.tk, ten: (T.hs.find(x => x.ten === r.dataset.tk) || {}).ho_ten || r.dataset.tk, noi_dung: r.querySelector('textarea').value.trim() }));
+    const nutPD = document.getElementById('th-pd');
+    if (nutPD) nutPD.onclick = async () => {
+      const c = chon(); if (!c.length) return toast('Chưa chọn em nào');
+      const khoi = (String(st.k.lop).match(/^\s*(\d{1,2})/) || [])[1] || '';
+      if (!confirm(`Đưa ${c.length} em vào lớp phụ đạo khối ${khoi} (PD${khoi})?\nCác em vẫn ở lớp chính; thầy ra đề thêm với Lớp giao = PD${khoi}.`)) return;
+      nutPD.disabled = true; let ok = 0;
+      for (const x of c) { const h = T.hs.find(y => y.ten === x.tk); if (h && !h.td && await datTD(h, true)) ok++; }
+      nutPD.disabled = false; toast(`🎯 Đã đưa ${ok} em vào PD${khoi}`); st.lop = null; mo({ goi: st.goi, lop: st.k.lop });
+    };
     document.getElementById('th-chep-qt').onclick = () => { const c = chon(); if (!c.length) return toast('Chưa chọn em nào'); chep(c.map(x => `${x.ten}:\n${x.noi_dung}`).join('\n\n'), `Đã chép ${c.length} tin nhắn`) };
     document.getElementById('th-gui').onclick = async ev => {
       const c = chon(); if (!c.length) return toast('Chưa chọn em nào');
@@ -440,7 +460,7 @@
     if (!k.ok) { $('bd-bang').innerHTML = `<p style="color:#b45309">${e(k.loi || 'Lỗi')} — nếu máy chủ chưa có chức năng này, thầy bấm Đăng lại tất cả trong ứng dụng.</p>`; return }
     BD.k = k;
     $('bd-de').innerHTML = '<option value="">Tất cả các đợt</option>' + k.de.map(d => `<option value="${e(d.slug)}">${e(d.ten)}</option>`).join(''); $('bd-de').value = BD.nhom;
-    $('bd-lop').innerHTML = '<option value="">Mọi lớp</option>' + k.cac_lop.map(x => `<option value="${e(x.lop)}">${e(x.lop)}</option>`).join(''); $('bd-lop').value = BD.lop;
+    $('bd-lop').innerHTML = '<option value="">Mọi lớp</option>' + k.cac_lop.map(x => `<option value="${e(x.lop)}">${e(tenLop(x.lop))}</option>`).join(''); $('bd-lop').value = BD.lop;
     bdVe();
   }
   const CXB = { tu_tin: '🤩 Tự tin', binh_thuong: '🙂 Bình thường', lo_lang: '😰 Lo lắng', met_moi: '😴 Mệt mỏi' };
