@@ -81,6 +81,11 @@ async function hocSinh(duong, d, env, req, url) {
     return json({ ok: true, lan: l.dem + 1, con_lai: l.gioi ? l.gioi - l.dem - 1 : null,
       thong_bao: l.gioi ? `Lần làm ${l.dem + 1}/${l.gioi}.` : `Lần làm ${l.dem + 1}.` });
   }
+  if (duong === 'goi-y') {            // học sinh mở "Gợi ý AI" — đếm để thầy biết
+    if (ph.vai === 'gv') return json({ ok: true });
+    await env.DB.prepare('UPDATE bai SET goi_y = COALESCE(goi_y, 0) + 1 WHERE id = (SELECT id FROM bai WHERE tk = ? AND de = ? AND nop_luc IS NULL ORDER BY id DESC LIMIT 1)').bind(ph.tk, slug).run();
+    return json({ ok: true });
+  }
   if (duong === 'cam-xuc') {
     if (ph.vai === 'gv') return json({ ok: true });
     const cx = String(d.cam_xuc || '').slice(0, 20);
@@ -141,7 +146,7 @@ async function quanTri(duong, d, env) {
   if (duong === 'de/xoa') { await DB.prepare('DELETE FROM de WHERE slug = ?').bind(d.slug).run(); return json({ ok: true }); }
   if (duong === 'diem') {
     const nhom = String(d.nhom || d.de || '');
-    const { results } = await DB.prepare(`SELECT b.id, b.tk, b.de, b.lan, b.bat_dau, b.nop_luc, b.diem, b.chuyen_tab, b.thoi_gian, b.cam_xuc, t.ho_ten, t.lop, t.stt
+    const { results } = await DB.prepare(`SELECT b.id, b.tk, b.de, b.lan, b.bat_dau, b.nop_luc, b.diem, b.chuyen_tab, b.thoi_gian, b.cam_xuc, b.goi_y, t.ho_ten, t.lop, t.stt
       FROM bai b LEFT JOIN tk t ON t.ten = b.tk WHERE b.nhom = ? ORDER BY t.lop, t.stt, b.lan`).bind(nhom).all();
     const them = (await DB.prepare('SELECT tk, so FROM luot_them WHERE nhom = ?').bind(nhom).all()).results;
     return json({ ok: true, ds: results, them });
@@ -166,7 +171,7 @@ export async function onRequest({ request: req, env, params }) {
       if (!env.ADMIN_TOKEN || req.headers.get('x-admin') !== env.ADMIN_TOKEN) return json({ ok: false, loi: 'Sai mã quản trị.' }, 403);
       return await quanTri(duong.slice(6), d, env);
     }
-    if (['nop', 'bat-dau', 'cam-xuc', 'doi-mk', 'dang-nhap', 'dang-xuat'].includes(duong) && req.method !== 'POST') return json({ ok: false, loi: 'Dùng POST.' }, 405);
+    if (['nop', 'bat-dau', 'cam-xuc', 'goi-y', 'doi-mk', 'dang-nhap', 'dang-xuat'].includes(duong) && req.method !== 'POST') return json({ ok: false, loi: 'Dùng POST.' }, 405);
     return await hocSinh(duong, d, env, req, url);
   } catch (e) { return json({ ok: false, loi: String(e && e.message || e) }, 500); }
 }

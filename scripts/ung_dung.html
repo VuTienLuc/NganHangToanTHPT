@@ -621,6 +621,7 @@ tr.gop-h td{background:#dbeafe;text-align:left;font-weight:700;padding:8px 12px;
     <label><input type="checkbox" id="nh-bg" checked> <span><b>📚 Bài giảng online HTML</b> — trình chiếu các câu kèm đáp án, lời giải; vào mục lục lớp trên trang (chỉ tài khoản giáo viên xem)</span></label>
     <label><input type="checkbox" id="nh-thi" checked> <span><b>🌐 Bài kiểm tra online theo lớp</b> — mỗi mã một link + 1 link chung, máy chủ chấm, học sinh đăng nhập</span></label>
     <div class="phu" id="nh-thi-phu">Giao cho lớp <input id="nh-lop-giao" type="text" placeholder="10A1, 10A2 (trống = mọi lớp)" style="width:200px"> Số lượt mỗi em <input id="nh-luot" type="number" min="0" max="20" value="2" style="width:50px" title="0 = không giới hạn">
+      <label style="display:inline-flex;gap:5px;align-items:center" title="Học sinh bấm 💡 để lấy lời nhắn cho AI hướng dẫn kiểu Pólya (không cho đáp số); số lần dùng ghi vào bảng điểm"><input type="checkbox" id="nh-goi-y"> 💡 Cho dùng Gợi ý AI</label>
       <span id="nh-thi-canh" style="color:#b91c1c"></span></div>
     <label><input type="checkbox" id="nh-pdf" checked> <span><b>📄 File PDF</b> — đề bài, lời giải từng mã (biên dịch LaTeX, vài phút)</span></label>
     <label><input type="checkbox" id="nh-xlsx" checked> <span><b>📊 Đáp án Excel</b> — đúng mẫu nạp vào app Chấm Phiếu AI</span></label>
@@ -646,6 +647,7 @@ tr.gop-h td{background:#dbeafe;text-align:left;font-weight:700;padding:8px 12px;
       <label style="flex:0 0 150px">Số lượt làm mỗi em <input id="dthi-luot" type="number" min="0" max="20" value="2" title="0 = không giới hạn"></label></div>
     <label>Cách mở phương án <select id="dthi-lat"><option value="select">Lật phương án nào → chọn phương án đó</option><option value="reveal">Lật để xem → bấm chọn đáp án</option><option value="off">Hiện sẵn tất cả phương án</option></select></label>
     <label>URL nhận điểm Google Sheets (không bắt buộc) <input id="dthi-sheet" placeholder="https://script.google.com/macros/s/…/exec"></label>
+    <label style="flex-direction:row;align-items:center;gap:8px;font-weight:400" title="Học sinh bấm nút 💡 trên trang thi: hiện lời nhắn cho AI (giáo viên Toán, hướng dẫn 4 bước Pólya, không cho đáp số) + đề câu đang làm để chụp gửi ChatGPT/Gemini. Số lần mở được ghi vào bảng điểm."><input type="checkbox" id="dthi-goi-y"> <b>💡 Cho dùng Gợi ý AI</b> (kiểu Pólya, không cho đáp số) — nên bật cho đề luyện tập / ôn tập</label>
     <label style="flex-direction:row;align-items:center;gap:8px;font-weight:400"><input type="checkbox" id="dthi-an" checked> <b>Ẩn đáp án &amp; lời giải</b> — trang làm bài không chứa đáp án, máy chủ chấm; thi xong bấm "Mở lời giải"</label>
     <div style="background:#f0fdf4;border-radius:8px;padding:8px 10px">
       <b style="color:#166534">Kèm bài giảng chữa đề</b> <span style="color:#555;font-size:12px">(cùng bộ câu, có đáp án + lời giải; chỉ tài khoản giáo viên xem, vào mục lục lớp)</span>
@@ -1958,7 +1960,7 @@ $("#dthi-ok").onclick=async()=>{
       let d=r.du_lieu;
       if(DTHI.dao&&tat) d=daoDe(d,so*7919+13,$("#xao_phuong_an").checked,$("#xao_y_dung_sai").checked);
       d.settings={examMinutes:phut,studentExam:w.examSettings({flipMode:$("#dthi-lat").value,scriptUrl:sheet,examId:slugi})};
-      const r2=await api("/api/thi/dang",{slug:slugi,ten:teni,html:w.createExam(d),an_dap_an:$("#dthi-an").checked,phut,dang_ngay:false,lop_giao:$("#dthi-lop").value,so_luot:+$("#dthi-luot").value});
+      const r2=await api("/api/thi/dang",{slug:slugi,ten:teni,html:w.createExam(d),an_dap_an:$("#dthi-an").checked,phut,dang_ngay:false,lop_giao:$("#dthi-lop").value,so_luot:+$("#dthi-luot").value,goi_y_ai:$("#dthi-goi-y").checked});
       if(!r2.ok) throw Error(r2.loi); ra.push(r2.slug);
       if($("#dthi-bg-html").checked){
         const g=await api("/api/thi/bg-dang",{slug:r2.slug+"-chua",ten:teni+" – chữa đề",lop:+$("#dthi-bg-lop").value,kieu:"html",html:w.createLegacy(d),ghi_de:true,nguon:"đề "+r2.slug,dang_ngay:false});
@@ -2009,9 +2011,9 @@ function veThi(r){
   $("#thi-node").textContent=r.co_node?"":"Máy chưa có Node.js — cài ở nodejs.org để đăng được.";
   if(!r.ds.length){$("#thi-ds").innerHTML='<p style="color:#666">Chưa có đề nào. Vào Xem trước câu được chọn → 🌐 Link thi trực tuyến.</p>';return}
   $("#thi-ds").innerHTML=`<table><tr><th>Đề</th><th>Trạng thái</th><th>Thao tác</th></tr>`+r.ds.map(x=>{const url=`${r.goc}/${x.slug}/`;
-    return `<tr${x.nhom?' style="opacity:.8"':''}><td>${x.loai==="nhom"?'<span class="tt da_cong_bo">Link chung · '+(x.con||[]).length+' mã</span> ':''}${x.nhom?'↳ ':''}<b>${esc(x.ten)}</b><br><a href="${url}" target="_blank" style="font-size:12px">${url}</a><br><span style="color:#1e3a8a;font-size:11.5px">Lớp: ${x.lop_giao||"mọi lớp"} · ${x.so_luot===0?"không giới hạn lượt":(x.so_luot??2)+" lượt/em"}</span><br><span style="color:#888;font-size:11.5px">${x.tao_luc}${x.loai==="nhom"?" · chia ngẫu nhiên: "+(x.con||[]).join(", "):` · ${x.so_cau} câu`+(x.phut?" · "+x.phut+" phút":"")}</span></td>
+    return `<tr${x.nhom?' style="opacity:.8"':''}><td>${x.loai==="nhom"?'<span class="tt da_cong_bo">Link chung · '+(x.con||[]).length+' mã</span> ':''}${x.nhom?'↳ ':''}<b>${esc(x.ten)}</b><br><a href="${url}" target="_blank" style="font-size:12px">${url}</a><br><span style="color:#1e3a8a;font-size:11.5px">Lớp: ${x.lop_giao||"mọi lớp"} · ${x.so_luot===0?"không giới hạn lượt":(x.so_luot??2)+" lượt/em"}${x.goi_y_ai?' · <b style="color:#b45309">💡 có Gợi ý AI</b>':""}</span><br><span style="color:#888;font-size:11.5px">${x.tao_luc}${x.loai==="nhom"?" · chia ngẫu nhiên: "+(x.con||[]).join(", "):` · ${x.so_cau} câu`+(x.phut?" · "+x.phut+" phút":"")}</span></td>
     <td><span class="tt ${x.trang_thai}">${TT_TEN[x.trang_thai]||x.trang_thai}</span></td>
-    <td>${x.nhom?"":`<button data-s="${x.slug}" data-v="diem" class="chinh">Điểm</button><button data-s="${x.slug}" data-v="sua" data-lop="${x.lop_giao||""}" data-luot="${x.so_luot??2}">Lớp/lượt</button>`}<button data-s="${x.slug}" data-v="qr">QR</button><button data-s="${x.slug}" data-v="chep">Chép link</button>
+    <td>${x.nhom?"":`<button data-s="${x.slug}" data-v="diem" class="chinh">Điểm</button><button data-s="${x.slug}" data-v="sua" data-lop="${x.lop_giao||""}" data-luot="${x.so_luot??2}">Lớp/lượt</button>`}<button data-s="${x.slug}" data-v="qr">QR</button><button data-s="${x.slug}" data-v="chep">Chép link</button>${x.nhom?"":`<button data-s="${x.slug}" data-v="goi-y" data-bat="${x.goi_y_ai?0:1}" title="Bật/tắt nút 💡 Gợi ý AI (kiểu Pólya) trên trang thi">${x.goi_y_ai?"Tắt 💡":"Bật 💡 Gợi ý"}</button>`}
     ${x.trang_thai!=="da_cong_bo"?`<button data-s="${x.slug}" data-v="da_cong_bo" title="Đăng lại bản có đáp án + lời giải ở đúng link">Mở lời giải</button>`:`<button data-s="${x.slug}" data-v="dang_mo" title="Ẩn lại đáp án, lời giải">Ẩn lời giải</button>`}
     ${x.trang_thai!=="da_dong"?`<button data-s="${x.slug}" data-v="da_dong">Đóng đề</button>`:`<button data-s="${x.slug}" data-v="dang_mo">Mở lại</button>`}
     <button data-s="${x.slug}" data-v="xoa" style="color:#b91c1c">Xoá</button></td></tr>`}).join("")+"</table>";
@@ -2023,6 +2025,8 @@ function veThi(r){
     if(v==="sua"){const lop=prompt("Giao cho lớp (cách nhau dấu phẩy; trống = mọi lớp):",b.dataset.lop);if(lop===null)return;
       const luot=prompt("Số lượt làm mỗi em (0 = không giới hạn):",b.dataset.luot);if(luot===null)return;
       const k=await api("/api/thi/de-sua",{slug:sl,lop_giao:lop,so_luot:+luot||0});alert(k.ok?"Đã cập nhật trên máy chủ.":"Đã lưu trên máy; máy chủ chưa nhận — bấm Đăng lại tất cả.");veThi(await api("/api/thi/ds",{}));return}
+    if(v==="goi-y"){const bat=b.dataset.bat==="1";if(bat&&!confirm("Bật Gợi ý AI cho đề này? Học sinh sẽ được AI hướng dẫn từng bước (không cho đáp số) — điểm phản ánh cả phần được gợi ý. Số lần dùng ghi vào bảng điểm."))return;
+      const k=await api("/api/thi/goi-y",{slug:sl,bat});if(!k.ok){alert(k.loi);return} theoDoiThi(sl,"");return}
     if(v==="xoa"&&!confirm("Gỡ đề này khỏi mạng? (bản gốc vẫn giữ trong thi-truc-tuyen/du_lieu/_da_xoa)"))return;
     const k=await api("/api/thi/trang-thai",{slug:sl,tt:v}); if(!k.ok){alert(k.loi);return}
     theoDoiThi(v==="xoa"?null:sl,"");
@@ -2065,14 +2069,14 @@ async function moDiem(nhom,ten){const k=await api("/api/thi/diem",{nhom});
   if(!k.ok){alert(k.loi||"Chưa lấy được điểm");return}
   const them=Object.fromEntries((k.them||[]).map(x=>[x.tk,x.so])), f=v=>v==null?"":Number(v).toFixed(2).replace(".",",");
   const CX={tu_tin:"🤩 Tự tin",binh_thuong:"🙂 Bình thường",lo_lang:"😰 Lo lắng",met_moi:"😴 Mệt mỏi"};
-  const dong=k.ds.map(x=>[x.lop||"",x.stt||"",x.ho_ten||x.tk,x.tk,x.de,x.lan,x.nop_luc?f(x.diem):"đang làm",x.thoi_gian?Math.round(x.thoi_gian/60)+" phút":"",x.chuyen_tab||0,x.nop_luc?new Date(x.nop_luc).toLocaleString("vi-VN"):"",CX[x.cam_xuc]||""]);
+  const dong=k.ds.map(x=>[x.lop||"",x.stt||"",x.ho_ten||x.tk,x.tk,x.de,x.lan,x.nop_luc?f(x.diem):"đang làm",x.thoi_gian?Math.round(x.thoi_gian/60)+" phút":"",x.chuyen_tab||0,x.nop_luc?new Date(x.nop_luc).toLocaleString("vi-VN"):"",CX[x.cam_xuc]||"",x.goi_y||0]);
   const demCx={};k.ds.forEach(x=>{if(x.cam_xuc)demCx[x.cam_xuc]=(demCx[x.cam_xuc]||0)+1});
   const tb=k.ds.filter(x=>x.nop_luc);const cao={};tb.forEach(x=>{cao[x.tk]=Math.max(cao[x.tk]??-1,x.diem)});const vals=Object.values(cao);
   const html=`<div style="margin-bottom:6px">${tb.length} bài đã nộp · ${vals.length} học sinh · điểm cao nhất mỗi em: TB ${vals.length?f(vals.reduce((a,b)=>a+b,0)/vals.length):"—"}${Object.keys(demCx).length?" · Cảm xúc: "+Object.entries(demCx).map(([c,n])=>(CX[c]||c)+" "+n).join(", "):""}</div>
-   <div style="max-height:52vh;overflow:auto"><table style="width:100%;border-collapse:collapse;font-size:12.5px"><tr><th>Lớp</th><th>STT</th><th align=left>Họ tên</th><th>Mã đề</th><th>Lần</th><th>Điểm</th><th>Thời gian</th><th>Rời tab</th><th>Cảm xúc</th><th>Nộp lúc</th><th></th></tr>`+
-   k.ds.map((x,i)=>`<tr style="border-bottom:1px solid #eef0f4"><td align=center>${esc(dong[i][0])}</td><td align=center>${dong[i][1]}</td><td>${esc(dong[i][2])}</td><td>${esc(x.de)}</td><td align=center>${x.lan}</td><td align=center><b>${dong[i][6]}</b></td><td align=center>${dong[i][7]}</td><td align=center>${dong[i][8]}</td><td>${dong[i][10]}</td><td>${dong[i][9]}</td>
+   <div style="max-height:52vh;overflow:auto"><table style="width:100%;border-collapse:collapse;font-size:12.5px"><tr><th>Lớp</th><th>STT</th><th align=left>Họ tên</th><th>Mã đề</th><th>Lần</th><th>Điểm</th><th>Thời gian</th><th>Rời tab</th><th>Cảm xúc</th><th title="Số câu em đã mở Gợi ý AI">💡 Gợi ý</th><th>Nộp lúc</th><th></th></tr>`+
+   k.ds.map((x,i)=>`<tr style="border-bottom:1px solid #eef0f4"><td align=center>${esc(dong[i][0])}</td><td align=center>${dong[i][1]}</td><td>${esc(dong[i][2])}</td><td>${esc(x.de)}</td><td align=center>${x.lan}</td><td align=center><b>${dong[i][6]}</b></td><td align=center>${dong[i][7]}</td><td align=center>${dong[i][8]}</td><td>${dong[i][10]}</td><td align=center>${dong[i][11]||""}</td><td>${dong[i][9]}</td>
      <td style="white-space:nowrap"><button data-tk="${esc(x.tk)}" data-v="them" style="font-size:11.5px">+1 lượt${them[x.tk]?" (đã +"+them[x.tk]+")":""}</button><button data-id="${x.id}" data-v="xoa" style="font-size:11.5px;color:#b91c1c">Xoá lần này</button></td></tr>`).join("")+"</table></div>";
-  hopThoai(`Điểm: ${ten}`,"",[["Tải bảng điểm (Excel/CSV)",()=>{const csv="\ufeff"+[["Lớp","STT","Họ tên","Tài khoản","Mã đề","Lần","Điểm","Thời gian","Rời tab","Nộp lúc","Cảm xúc"],...dong].map(r=>r.map(v=>`"${String(v).replace(/"/g,'""')}"`).join(",")).join("\n");
+  hopThoai(`Điểm: ${ten}`,"",[["Tải bảng điểm (Excel/CSV)",()=>{const csv="\ufeff"+[["Lớp","STT","Họ tên","Tài khoản","Mã đề","Lần","Điểm","Thời gian","Rời tab","Nộp lúc","Cảm xúc","Số câu mở Gợi ý AI"],...dong].map(r=>r.map(v=>`"${String(v).replace(/"/g,'""')}"`).join(",")).join("\n");
      const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([csv],{type:"text/csv"}));a.download=`Diem_${nhom}.csv`;a.click()},true]]);
   $("#ht-noi").innerHTML=html;
   $("#ht-noi").querySelectorAll("button[data-v]").forEach(b=>b.onclick=async()=>{
@@ -2244,7 +2248,7 @@ $("#nh-xem").onclick=async()=>{
     const r=await api("/api/xuat",{ma_tran:mt,thu:true});
     if(!r.ok||!r.xem){hopThoai("Chưa chọn được câu",r.nhat_ky);return}
     const tc={bg:$("#nh-bg").checked,thi:$("#nh-thi").checked,pdf:$("#nh-pdf").checked,xlsx:$("#nh-xlsx").checked,
-      lop_giao:$("#nh-lop-giao").value.trim(),so_luot:+$("#nh-luot").value,phut:+$("#nh-phut").value||45};
+      lop_giao:$("#nh-lop-giao").value.trim(),so_luot:+$("#nh-luot").value,phut:+$("#nh-phut").value||45,goi_y_ai:$("#nh-goi-y").checked};
     const dsB=nhTenBai();
     tc.chuong=dsB.length?dsB[0].ten_chuong:""; tc.chuong_so=dsB.length?dsB[0].chuong:0; tc.bai=dsB.map(d=>`Bài ${d.bai}. ${d.ten_bai}`).join("; ");
     XT={...r.xem,nhat_ky:r.nhat_ky,mt,tab:0,nguon:{nhanh:true,lop:NH.lop,tc,dong:()=>{$("#hop-nhanh").style.display="flex"}}};
@@ -2277,7 +2281,7 @@ $("#xt-nhanh").onclick=async()=>{
             const r=await api("/api/thi/du-lieu",{ma:boMa(b),ten:teni}); if(!r.ok) throw Error(r.loi);
             let d=r.du_lieu; if(dao) d=daoDe(d,so*7919+13,true,true);
             d.settings={examMinutes:tc.phut,studentExam:w.examSettings({flipMode:"select",scriptUrl:ds.script_url||"",examId:slugi})};
-            const r2=await api("/api/thi/dang",{slug:slugi,ten:teni,html:w.createExam(d),an_dap_an:true,phut:tc.phut,dang_ngay:false,lop_giao:tc.lop_giao,so_luot:tc.so_luot});
+            const r2=await api("/api/thi/dang",{slug:slugi,ten:teni,html:w.createExam(d),an_dap_an:true,phut:tc.phut,dang_ngay:false,lop_giao:tc.lop_giao,so_luot:tc.so_luot,goi_y_ai:tc.goi_y_ai});
             if(!r2.ok) throw Error(r2.loi); ra.push(r2); ghi("  ✓ "+r2.url)}
           kq.thi=ra; co_dang=true;
           if(ra.length>1){const g=await api("/api/thi/nhom",{slug:goc,ten,con:ra.map(x=>x.slug),lop_giao:tc.lop_giao,so_luot:tc.so_luot,dang_ngay:false});

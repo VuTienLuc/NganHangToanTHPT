@@ -94,6 +94,62 @@ const __DE=decodeURIComponent(location.pathname.split('/')[1]||''),__CHAM={};
 async function __goi(duong,du_lieu){const r=await fetch('/api/'+duong,du_lieu?{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify(du_lieu),credentials:'same-origin'}:{credentials:'same-origin'});if(r.status===401){location.href='/dang-nhap/?ve='+encodeURIComponent(location.pathname);throw Error('Cần đăng nhập lại.')}return r.json()}
 function examGrade(d,answers){const c=__CHAM[JSON.stringify(answers)];if(c)return c;if(d.questions.every(q=>q.answer!=null))return __examGrade0(d,answers);
  return {score:0,parts:{mcq:0,tf:0,short:0},right:{mcq:0,tf:0,short:0},blank:0,rows:d.questions.map((q,i)=>({index:i,type:q.type,correct:0,answered:false,points:0,max:q.type==='mcq'?.25:q.type==='tf'?1:.5}))};}
+// ---- 💡 GỢI Ý AI (kiểu Pólya): học sinh chụp màn hình lời nhắn + đề gửi ChatGPT/Gemini; máy chủ đếm số lần mở
+const __GOI_Y=__GOI_Y_AI__;
+const __LOI_NHAN=`Bạn là một giáo viên Toán THPT xuất sắc. Hãy hướng dẫn em tự giải bài toán bên dưới theo 4 bước của George Pólya: (1) Hiểu đề → (2) Lập kế hoạch → (3) Thực hiện → (4) Kiểm tra lại.
+Yêu cầu:
+• Thật ngắn gọn: mỗi lần chỉ 1–2 câu hỏi gợi mở cho bước tiếp theo.
+• KHÔNG đưa đáp số, KHÔNG giải hết, KHÔNG chọn đáp án A/B/C/D hay Đúng/Sai thay em.
+• Đợi em trả lời rồi mới gợi ý tiếp; em làm sai thì chỉ ra chỗ sai và gợi ý cách sửa.
+• Chỉ khi em đã tự làm ra kết quả, mới xác nhận đúng hay sai.
+Đề bài:`;
+function __gyCss(){if(document.getElementById('__gy-st'))return;const st=document.createElement('style');st.id='__gy-st';st.textContent=`
+ .__gy-nen{position:fixed;inset:0;z-index:9998;background:rgba(15,23,42,.55);display:grid;place-items:start center;overflow:auto;padding:14px}
+ .__gy{background:#fff;color:#0f172a;border-radius:16px;max-width:760px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,.3);font:16px/1.55 system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+ .__gy-chup{padding:16px 18px}.__gy-ln{background:#eff6ff;border:2px solid #93c5fd;border-radius:12px;padding:12px 14px;white-space:pre-wrap;font-size:15px}
+ .__gy-ln b{color:#1e3a8a}.__gy-de{margin-top:12px;border:2px dashed #cbd5e1;border-radius:12px;padding:12px 14px}
+ .__gy-de button,.__gy-de input{pointer-events:none}.__gy-than{font-size:17px;white-space:pre-line}.__gy-pa{display:grid;grid-template-columns:1fr 1fr;gap:6px 18px;margin-top:8px}.__gy-y div,.__gy-pa div{margin:3px 0}.__gy-loai{margin-top:6px;color:#64748b;font-size:14px;font-style:italic}.__gy img.fig,.__gy svg{max-width:100%;height:auto}@media(max-width:560px){.__gy-pa{grid-template-columns:1fr}}.__gy-nhan{font-weight:800;color:#b45309;font-size:13px;margin-bottom:4px}
+ .__gy-hd{padding:10px 18px;background:#fef3c7;color:#78350f;font-size:14px;border-top:1px solid #fde68a}
+ .__gy-nut{display:flex;gap:8px;flex-wrap:wrap;padding:12px 18px;border-top:1px solid #e2e8f0}
+ .__gy-nut button,.__gy-nut a{font:inherit;font-size:14px;font-weight:700;padding:9px 14px;border-radius:10px;border:1px solid #cbd5e1;background:#fff;color:#0f172a;cursor:pointer;text-decoration:none}
+ .__gy-nut .chinh{background:#1e40af;color:#fff;border-color:#1e40af}
+ #__gy-btn{position:fixed;right:14px;bottom:76px;z-index:9000;font:700 15px system-ui;padding:11px 16px;border-radius:999px;border:0;background:#f59e0b;color:#111;box-shadow:0 6px 20px rgba(0,0,0,.25);cursor:pointer}`;document.head.appendChild(st)}
+function __goiYMo(){
+ const q=document.getElementById('question');if(!q)return;
+ let d=null,i=0;try{d=JSON.parse(document.getElementById('exam-data').textContent)}catch(_){}
+ const cur=document.querySelector('#questionNav .current');if(cur)i=+cur.dataset.jump||0;
+ const qq=d&&d.questions[i];
+ __gyCss();
+ const o=document.createElement('div');o.className='__gy-nen';
+ const so=cur?cur.textContent.trim():String(i+1);
+ o.innerHTML='<div class="__gy"><div class="__gy-chup"><div class="__gy-ln"><b>👨‍🏫 Lời nhắn cho AI</b>\n'+__LOI_NHAN.replace(/[<>&]/g,c=>({'<':'&lt;','>':'&gt;','&':'&amp;'}[c])).replace('Bạn là','<b>Bạn là</b>')+'</div>'+
+  '<div class="__gy-de"><div class="__gy-nhan">ĐỀ BÀI — Câu '+so+'</div><div class="__gy-q"></div></div></div>'+
+  '<div class="__gy-hd">📸 <b>Chụp màn hình khung trên</b> (cả lời nhắn và đề) rồi gửi cho ChatGPT / Gemini — hoặc bấm <b>Chép chữ</b> để dán. AI chỉ gợi ý từng bước, em tự tính ra đáp số nhé!</div>'+
+  '<div class="__gy-nut"><button class="chinh" data-v="chep">📋 Chép chữ (lời nhắn + đề)</button><a href="https://chatgpt.com/" target="_blank" rel="noopener">Mở ChatGPT</a><a href="https://gemini.google.com/" target="_blank" rel="noopener">Mở Gemini</a><button data-v="dong" style="margin-left:auto">Đóng — quay lại làm bài</button></div></div>';
+ const vung=o.querySelector('.__gy-q');
+ if(qq&&typeof latex==='function'){   // dựng lại đề từ dữ liệu: hiện đủ phương án (kể cả khi đề đang ở chế độ lật)
+  let h='<div class="__gy-than">'+latex(qq.stem,qq,'stem',false)+'</div>';
+  if(qq.type==='mcq')h+='<div class="__gy-pa">'+qq.options.map((x,j)=>'<div><b>'+'ABCD'[j]+'.</b> '+latex(x,qq,'option'+j,false)+'</div>').join('')+'</div>';
+  if(qq.type==='tf')h+='<div class="__gy-y">'+qq.options.map((x,j)=>'<div><b>'+'abcd'[j]+')</b> '+latex(x,qq,'option'+j,false)+'</div>').join('')+'</div><div class="__gy-loai">Xét mỗi ý a), b), c), d) Đúng hay Sai.</div>';
+  if(qq.type==='short')h+='<div class="__gy-loai">Câu trả lời ngắn: tìm một số.</div>';
+  vung.innerHTML=h;
+ }else{const k=q.cloneNode(true);k.removeAttribute('id');k.querySelectorAll('[id]').forEach(e=>e.removeAttribute('id'));vung.appendChild(k)}
+ document.body.appendChild(o);
+ if(window.MathJax&&MathJax.typesetPromise)MathJax.typesetPromise([vung]).catch(()=>{});
+ o.querySelector('[data-v=dong]').onclick=()=>o.remove();o.onclick=e=>{if(e.target===o)o.remove()};
+ o.querySelector('[data-v=chep]').onclick=async e=>{
+  let t=__LOI_NHAN+'\n';
+  if(qq){t+=qq.stem+'\n';if(qq.type==='mcq')qq.options.forEach((x,j)=>t+='ABCD'[j]+'. '+x+'\n');
+   if(qq.type==='tf'){t+='(Xét Đúng hay Sai từng ý)\n';qq.options.forEach((x,j)=>t+='abcd'[j]+') '+x+'\n')}
+   if(qq.type==='short')t+='(Câu trả lời ngắn: tìm một số)\n'}
+  else t+=q.innerText;
+  try{await navigator.clipboard.writeText(t);e.target.textContent='✓ Đã chép — dán vào ChatGPT/Gemini'}catch(_){e.target.textContent='Không chép được — hãy chụp màn hình'}};
+ try{const kk='__gy:'+__DE+':'+i;if(!sessionStorage.getItem(kk)){sessionStorage.setItem(kk,'1');__goi('goi-y',{de:__DE,cau:i+1}).catch(()=>{})}}catch(_){}
+}
+if(__GOI_Y){__gyCss();const b=Object.assign(document.createElement('button'),{id:'__gy-btn',type:'button',textContent:'💡 Gợi ý AI'});
+ b.title='Hướng dẫn kiểu Pólya — không cho đáp số';b.onclick=__goiYMo;b.style.display='none';
+ document.addEventListener('DOMContentLoaded',()=>document.body.appendChild(b));if(document.body)document.body.appendChild(b);
+ setInterval(()=>{const w=document.getElementById('work');b.style.display=w&&!w.hidden?'':'none'},800);}
 const __DV=__DONG_VIEN__;
 function __camXuc(k){if(k&&k.tiep)return Promise.resolve();return new Promise(xong=>{
  const st=document.createElement('style');st.textContent=`.__cx{position:fixed;inset:0;z-index:9999;background:rgba(15,23,42,.55);display:grid;place-items:center;padding:16px;animation:__mo .25s}
@@ -145,7 +201,7 @@ def _thay_ham(html, ten, moi):
     return html[:i] + moi + html[k + 1:]
 
 
-def ban_truc_tuyen(html, slug, an_dap_an=True):
+def ban_truc_tuyen(html, slug, an_dap_an=True, goi_y=False):
     """HTML bài kiểm tra gốc → bản đăng mạng có đăng nhập: tự điền học sinh theo tài khoản, xin lượt ở máy chủ,
     nộp bài để MÁY CHỦ chấm. an_dap_an: bỏ hẳn đáp án + lời giải khỏi trang (trang không còn đáp án). Trả (html, số câu)."""
     m = KHOI_DL.search(html)
@@ -167,7 +223,8 @@ def ban_truc_tuyen(html, slug, an_dap_an=True):
                 del q["figures"][k]
     i = html.rfind("examRuntime();")
     dv = json.dumps(json.load(open(os.path.join(MAY_CHU, "dong_vien.json"), encoding="utf-8")), ensure_ascii=False).replace("<", "\\u003c")
-    html = html[:i] + JS_DANG_NHAP.replace("__DONG_VIEN__", dv) + "\n__khoiDong().then(()=>examRuntime());" + html[i + len("examRuntime();"):]
+    html = html[:i] + JS_DANG_NHAP.replace("__DONG_VIEN__", dv).replace("__GOI_Y_AI__", "true" if goi_y else "false") \
+        + "\n__khoiDong().then(()=>examRuntime());" + html[i + len("examRuntime();"):]
     for q in d["questions"]:
         for k in ("ma", "ma_dang", "ten_dang"):
             q.pop(k, None)
@@ -413,7 +470,7 @@ def _dat_trang(slug, noi_dung):
 
 
 # ---------------------------------------------------------------- tạo / đổi trạng thái
-def them_de(slug, ten, html_goc, an_dap_an=True, phut=None, ghi_de=False, lop_giao="", so_luot=2):
+def them_de(slug, ten, html_goc, an_dap_an=True, phut=None, ghi_de=False, lop_giao="", so_luot=2, goi_y_ai=False):
     slug = lam_slug(slug or ten)
     ds = danh_sach()
     if not ghi_de:
@@ -427,12 +484,12 @@ def them_de(slug, ten, html_goc, an_dap_an=True, phut=None, ghi_de=False, lop_gi
         d = json.loads(m.group(2)); d.setdefault("settings", {}).setdefault("studentExam", {})["examId"] = slug
         html_goc = html_goc[:m.start(2)] + json.dumps(d, ensure_ascii=False).replace("<", "\\u003c") + html_goc[m.end(2):]
     open(os.path.join(DL, slug + ".goc.html"), "w", encoding="utf-8").write(html_goc)
-    html, so = ban_truc_tuyen(html_goc, slug, an_dap_an)
+    html, so = ban_truc_tuyen(html_goc, slug, an_dap_an, goi_y_ai)
     ghi_site(); _dat_trang(slug, html)
     ds = [x for x in ds if x["slug"] != slug or x.get("loai") == "bai_giang"]
     ds.insert(0, {"slug": slug, "ten": ten, "tao_luc": datetime.datetime.now().strftime("%d/%m/%Y %H:%M"),
                   "trang_thai": "dang_mo" if an_dap_an else "da_cong_bo", "so_cau": so, "phut": phut,
-                  "lop_giao": chuan_lop(lop_giao), "so_luot": int(so_luot)})
+                  "lop_giao": chuan_lop(lop_giao), "so_luot": int(so_luot), "goi_y_ai": bool(goi_y_ai)})
     luu_ds(ds)
     return slug
 
@@ -460,7 +517,8 @@ def them_nhom(slug, ten, cac_con, lop_giao="", so_luot=2):
             x["nhom"] = slug
     ds.insert(0, {"slug": slug, "ten": ten, "tao_luc": datetime.datetime.now().strftime("%d/%m/%Y %H:%M"),
                   "trang_thai": "dang_mo", "loai": "nhom", "con": cac_con, "so_cau": len(cac_con),
-                  "lop_giao": chuan_lop(lop_giao), "so_luot": int(so_luot)})
+                  "lop_giao": chuan_lop(lop_giao), "so_luot": int(so_luot),
+                  "goi_y_ai": any(x.get("goi_y_ai") for x in ds if x["slug"] in cac_con)})
     luu_ds(ds)
     return slug
 
@@ -497,7 +555,7 @@ def _doi_1(slug, tt):
         _dat_trang(slug, trang_dong(x["ten"]))
     else:
         goc = open(p_goc, encoding="utf-8").read()
-        _dat_trang(slug, ban_truc_tuyen(goc, slug, tt == "dang_mo")[0])
+        _dat_trang(slug, ban_truc_tuyen(goc, slug, tt == "dang_mo", x.get("goi_y_ai"))[0])
     x["trang_thai"] = tt; luu_ds(ds)
 
 
@@ -696,7 +754,7 @@ def co_node():
 MAY_CHU = os.path.join(os.path.dirname(os.path.abspath(__file__)), "may_chu")   # mã máy chủ (Functions + schema)
 P_BM = os.path.join(THU, "bi_mat.json")       # mã quản trị + khoá phiên (KHÔNG đồng bộ GitHub)
 TEN_DB = "thi-toan-db"
-PHIEN_BAN_SCHEMA = 2
+PHIEN_BAN_SCHEMA = 3
 
 
 def _luu_ch(c):
@@ -831,11 +889,28 @@ def lam_lai_trang_de(in_ra=print):
         p = os.path.join(DL, x["slug"] + ".goc.html")
         if os.path.exists(p):
             try:
-                _dat_trang(x["slug"], ban_truc_tuyen(open(p, encoding="utf-8").read(), x["slug"], x.get("trang_thai") != "da_cong_bo")[0]); n += 1
+                _dat_trang(x["slug"], ban_truc_tuyen(open(p, encoding="utf-8").read(), x["slug"], x.get("trang_thai") != "da_cong_bo",
+                                                     x.get("goi_y_ai"))[0]); n += 1
             except Exception as e:
                 in_ra(f"   ⚠ chưa dựng lại được đề {x['slug']}: {e}")
     if n:
         in_ra(f"   cập nhật giao diện {n} trang đề")
+
+
+def dat_goi_y(slug, bat):
+    """Bật / tắt Gợi ý AI cho đề (link chung: áp cho mọi mã con), dựng lại trang."""
+    ds = danh_sach()
+    x = next((y for y in ds if y["slug"] == slug and y.get("loai") != "bai_giang"), None)
+    if not x:
+        raise RuntimeError("Không có đề " + slug)
+    cac = [y for y in ds if y["slug"] in (x.get("con") or [])] if x.get("loai") == "nhom" else [x]
+    x["goi_y_ai"] = bool(bat)
+    for y in cac:
+        y["goi_y_ai"] = bool(bat)
+        p = os.path.join(DL, y["slug"] + ".goc.html")
+        if y.get("trang_thai") != "da_dong" and os.path.exists(p):
+            _dat_trang(y["slug"], ban_truc_tuyen(open(p, encoding="utf-8").read(), y["slug"], y.get("trang_thai") != "da_cong_bo", bat)[0])
+    luu_ds(ds)
 
 
 def dong_bo_de(in_ra=print):

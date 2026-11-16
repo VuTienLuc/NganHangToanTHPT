@@ -431,7 +431,8 @@ class XuLy(BaseHTTPRequestHandler):
                     try:
                         slug = T.them_de(d.get("slug"), (d.get("ten") or "Đề thi").strip(), d["html"],
                                          bool(d.get("an_dap_an", True)), d.get("phut"), lop_giao=d.get("lop_giao") or "",
-                                         so_luot=int(d.get("so_luot") if d.get("so_luot") is not None else 2))
+                                         so_luot=int(d.get("so_luot") if d.get("so_luot") is not None else 2),
+                                         goi_y_ai=bool(d.get("goi_y_ai")))
                     except Exception as e:
                         return self.gui(200, {"ok": False, "loi": str(e)})
                     if d.get("dang_ngay", True):
@@ -447,6 +448,11 @@ class XuLy(BaseHTTPRequestHandler):
                     sl, tt = d.get("slug"), d.get("tt")
                     threading.Thread(target=dang_thi_nen, args=(lambda log: (T.doi_trang_thai(sl, tt),
                                      log(f"Đã đổi đề {sl} → {tt}")),), daemon=True).start()
+                    return self.gui(200, {"ok": True})
+                if viec == "goi-y":            # bật / tắt 💡 Gợi ý AI cho đề đã đăng
+                    sl, bat = d.get("slug"), bool(d.get("bat"))
+                    threading.Thread(target=dang_thi_nen, args=(lambda log: (T.dat_goi_y(sl, bat),
+                                     log(f"Gợi ý AI đề {sl}: {'bật' if bat else 'tắt'}")),), daemon=True).start()
                     return self.gui(200, {"ok": True})
                 if viec == "dang-lai":
                     threading.Thread(target=dang_thi_nen, daemon=True).start()

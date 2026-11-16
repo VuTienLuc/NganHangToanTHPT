@@ -578,3 +578,11 @@ de-da-ra/
   Khác/                                    ← không xác định được lớp
 ```
 Nút **🗂 Thư mục đề**: xem cây thư mục, **Sắp xếp N thư mục cũ** vào cấu trúc mới (chỉ di chuyển, lịch sử dùng câu đổi tên theo), **↶ Hoàn tác**, **Mở thư mục**.
+
+## 💡 Gợi ý AI khi học sinh làm bài (kiểu Pólya)
+
+Bật khi đăng đề (ô **💡 Cho dùng Gợi ý AI** trong 🌐 Link thi trực tuyến / ⚡ Tạo nhanh) hoặc nút **Bật 💡 Gợi ý** ở danh sách đề.
+- Trang thi có nút **💡 Gợi ý AI** (góc phải dưới). Bấm → khung gồm *lời nhắn cho AI* (giáo viên Toán xuất sắc, hướng dẫn 4 bước Pólya, ngắn gọn, KHÔNG cho đáp số, chờ học sinh trả lời từng bước) + *đề câu đang làm* (đủ phương án, kể cả đề đang ở chế độ lật).
+- Học sinh chụp màn hình khung đó gửi ChatGPT/Gemini, hoặc bấm **Chép chữ** để dán; có nút mở ChatGPT, Gemini.
+- Mỗi câu mở gợi ý được đếm: bảng điểm có cột **💡 Gợi ý** (số câu đã mở), có trong file CSV.
+- Nên dùng cho đề luyện tập / ôn tập; đề kiểm tra lấy điểm nên tắt.
