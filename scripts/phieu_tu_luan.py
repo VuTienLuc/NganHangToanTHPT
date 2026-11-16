@@ -108,8 +108,9 @@ def chon(ds, cac_dang, cfg, rng, khoa_noi_dung, ghi_thieu=None):
     return kq, thieu
 
 
-def khoi(kq, cac_dang, ten_dang, loi_giai, so_dong, thoat):
-    """Nội dung LaTeX các khối dạng. loi_giai=True: cột phải in lời giải thay cho dòng kẻ."""
+def khoi(kq, cac_dang, ten_dang, loi_giai, so_dong, thoat, bo_cuc="song_song"):
+    """Nội dung LaTeX các khối dạng. loi_giai=True: in lời giải thay cho dòng kẻ.
+    bo_cuc: "song_song" (trái ví dụ mẫu – phải tự luyện) | "tren_duoi" (ví dụ mẫu + lời giải ở trên, bài tự luyện bên dưới, cả bề ngang)."""
     ra, so_bai, so_vd = [], 0, 0
     for j, d in enumerate(cac_dang, 1):
         if d not in kq:
@@ -138,7 +139,7 @@ def khoi(kq, cac_dang, ten_dang, loi_giai, so_dong, thoat):
         if loi_giai:
             ra.append(r"\dangPhieu{" + str(j) + "}{" + thoat(ten_dang.get(d, d)) + "}\n" + "\n\\par\\smallskip\n".join(phai))
             continue
-        ra.append(r"\khoiDangTL{" + str(j) + "}{" + thoat(ten_dang.get(d, d)) + "}{" + trai + "}{" + "\n\\par\\medskip\n".join(phai) + "}")
+        ra.append((r"\khoiDangDoc{" if bo_cuc == "tren_duoi" else r"\khoiDangTL{") + str(j) + "}{" + thoat(ten_dang.get(d, d)) + "}{" + trai + "}{" + "\n\\par\\medskip\n".join(phai) + "}")
     return "\n".join(ra)
 
 
@@ -159,6 +160,13 @@ MACRO = r"""
     \dauCot{mauPhieu!80}{TỰ LUYỆN}#4\par\smallskip
   \end{paracol}
   \vspace{-\parskip}\noindent{\color{mauPhieu!60}\rule{\linewidth}{0.6pt}}\par}
+% Bố cục trên – dưới: ví dụ mẫu (nền nhạt, viền trái) cả bề ngang, rồi các bài tự luyện bên dưới
+\newcommand{\khoiDangDoc}[4]{\par\smallskip\needspace{6\baselineskip}%
+  \noindent\colorbox{mauDang}{\makebox[\dimexpr\linewidth-2\fboxsep][l]{\color{white}{\bfseries DẠNG #1.}\ #2}}\par\nopagebreak\vspace{3pt}
+  {\setlength{\parindent}{0pt}\dauDoc{mauDang!80}{VÍ DỤ MẪU}#3\par\medskip
+   \dauDoc{mauPhieu!80}{TỰ LUYỆN}#4\par\smallskip}
+  \vspace{-\parskip}\noindent{\color{mauPhieu!60}\rule{\linewidth}{0.6pt}}\par}
+\newcommand{\dauDoc}[2]{\noindent{\color{#1}\rule[-0.5ex]{3pt}{2.4ex}}\,{\color{#1}\bfseries\small #2}\par\nopagebreak\smallskip}
 \usepackage{multicol}\setlength{\columnsep}{0.55cm}\setlength{\columnseprule}{0.3pt}
 \IfFileExists{needspace.sty}{\usepackage{needspace}}{\providecommand{\needspace}[1]{}}
 \newcommand{\nhoHinh}{\tikzset{every picture/.append style={scale=0.75,transform shape}}}

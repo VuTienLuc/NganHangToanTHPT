@@ -210,6 +210,9 @@ như phần mềm cũ thì ghi `"khung": "DeThi"` trong file JSON.
 - Dữ liệu ở `thi-truc-tuyen/` (đồng bộ GitHub để máy nào cũng đăng được mà không mất đề cũ): `site/` = đúng những gì trên mạng,
   `du_lieu/*.goc.html` = bản gốc có đáp án. Đã cài wrangler riêng: đặt biến `NH_WRANGLER=wrangler`.
 
+### Phiếu tự luận: chọn bố cục
+- Ô **Bố cục** (kiểu Chỉ tự luận): *Song song* (trái ví dụ mẫu – phải tự luyện) hoặc *Trên – dưới* (ví dụ mẫu + lời giải ở trên, các bài tự luyện bên dưới, dùng cả bề ngang giấy, dòng làm bài dài hơn).
+
 ### Thư viện đề & bài giảng (hộp Thi & học trực tuyến)
 - Mọi đề thi, bài giảng, phiếu học tập nằm chung một danh sách, xếp **Khối → Chương → Bài** (đề tự nhận chương/bài từ mã dạng của câu; đề nhiều chương xếp vào "Đề kiểm tra – Ôn thi · <kỳ>").
 - Ô tìm trên cùng gõ không dấu được (vd `phuong trinh`, `10a1`, `bai 6`). Lọc nhanh theo Khối, Loại (Đề thi / Bài giảng / Phiếu), Trạng thái; bộ lọc được nhớ cho lần sau.

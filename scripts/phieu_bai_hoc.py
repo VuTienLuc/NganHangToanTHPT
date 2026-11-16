@@ -532,7 +532,7 @@ def _ghi_tu_luan(L):
     het = "\n\\par\\bigskip\\begin{center}{\\small\\itshape --- Hết ---}\\end{center}\\label{trangCuoiPhieu}\n"
     muc_kt = "" if kt_in == "khong" else (r"\phanPhieu{I. KIẾN THỨC TRỌNG TÂM}" + "\n" + kien + "\n")
     tieu_muc = r"\phanPhieu{" + ("I" if kt_in == "khong" else "II") + r". CÁC DẠNG TOÁN – VÍ DỤ MẪU VÀ TỰ LUYỆN}" + "\n"
-    hs = dau_phieu(nhan + " – TỰ LUẬN") + "\n" + muc_kt + tieu_muc + phieu_tu_luan.khoi(kq_tl, cac_dang, ten_dang, False, so_dong, thoat)
+    hs = dau_phieu(nhan + " – TỰ LUẬN") + "\n" + muc_kt + tieu_muc + phieu_tu_luan.khoi(kq_tl, cac_dang, ten_dang, False, so_dong, thoat, cfg.get("bo_cuc_tl") or "song_song")
     lg = (dau_phieu("LỜI GIẢI " + nhan + " – TỰ LUẬN", ho_ten=False) + "\n" +
           r"\phanPhieu{LỜI GIẢI CÁC BÀI TỰ LUYỆN}" + "\n{\\small\\itshape (Ví dụ mẫu đã có lời giải trên phiếu học sinh.)}\n" +
           "\\begin{multicols}{2}\\nhoHinh\n" + phieu_tu_luan.khoi(kq_tl, cac_dang, ten_dang, True, 0, thoat) + "\n\\end{multicols}")

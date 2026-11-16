@@ -574,10 +574,11 @@ tr.gop-h td{background:#dbeafe;text-align:left;font-weight:700;padding:8px 12px;
         <span class="nho" id="ph-loai"></span></div>
       <div style="display:flex;gap:14px;flex-wrap:wrap;align-items:center"><b>Kiểu phiếu</b>
         <label class="hop"><input type="radio" name="ph-kieu" value="trac_nghiem" checked> Trắc nghiệm 3 phần (luyện tập + về nhà)</label>
-        <label class="hop"><input type="radio" name="ph-kieu" value="tu_luan"> Chỉ tự luận: trái ví dụ mẫu – phải tự luyện</label></div>
+        <label class="hop"><input type="radio" name="ph-kieu" value="tu_luan"> Chỉ tự luận: ví dụ mẫu có lời giải + bài tự luyện</label></div>
       <div id="ph-tl-tuychon" style="display:none;gap:12px;flex-wrap:wrap;align-items:center">
         <label class="hop">Mỗi dạng: câu tương tự <input type="number" id="ph-tt" min="0" max="4" value="2" style="width:58px"></label>
         <label class="hop">câu vận dụng <select id="ph-vdtl" style="width:auto"><option value="1" selected>1 (câu 3)</option><option value="2">2 (câu 3, 4)</option></select></label>
+        <label class="hop">Bố cục <select id="ph-bo-cuc" style="width:auto"><option value="song_song" selected>Song song: trái ví dụ mẫu – phải tự luyện</option><option value="tren_duoi">Trên – dưới: ví dụ mẫu + lời giải ở trên, bài tự luyện bên dưới</option></select></label>
         <label class="hop">dòng làm bài <input type="number" id="ph-dong" min="0" max="8" value="2" style="width:58px"></label>
         <span class="nho">— lấy câu tự luận, trả lời ngắn, trắc nghiệm đổi sang tự luận; ví dụ mẫu có lời giải in sẵn</span></div>
       <div id="ph-tn-so"><b>Số câu luyện tập</b> <span class="nho">— bài tập về nhà cùng số câu, cùng dạng, cùng mức (câu khác)</span>
@@ -1758,7 +1759,7 @@ function phCfg(){
   const loai=$("#ph-loai").dataset.loai, tl=+document.querySelector('input[name="ph-tl"]:checked').value;
   const cfg={pham_vi:loai==="on_tap_chuong"?[$("#ph-chuong").value]:bai,dang,loai_phieu:loai,ten:$("#ph-ten").value.trim(),thoi_luong:tl,
     so_cau:{TN:+$("#ph-tn").value||0,DS:+$("#ph-ds").value||0,TLN:+$("#ph-tln").value||0},kien_thuc:$("#ph-kt").value,
-    co_chu:+$("#ph-co").value,hai_cot:$("#ph-hai-cot").checked,beamer:$("#ph-beamer").checked,kieu_cau:document.querySelector('input[name="ph-kieu"]:checked').value,so_tuong_tu:+$("#ph-tt").value,
+    co_chu:+$("#ph-co").value,hai_cot:$("#ph-hai-cot").checked,beamer:$("#ph-beamer").checked,kieu_cau:document.querySelector('input[name="ph-kieu"]:checked').value,so_tuong_tu:+$("#ph-tt").value,bo_cuc_tl:$("#ph-bo-cuc").value,
     so_van_dung:+$("#ph-vdtl").value,so_dong_lam_bai:+$("#ph-dong").value,nang_cao:$("#ph-nc").checked?{V:+$("#ph-vd").value||0,C:+$("#ph-vdc").value||0}:{},kien_thuc_in:document.querySelector('input[name="ph-kt-in"]:checked').value,giao_vien:$("#giao_vien").value.trim(),truong:$("#truong").value.trim(),
     nam_hoc:$("#nam_hoc").value.trim(),so_gd:$("#so_gd").value.trim()};
   return cfg;
