@@ -33,7 +33,7 @@ function __pgCss() {
 #pg .tien{height:8px;background:#334155;border-radius:9px;overflow:hidden;margin-top:4px}#pg .tien>i{display:block;height:100%;background:#22c55e}
 #pg .bp{display:flex;gap:18px;align-items:flex-end;justify-content:center;min-height:300px}#pg .bp>div{text-align:center;width:200px}
 #pg .bp .cot{border-radius:14px 14px 0 0;display:grid;place-items:center;font-size:48px;font-weight:900}
-#pg .doi{display:flex;gap:12px;flex-wrap:wrap}#pg .doi>div{flex:1;min-width:160px;border-radius:14px;padding:12px 16px;font-weight:800;font-size:20px}
+#pg .doi{display:flex;gap:12px;flex-wrap:wrap}#pg .doi>div{flex:1;min-width:140px;border-radius:14px;padding:12px 16px;font-weight:800;font-size:20px}
 #pg .goi{color:#94a3b8;font-size:15px}#pg .toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:#f8fafc;color:#0f172a;padding:10px 18px;border-radius:12px;font-weight:700;display:none;z-index:100000}
 @media (prefers-reduced-motion:reduce){#pg *{animation:none!important;transition:none!important}}`;
   document.head.appendChild(c);
@@ -69,7 +69,7 @@ async function __phongGV() {
   than.innerHTML = `<div class="the"><h2 style="margin:0 0 6px">Mở phòng thi đấu</h2><p class="goi" style="margin:0 0 16px">${d.questions.length} câu · học sinh quét QR bằng điện thoại để vào phòng, chọn đáp án trên máy của mình.</p>
     <div class="luoi"><label>Học sinh vào phòng bằng<select id="pg-vao"><option value="tk">Tài khoản thầy đã cấp (điểm gắn đúng tên)</option><option value="biet_danh">Nhập biệt danh (không cần tài khoản)</option></select></label>
     <label>Nhịp chạy câu<select id="pg-nhip"><option value="gv">Thầy bấm sang câu — cả lớp cùng câu</option><option value="tu_do">Học sinh tự làm theo tốc độ riêng</option></select></label>
-    <label>Chơi theo<select id="pg-doi"><option value="0">Cá nhân</option>${[2, 3, 4, 5, 6].map(n => `<option value="${n}">${n} đội (máy chia ngẫu nhiên)</option>`).join('')}</select></label>
+    <label>Chơi theo<select id="pg-doi"><option value="0">Cá nhân</option>${[2, 3, 4, 5, 6, 7, 8].map(n => `<option value="${n}">${n} đội (máy chia ngẫu nhiên)</option>`).join('')}</select></label>
     <label>Thời gian mỗi câu (giây)<input id="pg-giay" type="number" min="5" max="300" value="30"></label></div>
     <div style="margin-top:20px;display:flex;gap:12px;flex-wrap:wrap"><button class="chinh" id="pg-mo">🚪 Mở phòng</button><button id="pg-huy">Thoát</button></div>
     <p class="goi" style="margin:14px 0 0">Tính điểm: đúng được 600–1000 điểm tuỳ nhanh chậm, đúng liên tiếp thưởng thêm. Câu Đúng/Sai tính theo số ý đúng. Đội: điểm trung bình các thành viên.</p></div>`;
@@ -129,7 +129,7 @@ function __pgVe() {
     than.innerHTML = `<div class="cho"><div class="the" style="text-align:center"><img class="qr" alt="QR vào phòng" src="${__pgQr(url)}"><div class="goi" style="margin-top:10px">hoặc vào <b style="color:#fff">${__pe(url.replace(/^https?:\/\//, '').replace(/\/choi\/.*/, '/choi'))}</b> nhập mã</div><div class="ma">${s.ma}</div>
         <div class="goi">${s.vao === 'tk' ? '🔐 Đăng nhập tài khoản đã cấp' : '😀 Nhập biệt danh, không cần tài khoản'} · ${s.nhip === 'gv' ? 'thầy bấm sang câu' : 'tự làm theo tốc độ riêng'} · ${s.giay} giây/câu</div></div>
       <div class="the"><div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:10px"><h2 style="margin:0;flex:1">👥 ${s.nguoi.length} học sinh trong phòng</h2>
-        <label style="flex-direction:row;align-items:center">Chơi theo <select id="pg-doi2">${[0, 2, 3, 4, 5, 6].map(n => `<option value="${n}" ${s.so_doi === n ? 'selected' : ''}>${n ? n + ' đội' : 'Cá nhân'}</option>`).join('')}</select></label>
+        <label style="flex-direction:row;align-items:center">Chơi theo <select id="pg-doi2">${[0, 2, 3, 4, 5, 6, 7, 8].map(n => `<option value="${n}" ${s.so_doi === n ? 'selected' : ''}>${n ? n + ' đội' : 'Cá nhân'}</option>`).join('')}</select></label>
         ${s.so_doi ? '<button id="pg-chia">🎲 Chia đội lại</button>' : ''}<button class="xanh" id="pg-bd" ${s.nguoi.length ? '' : 'disabled'}>▶ Bắt đầu</button></div>
         ${s.so_doi ? __pgBangDoi(s) + '<div style="height:8px"></div>' : ''}
         <div>${s.nguoi.length ? s.nguoi.map(p => `<span class="chip ${p.onl ? '' : 'off'}" style="${p.doi != null ? 'background:' + __pgMauDoi(p.doi) : ''}">${__pe(p.ten)}<button data-ra="${__pe(p.id)}" title="Mời ra khỏi phòng" aria-label="Mời ${__pe(p.ten)} ra">✕</button></span>`).join('') : '<p class="goi">Chờ học sinh quét mã… Tên các em sẽ hiện ở đây.</p>'}</div></div></div>`;

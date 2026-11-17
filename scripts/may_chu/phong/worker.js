@@ -33,7 +33,7 @@ export class Phong {
     const u = new URL(req.url), duong = u.pathname.replace(/^\/+/, '');
     if (duong === 'tao') {                       // Pages gửi: {ma, slug, ten, khoa, vao, nhip, doi, giay, gv}
       const d = await req.json();
-      this.s = { ma: d.ma, slug: d.slug, ten: d.ten, khoa: d.khoa, vao: d.vao, nhip: d.nhip, so_doi: d.doi | 0, giay: d.giay || 20,
+      this.s = { ma: d.ma, slug: d.slug, ten: d.ten, khoa: d.khoa, vao: d.vao, nhip: d.nhip, so_doi: Math.max(0, Math.min(8, d.doi | 0)), giay: d.giay || 20,
         gv: d.gv, tao_luc: Date.now(), giai_doan: 'cho', cur: -1, cau: [], nguoi: {}, het_luc: 0 };
       await this.luu();
       await this.ctx.storage.setAlarm(Date.now() + 6 * 3600e3);       // phòng tự xoá sau 6 giờ
