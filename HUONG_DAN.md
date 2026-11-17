@@ -221,6 +221,9 @@ như phần mềm cũ thì ghi `"khung": "DeThi"` trong file JSON.
 - **⚑ Học sinh cần quan tâm**: máy tự đánh dấu em chưa làm, thiếu bài, TB dưới 5, tụt từ 1 điểm, hoặc đang lo lắng/mệt (cảm xúc khi làm bài). Bấm ⚑ trong bảng để đánh dấu / bỏ đánh dấu thêm (nhớ theo lớp).
 - Mỗi em được đánh dấu có **tin nhắn riêng tích cực, vui** (sửa được, 🎲 đổi câu khác). **💌 Gửi vào trang học** → em thấy khung “💌 Thầy nhắn em” khi đăng nhập, bấm “Em đã đọc 👍”; bảng của thầy hiện “✓ em đã đọc”. Hoặc **Chép tin nhắn** để gửi Zalo.
 
+### 💡 Cẩm nang dạy học (trang giáo viên web)
+- Bàn làm việc giáo viên → nút **💡 Cẩm nang** (trang `/_gv/meo.html`): mẹo dùng hệ thống theo nhịp một tuần dạy (trước giờ, đầu giờ, trong giờ, cuối giờ, ở nhà, hằng tuần, phụ đạo, cuối kỳ), động viên, chống gian lận, phím tắt, hỏi đáp; có ô tìm (gõ không dấu, phím /), in được, tự theo nền sáng/tối. Nội dung sửa ở `scripts/may_chu/meo.html`.
+
 ### 🗺 Bản đồ lỗ hổng kiến thức theo dạng + 🩹 phiếu vá
 - Tổng hợp quá trình → chọn lớp → **🗺 Lỗ hổng theo dạng** (app và trang GV web). Máy cộng tỉ lệ đúng theo **mã dạng** của từng câu (lần làm gần nhất mỗi đề + phiếu cuối giờ + thi đấu).
 - **📉 Dạng cả lớp còn yếu nhất** (thanh %, số em hổng) và **🌡 bảng nhiệt** từng em × từng dạng; bấm tên em → danh sách dạng em đó cần vá. Ngưỡng hổng chỉnh 40/50/65%.
