@@ -851,6 +851,10 @@ def dang_phong(c, in_ra):
     if rc == 0:
         c["phong_ok"] = True; c["phong_ban"] = ma; _luu_ch(c); _chep_may_chu()
         in_ra("   ✓ Phòng thi đấu sẵn sàng.")
+    elif "workers.dev subdomain" in ra:
+        in_ra("   ⚠ Tài khoản Cloudflare chưa bật Workers (cần làm MỘT lần): mở https://dash.cloudflare.com → menu bên trái "
+              "“Compute (Workers)” / “Workers & Pages” → đợi trang tải xong (Cloudflare tự tạo tên miền workers.dev; nếu hỏi tên thì "
+              "gõ thi-toan-vtl rồi bấm Set up) → quay lại bấm “Đăng lại tất cả”. Các phần khác vẫn chạy bình thường.")
     else:
         in_ra("   ⚠ Chưa đăng được phòng thi đấu (xem nhật ký) — các phần khác vẫn chạy bình thường.")
 
