@@ -1,0 +1,2 @@
+CREATE TABLE IF NOT EXISTS thi_dau (id INTEGER PRIMARY KEY AUTOINCREMENT, ma TEXT, slug TEXT, ten_de TEXT, tk TEXT, ten TEXT, lop TEXT, doi INTEGER, diem INTEGER, dung INTEGER, so_cau INTEGER, diem10 REAL, hang INTEGER, tao_luc TEXT);
+CREATE INDEX IF NOT EXISTS thi_dau_ma ON thi_dau(ma);

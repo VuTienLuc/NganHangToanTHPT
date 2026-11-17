@@ -223,8 +223,9 @@ def ban_truc_tuyen(html, slug, an_dap_an=True, goi_y=False):
                 del q["figures"][k]
     i = html.rfind("examRuntime();")
     dv = json.dumps(json.load(open(os.path.join(MAY_CHU, "dong_vien.json"), encoding="utf-8")), ensure_ascii=False).replace("<", "\\u003c")
-    html = html[:i] + JS_DANG_NHAP.replace("__DONG_VIEN__", dv).replace("__GOI_Y_AI__", "true" if goi_y else "false") \
-        + "\n__khoiDong().then(()=>examRuntime());" + html[i + len("examRuntime();"):]
+    gv_phong = open(os.path.join(MAY_CHU, "phong", "gv.js"), encoding="utf-8").read()
+    html = html[:i] + JS_DANG_NHAP.replace("__DONG_VIEN__", dv).replace("__GOI_Y_AI__", "true" if goi_y else "false") + "\n" + gv_phong \
+        + "\nif(new URLSearchParams(location.search).has('phong'))__phongGV();else __khoiDong().then(()=>examRuntime());" + html[i + len("examRuntime();"):]
     for q in d["questions"]:
         for k in ("ma", "ma_dang", "ten_dang"):
             q.pop(k, None)
@@ -412,7 +413,7 @@ GV_JS = r"""function veGV(t){
   const v=ds.filter(x=>x.trang_thai===st.tab);
   $('de').innerHTML=v.length?v.map(x=>`<div class="g-de"><span class="t">${e(x.ten)}</span><span class="m"><span>${x.lop?'Lớp '+e(x.lop):'Mọi lớp'}</span><span>${x.so_luot?x.so_luot+' lượt/em':'không giới hạn lượt'}</span>
     <span>${x.so_hs?x.so_hs+' HS nộp · TB '+so(x.tb||0):'chưa có bài nộp'}</span></span>
-    <span class="n"><a class="g-btn" href="/${encodeURIComponent(x.slug)}/" target="_blank" rel="noopener">▶ Làm thử</a><button class="g-btn" data-bd="${e(x.slug)}" title="Điểm, số phút, số lần rời tab của từng lượt">📋 Điểm</button><button class="g-btn" data-l="${e(location.origin+'/'+x.slug+'/')}">Chép link</button></span></div>`).join('')
+    <span class="n"><a class="g-btn" href="/${encodeURIComponent(x.slug)}/" target="_blank" rel="noopener">▶ Làm thử</a><a class="g-btn" href="/${encodeURIComponent(x.slug)}/?phong" target="_blank" rel="noopener" title="Trình chiếu câu hỏi, học sinh quét QR chọn đáp án — tính điểm cá nhân / đội" style="background:#7c3aed;color:#fff;border-color:#7c3aed">🎮 Thi đấu</a><button class="g-btn" data-bd="${e(x.slug)}" title="Điểm, số phút, số lần rời tab của từng lượt">📋 Điểm</button><button class="g-btn" data-l="${e(location.origin+'/'+x.slug+'/')}">Chép link</button></span></div>`).join('')
    :`<div class="g-rong"><b>Không có đề ${TT[st.tab][0].toLowerCase()}</b>Đăng đề từ ứng dụng ra đề (🌐 Link thi trực tuyến).</div>`;
   $('de').querySelectorAll('[data-bd]').forEach(b=>b.onclick=()=>thTai(()=>TongHop.bangDiem({goi:goiGV,nhom:b.dataset.bd})));
   $('de').querySelectorAll('[data-l]').forEach(b=>b.onclick=()=>{navigator.clipboard.writeText(b.dataset.l).then(()=>toast('Đã chép link'))})}
@@ -489,6 +490,8 @@ def ghi_site():
         ghi_nang_cap_phieu()
     except Exception:
         pass
+    os.makedirs(os.path.join(SITE, "choi"), exist_ok=True)
+    shutil.copy(os.path.join(MAY_CHU, "phong", "choi.html"), os.path.join(SITE, "choi", "index.html"))
     os.makedirs(os.path.join(SITE, "_gv"), exist_ok=True)
     shutil.copy(os.path.join(os.path.dirname(os.path.abspath(__file__)), "tong_hop.js"), os.path.join(SITE, "_gv", "tong_hop.js"))
     open(os.path.join(SITE, "_headers"), "w", encoding="utf-8").write(
@@ -796,7 +799,7 @@ def co_node():
 MAY_CHU = os.path.join(os.path.dirname(os.path.abspath(__file__)), "may_chu")   # mã máy chủ (Functions + schema)
 P_BM = os.path.join(THU, "bi_mat.json")       # mã quản trị + khoá phiên (KHÔNG đồng bộ GitHub)
 TEN_DB = "thi-toan-db"
-PHIEN_BAN_SCHEMA = 6
+PHIEN_BAN_SCHEMA = 7
 
 
 def _luu_ch(c):
@@ -822,7 +825,34 @@ def _chep_may_chu():
     shutil.copy(os.path.join(MAY_CHU, "schema.sql"), os.path.join(THU, "schema.sql"))
     toml = (f'name = "{c["du_an"]}"\npages_build_output_dir = "./site"\ncompatibility_date = "2024-09-23"\n\n'
             f'[[d1_databases]]\nbinding = "DB"\ndatabase_name = "{TEN_DB}"\ndatabase_id = "{c.get("d1_id") or "chua-co"}"\n')
+    if c.get("phong_ok"):                       # phòng thi đấu trực tiếp: Durable Object ở worker riêng
+        toml += f'\n[[durable_objects.bindings]]\nname = "PHONG"\nclass_name = "Phong"\nscript_name = "{ten_worker_phong(c)}"\n'
     open(os.path.join(THU, "wrangler.toml"), "w", encoding="utf-8").write(toml)
+    d = os.path.join(THU, "phong"); os.makedirs(d, exist_ok=True)
+    shutil.copy(os.path.join(MAY_CHU, "phong", "worker.js"), os.path.join(d, "worker.js"))
+    open(os.path.join(d, "wrangler.toml"), "w", encoding="utf-8").write(
+        f'name = "{ten_worker_phong(c)}"\nmain = "worker.js"\ncompatibility_date = "2024-09-23"\nworkers_dev = false\n\n'
+        '[[durable_objects.bindings]]\nname = "PHONG"\nclass_name = "Phong"\n\n[[migrations]]\ntag = "v1"\nnew_sqlite_classes = ["Phong"]\n')
+
+
+def ten_worker_phong(c=None):
+    return ((c or cau_hinh())["du_an"] + "-phong")[:60]
+
+
+def dang_phong(c, in_ra):
+    """Đăng worker phòng thi đấu (Durable Object). Lỗi thì vẫn đăng trang bình thường, chỉ chưa có phòng thi đấu."""
+    import hashlib
+    ma = hashlib.sha1(open(os.path.join(MAY_CHU, "phong", "worker.js"), "rb").read()).hexdigest()[:12]
+    if c.get("phong_ok") and c.get("phong_ban") == ma:
+        return
+    in_ra("Đăng máy chủ phòng thi đấu trực tiếp (chỉ khi có thay đổi)…")
+    _chep_may_chu()
+    rc, ra = _chay(["deploy", "--config", os.path.join("phong", "wrangler.toml")], in_ra, 300)
+    if rc == 0:
+        c["phong_ok"] = True; c["phong_ban"] = ma; _luu_ch(c); _chep_may_chu()
+        in_ra("   ✓ Phòng thi đấu sẵn sàng.")
+    else:
+        in_ra("   ⚠ Chưa đăng được phòng thi đấu (xem nhật ký) — các phần khác vẫn chạy bình thường.")
 
 
 def _dat_bi_mat(c, in_ra):
@@ -1212,6 +1242,10 @@ def dang(in_ra=print):
         else:
             raise RuntimeError("Chưa tạo được dự án Cloudflare Pages (xem nhật ký). Có thể đổi tên dự án khác rồi thử lại.")
     chuan_bi_may_chu(c, in_ra)
+    try:
+        dang_phong(c, in_ra)
+    except Exception as e:
+        in_ra(f"   ⚠ Phòng thi đấu: {e}")
     lam_lai_trang_de(in_ra)
     in_ra("Đang đưa trang lên Cloudflare Pages…")
     rc, ra = _chay(["pages", "deploy", SITE, "--project-name", c["du_an"], "--branch", "main", "--commit-dirty=true"], in_ra, 600)

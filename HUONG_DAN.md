@@ -220,6 +220,14 @@ như phần mềm cũ thì ghi `"khung": "DeThi"` trong file JSON.
 - **⚑ Học sinh cần quan tâm**: máy tự đánh dấu em chưa làm, thiếu bài, TB dưới 5, tụt từ 1 điểm, hoặc đang lo lắng/mệt (cảm xúc khi làm bài). Bấm ⚑ trong bảng để đánh dấu / bỏ đánh dấu thêm (nhớ theo lớp).
 - Mỗi em được đánh dấu có **tin nhắn riêng tích cực, vui** (sửa được, 🎲 đổi câu khác). **💌 Gửi vào trang học** → em thấy khung “💌 Thầy nhắn em” khi đăng nhập, bấm “Em đã đọc 👍”; bảng của thầy hiện “✓ em đã đọc”. Hoặc **Chép tin nhắn** để gửi Zalo.
 
+### 🎮 Phòng thi đấu trực tiếp (kiểu Quizizz)
+- Mở phòng: Thư viện (app) hoặc trang GV web → nút **🎮 Thi đấu** ở đề → trang chiếu mở ra, chọn: học sinh vào bằng **tài khoản** hay **biệt danh**; nhịp **thầy bấm sang câu** hay **học sinh tự làm**; **cá nhân** hay **2–6 đội** (máy chia ngẫu nhiên, chia lại được); số giây mỗi câu → **Mở phòng**.
+- Học sinh quét **QR** (hoặc vào …pages.dev/choi, nhập mã 6 số) → chọn đáp án trên điện thoại (A/B/C/D, Đúng/Sai từng ý, nhập đáp số). Tải lại trang vẫn giữ điểm.
+- Điểm: đúng 600–1000 tuỳ nhanh chậm, đúng liên tiếp thưởng thêm (🔥 chuỗi), Đúng/Sai tính theo số ý đúng; đội = điểm trung bình thành viên.
+- Thầy điều khiển: ⏹ Hết giờ · hiện đáp án (tự hiện khi cả lớp đã trả lời hoặc hết giờ), +10 giây, Câu tiếp ▶ (phím → hoặc Space), F toàn màn hình. Sau mỗi câu: số em chọn từng phương án, bảng xếp hạng, điểm đội.
+- Kết thúc: bục vinh danh, xếp hạng đầy đủ, **💾 Lưu kết quả vào máy chủ** (kèm điểm quy ra thang 10), **⬇ Tải Excel**. Phòng tự xoá sau 6 giờ.
+- Lần đầu: bấm **Đăng lại tất cả** — app tự đăng thêm máy chủ phòng (worker “…-phong”, Durable Objects, gói miễn phí dùng được).
+
 ### 🎯 Lớp phụ đạo theo khối (PD10, PD11, PD12…)
 - Mọi em đang **⭐ theo dõi** tự thuộc thêm **lớp phụ đạo khối** của mình: lớp 10A4 → **PD10**. Em vẫn ở lớp chính, điểm lớp chính không đổi.
 - Đưa em vào: bấm ☆ trong bảng tổng hợp lớp, hoặc trong khung ⚑ cần quan tâm chọn các em → **🎯 Đưa các em đã chọn vào lớp phụ đạo**. Bỏ ra: ★ → ☆ hoặc “Bỏ theo dõi”.
