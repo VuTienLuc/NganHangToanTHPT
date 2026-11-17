@@ -4,7 +4,7 @@
   const KY = '— Thầy Vũ Tiến Lực';
   const CSS = `
 #th-hop,#bd-hop{position:fixed;inset:0;background:rgba(15,23,42,.5);display:none;align-items:center;justify-content:center;z-index:9000;font:14px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:#0f172a}
-#bd-hop{z-index:9050;font:14px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:#0f172a}#bd-hop *{box-sizing:border-box}#bd-hop button,#bd-hop select{font:inherit;font-size:13.5px;border:1px solid #cbd5e1;background:#fff;color:#0f172a;border-radius:8px;padding:6px 11px;min-height:36px;cursor:pointer;width:auto;margin:0}#bd-hop button.chinh{background:#1e40af;border-color:#1e40af;color:#fff;font-weight:700}#bd-hop label{display:inline-flex;align-items:center;gap:6px;font-weight:600;margin:0}#bd-hop input[type=checkbox]{width:18px;height:18px;padding:0}#bd-hop table{display:table}#bd-hop th,#bd-hop td{display:table-cell}#bd-hop .th-noi{background:#fff;border-radius:14px;width:min(1200px,97vw);max-height:94vh;display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.3)}#bd-hop .th-dau{display:flex;align-items:center;gap:10px;padding:12px 16px;border-bottom:1px solid #e2e8f0;flex-wrap:wrap}#bd-hop .th-dau h2{margin:0;font-size:17px;flex:1;min-width:220px}#bd-hop .th-than{overflow:auto;padding:12px 16px}#bd-hop .th-chan{display:flex;gap:8px;padding:10px 16px;border-top:1px solid #e2e8f0;flex-wrap:wrap;align-items:center;justify-content:flex-end}
+#lh-hop{position:fixed;inset:0;background:rgba(15,23,42,.5);display:none;align-items:center;justify-content:center}#bd-hop,#lh-hop{z-index:9050;font:14px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:#0f172a}#bd-hop *,#lh-hop *{box-sizing:border-box}#bd-hop button,#bd-hop select,#lh-hop button,#lh-hop select{font:inherit;font-size:13.5px;border:1px solid #cbd5e1;background:#fff;color:#0f172a;border-radius:8px;padding:6px 11px;min-height:36px;cursor:pointer;width:auto;margin:0}#bd-hop button.chinh,#lh-hop button.chinh{background:#1e40af;border-color:#1e40af;color:#fff;font-weight:700}#bd-hop label,#lh-hop label{display:inline-flex;align-items:center;gap:6px;font-weight:600;margin:0}#bd-hop input[type=checkbox],#lh-hop input[type=checkbox]{width:18px;height:18px;padding:0}#bd-hop table,#lh-hop table{display:table}#bd-hop th,#bd-hop td,#lh-hop th,#lh-hop td{display:table-cell}#bd-hop .th-noi,#lh-hop .th-noi{background:#fff;border-radius:14px;width:min(1200px,97vw);max-height:94vh;display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.3)}#bd-hop .th-dau,#lh-hop .th-dau{display:flex;align-items:center;gap:10px;padding:12px 16px;border-bottom:1px solid #e2e8f0;flex-wrap:wrap}#bd-hop .th-dau h2,#lh-hop .th-dau h2{margin:0;font-size:17px;flex:1;min-width:220px}#bd-hop .th-than,#lh-hop .th-than{overflow:auto;padding:12px 16px}#bd-hop .th-chan,#lh-hop .th-chan{display:flex;gap:8px;padding:10px 16px;border-top:1px solid #e2e8f0;flex-wrap:wrap;align-items:center;justify-content:flex-end}
 #th-hop *{box-sizing:border-box}#th-hop table{display:table}#th-hop th,#th-hop td{display:table-cell}#th-hop button{width:auto;margin:0}#th-hop label{display:inline-flex;align-items:center;gap:6px;font-weight:600;margin:0}#th-hop input[type=checkbox]{width:18px;height:18px;padding:0}#th-hop button,#th-hop select{font:inherit;font-size:13.5px;border:1px solid #cbd5e1;background:#fff;color:#0f172a;border-radius:8px;padding:6px 11px;min-height:36px;cursor:pointer}
 #th-hop button:hover{border-color:#1e40af}#th-hop button:focus-visible,#th-hop select:focus-visible{outline:3px solid #93c5fd;outline-offset:1px}
 #th-hop button.chinh{background:#1e40af;border-color:#1e40af;color:#fff;font-weight:700}#th-hop button.hong{background:#db2777;border-color:#db2777;color:#fff;font-weight:700}
@@ -47,6 +47,12 @@
 .bd-k-dau{display:flex;gap:6px;align-items:center}.bd-k-dau b{flex:1}.bd-k-dau button{font-size:12.5px!important;min-height:30px!important;padding:3px 9px!important}
 .bd-stt{font:600 13.5px/1.5 ui-monospace,Menlo,monospace;background:#f8fafc;border-radius:7px;padding:6px 8px;word-break:break-word;user-select:all}
 .bd-ds{overflow:auto;display:flex;flex-direction:column;gap:2px;font-size:13px}.bd-ds small{color:#64748b}
+#lh-hop button:disabled{opacity:.5;cursor:default}.lh-ds{display:flex;flex-direction:column;gap:4px;max-height:40vh;overflow:auto}
+.lh-dong{display:grid!important;grid-template-columns:auto minmax(0,2fr) minmax(160px,1.4fr) 110px;gap:10px!important;align-items:center;padding:6px 8px;border-radius:8px;font-weight:400!important;cursor:pointer}
+.lh-dong:hover{background:#f8fafc}.lh-ten{display:flex;flex-direction:column;min-width:0}.lh-ten b{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.lh-ten small{color:#64748b;font-size:12px}
+.lh-thanh{position:relative;height:22px;background:#f1f5f9;border-radius:6px;overflow:hidden}.lh-thanh i{display:block;height:100%}.lh-thanh em{position:absolute;right:6px;top:1px;font-style:normal;font-weight:700;font-size:12.5px}
+.lh-so{display:flex;flex-direction:column;font-size:13px}.lh-so small{color:#64748b;font-size:11.5px}
+.lh-nhiet td{padding:3px 4px!important;font-size:12px;font-weight:700;min-width:34px}.lh-nhiet th .lh-dung{writing-mode:vertical-rl;transform:rotate(180deg);font-size:11px;font-weight:600;white-space:nowrap}
 @media (max-width:760px){.th-em{grid-template-columns:auto minmax(0,1fr)}.th-em textarea,.th-em .nut{grid-column:1/-1}}`;
   const e = s => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
   const F = v => v == null || isNaN(v) ? '—' : (Math.round(v * 10) / 10).toString().replace('.', ',');
@@ -64,13 +70,14 @@
       <label>Lớp <select id="th-lop" style="min-width:130px"></select></label><button id="th-tai" title="Lấy số liệu mới nhất">↻ Làm mới</button></div>
       <div class="th-than" id="th-than"></div>
       <div class="th-chan"><button id="th-chep">💬 Chép nhận xét lớp</button><button id="th-chep-em">Chép nhận xét từng em</button>
-      <button id="th-tc" class="hong" title="Chiếu lên lớp: chữ to, bục vinh danh, bảng xếp hạng, bảng vàng">📽 Trình chiếu</button><button id="th-bd">📋 Bảng điểm từng lượt</button><button id="th-xuat" class="chinh">⬇ Tải bảng tổng hợp (Excel)</button><button id="th-dong">Đóng</button></div></div><div class="th-toast" id="th-toast" role="status"></div>`;
+      <button id="th-lh" title="Tỉ lệ đúng theo từng dạng toán của lớp và từng em — tạo phiếu vá lỗ hổng">🗺 Lỗ hổng theo dạng</button><button id="th-tc" class="hong" title="Chiếu lên lớp: chữ to, bục vinh danh, bảng xếp hạng, bảng vàng">📽 Trình chiếu</button><button id="th-bd">📋 Bảng điểm từng lượt</button><button id="th-xuat" class="chinh">⬇ Tải bảng tổng hợp (Excel)</button><button id="th-dong">Đóng</button></div></div><div class="th-toast" id="th-toast" role="status"></div>`;
     document.body.appendChild(hop);
     const $ = id => document.getElementById(id);
     $('th-dong').onclick = () => { hop.style.display = 'none' };
     hop.addEventListener('keydown', ev => { if (ev.key === 'Escape') hop.style.display = 'none' });
     $('th-lop').onchange = tai; $('th-tai').onclick = () => { st.lop = null; mo({ goi: st.goi, lop: $('th-lop').value }) };
     $('th-xuat').onclick = xuat;
+    $('th-lh').onclick = () => { const l = $('th-lop').value; loHong({ goi: st.goi, lop: l === '__td' ? '' : l, taoPhieu: st.taoPhieu }) };
     $('th-tc').onclick = () => { if (!st.T || !st.k || $('th-lop').value === '__td') return toast('Chọn một lớp để trình chiếu'); trinhChieu() };
     $('th-bd').onclick = () => { const l = $('th-lop').value; bangDiem({ goi: st.goi, lop: l === '__td' ? '' : l }) };
     $('th-chep').onclick = () => chep($('th-nx-lop')?.value || '', 'Đã chép nhận xét lớp');
@@ -82,7 +89,7 @@
   const doc = k => { try { return JSON.parse(localStorage.getItem('th_' + k) || 'null') } catch (_) { return null } };
 
   async function mo(o) {
-    dung(); st.goi = o.goi; hop.style.display = 'flex';
+    dung(); st.goi = o.goi; st.taoPhieu = o.taoPhieu || st.taoPhieu; hop.style.display = 'flex';
     const $ = id => document.getElementById(id), than = $('th-than');
     than.innerHTML = 'Đang lấy danh sách lớp…';
     if (!st.lop) {
@@ -345,6 +352,13 @@
         Ra đề thêm cho riêng các em: khi đăng đề, ghi ô <b>Lớp giao</b> là <code style="background:#fff;padding:1px 6px;border-radius:5px;font-weight:700">${e(k.lop)}</code> <button data-chep-pd="${e(k.lop)}" style="font-size:12px!important;min-height:0!important;padding:2px 8px!important">📋 Chép</button> — chỉ các em trong lớp phụ đạo thấy và làm được, đề tự tính vào tổng hợp này.
         Thêm / bớt em: bấm ☆/★ ở bảng tổng hợp lớp chính, hoặc nút 🎯 trong khung ⚑ cần quan tâm.</div></div>` : ''}
       ${n ? `<div class="th-bd">${svg}</div>` : ''}
+      ${(k.phieu || []).length ? `<div class="th-hop2" style="border:1px solid #c7d2fe;background:#f5f7ff"><h3 style="color:#3730a3">🎫 Phiếu cuối giờ — mức hiểu bài qua từng tiết</h3>
+        <div style="overflow:auto"><table class="th-bang"><thead><tr><th class="ten">Ngày</th><th class="ten">Bài</th><th>Số em</th><th>% đúng</th><th>😀 Hiểu rõ</th><th>😐 Chưa chắc</th><th>😟 Chưa hiểu</th><th class="ten">Mức hiểu</th></tr></thead><tbody>
+        ${k.phieu.map(x => { const n = x.ds.length, pt = n && x.so_cau ? 100 * x.ds.reduce((a, y) => a + (y.dung || 0), 0) / (n * x.so_cau) : null, dg = [0, 1, 2].map(j => x.ds.filter(y => y.dg === j).length), t = dg[0] + dg[1] + dg[2];
+          return `<tr><td class="ten">${e(new Date(x.ngay).toLocaleDateString('vi-VN'))}</td><td class="ten" title="${e(x.ten)}">${e(String(x.ten).replace(/^Phiếu cuối giờ\s*[–-]\s*/, '').slice(0, 46))}</td><td>${n}</td>
+            <td><span class="o-d ${pt == null ? 'c' : pt >= 80 ? 'g' : pt >= 60 ? 'k' : pt >= 40 ? 'tb' : 'y'}">${pt == null ? '—' : Math.round(pt) + '%'}</span></td><td>${dg[0]}</td><td>${dg[1]}</td><td>${dg[2]}</td>
+            <td class="ten" style="min-width:140px">${t ? `<div style="display:flex;height:12px;border-radius:6px;overflow:hidden"><i style="width:${100 * dg[0] / t}%;background:#22c55e"></i><i style="width:${100 * dg[1] / t}%;background:#eab308"></i><i style="width:${100 * dg[2] / t}%;background:#ef4444"></i></div>` : ''}</td></tr>`; }).join('')}
+        </tbody></table></div></div>` : ''}
       <div class="th-hop2 th-qt" id="th-qt"><h3>⚑ Học sinh cần quan tâm — tin nhắn riêng (tích cực, vui)</h3><div id="th-qt-ds"></div></div>
       <div class="th-hop2 th-nx"><h3>💬 Nhận xét chung cho lớp (sửa được, chép gửi nhóm lớp)</h3><textarea id="th-nx-lop">${e(nxLop(k.lop, T))}</textarea></div>
       ${!n && T.chuaGiao.length ? `<div class="th-hop2" style="background:#fffbeb;border:1px solid #fde68a"><h3 style="color:#b45309">Chưa có bài nào được xác nhận giao cho lớp ${e(k.lop)}</h3><div style="font-size:13px">Bảng dưới vẫn hiện điểm mọi bài (cột xám = chưa giao). Thầy bấm <b>✓ Xác nhận đã giao</b> dưới tên bài nào đã thật sự giao — bài đó mới tính hoàn thành, điểm TB, tiến bộ.</div></div>` : ''}
@@ -625,5 +639,100 @@
     document.getElementById('tc-ca').onclick = ev => { caLop = !caLop; ev.target.setAttribute('aria-pressed', caLop); ve2() };
     ve2();
   }
-  window.TongHop = { mo, bangDiem };
+  // ---------- LỖ HỔNG KIẾN THỨC THEO DẠNG ----------
+  const LH = { goi: null, lop: '', k: null, chon: new Set(), nguong: 50, taoPhieu: null };
+  let lhHop;
+  const mauPT = p => p == null ? '#f1f5f9' : p >= 80 ? '#bbf7d0' : p >= 65 ? '#d9f99d' : p >= 50 ? '#fef08a' : p >= 35 ? '#fed7aa' : '#fecaca';
+  function lhDung() {
+    dung(); if (lhHop) return;
+    lhHop = document.createElement('div'); lhHop.id = 'lh-hop'; lhHop.className = 'bd-kieu'; lhHop.setAttribute('role', 'dialog'); lhHop.setAttribute('aria-modal', 'true'); lhHop.setAttribute('aria-labelledby', 'lh-tieu');
+    lhHop.innerHTML = `<div class="th-noi"><div class="th-dau"><h2 id="lh-tieu">🗺 Bản đồ lỗ hổng kiến thức theo dạng toán</h2><label>Lớp <select id="lh-lop"></select></label>
+      <label title="Dưới ngưỡng này coi là còn hổng">Ngưỡng <select id="lh-ng"><option value="40">40%</option><option value="50" selected>50%</option><option value="65">65%</option></select></label><button id="lh-tai">↻</button></div>
+      <div class="th-than" id="lh-than"></div>
+      <div class="th-chan"><span id="lh-chon" style="margin-right:auto;font-size:13px;color:#475569"></span><button id="lh-phieu" class="chinh" disabled>🩹 Tạo phiếu vá lỗ hổng…</button><button id="lh-dong">Đóng</button></div></div>`;
+    hop.parentNode.appendChild(lhHop);
+    const $ = id => document.getElementById(id);
+    $('lh-dong').onclick = () => { lhHop.style.display = 'none' };
+    lhHop.addEventListener('keydown', ev => { if (ev.key === 'Escape') lhHop.style.display = 'none' });
+    $('lh-lop').onchange = ev => { LH.lop = ev.target.value; LH.chon.clear(); lhTai() };
+    $('lh-ng').onchange = ev => { LH.nguong = +ev.target.value; lhVe() };
+    $('lh-tai').onclick = lhTai; $('lh-phieu').onclick = lhPhieu;
+  }
+  async function loHong(o) {
+    lhDung(); LH.goi = o.goi; LH.taoPhieu = o.taoPhieu || null; lhHop.style.display = 'flex';
+    const $ = id => document.getElementById(id);
+    if (!st.lop) { const k = await LH.goi('lo-hong', {}).catch(x => ({ ok: false, loi: String(x) })); st.lop = k.cac_lop || [] }
+    $('lh-lop').innerHTML = (st.lop || []).map(x => `<option value="${e(x.lop)}">${e(tenLop(x.lop))} (${x.n} em)</option>`).join('');
+    LH.lop = o.lop && (st.lop || []).some(x => x.lop === o.lop) ? o.lop : (st.lop[0] || {}).lop || ''; $('lh-lop').value = LH.lop; LH.chon.clear(); lhTai();
+  }
+  async function lhTai() {
+    const than = document.getElementById('lh-than'); if (!LH.lop) { than.innerHTML = '<p>Chưa có lớp nào.</p>'; return }
+    than.innerHTML = 'Đang phân tích bài làm theo dạng…';
+    const k = await LH.goi('lo-hong', { lop: LH.lop }).catch(x => ({ ok: false, loi: String(x) }));
+    if (!k.ok) { than.innerHTML = `<p style="color:#b45309">${e(k.loi || 'Lỗi')} — nếu máy chủ chưa có chức năng này, thầy bấm Đăng lại tất cả trong ứng dụng.</p>`; return }
+    LH.k = k; lhVe();
+  }
+  function lhTinh() {
+    const k = LH.k, ng = LH.nguong;
+    const ds = Object.entries(k.dangs).map(([ma, v]) => {
+      let a = 0, b = 0, hong = [], co = 0;
+      for (const h of k.hs) { const x = (k.m[h.ten] || {})[ma]; if (!x) continue; co++; a += x[0]; b += x[1]; if (100 * x[0] / x[1] < ng) hong.push(h) }
+      return { ma, ten: v.ten, bai: v.bai, pt: b ? 100 * a / b : null, so_cau: b, co, hong };
+    }).sort((x, y) => (x.pt ?? 999) - (y.pt ?? 999));
+    return ds;
+  }
+  function lhVe() {
+    const k = LH.k, than = document.getElementById('lh-than'), ng = LH.nguong, ds = lhTinh();
+    const coDL = k.hs.filter(h => k.m[h.ten]).length;
+    if (!ds.length) { than.innerHTML = `<div class="th-hop2" style="background:#fffbeb;border:1px solid #fde68a"><h3 style="color:#b45309">Chưa có dữ liệu theo dạng</h3><div style="font-size:13.5px">Bản đồ dựng từ mã dạng gắn trong từng câu. Đề đăng trước bản cập nhật này cần <b>Đăng lại tất cả</b> một lần để máy chủ biết câu nào thuộc dạng nào; bài học sinh đã nộp trước đó vẫn được tính.</div></div>`; lhChon(); return }
+    const yeu = ds.filter(x => x.pt != null && x.pt < ng);
+    const ten = h => (h.ho_ten || h.ten);
+    // nhóm theo bài để bảng nhiệt dễ đọc
+    const cot = ds.slice().sort((a, b) => a.ma.localeCompare(b.ma, 'vi', { numeric: true }));
+    than.innerHTML = `<div class="th-the"><div><b>${ds.length}</b><span>dạng toán đã kiểm tra</span></div><div class="qt"><b>${yeu.length}</b><span>dạng cả lớp dưới ${ng}%</span></div>
+      <div><b>${coDL}/${k.hs.length}</b><span>em có bài làm để phân tích</span></div><div><b>${F(ds.filter(x => x.pt != null).reduce((a, x) => a + x.pt, 0) / Math.max(1, ds.filter(x => x.pt != null).length))}%</b><span>tỉ lệ đúng trung bình</span></div></div>
+      <div class="th-hop2" style="border:1px solid #e2e8f0"><h3 style="color:#0f172a">📉 Dạng cả lớp còn yếu nhất <span style="font-weight:400;color:#64748b;font-size:12.5px">— tick để tạo phiếu vá</span></h3>
+        <div class="lh-ds">${ds.map(x => `<label class="lh-dong"><input type="checkbox" data-ma="${e(x.ma)}" ${LH.chon.has(x.ma) ? 'checked' : ''}>
+          <span class="lh-ten"><b>${e(x.ten || x.ma)}</b><small>${e(x.bai)} · <code>${e(x.ma)}</code></small></span>
+          <span class="lh-thanh" title="${F(x.pt)}% đúng trên ${Math.round(x.so_cau)} lượt câu"><i style="width:${Math.max(2, x.pt || 0)}%;background:${x.pt >= ng ? '#22c55e' : x.pt >= ng - 15 ? '#f59e0b' : '#ef4444'}"></i><em>${F(x.pt)}%</em></span>
+          <span class="lh-so">${x.hong.length ? `<b style="color:#b91c1c">${x.hong.length}</b> em hổng` : '<span style="color:#15803d">✓ ổn</span>'}<small>${x.co} em đã làm</small></span></label>`).join('')}</div></div>
+      <div class="th-hop2" style="border:1px solid #e2e8f0"><h3 style="color:#0f172a">🌡 Bảng nhiệt từng em × từng dạng <span style="font-weight:400;color:#64748b;font-size:12.5px">— bấm tên em để xem dạng em đó cần vá</span></h3>
+        <div style="overflow:auto;max-height:52vh;border:1px solid #e2e8f0;border-radius:10px"><table class="th-bang lh-nhiet"><thead><tr><th class="ten" style="left:0;z-index:2">Học sinh</th>
+          ${cot.map(x => `<th title="${e((x.ten || '') + ' — ' + x.bai)}"><span class="lh-dung">${e(x.ma)}</span></th>`).join('')}<th>Số dạng hổng</th></tr></thead><tbody>
+          ${k.hs.map((h, i) => { const mm = k.m[h.ten] || {}; let soHong = 0;
+            const o = cot.map(x => { const v = mm[x.ma]; if (!v) return '<td></td>'; const p = 100 * v[0] / v[1]; if (p < ng) soHong++;
+              return `<td style="background:${mauPT(p)}" title="${e(x.ten)}: ${F(p)}% (${Math.round(v[1])} câu)">${Math.round(p)}</td>` }).join('');
+            return `<tr><td class="ten" style="position:sticky;left:0;background:#fff"><button class="th-ten" data-lh="${i}">${e(ten(h))}</button>${laPD(k.lop) ? ` <small style="color:#64748b">${e(h.lop)}</small>` : ''}</td>${o}<td><b style="color:${soHong ? '#b91c1c' : '#15803d'}">${mm && Object.keys(mm).length ? soHong : ''}</b></td></tr>` }).join('')}
+        </tbody></table></div><p style="font-size:12px;color:#64748b;margin:6px 0 0">Số trong ô = % đúng của em ở dạng đó (lần làm gần nhất mỗi đề, cộng cả phiếu cuối giờ / thi đấu). Xanh ≥ 80 · vàng 50–65 · cam/đỏ dưới 50 · trống = chưa gặp dạng này.</p></div>
+      <div id="lh-em"></div>`;
+    than.querySelectorAll('[data-ma]').forEach(c => c.onchange = () => { c.checked ? LH.chon.add(c.dataset.ma) : LH.chon.delete(c.dataset.ma); lhChon() });
+    than.querySelectorAll('[data-lh]').forEach(b => b.onclick = () => lhEm(k.hs[+b.dataset.lh]));
+    lhChon();
+  }
+  function lhEm(h) {
+    const k = LH.k, mm = k.m[h.ten] || {}, ng = LH.nguong, o = document.getElementById('lh-em');
+    const ds = Object.entries(mm).map(([ma, v]) => ({ ma, p: 100 * v[0] / v[1], n: v[1], ...(k.dangs[ma] || {}) })).sort((a, b) => a.p - b.p);
+    o.innerHTML = `<div class="th-hop2 th-qt"><h3>👤 ${e(h.ho_ten || h.ten)} — ${ds.filter(x => x.p < ng).length} dạng cần vá <button id="lh-em-chon" style="font-size:12px!important;min-height:0!important;padding:3px 9px!important">Chọn các dạng này để tạo phiếu vá</button></h3>
+      ${ds.length ? ds.map(x => `<div style="display:flex;gap:8px;align-items:center;padding:3px 0"><span class="o-d" style="background:${mauPT(x.p)};color:#0f172a">${Math.round(x.p)}%</span><span style="flex:1">${e(x.ten || x.ma)} <small style="color:#64748b">· ${e(x.bai || '')}</small></span></div>`).join('') : '<p>Em chưa có bài làm để phân tích.</p>'}</div>`;
+    o.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    document.getElementById('lh-em-chon').onclick = () => { LH.chon = new Set(ds.filter(x => x.p < ng).map(x => x.ma)); LH.chiEm = h; lhVe(); toast(`Đã chọn ${LH.chon.size} dạng của ${h.ho_ten || h.ten}`) };
+  }
+  function lhChon() {
+    const n = LH.chon.size, b = document.getElementById('lh-phieu');
+    document.getElementById('lh-chon').textContent = n ? `Đã chọn ${n} dạng` + (LH.chiEm ? ` (theo ${LH.chiEm.ho_ten || LH.chiEm.ten})` : '') : 'Tick các dạng cần vá (hoặc bấm tên một em → “Chọn các dạng này”).';
+    b.disabled = !n; b.title = LH.taoPhieu ? '' : 'Tạo phiếu cần ngân hàng câu hỏi trên máy thầy — mở chức năng này trong ứng dụng ra đề';
+  }
+  async function lhPhieu() {
+    if (!LH.taoPhieu) return alert('Phiếu vá lấy câu từ ngân hàng LaTeX trên máy thầy, nên tạo trong ỨNG DỤNG RA ĐỀ:\nThi & học trực tuyến → 📊 Tổng hợp quá trình → 🗺 Lỗ hổng theo dạng.\n\nTrên web thầy vẫn xem được bản đồ lỗ hổng.');
+    const k = LH.k, ds = lhTinh(), chon = ds.filter(x => LH.chon.has(x.ma)), ng = LH.nguong;
+    const hong = [...new Set(chon.flatMap(x => x.hong.map(h => h.ten)))];
+    const pd = 'PD' + ((String(k.lop).match(/^\s*(\d{1,2})/) || [])[1] || '');
+    const goiY = LH.chiEm ? LH.chiEm.ten : hong.join(', ');
+    const lopGiao = prompt(`Phiếu vá ${chon.length} dạng (mỗi dạng 2 câu, dễ → khó).\n\nGiao cho ai? (sửa được)\n• Các em đang hổng: ${hong.length} em (đã điền sẵn)\n• Cả lớp: ${k.lop}${laPD(k.lop) ? '' : `\n• Lớp phụ đạo: ${pd}`}`, goiY || k.lop);
+    if (lopGiao === null) return;
+    const ten = `Phiếu vá lỗ hổng – ${chon.length === 1 ? (chon[0].ten || chon[0].ma) : chon.length + ' dạng'} – ${laPD(k.lop) ? k.lop : 'Lớp ' + k.lop}`;
+    document.getElementById('lh-phieu').disabled = true;
+    try { await LH.taoPhieu({ dang: chon.map(x => x.ma), lop_giao: lopGiao, ten, moi: 2 }) } finally { document.getElementById('lh-phieu').disabled = false }
+  }
+  window.TongHop = { mo, bangDiem, loHong };
 })();

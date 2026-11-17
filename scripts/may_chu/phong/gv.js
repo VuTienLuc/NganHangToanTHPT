@@ -59,11 +59,17 @@ async function __phongGV() {
   __pgCss();
   const d = __pgDuLieu(), sl = (d.settings && d.settings.studentExam && d.settings.studentExam.examId) || location.pathname.split('/').filter(Boolean)[0];
   const g = document.createElement('div'); g.id = 'pg'; document.body.appendChild(g);
-  g.innerHTML = '<div class="dau"><h1>🎮 Phòng thi đấu · ' + __pe(d.title) + '</h1><span id="pg-ma-nho" class="goi"></span><button id="pg-tat" title="Toàn màn hình (F)">⛶</button></div><div class="than" id="pg-than"></div><div class="toast" id="pg-toast" role="status"></div>';
+  g.innerHTML = '<div class="dau"><h1>' + (new URLSearchParams(location.search).has('phieu') ? '🎫 ' : '🎮 Phòng thi đấu · ') + __pe(d.title) + '</h1><span id="pg-ma-nho" class="goi"></span><button id="pg-tat" title="Toàn màn hình (F)">⛶</button></div><div class="than" id="pg-than"></div><div class="toast" id="pg-toast" role="status"></div>';
   document.getElementById('pg-tat').onclick = () => document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen?.().catch(() => {});
   document.addEventListener('keydown', e => { if (e.target.matches('input,select,textarea')) return; if (e.key === 'f' || e.key === 'F') document.getElementById('pg-tat').click(); if ((e.key === 'ArrowRight' || e.key === ' ') && __PG.st) { e.preventDefault(); __pgTiep(); } });
   const daCo = new URLSearchParams(location.search).get('phong');
   if (/^\d{6}$/.test(daCo || '')) return __pgNoi(daCo);
+  if (new URLSearchParams(location.search).has('phieu')) {        // 🎫 phiếu cuối giờ: mở phòng ngay, học sinh tự làm, không xếp hạng
+    document.getElementById('pg-than').innerHTML = '<div class="the">Đang mở phiếu cuối giờ…</div>';
+    const k = await __pgGoi('phong/tao', { slug: sl, vao: 'tk', nhip: 'tu_do', doi: 0, giay: 120, kieu: 'phieu' });
+    if (!k.ok) { document.getElementById('pg-than').innerHTML = '<div class="the">' + __pe(k.loi || 'Chưa mở được phòng') + '</div>'; return; }
+    history.replaceState(null, '', location.pathname + '?phong=' + k.ma + '&phieu=1'); __PG.tuBatDau = true; return __pgNoi(k.ma);
+  }
   // cài đặt trước khi mở phòng
   const than = document.getElementById('pg-than');
   than.innerHTML = `<div class="the"><h2 style="margin:0 0 6px">Mở phòng thi đấu</h2><p class="goi" style="margin:0 0 16px">${d.questions.length} câu · học sinh quét QR bằng điện thoại để vào phòng, chọn đáp án trên máy của mình.</p>
@@ -103,6 +109,8 @@ function __pgNhan(m) {
     __pgGui({ t: 'nap', cau: d.questions.map(q => { const c = __pgCau(q); return { html: c.de + (q.type === 'short' ? '' : '<ol class="pa-ds" type="' + (q.type === 'mcq' ? 'A' : 'a') + '">' + c.pa.map(x => '<li>' + x + '</li>').join('') + '</ol>'), so_pa: (q.options || []).length }; }) });
     return;
   }
+  if (m.kieu === 'phieu' && m.giai_doan === 'cho' && m.co_cau && !__PG.daBD) { __PG.daBD = true; __pgGui({ t: 'bat_dau_phieu' }); }
+  if (m.kieu === 'phieu' && m.giai_doan === 'ket_thuc' && !__PG.daLuu) { __PG.daLuu = true; __pgGoi('phong/' + m.ma + '/luu', {}).then(k => __pgToast(k.ok ? '✓ Đã lưu kết quả phiếu (' + k.so + ' em)' : (k.loi || 'Chưa lưu được'))); }
   __pgVe();
 }
 function __pgTiep() {
@@ -139,7 +147,8 @@ function __pgVe() {
     than.querySelectorAll('[data-ra]').forEach(b => b.onclick = () => { if (confirm('Mời em này ra khỏi phòng?')) __pgGui({ t: 'moi_ra', id: b.dataset.ra }); });
     return;
   }
-  if (s.giai_doan === 'ket_thuc') return __pgVeKetThuc(s);
+  if (s.giai_doan === 'ket_thuc') return s.kieu === 'phieu' ? __pgVePhieu(s, true) : __pgVeKetThuc(s);
+  if (s.kieu === 'phieu') return __pgVePhieu(s);
   if (s.nhip === 'tu_do') {
     than.innerHTML = `<div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap"><h2 style="margin:0;flex:1">🏃 Học sinh đang tự làm · ${s.so_cau} câu · ${onl}/${s.nguoi.length} em đang kết nối</h2><button class="chinh" id="pg-kt">🏁 Kết thúc &amp; xem kết quả</button></div>
       ${__pgBangDoi(s)}<div class="xh">${xep.map((p, i) => `<div><span class="h">${['🥇', '🥈', '🥉'][i] || i + 1}</span><span>${__pe(p.ten)} ${p.doi != null ? `<span class="chip" style="background:${__pgMauDoi(p.doi)};font-size:13px;padding:2px 10px">${__pgTenDoi(p.doi)}</span>` : ''}
@@ -186,5 +195,44 @@ function __pgVeKetThuc(s) {
     const csv = '﻿' + [dau, ...k.nguoi.map(p => [p.hang, p.ho_ten || p.ten, p.tk || '', p.lop || '', p.stt || '', p.doi != null ? __pgTenDoi(p.doi) : '', p.diem, p.dung, p.da_lam, F(p.diem10)])]
       .map(r => r.map(v => '"' + String(v).replace(/"/g, '""') + '"').join(',')).join('\n');
     const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv' })); a.download = 'ThiDau_' + s.ma + '.csv'; a.click();
+  };
+}
+
+// ===== 🎫 PHIẾU CUỐI GIỜ: thống kê từng câu + lỗi sai phổ biến + tự đánh giá =====
+function __pgDapChu(type, v) { if (v == null) return '—'; return type === 'mcq' ? 'ABCD'[v] : type === 'tf' ? (Array.isArray(v) ? v.map((x, j) => 'abcd'[j] + (x ? 'Đ' : 'S')).join(' ') : '—') : String(v); }
+function __pgVePhieu(s, xong) {
+  const than = document.getElementById('pg-than'), d = __pgDuLieu(), tk = s.thong_ke || [], url = __pgUrlChoi(s.ma);
+  const nop = s.nguoi.filter(p => p.da_lam >= s.so_cau).length, dg = s.danh_gia || [0, 0, 0], tdg = dg[0] + dg[1] + dg[2];
+  const pt = x => x == null ? '—' : Math.round(100 * x) + '%', mau = x => x == null ? '#475569' : x >= .8 ? '#16a34a' : x >= .6 ? '#ca8a04' : '#dc2626';
+  const yeu = tk.map((x, i) => ({ ...x, i })).filter(x => x.n && x.dung < .6).sort((a, b) => a.dung - b.dung);
+  than.innerHTML = `<div style="display:grid;grid-template-columns:${xong ? '1fr' : 'minmax(220px,300px) 1fr'};gap:20px;align-items:start">
+    ${xong ? '' : `<div class="the" style="text-align:center"><img class="qr" alt="QR" src="${__pgQr(url)}"><div class="ma" style="font-size:52px">${s.ma}</div><div class="goi">${__pe(url.replace(/^https?:\/\//, '').replace(/\/choi\/.*/, '/choi'))}</div>
+      <div style="font-size:30px;font-weight:900;margin-top:10px">${nop}<span class="goi" style="font-size:18px">/${s.nguoi.length} em đã nộp</span></div>
+      <button class="chinh" id="pg-kt" style="margin-top:12px;width:100%">🏁 Kết thúc &amp; lưu</button></div>`}
+    <div style="display:flex;flex-direction:column;gap:14px">
+      <h2 style="margin:0">🎫 Phiếu cuối giờ · ${__pe(s.ten)}${xong ? ' — kết quả' : ''}</h2>
+      <div class="the" style="display:flex;gap:18px;flex-wrap:wrap;align-items:center;font-size:22px"><b>Các em tự đánh giá:</b>
+        <span>😀 Hiểu rõ <b>${dg[0]}</b></span><span>😐 Còn chỗ chưa chắc <b>${dg[1]}</b></span><span>😟 Chưa hiểu <b>${dg[2]}</b></span>
+        ${tdg ? `<div style="flex-basis:100%;display:flex;height:16px;border-radius:9px;overflow:hidden"><i style="width:${100 * dg[0] / tdg}%;background:#22c55e"></i><i style="width:${100 * dg[1] / tdg}%;background:#eab308"></i><i style="width:${100 * dg[2] / tdg}%;background:#ef4444"></i></div>` : ''}</div>
+      ${xong && yeu.length ? `<div class="the" style="background:#422006;border:2px solid #f59e0b"><b style="font-size:22px">💡 Gợi ý mở đầu tiết sau</b>${yeu.map(x => `<div style="margin-top:8px;font-size:19px">• Sửa <b>câu ${x.i + 1}</b>${x.ten_dang ? ' (' + __pe(x.ten_dang) + ')' : ''}: chỉ ${pt(x.dung)} đúng${x.sai_nhieu ? `, ${x.sai_nhieu.so} em chọn <b>${__pe(__pgDapChu(x.type, x.sai_nhieu.v))}</b>` : ''} — đáp án ${__pe(__pgDapChu(x.type, x.dap_an))}.</div>`).join('')}</div>`
+        : xong ? '<div class="the" style="background:#052e16;border:2px solid #22c55e;font-size:20px">🎉 Mọi câu đều trên 60% đúng — lớp nắm bài tốt!</div>' : ''}
+      ${tk.map((x, i) => { const q = d.questions[i], c = __pgCau(q);
+        return `<div class="the"><div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap"><b style="font-size:22px">Câu ${i + 1}</b><span class="goi">${__pe(x.ten_dang || '')}</span><span style="flex:1"></span>
+          <span style="font:900 34px ui-monospace,Menlo,monospace;color:${mau(x.dung)}">${pt(x.dung)}</span><span class="goi">${x.n} em</span></div>
+          <div class="tien" style="height:12px;margin:8px 0"><i style="width:${Math.round(100 * (x.dung || 0))}%;background:${mau(x.dung)}"></i></div>
+          <details><summary class="goi" style="cursor:pointer">Xem đề</summary><div class="cau" style="font-size:18px;margin-top:8px">${c.de}</div></details>
+          ${x.chon ? `<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:8px">${x.chon.map((n, j) => `<div style="border-radius:10px;padding:8px 10px;background:${j === x.dap_an ? '#166534' : '#334155'};${j === x.dap_an ? 'outline:3px solid #4ade80' : ''}"><b>${'ABCD'[j]}</b>${j === x.dap_an ? ' ✓' : ''} <span style="float:right;font-weight:900">${n}</span></div>`).join('')}</div>` : ''}
+          ${x.sai_nhieu && x.dung < 1 ? `<div style="margin-top:8px;color:#fca5a5">Sai nhiều nhất: <b>${__pe(__pgDapChu(x.type, x.sai_nhieu.v))}</b> (${x.sai_nhieu.so} em) · đáp án <b style="color:#86efac">${__pe(__pgDapChu(x.type, x.dap_an))}</b></div>` : ''}</div>`; }).join('')}
+      ${xong ? '<div style="display:flex;gap:10px;flex-wrap:wrap"><button id="pg-csv">⬇ Tải Excel</button><button id="pg-moi">Đóng phiếu</button></div>' : ''}</div></div>`;
+  __pgMath(than);
+  const b = id => document.getElementById(id);
+  if (b('pg-kt')) b('pg-kt').onclick = () => { if (confirm('Kết thúc phiếu và lưu kết quả? Em chưa nộp sẽ dừng ở câu đang làm.')) __pgGui({ t: 'ket_thuc' }); };
+  if (b('pg-moi')) b('pg-moi').onclick = () => { location.href = location.pathname; };
+  if (b('pg-csv')) b('pg-csv').onclick = async () => {
+    const k = await __pgGoi('phong/' + s.ma + '/ket-qua'); if (!k.ok) return __pgToast('Phòng không còn');
+    const DG = ['😀 Hiểu rõ', '😐 Chưa chắc', '😟 Chưa hiểu'], dau = ['Tên', 'Tài khoản', 'Lớp', 'STT', ...Array.from({ length: k.so_cau }, (_, i) => 'Câu ' + (i + 1)), 'Số câu đúng', 'Tự đánh giá'];
+    const csv = '﻿' + [dau, ...k.nguoi.map(p => [p.ho_ten || p.ten, p.tk || '', p.lop || '', p.stt || '', ...Array.from({ length: k.so_cau }, (_, i) => { const x = p.tl[i]; return x ? (x.ti_le === 1 ? 'Đúng' : x.ti_le > 0 ? 'Một phần' : 'Sai') : ''; }), p.dung, p.danh_gia != null ? DG[p.danh_gia] : ''])]
+      .map(r => r.map(v => '"' + String(v).replace(/"/g, '""') + '"').join(',')).join('\n');
+    const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv' })); a.download = 'PhieuCuoiGio_' + s.ma + '.csv'; a.click();
   };
 }

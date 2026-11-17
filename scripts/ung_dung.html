@@ -2065,14 +2065,14 @@ function veThi(r){
   const chip=(k,v,t)=>`<button class="tv-chip" data-k="${k}" data-v="${v}" aria-pressed="${String(TV[k])===String(v)}">${t}</button>`;
   $("#thi-ds").innerHTML=`<div class="tv"><div class="tv-thanh">
     <div class="tv-tim"><div class="o"><span class="kinh" aria-hidden="true">🔍</span><input id="tv-q" type="search" placeholder="Tìm đề, bài giảng, phiếu theo tên, bài, chương, lớp giao… (gõ không dấu được)" aria-label="Tìm trong thư viện" value="${esc(TV.q)}"></div>
-      <button id="tv-th" class="chinh" title="Điểm từng đợt, mức hoàn thành, tiến bộ và nhận xét tích cực theo lớp">📊 Tổng hợp quá trình</button><button id="tv-bg-mo">＋ Đăng bài giảng</button></div>
+      <button id="tv-pcg" title="Phiếu 3 câu cuối tiết: học sinh quét QR làm trên điện thoại, tự đánh giá mức hiểu bài; thầy xem ngay câu nào lớp sai nhiều">🎫 Phiếu cuối giờ</button><button id="tv-th" class="chinh" title="Điểm từng đợt, mức hoàn thành, tiến bộ và nhận xét tích cực theo lớp">📊 Tổng hợp quá trình</button><button id="tv-bg-mo">＋ Đăng bài giảng</button></div>
     <div class="tv-loc"><span class="nhan-loc">Khối</span>${chip("lop","","Tất cả")}${lops.map(l=>chip("lop",l,l?"Lớp "+l:"Chưa rõ")).join("")}
       <span class="nhan-loc">Loại</span>${chip("loai","","Tất cả")}${chip("loai","de","📝 Đề thi")}${chip("loai","bg","📚 Bài giảng")}${chip("loai","phieu","📄 Phiếu")}
       <span class="nhan-loc">Trạng thái</span>${chip("tt","","Tất cả")}${chip("tt","mo","Đang mở")}${chip("tt","dong","Đã đóng / ẩn")}${chip("tt","giao","✓ Đã giao")}${chip("tt","chua_giao","○ Chưa giao")}
       <span class="tv-dem" id="tv-dem"></span></div></div><div id="tv-ds"></div></div>`;
   $("#tv-q").oninput=e=>{TV.q=e.target.value;tvVe()};
   if(!TV.giaoTai){TV.giaoTai=1;api("/api/thi/de-giao-ds",{}).then(k=>{if(k.ok){TV.giao=Object.fromEntries(k.ds.map(x=>[x.slug,x.giao]));TV.giaoOk=1}else TV.giaoLoi=k.loi||"Chưa kết nối máy chủ";tvVe()})}
-  $("#tv-bg-mo").onclick=()=>moBg(null);$("#tv-th").onclick=()=>moTongHop();
+  $("#tv-bg-mo").onclick=()=>moBg(null);$("#tv-th").onclick=()=>moTongHop();$("#tv-pcg").onclick=()=>moPhieuCuoiGio();
   $("#thi-ds").querySelectorAll(".tv-chip").forEach(b=>b.onclick=()=>{TV[b.dataset.k]=b.dataset.v;tvLuu();veThi(TV.r)});
   tvVe();
 }
@@ -2187,7 +2187,56 @@ async function hanhDongBg(x,v,b){const sl=x.slug;
 }
 
 // ---------------- TỔNG HỢP QUÁ TRÌNH HỌC ONLINE (mã dùng chung: scripts/tong_hop.js)
-function moTongHop(lop){TongHop.mo({goi:(v,d)=>api("/api/thi/"+v,d),lop})}
+function moTongHop(lop){TongHop.mo({goi:(v,d)=>api("/api/thi/"+v,d),lop,taoPhieu:taoPhieuTuNganHang})}
+// 🎫 phiếu cuối giờ: chọn bài → 3 câu TN (dễ → khó, rải các dạng của bài) → đăng → mở phòng chế độ phiếu
+async function moPhieuCuoiGio(){
+  if(!DM_DANG){const r=await api("/api/danh-muc-dang",{});DM_DANG=r.dang}
+  const bai=new Map();for(const d of DM_DANG){const k=d.k.split("-")[0];if(!bai.has(k))bai.set(k,d)}
+  let c={};try{c=JSON.parse(localStorage.getItem("pcg")||"{}")}catch(_){}
+  const lops=[...new Set([...bai.values()].map(d=>d.lop))].sort((a,b)=>a-b);
+  hopThoai("🎫 Phiếu cuối giờ","");
+  const noi=$("#ht-noi");noi.innerHTML=`<div style="display:flex;flex-direction:column;gap:10px;min-width:min(560px,80vw);font:15px/1.5 system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;white-space:normal"><style>#ht-noi select{font:inherit;padding:5px 8px;max-width:100%}#ht-noi label{display:flex;flex-direction:column;gap:4px;font-weight:600}</style>
+    <label>Khối <select id="pcg-lop">${lops.map(l=>`<option value="${l}">Lớp ${l}</option>`).join("")}</select></label>
+    <label>Bài vừa học <select id="pcg-bai" style="max-width:100%"></select></label>
+    <label>Số câu <select id="pcg-n"><option>3</option><option>4</option><option>5</option></select></label>
+    <p style="margin:0;font-size:13px;color:#64748b">Máy rút câu trắc nghiệm của bài (dễ → khó, rải các dạng), đăng lên mạng rồi mở màn hình chiếu có QR. Học sinh đăng nhập tài khoản, làm trên điện thoại, cuối phiếu tự đánh giá 😀😐😟. Kết quả lưu vào Tổng hợp (mục 🎫) và Bản đồ lỗ hổng.</p></div>`;
+  const veBai=()=>{const l=+$("#pcg-lop").value;$("#pcg-bai").innerHTML=[...bai.entries()].filter(([,d])=>d.lop===l).map(([k,d])=>`<option value="${esc(k)}">${esc((d.ten_chuong?d.ten_chuong.slice(0,28)+" › ":"")+"Bài "+d.bai+". "+d.ten_bai)}</option>`).join("")};
+  $("#pcg-lop").onchange=veBai;if(c.lop)$("#pcg-lop").value=c.lop;veBai();if(c.bai)$("#pcg-bai").value=c.bai;if(c.n)$("#pcg-n").value=c.n;
+  const nut=$("#ht-nut");const b=document.createElement("button");b.className="chinh";b.textContent="🎫 Tạo & mở phiếu";nut.prepend(b);
+  b.onclick=async()=>{const k=$("#pcg-bai").value,d=bai.get(k),n=+$("#pcg-n").value;if(!k)return;
+    try{localStorage.setItem("pcg",JSON.stringify({lop:$("#pcg-lop").value,bai:k,n}))}catch(_){}
+    const ten=`Phiếu cuối giờ – Bài ${d.bai}. ${d.ten_bai} – ${new Date().toLocaleDateString("vi-VN")}`;
+    b.remove();
+    try{await taoPhieuTuNganHang({tieu:"🎫 Phiếu cuối giờ",bai:[k],tong:n,moi:3,loai:["TN"],ten,slug:"phieu-cuoi-gio-"+boDauSlug(d.ten_bai).slice(0,30),lop_giao:"PHIEU",so_luot:1,phut:10,goi_y_ai:false,
+      sau:r=>{$("#ht-noi").textContent+="\n✓ Đang mở màn hình chiếu phiếu (thầy cần đăng nhập tài khoản GV trên trình duyệt)…";window.open(r.url+"?phong&phieu=1","_blank")}})}catch(_){}
+  };
+}
+// dựng đề từ ngân hàng (theo dạng / theo bài) → đăng lên mạng; dùng cho phiếu vá lỗ hổng và phiếu cuối giờ
+async function taoPhieuTuNganHang(o){
+  let nk="";const ghi=t=>{nk+=t+"\n";$("#ht-noi").textContent=nk};
+  hopThoai(o.tieu||"🩹 Tạo phiếu vá lỗ hổng","");
+  try{
+    ghi("• Rút câu từ ngân hàng…");
+    const c=await api("/api/chon-theo-dang",{dang:o.dang||[],bai:o.bai||[],moi:o.moi||2,tong:o.tong||0,loai:o.loai});
+    if(!c.ok) throw Error(c.loi);
+    ghi(`  ${c.ma.length} câu`+(c.thieu&&c.thieu.length?` · chưa có câu cho: ${c.thieu.join(", ")}`:""));
+    const w=await appTrinhChieu(); let ds={};try{ds=(await api("/api/thi/ds",{})).cau_hinh||{}}catch(_){}
+    const slug=(o.slug||boDauSlug(o.ten))+"-"+new Date().toISOString().slice(5,16).replace(/\D/g,"");
+    ghi("• Dựng đề (công thức, hình)…");
+    const r=await api("/api/thi/du-lieu",{ma:c.ma,ten:o.ten}); if(!r.ok) throw Error(r.loi);
+    const d=r.du_lieu; d.settings={examMinutes:o.phut||Math.max(10,c.ma.length*3),studentExam:w.examSettings({flipMode:"select",scriptUrl:ds.script_url||"",examId:slug})};
+    // phiếu ngắn (vài câu) không theo cấu trúc 12–4–6: tạm bỏ kiểm tra cấu trúc THPT của app trình chiếu khi dựng trang
+    const cu=w.examStructure;let html;w.examStructure=x=>{const c={mcq:0,tf:0,short:0};for(const q of x.questions)c[q.type]++;return c};
+    try{html=w.createExam(d)}finally{w.examStructure=cu}
+    const r2=await api("/api/thi/dang",{slug,ten:o.ten,html,an_dap_an:o.an_dap_an!==false,phut:d.settings.examMinutes,dang_ngay:false,lop_giao:o.lop_giao||"",so_luot:o.so_luot??0,goi_y_ai:o.goi_y_ai!==false});
+    if(!r2.ok) throw Error(r2.loi); ghi("  ✓ "+r2.url);
+    ghi("• Đăng lên Cloudflare (1–3 phút)…");const k=await api("/api/thi/dang-lai",{}); if(!k.ok) throw Error(k.loi);
+    const s=await nhCho(()=>{}); if(!s.thi_ok) throw Error("Đăng chưa xong — xem nhật ký trong 🌐 Thi trực tuyến.");
+    ghi(`✓ Xong! Link: ${r2.url}\nGiao cho: ${o.lop_giao||"mọi lớp"}`+(o.sau?"":"\nHọc sinh được giao thấy phiếu ngay trên trang học của mình."));
+    if(o.sau) o.sau(r2); else navigator.clipboard&&navigator.clipboard.writeText(r2.url).catch(()=>{});
+    return r2;
+  }catch(e){ghi("✗ "+e.message);throw e}
+}
 
 async function moThi(){$("#hop-thi").style.display="flex";$("#thi-kq").innerHTML="";veThi(await api("/api/thi/ds",{}))}
 // ---------------- BÀI GIẢNG

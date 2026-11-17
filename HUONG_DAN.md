@@ -221,6 +221,18 @@ như phần mềm cũ thì ghi `"khung": "DeThi"` trong file JSON.
 - **⚑ Học sinh cần quan tâm**: máy tự đánh dấu em chưa làm, thiếu bài, TB dưới 5, tụt từ 1 điểm, hoặc đang lo lắng/mệt (cảm xúc khi làm bài). Bấm ⚑ trong bảng để đánh dấu / bỏ đánh dấu thêm (nhớ theo lớp).
 - Mỗi em được đánh dấu có **tin nhắn riêng tích cực, vui** (sửa được, 🎲 đổi câu khác). **💌 Gửi vào trang học** → em thấy khung “💌 Thầy nhắn em” khi đăng nhập, bấm “Em đã đọc 👍”; bảng của thầy hiện “✓ em đã đọc”. Hoặc **Chép tin nhắn** để gửi Zalo.
 
+### 🗺 Bản đồ lỗ hổng kiến thức theo dạng + 🩹 phiếu vá
+- Tổng hợp quá trình → chọn lớp → **🗺 Lỗ hổng theo dạng** (app và trang GV web). Máy cộng tỉ lệ đúng theo **mã dạng** của từng câu (lần làm gần nhất mỗi đề + phiếu cuối giờ + thi đấu).
+- **📉 Dạng cả lớp còn yếu nhất** (thanh %, số em hổng) và **🌡 bảng nhiệt** từng em × từng dạng; bấm tên em → danh sách dạng em đó cần vá. Ngưỡng hổng chỉnh 40/50/65%.
+- Tick dạng (hoặc “Chọn các dạng này” của một em) → **🩹 Tạo phiếu vá lỗ hổng** (chỉ trong app — cần ngân hàng): mỗi dạng 2 câu dễ → khó, giao cho **các em đang hổng** (ghi thẳng tài khoản ở ô Lớp giao, vd `10a1-05, 10a1-07`), cả lớp hoặc PD10. Em được giao thấy phiếu trên trang học.
+- Đề đăng trước bản này cần **Đăng lại tất cả** một lần để máy chủ biết câu nào thuộc dạng nào (bài đã nộp vẫn được tính).
+
+### 🎫 Phiếu cuối giờ (exit ticket)
+- Thư viện → **🎫 Phiếu cuối giờ** → chọn khối, bài vừa học, số câu (3–5) → **Tạo & mở phiếu**: máy rút câu trắc nghiệm của bài (dễ → khó, rải các dạng), đăng, mở màn chiếu có QR (cần đăng nhập GV trên trình duyệt).
+- Học sinh quét QR, đăng nhập, làm trên điện thoại (không xếp hạng, không tính tốc độ); cuối phiếu tự đánh giá **😀 Hiểu rõ · 😐 Còn chỗ chưa chắc · 😟 Chưa hiểu**.
+- Màn chiếu: % đúng từng câu, số em chọn A/B/C/D, **sai nhiều nhất**, tỉ lệ tự đánh giá. **🏁 Kết thúc & lưu** → **💡 Gợi ý mở đầu tiết sau** (câu dưới 60%, đáp án sai phổ biến) + tải Excel; kết quả tự lưu.
+- Tổng hợp lớp có mục **🎫 Phiếu cuối giờ — mức hiểu bài qua từng tiết**; kết quả cũng vào Bản đồ lỗ hổng. Cần Đăng lại tất cả (cơ sở dữ liệu bản 8).
+
 ### 🎮 Phòng thi đấu trực tiếp (kiểu Quizizz)
 - Mở phòng: Thư viện (app) hoặc trang GV web → nút **🎮 Thi đấu** ở đề → trang chiếu mở ra, chọn: học sinh vào bằng **tài khoản** hay **biệt danh**; nhịp **thầy bấm sang câu** hay **học sinh tự làm**; **cá nhân** hay **2–6 đội** (máy chia ngẫu nhiên, chia lại được); số giây mỗi câu → **Mở phòng**.
 - Học sinh quét **QR** (hoặc vào …pages.dev/choi, nhập mã 6 số) → chọn đáp án trên điện thoại (A/B/C/D, Đúng/Sai từng ý, nhập đáp số). Tải lại trang vẫn giữ điểm.

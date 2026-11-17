@@ -33,7 +33,7 @@ export const soBam = s => { let h = 2166136261; for (const c of String(s)) h = M
 // lớp phụ đạo theo khối: học sinh thầy đánh dấu ⭐ (bảng theo_doi) thuộc thêm lớp PD<khối>, vd PD10
 export const khoiCua = l => (String(l || '').match(/^\s*(\d{1,2})/) || [])[1] || '';
 export async function cacLop(env, ph) {
-  const ds = [ph.lop];
+  const ds = [ph.lop, ph.tk];                 // ô Lớp giao ghi được cả tài khoản (giao riêng từng em, vd phiếu vá lỗ hổng)
   try { if (khoiCua(ph.lop) && await env.DB.prepare('SELECT 1 AS c FROM theo_doi WHERE tk = ?').bind(ph.tk).first()) ds.push('PD' + khoiCua(ph.lop)); } catch (_) {}
   return ds;
 }

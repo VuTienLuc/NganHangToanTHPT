@@ -1,0 +1,3 @@
+ALTER TABLE thi_dau ADD COLUMN kieu TEXT;
+ALTER TABLE thi_dau ADD COLUMN danh_gia INTEGER;
+ALTER TABLE thi_dau ADD COLUMN chi_tiet TEXT;
