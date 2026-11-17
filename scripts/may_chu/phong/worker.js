@@ -33,7 +33,7 @@ export class Phong {
     const u = new URL(req.url), duong = u.pathname.replace(/^\/+/, '');
     if (duong === 'tao') {                       // Pages gửi: {ma, slug, ten, khoa, vao, nhip, doi, giay, gv}
       const d = await req.json();
-      this.s = { ma: d.ma, slug: d.slug, ten: d.ten, khoa: d.khoa, vao: d.vao, nhip: d.nhip, so_doi: Math.max(0, Math.min(8, d.doi | 0)), giay: d.giay || 20,
+      this.s = { ma: d.ma, slug: d.slug, ten: d.ten, khoa: d.khoa, vao: d.vao, nhip: d.nhip, kieu: d.kieu === 'phieu' ? 'phieu' : 'thi_dau', so_doi: Math.max(0, Math.min(8, d.doi | 0)), giay: d.giay || 20,
         gv: d.gv, tao_luc: Date.now(), giai_doan: 'cho', cur: -1, cau: [], nguoi: {}, het_luc: 0 };
       await this.luu();
       await this.ctx.storage.setAlarm(Date.now() + 6 * 3600e3);       // phòng tự xoá sau 6 giờ
@@ -42,7 +42,7 @@ export class Phong {
     const s = await this.nap();
     if (duong === 'thong-tin') {
       if (!s) return Response.json({ ok: false, loi: 'Không có phòng này (sai mã hoặc phòng đã đóng).' });
-      return Response.json({ ok: true, ten: s.ten, vao: s.vao, nhip: s.nhip, giai_doan: s.giai_doan, so_doi: s.so_doi });
+      return Response.json({ ok: true, ten: s.ten, vao: s.vao, nhip: s.nhip, giai_doan: s.giai_doan, so_doi: s.so_doi, kieu: s.kieu });
     }
     if (duong === 'ket-qua') {
       if (!s) return Response.json({ ok: false });
@@ -72,7 +72,7 @@ export class Phong {
   danhSach() {
     const s = this.s;
     return Object.values(s.nguoi).map(p => ({ id: p.id, ten: p.ten, lop: p.lop, stt: p.stt, doi: p.doi, diem: p.diem, chuoi: p.chuoi,
-      dung: p.dung, da_lam: Object.keys(p.tl).length, onl: !!this.wsCua(p.id) }));
+      dung: p.dung, da_lam: Object.keys(p.tl).length, onl: !!this.wsCua(p.id), danh_gia: p.danh_gia ?? null }));
   }
   bangDoi() {
     const s = this.s; if (!s.so_doi) return [];
@@ -90,7 +90,22 @@ export class Phong {
   bangKetQua(day) {
     const s = this.s, ds = this.danhSach().sort((a, b) => b.diem - a.diem).map((p, i) => ({ ...p, hang: i + 1, diem10: this.diem10(s.nguoi[p.id]) }));
     return { ten: s.ten, slug: s.slug, ma: s.ma, so_cau: s.cau.length, so_doi: s.so_doi, nhip: s.nhip, vao: s.vao,
-      nguoi: day ? ds.map(p => ({ ...p, tk: s.nguoi[p.id].tk, ho_ten: s.nguoi[p.id].ho_ten, tl: s.nguoi[p.id].tl })) : ds, doi: this.bangDoi() };
+      kieu: s.kieu, nguoi: day ? ds.map(p => ({ ...p, tk: s.nguoi[p.id].tk, ho_ten: s.nguoi[p.id].ho_ten, tl: s.nguoi[p.id].tl, chi_tiet: this.chiTiet(s.nguoi[p.id]) })) : ds, doi: this.bangDoi() };
+  }
+  chiTiet(p) {
+    return Object.entries(p.tl).map(([i, x]) => { const k = this.s.khoa[i] || {}; return { i: +i, dang: k.dang || '', ten_dang: k.ten_dang || '', bai: k.bai || '', ti_le: x.ti_le, v: x.v }; });
+  }
+  // thống kê từng câu (chế độ tự làm / phiếu): % đúng, số em chọn từng phương án, đáp án sai nhiều nhất
+  thongKe() {
+    const s = this.s;
+    return s.khoa.map((k, i) => {
+      const ds = Object.values(s.nguoi).map(p => p.tl[i]).filter(Boolean);
+      const chon = k.type === 'mcq' ? [0, 1, 2, 3].map(j => ds.filter(x => x.v === j).length) : null;
+      const sai = {}; for (const x of ds) if (x.ti_le < 1 && x.v != null) { const kh = JSON.stringify(x.v); sai[kh] = (sai[kh] || 0) + 1; }
+      const top = Object.entries(sai).sort((a, b) => b[1] - a[1])[0];
+      return { n: ds.length, dung: ds.length ? ds.reduce((a, x) => a + x.ti_le, 0) / ds.length : null, chon, sai_nhieu: top ? { v: JSON.parse(top[0]), so: top[1] } : null,
+        type: k.type, dap_an: k.answer, ten_dang: k.ten_dang || '' };
+    });
   }
   // trạng thái gửi màn hình thầy
   trangThaiGV() {
@@ -99,13 +114,15 @@ export class Phong {
     const chon = k && k.type === 'mcq' ? [0, 1, 2, 3].map(j => Object.values(s.nguoi).filter(p => p.tl[s.cur] && p.tl[s.cur].v === j).length) : null;
     return { t: 'phong', ma: s.ma, ten: s.ten, vao: s.vao, nhip: s.nhip, so_doi: s.so_doi, giay: s.giay, giai_doan: s.giai_doan, cur: s.cur,
       so_cau: s.cau.length, het_luc: s.het_luc, bay_gio: Date.now(), nguoi: this.danhSach(), doi: this.bangDoi(), da_tl: dem, chon,
-      dap_an: s.giai_doan === 'dap_an' && k ? k.answer : null, co_cau: s.cau.length > 0 };
+      dap_an: s.giai_doan === 'dap_an' && k ? k.answer : null, co_cau: s.cau.length > 0, kieu: s.kieu,
+      thong_ke: s.nhip === 'tu_do' ? this.thongKe() : null,
+      danh_gia: [0, 1, 2].map(j => Object.values(s.nguoi).filter(p => p.danh_gia === j).length) };
   }
   // câu i gửi cho học sinh (không kèm đáp án)
   cauHS(i) { const c = this.s.cau[i]; return c ? { i, type: c.type, html: c.html, so_pa: c.so_pa } : null; }
   trangThaiHS(p) {
     const s = this.s;
-    const m = { t: 'trang_thai', ten: s.ten, nhip: s.nhip, giai_doan: s.giai_doan, so_cau: s.cau.length, bay_gio: Date.now(), giay: s.giay,
+    const m = { t: 'trang_thai', kieu: s.kieu, ten: s.ten, nhip: s.nhip, giai_doan: s.giai_doan, so_cau: s.cau.length, bay_gio: Date.now(), giay: s.giay,
       toi: p ? { id: p.id, ten: p.ten, doi: p.doi, diem: p.diem, chuoi: p.chuoi, hang: this.hangCua(p.id) } : null, so_doi: s.so_doi };
     if (s.nhip === 'gv') {
       m.cur = s.cur; m.het_luc = s.het_luc;
@@ -117,7 +134,7 @@ export class Phong {
     } else if (p && s.giai_doan === 'cau') {
       const i = p.cur ?? 0;
       if (i < s.cau.length) { m.cur = i; m.cau = this.cauHS(i); m.het_luc = p.het_luc; }
-      else m.xong = true;
+      else { m.xong = true; m.danh_gia = p.danh_gia ?? null; }
     }
     if (s.giai_doan === 'ket_thuc') m.ket_qua = { top: this.danhSach().sort((a, b) => b.diem - a.diem).slice(0, 5), doi: this.bangDoi() };
     return m;
@@ -162,6 +179,10 @@ export class Phong {
       delete s.nguoi[m.id]; const w = this.wsCua(m.id); if (w) { this.gui(w, { t: 'bi_moi_ra' }); try { w.close(4000, 'out'); } catch (_) {} }
       await this.luu(); return this.phatTat();
     }
+    if (m.t === 'bat_dau_phieu' && s.giai_doan === 'cho' && s.kieu === 'phieu' && s.cau.length) {
+      s.giai_doan = 'cau'; for (const p of Object.values(s.nguoi)) { p.cur = 0; p.het_luc = Date.now() + s.giay * 1000; }
+      await this.luu(); return this.phatTat();
+    }
     if (m.t === 'bat_dau' && s.giai_doan === 'cho') {
       if (!s.cau.length) return this.gui(ws, { t: 'loi', loi: 'Chưa nạp câu hỏi.' });
       if (s.so_doi && Object.values(s.nguoi).some(p => p.doi == null)) this.chiaDoi();
@@ -204,7 +225,8 @@ export class Phong {
     let diem = 0;
     if (tl > 0) {
       p.chuoi = tl === 1 ? (p.chuoi || 0) + 1 : 0;
-      diem = Math.round(tl * (DIEM_CO_BAN + DIEM_TOC_DO * con / tong)) + (tl === 1 ? THUONG_CHUOI * Math.min(CHUOI_TOI_DA, Math.max(0, p.chuoi - 1)) : 0);
+      diem = s.kieu === 'phieu' ? Math.round(tl * 1000)
+        : Math.round(tl * (DIEM_CO_BAN + DIEM_TOC_DO * con / tong)) + (tl === 1 ? THUONG_CHUOI * Math.min(CHUOI_TOI_DA, Math.max(0, p.chuoi - 1)) : 0);
       if (tl === 1) p.dung++;
     } else p.chuoi = 0;
     p.diem += diem;
@@ -253,6 +275,7 @@ export class Phong {
       return;
     }
     if (m.t === 'tiep' && s.nhip === 'tu_do') return this.gui(ws, this.trangThaiHS(p));
+    if (m.t === 'danh_gia' && [0, 1, 2].includes(m.v)) { p.danh_gia = m.v; await this.luu(); this.gui(ws, this.trangThaiHS(p)); this.guiGV(this.trangThaiGV()); return; }
     if (m.t === 'het_gio_rieng' && s.nhip === 'tu_do' && s.giai_doan === 'cau' && m.i === p.cur && Date.now() >= p.het_luc - 500 && !p.tl[p.cur]) {
       p.tl[p.cur] = { v: null, ti_le: 0, diem: 0, ms: s.giay * 1000 }; p.chuoi = 0;
       const dapAn = s.khoa[p.cur].answer; p.cur++; p.het_luc = Date.now() + s.giay * 1000 + 2500; await this.luu();

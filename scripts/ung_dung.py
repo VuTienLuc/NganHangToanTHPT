@@ -357,7 +357,7 @@ class XuLy(BaseHTTPRequestHandler):
                     return self.gui(200, T.them_gv(d.get("ten"), d.get("ho_ten"), d.get("mk")))
                 if viec == "phieu":
                     return self.gui(200, {"ok": True, "html": T.phieu_tai_khoan(d.get("lop") or "")})
-                if viec in ("theo-doi", "theo-doi-dat", "de-giao", "de-giao-ds", "bang-diem"):
+                if viec in ("theo-doi", "theo-doi-dat", "de-giao", "de-giao-ds", "bang-diem", "lo-hong"):
                     return self.gui(200, T.goi(viec, d))
                 if viec == "loi-nhan":
                     return self.gui(200, T.goi("loi-nhan", {"ds": d.get("ds") or []}))
@@ -670,6 +670,33 @@ class XuLy(BaseHTTPRequestHandler):
                     threading.Thread(target=bien_dich_nen, args=(rel,), daemon=True).start()
                 log = "\n".join(x for x in dong if not x.startswith("THU_MUC:"))
                 return self.gui(200, {"ok": True, "nhat_ky": log, "thu_muc": rel, "bien_dich": dang_bd, "bo_sung": bo_sung()})
+            if u.path == "/api/chon-theo-dang":      # phiếu vá lỗ hổng / phiếu cuối giờ: rút câu ngân hàng theo dạng hoặc theo bài
+                import random
+                from xem_truoc import kho, hop_le
+                dang = set(d.get("dang") or []); bai = set(d.get("bai") or [])
+                loai = set(d.get("loai") or ["TN", "DS", "TLN"]); moi = max(1, min(6, int(d.get("moi") or 2))); tong = int(d.get("tong") or 0)
+                thu_tu = {"N": 0, "H": 1, "V": 2, "C": 3}
+                theo = {}
+                for c in kho().values():
+                    k = c.get("dang_key") or ""
+                    if not k or c.get("loai") not in loai or not hop_le(c):
+                        continue
+                    if k in dang or k.split("-")[0] in bai:
+                        theo.setdefault(k, []).append(c)
+                chon, thieu = [], []
+                for k in sorted(theo) if bai else [x for x in d.get("dang") or [] if x in theo]:
+                    ds = theo[k]; random.shuffle(ds)
+                    ds.sort(key=lambda c: (thu_tu.get(c.get("muc_chuan") or c.get("muc") or "H", 1), c.get("so_lan_dung") or 0))
+                    # dễ → khó: lấy rải theo mức (câu dễ nhất, rồi câu khó hơn)
+                    buoc = max(1, len(ds) // moi) if len(ds) > moi else 1
+                    chon += [ds[min(i * buoc, len(ds) - 1)] for i in range(min(moi, len(ds)))]
+                thieu = [x for x in (d.get("dang") or []) if x not in theo]
+                if tong and len(chon) > tong:            # phiếu cuối giờ: N câu rải đều các dạng, dễ → khó
+                    chon.sort(key=lambda c: thu_tu.get(c.get("muc_chuan") or c.get("muc") or "H", 1))
+                    b = len(chon) / tong; chon = [chon[int(i * b)] for i in range(tong)]
+                chon.sort(key=lambda c: ({"TN": 0, "DS": 1, "TLN": 2}.get(c["loai"], 3), thu_tu.get(c.get("muc_chuan") or c.get("muc") or "H", 1)))
+                return self.gui(200, {"ok": bool(chon), "ma": [c["ma"] for c in chon], "thieu": thieu,
+                                      "loi": "" if chon else "Ngân hàng chưa có câu hợp lệ cho các dạng/bài đã chọn."})
             if u.path == "/api/danh-muc-dang":
                 import tao_prompt
                 return self.gui(200, {"ok": True, "dang": tao_prompt.danh_sach_dang()})

@@ -239,7 +239,20 @@ def ban_truc_tuyen(html, slug, an_dap_an=True, goi_y=False):
 def khoa_dap_an(html_goc):
     """Đáp án để máy chủ chấm: [{type, answer}] theo đúng thứ tự câu."""
     d = json.loads(KHOI_DL.search(html_goc).group(2))
-    return [{"type": q["type"], "answer": q["answer"]} for q in d["questions"]]
+    try:
+        from nh_core import tai_id_map
+        idm = tai_id_map()
+    except Exception:
+        idm = {}
+    ra = []
+    for q in d["questions"]:
+        k = {"type": q["type"], "answer": q["answer"]}
+        ma = q.get("ma_dang") or ""
+        if ma:                                  # mã dạng để máy chủ thống kê lỗ hổng kiến thức theo dạng
+            v = idm.get(ma, {})
+            k.update(dang=ma, ten_dang=(q.get("ten_dang") or v.get("type_name") or "")[:120], bai=(v.get("lesson_name") or "")[:120])
+        ra.append(k)
+    return ra
 
 
 # ---------------------------------------------------------------- trang phụ
@@ -799,7 +812,7 @@ def co_node():
 MAY_CHU = os.path.join(os.path.dirname(os.path.abspath(__file__)), "may_chu")   # mã máy chủ (Functions + schema)
 P_BM = os.path.join(THU, "bi_mat.json")       # mã quản trị + khoá phiên (KHÔNG đồng bộ GitHub)
 TEN_DB = "thi-toan-db"
-PHIEN_BAN_SCHEMA = 7
+PHIEN_BAN_SCHEMA = 8
 
 
 def _luu_ch(c):

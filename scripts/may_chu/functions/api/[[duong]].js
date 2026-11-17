@@ -49,7 +49,13 @@ async function tongHop(DB, d) {
   try { nhan = (await DB.prepare('SELECT id, tk, noi_dung, tao_luc, xem_luc FROM loi_nhan ORDER BY id DESC LIMIT 2000').all()).results.filter(x => tks.has(x.tk)); } catch (_) {}
   let theo = [];
   try { theo = (await DB.prepare('SELECT tk, ghi_chu, tu_luc FROM theo_doi').all()).results.filter(x => tks.has(x.tk)); } catch (_) {}
-  return { ok: true, lop, phu_dao: pd, hs, de, bai, nhan, theo_doi: theo };
+  let phieu = [];
+  try {
+    const r = (await DB.prepare("SELECT ma, ten_de, tao_luc, tk, dung, so_cau, danh_gia FROM thi_dau WHERE kieu = 'phieu' ORDER BY id DESC LIMIT 3000").all()).results.filter(x => tks.has(x.tk));
+    const g = new Map(); for (const x of r) { const o = g.get(x.ma) || { ma: x.ma, ten: x.ten_de, ngay: x.tao_luc, so_cau: x.so_cau, ds: [] }; o.ds.push({ tk: x.tk, dung: x.dung, dg: x.danh_gia }); g.set(x.ma, o); }
+    phieu = [...g.values()].sort((a, b) => String(a.ngay).localeCompare(String(b.ngay)));
+  } catch (_) {}
+  return { ok: true, lop, phu_dao: pd, hs, de, bai, nhan, theo_doi: theo, phieu };
 }
 // học sinh thầy chọn theo dõi (mọi lớp): bài làm, đề giao cho lớp các em, lời nhắn
 async function theoDoi(DB) {
@@ -89,6 +95,35 @@ async function bangDiem(DB, d) {
     }
   }
   return { ok: true, ds, de, cac_lop, hs };
+}
+// lỗ hổng kiến thức theo DẠNG: tỉ lệ đúng từng dạng của mỗi em (lần làm gần nhất mỗi đề) + phiếu cuối giờ / thi đấu
+async function loHong(DB, d) {
+  const lop = String(d.lop || '').trim(), tat = await dsHocSinh(DB);
+  if (!lop) return { ok: true, cac_lop: demLop(tat) };
+  const hs = tat.filter(h => thuocLop(h, lop)), tks = new Set(hs.map(h => h.ten));
+  const khoa = new Map((await DB.prepare("SELECT slug, khoa FROM de WHERE khoa IS NOT NULL AND khoa <> ''").all()).results
+    .map(x => { try { return [x.slug, JSON.parse(x.khoa)]; } catch (_) { return [x.slug, null]; } }));
+  const bai = (await DB.prepare('SELECT tk, de, nop_luc, cham FROM bai WHERE nop_luc IS NOT NULL ORDER BY nop_luc DESC').all()).results.filter(x => tks.has(x.tk));
+  const dangs = {}, m = {}, lan = new Set(), nguon = {};
+  const cong = (tk, k, tiLe) => {
+    if (!k || !k.dang) return;
+    dangs[k.dang] ??= { ten: k.ten_dang || '', bai: k.bai || '' };
+    const o = (m[tk] ??= {})[k.dang] ??= [0, 0]; o[0] += tiLe; o[1] += 1;
+  };
+  for (const b of bai) {
+    const kh = b.tk + '|' + b.de; if (lan.has(kh)) continue; lan.add(kh);      // chỉ lần làm gần nhất mỗi đề
+    const kk = khoa.get(b.de); if (!kk) continue;
+    let c; try { c = JSON.parse(b.cham); } catch (_) { c = null; }
+    if (!c || !Array.isArray(c.rows)) continue;
+    nguon[b.tk] = (nguon[b.tk] || 0) + 1;
+    for (const r of c.rows) { const k = kk[r.index]; if (k) cong(b.tk, k, k.type === 'tf' ? (r.correct || 0) / 4 : r.correct ? 1 : 0); }
+  }
+  try {
+    const td = (await DB.prepare("SELECT tk, chi_tiet FROM thi_dau WHERE chi_tiet IS NOT NULL AND tk <> '' ORDER BY id DESC LIMIT 4000").all()).results.filter(x => tks.has(x.tk));
+    for (const x of td) { let ct; try { ct = JSON.parse(x.chi_tiet); } catch (_) { ct = null; } if (!Array.isArray(ct)) continue;
+      nguon[x.tk] = (nguon[x.tk] || 0) + 1; for (const r of ct) if (r && r.dang) cong(x.tk, { dang: r.dang, ten_dang: r.ten_dang, bai: r.bai }, +r.ti_le || 0); }
+  } catch (_) {}
+  return { ok: true, lop, phu_dao: LA_PD(lop), hs: hs.map(h => ({ ten: h.ten, ho_ten: h.ho_ten, stt: h.stt, lop: h.lop })), dangs, m, nguon };
 }
 // thầy đánh dấu bài đã giao (tính vào tổng hợp) / chưa giao (chỉ là tự luyện thêm); null = tự động theo ô Lớp giao
 async function datGiao(DB, d) {
@@ -145,6 +180,7 @@ async function hocSinh(duong, d, env, req, url) {
     if (duong === 'gv/theo-doi') return json(await theoDoi(env.DB));
     if (duong === 'gv/de-giao') return json(await datGiao(env.DB, d));
     if (duong === 'gv/bang-diem') return json(await bangDiem(env.DB, d));
+    if (duong === 'gv/lo-hong') return json(await loHong(env.DB, d));
     if (duong === 'gv/theo-doi-dat') return json(await datTheoDoi(env.DB, d));
     return json({ ok: false, loi: 'Không có chức năng này.' }, 404);
   }
@@ -161,7 +197,7 @@ async function hocSinh(duong, d, env, req, url) {
     if (ph.vai !== 'gv') {
       const { results } = await env.DB.prepare("SELECT slug, ten, lop, so_luot, nhom, trang_thai FROM de WHERE (nhom IS NULL OR nhom = '') AND trang_thai != 'da_dong' ORDER BY tao_luc DESC").all();
       ra.de = [];
-      const lops = await cacLop(env, ph); ra.lop_phu = lops.slice(1);
+      const lops = await cacLop(env, ph); ra.lop_phu = lops.slice(2);
       for (const x of results.filter(x => lopKhopDs(x.lop, lops))) {
         const l = await luot(env, ph.tk, x);
         const tot = await env.DB.prepare('SELECT MAX(diem) AS d FROM bai WHERE tk = ? AND nhom = ? AND nop_luc IS NOT NULL').bind(ph.tk, l.nhom).first();
@@ -268,6 +304,7 @@ async function quanTri(duong, d, env) {
   if (duong === 'theo-doi') return json(await theoDoi(DB));
   if (duong === 'de-giao') return json(await datGiao(DB, d));
   if (duong === 'bang-diem') return json(await bangDiem(DB, d));
+  if (duong === 'lo-hong') return json(await loHong(DB, d));
   if (duong === 'de-giao-ds') return json({ ok: true, ds: (await DB.prepare("SELECT slug, giao FROM de WHERE nhom = '' OR nhom IS NULL").all()).results });
   if (duong === 'theo-doi-dat') return json(await datTheoDoi(DB, d));
   if (duong === 'luot/them') {
@@ -301,7 +338,7 @@ async function phongThiDau(duong, d, env, req) {
       if (!t.ok) break;
     }
     await stub(ma).fetch('https://phong/tao', { method: 'POST', body: JSON.stringify({ ma, slug: de.slug, ten: de.ten, khoa, gv: ph.tk,
-      vao: d.vao === 'biet_danh' ? 'biet_danh' : 'tk', nhip: d.nhip === 'tu_do' ? 'tu_do' : 'gv', doi: d.doi | 0, giay: d.giay | 0 || 20 }) });
+      vao: d.vao === 'biet_danh' ? 'biet_danh' : 'tk', nhip: d.nhip === 'tu_do' ? 'tu_do' : 'gv', doi: d.doi | 0, giay: d.giay | 0 || 20, kieu: d.kieu === 'phieu' ? 'phieu' : 'thi_dau' }) });
     return json({ ok: true, ma, slug: de.slug });
   }
   const m = duong.match(/^(\d{6})\/(thong-tin|ws|luu|ket-qua)$/);
@@ -331,8 +368,9 @@ async function phongThiDau(duong, d, env, req) {
   // luu: ghi kết quả vào D1 (bảng thi_dau) — ghi đè lần lưu trước của cùng phòng
   const now = BAY_GIO();
   await env.DB.prepare('DELETE FROM thi_dau WHERE ma = ? AND tao_luc > ?').bind(ma, new Date(Date.now() - 864e5).toISOString()).run();
-  if (kq.nguoi.length) await env.DB.batch(kq.nguoi.map(p => env.DB.prepare(`INSERT INTO thi_dau (ma, slug, ten_de, tk, ten, lop, doi, diem, dung, so_cau, diem10, hang, tao_luc)
-    VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)`).bind(ma, kq.slug, kq.ten, p.tk || '', p.ten, p.lop || '', p.doi ?? null, p.diem, p.dung, kq.so_cau, p.diem10, p.hang, now)));
+  if (kq.nguoi.length) await env.DB.batch(kq.nguoi.map(p => env.DB.prepare(`INSERT INTO thi_dau (ma, slug, ten_de, tk, ten, lop, doi, diem, dung, so_cau, diem10, hang, tao_luc, kieu, danh_gia, chi_tiet)
+    VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`).bind(ma, kq.slug, kq.ten, p.tk || '', p.ten, p.lop || '', p.doi ?? null, p.diem, p.dung, kq.so_cau, p.diem10, p.hang, now,
+      kq.kieu || 'thi_dau', p.danh_gia ?? null, JSON.stringify(p.chi_tiet || []))));
   return json({ ok: true, so: kq.nguoi.length });
 }
 

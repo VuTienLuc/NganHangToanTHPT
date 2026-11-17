@@ -85,6 +85,7 @@ function hoiTen() {
 }
 function thanh() {
   const t = st && st.toi; if (!t) return '';
+  if (st.kieu === 'phieu') return `<div class="thanh"><span class="ten">🎫 ${e(t.ten)}</span><span class="diem">Phiếu cuối giờ</span></div>`;
   const d = t.doi != null ? DOI[t.doi] : null;
   return `<div class="thanh"><span class="ten">${e(t.ten)}</span>${d ? `<span class="diem" style="background:${d[1]};white-space:nowrap">Đội ${d[0]}</span>` : ''}${t.chuoi >= 2 ? `<span class="diem">🔥 ${t.chuoi}</span>` : ''}<span class="diem">⭐ ${t.diem}</span><span class="diem">#${t.hang || '–'}</span></div>`;
 }
@@ -102,14 +103,25 @@ function ve() {
   if (s.giai_doan === 'cho') {
     const d = s.toi && s.toi.doi != null ? DOI[s.toi.doi] : null;
     vo.innerHTML = thanh() + `<div class="the giua" style="margin-top:8vh"><div style="font-size:56px">✅</div><h1>Em đã vào phòng!</h1><p>${e(s.ten)}</p>
-      ${d ? `<div class="doi" style="background:${d[1]}">Đội ${d[0]}</div>` : ''}<p class="nho tb">Chờ thầy bắt đầu… nhìn lên bảng nhé 👀</p></div>`;
+      ${d ? `<div class="doi" style="background:${d[1]}">Đội ${d[0]}</div>` : ''}<p class="nho tb">${s.kieu === 'phieu' ? 'Phiếu sắp bắt đầu…' : 'Chờ thầy bắt đầu… nhìn lên bảng nhé 👀'}</p></div>`;
     return;
   }
+  if (s.giai_doan === 'ket_thuc' && s.kieu === 'phieu') { vo.innerHTML = thanh() + '<div class="the giua" style="margin-top:8vh"><div style="font-size:56px">🎫</div><h1>Phiếu đã kết thúc</h1><p>Cảm ơn em đã làm bài! Hẹn gặp em tiết sau 👋</p></div>'; return; }
   if (s.giai_doan === 'ket_thuc') {
     const r = s.ket_qua || { top: [], doi: [] }, toi = s.toi || {};
     vo.innerHTML = thanh() + `<div class="the giua"><div style="font-size:52px">${toi.hang === 1 ? '🏆' : toi.hang <= 3 ? '🥈' : '🎉'}</div><h1>Hạng ${toi.hang || '–'}</h1><p>Em được <b>${toi.diem || 0}</b> điểm. ${toi.hang <= 3 ? 'Xuất sắc lắm!' : 'Cố gắng tuyệt vời, lần sau còn cao hơn nữa!'}</p>
       ${r.doi && r.doi.length ? `<p>👑 Đội ${DOI[r.doi[0].doi] ? DOI[r.doi[0].doi][0] : ''} vô địch</p>` : ''}
       <div class="xh" style="text-align:left">${r.top.map((p, i) => `<div class="${p.id === toi.id ? 'toi' : ''}"><span>${i + 1}. ${e(p.ten)}</span><b>${p.diem}</b></div>`).join('')}</div></div>`;
+    return;
+  }
+  if (s.xong && s.kieu === 'phieu') {
+    if (s.danh_gia == null) {
+      vo.innerHTML = thanh() + `<div class="the giua" style="margin-top:4vh"><h1>Em hiểu bài hôm nay đến đâu?</h1><p class="nho">Chọn thật lòng nhé — để thầy biết tiết sau cần giảng lại chỗ nào 💙</p>
+        <div style="display:flex;flex-direction:column;gap:10px;margin-top:12px">${[['😀', 'Em hiểu rõ', '#16a34a'], ['😐', 'Còn chỗ chưa chắc', '#ca8a04'], ['😟', 'Em chưa hiểu', '#dc2626']].map((x, j) => `<button data-dg="${j}" style="background:${x[2]};color:#fff;font-size:22px;min-height:68px">${x[0]} ${x[1]}</button>`).join('')}</div></div>`;
+      vo.querySelectorAll('[data-dg]').forEach(b => b.onclick = () => { rung(20); gui({ t: 'danh_gia', v: +b.dataset.dg }); });
+      return;
+    }
+    vo.innerHTML = thanh() + `<div class="the giua" style="margin-top:8vh"><div style="font-size:56px">${['😀', '😐', '😟'][s.danh_gia]}</div><h1>Cảm ơn em!</h1><p>${s.danh_gia === 0 ? 'Tuyệt vời, giữ vững nhé!' : s.danh_gia === 1 ? 'Tiết sau thầy sẽ làm rõ thêm cho em.' : 'Không sao đâu — thầy sẽ giảng lại, em mạnh dạn hỏi thầy nhé!'}</p></div>`;
     return;
   }
   if (s.xong) { vo.innerHTML = thanh() + '<div class="the giua" style="margin-top:8vh"><div style="font-size:56px">🏁</div><h1>Em đã làm xong!</h1><p class="nho">Chờ thầy công bố kết quả chung cuộc.</p></div>'; return; }
@@ -144,7 +156,7 @@ function veDapAnGV() {
 function veKetQua() {
   const m = ketQua, c = st && st.cau, lop = m.ti_le === 1 ? 'dung' : m.ti_le > 0 ? 'nua' : 'sai';
   vo.innerHTML = thanh() + `<div class="kq ${lop}" style="margin-top:6vh"><div class="to">${m.het_gio ? 'Hết giờ ⏰' : m.ti_le === 1 ? 'Chính xác! 🎯' : m.ti_le > 0 ? 'Đúng một phần 👍' : 'Chưa đúng 😅'}</div>
-    <div style="font-size:22px;font-weight:800;margin-top:6px">+${m.diem} điểm${m.chuoi >= 2 ? ' · 🔥 chuỗi ' + m.chuoi : ''}</div>${c ? `<div style="margin-top:10px">Đáp án: <b>${e(dapAnChu(c.type, m.dap_an))}</b></div>` : ''}</div>`;
+    ${st && st.kieu === 'phieu' ? '' : `<div style="font-size:22px;font-weight:800;margin-top:6px">+${m.diem} điểm${m.chuoi >= 2 ? ' · 🔥 chuỗi ' + m.chuoi : ''}</div>`}${c ? `<div style="margin-top:10px">Đáp án: <b>${e(dapAnChu(c.type, m.dap_an))}</b></div>` : ''}</div>`;
 }
 batDau();
 })();
