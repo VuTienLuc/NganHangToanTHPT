@@ -362,7 +362,7 @@ GV_JS = r"""function veGV(t){
  const st={q:'',lop:q0.get('lop')||L('lop')||'',kieu:'',xep:L('xep')||'muc_luc',tab:'dang_mo'};
  let BG=[], DE=t.de||[], ghim=L('ghim')||[], gan=L('gan')||[];
  nd.innerHTML=`<div class="g-top"><h2>Bàn làm việc giáo viên<small>Bài giảng trình chiếu · đề kiểm tra trực tuyến</small></h2>
-  <button class="g-btn" id="g-bd">📋 Bảng điểm</button>  <button class="g-btn" id="g-th" style="background:#1e40af;color:#fff;border-color:#1e40af">📊 Tổng hợp quá trình</button><a class="g-btn" href="#" id="thoat">Đăng xuất</a></div>
+  <a class="g-btn" href="/_gv/meo.html" target="_blank" rel="noopener" title="Mẹo dạy học hiệu quả với hệ thống: trước – trong – cuối giờ, hằng tuần, phụ đạo, phím tắt, hỏi đáp">💡 Cẩm nang</a>  <button class="g-btn" id="g-bd">📋 Bảng điểm</button>  <button class="g-btn" id="g-th" style="background:#1e40af;color:#fff;border-color:#1e40af">📊 Tổng hợp quá trình</button><a class="g-btn" href="#" id="thoat">Đăng xuất</a></div>
   <div class="g-stat" id="g-stat"></div>
   <div class="g-luoi"><section class="g-khoi" aria-labelledby="h-bg"><h3 id="h-bg">📚 Bài giảng <span class="dem" id="bg-dem"></span></h3>
    <div class="g-tim"><div class="o"><span class="kinh" aria-hidden="true">🔍</span><input id="tim" type="search" placeholder="Tìm bài giảng: tên bài, chương, dạng…" aria-label="Tìm bài giảng" autocomplete="off"><kbd>/</kbd></div>
@@ -505,6 +505,8 @@ def ghi_site():
         pass
     os.makedirs(os.path.join(SITE, "choi"), exist_ok=True)
     shutil.copy(os.path.join(MAY_CHU, "phong", "choi.html"), os.path.join(SITE, "choi", "index.html"))
+    os.makedirs(os.path.join(SITE, "_gv"), exist_ok=True)
+    shutil.copy(os.path.join(MAY_CHU, "meo.html"), os.path.join(SITE, "_gv", "meo.html"))
     os.makedirs(os.path.join(SITE, "_gv"), exist_ok=True)
     shutil.copy(os.path.join(os.path.dirname(os.path.abspath(__file__)), "tong_hop.js"), os.path.join(SITE, "_gv", "tong_hop.js"))
     open(os.path.join(SITE, "_headers"), "w", encoding="utf-8").write(
