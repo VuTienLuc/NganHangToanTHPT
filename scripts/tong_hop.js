@@ -64,13 +64,14 @@
       <label>Lớp <select id="th-lop" style="min-width:130px"></select></label><button id="th-tai" title="Lấy số liệu mới nhất">↻ Làm mới</button></div>
       <div class="th-than" id="th-than"></div>
       <div class="th-chan"><button id="th-chep">💬 Chép nhận xét lớp</button><button id="th-chep-em">Chép nhận xét từng em</button>
-      <button id="th-bd">📋 Bảng điểm từng lượt</button><button id="th-xuat" class="chinh">⬇ Tải bảng tổng hợp (Excel)</button><button id="th-dong">Đóng</button></div></div><div class="th-toast" id="th-toast" role="status"></div>`;
+      <button id="th-tc" class="hong" title="Chiếu lên lớp: chữ to, bục vinh danh, bảng xếp hạng, bảng vàng">📽 Trình chiếu</button><button id="th-bd">📋 Bảng điểm từng lượt</button><button id="th-xuat" class="chinh">⬇ Tải bảng tổng hợp (Excel)</button><button id="th-dong">Đóng</button></div></div><div class="th-toast" id="th-toast" role="status"></div>`;
     document.body.appendChild(hop);
     const $ = id => document.getElementById(id);
     $('th-dong').onclick = () => { hop.style.display = 'none' };
     hop.addEventListener('keydown', ev => { if (ev.key === 'Escape') hop.style.display = 'none' });
     $('th-lop').onchange = tai; $('th-tai').onclick = () => { st.lop = null; mo({ goi: st.goi, lop: $('th-lop').value }) };
     $('th-xuat').onclick = xuat;
+    $('th-tc').onclick = () => { if (!st.T || !st.k || $('th-lop').value === '__td') return toast('Chọn một lớp để trình chiếu'); trinhChieu() };
     $('th-bd').onclick = () => { const l = $('th-lop').value; bangDiem({ goi: st.goi, lop: l === '__td' ? '' : l }) };
     $('th-chep').onclick = () => chep($('th-nx-lop')?.value || '', 'Đã chép nhận xét lớp');
     $('th-chep-em').onclick = () => chep([...hop.querySelectorAll('td.nx')].map(td => td.innerText.trim()).join('\n'), 'Đã chép nhận xét từng em');
@@ -523,6 +524,106 @@
       .map(r => r.map(v => `"${String(v).replace(/"/g, '""')}"`).join(',')).join('\n');
     const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv' }));
     a.download = `BangDiem_${BD.nhom || 'tat-ca-dot'}${BD.lop ? '_' + BD.lop : ''}_${new Date().toISOString().slice(0, 10)}.csv`; a.click();
+  }
+  // ---------- TRÌNH CHIẾU TỔNG HỢP: chữ to cho máy chiếu, bục vinh danh, xếp hạng, bảng vàng ----------
+  const TC_CSS = `
+#tc-th{position:fixed;inset:0;z-index:9500;background:radial-gradient(1200px 700px at 50% -10%,#312e81,#0b1020 60%);color:#f8fafc;font:24px/1.4 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;display:flex;flex-direction:column;overflow:hidden}
+#tc-th *{box-sizing:border-box}#tc-th button{width:auto;margin:0;font:inherit;font-size:18px;border:0;border-radius:12px;padding:10px 16px;background:rgba(255,255,255,.12);color:#fff;cursor:pointer;min-height:48px}
+#tc-th button:focus-visible{outline:3px solid #fde68a}#tc-th button[aria-pressed=true]{background:#7c3aed}
+#tc-th .tc-dau{display:flex;align-items:center;gap:12px;padding:14px 28px;flex-wrap:wrap}#tc-th h1,#tc-th h2,#tc-th h3{color:#fff;display:block}#tc-th .tc-dau h1{margin:0;font-size:clamp(22px,2.4vw,34px);flex:1}
+#tc-th .tc-than{flex:1;overflow:hidden;padding:8px 4vw 18px;display:flex;flex-direction:column;justify-content:center;gap:2vh}
+#tc-th .tc-chan{display:flex;justify-content:center;gap:10px;padding:10px 0 18px}#tc-th .cham{width:12px;height:12px;border-radius:50%;background:rgba(255,255,255,.3);padding:0;min-height:0}#tc-th .cham.on{background:#fde68a;width:34px;border-radius:8px}
+.tc-tieu{text-align:center;font-size:clamp(30px,4vw,60px);font-weight:900;margin:0;letter-spacing:.01em}.tc-phu{text-align:center;color:#c7d2fe;font-size:clamp(18px,1.8vw,28px);margin:0}
+.tc-so{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:2vw}.tc-so>div{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);border-radius:24px;padding:3vh 2vw;text-align:center}
+.tc-so .ic{font-size:clamp(40px,4.5vw,72px)}.tc-so b{display:block;font-weight:900;font-size:clamp(44px,min(5.5vw,10vh),96px);line-height:1.05;font-variant-numeric:tabular-nums;color:#fde68a}.tc-so span{font-size:clamp(16px,1.6vw,26px);color:#e0e7ff}
+.tc-bp{display:flex;align-items:flex-end;justify-content:center;gap:2.5vw;flex:1;min-height:0}.tc-bp>div{width:min(26vw,360px);text-align:center;display:flex;flex-direction:column;align-items:center}
+.tc-bp .ten{font-size:clamp(22px,min(2.8vw,5vh),46px);font-weight:900;line-height:1.15}.tc-bp .lop{font-size:clamp(14px,1.3vw,20px);color:#c7d2fe}
+.tc-bp .d{font-weight:900;font-size:clamp(28px,min(3.6vw,6vh),60px);font-variant-numeric:tabular-nums;color:#fde68a;margin:.3vh 0 1vh}.tc-bp .bac{width:100%;border-radius:22px 22px 0 0;display:grid;place-items:center;font-size:clamp(56px,7vw,120px);box-shadow:inset 0 -12px 0 rgba(0,0,0,.18)}
+.tc-bp .huy{font-size:clamp(14px,1.3vw,20px);display:flex;gap:6px;justify-content:center;flex-wrap:wrap;min-height:1.6em}
+.tc-xh{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,520px),1fr));grid-auto-flow:row;gap:1.4vh 2vw;align-content:start}
+.tc-xh>div{display:grid;grid-template-columns:clamp(50px,5vw,80px) 1fr auto;gap:1.2vw;align-items:center;background:rgba(255,255,255,.08);border-radius:18px;padding:1.4vh 1.4vw;font-size:clamp(20px,min(2.1vw,4.4vh),36px)}
+.tc-xh .h{font-weight:900;font-size:1.2em;text-align:center;color:#c7d2fe;font-variant-numeric:tabular-nums}.tc-xh .t{font-weight:800;min-width:0;display:flex;flex-direction:column}.tc-xh .t>span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.tc-xh .t small{font-weight:500;font-size:.55em;display:flex;gap:.3em;flex-wrap:wrap;margin-top:.15em}.tc-xh .t small:empty{display:none}.tc-xh .d{font-weight:900;font-size:1.2em;font-variant-numeric:tabular-nums;color:#fde68a}
+.tc-xh>div.top1{background:linear-gradient(90deg,rgba(234,179,8,.45),rgba(255,255,255,.08))}.tc-xh>div.top2{background:linear-gradient(90deg,rgba(148,163,184,.45),rgba(255,255,255,.08))}.tc-xh>div.top3{background:linear-gradient(90deg,rgba(180,83,9,.45),rgba(255,255,255,.08))}
+.tc-vang{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:2vw}.tc-vang>div{border-radius:24px;padding:1.8vh 2vw;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14)}
+.tc-vang h3{margin:0 0 .8vh;font-size:clamp(20px,min(2.4vw,4vh),38px);display:flex;gap:.4em;align-items:center}.tc-vang p{margin:.4vh 0;font-size:clamp(18px,min(2vw,3.6vh),32px);font-weight:700}
+.tc-vang p small{color:#c7d2fe;font-weight:500;font-size:.7em}
+.tc-huy{display:inline-flex;align-items:center;gap:.25em;background:rgba(255,255,255,.14);border-radius:999px;padding:.05em .55em;font-size:.62em;font-weight:700;white-space:nowrap}
+@keyframes tcVao{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}.tc-hien>*{animation:tcVao .45s ease-out both}.tc-hien>*:nth-child(2){animation-delay:.08s}.tc-hien>*:nth-child(3){animation-delay:.16s}
+@keyframes tcLen{from{transform:scaleY(.1)}to{transform:none}}.tc-bp .bac{transform-origin:bottom;animation:tcLen .7s cubic-bezier(.2,.8,.2,1) both}
+@media (prefers-reduced-motion:reduce){#tc-th *{animation:none!important}}`;
+  // huy hiệu theo thành tích (chỉ khen, không chê)
+  function huyHieu(h, T) {
+    const b = [], n = T.de.length;
+    if (h.lam && h.lam === n) b.push(['🔥', 'Chăm chỉ']);
+    if (h.tb != null && h.tb >= 8) b.push(['⭐', 'Xuất sắc']);
+    if (h.xu != null && h.xu >= 1) b.push(['🚀', 'Tiến bộ']);
+    if (h.sua) b.push(['🔁', 'Không bỏ cuộc']);
+    if (h.gy) b.push(['💡', 'Tự học']);
+    if (h.them && h.them.length) b.push(['🎯', 'Làm thêm']);
+    return b;
+  }
+  function trinhChieu() {
+    const T = st.T, k = st.k, n = T.de.length, ten = h => (h.ho_ten || h.ten).trim();
+    const coDiem = T.hs.filter(h => h.tb != null || (h.tbThem != null && !n));
+    const xep = coDiem.map(h => ({ h, d: n ? h.tb : h.tbThem })).filter(x => x.d != null)
+      .sort((a, b) => b.d - a.d || b.h.lam - a.h.lam || ten(a.h).localeCompare(ten(b.h), 'vi'));
+    const tl = T.hs.length && n ? Math.round(T.hs.reduce((a, h) => a + h.lam, 0) / (T.hs.length * n) * 100) : 0;
+    const tb = xep.length ? xep.reduce((a, x) => a + x.d, 0) / xep.length : null;
+    const tienBo = T.hs.filter(h => h.xu != null && h.xu >= 1).sort((a, b) => b.xu - a.xu);
+    const cham = T.hs.filter(h => n && h.lam === n), gioi = xep.filter(x => x.d >= 8).map(x => x.h);
+    const kien = T.hs.filter(h => h.sua).sort((a, b) => b.sua - a.sua), them = T.hs.filter(h => h.them && h.them.length).sort((a, b) => b.them.length - a.them.length);
+    const tenLop = laPD(k.lop) ? 'Lớp phụ đạo khối ' + k.lop.slice(2) : 'Lớp ' + k.lop;
+    const huyHtml = h => huyHieu(h, T).map(x => `<span class="tc-huy" title="${x[1]}">${x[0]} ${x[1]}</span>`).join('');
+    let caLop = false, trang = 0;
+    const MOI = 10, soTrangXH = () => Math.max(1, Math.ceil((caLop ? xep.length : Math.min(xep.length, 10)) / MOI));
+    const cacTrang = () => {
+      const t = [];
+      t.push(() => `<div class="tc-hien"><h2 class="tc-tieu">📊 ${e(tenLop)} — Hành trình học online</h2><p class="tc-phu">${n} bài đã giao · ${T.hs.length} học sinh</p></div>
+        <div class="tc-so tc-hien"><div><div class="ic">📝</div><b>${n}</b><span>bài đã giao</span></div><div><div class="ic">✅</div><b>${tl}%</b><span>lượt bài hoàn thành</span></div>
+        <div><div class="ic">🎓</div><b>${F(tb)}</b><span>điểm trung bình lớp</span></div><div><div class="ic">🚀</div><b>${tienBo.length}</b><span>bạn tiến bộ rõ rệt</span></div><div><div class="ic">🔥</div><b>${cham.length}</b><span>bạn làm đủ mọi bài</span></div></div>`);
+      if (xep.length) t.push(() => {
+        const top = xep.slice(0, 3), cao = ['34vh', '25vh', '18vh'], mau = ['linear-gradient(#facc15,#ca8a04)', 'linear-gradient(#e2e8f0,#94a3b8)', 'linear-gradient(#fb923c,#b45309)'];
+        return `<h2 class="tc-tieu tc-hien">🏆 Bục vinh danh</h2><div class="tc-bp">${[1, 0, 2].filter(i => top[i]).map(i => `<div class="tc-hien">
+          <div class="huy">${huyHtml(top[i].h)}</div><div class="ten">${e(ten(top[i].h))}</div>${laPD(k.lop) && top[i].h.lop_chinh ? `<div class="lop">${e(top[i].h.lop_chinh)}</div>` : ''}
+          <div class="d">${F(top[i].d)}</div><div class="bac" style="height:${cao[i]};background:${mau[i]};animation-delay:${[.25, 0, .5][i]}s">${['🥇', '🥈', '🥉'][i]}</div></div>`).join('')}</div>`;
+      });
+      for (let p = 0; p < soTrangXH(); p++) t.push(() => {
+        const ds = xep.slice(0, caLop ? xep.length : 10).slice(p * MOI, p * MOI + MOI);
+        return `<h2 class="tc-tieu" style="font-size:clamp(26px,3vw,46px)">🏅 Bảng xếp hạng${soTrangXH() > 1 ? ` <small style="font-size:.5em;color:#c7d2fe">(${p + 1}/${soTrangXH()})</small>` : ''}</h2>
+          <div class="tc-xh tc-hien" style="${innerWidth >= 1100 && ds.length > 5 ? `grid-template-columns:1fr 1fr;grid-template-rows:repeat(${Math.ceil(ds.length / 2)},auto);grid-auto-flow:column` : ''}">${ds.map((x, i) => { const r = p * MOI + i + 1; return `<div class="${r <= 3 ? 'top' + r : ''}"><span class="h">${['🥇', '🥈', '🥉'][r - 1] || r}</span>
+            <span class="t"><span>${e(ten(x.h))}</span><small>${huyHtml(x.h)}</small></span><span class="d">${F(x.d)}</span></div>` }).join('')}</div>`;
+      });
+      const muc = [['🔥', 'Chăm chỉ — làm đủ mọi bài', cham, h => `${h.lam}/${n} bài`], ['🚀', 'Tiến bộ vượt bậc', tienBo, h => `+${F(h.xu)} điểm`],
+        ['⭐', 'Xuất sắc — TB từ 8', gioi, h => `TB ${F(h.tb)}`], ['🔁', 'Không bỏ cuộc — làm lại cao hơn', kien, h => `${h.sua} bài`], ['🎯', 'Chủ động làm thêm', them, h => `${h.them.length} bài tự luyện`]]
+        .filter(m => m[2].length);
+      if (muc.length) t.push(() => `<h2 class="tc-tieu" style="font-size:clamp(26px,3vw,46px)">🌟 Bảng vàng của lớp</h2><div class="tc-vang tc-hien">${muc.slice(0, 4).map(m => `<div><h3><span>${m[0]}</span>${m[1]}</h3>
+        ${m[2].slice(0, 4).map(h => `<p>${e(ten(h))} <small>· ${m[3](h)}</small></p>`).join('')}${m[2].length > 4 ? `<p><small>và ${m[2].length - 4} bạn khác 👏</small></p>` : ''}</div>`).join('')}</div>`);
+      t.push(() => `<div class="tc-hien" style="text-align:center"><div style="font-size:clamp(70px,9vw,150px)">💪</div><h2 class="tc-tieu">Cảm ơn cả lớp đã cố gắng!</h2>
+        <p class="tc-phu" style="margin-top:2vh">Mỗi tuần một chút — kết quả sẽ đến. Bạn nào còn thiếu bài, vào làm bù nhé: link vẫn mở! 🚀</p></div>`);
+      return t;
+    };
+    let c = document.getElementById('tc-th-css'); if (!c) { c = document.createElement('style'); c.id = 'tc-th-css'; c.textContent = TC_CSS; document.head.appendChild(c) }
+    const o = document.createElement('div'); o.id = 'tc-th'; o.setAttribute('role', 'dialog'); o.setAttribute('aria-label', 'Trình chiếu tổng hợp'); o.tabIndex = -1;
+    o.innerHTML = `<div class="tc-dau"><h1>📊 ${e(tenLop)}</h1><button id="tc-ca" aria-pressed="false" title="Mặc định chỉ chiếu top 10 để giữ tinh thần cho các bạn còn lại">👥 Xếp hạng cả lớp</button>
+      <button id="tc-full" title="Toàn màn hình (F)">⛶</button><button id="tc-thoat" title="Thoát (Esc)">✕ Thoát</button></div><div class="tc-than" id="tc-than"></div>
+      <div class="tc-chan"><button id="tc-lui" aria-label="Trang trước">◀</button><span id="tc-cham" style="display:flex;gap:8px;align-items:center"></span><button id="tc-toi" aria-label="Trang sau">▶</button></div>`;
+    document.body.appendChild(o); o.focus();
+    const ve2 = () => {
+      const ds = cacTrang(); trang = Math.max(0, Math.min(ds.length - 1, trang));
+      document.getElementById('tc-than').innerHTML = ds[trang]();
+      document.getElementById('tc-cham').innerHTML = ds.map((_, i) => `<button class="cham ${i === trang ? 'on' : ''}" data-tr="${i}" aria-label="Trang ${i + 1}"></button>`).join('');
+      o.querySelectorAll('[data-tr]').forEach(b => b.onclick = () => { trang = +b.dataset.tr; ve2() });
+    };
+    const thoat = () => { if (document.fullscreenElement) document.exitFullscreen(); o.remove(); document.removeEventListener('keydown', phim) };
+    const phim = ev => { if (ev.key === 'ArrowRight' || ev.key === ' ' || ev.key === 'PageDown') { ev.preventDefault(); trang++; ve2() } else if (ev.key === 'ArrowLeft' || ev.key === 'PageUp') { trang--; ve2() }
+      else if (ev.key === 'Escape' && !document.fullscreenElement) thoat(); else if (ev.key === 'f' || ev.key === 'F') document.getElementById('tc-full').click() };
+    document.addEventListener('keydown', phim);
+    document.getElementById('tc-thoat').onclick = thoat;
+    document.getElementById('tc-full').onclick = () => document.fullscreenElement ? document.exitFullscreen() : o.requestFullscreen?.().catch(() => {});
+    document.getElementById('tc-lui').onclick = () => { trang--; ve2() }; document.getElementById('tc-toi').onclick = () => { trang++; ve2() };
+    document.getElementById('tc-ca').onclick = ev => { caLop = !caLop; ev.target.setAttribute('aria-pressed', caLop); ve2() };
+    ve2();
   }
   window.TongHop = { mo, bangDiem };
 })();
