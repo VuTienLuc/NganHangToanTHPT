@@ -2126,7 +2126,7 @@ function tvMuc(x,tk){
     <div class="tv-ic ${lo==="de"?"":lo==="phieu"?"ph":x.kieu==="pdf"?"pdf":"bg"}" aria-hidden="true">${ic}</div>
     <div style="min-width:0"><div class="tv-ten" title="${esc(x.ten)}">${tvHl(x.ten,tk)}</div><div class="tv-meta">${meta}</div></div>
     <div class="tv-nut"><button class="gui" data-v="gui" title="Link, QR, tin nhắn mẫu để gửi học sinh">📤 Gửi HS</button>
-      ${lo==="de"?`<button data-v="giao" class="nut-giao ${tvDaGiao(x)?"bat":""}" title="Đánh dấu bài đã giao (tính vào tổng hợp) / chưa giao">${tvDaGiao(x)?"✓ Đã giao":"Xác nhận đã giao"}</button><button data-v="diem">Điểm</button>`:`<button data-v="xem">Xem</button>`}
+      ${lo==="de"?`<button data-v="giao" class="nut-giao ${tvDaGiao(x)?"bat":""}" title="Đánh dấu bài đã giao (tính vào tổng hợp) / chưa giao">${tvDaGiao(x)?"✓ Đã giao":"Xác nhận đã giao"}</button><button data-v="diem">Điểm</button><button data-v="thi-dau" title="Phòng thi đấu trực tiếp: trình chiếu câu hỏi, học sinh quét QR chọn đáp án (cá nhân / đội)" style="background:#7c3aed;color:#fff;border-color:#7c3aed">🎮 Thi đấu</button>`:`<button data-v="xem">Xem</button>`}
       ${con.length?`<button data-v="con">${con.length} mã ▾</button>`:""}<button data-v="them" aria-label="Thêm thao tác">⋯</button></div>
     <div class="tv-gui"></div>
     ${con.length?`<div class="tv-con">${con.map(y=>`<div class="dong-con" data-s="${esc(y.slug)}"><b>${esc(y.ten)}</b><span style="color:#64748b">${({dang_mo:"đang mở",da_cong_bo:"đã công bố",da_dong:"đã đóng"})[y.trang_thai]||""}</span>
@@ -2160,6 +2160,7 @@ function tvGui(el,x,lo,url){
     navigator.clipboard.writeText(k==="link"?url:g.querySelector("textarea").value).then(()=>{const t=b.textContent;b.textContent="✓ Đã chép";setTimeout(()=>b.textContent=t,1500)})});
 }
 async function hanhDongDe(x,v,b){const sl=x.slug;
+  if(v==="thi-dau"){window.open(`${TV.r.goc}/${sl}/?phong`,"_blank");return}
   if(v==="giao"){const bat=!tvDaGiao(x);
     if(!confirm(bat?`Xác nhận “${x.ten}” là bài ĐÃ GIAO?\n\nBài này sẽ tính vào tổng hợp quá trình (hoàn thành, điểm TB, tiến bộ) của các lớp ${x.lop_giao||"(mọi lớp)"}. Em chưa làm sẽ bị tính thiếu bài.`
       :`Đổi “${x.ten}” thành CHƯA GIAO?\n\nBài này không tính vào hoàn thành / điểm TB nữa. Em nào đã làm thì vẫn được ghi nhận là tự luyện thêm.`))return;

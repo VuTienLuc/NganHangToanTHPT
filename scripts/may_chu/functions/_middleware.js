@@ -16,10 +16,14 @@ async function nangCapPhieu(r) {
 export async function onRequest({ request: req, env, next: tiep }) {
   const u = new URL(req.url), p = u.pathname, seg = decodeURIComponent(p.split('/')[1] || '');
   const next = seg === 'bai-giang' ? async () => nangCapPhieu(await tiep()) : tiep;
+  if (seg === 'choi') {                       // phòng thi đấu: /choi/123456 → trang /choi/ (công khai; trang tự hỏi đăng nhập nếu phòng cần)
+    if (/^\/choi\/\d{6}\/?$/.test(p) && env.ASSETS) return env.ASSETS.fetch(new Request(new URL('/choi/', u), req));
+    return next();
+  }
   if (!seg || seg === 'index.html' || seg === 'api' || seg === 'dang-nhap' || seg === '404.html' || seg.startsWith('_') || seg === 'favicon.ico')
     return next();
   const ph = await docPhien(env, req);
-  const veDangNhap = () => Response.redirect(`${u.origin}/dang-nhap/?ve=${encodeURIComponent(p)}`, 302);
+  const veDangNhap = () => Response.redirect(`${u.origin}/dang-nhap/?ve=${encodeURIComponent(p + u.search)}`, 302);
   if (seg === 'bai-giang' || /^toan\d+$/.test(seg)) {
     if (!ph) return veDangNhap();
     if (ph.vai !== 'gv') {

@@ -279,6 +279,63 @@ async function quanTri(duong, d, env) {
   return json({ ok: false, loi: 'Không có chức năng quản trị này.' }, 404);
 }
 
+// ---- phòng thi đấu trực tiếp (Durable Object PHONG ở worker <dự án>-phong)
+async function phongThiDau(duong, d, env, req) {
+  if (!env.PHONG) return json({ ok: false, loi: 'Máy chủ chưa có phòng thi đấu — thầy mở ứng dụng, bấm “Đăng lại tất cả”.' }, 503);
+  const ph = await docPhien(env, req), stub = ma => env.PHONG.get(env.PHONG.idFromName('p' + ma));
+  if (duong === 'tao') {
+    if (!ph || ph.vai !== 'gv') return json({ ok: false, loi: 'Chỉ giáo viên mở phòng.' }, 403);
+    let de = await env.DB.prepare('SELECT slug, ten, con, khoa FROM de WHERE slug = ?').bind(String(d.slug || '')).first();
+    if (!de) return json({ ok: false, loi: 'Không thấy đề này trên máy chủ.' });
+    if (!de.khoa && de.con) {                  // link chung nhiều mã đề → dùng mã đầu
+      let con; try { con = JSON.parse(de.con)[0]; } catch (_) { con = String(de.con).split(',').map(x => x.trim()).filter(Boolean)[0]; }
+      const c = con && await env.DB.prepare('SELECT slug, ten, khoa FROM de WHERE slug = ?').bind(con).first();
+      if (c) de = { ...c, ten: de.ten };
+    }
+    let khoa; try { khoa = JSON.parse(de.khoa); } catch (_) { khoa = null; }
+    if (!Array.isArray(khoa) || !khoa.length) return json({ ok: false, loi: 'Đề này chưa có đáp án trên máy chủ — bấm Đăng lại tất cả.' });
+    let ma;
+    for (let lan = 0; lan < 8; lan++) {
+      ma = String(100000 + Math.floor(Math.random() * 900000));
+      const t = await (await stub(ma).fetch('https://phong/thong-tin')).json();
+      if (!t.ok) break;
+    }
+    await stub(ma).fetch('https://phong/tao', { method: 'POST', body: JSON.stringify({ ma, slug: de.slug, ten: de.ten, khoa, gv: ph.tk,
+      vao: d.vao === 'biet_danh' ? 'biet_danh' : 'tk', nhip: d.nhip === 'tu_do' ? 'tu_do' : 'gv', doi: d.doi | 0, giay: d.giay | 0 || 20 }) });
+    return json({ ok: true, ma, slug: de.slug });
+  }
+  const m = duong.match(/^(\d{6})\/(thong-tin|ws|luu|ket-qua)$/);
+  if (!m) return json({ ok: false, loi: 'Không có chức năng này.' }, 404);
+  const [, ma, viec] = m;
+  if (viec === 'thong-tin') {
+    const t = await (await stub(ma).fetch('https://phong/thong-tin')).json();
+    return json({ ...t, da_dang_nhap: !!ph, vai: ph ? ph.vai : null, tk: ph ? ph.tk : null });
+  }
+  if (viec === 'ws') {
+    const h = new Headers(req.headers), vai = new URL(req.url).searchParams.get('vai');
+    ['X-Vai', 'X-Tk', 'X-Ho-Ten', 'X-Lop', 'X-Stt', 'X-Khach'].forEach(k => h.delete(k));
+    if (vai === 'gv') {
+      if (!ph || ph.vai !== 'gv') return new Response('Chỉ giáo viên', { status: 403 });
+      h.set('X-Vai', 'gv');
+    } else if (ph && ph.vai === 'hs') {
+      const t = await env.DB.prepare('SELECT ho_ten, lop, stt FROM tk WHERE ten = ?').bind(ph.tk).first();
+      h.set('X-Tk', ph.tk); h.set('X-Ho-Ten', encodeURIComponent((t && t.ho_ten) || ph.tk)); h.set('X-Lop', (t && t.lop) || ''); h.set('X-Stt', String((t && t.stt) || ''));
+    }
+    else { const k = new URL(req.url).searchParams.get('k') || ''; if (/^[a-z0-9]{8,24}$/.test(k)) h.set('X-Khach', k); }
+    return stub(ma).fetch(new Request('https://phong/ws', { headers: h }));
+  }
+  if (!ph || ph.vai !== 'gv') return json({ ok: false, loi: 'Chỉ giáo viên.' }, 403);
+  const kq = await (await stub(ma).fetch('https://phong/ket-qua')).json();
+  if (!kq.ok) return json({ ok: false, loi: 'Phòng không còn.' });
+  if (viec === 'ket-qua') return json(kq);
+  // luu: ghi kết quả vào D1 (bảng thi_dau) — ghi đè lần lưu trước của cùng phòng
+  const now = BAY_GIO();
+  await env.DB.prepare('DELETE FROM thi_dau WHERE ma = ? AND tao_luc > ?').bind(ma, new Date(Date.now() - 864e5).toISOString()).run();
+  if (kq.nguoi.length) await env.DB.batch(kq.nguoi.map(p => env.DB.prepare(`INSERT INTO thi_dau (ma, slug, ten_de, tk, ten, lop, doi, diem, dung, so_cau, diem10, hang, tao_luc)
+    VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)`).bind(ma, kq.slug, kq.ten, p.tk || '', p.ten, p.lop || '', p.doi ?? null, p.diem, p.dung, kq.so_cau, p.diem10, p.hang, now)));
+  return json({ ok: true, so: kq.nguoi.length });
+}
+
 export async function onRequest({ request: req, env, params }) {
   const url = new URL(req.url);
   const duong = [].concat(params.duong || []).join('/');
@@ -290,6 +347,7 @@ export async function onRequest({ request: req, env, params }) {
       if (!env.ADMIN_TOKEN || req.headers.get('x-admin') !== env.ADMIN_TOKEN) return json({ ok: false, loi: 'Sai mã quản trị.' }, 403);
       return await quanTri(duong.slice(6), d, env);
     }
+    if (duong.startsWith('phong/')) return await phongThiDau(duong.slice(6), d, env, req);
     if (['nop', 'bat-dau', 'cam-xuc', 'goi-y', 'doi-mk', 'dang-nhap', 'dang-xuat', 'loi-nhan/da-xem', 'gv/loi-nhan', 'gv/theo-doi-dat', 'gv/de-giao'].includes(duong) && req.method !== 'POST') return json({ ok: false, loi: 'Dùng POST.' }, 405);
     return await hocSinh(duong, d, env, req, url);
   } catch (e) { return json({ ok: false, loi: String(e && e.message || e) }, 500); }

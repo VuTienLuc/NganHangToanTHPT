@@ -1,0 +1,151 @@
+<!DOCTYPE html><html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow"><meta name="theme-color" content="#4c1d95"><title>Vào phòng thi đấu — Toán</title>
+<script>window.MathJax={tex:{inlineMath:[['$','$'],['\\(','\\)']],displayMath:[['$$','$$'],['\\[','\\]']],macros:{heva:['\\left\\{\\begin{aligned}#1\\end{aligned}\\right.',1],hoac:['\\left[\\begin{aligned}#1\\end{aligned}\\right.',1],mathrm:['\\operatorname{#1}',1]}},options:{enableMenu:false}};</script>
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"></script>
+<style>
+*{box-sizing:border-box}html,body{margin:0;min-height:100%}body{background:linear-gradient(160deg,#4c1d95,#1e3a8a);color:#0f172a;font:17px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;min-height:100vh;min-height:100dvh}
+button,input{font:inherit}button{cursor:pointer;border:0;border-radius:14px;font-weight:800;min-height:52px;padding:12px 18px}button:focus-visible,input:focus-visible{outline:3px solid #fde68a;outline-offset:2px}
+.vo{max-width:640px;margin:0 auto;padding:14px 14px calc(18px + env(safe-area-inset-bottom));display:flex;flex-direction:column;gap:12px;min-height:100vh;min-height:100dvh}
+.thanh{display:flex;align-items:center;gap:10px;color:#fff;font-weight:700}.thanh .ten{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.diem{background:rgba(255,255,255,.15);border-radius:999px;padding:4px 12px;font-variant-numeric:tabular-nums}
+.the{background:#fff;border-radius:18px;padding:18px;box-shadow:0 10px 30px rgba(0,0,0,.25)}.giua{text-align:center}
+h1{font-size:24px;margin:0 0 6px;color:#4c1d95}.nho{color:#64748b;font-size:14px}
+input[type=text],input[inputmode]{width:100%;font-size:22px;padding:12px 14px;border:2px solid #c4b5fd;border-radius:12px;text-align:center}
+.nut{width:100%;background:#7c3aed;color:#fff;font-size:19px;margin-top:12px}.nut:disabled{opacity:.55}
+.loi{color:#b91c1c;font-weight:700;min-height:1.4em;margin-top:8px}
+.cau{font-size:18px}.cau img{max-width:100%;height:auto}.cau ol{padding-left:1.6em;margin:8px 0 0}.cau li{margin:4px 0}
+.pa{display:grid;grid-template-columns:1fr 1fr;gap:10px}.pa button{color:#fff;font-size:30px;min-height:96px;display:flex;align-items:center;justify-content:center;gap:10px;box-shadow:0 6px 0 rgba(0,0,0,.25)}
+.pa button:active{transform:translateY(3px);box-shadow:0 3px 0 rgba(0,0,0,.25)}.pa button.chon{outline:5px solid #fde68a}
+.tf .dong{display:flex;align-items:center;gap:8px;background:#fff;border-radius:12px;padding:8px 10px;margin:6px 0}.tf .dong b{width:28px}.tf .dong span{flex:1;color:#64748b;font-size:14px}
+.tf button{min-height:44px;padding:6px 12px;background:#e2e8f0;color:#0f172a;font-size:16px}.tf button.d.chon{background:#16a34a;color:#fff}.tf button.s.chon{background:#dc2626;color:#fff}
+.dh{height:10px;background:rgba(255,255,255,.2);border-radius:9px;overflow:hidden}.dh i{display:block;height:100%;background:#fde68a;transition:width .25s linear}
+.kq{color:#fff;text-align:center;border-radius:18px;padding:26px 18px}.kq.dung{background:#16a34a}.kq.sai{background:#dc2626}.kq.nua{background:#d97706}.kq .to{font-size:44px;font-weight:900;line-height:1.1}
+.doi{display:inline-block;color:#fff;border-radius:999px;padding:4px 14px;font-weight:800;margin-top:6px}
+.xh div{display:flex;justify-content:space-between;padding:8px 4px;border-bottom:1px solid #e2e8f0}.xh .toi{background:#fef9c3;border-radius:8px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style></head><body><main class="vo" id="vo"><div class="the giua"><h1>🎮 Phòng thi đấu</h1><p class="nho">Đang mở…</p></div></main>
+<script>
+(() => {
+const $ = id => document.getElementById(id), vo = $('vo');
+const e = s => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const MAU = ['#e11d48', '#2563eb', '#d97706', '#059669'], HINH = ['▲', '◆', '●', '■'];
+const DOI = [['Đỏ', '#ef4444'], ['Xanh dương', '#3b82f6'], ['Xanh lá', '#22c55e'], ['Vàng', '#ca8a04'], ['Tím', '#a855f7'], ['Cam', '#f97316'], ['Hồng', '#ec4899'], ['Ngọc', '#14b8a6']];
+let ma = (location.pathname.match(/\/choi\/(\d{6})/) || [])[1] || new URLSearchParams(location.search).get('p') || '';
+let ws, st = null, lech = 0, hen = null, chon = null, guiRoi = false, ketQua = null, lanNoi = 0, thongTin = null;
+const khach = (() => { try { let k = localStorage.getItem('choi_k'); if (!k) { k = Math.random().toString(36).slice(2, 12) + Date.now().toString(36); localStorage.setItem('choi_k', k); } return k; } catch (_) { return Math.random().toString(36).slice(2, 14); } })();
+const math = el => { if (window.MathJax && MathJax.typesetPromise) MathJax.typesetPromise([el]).catch(() => {}); else setTimeout(() => math(el), 400); };
+const rung = n => { try { navigator.vibrate && navigator.vibrate(n); } catch (_) {} };
+
+function nhapMa(loi) {
+  vo.innerHTML = `<div class="the giua"><h1>🎮 Vào phòng thi đấu</h1><p class="nho">Nhập mã 6 số thầy chiếu trên bảng</p>
+    <input id="ma" inputmode="numeric" maxlength="6" autocomplete="off" aria-label="Mã phòng" value="${e(ma)}"><div class="loi" id="loi">${e(loi || '')}</div><button class="nut" id="vao">Vào phòng</button></div>`;
+  $('ma').focus(); $('vao').onclick = () => { const v = $('ma').value.replace(/\D/g, ''); if (v.length !== 6) { $('loi').textContent = 'Mã phòng gồm 6 chữ số.'; return; } ma = v; history.replaceState(null, '', '/choi/' + ma); batDau(); };
+  $('ma').onkeydown = ev => { if (ev.key === 'Enter') $('vao').click(); };
+}
+async function batDau() {
+  if (!/^\d{6}$/.test(ma)) return nhapMa();
+  vo.innerHTML = '<div class="the giua"><p class="nho">Đang tìm phòng ' + ma + '…</p></div>';
+  let t; try { t = await (await fetch('/api/phong/' + ma + '/thong-tin', { credentials: 'same-origin' })).json(); } catch (_) { t = { ok: false, loi: 'Không có mạng. Kiểm tra wifi/4G rồi thử lại.' }; }
+  if (!t.ok) return nhapMa(t.loi || 'Không có phòng này.');
+  thongTin = t;
+  if (t.vao === 'tk' && (!t.da_dang_nhap || t.vai !== 'hs')) {
+    if (t.vai === 'gv') return nhapMa('Máy này đang đăng nhập tài khoản giáo viên. Học sinh dùng máy khác hoặc đăng xuất.');
+    location.href = '/dang-nhap/?ve=' + encodeURIComponent('/choi/' + ma); return;
+  }
+  if (t.giai_doan === 'ket_thuc') return nhapMa('Phòng ' + ma + ' đã kết thúc.');
+  noi();
+}
+function noi() {
+  ws = new WebSocket((location.protocol === 'https:' ? 'wss://' : 'ws://') + location.host + '/api/phong/' + ma + '/ws?vai=hs&k=' + khach);
+  ws.onopen = () => { lanNoi = 0; let bd = ''; try { bd = localStorage.getItem('choi_ten') || ''; } catch (_) {} ws.send(JSON.stringify({ t: 'vao', biet_danh: bd })); };
+  ws.onmessage = ev => nhan(JSON.parse(ev.data));
+  ws.onclose = ev => { if (ev.code === 4000) return; clearInterval(hen); setTimeout(noi, Math.min(6000, 800 * ++lanNoi)); if (lanNoi > 1) thongBao('Đang nối lại…'); };
+}
+const gui = m => { if (ws && ws.readyState === 1) ws.send(JSON.stringify(m)); };
+function thongBao(m) { const t = document.querySelector('.nho.tb'); if (t) t.textContent = m; }
+function nhan(m) {
+  if (m.t === 'can_ten') return hoiTen();
+  if (m.t === 'loi') return nhapMa(m.loi);
+  if (m.t === 'bi_moi_ra') { ws.close(4000); return nhapMa('Thầy đã mời em ra khỏi phòng.'); }
+  if (m.t === 'can_vao') return gui({ t: 'vao' });
+  if (m.t === 'da_nhan') { guiRoi = true; return ve(); }
+  if (m.t === 'ket_qua_cau') { ketQua = m; if (st && st.toi) { st.toi.diem = m.tong; st.toi.chuoi = m.chuoi; st.toi.hang = m.hang; } rung(m.ti_le === 1 ? 60 : [80, 60, 80]); veKetQua(); setTimeout(() => { ketQua = null; gui({ t: 'tiep' }); }, 2500); return; }
+  if (m.t === 'trang_thai') {
+    lech = m.bay_gio - Date.now();
+    const doiCau = !st || st.cur !== m.cur || st.giai_doan !== m.giai_doan;
+    if (doiCau) { chon = null; guiRoi = !!m.da_tl; if (m.giai_doan === 'dap_an' && st && st.giai_doan === 'cau') rung(m.da_tl && m.da_tl.ti_le === 1 ? 60 : [80, 60, 80]); }
+    st = m; if (!ketQua) ve();
+  }
+}
+function hoiTen() {
+  vo.innerHTML = `<div class="the giua"><h1>Chào em! 👋</h1><p class="nho">Nhập biệt danh để vào phòng ${e(ma)} (tối đa 24 ký tự)</p>
+    <input type="text" id="bd" maxlength="24" autocomplete="nickname" aria-label="Biệt danh"><div class="loi" id="loi"></div><button class="nut" id="ok">Vào phòng 🚀</button></div>`;
+  $('bd').focus(); $('ok').onclick = () => { const v = $('bd').value.trim(); if (!v) { $('loi').textContent = 'Em nhập biệt danh nhé.'; return; } try { localStorage.setItem('choi_ten', v); } catch (_) {} gui({ t: 'vao', biet_danh: v }); };
+  $('bd').onkeydown = ev => { if (ev.key === 'Enter') $('ok').click(); };
+}
+function thanh() {
+  const t = st && st.toi; if (!t) return '';
+  const d = t.doi != null ? DOI[t.doi] : null;
+  return `<div class="thanh"><span class="ten">${e(t.ten)}</span>${d ? `<span class="diem" style="background:${d[1]};white-space:nowrap">Đội ${d[0]}</span>` : ''}${t.chuoi >= 2 ? `<span class="diem">🔥 ${t.chuoi}</span>` : ''}<span class="diem">⭐ ${t.diem}</span><span class="diem">#${t.hang || '–'}</span></div>`;
+}
+function veDongHo(hetLuc, tong, i) {
+  clearInterval(hen); const el = $('dh'); if (!el) return;
+  const chay = () => { const con = hetLuc - (Date.now() + lech), w = Math.max(0, Math.min(100, 100 * con / tong));
+    const x = $('dh'); if (!x) return clearInterval(hen); x.style.width = w + '%'; const so = $('so-giay'); if (so) so.textContent = Math.max(0, Math.ceil(con / 1000));
+    if (con <= 0) { clearInterval(hen); if (st.nhip === 'tu_do' && !guiRoi) { guiRoi = true; gui({ t: 'het_gio_rieng', i }); } } };
+  chay(); hen = setInterval(chay, 200);
+}
+function ve() {
+  clearInterval(hen);
+  if (!st) return;
+  const s = st;
+  if (s.giai_doan === 'cho') {
+    const d = s.toi && s.toi.doi != null ? DOI[s.toi.doi] : null;
+    vo.innerHTML = thanh() + `<div class="the giua" style="margin-top:8vh"><div style="font-size:56px">✅</div><h1>Em đã vào phòng!</h1><p>${e(s.ten)}</p>
+      ${d ? `<div class="doi" style="background:${d[1]}">Đội ${d[0]}</div>` : ''}<p class="nho tb">Chờ thầy bắt đầu… nhìn lên bảng nhé 👀</p></div>`;
+    return;
+  }
+  if (s.giai_doan === 'ket_thuc') {
+    const r = s.ket_qua || { top: [], doi: [] }, toi = s.toi || {};
+    vo.innerHTML = thanh() + `<div class="the giua"><div style="font-size:52px">${toi.hang === 1 ? '🏆' : toi.hang <= 3 ? '🥈' : '🎉'}</div><h1>Hạng ${toi.hang || '–'}</h1><p>Em được <b>${toi.diem || 0}</b> điểm. ${toi.hang <= 3 ? 'Xuất sắc lắm!' : 'Cố gắng tuyệt vời, lần sau còn cao hơn nữa!'}</p>
+      ${r.doi && r.doi.length ? `<p>👑 Đội ${DOI[r.doi[0].doi] ? DOI[r.doi[0].doi][0] : ''} vô địch</p>` : ''}
+      <div class="xh" style="text-align:left">${r.top.map((p, i) => `<div class="${p.id === toi.id ? 'toi' : ''}"><span>${i + 1}. ${e(p.ten)}</span><b>${p.diem}</b></div>`).join('')}</div></div>`;
+    return;
+  }
+  if (s.xong) { vo.innerHTML = thanh() + '<div class="the giua" style="margin-top:8vh"><div style="font-size:56px">🏁</div><h1>Em đã làm xong!</h1><p class="nho">Chờ thầy công bố kết quả chung cuộc.</p></div>'; return; }
+  const c = s.cau; if (!c) { vo.innerHTML = thanh() + '<div class="the giua"><p class="nho tb">Chờ câu tiếp theo…</p></div>'; return; }
+  const lo = s.giai_doan === 'dap_an';
+  if (lo) return veDapAnGV();
+  const dh = `<div style="display:flex;align-items:center;gap:10px;color:#fff;font-weight:800"><span>Câu ${c.i + 1}/${s.so_cau}</span><div class="dh" style="flex:1"><i id="dh"></i></div><span id="so-giay"></span></div>`;
+  if (guiRoi) { vo.innerHTML = thanh() + dh + '<div class="the giua" style="margin-top:6vh"><div style="font-size:52px">⏳</div><h1>Đã gửi đáp án!</h1><p class="nho">Chờ các bạn và thầy công bố đáp án…</p></div>';
+    veDongHo(s.het_luc, s.giay * 1000, c.i); return; }
+  let tl = '';
+  if (c.type === 'mcq') tl = '<div class="pa">' + [0, 1, 2, 3].slice(0, c.so_pa || 4).map(j => `<button data-j="${j}" style="background:${MAU[j]}" aria-label="Chọn ${'ABCD'[j]}">${HINH[j]} ${'ABCD'[j]}</button>`).join('') + '</div>';
+  else if (c.type === 'tf') { chon = Array.isArray(chon) ? chon : [null, null, null, null];
+    tl = '<div class="tf">' + [0, 1, 2, 3].map(j => `<div class="dong"><b>${'abcd'[j]})</b><span>ý ${'abcd'[j]}</span><button class="d ${chon[j] === true ? 'chon' : ''}" data-tf="${j},1">Đúng</button><button class="s ${chon[j] === false ? 'chon' : ''}" data-tf="${j},0">Sai</button></div>`).join('') + `<button class="nut" id="gui-tf" ${chon.every(x => x !== null) ? '' : 'disabled'}>Gửi đáp án</button></div>`; }
+  else tl = `<div class="the"><input inputmode="decimal" id="ds" placeholder="Nhập đáp số" aria-label="Đáp số" autocomplete="off" value="${e(typeof chon === 'string' ? chon : '')}"><button class="nut" id="gui-ds">Gửi đáp số</button><p class="nho">Số thập phân dùng dấu phẩy, ví dụ -1,5</p></div>`;
+  vo.innerHTML = thanh() + dh + `<div class="the cau" id="cau">${c.html}</div>` + tl;
+  math($('cau'));
+  vo.querySelectorAll('[data-j]').forEach(b => b.onclick = () => { if (guiRoi) return; rung(15); chon = +b.dataset.j; b.classList.add('chon'); gui({ t: 'tl', i: c.i, v: chon }); guiRoi = true; if (s.nhip === 'gv') ve(); });
+  vo.querySelectorAll('[data-tf]').forEach(b => b.onclick = () => { const [j, v] = b.dataset.tf.split(','); chon[+j] = v === '1'; rung(10); ve(); });
+  if ($('gui-tf')) $('gui-tf').onclick = () => { if (guiRoi || chon.some(x => x === null)) return; gui({ t: 'tl', i: c.i, v: chon }); guiRoi = true; if (s.nhip === 'gv') ve(); };
+  if ($('ds')) { $('ds').oninput = ev => { chon = ev.target.value; }; $('ds').onkeydown = ev => { if (ev.key === 'Enter') $('gui-ds').click(); }; }
+  if ($('gui-ds')) $('gui-ds').onclick = () => { const v = $('ds').value.trim(); if (!v || guiRoi) return; gui({ t: 'tl', i: c.i, v }); guiRoi = true; if (s.nhip === 'gv') ve(); };
+  veDongHo(s.het_luc, s.giay * 1000, c.i);
+}
+function dapAnChu(type, da) { return type === 'mcq' ? 'ABCD'[da] : type === 'tf' ? da.map((x, j) => 'abcd'[j] + ' ' + (x ? 'Đ' : 'S')).join(' · ') : String(da); }
+function veDapAnGV() {
+  const s = st, c = s.cau, x = s.da_tl, tl = x ? x.ti_le : 0;
+  const lop = !x ? 'sai' : tl === 1 ? 'dung' : tl > 0 ? 'nua' : 'sai';
+  const loi = !x ? ['Hết giờ mất rồi ⏰', 'Câu sau nhanh tay hơn nhé!'] : tl === 1 ? [['Chính xác! 🎯', 'Quá đỉnh! ✨', 'Tuyệt vời! 🚀'][c.i % 3], `+${x.diem} điểm`] : tl > 0 ? ['Đúng một phần 👍', `+${x.diem} điểm`] : [['Chưa đúng 😅', 'Tiếc quá! 🙈', 'Suýt nữa! 💪'][c.i % 3], 'Xem đáp án trên bảng nhé'];
+  vo.innerHTML = thanh() + `<div class="kq ${lop}" style="margin-top:4vh"><div class="to">${loi[0]}</div><div style="font-size:22px;font-weight:800;margin-top:6px">${loi[1]}</div>
+    <div style="margin-top:12px">Đáp án: <b>${e(dapAnChu(c.type, s.dap_an))}</b></div></div><div class="the giua"><p class="nho">Chờ thầy chuyển câu tiếp theo…</p></div>`;
+}
+function veKetQua() {
+  const m = ketQua, c = st && st.cau, lop = m.ti_le === 1 ? 'dung' : m.ti_le > 0 ? 'nua' : 'sai';
+  vo.innerHTML = thanh() + `<div class="kq ${lop}" style="margin-top:6vh"><div class="to">${m.het_gio ? 'Hết giờ ⏰' : m.ti_le === 1 ? 'Chính xác! 🎯' : m.ti_le > 0 ? 'Đúng một phần 👍' : 'Chưa đúng 😅'}</div>
+    <div style="font-size:22px;font-weight:800;margin-top:6px">+${m.diem} điểm${m.chuoi >= 2 ? ' · 🔥 chuỗi ' + m.chuoi : ''}</div>${c ? `<div style="margin-top:10px">Đáp án: <b>${e(dapAnChu(c.type, m.dap_an))}</b></div>` : ''}</div>`;
+}
+batDau();
+})();
+</script></body></html>
