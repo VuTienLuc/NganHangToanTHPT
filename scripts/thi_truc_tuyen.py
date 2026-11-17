@@ -534,7 +534,7 @@ TRANG_NHOM = """<!DOCTYPE html><html lang="vi"><head><meta charset="utf-8"><meta
 <meta name="robots" content="noindex,nofollow"><title>{tieu}</title></head><body style="font:17px system-ui;text-align:center;padding-top:30vh;color:#1e3a8a">
 Đang mở đề…<script>(function(){{var ds={ds},k='nhom-de:{slug}',m=null;try{{m=localStorage.getItem(k)}}catch(e){{}}
 if(ds.indexOf(m)<0){{m=ds[Math.floor(Math.random()*ds.length)];try{{localStorage.setItem(k,m)}}catch(e){{}}}}
-location.replace('../'+m+'/');}})();</script></body></html>"""
+location.replace('../'+m+'/'+location.search);}})();</script></body></html>"""
 
 
 def trang_nhom(slug, ten, cac_con):
@@ -851,6 +851,10 @@ def dang_phong(c, in_ra):
     if rc == 0:
         c["phong_ok"] = True; c["phong_ban"] = ma; _luu_ch(c); _chep_may_chu()
         in_ra("   ✓ Phòng thi đấu sẵn sàng.")
+    elif "workers.dev subdomain" in ra:
+        in_ra("   ⚠ Tài khoản Cloudflare chưa bật Workers (cần làm MỘT lần): mở https://dash.cloudflare.com → menu bên trái "
+              "“Compute (Workers)” / “Workers & Pages” → đợi trang tải xong (Cloudflare tự tạo tên miền workers.dev; nếu hỏi tên thì "
+              "gõ thi-toan-vtl rồi bấm Set up) → quay lại bấm “Đăng lại tất cả”. Các phần khác vẫn chạy bình thường.")
     else:
         in_ra("   ⚠ Chưa đăng được phòng thi đấu (xem nhật ký) — các phần khác vẫn chạy bình thường.")
 
@@ -956,6 +960,9 @@ def lam_lai_trang_de(in_ra=print):
     """Dựng lại mọi trang đề từ bản gốc theo mã vá mới nhất (sửa lỗi/giao diện áp cho cả đề đã đăng)."""
     n = 0
     for x in danh_sach():
+        if x.get("loai") == "nhom" and x.get("trang_thai") != "da_dong":      # link chung: giữ ?phong khi chuyển sang mã đề
+            _dat_trang(x["slug"], trang_nhom(x["slug"], x["ten"], x.get("con") or []))
+            continue
         if x.get("loai") in ("bai_giang", "nhom") or x.get("trang_thai") == "da_dong":
             continue
         p = os.path.join(DL, x["slug"] + ".goc.html")
