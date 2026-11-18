@@ -56,6 +56,58 @@ def nhap_tuong_tu_va_tao_phieu(t, cfg, so, vi_du_mau, bien_dich, nguon="Câu tư
             "nhat_ky": "\n".join(x for x in dong if not x.startswith("THU_MUC:") and not x.startswith("   +"))}
 
 
+def tu_sinh_nen(d):
+    """Chạy nền cho /api/tu-sinh: nhật kí từng bước vào cong_viec, kết quả cuối ở cong_viec["ket_qua"]."""
+    import random as _rd, sinh_tuong_tu as ST
+    def ghi(x):
+        cong_viec["nhat_ky"] += x + "\n"
+    ra = {"ok": False}
+    try:
+        cfg = dict(d.get("cau_hinh") or {})
+        so = max(1, min(8, int(d.get("so") or 3))); kieu = d.get("kieu") or "giong"; cach = d.get("cach") or "python"
+        rng = _rd.Random(cfg.get("seed") or time.time())
+        khoi, vdm = [], {}
+        if cach in ("python", "python_ai"):
+            ghi("🐍 Python (đổi số liệu, tính lại lời giải):")
+            t_py, vd_py, nk_py = ST.sinh_python(cfg, so, kieu, rng)
+            for x in nk_py:
+                ghi(x)
+            if t_py:
+                khoi.append(t_py)
+            vdm.update(vd_py)
+        if cach in ("ai", "python_ai"):
+            import luyen_moi_ngay
+            kq, cac_dang, _ = luyen_moi_ngay.chon(dict(cfg, so_tuong_tu=0, so_van_dung=0, theo_mau=False), rng)
+            con_lai = [k for k in cac_dang if k not in vdm]
+            if con_lai:
+                id_map = tai_id_map()
+                mau = [{"ma": kq[k]["vd"]["ma"], "dang_key": k, "muc": kq[k]["vd"].get("muc_chuan") or "H",
+                        "ten_dang": (id_map.get(k, {}).get("type_name") or "").strip(), "ten_bai": (id_map.get(k, {}).get("lesson_name") or "").strip(),
+                        "de": kq[k]["vd"]["_tl"]["de"], "lg": kq[k]["vd"]["_tl"]["lg"]} for k in con_lai]
+                ghi(f"🤖 AI soạn {len(mau)} mẫu (mỗi lượt một mẫu; bị ngắt / thiếu → tự hỏi tiếp; khoá hết lượt → đổi khoá):")
+                try:
+                    kb, vd_ai = ST.sinh_ai(mau, so, kieu, lop_tu_so(con_lai[0][0]), ghi)
+                    khoi += kb; vdm.update(vd_ai)
+                except ST.HetKhoa as e:
+                    if cach == "ai" and not khoi:
+                        raise
+                    ghi(f"  ⚠ {e} — giữ các câu đã sinh.")
+        if not khoi:
+            raise RuntimeError("Chưa sinh được câu nào. Thầy thử cách khác hoặc 📝 Prompt AI (chép – dán).")
+        ghi("\n📥 Nhập ngân hàng và tạo phiếu…")
+        ra = nhap_tuong_tu_va_tao_phieu("\n\n".join(khoi), cfg, so, vdm, False,
+                                        "Ngân hàng tự sinh (" + {"python": "Python", "ai": "AI", "python_ai": "Python + AI"}.get(cach, cach) + ")")
+        ghi(ra.get("nhat_ky", ""))
+        if ra.get("ok") and d.get("bien_dich") and tim_pdflatex():
+            ghi("Biên dịch PDF…")
+            bien_dich_thu_muc(os.path.join(GOC, ra["thu_muc"]), ghi)
+    except Exception as e:
+        ghi(f"Lỗi: {e}")
+        ra = {"ok": False}
+    ra["nhat_ky"] = cong_viec["nhat_ky"]
+    cong_viec.update(dang_chay=False, xong=True, ket_qua=ra)
+
+
 def chi_muc_cu():
     p = os.path.join(GOC, "du-lieu", "chi_muc.jsonl")
     if not os.path.exists(p):
@@ -753,57 +805,22 @@ class XuLy(BaseHTTPRequestHandler):
                     return self.gui(200, {"ok": False, "nhat_ky": "Các câu chưa có dòng '% mau: <mã câu mẫu>' — AI cần giữ dòng này (xem lại prompt)."})
                 return self.gui(200, nhap_tuong_tu_va_tao_phieu(t, dict(d.get("cau_hinh") or {}), d.get("so"), d.get("vi_du_mau"),
                                                                 d.get("bien_dich")))
-            if u.path == "/api/khoa-ai":              # khoá API AI (Gemini / Claude) — lưu ai_khoa.json trên máy, không đưa lên git
+            if u.path == "/api/khoa-ai":              # nhiều khoá API (Gemini / DeepSeek / Claude / OpenAI) — tự nhận dạng, lưu ai_khoa.json trên máy
                 import sinh_tuong_tu as ST
                 if d.get("luu"):
-                    ST.luu_khoa(d.get("nha") or "gemini", d.get("khoa") or "", d.get("mo_hinh") or "")
-                k = ST.doc_khoa()
-                return self.gui(200, {"ok": True, "nha": k.get("nha") or "", "co_khoa": bool(k.get("khoa")), "mo_hinh": k.get("mo_hinh") or ""})
-            if u.path == "/api/tu-sinh":              # NGÂN HÀNG TỰ SINH: rút mẫu trong kho → Python / AI sinh câu tương tự → nhập kho → in phiếu theo mẫu
-                import random as _rd, sinh_tuong_tu as ST
-                cfg = dict(d.get("cau_hinh") or {})
-                so = max(1, min(8, int(d.get("so") or 3))); kieu = d.get("kieu") or "giong"; cach = d.get("cach") or "python"
-                rng = _rd.Random(cfg.get("seed") or time.time())
-                khoi, vdm, nk = [], {}, []
-                try:
-                    if cach in ("python", "python_ai"):
-                        t_py, vd_py, nk_py = ST.sinh_python(cfg, so, kieu, rng)
-                        if t_py:
-                            khoi.append(t_py)
-                        vdm.update(vd_py); nk += ["🐍 Python (đổi số liệu, tính lại lời giải):"] + nk_py
-                    if cach in ("ai", "python_ai"):
-                        import luyen_moi_ngay, tao_prompt
-                        kq, cac_dang, _ = luyen_moi_ngay.chon(dict(cfg, so_tuong_tu=0, so_van_dung=0, theo_mau=False), rng)
-                        con_lai = [k for k in cac_dang if k not in vdm]
-                        if con_lai:
-                            id_map = tai_id_map()
-                            mau = [{"ma": kq[k]["vd"]["ma"], "dang_key": k, "muc": kq[k]["vd"].get("muc_chuan") or "H",
-                                    "ten_dang": (id_map.get(k, {}).get("type_name") or "").strip(), "ten_bai": (id_map.get(k, {}).get("lesson_name") or "").strip(),
-                                    "de": kq[k]["vd"]["_tl"]["de"], "lg": kq[k]["vd"]["_tl"]["lg"]} for k in con_lai]
-                            p = tao_prompt.prompt_tuong_tu(mau, so, kieu, lop_tu_so(con_lai[0][0]))
-                            nk.append(f"🤖 AI soạn cho {len(mau)} dạng: " + ", ".join(con_lai))
-                            try:
-                                tra = ST.goi_ai(p)
-                            except Exception as e:
-                                if cach == "ai" or not khoi:
-                                    raise
-                                tra = ""; nk.append(f"  ⚠ Gọi AI chưa được ({e}) — giữ phần Python đã sinh.")
-                            m = re.findall(r"```(?:latex|tex)?\s*\n([\s\S]*?)```", tra)
-                            tra = max(m, key=len) if m else tra
-                            if not tra:
-                                pass
-                            elif "\\begin{bt}" not in tra:
-                                nk.append("  ⚠ AI chưa trả về câu đúng định dạng.")
-                            else:
-                                khoi.append(tra); vdm.update({x["dang_key"]: x["ma"] for x in mau})
-                except Exception as e:
-                    return self.gui(200, {"ok": False, "nhat_ky": "\n".join(nk + [f"Lỗi: {e}"])})
-                if not khoi:
-                    return self.gui(200, {"ok": False, "nhat_ky": "\n".join(nk + ["", "Chưa sinh được câu nào. Thầy thử cách AI hoặc 📝 Prompt AI (chép – dán)."])})
-                ra = nhap_tuong_tu_va_tao_phieu("\n\n".join(khoi), cfg, so, vdm, d.get("bien_dich"),
-                                                "Ngân hàng tự sinh (" + {"python": "Python", "ai": "AI", "python_ai": "Python + AI"}.get(cach, cach) + ")")
-                ra["nhat_ky"] = "\n".join(nk) + "\n\n" + ra.get("nhat_ky", "")
+                    ST.luu_khoa(d.get("van") or "", them=bool(d.get("them")))
+                ra = {"ok": True, "ds": [{"nha": ST.TEN_NHA.get(k["nha"], k["nha"]), "khoa": ST.che(k["khoa"]), "mo_hinh": k.get("mo_hinh") or ""}
+                                         for k in ST.doc_khoa()["ds"]]}
+                ra["co_khoa"] = bool(ra["ds"])
+                if d.get("thu"):
+                    ra["thu"] = [{"nha": a, "khoa": b, "ok": c, "ghi": e} for a, b, c, e in ST.kiem_tra_khoa()]
                 return self.gui(200, ra)
+            if u.path == "/api/tu-sinh":              # NGÂN HÀNG TỰ SINH (chạy nền): rút mẫu → Python / AI sinh câu tương tự → nhập kho → in phiếu theo mẫu
+                if cong_viec.get("dang_chay"):
+                    return self.gui(200, {"ok": False, "nhat_ky": "Đang có việc khác chạy (biên dịch / đăng web…) — thầy đợi xong rồi bấm lại."})
+                cong_viec.update(dang_chay=True, xong=False, nhat_ky="", ket_qua=None)
+                threading.Thread(target=tu_sinh_nen, args=(dict(d),), daemon=True).start()
+                return self.gui(200, {"ok": True, "nen": True})
             if u.path == "/api/chon-theo-dang":      # phiếu vá lỗ hổng / phiếu cuối giờ: rút câu ngân hàng theo dạng hoặc theo bài
                 import random
                 from xem_truoc import kho, hop_le

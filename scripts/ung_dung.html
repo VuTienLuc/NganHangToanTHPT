@@ -194,6 +194,13 @@ footer .gian{flex:1}
 #hop-nk,#hop-kt{position:fixed;inset:0;background:rgba(17,24,39,.35);display:none;align-items:center;justify-content:center;z-index:18}
 #hop-nk .noi,#hop-kt .noi{background:#fff;border-radius:14px;width:min(1100px,96vw);height:min(90vh,880px);display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.25)}
 #hop-nk .noi{width:min(820px,96vw);height:min(80vh,720px)}
+#hop-khoa{position:fixed;inset:0;background:rgba(17,24,39,.35);display:none;align-items:center;justify-content:center;z-index:41}
+#hop-khoa .noi{background:#fff;border-radius:14px;width:min(720px,96vw);max-height:90vh;display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.25)}
+#hop-khoa h2{margin:0;padding:12px 18px;font-size:16px;border-bottom:1px solid var(--vien)}
+#hop-khoa .than{overflow:auto;padding:12px 18px;display:flex;flex-direction:column;gap:10px;font-size:13px}
+#hop-khoa textarea{min-height:120px;width:100%;box-sizing:border-box;padding:8px;border:1px solid var(--vien);border-radius:8px;font:12px ui-monospace,Menlo,monospace}
+#hop-khoa table{border-collapse:collapse;width:100%}#hop-khoa td,#hop-khoa th{border-bottom:1px solid var(--vien);padding:5px 6px;text-align:left}
+#hop-khoa .chan{padding:10px 18px;border-top:1px solid var(--vien);display:flex;gap:8px;align-items:center;flex-wrap:wrap}
 #hop-tt{position:fixed;inset:0;background:rgba(17,24,39,.35);display:none;align-items:center;justify-content:center;z-index:40}
 #hop-tt .noi{background:#fff;border-radius:14px;width:min(860px,96vw);height:min(82vh,740px);display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.25)}
 #hop-tt h2{margin:0;padding:12px 18px;font-size:16px;border-bottom:1px solid var(--vien)}
@@ -592,7 +599,7 @@ tr.gop-h td{background:#dbeafe;text-align:left;font-weight:700;padding:8px 12px;
           <select id="ph-ts-cach" style="width:auto" title="Cách sinh câu tương tự từ ví dụ mẫu rút trong kho">
             <option value="python" selected>🐍 Python – đổi số liệu, tính lại lời giải (không cần mạng)</option>
             <option value="python_ai">🐍 Python trước, dạng còn lại 🤖 AI</option>
-            <option value="ai">🤖 AI tự động (Gemini / Claude)</option></select>
+            <option value="ai">🤖 AI tự động (Gemini / DeepSeek / … — nhiều khoá, tự đổi khoá)</option></select>
           <button id="ph-ts-chay" class="chinh" title="Rút ví dụ mẫu trong kho → sinh câu tương tự → nhập ngân hàng → in phiếu riêng theo mẫu">⚡ Tự sinh &amp; in phiếu theo mẫu</button>
           <a href="#" id="ph-ts-khoa" title="Khoá API cho cách AI tự động (lưu trên máy này)">⚙ Khoá AI…</a>
           <span class="nho" style="width:100%">hoặc chép – dán thủ công:
@@ -625,6 +632,20 @@ tr.gop-h td{background:#dbeafe;text-align:left;font-weight:700;padding:8px 12px;
     </div>
   </div>
   <div class="chan"><span id="ph-trang-thai" class="nho"></span><button id="ph-thieu" style="margin-left:auto" title="Kiểm tra ngân hàng đủ câu cho phiếu này chưa; thiếu thì soạn prompt cho AI sinh câu, rồi nhập vào ngân hàng">Kiểm tra kho / Prompt AI soạn câu…</button><button id="ph-tao" class="chinh">Tạo phiếu</button><button id="ph-dong-hop">Đóng</button></div>
+</div></div>
+<div id="hop-khoa"><div class="noi">
+  <h2>⚙ Khoá API AI — nhiều khoá, tự nhận dạng, hết lượt tự đổi khoá</h2>
+  <div class="than">
+    <div id="khoa-ds"></div>
+    <label><b>Dán khoá</b> — mỗi dòng một khoá. App tự nhận: <code>AIza…</code> = Gemini · <code>sk-…</code> = DeepSeek · <code>sk-ant-…</code> = Claude · <code>sk-proj-…</code> = OpenAI.
+      Muốn chọn mô hình: <code>gemini@gemini-3.5-flash:AIza…</code>, <code>deepseek@deepseek-reasoner:sk-…</code>.
+      <textarea id="khoa-van" placeholder="AIzaSy…&#10;sk-…&#10;AIzaSy… (khoá Gemini thứ hai)"></textarea></label>
+    <p class="nho" style="margin:0">Khoá chỉ lưu trên máy này (<code>ai_khoa.json</code>, đã chặn khỏi GitHub). Khi chạy, app dùng lần lượt từng khoá; khoá hết lượt / sai / quá tải thì tự chuyển khoá khác, tất cả đang nghỉ thì chờ rồi chạy tiếp.
+      AI trả lời dài bị ngắt → app giữ các câu hoàn chỉnh và tự hỏi tiếp phần còn thiếu.</p>
+    <div id="khoa-thu" class="nho"></div>
+  </div>
+  <div class="chan"><button id="khoa-them" class="chinh">➕ Thêm vào danh sách</button><button id="khoa-thay">Thay cả danh sách</button>
+    <button id="khoa-kt">🔌 Kiểm tra các khoá</button><button id="khoa-dong" style="margin-left:auto">Đóng</button></div>
 </div></div>
 <div id="hop-tt"><div class="noi">
   <h2>Câu tương tự theo mẫu → nhập ngân hàng → in phiếu riêng</h2>
@@ -1802,23 +1823,33 @@ $("#ph-tt-prompt").onclick=async()=>{
        ["Dán kết quả AI → nhập kho & in phiếu…",()=>{$("#hop-thoai").style.display="none";moTT()}]]);}
   finally{b.disabled=false}
 };
-$("#ph-ts-khoa").onclick=async e=>{e.preventDefault();
-  const k=await api("/api/khoa-ai",{});
-  const nha=prompt(`Nhà cung cấp AI: gemini hoặc claude${k.co_khoa?` (đang dùng: ${k.nha}${k.mo_hinh?" – "+k.mo_hinh:""})`:""}`,k.nha||"gemini");if(nha===null)return;
-  const khoa=prompt("Dán khoá API (Gemini: aistudio.google.com/apikey · Claude: console.anthropic.com). Khoá chỉ lưu trên máy này, không lên GitHub.","");if(!khoa)return;
-  const mo=prompt("Mô hình (để trống = tự chọn bản mới nhất của Gemini / claude-sonnet-5-5)",k.mo_hinh||"");
-  const r=await api("/api/khoa-ai",{luu:true,nha:/claude/i.test(nha)?"claude":"gemini",khoa,mo_hinh:mo||""});
-  alert(r.co_khoa?`Đã lưu khoá ${r.nha}.`:"Chưa lưu được khoá.")};
+function veKhoa(r){$("#khoa-ds").innerHTML=r.ds.length?`<b>Đang có ${r.ds.length} khoá</b> (dùng theo thứ tự):<table><tr><th>#</th><th>Hãng</th><th>Khoá</th><th>Mô hình</th></tr>`+
+  r.ds.map((k,i)=>`<tr><td>${i+1}</td><td>${esc(k.nha)}</td><td><code>${esc(k.khoa)}</code></td><td>${esc(k.mo_hinh||"mặc định")}</td></tr>`).join("")+"</table>":"<i>Chưa có khoá nào.</i>"}
+$("#ph-ts-khoa").onclick=async e=>{e.preventDefault();$("#khoa-van").value="";$("#khoa-thu").textContent="";veKhoa(await api("/api/khoa-ai",{}));$("#hop-khoa").style.display="flex"};
+$("#khoa-dong").onclick=()=>$("#hop-khoa").style.display="none";
+const luuKhoa=async them=>{const van=$("#khoa-van").value.trim();if(!van){alert("Dán khoá vào ô trước.");return}
+  if(!them&&!confirm("Thay toàn bộ danh sách khoá cũ bằng các khoá vừa dán?"))return;
+  const r=await api("/api/khoa-ai",{luu:true,them,van});$("#khoa-van").value="";veKhoa(r)};
+$("#khoa-them").onclick=()=>luuKhoa(true);$("#khoa-thay").onclick=()=>luuKhoa(false);
+$("#khoa-kt").onclick=async()=>{const b=$("#khoa-kt");b.disabled=true;$("#khoa-thu").textContent="Đang gọi thử từng khoá…";
+  try{const r=await api("/api/khoa-ai",{thu:true});veKhoa(r);
+    $("#khoa-thu").innerHTML=(r.thu||[]).map(t=>`${t.ok?"✅":"❌"} ${esc(t.nha)} <code>${esc(t.khoa)}</code> — ${esc(t.ghi)}`).join("<br>")||"Chưa có khoá."}
+  finally{b.disabled=false}};
 $("#ph-ts-chay").onclick=async()=>{
   const cfg=phCfg(); if(!cfg)return; const so=Math.max(1,+$("#ph-tt").value||3), cach=$("#ph-ts-cach").value;
   if(cach!=="python"){const k=await api("/api/khoa-ai",{});if(!k.co_khoa){alert("Cách này cần khoá API AI — bấm ⚙ Khoá AI… trước (hoặc chọn 🐍 Python).");return}}
-  const b=$("#ph-ts-chay");b.disabled=true;b.textContent="Đang sinh câu, biên dịch thử, nhập kho…";
-  try{const r=await api("/api/tu-sinh",{cau_hinh:cfg,so,kieu:ttKieu(),cach,bien_dich:$("#bien_dich").checked});
-    if(!r.ok){hopThoai("Chưa tự sinh được",r.nhat_ky||r.loi||"");return}
+  const b=$("#ph-ts-chay");b.disabled=true;b.textContent="Đang tự sinh…";
+  try{const r0=await api("/api/tu-sinh",{cau_hinh:cfg,so,kieu:ttKieu(),cach,bien_dich:$("#bien_dich").checked});
+    if(!r0.ok){hopThoai("Chưa tự sinh được",r0.nhat_ky||r0.loi||"");return}
+    hopThoai("⚡ Đang tự sinh câu tương tự theo mẫu… (chạy tự động, thầy có thể để đó)","Đang chuẩn bị…");
+    let s;
+    for(;;){await new Promise(x=>setTimeout(x,1500));s=await api("/api/trang-thai");
+      $("#ht-noi").textContent=s.nhat_ky||"Đang chạy…";$("#ht-noi").scrollTop=1e9;if(s.xong)break}
+    const r=s.ket_qua||{};
+    if(!r.ok){hopThoai("Chưa tự sinh được",r.nhat_ky||s.nhat_ky||"");return}
     $("#hop-phieu").style.display="none";await tai();
-    hopThoai(`Đã sinh & nhập ${r.so_cau} câu, tạo phiếu theo mẫu: ${r.thu_muc}`,r.nhat_ky+(r.bien_dich?"\nĐang biên dịch PDF…":""),
-      [["🌐 Phiếu HTML lên web…",()=>phieuWeb(r.thu_muc),true],["Mở thư mục",()=>api("/api/mo",{duong_dan:r.thu_muc})]]);
-    if(r.bien_dich) theoDoi(r.nhat_ky);}
+    hopThoai(`Đã sinh & nhập ${r.so_cau} câu, tạo phiếu theo mẫu: ${r.thu_muc}`,r.nhat_ky,
+      [["🌐 Phiếu HTML lên web…",()=>phieuWeb(r.thu_muc),true],["Mở thư mục",()=>api("/api/mo",{duong_dan:r.thu_muc})]]);}
   finally{b.disabled=false;b.textContent="⚡ Tự sinh & in phiếu theo mẫu"}
 };
 function moTT(){if(!TT_MAU){alert("Thầy bấm “📝 Prompt AI soạn câu tương tự theo mẫu…” trước.");return}

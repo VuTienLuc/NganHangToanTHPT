@@ -359,19 +359,56 @@ def sinh_python(cfg, so, kieu, rng):
     return "\n\n".join(khoi), {d: mau[d][0][0]["ma"] for d in mau}, nk
 
 
-# ------------------------------------------------------------------ AI qua khoá API
+# ------------------------------------------------------------------ AI qua khoá API: nhiều khoá, tự nhận dạng, xoay vòng, tự chạy tiếp khi bị ngắt
+import time as _time
+
 KHOA = os.path.join(GOC, "ai_khoa.json")
+TEN_NHA = {"gemini": "Gemini", "deepseek": "DeepSeek", "claude": "Claude", "openai": "OpenAI"}
+MO_MAC_DINH = {"gemini": "gemini-flash-latest", "deepseek": "deepseek-chat", "claude": "claude-sonnet-5-5", "openai": "gpt-4o-mini"}
+
+
+def nhan_dang(khoa):
+    """Đoán nhà cung cấp từ dạng khoá."""
+    k = (khoa or "").strip()
+    if k.startswith("AIza"):
+        return "gemini"
+    if k.startswith("sk-ant-"):
+        return "claude"
+    if k.startswith(("sk-proj-", "sk-svcacct-")):
+        return "openai"
+    if k.startswith("sk-"):
+        return "deepseek"
+    return "gemini"
 
 
 def doc_khoa():
+    """→ {"ds": [{"khoa", "nha", "mo_hinh"}…]} (đọc cả kiểu cũ một khoá)."""
     try:
-        return json.load(open(KHOA, encoding="utf-8"))
+        k = json.load(open(KHOA, encoding="utf-8"))
     except Exception:
-        return {}
+        return {"ds": []}
+    if "ds" not in k:
+        k = {"ds": [{"khoa": k.get("khoa", ""), "nha": k.get("nha") or nhan_dang(k.get("khoa")), "mo_hinh": k.get("mo_hinh", "")}] if k.get("khoa") else []}
+    k["ds"] = [x for x in k["ds"] if x.get("khoa")]
+    return k
 
 
-def luu_khoa(nha, khoa, mo_hinh=""):
-    json.dump({"nha": nha, "khoa": khoa.strip(), "mo_hinh": mo_hinh.strip()}, open(KHOA, "w", encoding="utf-8"))
+def luu_khoa(van, mo_hinh=None, them=False):
+    """van: chuỗi nhiều khoá (cách nhau xuống dòng / dấu phẩy / khoảng trắng); có thể ghi 'deepseek:sk-…' hoặc 'gemini@gemini-3.5-flash:AIza…'."""
+    ds = doc_khoa()["ds"] if them else []
+    da = {x["khoa"] for x in ds}
+    for tok in re.split(r"[\s,;]+", van or ""):
+        if not tok:
+            continue
+        nha, mo = None, ""
+        m = re.match(r"^(gemini|deepseek|claude|openai)(?:@([\w.\-]+))?:(.+)$", tok, re.I)
+        if m:
+            nha, mo, tok = m.group(1).lower(), m.group(2) or "", m.group(3)
+        if tok in da or len(tok) < 20:
+            continue
+        da.add(tok)
+        ds.append({"khoa": tok, "nha": nha or nhan_dang(tok), "mo_hinh": mo or (mo_hinh or {}).get(nha or nhan_dang(tok), "")})
+    json.dump({"ds": ds}, open(KHOA, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
     gi = os.path.join(GOC, ".gitignore")
     try:
         t = open(gi, encoding="utf-8").read()
@@ -379,39 +416,190 @@ def luu_khoa(nha, khoa, mo_hinh=""):
             open(gi, "a", encoding="utf-8").write("\n# khoá API AI của thầy — không đưa lên git\nai_khoa.json\n")
     except OSError:
         pass
+    return ds
 
 
-def goi_ai(prompt, k=None, timeout=300):
-    """Gửi prompt → văn bản trả về. k: {"nha": "gemini"|"claude", "khoa", "mo_hinh"}."""
-    k = k or doc_khoa()
-    if not k.get("khoa"):
-        raise RuntimeError("Chưa có khoá API AI — bấm ⚙ Khoá AI… trong hộp Phiếu bài học.")
-    if k.get("nha") == "claude":
-        mo = k.get("mo_hinh") or "claude-sonnet-5-5"
-        req = urllib.request.Request("https://api.anthropic.com/v1/messages",
-                                     json.dumps({"model": mo, "max_tokens": 16000, "messages": [{"role": "user", "content": prompt}]}).encode(),
-                                     {"content-type": "application/json", "x-api-key": k["khoa"], "anthropic-version": "2023-06-01"})
-        r = json.load(urllib.request.urlopen(req, timeout=timeout))
-        return "".join(x.get("text", "") for x in r.get("content", []))
-    def goi(mo):
-        req = urllib.request.Request(f"https://generativelanguage.googleapis.com/v1beta/models/{mo}:generateContent",
-                                     json.dumps({"contents": [{"parts": [{"text": prompt}]}], "generationConfig": {"temperature": 0.7}}).encode(),
-                                     {"content-type": "application/json", "x-goog-api-key": k["khoa"]})
-        r = json.load(urllib.request.urlopen(req, timeout=timeout))
-        return "".join(p.get("text", "") for c in r.get("candidates", []) for p in c.get("content", {}).get("parts", []))
+def che(khoa):
+    return khoa[:6] + "…" + khoa[-4:]
+
+
+class HetKhoa(RuntimeError):
+    pass
+
+
+def _http(url, body, headers, timeout):
+    req = urllib.request.Request(url, json.dumps(body).encode() if body is not None else None, {"content-type": "application/json", **headers})
+    return json.load(urllib.request.urlopen(req, timeout=timeout))
+
+
+def goi_mot(k, prompt, timeout=240, max_tok=8000):
+    """Gọi MỘT khoá → (văn bản, bị_cắt)."""
+    nha, khoa, mo = k["nha"], k["khoa"], k.get("mo_hinh") or MO_MAC_DINH.get(k["nha"])
+    if nha == "claude":
+        r = _http("https://api.anthropic.com/v1/messages", {"model": mo, "max_tokens": max_tok, "messages": [{"role": "user", "content": prompt}]},
+                  {"x-api-key": khoa, "anthropic-version": "2023-06-01"}, timeout)
+        return "".join(x.get("text", "") for x in r.get("content", [])), r.get("stop_reason") == "max_tokens"
+    if nha in ("deepseek", "openai"):
+        url = "https://api.deepseek.com/chat/completions" if nha == "deepseek" else "https://api.openai.com/v1/chat/completions"
+        r = _http(url, {"model": mo, "messages": [{"role": "user", "content": prompt}], "max_tokens": max_tok, "temperature": 0.7, "stream": False},
+                  {"authorization": "Bearer " + khoa}, timeout)
+        c = (r.get("choices") or [{}])[0]
+        return (c.get("message") or {}).get("content") or "", c.get("finish_reason") in ("length", "insufficient_system_resource")
+
+    def gem(m):
+        r = _http(f"https://generativelanguage.googleapis.com/v1beta/models/{m}:generateContent",
+                  {"contents": [{"parts": [{"text": prompt}]}], "generationConfig": {"temperature": 0.7, "maxOutputTokens": max_tok}},
+                  {"x-goog-api-key": khoa}, timeout)
+        c = (r.get("candidates") or [{}])[0]
+        return "".join(p.get("text", "") for p in (c.get("content") or {}).get("parts", [])), c.get("finishReason") == "MAX_TOKENS"
     try:
-        return goi(k.get("mo_hinh") or "gemini-flash-latest")
+        return gem(mo)
     except urllib.error.HTTPError as e:
         if e.code != 404:
             raise
-        return goi(_gemini_moi_nhat(k["khoa"]))          # tên mô hình đã cũ → lấy bản "flash" mới nhất đang có
+        k["mo_hinh"] = _gemini_moi_nhat(khoa)              # tên mô hình đã cũ → bản "flash" mới nhất đang có
+        return gem(k["mo_hinh"])
 
 
 def _gemini_moi_nhat(khoa):
-    req = urllib.request.Request("https://generativelanguage.googleapis.com/v1beta/models?pageSize=200", headers={"x-goog-api-key": khoa})
-    ds = json.load(urllib.request.urlopen(req, timeout=60)).get("models", [])
+    ds = _http("https://generativelanguage.googleapis.com/v1beta/models?pageSize=200", None, {"x-goog-api-key": khoa}, 60).get("models", [])
     ten = [m["name"].split("/")[-1] for m in ds if "generateContent" in (m.get("supportedGenerationMethods") or [])]
     tot = [t for t in ten if re.fullmatch(r"gemini-[\d.]+-flash", t)] or [t for t in ten if "flash" in t and "lite" not in t] or ten
     if not tot:
         raise RuntimeError("Khoá API không có mô hình Gemini nào dùng được.")
     return max(tot, key=lambda t: [int(x) for x in re.findall(r"\d+", t)] or [0])
+
+
+class XoayKhoa:
+    """Dùng lần lượt các khoá; khoá hết lượt / lỗi thì nghỉ một lúc và chuyển khoá khác; tất cả đang nghỉ thì chờ."""
+    NGHI = {401: 3600, 403: 3600, 402: 3600, 429: 60, "mang": 20, "khac": 30}
+
+    def __init__(self, ds=None, ghi=print):
+        self.ds = [dict(x) for x in (ds if ds is not None else doc_khoa()["ds"])]
+        if not self.ds:
+            raise HetKhoa("Chưa có khoá API AI — bấm ⚙ Khoá AI… trong hộp Phiếu bài học.")
+        self.nghi = {}
+        self.i = 0
+        self.ghi = ghi
+
+    def goi(self, prompt, cho_toi_da=180):
+        bat_dau = _time.time()
+        while True:
+            now = _time.time()
+            for _ in range(len(self.ds)):
+                k = self.ds[self.i % len(self.ds)]
+                if self.nghi.get(k["khoa"], 0) <= now:
+                    try:
+                        t, cat = goi_mot(k, prompt)
+                        if not t.strip():
+                            raise RuntimeError("trả về rỗng")
+                        return t, cat, k
+                    except urllib.error.HTTPError as e:
+                        try:
+                            noi = e.read().decode("utf-8", "ignore")[:160]
+                        except Exception:
+                            noi = ""
+                        lau = self.NGHI.get(e.code, self.NGHI["khac"] if e.code >= 500 else 60)
+                        if e.code in (400, 429) and re.search(r"quota|billing|exhaust|balance|insufficient|per.?day|API key", noi, re.I):
+                            lau = 3600                       # hết hạn mức ngày / hết tiền / sai khoá → bỏ khoá này lâu
+                        self.nghi[k["khoa"]] = _time.time() + lau
+                        self.ghi(f"    ↪ {TEN_NHA.get(k['nha'], k['nha'])} {che(k['khoa'])}: lỗi {e.code}"
+                                 f"{' (hết lượt / sai khoá)' if lau >= 3600 else ' (quá tải, nghỉ ' + str(lau) + 's)'} → đổi khoá")
+                    except Exception as e:
+                        self.nghi[k["khoa"]] = _time.time() + self.NGHI["mang"]
+                        self.ghi(f"    ↪ {TEN_NHA.get(k['nha'], k['nha'])} {che(k['khoa'])}: {str(e)[:80]} → đổi khoá")
+                self.i += 1
+            con = [v for v in self.nghi.values() if v > _time.time()]
+            if len(con) >= len(self.ds) and min(con) - _time.time() > 600:
+                raise HetKhoa("Mọi khoá API đều hết lượt hoặc sai khoá. Thầy thêm khoá khác ở ⚙ Khoá AI…")
+            if _time.time() - bat_dau > cho_toi_da:
+                raise HetKhoa("Các khoá API đang quá tải lâu — thử lại sau.")
+            cho = max(2, min(30, (min(con) - _time.time()) if con else 2))
+            self.ghi(f"    … mọi khoá đang nghỉ, chờ {int(cho)}s")
+            _time.sleep(cho)
+
+
+KHOI_BT = re.compile(r"\\begin\{bt\}.*?\\end\{bt\}", re.S)
+
+
+def tach_khoi_ai(t):
+    """Lấy các khối \\begin{bt}…\\end{bt} HOÀN CHỈNH (khối bị cắt dở ở cuối thì bỏ)."""
+    t = re.sub(r"```(?:latex|tex)?", "", t or "")
+    ra = []
+    for k in KHOI_BT.findall(t):
+        than = k[k.find("\\loigiai"):] if "\\loigiai" in k else ""
+        if not than or than.count("{") != than.count("}"):
+            continue
+        ra.append(k)
+    return ra
+
+
+def _de_cua(k):
+    t = re.sub(r"^\\begin\{bt\}[^\n]*\n", "", k)
+    t = "\n".join(x for x in t.split("\n") if not x.strip().startswith("%"))
+    return re.sub(r"\s+", " ", t.split("\\loigiai")[0]).strip()
+
+
+def sinh_ai(mau, so, kieu, lop, ghi=print, xoay=None, lan_toi_da=6):
+    """mau: [{"ma", "dang_key", "muc", "ten_dang", "ten_bai", "de", "lg"}] → (danh sách khối LaTeX, {dạng: mã mẫu}).
+    Mỗi lượt gọi CHỈ MỘT mẫu (câu trả lời ngắn, ít bị ngắt); thiếu câu (bị cắt / AI trả thiếu) → tự hỏi tiếp phần còn thiếu."""
+    import tao_prompt
+    xoay = xoay or XoayKhoa(ghi=ghi)
+    n_nc = so if kieu == "nang_cao" else (1 if kieu == "giong_nc" and so > 1 else 0)
+    ra, vdm = [], {}
+    for j, m in enumerate(mau, 1):
+        can = {"giong": so - n_nc, "nang_cao": n_nc}
+        co = {"giong": [], "nang_cao": []}
+        da_de = {re.sub(r"\s+", " ", m["de"]).strip()}
+        ghi(f"  [{j}/{len(mau)}] {m['dang_key']} · mẫu {m['ma']}: cần {can['giong']} giống mẫu" + (f" + {can['nang_cao']} nâng cao" if n_nc else ""))
+        for lan in range(lan_toi_da):
+            loai = "giong" if len(co["giong"]) < can["giong"] else ("nang_cao" if len(co["nang_cao"]) < can["nang_cao"] else None)
+            if not loai:
+                break
+            thieu = can[loai] - len(co[loai])
+            p = tao_prompt.prompt_tuong_tu([m], thieu, loai, lop)
+            if da_de and lan:
+                p += "\n\n# KHÔNG LẶP LẠI các đề đã có sau (soạn câu MỚI, số liệu khác):\n" + "\n".join("- " + d[:160] for d in list(da_de)[:12])
+            try:
+                t, cat, k = xoay.goi(p)
+            except HetKhoa:
+                raise
+            moi = 0
+            for kb in tach_khoi_ai(t):
+                nc = bool(re.search(r"%\s*mau:\s*[0-9a-f]{8}\s+nang_cao", kb)) or loai == "nang_cao"
+                if not re.search(r"%\s*mau:", kb):              # AI quên dòng mẫu → tự thêm
+                    kb = re.sub(r"(\\begin\{bt\}[^\n]*\n)", r"\1% mau: " + m["ma"] + (" nang_cao" if nc else "") + "\n", kb, count=1)
+                kb = re.sub(r"%\s*mau:\s*[0-9a-f]{8}", "% mau: " + m["ma"], kb)
+                d = _de_cua(kb)
+                lo = "nang_cao" if nc else "giong"
+                if not d or d in da_de or len(co[lo]) >= can[lo]:
+                    continue
+                da_de.add(d); co[lo].append(kb); moi += 1
+            ghi(f"    lượt {lan + 1} ({TEN_NHA.get(k['nha'], k['nha'])} {che(k['khoa'])}): +{moi} câu"
+                + (" · bị ngắt giữa chừng → hỏi tiếp phần còn thiếu" if cat else "")
+                + f" · có {len(co['giong'])}/{can['giong']}" + (f" + {len(co['nang_cao'])}/{can['nang_cao']}" if n_nc else ""))
+        if co["giong"] or co["nang_cao"]:
+            ra += co["giong"] + co["nang_cao"]; vdm[m["dang_key"]] = m["ma"]
+        if len(co["giong"]) < can["giong"] or len(co["nang_cao"]) < can["nang_cao"]:
+            ghi("    ⚠ chưa đủ số câu sau nhiều lượt — giữ các câu đã có")
+    return ra, vdm
+
+
+def goi_ai(prompt, k=None, timeout=300):
+    """Tương thích cũ: gọi lần lượt các khoá, trả văn bản."""
+    t, _, _ = XoayKhoa([k] if k else None, ghi=lambda x: None).goi(prompt)
+    return t
+
+
+def kiem_tra_khoa(ghi=print):
+    """Gọi thử từng khoá với câu rất ngắn → [(nhà, khoá che, ok, ghi chú)]."""
+    ra = []
+    for k in doc_khoa()["ds"]:
+        try:
+            t, _ = goi_mot(dict(k), "Trả lời đúng một từ: OK", timeout=60, max_tok=20)
+            ra.append((TEN_NHA.get(k["nha"], k["nha"]), che(k["khoa"]), True, (k.get("mo_hinh") or MO_MAC_DINH.get(k["nha"])) + " · " + t.strip()[:20]))
+        except urllib.error.HTTPError as e:
+            ra.append((TEN_NHA.get(k["nha"], k["nha"]), che(k["khoa"]), False, f"lỗi {e.code}"))
+        except Exception as e:
+            ra.append((TEN_NHA.get(k["nha"], k["nha"]), che(k["khoa"]), False, str(e)[:60]))
+    return ra
