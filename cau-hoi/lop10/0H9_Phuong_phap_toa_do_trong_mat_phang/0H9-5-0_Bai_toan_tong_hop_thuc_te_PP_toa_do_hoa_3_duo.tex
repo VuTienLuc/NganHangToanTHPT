@@ -1,7 +1,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Lớp 10 | Phương pháp tọa độ trong mặt phẳng (𝑂𝑥𝑦) | Ba đường conic trong mặt phẳng tọa độ
 % Dạng 0H9?5-0: Bài toán tổng hợp/thực tế, PP tọa độ hóa 3 đường conic
-% Số câu: 8  (sinh tự động bởi tach_cau.py; từ nay thầy sửa trực tiếp file này)
+% Số câu: 76  (sinh tự động bởi tach_cau.py; từ nay thầy sửa trực tiếp file này)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%% ĐÚNG/SAI %%%%%%%%%%%%%%%%
@@ -3544,4 +3544,40 @@ Thay $x = 1{,}5$ vào phương trình elip $(E)$ với tung độ $y > 0$, ta t�
 $y_M = 3\sqrt{1 - \dfrac{1{,}5^2}{36}} = 3\sqrt{1 - \dfrac{1}{16}} = \dfrac{3\sqrt{15}}{4} \approx 2{,}905\text{ (m)}$.\\
 Vì $2{,}905\text{ m} > 2{,}8\text{ m}$ nên chiếc xe tải có chiều cao $2{,}8\text{ m}$ có thể đi qua hầm an toàn được khi chạy ở chính giữa hầm.
 }
+\end{bt}
+
+% ===== 1 câu chuyển về từ chương 0H4 (xếp nhầm chỗ) – 2026-11-18: 0H4-3-1_Giai_tam_giac.tex =====
+
+% nguồn: MaHoaNH_TuLuan_Lop10
+\begin{bt}%[0H9K5-0]%[ma:44682627]
+	Để cắt một biển quảng cáo hình Elip có trục lớn là $80$ cm và trục nhỏ là $40$ cm, từ một tấm Inox hình chữ nhật có kích thước $80\times 40$, người ta ghim hai chiếc đinh tại hai tiêu điểm của Elip và vẽ hình  Elip đó lên tấm Inox (như hình vẽ minh họa dưới đây). Hỏi phải ghim hai chiếc đinh cách các mép tấm Inox bao nhiêu và lấy vòng dây không đàn hồi có độ dài bao nhiêu?
+	\begin{center}
+		\begin{tikzpicture}[line cap=butt,line join=miter,>=stealth]
+				 \tikzset{declare function={xmin=-3; xmax=3; ymin=-2; ymax=2;},
+					smooth,samples=450 
+				 }
+				 \path (0,0) coordinate (O);
+				\draw[->] (xmin,0)--(xmax,0)  node[shift={(-100:7pt)},font=\normalsize]{$ x $};
+				 \draw[->] (0,ymin)--(0,ymax) node[shift={(190:7pt)},font=\normalsize]{$ y $};
+				\fill (0,0) node[shift={(225:7pt)},font=\normalsize]{$  O $};
+				\clip (xmin,ymin)  rectangle (xmax,ymax);
+				\fill (-2,0) circle (1pt); \fill (2,0) circle (1pt);  \fill (0,-1) circle (1pt); \fill (0,1) circle (1pt); \fill (-1.2,0) circle (1pt); \fill (1.2,0) circle (1pt);
+				 \draw (O) ellipse (2 and 1)
+					(-2,1) node[left]{$P$}--(2,1) node[right]{$Q$}--(2,-1) node[right]{$R$}--(-2,-1)  node[left]{$S$}--(-2,1)
+					(0,1) node[above left]{$B_2$} 
+					(0,1)  node[above right]{$b$}
+					 (0,-1) node[below left]{$B_1$}
+					(0,-1) node[below  right]{$-b$}
+					(-2,0) node[above  left]{$-a$}
+					 (-2,0) node[below left]{$A_1$}
+					 (2,0) node[above right]{$a$}
+					 (2,0) node[below right]{$A_2$}
+					(-1.2,0) node[above]{$F_1$} 
+					 (1.2,0) node[above]{$F_2$};
+			\end{tikzpicture}
+	\end{center}
+	\loigiai{ 
+		Ghim đinh cách mép  tấm Inox: $A_1F_1=A_2F_2=a-c=40-20\sqrt{3}$.\\
+		 Độ dài vòng dây không đàn hồi: $2a+2c=80+40\sqrt{2}$.
+	 }
 \end{bt}

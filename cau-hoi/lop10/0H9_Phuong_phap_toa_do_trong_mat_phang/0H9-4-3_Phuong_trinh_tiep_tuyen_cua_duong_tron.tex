@@ -1,7 +1,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Lớp 10 | Phương pháp tọa độ trong mặt phẳng (𝑂𝑥𝑦) | Đường tròn trong mặt phẳng tọa độ
 % Dạng 0H9?4-3: Phương trình tiếp tuyến của đường tròn
-% Số câu: 20  (sinh tự động bởi tach_cau.py; từ nay thầy sửa trực tiếp file này)
+% Số câu: 61  (sinh tự động bởi tach_cau.py; từ nay thầy sửa trực tiếp file này)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%% TRẮC NGHIỆM 4 PHƯƠNG ÁN %%%%%%%%%%%%%%%%
@@ -906,3 +906,173 @@ Trong mặt phẳng toạ độ $Oxy$, cho đường tròn $(C)$ có phương tr
 \end{enumerate}
 }
 \end{bt}
+
+% ===== 9 câu chuyển về từ chương 0H4 (xếp nhầm chỗ) – 2026-11-18: 0H4-1-2_Tinh_cac_gia_tri_luong_giac.tex, 0H4-2-2_Bai_toan_co_dung_cong_thuc_dien_tich.tex, 0H4-2-3_Bien_doi_rut_gon_bieu_thuc.tex =====
+
+% nguồn: MaHoaNH_TuLuan_Lop10
+\begin{bt}%[0H9K4-3]%[ma:bfedbf6b]
+	Trong mặt phẳng $Oxy$, cho đường tròn $(C)\colon (x-3)^{2}+(y-4)^{2}=36$ và điểm $P(-3;-2)$. Từ điểm $P$ kẻ các tiếp tuyến $PM$ và $PN$  tới đường tròn $(C)$, với $M$, $N$ là các tiếp điểm. Viết phương trình tổng quát của đường thẳng $MN$.
+	 \loigiai{
+	 \immini{
+		Đường tròn $(C)$ có tâm $I(3;4)$  và có bán kính $R=6$.\\
+		Ta  có $MN\perp IP$ nên đường thẳng $MN$ có véc-tơ pháp tuyến là $\vec{IP}=(-6;-6)$ hay $MN$ có VTPT $\vec{n}=(1;1)$.\\
+		Ta có $IM=R=6$, $PI=6\sqrt{2}$, ta suy ra tứ giác $IMPN$ là hình vuông. Gọi $K$ là trung điểm $IP$ $\Rightarrow  K(0;1)$. Ta có $MN$ qua $K(0;1)$.\\
+		Phương trình tổng quát của đường  thẳng $MN$ là
+		 \[
+		 1\cdot (x-0)+1\cdot(y-1)=0\Leftrightarrow x+y-1=0.
+		\] 
+		}{\begin{tikzpicture}[scale=1,line join=round,line cap=round]
+		\def\a{2.5} 
+		\coordinate (I) at (0,0); 
+		\draw (I) circle (\a); 
+		\coordinate (M)  at ($(I)+(45:\a)$);
+		\coordinate  (N) at ($(I)+(-45:\a)$);
+		\path (I)--(M)--([turn]-90:\a) coordinate (Mt); 
+		\draw (I)--(M)--(Mt); 
+		\path (I)--(N)--([turn]90:\a)  coordinate (Nb);
+		 \draw (I)--(N)--(Nb);
+		\coordinate (P) at (intersection of M--Mt and N--Nb); 
+		\draw  (P)--(M)
+			(P)--(N) 
+			 (M)--(N);
+		\coordinate (K) at (intersection  of I--P and M--N);
+		\draw (I)--(P); 
+		\foreach  \x in {P,M,N}{
+			\draw[fill=red] (\x) circle  (1pt) node[right]{$\x$};
+		} 
+		\foreach \x in {I}{ 
+			\draw[fill=red] (\x) circle (1pt) node[left]{$\x$}; 
+		 }
+		\foreach \x  in {K}{
+			\draw[fill=red] (\x)  circle (1pt) node[below right]{$\x$};
+		 }
+		\draw pic[draw=blue,angle  radius=2mm]
+			 {right angle=I--M--P}
+			pic[draw=blue,angle radius=2mm]  {right angle=I--N--P}
+			 pic[draw=blue,angle radius=2mm] {right angle=M--K--P};
+	\end{tikzpicture}
+		} 
+	} 
+\end{bt}
+
+% nguồn: MaHoaNH_TuLuan_Lop10
+\begin{bt}%[0H9B4-3]%[0X1Y3-2]%[0X1B4-3]%[ma:cd902c0c]
+	 Trong mặt phẳng $Oxy$, viết phương trình đường tròn có tâm $I(3;5)$ và tiếp xúc với đường thẳng $\Delta$ có phương trình $4x + 3y + 23 = 0$.
+	\loigiai{ 
+		Gọi  $(C)$ là đường tròn cần tìm.\\
+		Vì $(C)$ có tâm $I(3;5)$ và tiếp xúc với đường  thẳng $\Delta$ có phương trình $4x + 3y + 23 = 0$ nên bán kính đường tròn $(C)$ chính là khoảng cách từ $I$ đến $\Delta$. Do đó
+		$$ R = \mathrm{d}(I,\Delta) = \dfrac{|4\cdot 3 + 3\cdot 5  + 23|}{\sqrt{4^2 + 3^2}} = \dfrac{50}{5} = 10. $$
+		Phương trình đường tròn  có tâm $I(3;5)$ và bán kính $R = 10$ là
+		$$ (C)\colon (x-3)^2 + (y-5)^2  = 100. $$
+	 }
+\end{bt}
+
+% nguồn: MaHoaNH_TuLuan_Lop10
+\begin{bt}%[0H9B4-3]%[ma:34a60afb]
+	Trong mặt phẳng tọa độ $Oxy$, viết phương trình đường tròn $(C)$,  biết
+	\begin{enumerate}
+		\item $(C)$ có tâm $I(3;-4)$  bán kính $R=\sqrt{3}$.
+		\item $(C)$ có tâm $I(3;-4)$ và tiếp xúc với đường thẳng $(\Delta)\colon  x-2y-6=0$.
+	\end{enumerate}
+	\loigiai{ 
+		\begin{enumerate}
+			\item Phương  trình đường tròn $(C)$ có tâm $I(3;-4)$ bán kính $R=\sqrt{3}$ là
+			 \[(C)\colon (x-3)^2+(y+4)^2=3. \]
+			\item Vì $(C)$ tiếp xúc với  đường thẳng $(\Delta)\colon x-2y-6=0$ nên
+			\[R=\mathrm{d}(I, \Delta)=\dfrac{|3+8-6|}{\sqrt{5}}=\sqrt{5}.  \]
+			Do đó  phương trình đường tròn $(C)$ có tâm $I(3;-4)$ bán kính $R=\sqrt{5}$ là
+			\[(C)\colon  (x-3)^2+(y+4)^2=5. \]
+		\end{enumerate}
+	 }
+\end{bt}
+
+% nguồn: MaHoaNH_TracNghiem_Lop10
+\begin{ex}%[0H9B4-3]%[ma:5ecb895a]
+	Trong mặt  phẳng $O x y$, cho đường tròn $(\mathscr{C}):(x-7)^2+(y+3)^2=100$. Phương trình tiếp tuyến của $(\mathscr{C})$ tại điểm $A(1; 5)$ có dạng $a x+b y+17=0$. Giá trị của $a^3-b^2$ là
+	\choice 
+		{$ -55 $} 
+		 {$ 25 $}
+		{$ 43  $}
+		{\True$  11 $}
+	\loigiai{$(\mathscr{C}):(x-7)^2+(y+3)^2=100$ có tâm $ I (7;-3)  $.\\
+		Tiếp tuyến tại điểm  $A(1; 5)$ nhận $ \overrightarrow{IA}=(-6;8) $ là véc-tơ pháp tuyến.\\
+	Do  đó phương trình tiếp tuyến là $ -6(x-1)+8(y-5)=0 $, tức là $ 3x-4y+17=0 $.}
+\end{ex}
+
+% nguồn: MaHoaNH_TracNghiem_Lop10
+\begin{ex}%[0H9B4-3]%[ma:0ed14500]
+	Trong mặt phẳng $Oxy$, cho  đường thẳng $(\Delta)\colon 4x-3y-3=0$. Đường tròn tâm $I(1;-3)$ nào sau đây tiếp xúc với $(\Delta)$?
+	 \choice
+		{$(x+1)^2+(y-3)^2=4$} 
+		{\True  $(x-1)^2+(y+3)^2=4$}
+		 {$(x+1)^2+(y-3)^2=2$}
+		{$(x-1)^2+(y+3)^2=2$} 
+	\loigiai{ 
+		Ta có đường tròn tâm $I(1;-3)$ tiếp xúc với $(\Delta)$ nên bán kính đường  tròn là \[R=\mathrm{d}(I,\Delta)=\dfrac{\left|4-3(-3)-3\right|}{\sqrt{4^2+(-3)^2}}=2.\]
+		Phương  trình đường tròn $(C)\colon (x-1)^2+(y+3)^2=4$.
+	} 
+\end{ex}
+
+% nguồn: MaHoaNH_TracNghiem_Lop10
+\begin{ex}%[0H9B4-3]%[ma:9d6c2790]
+	Trong mặt phẳng tọa độ $Oxy$, cho đường tròn $(C)\colon x^2+y^2+2x-6y+5=0$. Gọi $\Delta$ là tiếp tuyến của $(C)$ tại điểm $A(0;1)$. Phương  trình tổng quát của $\Delta$ là
+	\choice 
+		{$x-2y+1=0$} 
+		{$x+2y-2=0$} 
+		{$x+2y+2=0$} 
+		{\True $x-2y+2=0$} 
+	 \loigiai{
+		Đường  tròn $(C)$ có tâm $I(-1;3)$.\\
+		Phương trình tiếp tuyến $\Delta$ của $(C)$ tại $A(0;1)$ nhận véc-tơ $\overrightarrow{IA}=(1;-2)$ làm véc-tơ pháp  tuyến có dạng
+		 $$\Delta\colon 1(x-0)-2(y-1)=0\Leftrightarrow x-2y+2=0.$$
+	 }
+\end{ex}
+
+% nguồn: MaHoaNH_TracNghiem_Lop10
+\begin{ex}%[0H9B4-3]%[ma:eba190e5]
+	Cho đường tròn  $(C)\colon x^2+y^2-3 x-y=0$. Phương trình tiếp tuyến của $(C)$ tại $M(1;-1)$ là:
+	 \choice
+		{$x-3  y-2=0$}
+		{\True $x+3 y+2=0$} 
+		 {$x-3 y+2=0$}
+		{$x+3  y-2=0$}
+	 \loigiai{
+		Đường tròn $ (C) $ có tâm $ I\left(\dfrac{3}{2};\dfrac{1}{2}\right) $.\\ 
+		 Ta có $ \overrightarrow{MI}=\left(\dfrac{1}{2};\dfrac{3}{2}\right) =\dfrac{1}{2}(1;3)$.\\
+		Do đó phương trình tiếp tuyến của đường tròn $  (C) $ tại $ M $ là $ 1(x-1)+3(y+1)=0\Leftrightarrow x+3y+2=0 $.
+	} 
+\end{ex}
+
+% nguồn: MaHoaNH_TracNghiem_Lop10
+\begin{ex}%[0H9B4-3]%[ma:a559dc89]
+	Trong mặt phẳng tọa độ $Oxy$, cho đường tròn $(C)$ có  phương trình $(x-1)^2+(y+2)^2=8$. Phương trình tiếp tuyến $d$ của đường tròn $(C)$ tại điểm $A(3;-4)$ là
+	\choice 
+		{$d\colon  x+y+1=0$}
+		{$d\colon  x-2y-11=0$}
+		{\True  $d\colon x-y-7=0$}
+		{$d\colon  x-y+7=0$}
+	\loigiai{ 
+		Đường tròn $(C)$ có tâm $I(1;-2)$.\\ 
+		Ta  có $ \overrightarrow{IA}=(2;-2) =2\cdot(1;-1)$.\\
+		 Tiếp tuyến $d$ của đường tròn $(C)$ tại điểm $A(3;-4)$ có một véc-tơ pháp tuyến là $ \overrightarrow{n}=(1;-1) $
+		Phương trình tiếp tuyến $d$  của đường tròn $(C)$ tại điểm $A(3;-4)$ là \[d\colon (x-3)-(y+4)=0\Leftrightarrow x-y-7=0.\]
+	} 
+\end{ex}
+
+% nguồn: MaHoaNH_TracNghiem_Lop10
+\begin{ex}%[0H9K4-3]%[ma:e6884b19]
+	Trong mặt phẳng $Oxy$, cho đường tròn $(C)\colon (x-1)^2+(y-4)^2=4$. Phương trình tiếp tuyến với đường tròn $(C)$  song song với đường thẳng $\Delta\colon 4x-3y-2=0$ là
+	 \choice
+		 {$4x-3y-18=0$}
+		{$4x-3y+18=0;4x-3y-2=0$} 
+		{$4x-3y-18=0;4x-3y+2=0$} 
+		 {\True $4x-3y+18=0$}
+	\loigiai{ 
+		Đường tròn $(C)\colon (x-1)^2+(y-4)^2=4$ có tâm $I(1;4)$ và  bán kính $r=2$.\\
+		Tiếp tuyến $d$ của $(C)$ song song với đường thẳng $\Delta\colon  4x-3y-2=0$ có phương trình dạng
+		$$d\colon  4x-3y+c=0,\; c\neq -2.$$
+		Ngoài  ra $\mathrm{d}(I,d)=r \Leftrightarrow \dfrac{\big|4\cdot 1-3\cdot 4+c\big|}{\sqrt{4^2+(-3)^2}}=2
+		 \Leftrightarrow \big|c-8\big|=10 \Leftrightarrow \hoac{&c=-2\;\;\text{(loại)}\\&c=18\;\;\text{(nhận).}}$\\
+		Vậy $d\colon 4x-3y+18=0$  là tiếp tuyến cần tìm.
+	} 
+\end{ex}
