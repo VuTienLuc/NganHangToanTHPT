@@ -45,6 +45,16 @@ def du_lieu_cay():
             kho[c["dang_key"]][c["loai"]][i] += 1
             if not ls.get(c["ma"]):
                 moi[c["dang_key"]][c["loai"]][i] += 1
+    # Lớp 8, 9: hiện đủ mục lục SGK KNTT (du-lieu/toan8_kntt.json, toan9_kntt.json), dạng chưa có câu = 0
+    for lop_thcs in (8, 9):
+        try:
+            src = json.load(open(os.path.join(GOC, "du-lieu", f"toan{lop_thcs}_kntt.json"), encoding="utf-8"))
+        except Exception:
+            continue
+        for ch_ in src.get("chuong", []):
+            for b in ch_.get("bai", []):
+                for j in range(1, len(b.get("dang", [])) + 1):
+                    kho[f"{ch_['ma']}?{b['so']}-{j}"]          # defaultdict: tạo ô rỗng nếu chưa có
     ds = []
     for k, v in kho.items():
         m = re.match(r"(\d)([A-Z])(\d+)\?(\d+)-(\d+)", k)
