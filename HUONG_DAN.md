@@ -510,6 +510,16 @@ Vấn đề cũ: câu "tự luyện" chỉ cùng dạng nên không giống ví 
 3. **Dán kết quả AI → nhập kho & in phiếu…** → dán nguyên khối ```latex → **Nhập kho & tạo phiếu theo mẫu**:
    câu được biên dịch thử, nhập ngân hàng (câu lỗi để riêng ở `ai-nhap/_loi`), file lưu `ai-nhap/da-nhap/…_tuong-tu-theo-mau.tex`,
    rồi tạo **phiếu riêng** "… – tương tự theo mẫu": mỗi dạng = ví dụ mẫu + đúng các câu con (câu nâng cao gắn nhãn *Nâng cao*).
+- **⚡ Ngân hàng tự sinh** (không phải chép – dán): chọn *phải* = giống mẫu / … → khung *Ngân hàng tự sinh* → chọn cách → **⚡ Tự sinh & in phiếu theo mẫu**.
+  App rút ví dụ mẫu trong kho → sinh câu tương tự → biên dịch thử → nhập ngân hàng → in phiếu riêng theo mẫu (như trên).
+  - **🐍 Python** (không cần mạng): đọc số liệu trong đề và các phép tính trong lời giải mẫu, chọn số liệu mới (cùng số chữ số, cùng chẵn/lẻ,
+    giữ số tròn, giữ thứ tự lớn – bé), **tính lại toàn bộ lời giải**; chỉ nhận khi mọi kết quả là số tự nhiên dương, chia hết, dòng "thử lại" vẫn đúng.
+    Câu *nâng cao* = cùng lời giải, số liệu lớn hơn. Hợp nhất với bài toán có lời văn, tìm x, tính giá trị biểu thức, chu vi – diện tích (tiểu học, THCS).
+    Mẫu là bài suy luận / về chữ số / có hình, bảng / số nằm ngoài công thức → Python tự bỏ, thử mẫu khác cùng dạng; không được thì báo để dùng AI.
+  - **🤖 AI tự động**: gọi Gemini hoặc Claude bằng khoá API của thầy (**⚙ Khoá AI…**, lưu `ai_khoa.json` trên máy, đã chặn khỏi git).
+    Gemini để trống tên mô hình → tự chọn bản "flash" mới nhất. Khoá Gemini miễn phí: aistudio.google.com/apikey.
+  - **🐍 Python trước, dạng còn lại 🤖 AI**: tiết kiệm lượt AI; AI lỗi thì vẫn giữ phần Python đã sinh.
+  - Dạng chưa sinh được câu theo mẫu → phiếu tạm lấy câu cùng dạng trong kho (có ghi chú trong nhật kí).
 - Mỗi câu AI soạn có dòng `% mau: <mã câu mẫu>` (thêm `nang_cao` nếu là câu nâng cao). Từ đó **mọi phiếu tự luận / Luyện mỗi ngày
   tự ưu tiên ví dụ mẫu đã có câu con và xếp đúng câu con sau mẫu** — kể cả khi để chế độ "lấy trong kho".
 

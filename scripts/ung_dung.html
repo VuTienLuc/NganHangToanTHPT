@@ -585,9 +585,18 @@ tr.gop-h td{background:#dbeafe;text-align:left;font-weight:700;padding:8px 12px;
       <div id="ph-tl-tuychon" style="display:none;gap:12px;flex-wrap:wrap;align-items:center">
         <label class="hop">Mỗi dạng: câu tương tự <input type="number" id="ph-tt" min="0" max="8" value="2" style="width:58px"></label>
         <label class="hop" title="Câu tương tự lấy từ đâu: trong kho cùng dạng, hoặc AI soạn BÁM SÁT từng ví dụ mẫu (giống mẫu / nâng cao hơn một chút), nhập vào ngân hàng rồi in phiếu riêng">phải <select id="ph-tt-kieu" style="width:auto">
-          <option value="kho" selected>lấy trong kho (cùng dạng)</option><option value="giong">giống ví dụ mẫu (AI soạn)</option>
-          <option value="giong_nc">giống mẫu, câu cuối nâng cao hơn (AI soạn)</option><option value="nang_cao">nâng cao hơn mẫu một chút (AI soạn)</option></select></label>
-        <button id="ph-tt-prompt" style="display:none" title="Chọn ví dụ mẫu cho từng dạng, soạn prompt để AI viết câu tương tự theo đúng mẫu">📝 Prompt AI soạn câu tương tự theo mẫu…</button>
+          <option value="kho" selected>lấy trong kho (cùng dạng)</option><option value="giong">giống ví dụ mẫu</option>
+          <option value="giong_nc">giống mẫu, câu cuối nâng cao hơn</option><option value="nang_cao">nâng cao hơn mẫu một chút</option></select></label>
+        <span id="ph-ts" style="display:none;gap:6px;align-items:center;flex-wrap:wrap;width:100%;padding:8px 10px;border:1px dashed var(--vien);border-radius:10px">
+          <b>Ngân hàng tự sinh:</b>
+          <select id="ph-ts-cach" style="width:auto" title="Cách sinh câu tương tự từ ví dụ mẫu rút trong kho">
+            <option value="python" selected>🐍 Python – đổi số liệu, tính lại lời giải (không cần mạng)</option>
+            <option value="python_ai">🐍 Python trước, dạng còn lại 🤖 AI</option>
+            <option value="ai">🤖 AI tự động (Gemini / Claude)</option></select>
+          <button id="ph-ts-chay" class="chinh" title="Rút ví dụ mẫu trong kho → sinh câu tương tự → nhập ngân hàng → in phiếu riêng theo mẫu">⚡ Tự sinh &amp; in phiếu theo mẫu</button>
+          <a href="#" id="ph-ts-khoa" title="Khoá API cho cách AI tự động (lưu trên máy này)">⚙ Khoá AI…</a>
+          <span class="nho" style="width:100%">hoặc chép – dán thủ công:
+          <button id="ph-tt-prompt" title="Chọn ví dụ mẫu cho từng dạng, soạn prompt để AI viết câu tương tự theo đúng mẫu">📝 Prompt AI soạn câu tương tự theo mẫu…</button></span></span>
         <label class="hop" id="ph-vdtl-o">câu vận dụng <select id="ph-vdtl" style="width:auto"><option value="1" selected>1 (câu 3)</option><option value="2">2 (câu 3, 4)</option></select></label>
         <label class="hop" id="ph-ln-o" style="display:none">Mỗi ngày <select id="ph-ln-n" style="width:auto"><option value="1" selected>1 dạng</option><option value="2">2 dạng (cùng bài)</option></select></label>
         <label class="hop" id="ph-bo-cuc-o">Bố cục <select id="ph-bo-cuc" style="width:auto"><option value="song_song" selected>Song song: trái ví dụ mẫu – phải tự luyện</option><option value="tren_duoi">Trên – dưới: ví dụ mẫu + lời giải ở trên, bài tự luyện bên dưới</option></select></label>
@@ -1779,7 +1788,7 @@ async function promptBoSung(bs){
 // ---------------- CÂU TƯƠNG TỰ THEO MẪU (AI soạn bám sát ví dụ mẫu → nhập kho → in phiếu riêng)
 let TT_MAU=null;
 const ttKieu=()=>$("#ph-tt-kieu").value;
-$("#ph-tt-kieu").onchange=()=>{const ai=ttKieu()!=="kho";$("#ph-tt-prompt").style.display=ai?"":"none";$("#ph-vdtl-o").style.display=ai?"none":"";
+$("#ph-tt-kieu").onchange=()=>{const ai=ttKieu()!=="kho";$("#ph-ts").style.display=ai?"flex":"none";$("#ph-vdtl-o").style.display=ai?"none":"";
   if(ai&&+$("#ph-tt").value<1)$("#ph-tt").value=3};
 $("#ph-tt-prompt").onclick=async()=>{
   const cfg=phCfg(); if(!cfg)return; const so=Math.max(1,+$("#ph-tt").value||3);
@@ -1792,6 +1801,25 @@ $("#ph-tt-prompt").onclick=async()=>{
       [["Chép prompt",async e=>{try{await navigator.clipboard.writeText(r.noi_dung);e.target.textContent="Đã chép ✓"}catch(_){alert("Bôi đen rồi Cmd+C.")}},true],
        ["Dán kết quả AI → nhập kho & in phiếu…",()=>{$("#hop-thoai").style.display="none";moTT()}]]);}
   finally{b.disabled=false}
+};
+$("#ph-ts-khoa").onclick=async e=>{e.preventDefault();
+  const k=await api("/api/khoa-ai",{});
+  const nha=prompt(`Nhà cung cấp AI: gemini hoặc claude${k.co_khoa?` (đang dùng: ${k.nha}${k.mo_hinh?" – "+k.mo_hinh:""})`:""}`,k.nha||"gemini");if(nha===null)return;
+  const khoa=prompt("Dán khoá API (Gemini: aistudio.google.com/apikey · Claude: console.anthropic.com). Khoá chỉ lưu trên máy này, không lên GitHub.","");if(!khoa)return;
+  const mo=prompt("Mô hình (để trống = tự chọn bản mới nhất của Gemini / claude-sonnet-5-5)",k.mo_hinh||"");
+  const r=await api("/api/khoa-ai",{luu:true,nha:/claude/i.test(nha)?"claude":"gemini",khoa,mo_hinh:mo||""});
+  alert(r.co_khoa?`Đã lưu khoá ${r.nha}.`:"Chưa lưu được khoá.")};
+$("#ph-ts-chay").onclick=async()=>{
+  const cfg=phCfg(); if(!cfg)return; const so=Math.max(1,+$("#ph-tt").value||3), cach=$("#ph-ts-cach").value;
+  if(cach!=="python"){const k=await api("/api/khoa-ai",{});if(!k.co_khoa){alert("Cách này cần khoá API AI — bấm ⚙ Khoá AI… trước (hoặc chọn 🐍 Python).");return}}
+  const b=$("#ph-ts-chay");b.disabled=true;b.textContent="Đang sinh câu, biên dịch thử, nhập kho…";
+  try{const r=await api("/api/tu-sinh",{cau_hinh:cfg,so,kieu:ttKieu(),cach,bien_dich:$("#bien_dich").checked});
+    if(!r.ok){hopThoai("Chưa tự sinh được",r.nhat_ky||r.loi||"");return}
+    $("#hop-phieu").style.display="none";await tai();
+    hopThoai(`Đã sinh & nhập ${r.so_cau} câu, tạo phiếu theo mẫu: ${r.thu_muc}`,r.nhat_ky+(r.bien_dich?"\nĐang biên dịch PDF…":""),
+      [["🌐 Phiếu HTML lên web…",()=>phieuWeb(r.thu_muc),true],["Mở thư mục",()=>api("/api/mo",{duong_dan:r.thu_muc})]]);
+    if(r.bien_dich) theoDoi(r.nhat_ky);}
+  finally{b.disabled=false;b.textContent="⚡ Tự sinh & in phiếu theo mẫu"}
 };
 function moTT(){if(!TT_MAU){alert("Thầy bấm “📝 Prompt AI soạn câu tương tự theo mẫu…” trước.");return}
   $("#tt-van").value="";$("#tt-tt").textContent="";

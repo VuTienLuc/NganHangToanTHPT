@@ -105,8 +105,7 @@ def chon(ds, cac_dang, cfg, rng, khoa_noi_dung, ghi_thieu=None):
             kq[d] = {"vd": vd, "tu_luyen": tl}
             continue
         if theo_mau:
-            thieu.append(f"{d}: chưa có câu tương tự theo mẫu")
-            continue
+            thieu.append(f"{d}: chưa có câu tương tự theo mẫu — tạm lấy câu cùng dạng trong kho")
         v = [c for c in v if not c["_mau"]] + [c for c in v if c["_mau"]]
         # ví dụ mẫu: mức thấp, có lời giải
         ung = [c for c in v if moi(c) and c["_tl"]["lg"] and not c["_mau"]] or [c for c in v if moi(c) and c["_tl"]["lg"]]
