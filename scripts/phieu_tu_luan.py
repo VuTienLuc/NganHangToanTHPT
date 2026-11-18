@@ -48,10 +48,23 @@ def doi_tu_luan(c):
     return None
 
 
+MAU = re.compile(r"%\s*mau:\s*([0-9a-f]{8})\s*(nang_cao)?")
+
+
+def mau_cua(c):
+    """Câu soạn tương tự theo câu mẫu: dòng '% mau: <mã câu mẫu> [nang_cao]' → (mã mẫu, nâng cao?) hoặc None."""
+    m = MAU.search(c.get("noi_dung") or "")
+    return (m.group(1), bool(m.group(2))) if m else None
+
+
 def chon(ds, cac_dang, cfg, rng, khoa_noi_dung, ghi_thieu=None):
-    """ds: câu đã lọc phạm vi. → ({dạng: {"vd": câu, "tu_luyen": [câu…]}}, thiếu)."""
-    so_tt = int(cfg.get("so_tuong_tu") or 2)
-    so_vd = int(cfg.get("so_van_dung") or 1)
+    """ds: câu đã lọc phạm vi. → ({dạng: {"vd": câu, "tu_luyen": [câu…]}}, thiếu).
+    Câu tương tự THEO MẪU (dòng '% mau: <mã>'): ví dụ mẫu ưu tiên câu đã có câu con; tự luyện lấy các câu con trước.
+    cfg["vi_du_mau"] = {dạng: mã câu} chỉ định ví dụ mẫu; cfg["theo_mau"] = True → tự luyện CHỈ gồm câu con của ví dụ mẫu."""
+    so_tt = int(cfg.get("so_tuong_tu") if cfg.get("so_tuong_tu") is not None else 2)
+    so_vd = int(cfg.get("so_van_dung") if cfg.get("so_van_dung") is not None else 1)
+    chi_dinh = cfg.get("vi_du_mau") or {}
+    theo_mau = bool(cfg.get("theo_mau"))
     theo = collections.defaultdict(list)
     for c in ds:
         if c["loai"] not in UU_TIEN:
@@ -59,7 +72,12 @@ def chon(ds, cac_dang, cfg, rng, khoa_noi_dung, ghi_thieu=None):
         t = doi_tu_luan(c)
         if not t:
             continue
-        theo[c["dang_key"]].append(dict(c, _tl=t, _k=khoa_noi_dung(c)))
+        theo[c["dang_key"]].append(dict(c, _tl=t, _k=khoa_noi_dung(c), _mau=mau_cua(c)))
+    con = collections.defaultdict(list)                 # mã câu mẫu → các câu con
+    for v in theo.values():
+        for c in v:
+            if c["_mau"]:
+                con[c["_mau"][0]].append(c)
     da_k, kq, thieu = set(), {}, []
     for d in cac_dang:
         v = theo.get(d, [])
@@ -67,8 +85,30 @@ def chon(ds, cac_dang, cfg, rng, khoa_noi_dung, ghi_thieu=None):
         v.sort(key=lambda c: ((c.get("so_lan_dung") or 0) > 0, UU_TIEN[c["loai"]]))
         moi = lambda c: c["_k"] not in da_k
         muc = lambda c: THU_TU_MUC.get(c.get("muc_chuan") or "", 1)
+        # ----- theo mẫu: ví dụ chỉ định, hoặc câu (không phải câu con) có nhiều câu con nhất
+        vd = next((c for c in v if c["ma"] == chi_dinh.get(d) and c["_tl"]["lg"]), None)
+        if not vd:
+            co_con = [c for c in v if con.get(c["ma"]) and not c["_mau"] and c["_tl"]["lg"] and moi(c)]
+            vd = max(co_con, key=lambda c: (len(con[c["ma"]]), -muc(c))) if co_con else None
+        if vd:
+            da_k.add(vd["_k"])
+            cc = sorted((c for c in con.get(vd["ma"], []) if moi(c)), key=lambda c: (c["_mau"][1], muc(c)))
+            can = so_tt + (0 if theo_mau else so_vd)
+            tl = []
+            for c in cc[:can]:
+                da_k.add(c["_k"]); tl.append(dict(c, _vai="nang_cao" if c["_mau"][1] else "tuong_tu"))
+            if not theo_mau:                              # thiếu thì bù câu cùng dạng như cũ
+                for c in sorted((c for c in v if moi(c) and not c["_mau"]), key=muc, reverse=True)[:max(0, can - len(tl))]:
+                    da_k.add(c["_k"]); tl.append(dict(c, _vai="van_dung" if muc(c) >= 2 else "tuong_tu"))
+            if len(tl) < can:
+                thieu.append(f"{d}: ví dụ mẫu {vd['ma']} mới có {len(tl)}/{can} câu tương tự theo mẫu")
+            kq[d] = {"vd": vd, "tu_luyen": tl}
+            continue
+        if theo_mau:
+            thieu.append(f"{d}: chưa có câu tương tự theo mẫu — tạm lấy câu cùng dạng trong kho")
+        v = [c for c in v if not c["_mau"]] + [c for c in v if c["_mau"]]
         # ví dụ mẫu: mức thấp, có lời giải
-        ung = [c for c in v if moi(c) and c["_tl"]["lg"]]
+        ung = [c for c in v if moi(c) and c["_tl"]["lg"] and not c["_mau"]] or [c for c in v if moi(c) and c["_tl"]["lg"]]
         if not ung:
             thieu.append(f"{d}: không có câu tự luận có lời giải để làm ví dụ mẫu")
             if ghi_thieu is not None:
