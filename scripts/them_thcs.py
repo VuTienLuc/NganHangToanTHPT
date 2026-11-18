@@ -9,7 +9,7 @@ def nap():
     xuong = "\r\n" if b"\r\n" in tho[:2000] else "\n"
     m = json.loads(tho.decode("utf-8"))
     them = 0
-    for f in sorted(glob.glob(os.path.join(GOC, "du-lieu", "toan*_kntt.json"))):
+    for f in sorted(glob.glob(os.path.join(GOC, "du-lieu", "toan*_kntt.json")) + glob.glob(os.path.join(GOC, "du-lieu", "toan*_tuduy.json"))):
       src = json.load(open(f, encoding="utf-8"))
       for ch in src["chuong"]:
         for b in ch["bai"]:

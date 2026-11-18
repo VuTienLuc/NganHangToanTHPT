@@ -120,7 +120,7 @@ def prompt(cac_bai_chon):
         raise ValueError("Chưa chọn bài.")
     id_map = tai_id_map()
     lop = ds[bai[0]]["lop"]
-    cap = (f"THCS – Toán {lop}, sách Kết nối tri thức với cuộc sống" if lop <= 9 else "THPT, sách Kết nối tri thức với cuộc sống")
+    cap = ("Tiểu học – Toán tư duy lớp " + str(lop) + " (bám SGK Kết nối tri thức; Violympic, Toán tư duy Singapore)" if lop <= 5 else f"THCS – Toán {lop}, sách Kết nối tri thức với cuộc sống" if lop <= 9 else "THPT, sách Kết nối tri thức với cuộc sống")
     nhieu = len(bai) > 1
     dong = []
     for b in bai:

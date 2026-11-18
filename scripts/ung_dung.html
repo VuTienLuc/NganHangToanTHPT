@@ -1114,7 +1114,7 @@ async function moSoan(){
 }
 function dienChuong(cc){
   const lop=+$("#soan-lop").value, seen=new Map();
-  for(const d of DM_DANG) if(d.lop===lop){const k=`${d.lop}|${d.mon}|${d.chuong}`;if(!seen.has(k))seen.set(k,/^Chương/.test(d.ten_chuong)?d.ten_chuong:`${d.mon==="H"?"Hình":d.mon==="D"?"Đại số":"Chuyên đề"} – Ch.${d.chuong}: ${d.ten_chuong}`)}
+  for(const d of DM_DANG) if(d.lop===lop){const k=`${d.lop}|${d.mon}|${d.chuong}`;if(!seen.has(k))seen.set(k,/^(Chương|Chủ đề|Mở rộng)/.test(d.ten_chuong)?d.ten_chuong:`${d.mon==="H"?"Hình":d.mon==="D"?"Đại số":"Chuyên đề"} – Ch.${d.chuong}: ${d.ten_chuong}`)}
   $("#soan-chuong").innerHTML=[...seen].map(([k,t])=>`<option value="${k}">${esc(t)}</option>`).join("");
   if(cc&&seen.has(cc))$("#soan-chuong").value=cc;
   dienBai();
@@ -1255,7 +1255,7 @@ function veBangMa(){
   let h="",cu="",cuBai="";
   for(const d of ds.slice(0,600)){
     const ch=`${d.lop}|${d.mon}|${d.chuong}`;
-    if(ch!==cu){cu=ch;cuBai="";h+=`<div class="ch">Lớp ${d.lop} · ${d.mon==="H"?"Hình học":d.mon==="D"?"Đại số – Giải tích":"Chuyên đề"} · Chương ${d.chuong}: ${esc(d.ten_chuong)}</div>`}
+    if(ch!==cu){cu=ch;cuBai="";h+=`<div class="ch">Lớp ${d.lop} · ${/^(Chương|Chủ đề|Mở rộng)/.test(d.ten_chuong)?esc(d.ten_chuong):`${d.mon==="H"?"Hình học":d.mon==="D"?"Đại số – Giải tích":"Chuyên đề"} · Chương ${d.chuong}: ${esc(d.ten_chuong)}`}</div>`}
     if(d.bai!==cuBai){cuBai=d.bai;h+=`<div class="bai">Bài ${d.bai}. ${esc(d.ten_bai)}</div>`}
     const ma=d.k.replace("?",muc);
     h+=`<div class="d" data-ma="${ma}"><code>${ma}</code><span>${esc(d.ten_dang)}</span><span class="so">kho ${kho[d.k]||0} câu</span></div>`;
@@ -1685,7 +1685,7 @@ async function moPhieu(){
 }
 function phChuong(){
   const lop=+$("#ph-lop").value, m=new Map();
-  for(const d of DM_DANG) if(d.lop===lop){const k=d.k.slice(0,3); if(!m.has(k)) m.set(k,/^Chương/.test(d.ten_chuong)?d.ten_chuong:`Ch.${d.chuong} ${d.ten_chuong}`)}
+  for(const d of DM_DANG) if(d.lop===lop){const k=d.k.slice(0,3); if(!m.has(k)) m.set(k,/^(Chương|Chủ đề|Mở rộng)/.test(d.ten_chuong)?d.ten_chuong:`Ch.${d.chuong} ${d.ten_chuong}`)}
   $("#ph-chuong").innerHTML=[...m].map(([k,t])=>`<option value="${k}">${esc(t)}</option>`).join(""); phBai();
 }
 function phBai(){
