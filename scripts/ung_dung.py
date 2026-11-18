@@ -433,9 +433,13 @@ class XuLy(BaseHTTPRequestHandler):
                         ra = {"ok": True, "tep": os.path.relpath(p, GOC), "nhat_ky": "\n".join(dong)}
                         if d.get("dang") in ("gv", "hs"):
                             ten = (d.get("ten") or P.get("ten") or "Phiếu học tập").strip()
-                            ten = ten if ten.lower().startswith("phiếu") else ("Phiếu tự luận – " if P.get("kieu") == "tu_luan" else "Phiếu học tập – ") + ten
+                            if P.get("kieu") == "luyen_ngay":
+                                ten = ten if ten.lower().startswith("luyện") else "Luyện mỗi ngày – " + ten
+                            else:
+                                ten = ten if ten.lower().startswith("phiếu") else ("Phiếu tự luận – " if P.get("kieu") == "tu_luan" else "Phiếu học tập – ") + ten
                             lop = int(re.sub(r"\D", "", str(P.get("lop") or "")) or 10)
-                            slug = T.them_bai_giang(d.get("slug") or ("phieu-" + T.lam_slug(P.get("ten") or ten) + ("-tl" if P.get("kieu") == "tu_luan" else "")),
+                            slug = T.them_bai_giang(d.get("slug") or (("luyen-ngay-" if P.get("kieu") == "luyen_ngay" else "phieu-") + T.lam_slug(P.get("ten") or ten)
+                                                                       + ("-tl" if P.get("kieu") == "tu_luan" else "")),
                                                     ten, lop, "html", open(p, "rb").read(), True, "phiếu học tập",
                                                     P.get("chuong") or "", P.get("ten") or "", 0, hs=d["dang"] == "hs", loai_bg="phieu")
                             T.dat_thu_muc(slug, os.path.relpath(os.path.dirname(p), GOC))
@@ -654,6 +658,8 @@ class XuLy(BaseHTTPRequestHandler):
             if u.path == "/api/phieu-thieu":
                 import phieu_bai_hoc
                 cfg = d.get("cau_hinh") or {}
+                if cfg.get("kieu_cau") == "luyen_ngay":      # luyện mỗi ngày: kiểm kho như phiếu tự luận (ví dụ mẫu + tự luyện mỗi dạng)
+                    cfg = dict(cfg, kieu_cau="tu_luan")
                 try:
                     thieu = phieu_bai_hoc.tao(cfg, lambda x: None, chi_tinh=True)
                 except Exception as e:
@@ -670,7 +676,11 @@ class XuLy(BaseHTTPRequestHandler):
                     except Exception:
                         return None
                 try:
-                    out_goc = phieu_bai_hoc.tao(cfg, dong.append)
+                    if cfg.get("kieu_cau") == "luyen_ngay":
+                        import luyen_moi_ngay
+                        out_goc = luyen_moi_ngay.tao(cfg, dong.append)
+                    else:
+                        out_goc = phieu_bai_hoc.tao(cfg, dong.append)
                 except Exception as e:
                     return self.gui(200, {"ok": False, "nhat_ky": f"Chưa tạo được phiếu: {e}", "bo_sung": bo_sung()})
                 rel = os.path.relpath(out_goc, GOC)
