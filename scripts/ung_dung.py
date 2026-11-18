@@ -45,8 +45,8 @@ def du_lieu_cay():
             kho[c["dang_key"]][c["loai"]][i] += 1
             if not ls.get(c["ma"]):
                 moi[c["dang_key"]][c["loai"]][i] += 1
-    # Lớp 4 (tư duy), 8, 9 (SGK KNTT): hiện đủ mục lục kể cả dạng chưa có câu (= 0)
-    for ten_f in ("toan4_tuduy", "toan8_kntt", "toan9_kntt"):
+    # Lớp 4, 5 (tư duy theo SGK KNTT), 8, 9 (SGK KNTT): hiện đủ mục lục kể cả dạng chưa có câu (= 0)
+    for ten_f in ("toan4_tuduy", "toan5_tuduy", "toan8_kntt", "toan9_kntt"):
         try:
             src = json.load(open(os.path.join(GOC, "du-lieu", f"{ten_f}.json"), encoding="utf-8"))
         except Exception:

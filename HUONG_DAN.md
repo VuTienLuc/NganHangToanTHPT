@@ -489,15 +489,16 @@ Câu được lấy xoay vòng qua các dạng, ưu tiên câu chưa dùng; thi�
 Dòng lệnh: `python3 scripts/phieu_bai_hoc.py cau_hinh.json --bien-dich`.
 
 
-## Toán tư duy lớp 4 (Violympic, Toán tư duy Singapore)
+## Toán tư duy lớp 4, 5 (bám SGK Kết nối tri thức + Violympic, Singapore)
 
-- Danh mục: `du-lieu/toan4_tuduy.json` — 10 chương, 35 bài, 102 dạng (mã bắt đầu bằng `4`, ví dụ `4D6?20-1` = Giả thiết tạm, gà – chó).
-- Không có SGK nên chương, bài xếp theo chủ đề thi: cấu tạo số, dãy số quy luật, tính nhanh – tìm x, chia hết, trung bình cộng,
-  bài toán điển hình (tổng – hiệu, tổng – tỉ, hiệu – tỉ, tuổi, giả thiết tạm, sơ đồ đoạn thẳng), phân số, trồng cây – thời gian – đo lường,
-  hình học (đếm hình, chu vi diện tích, hình khối), logic – tổ hợp (nói dối, Dirichlet, bắt tay, cân – rót nước – que diêm).
+- Danh mục: `du-lieu/toan4_tuduy.json` (12 chương, 49 bài, 111 dạng) và `du-lieu/toan5_tuduy.json` (11 chương, 47 bài, 102 dạng).
+- Chương = **chủ đề SGK KNTT**, số bài = **đúng số bài SGK** (bỏ các bài Luyện tập chung, Ôn tập, Thực hành trải nghiệm).
+  Mỗi bài có các dạng tư duy nâng cao kiểu Violympic, SASMO, SEAMO, Kangaroo. Cuối mỗi lớp có chương **Mở rộng** (logic, tổ hợp, que diêm…).
+- Quy ước mã: `4`/`5` + D (số, đo lường) hoặc H (hình) + số chủ đề; chủ đề 10, 11, 12 ghi `C0`, `C1`, `C2`; Mở rộng ghi `4C4`, `5C3`.
+  Ví dụ `4D5?25-2` = lớp 4, Chủ đề 5, Bài 25 (Tổng – hiệu), dạng 2; `5C0?60-3` = lớp 5, Chủ đề 10, Bài 60, chuyển động cùng chiều.
 - Sửa, thêm dạng: sửa file JSON rồi chạy `python3 scripts/them_thcs.py` và `python3 scripts/lap_chi_muc.py`.
-- App ra đề: cây bên trái có **Lớp 4** đủ 10 chương; **Prompt AI bổ sung câu thiếu** tự dùng hướng dẫn riêng cho toán tư duy
-  (không dùng ẩn x, giải bằng sơ đồ, giả thiết tạm; ưu tiên Trả lời ngắn như Violympic).
+- **Prompt AI bổ sung câu thiếu** có hướng dẫn riêng cho toán tư duy: bám kiến thức bài SGK, không dùng ẩn x,
+  giải bằng sơ đồ đoạn thẳng, giả thiết tạm; ưu tiên Trả lời ngắn như Violympic.
 
 ## Toán THCS 6 – 9 (Kết nối tri thức)
 

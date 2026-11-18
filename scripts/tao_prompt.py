@@ -237,7 +237,8 @@ def danh_sach_dang():
 def lop_thcs(lop):
     """Hướng dẫn riêng cho Toán THCS (lớp 6–9, KNTT) và Toán tư duy tiểu học (lớp 3–5)."""
     if lop <= 5:
-        return (f"- Lớp {lop} – TOÁN TƯ DUY: phong cách đề Violympic và Toán tư duy Singapore (SASMO, SEAMO, Kangaroo).\n"
+        return (f"- Lớp {lop} – TOÁN TƯ DUY bám SGK Toán {lop} Kết nối tri thức: mỗi câu dựa trên kiến thức của bài đang soạn và các bài trước,\n"
+                f"  nâng lên theo phong cách đề Violympic và Toán tư duy Singapore (SASMO, SEAMO, Kangaroo).\n"
                 f"  Chỉ dùng kiến thức tiểu học đến lớp {lop}: KHÔNG dùng ẩn x lập phương trình, số âm, công thức lớp trên; giải bằng sơ đồ đoạn thẳng,\n"
                 f"  giả thiết tạm, suy luận, liệt kê, tính ngược. Lời văn ngắn, gần gũi trẻ em (bạn An, quả táo, viên bi…); số liệu nguyên, đẹp.\n"
                 f"- Ưu tiên Trả lời ngắn (đáp số là số tự nhiên như đề Violympic) và Trắc nghiệm; hình vẽ (đếm hình, xếp hình) dùng TikZ đơn giản.\n"
@@ -275,7 +276,7 @@ def tao_prompt_soan(cac_dang, so_cau, tai_lieu="", cach="ket_hop", thuc_te=False
         chung = chung[:i] + chung[j:]
     chung = chung.replace("Đủ số câu như đề", "Đủ số câu theo loại × mức như bảng")
     p = f"""# NHIỆM VỤ
-Thầy là giáo viên Toán {("Tiểu học – Toán tư duy lớp " + str(lop) + " (Violympic, Toán tư duy Singapore)") if lop <= 5 else f"THCS – Toán {lop}, sách Kết nối tri thức với cuộc sống (chương trình GDPT 2018)" if lop <= 9 else "THPT (chương trình GDPT 2018)"}. Đính kèm là **tài liệu học tập**{(': ' + tai_lieu) if tai_lieu else ''}.
+Thầy là giáo viên Toán {("Tiểu học – Toán tư duy lớp " + str(lop) + " (bám SGK Kết nối tri thức; Violympic, Toán tư duy Singapore)") if lop <= 5 else f"THCS – Toán {lop}, sách Kết nối tri thức với cuộc sống (chương trình GDPT 2018)" if lop <= 9 else "THPT (chương trình GDPT 2018)"}. Đính kèm là **tài liệu học tập**{(': ' + tai_lieu) if tai_lieu else ''}.
 Hãy **đọc kỹ tài liệu** (lý thuyết, định nghĩa, công thức, ví dụ, luyện tập, bài tập) rồi **SOẠN CÂU HỎI MỚI** cho:
 **Lớp {lop} — {ten_bai}** ({bai[0][0]}).
 Câu hỏi phải đúng phạm vi bài học: chỉ dùng kiến thức có trong tài liệu và các bài trước, KHÔNG dùng kiến thức của bài sau.
