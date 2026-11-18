@@ -427,9 +427,36 @@ class HetKhoa(RuntimeError):
     pass
 
 
+_SSL = None
+
+
+def ngu_canh_ssl():
+    """Chứng chỉ HTTPS: Python cài từ python.org trên macOS không dùng kho chứng chỉ của máy → lỗi CERTIFICATE_VERIFY_FAILED.
+    Thứ tự: gói certifi → /etc/ssl/cert.pem (macOS, Linux) → mặc định. Vẫn KIỂM TRA chứng chỉ, không tắt bảo mật."""
+    global _SSL
+    if _SSL is None:
+        import ssl
+        cac = []
+        try:
+            import certifi
+            cac.append(certifi.where())
+        except Exception:
+            pass
+        cac += ["/etc/ssl/cert.pem", "/etc/ssl/certs/ca-certificates.crt", "/opt/homebrew/etc/openssl@3/cert.pem", "/usr/local/etc/openssl@3/cert.pem"]
+        _SSL = ssl.create_default_context()
+        for f in cac:
+            if f and os.path.isfile(f):
+                try:
+                    _SSL = ssl.create_default_context(cafile=f)
+                    break
+                except Exception:
+                    continue
+    return _SSL
+
+
 def _http(url, body, headers, timeout):
     req = urllib.request.Request(url, json.dumps(body).encode() if body is not None else None, {"content-type": "application/json", **headers})
-    return json.load(urllib.request.urlopen(req, timeout=timeout))
+    return json.load(urllib.request.urlopen(req, timeout=timeout, context=ngu_canh_ssl()))
 
 
 def goi_mot(k, prompt, timeout=240, max_tok=8000):
