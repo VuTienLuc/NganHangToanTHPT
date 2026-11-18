@@ -156,9 +156,9 @@ def tim_lenh(text, ten):
     return m
 
 def lop_tu_so(l):
-    """Chữ số lớp trong mã dạng → lớp: 0→10, 1→11, 2→12; 6…9 → lớp 6…9 (THCS, KNTT)."""
+    """Chữ số lớp trong mã dạng → lớp: 0→10, 1→11, 2→12; 3…9 → lớp 3…9 (tiểu học tư duy, THCS KNTT)."""
     l = int(l)
-    return l if l >= 6 else 10 + l
+    return l if l >= 3 else 10 + l
 
 def phan_tich_cau(khoi_text):
     """khoi_text: toàn bộ '\\begin{ex}...\\end{ex}'. Trả dict thông tin."""

@@ -489,6 +489,16 @@ Câu được lấy xoay vòng qua các dạng, ưu tiên câu chưa dùng; thi�
 Dòng lệnh: `python3 scripts/phieu_bai_hoc.py cau_hinh.json --bien-dich`.
 
 
+## Toán tư duy lớp 4 (Violympic, Toán tư duy Singapore)
+
+- Danh mục: `du-lieu/toan4_tuduy.json` — 10 chương, 35 bài, 102 dạng (mã bắt đầu bằng `4`, ví dụ `4D6?20-1` = Giả thiết tạm, gà – chó).
+- Không có SGK nên chương, bài xếp theo chủ đề thi: cấu tạo số, dãy số quy luật, tính nhanh – tìm x, chia hết, trung bình cộng,
+  bài toán điển hình (tổng – hiệu, tổng – tỉ, hiệu – tỉ, tuổi, giả thiết tạm, sơ đồ đoạn thẳng), phân số, trồng cây – thời gian – đo lường,
+  hình học (đếm hình, chu vi diện tích, hình khối), logic – tổ hợp (nói dối, Dirichlet, bắt tay, cân – rót nước – que diêm).
+- Sửa, thêm dạng: sửa file JSON rồi chạy `python3 scripts/them_thcs.py` và `python3 scripts/lap_chi_muc.py`.
+- App ra đề: cây bên trái có **Lớp 4** đủ 10 chương; **Prompt AI bổ sung câu thiếu** tự dùng hướng dẫn riêng cho toán tư duy
+  (không dùng ẩn x, giải bằng sơ đồ, giả thiết tạm; ưu tiên Trả lời ngắn như Violympic).
+
 ## Toán THCS 6 – 9 (Kết nối tri thức)
 
 Danh mục theo mục lục SGK KNTT:

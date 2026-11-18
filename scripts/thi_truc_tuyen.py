@@ -998,8 +998,8 @@ def phan_loai(x, ds=None):
     """Khối / chương / bài của một đề hoặc bài giảng (để xếp thư viện theo mục lục)."""
     from nh_core import tai_id_map, lop_tu_so, ky_thi
     ten = x.get("ten") or ""
-    m_lop = (re.search(r"(?:toán|lớp|lop)\s*(1[0-2]|[6-9])\b", ten, re.I) or re.search(r"\b(1[0-2]|[6-9])[A-Z]\d", x.get("lop_giao") or "")
-             or re.search(r"\bPD(1[0-2]|[6-9])\b", x.get("lop_giao") or "", re.I))
+    m_lop = (re.search(r"(?:toán|lớp|lop)\s*(1[0-2]|[3-9])\b", ten, re.I) or re.search(r"\b(1[0-2]|[3-9])[A-Z]\d", x.get("lop_giao") or "")
+             or re.search(r"\bPD(1[0-2]|[3-9])\b", x.get("lop_giao") or "", re.I))
     if x.get("loai") == "bai_giang":
         t = _the_bg(x)
         lop_bg = t["lop"] or (int(m_lop.group(1)) if m_lop else 0)
