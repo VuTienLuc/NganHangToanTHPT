@@ -206,6 +206,8 @@ def tao(cfg, in_ra=print):
     vd = id_map.get(cac_dang[0], {})
     cac_bai = {d.split("-")[0] for d in cac_dang}
     ten = (cfg.get("ten") or "").strip() or ((vd.get("lesson_name") if len(cac_bai) == 1 else vd.get("chap_name")) or "Toán").strip()
+    if cfg.get("theo_mau") and "theo mẫu" not in ten:
+        ten += " – tương tự theo mẫu"
     so_dong = int(cfg.get("so_dong_lam_bai") or 3)
     out_goc = thu_muc_xuat(ten_tep(f"Luyện Mỗi Ngày - {ten_ngan(ten, 55)} - {time.strftime('%d-%m-%Y')}", 90), cac_dang, "phieu")
     out = os.path.join(out_goc, "tex")

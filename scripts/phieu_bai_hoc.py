@@ -318,6 +318,8 @@ def tao(cfg, in_ra=print, chi_tinh=False):
     nhan = {"bai_hoc": "PHIẾU BÀI HỌC", "chuyen_de": "PHIẾU CHUYÊN ĐỀ", "on_tap_chuong": "PHIẾU ÔN TẬP CHƯƠNG"}[loai_phieu]
     vd = id_map.get(cac_dang[0], {}) if cac_dang else {}
     ten = cfg.get("ten") or (vd.get("chap_name") if loai_phieu == "on_tap_chuong" else vd.get("lesson_name")) or "Bài học"
+    if cfg.get("theo_mau") and "theo mẫu" not in ten:
+        ten += " – tương tự theo mẫu"
     lop = lop_tu_so(cac_dang[0][0]) if cac_dang else ""
     gv = tt.get("giao_vien") or "Vũ Tiến Lực"
     # ---------- thư mục ra

@@ -194,6 +194,12 @@ footer .gian{flex:1}
 #hop-nk,#hop-kt{position:fixed;inset:0;background:rgba(17,24,39,.35);display:none;align-items:center;justify-content:center;z-index:18}
 #hop-nk .noi,#hop-kt .noi{background:#fff;border-radius:14px;width:min(1100px,96vw);height:min(90vh,880px);display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.25)}
 #hop-nk .noi{width:min(820px,96vw);height:min(80vh,720px)}
+#hop-tt{position:fixed;inset:0;background:rgba(17,24,39,.35);display:none;align-items:center;justify-content:center;z-index:40}
+#hop-tt .noi{background:#fff;border-radius:14px;width:min(860px,96vw);height:min(82vh,740px);display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.25)}
+#hop-tt h2{margin:0;padding:12px 18px;font-size:16px;border-bottom:1px solid var(--vien)}
+#hop-tt .than{flex:1;overflow:auto;padding:12px 18px;display:flex;flex-direction:column;gap:10px;font-size:13px}
+#hop-tt textarea{flex:1;min-height:220px;width:100%;box-sizing:border-box;padding:8px;border:1px solid var(--vien);border-radius:8px;font:12px ui-monospace,Menlo,monospace}
+#hop-tt .chan{padding:10px 18px;border-top:1px solid var(--vien);display:flex;gap:8px;align-items:center}
 #hop-nk h2,#hop-kt h2{margin:0;padding:12px 18px;font-size:16px;border-bottom:1px solid var(--vien)}
 #hop-nk .than,#hop-kt .than{flex:1;overflow:auto;padding:12px 18px;display:flex;flex-direction:column;gap:10px;font-size:13px}
 #hop-kt .than{display:grid;grid-template-columns:minmax(0,0.9fr) minmax(0,1.3fr);gap:14px}
@@ -577,8 +583,12 @@ tr.gop-h td{background:#dbeafe;text-align:left;font-weight:700;padding:8px 12px;
         <label class="hop"><input type="radio" name="ph-kieu" value="tu_luan"> Chỉ tự luận: ví dụ mẫu có lời giải + bài tự luyện</label>
         <label class="hop" title="Mỗi ngày một trang theo thứ tự bài, dạng SGK: ví dụ mẫu có lời giải + bài tự luyện dễ → khó + ô tự đánh giá, phụ huynh kí. Kèm trang web học sinh tự làm, xem lời giải, tự chấm, lưu tiến độ."><input type="radio" name="ph-kieu" value="luyen_ngay"> 📅 Luyện mỗi ngày (Ngày 1, 2, … · phiếu in + web tự chấm)</label></div>
       <div id="ph-tl-tuychon" style="display:none;gap:12px;flex-wrap:wrap;align-items:center">
-        <label class="hop">Mỗi dạng: câu tương tự <input type="number" id="ph-tt" min="0" max="4" value="2" style="width:58px"></label>
-        <label class="hop">câu vận dụng <select id="ph-vdtl" style="width:auto"><option value="1" selected>1 (câu 3)</option><option value="2">2 (câu 3, 4)</option></select></label>
+        <label class="hop">Mỗi dạng: câu tương tự <input type="number" id="ph-tt" min="0" max="8" value="2" style="width:58px"></label>
+        <label class="hop" title="Câu tương tự lấy từ đâu: trong kho cùng dạng, hoặc AI soạn BÁM SÁT từng ví dụ mẫu (giống mẫu / nâng cao hơn một chút), nhập vào ngân hàng rồi in phiếu riêng">phải <select id="ph-tt-kieu" style="width:auto">
+          <option value="kho" selected>lấy trong kho (cùng dạng)</option><option value="giong">giống ví dụ mẫu (AI soạn)</option>
+          <option value="giong_nc">giống mẫu, câu cuối nâng cao hơn (AI soạn)</option><option value="nang_cao">nâng cao hơn mẫu một chút (AI soạn)</option></select></label>
+        <button id="ph-tt-prompt" style="display:none" title="Chọn ví dụ mẫu cho từng dạng, soạn prompt để AI viết câu tương tự theo đúng mẫu">📝 Prompt AI soạn câu tương tự theo mẫu…</button>
+        <label class="hop" id="ph-vdtl-o">câu vận dụng <select id="ph-vdtl" style="width:auto"><option value="1" selected>1 (câu 3)</option><option value="2">2 (câu 3, 4)</option></select></label>
         <label class="hop" id="ph-ln-o" style="display:none">Mỗi ngày <select id="ph-ln-n" style="width:auto"><option value="1" selected>1 dạng</option><option value="2">2 dạng (cùng bài)</option></select></label>
         <label class="hop" id="ph-bo-cuc-o">Bố cục <select id="ph-bo-cuc" style="width:auto"><option value="song_song" selected>Song song: trái ví dụ mẫu – phải tự luyện</option><option value="tren_duoi">Trên – dưới: ví dụ mẫu + lời giải ở trên, bài tự luyện bên dưới</option></select></label>
         <label class="hop">dòng làm bài <input type="number" id="ph-dong" min="0" max="8" value="2" style="width:58px"></label>
@@ -606,6 +616,16 @@ tr.gop-h td{background:#dbeafe;text-align:left;font-weight:700;padding:8px 12px;
     </div>
   </div>
   <div class="chan"><span id="ph-trang-thai" class="nho"></span><button id="ph-thieu" style="margin-left:auto" title="Kiểm tra ngân hàng đủ câu cho phiếu này chưa; thiếu thì soạn prompt cho AI sinh câu, rồi nhập vào ngân hàng">Kiểm tra kho / Prompt AI soạn câu…</button><button id="ph-tao" class="chinh">Tạo phiếu</button><button id="ph-dong-hop">Đóng</button></div>
+</div></div>
+<div id="hop-tt"><div class="noi">
+  <h2>Câu tương tự theo mẫu → nhập ngân hàng → in phiếu riêng</h2>
+  <div class="than">
+    <p style="margin:0">Dán <b>nguyên kết quả AI trả về</b> (cả khối <code>```latex … ```</code>). Em sẽ nhập các câu vào ngân hàng (câu lỗi biên dịch tự để riêng ở <code>ai-nhap/_loi</code>, không vào kho),
+      rồi tạo <b>phiếu riêng</b>: mỗi dạng = ví dụ mẫu có lời giải + đúng các câu tương tự của mẫu đó. Ví dụ mẫu và câu tương tự còn dùng lại được cho các phiếu sau.</p>
+    <p class="nho" id="tt-mau" style="margin:0"></p>
+    <textarea id="tt-van" placeholder="\begin{bt}%[…]&#10;% mau: 1a2b3c4d&#10;…"></textarea>
+  </div>
+  <div class="chan"><span id="tt-tt" class="nho"></span><button id="tt-nhap" class="chinh" style="margin-left:auto">Nhập kho &amp; tạo phiếu theo mẫu</button><button id="tt-dong">Đóng</button></div>
 </div></div>
 <div id="hop-nk"><div class="noi">
   <h2>Nhập kho câu hỏi</h2>
@@ -1756,6 +1776,39 @@ async function promptBoSung(bs){
     [["Chép prompt",async e=>{try{await navigator.clipboard.writeText(r.noi_dung);e.target.textContent="Đã chép ✓"}catch(_){alert("Bôi đen rồi Cmd+C.")}},true],
      ["Nhập câu AI trả về (dán / chọn file)…",()=>{$("#hop-thoai").style.display="none";moNhapKho()}]]);
 }
+// ---------------- CÂU TƯƠNG TỰ THEO MẪU (AI soạn bám sát ví dụ mẫu → nhập kho → in phiếu riêng)
+let TT_MAU=null;
+const ttKieu=()=>$("#ph-tt-kieu").value;
+$("#ph-tt-kieu").onchange=()=>{const ai=ttKieu()!=="kho";$("#ph-tt-prompt").style.display=ai?"":"none";$("#ph-vdtl-o").style.display=ai?"none":"";
+  if(ai&&+$("#ph-tt").value<1)$("#ph-tt").value=3};
+$("#ph-tt-prompt").onclick=async()=>{
+  const cfg=phCfg(); if(!cfg)return; const so=Math.max(1,+$("#ph-tt").value||3);
+  const b=$("#ph-tt-prompt");b.disabled=true;
+  try{const r=await api("/api/prompt-tuong-tu",{cau_hinh:cfg,so,kieu:ttKieu()});
+    if(!r.ok){alert(r.loi);return}
+    TT_MAU={cfg,so,vi_du_mau:r.vi_du_mau};
+    hopThoai(`Prompt AI: ${so} câu tương tự cho mỗi ví dụ mẫu (${r.so_mau} mẫu)`,
+      `1) Chép prompt, dán vào ChatGPT / Gemini / Claude.\n2) Chép NGUYÊN kết quả AI trả về.\n3) Bấm “Dán kết quả AI → nhập kho & in phiếu…”, dán vào ô, bấm Nhập kho & tạo phiếu theo mẫu.\n${"─".repeat(60)}\n\n`+r.noi_dung,
+      [["Chép prompt",async e=>{try{await navigator.clipboard.writeText(r.noi_dung);e.target.textContent="Đã chép ✓"}catch(_){alert("Bôi đen rồi Cmd+C.")}},true],
+       ["Dán kết quả AI → nhập kho & in phiếu…",()=>{$("#hop-thoai").style.display="none";moTT()}]]);}
+  finally{b.disabled=false}
+};
+function moTT(){if(!TT_MAU){alert("Thầy bấm “📝 Prompt AI soạn câu tương tự theo mẫu…” trước.");return}
+  $("#tt-van").value="";$("#tt-tt").textContent="";
+  $("#tt-mau").textContent=`Ví dụ mẫu đã chọn: ${Object.values(TT_MAU.vi_du_mau).join(", ")} · ${TT_MAU.so} câu tương tự / mẫu`;
+  $("#hop-tt").style.display="flex";$("#tt-van").focus()}
+$("#tt-dong").onclick=()=>$("#hop-tt").style.display="none";
+$("#tt-nhap").onclick=async()=>{
+  const van=$("#tt-van").value.trim(); if(!van){alert("Dán kết quả AI vào ô.");return}
+  const b=$("#tt-nhap");b.disabled=true;$("#tt-tt").textContent="Đang kiểm tra, biên dịch thử từng câu và nhập kho…";
+  try{const r=await api("/api/tuong-tu-nhap",{van,cau_hinh:TT_MAU.cfg,so:TT_MAU.so,vi_du_mau:TT_MAU.vi_du_mau,bien_dich:$("#bien_dich").checked});
+    if(!r.ok){$("#tt-tt").textContent="";hopThoai("Chưa xong",r.nhat_ky||r.loi||"");return}
+    $("#hop-tt").style.display="none";$("#hop-phieu").style.display="none";await tai();
+    hopThoai(`Đã nhập ${r.so_cau} câu và tạo phiếu theo mẫu: ${r.thu_muc}`,r.nhat_ky+(r.bien_dich?"\nĐang biên dịch PDF…":""),
+      [["🌐 Phiếu HTML lên web…",()=>phieuWeb(r.thu_muc),true],["Mở thư mục",()=>api("/api/mo",{duong_dan:r.thu_muc})]]);
+    if(r.bien_dich) theoDoi(r.nhat_ky);}
+  finally{b.disabled=false}
+};
 $("#ph-nc").onchange=e=>{$("#ph-vd").disabled=$("#ph-vdc").disabled=!e.target.checked};
 function phCfg(){
   const bai=phBaiChon(); if(!bai.length){alert("Chọn ít nhất một bài.");return null}
@@ -1763,8 +1816,8 @@ function phCfg(){
   const loai=$("#ph-loai").dataset.loai, tl=+document.querySelector('input[name="ph-tl"]:checked').value;
   const cfg={pham_vi:loai==="on_tap_chuong"?[$("#ph-chuong").value]:bai,dang,loai_phieu:loai,ten:$("#ph-ten").value.trim(),thoi_luong:tl,
     so_cau:{TN:+$("#ph-tn").value||0,DS:+$("#ph-ds").value||0,TLN:+$("#ph-tln").value||0},kien_thuc:$("#ph-kt").value,
-    co_chu:+$("#ph-co").value,hai_cot:$("#ph-hai-cot").checked,beamer:$("#ph-beamer").checked,kieu_cau:document.querySelector('input[name="ph-kieu"]:checked').value,so_tuong_tu:+$("#ph-tt").value,bo_cuc_tl:$("#ph-bo-cuc").value,so_dang_ngay:+$("#ph-ln-n").value,
-    so_van_dung:+$("#ph-vdtl").value,so_dong_lam_bai:+$("#ph-dong").value,nang_cao:$("#ph-nc").checked?{V:+$("#ph-vd").value||0,C:+$("#ph-vdc").value||0}:{},kien_thuc_in:document.querySelector('input[name="ph-kt-in"]:checked').value,giao_vien:$("#giao_vien").value.trim(),truong:$("#truong").value.trim(),
+    co_chu:+$("#ph-co").value,hai_cot:$("#ph-hai-cot").checked,beamer:$("#ph-beamer").checked,kieu_cau:document.querySelector('input[name="ph-kieu"]:checked').value,so_tuong_tu:+$("#ph-tt").value,bo_cuc_tl:$("#ph-bo-cuc").value,so_dang_ngay:+$("#ph-ln-n").value,theo_mau:$("#ph-tt-kieu").value!=="kho",
+    so_van_dung:$("#ph-tt-kieu").value!=="kho"?0:+$("#ph-vdtl").value,so_dong_lam_bai:+$("#ph-dong").value,nang_cao:$("#ph-nc").checked?{V:+$("#ph-vd").value||0,C:+$("#ph-vdc").value||0}:{},kien_thuc_in:document.querySelector('input[name="ph-kt-in"]:checked').value,giao_vien:$("#giao_vien").value.trim(),truong:$("#truong").value.trim(),
     nam_hoc:$("#nam_hoc").value.trim(),so_gd:$("#so_gd").value.trim()};
   return cfg;
 }

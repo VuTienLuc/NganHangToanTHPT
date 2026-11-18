@@ -690,6 +690,64 @@ class XuLy(BaseHTTPRequestHandler):
                     threading.Thread(target=bien_dich_nen, args=(rel,), daemon=True).start()
                 log = "\n".join(x for x in dong if not x.startswith("THU_MUC:"))
                 return self.gui(200, {"ok": True, "nhat_ky": log, "thu_muc": rel, "bien_dich": dang_bd, "bo_sung": bo_sung()})
+            if u.path == "/api/prompt-tuong-tu":      # phiếu tự luận: prompt AI soạn câu tương tự BÁM SÁT từng ví dụ mẫu
+                import random, luyen_moi_ngay, tao_prompt
+                cfg = dict(d.get("cau_hinh") or {}, so_tuong_tu=0, so_van_dung=0, theo_mau=False)
+                try:
+                    kq, cac_dang, _ = luyen_moi_ngay.chon(cfg, random.Random(cfg.get("seed") or time.time()))
+                    if not kq:
+                        return self.gui(200, {"ok": False, "loi": "Phạm vi đã chọn chưa có câu tự luận (có lời giải) nào để làm ví dụ mẫu."})
+                    id_map = tai_id_map()
+                    mau = [{"ma": kq[k]["vd"]["ma"], "dang_key": k, "muc": kq[k]["vd"].get("muc_chuan") or "H",
+                            "ten_dang": (id_map.get(k, {}).get("type_name") or "").strip(), "ten_bai": (id_map.get(k, {}).get("lesson_name") or "").strip(),
+                            "de": kq[k]["vd"]["_tl"]["de"], "lg": kq[k]["vd"]["_tl"]["lg"]} for k in cac_dang]
+                    lop = lop_tu_so(cac_dang[0][0])
+                    p = tao_prompt.prompt_tuong_tu(mau, d.get("so") or 3, d.get("kieu") or "giong", lop, d.get("ghi_chu") or "")
+                except Exception as e:
+                    return self.gui(200, {"ok": False, "loi": str(e)})
+                return self.gui(200, {"ok": True, "noi_dung": p, "vi_du_mau": {m["dang_key"]: m["ma"] for m in mau}, "so_mau": len(mau)})
+            if u.path == "/api/tuong-tu-nhap":        # dán kết quả AI → nhập kho → tạo phiếu riêng: ví dụ mẫu + đúng các câu tương tự theo mẫu
+                import nhap_cau
+                t = (d.get("van") or "").strip()
+                m = re.search(r"```(?:latex|tex)?\s*\n([\s\S]*?)```", t)
+                t = m.group(1) if m else t
+                if "\\begin{bt}" not in t and "\\begin{ex}" not in t:
+                    return self.gui(200, {"ok": False, "nhat_ky": "Chưa thấy câu nào (\\begin{bt} … \\end{bt}) trong nội dung dán vào."})
+                if not re.search(r"%\s*mau:\s*[0-9a-f]{8}", t):
+                    return self.gui(200, {"ok": False, "nhat_ky": "Các câu chưa có dòng '% mau: <mã câu mẫu>' — AI cần giữ dòng này (xem lại prompt)."})
+                cfg = dict(d.get("cau_hinh") or {})
+                ten_tep_ai = time.strftime("%Y-%m-%d_%H%M%S") + "_tuong-tu-theo-mau.tex"
+                p = os.path.join(GOC, "ai-nhap", ten_tep_ai)
+                open(p, "w", encoding="utf-8").write("% Câu tương tự theo mẫu – AI soạn, nhập từ ứng dụng (Phiếu bài học)\n" + t + "\n")
+                dong = []
+                try:
+                    so = nhap_cau.nhap([p], thu=False, in_ra=dong.append)
+                except Exception as e:
+                    return self.gui(200, {"ok": False, "nhat_ky": f"Chưa nhập được: {e}\n" + "\n".join(dong)})
+                os.makedirs(os.path.join(GOC, "ai-nhap", "da-nhap"), exist_ok=True)
+                try:
+                    shutil.move(p, os.path.join(GOC, "ai-nhap", "da-nhap", ten_tep_ai))
+                except OSError:
+                    pass
+                cfg.update(theo_mau=True, so_tuong_tu=int(d.get("so") or cfg.get("so_tuong_tu") or 3), so_van_dung=0,
+                           vi_du_mau=d.get("vi_du_mau") or cfg.get("vi_du_mau") or {})
+                dong.append(f"→ Đã nhập {so} câu vào ngân hàng.\n")
+                try:
+                    if cfg.get("kieu_cau") == "luyen_ngay":
+                        import luyen_moi_ngay
+                        out_goc = luyen_moi_ngay.tao(cfg, dong.append)
+                    else:
+                        import phieu_bai_hoc
+                        cfg["kieu_cau"] = "tu_luan"
+                        out_goc = phieu_bai_hoc.tao(cfg, dong.append)
+                except Exception as e:
+                    return self.gui(200, {"ok": False, "nhat_ky": "\n".join(dong) + f"\nChưa tạo được phiếu: {e}"})
+                rel = os.path.relpath(out_goc, GOC)
+                dang_bd = bool(d.get("bien_dich") and tim_pdflatex())
+                if dang_bd:
+                    threading.Thread(target=bien_dich_nen, args=(rel,), daemon=True).start()
+                return self.gui(200, {"ok": True, "so_cau": so, "thu_muc": rel, "bien_dich": dang_bd,
+                                      "nhat_ky": "\n".join(x for x in dong if not x.startswith("THU_MUC:"))})
             if u.path == "/api/chon-theo-dang":      # phiếu vá lỗ hổng / phiếu cuối giờ: rút câu ngân hàng theo dạng hoặc theo bài
                 import random
                 from xem_truoc import kho, hop_le

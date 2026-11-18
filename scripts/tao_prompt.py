@@ -323,3 +323,83 @@ if __name__ == "__main__":
         open(a.ra, "w", encoding="utf-8").write(p); print(f"Đã ghi {a.ra} ({len(p):,} ký tự).")
     else:
         print(p)
+
+
+# ------------------------------------------------------------------ CÂU TƯƠNG TỰ THEO MẪU (phiếu tự luận / luyện mỗi ngày)
+MUC_SAU = {"N": "H", "H": "V", "V": "C", "C": "C"}
+KIEU_TT = {
+    "giong": "Tất cả câu GIỐNG MẪU",
+    "giong_nc": "Các câu đầu GIỐNG MẪU, câu cuối NÂNG CAO HƠN MỘT CHÚT",
+    "nang_cao": "Tất cả câu NÂNG CAO HƠN MẪU MỘT CHÚT",
+}
+
+
+def prompt_tuong_tu(mau, so, kieu="giong", lop=10, ghi_chu=""):
+    """mau: [{"ma", "dang_key", "muc", "ten_dang", "ten_bai", "de", "lg"}] — mỗi ví dụ mẫu sẽ in trên phiếu.
+    so: số câu tương tự cho MỖI mẫu; kieu: giong | giong_nc | nang_cao."""
+    so = max(1, min(8, int(so)))
+    kieu = kieu if kieu in KIEU_TT else "giong"
+    def so_nc():
+        return so if kieu == "nang_cao" else (1 if kieu == "giong_nc" else 0)
+    n_nc = so_nc(); n_g = so - n_nc
+    cap = (("Tiểu học – Toán tư duy lớp " + str(lop) + " (bám SGK Kết nối tri thức)") if lop <= 5 else
+           f"THCS – Toán {lop}, sách Kết nối tri thức" if lop <= 9 else f"THPT – Toán {lop}, sách Kết nối tri thức")
+    khoi = []
+    for i, m in enumerate(mau, 1):
+        ma_g = m["dang_key"].replace("?", m.get("muc") or "H")
+        ma_nc = m["dang_key"].replace("?", MUC_SAU.get(m.get("muc") or "H", "V"))
+        yc = []
+        if n_g:
+            yc.append(f"{n_g} câu GIỐNG MẪU — mã `%[{ma_g}]`, dòng `% mau: {m['ma']}`")
+        if n_nc:
+            yc.append(f"{n_nc} câu NÂNG CAO HƠN MỘT CHÚT — mã `%[{ma_nc}]`, dòng `% mau: {m['ma']} nang_cao`")
+        khoi.append(f"""### MẪU {i} — mã câu mẫu `{m['ma']}` · {m.get('ten_bai') or ''} · Dạng: {m.get('ten_dang') or m['dang_key']}
+Cần soạn: {' + '.join(yc)}
+
+ĐỀ MẪU:
+{m['de'].strip()}
+
+LỜI GIẢI MẪU:
+{m['lg'].strip()}
+""")
+    tong = so * len(mau)
+    nc_luat = ("" if not n_nc else """
+## Câu NÂNG CAO HƠN MỘT CHÚT
+- Vẫn đúng dạng và đúng cách giải của mẫu, chỉ khó hơn MỘT bậc nhỏ: thêm đúng một bước tính, hoặc số liệu lớn hơn / có dư, hoặc thêm một điều kiện
+  (ví dụ: mẫu hỏi một số → câu nâng cao hỏi hai số; mẫu cho trực tiếp → câu nâng cao cho gián tiếp qua một phép tính).
+- Học sinh đã làm được mẫu thì phải tự làm được câu nâng cao; KHÔNG chuyển sang dạng khác, KHÔNG dùng kiến thức bài sau.""")
+    lop_luat = "\n".join(x for x in lop_thcs(lop).split("\n") if "Ưu tiên Trả lời ngắn" not in x and "Bài tự luận (TL) viết như đề" not in x) if lop <= 9 else ""
+    return f"""# NHIỆM VỤ
+Thầy là giáo viên {cap}. Thầy cần CÂU TỰ LUẬN TƯƠNG TỰ THEO TỪNG VÍ DỤ MẪU để in phiếu: học sinh đọc ví dụ mẫu có lời giải,
+rồi tự làm các câu tương tự. Vì vậy câu tương tự phải BÁM SÁT MẪU, học sinh nhìn mẫu là biết cách làm.
+Kiểu: **{KIEU_TT[kieu]}** · mỗi mẫu {so} câu · tổng {tong} câu.
+
+## Câu GIỐNG MẪU (bắt buộc)
+- Cùng câu hỏi, cùng cấu trúc đề, cùng số bước giải, cùng phương pháp, cùng mức độ với mẫu.
+- CHỈ được đổi: số liệu, tên người, đồ vật, ngữ cảnh đời sống (có thể đổi đơn vị quen thuộc). Không đổi yêu cầu, không thêm bớt bước.
+- Số liệu mới khác hẳn mẫu và khác nhau giữa các câu; kết quả đẹp (số tự nhiên / số gọn), đáp số duy nhất, mọi bước tính ra số hợp lý.
+{nc_luat}
+## Lời giải
+- Trình bày THEO ĐÚNG CÁC BƯỚC của lời giải mẫu (cùng cách lập luận, cùng thứ tự), đủ bước, có thử lại khi mẫu có.
+- Tự giải lại và kiểm tra từng phép tính trước khi trả lời; câu nào không chắc thì thêm dòng `% KIEM_TRA: <lý do>`.
+{lop_luat}
+## ĐỊNH DẠNG BẮT BUỘC (để nhập thẳng vào ngân hàng LaTeX)
+- Mỗi câu một khối tự luận, KHÔNG có \\shortans, KHÔNG có phương án:
+```latex
+\\begin{{bt}}%[MÃ DẠNG GHI Ở TỪNG MẪU]
+% nguon: AI soạn tương tự câu mẫu <mã câu mẫu>
+% mau: <mã câu mẫu>            ← câu nâng cao ghi: % mau: <mã câu mẫu> nang_cao
+	<đề bài>
+	\\loigiai{{
+		<lời giải từng bước, mỗi bước một dòng, xuống dòng bằng \\\\>
+	}}
+\\end{{bt}}
+```
+- Dòng `% mau: …` là BẮT BUỘC, chép đúng mã câu mẫu (8 kí tự) — chương trình dựa vào đó để xếp câu đúng sau ví dụ mẫu.
+- Công thức, số trong `$…$`; số lớn viết `$12\\,500$`; số thập phân `$2{{,}}5$`; không dùng Markdown (**, #) trong khối.
+- Hình (nếu mẫu có hình) vẽ bằng `tikzpicture` giống kiểu hình của mẫu.
+- Trả lời DUY NHẤT một khối ```latex chứa đủ {tong} câu, xếp theo thứ tự MẪU 1, MẪU 2, …; không giải thích gì thêm.
+{('- Yêu cầu thêm của thầy: ' + ghi_chu) if ghi_chu else ''}
+
+# CÁC VÍ DỤ MẪU
+""" + "\n".join(khoi)

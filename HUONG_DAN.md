@@ -500,6 +500,19 @@ Dòng lệnh: `python3 scripts/phieu_bai_hoc.py cau_hinh.json --bien-dich`.
 - **Prompt AI bổ sung câu thiếu** có hướng dẫn riêng cho toán tư duy: bám kiến thức bài SGK, không dùng ẩn x,
   giải bằng sơ đồ đoạn thẳng, giả thiết tạm; ưu tiên Trả lời ngắn như Violympic.
 
+## 📝 Câu tương tự THEO MẪU (phiếu tự luận, Luyện mỗi ngày)
+
+Vấn đề cũ: câu "tự luyện" chỉ cùng dạng nên không giống ví dụ mẫu. Nay:
+1. **Phiếu bài học** → kiểu *Chỉ tự luận* (hoặc *📅 Luyện mỗi ngày*) → *Mỗi dạng: câu tương tự* = số câu (1–8) →
+   *phải*: **giống ví dụ mẫu** / **giống mẫu, câu cuối nâng cao hơn** / **nâng cao hơn mẫu một chút**.
+2. Bấm **📝 Prompt AI soạn câu tương tự theo mẫu…**: app chọn ví dụ mẫu cho từng dạng và soạn prompt (đề + lời giải mẫu, luật
+   "cùng cấu trúc, cùng số bước, chỉ đổi số liệu/ngữ cảnh"; câu nâng cao "thêm đúng một bước"). Chép prompt → ChatGPT / Gemini / Claude.
+3. **Dán kết quả AI → nhập kho & in phiếu…** → dán nguyên khối ```latex → **Nhập kho & tạo phiếu theo mẫu**:
+   câu được biên dịch thử, nhập ngân hàng (câu lỗi để riêng ở `ai-nhap/_loi`), file lưu `ai-nhap/da-nhap/…_tuong-tu-theo-mau.tex`,
+   rồi tạo **phiếu riêng** "… – tương tự theo mẫu": mỗi dạng = ví dụ mẫu + đúng các câu con (câu nâng cao gắn nhãn *Nâng cao*).
+- Mỗi câu AI soạn có dòng `% mau: <mã câu mẫu>` (thêm `nang_cao` nếu là câu nâng cao). Từ đó **mọi phiếu tự luận / Luyện mỗi ngày
+  tự ưu tiên ví dụ mẫu đã có câu con và xếp đúng câu con sau mẫu** — kể cả khi để chế độ "lấy trong kho".
+
 ## 📅 Luyện mỗi ngày (tự luận theo ngày – hợp nhất cho lớp 4, 5; lớp nào cũng dùng được)
 
 - Mở **Phiếu bài học** → chọn lớp, chương/bài → **Kiểu phiếu: 📅 Luyện mỗi ngày** → *Mỗi ngày 1 dạng* (hoặc 2 dạng cùng bài) → **Tạo phiếu**.
