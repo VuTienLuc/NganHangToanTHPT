@@ -500,6 +500,17 @@ Dòng lệnh: `python3 scripts/phieu_bai_hoc.py cau_hinh.json --bien-dich`.
 - **Prompt AI bổ sung câu thiếu** có hướng dẫn riêng cho toán tư duy: bám kiến thức bài SGK, không dùng ẩn x,
   giải bằng sơ đồ đoạn thẳng, giả thiết tạm; ưu tiên Trả lời ngắn như Violympic.
 
+## 📅 Luyện mỗi ngày (tự luận theo ngày – hợp nhất cho lớp 4, 5; lớp nào cũng dùng được)
+
+- Mở **Phiếu bài học** → chọn lớp, chương/bài → **Kiểu phiếu: 📅 Luyện mỗi ngày** → *Mỗi ngày 1 dạng* (hoặc 2 dạng cùng bài) → **Tạo phiếu**.
+- Mỗi dạng (theo thứ tự bài SGK) thành **một ngày, một trang A4**: Ví dụ mẫu có lời giải từng bước → 3 bài tự luyện dễ → khó
+  (bài cuối gắn nhãn *Vận dụng*) có dòng kẻ → ô *Tự đánh giá* + phụ huynh kí. Trang đầu là **bảng lộ trình N ngày** để đánh dấu.
+- Ra 2 file PDF: phiếu học sinh và **lời giải các bài tự luyện theo từng ngày**; kèm trang web `PhieuHocTap_Web.html`.
+- **🌐 Phiếu HTML lên web… → Đăng – học sinh khối lớp**: học sinh mở link, thấy ô "Hôm nay em làm Ngày …", đọc ví dụ mẫu,
+  tự làm ra giấy, bấm *Em làm xong – xem lời giải*, tự chấm ✅/❌ → được ⭐, đếm 🔥 chuỗi ngày liên tiếp; tiến độ lưu trên máy em.
+- Cần mỗi dạng ≥ 4 câu tự luận có lời giải (1 ví dụ + 3 tự luyện). Thiếu → nút *Kiểm tra kho / Prompt AI soạn câu…*.
+- Hiện có: **Toán 4 – Chủ đề 1** (60 câu, 15 ngày). Script: `scripts/luyen_moi_ngay.py`.
+
 ## Toán THCS 6 – 9 (Kết nối tri thức)
 
 Danh mục theo mục lục SGK KNTT:

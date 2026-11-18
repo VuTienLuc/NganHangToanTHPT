@@ -337,6 +337,13 @@ def tao_html(thu_muc, in_ra=print, ve=True):
 
 def ghi(thu_muc, in_ra=print, ve=True):
     goc = os.path.join(GOC, thu_muc) if not os.path.isabs(thu_muc) else thu_muc
+    try:
+        kieu = json.load(open(os.path.join(goc, "tex", "phieu_web.json"), encoding="utf-8")).get("kieu")
+    except Exception:
+        kieu = None
+    if kieu == "luyen_ngay":                 # Luyện mỗi ngày: trang riêng (lộ trình theo ngày, tự chấm, lưu tiến độ)
+        import luyen_moi_ngay
+        return luyen_moi_ngay.ghi_html(goc, in_ra, ve)
     t, P = tao_html(goc, in_ra, ve)
     p = os.path.join(goc, "PhieuHocTap_Web.html")
     open(p, "w", encoding="utf-8").write(t)
