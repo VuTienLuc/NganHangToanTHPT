@@ -124,6 +124,62 @@
 	} 
 \end{ex}
 
+%%%%%%%%%%%%%%%% ĐÚNG/SAI %%%%%%%%%%%%%%%%
+
+\begin{ex}%[1H8H5-2]%[ma:64176ac3]
+ Cho hình chóp đều $S.ABC$ có cạnh đáy bằng $a$, gọi $O$  là tâm của đáy và $SO=\dfrac{a \sqrt{3}}{3}$. Khi đó
+ \choiceTF 
+   {$AO=\dfrac{a\sqrt{3}}{2}$}
+  {\True  $\mathrm{d}(O, SA)=\dfrac{a\sqrt{6}}{6}$}
+  {\True  Kẻ đường cao $AI$ của tam giác $ABC$, khi đó $OI=\dfrac{a\sqrt{3}}{6}$}
+  {$\mathrm{d}(O,(SBC))=\dfrac{a\sqrt{15}}{12}$} 
+ \loigiai{ 
+  \begin{center}
+   \begin{tikzpicture}[scale=1,font=\footnotesize,line join=round,line cap=round,>=stealth]
+      \def\b{4.5}
+      \def\c{3.5}
+      \def\gA{-30}
+     \def\h{3.5} 
+     \path (0,0) coordinate  (A)
+      (0:\b) coordinate (C) 
+      (\gA:\c) coordinate  (B)
+      ($(B)!0.5!(C)$) coordinate (I) 
+       ($(A)!2/3!(I)$) coordinate (O)
+      (O)+(90:\h) coordinate (S) 
+       ($(S)!(O)!(A)$) coordinate (H)
+      ($(S)!(O)!(I)$) coordinate  (K);
+     \foreach  \i in {A,B,C}{\draw (S)--(\i);}
+     \draw (A)--(B)--(C) 
+       (S)--(I);
+     \draw[dashed]  (A)--(C)
+       (A)--(I)
+       (H)--(O)--(K)
+      (S)--(O); 
+     \pic[draw,thin,angle radius=2mm] {right angle  = O--H--S};
+     \pic[draw,thin,angle radius=2mm] {right angle = S--O--A}; 
+     \pic[draw,thin,angle radius=2mm] {right  angle = S--K--O};
+     \pic[draw,thin,angle  radius=2mm] {right angle = A--I--B};
+     \foreach \i/\g in  {S/90,A/-135,B/-90,C/-45,O/-90,H/150,K/0,I/0}{\draw[fill=black](\i) circle (1pt)
+       ($(\i)+(\g:3mm)$) node[scale=1]{$\i$};}
+    \end{tikzpicture}
+  \end{center}
+  \begin{itemchoice}
+   \itemch Sai. Kẻ đường cao $AI$ của  tam giác $ABC$, ta có $O$ thuộc $AI$.\\
+   Trong mặt phẳng $(SAI)$, dựng $OH\perp SA$ tại  $H\Rightarrow \mathrm{d}(O, SA)=OH$.\\
+   Tam giác $ABC$ đều cạnh $a$  nên $AO=\dfrac{2}{3} AI=\dfrac{2}{3} \cdot \dfrac{a \sqrt{3}}{2}=\dfrac{a \sqrt{3}}{3}=SO$.
+   \itemch Đúng. Tam giác $SAO$ vuông cân tại  $O$ nên $OH=\dfrac{SA}{2}=\dfrac{\dfrac{a \sqrt{3}}{3} \cdot \sqrt{2}}{2}=\dfrac{a \sqrt{6}}{6}$.\\
+    Vậy $\mathrm{d}(O, SA)=OH=\dfrac{a\sqrt{6}}{6}$.
+   \itemch Đúng. Ta xét khoảng cách  từ $O$ đến mặt bên $(SBC)$.\\
+   Kẻ đường cao $OK$ của tam giác $SOI\Rightarrow OK\perp SI$. \hfill(1)\\ 
+   Ta có $\heva{&BC\perp SO\ (\text{do  } SO\perp(ABC) \\ &BC\perp AI} \Rightarrow BC\perp(SAI) \Rightarrow BC\perp OK$. \hfill(2)\\
+   Từ $(1)$ và $(2)$ suy ra $OK\perp(SBC)$  hay $OK=\mathrm{d}(O, (SBC))$.\\
+   Ta có ${OI=\dfrac{AI}{3}=\dfrac{\dfrac{a \sqrt{3}}{2}}{3}=\dfrac{a \sqrt{3}}{6}}$. 
+   \itemch Sai. Tam giác $SOI$  vuông tại $O$ có đường cao $OK$ nên
+   $$\dfrac{1}{OK^2}=\dfrac{1}{SO^2}+\dfrac{1}{OI^2} \Rightarrow OK=\dfrac{SO\cdot OI}{\sqrt{SO^2+OI^2}}=\dfrac{\dfrac{a \sqrt{3}}{3} \cdot \dfrac{a  \sqrt{3}}{6}}{\sqrt{\dfrac{3a^2}{9}+\dfrac{3a^2}{36}}}=\dfrac{a \sqrt{15}}{15}.$$
+   Vậy ${\mathrm{d}(O, (SBC.)=OK=\dfrac{a  \sqrt{15}}{15}}$.
+  \end{itemchoice}
+ } 
+\end{ex}
 
 %%%%%%%%%%%%%%%% TRẢ LỜI NGẮN %%%%%%%%%%%%%%%%
 

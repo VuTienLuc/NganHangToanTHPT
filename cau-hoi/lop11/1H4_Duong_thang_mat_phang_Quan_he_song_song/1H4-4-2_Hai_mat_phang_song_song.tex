@@ -1805,7 +1805,7 @@
 \end{ex}
 
 % nguồn: Ok_TracNghiemLop11_Lan1
-\begin{ex}%[1H4B4-2]%[ma:cea10fa6]
+\begin{ex}%[1H4H4-2]%[ma:cea10fa6]
 	Cho hình hộp $ABCD.A'B'C'D'$, $AC$ cắt $BD$  tại $O$ còn $A'C'$ cắt $B'D'$ tại $O'$. Khi đó $(AB'D')$ sẽ song song mặt phẳng nào dưới đây?
 	 \choice
 		 {$(A'OC') $}
@@ -2932,6 +2932,85 @@ Vậy mệnh đề đúng.
 	} 
 \end{ex}
 
+\begin{ex}%[1H4H4-2]%[ma:5a80d824]
+	Cho hình bình  hành $ABCD$ và $ABEF$ nằm ở hai mặt phẳng khác nhau. Gọi $M$ là trọng tâm $\triangle ABE$. Gọi $(P)$ là mặt phẳng đi qua $M$ và song song với mặt $(ADF)$. Lấy $N$ là giao điểm của $(P)$ và $AC$. Khi đó:
+	 \choiceTF
+		{\True $EFDC$  là hình thang}
+		{\True  $FD\parallel EC$}
+		{\True $(ADF)\parallel (BCE)$} 
+		{$\dfrac{AN}{NC}=3$} 
+	 \loigiai{
+		\begin{center}
+			\begin{tikzpicture}
+					\def\a{4} \def\h{3} 
+					 \path
+						(0:0) coordinate (A) 
+						(210:\a) coordinate  (B)
+						++(0:\a)  coordinate (C)
+						($(A)+(C)-(B)$)  coordinate (D)
+						($(B)+(80:\h)$) coordinate  (E)
+						 ($(A)+(80:\h)$) coordinate (F);
+					\draw[dashed,thin]  (B)--(A)--(D)
+						(A)--(F); 
+					\draw (B)--(C)--(D) 
+						 (B)--(E)--(F)--(D)
+						(E)--(C); 
+					\foreach \x/\y in  {A/180,B/180,C/-90,D/0,E/150,F/150}
+					\fill[black] (\x) circle  (1pt)
+						($(\y:3mm)+(\x)$)  node {$\x$};
+				\end{tikzpicture}
+		\end{center}
+		\begin{itemchoice}
+			 \itemch Đúng.\\
+			Tứ giác $EFDC$ là hình bình hành và  cũng là hình thang.
+			\itemch Đúng.\\ 
+			Tứ giác $EFDC$ là  hình bình hành nên $FD\parallel EC$.
+			\itemch  Đúng.\\
+			Cho hình bình hành $ABCD$ và $ABEF$ nằm ở hai mặt phẳng khác nhau. Chứng  minh rằng $(ADF)\parallel (BCE)$.\\
+			Ta có $\heva{&EF\parallel CD\,\,(\parallel  AB)\\&EF=CD\,\,(=AB)}$ $\Rightarrow EFDC$ là hình bình hành.\\
+			$\Rightarrow FD\parallel EC$.\\ 
+			Ta có  $\heva{&AD\parallel BC;\,AF\parallel BE\\&AD,AF\subset (ADF);\, AD\cap AF=A\\&BC,\,BE\subset (BEC);\,BC\cap BE=B}$ $\Rightarrow (ADF)\parallel (BCE)$.
+			\itemch Sai. Tính $\dfrac{AN}{NC}$.\\ 
+			\centerline{ 
+			\begin{tikzpicture}
+					\def\a{4}  \def\h{4.5}
+					 \path
+						 (0:0) coordinate (A)
+						(210:3)  coordinate (B)
+						++(0:8)  coordinate (C)
+						 ($(A)+(C)-(B)$) coordinate (D)
+						($(B)+(75:\h)$) coordinate  (E)
+						($(A)+(75:\h)$) coordinate (F) 
+						(barycentric cs:A=1,B=1,E=1) coordinate (M) 
+						(barycentric  cs:A=1,C=2) coordinate (N)
+						(barycentric cs:A=1,B=1) coordinate (S) 
+						(barycentric  cs:A=1,B=2) coordinate (I)
+						(barycentric  cs:F=1,E=2) coordinate (J)
+						(barycentric cs:D=1,C=2) coordinate (K); 
+					\draw[dashed,thin] (B)--(A)--(D) 
+						 (A)--(F)
+						 (E)--(S)
+						(E)--(A)--(C) 
+						(J)--(I)--(K); 
+					\draw  (B)--(C)--(D)
+						 (B)--(E)--(F)--(D)
+						 (E)--(C)
+						 (K)--(J);
+					\foreach \x/\y in  {A/180,B/180,C/-90,D/0,E/150,F/150,M/180,N/-90,S/0,I/150,J/90,K/-30}
+					\fill[black] (\x)  circle (1pt)
+						($(\y:3mm)+(\x)$) node {$\x$}; 
+				\end{tikzpicture}
+			 }\\
+			Vẽ mp $(P)$ chứa $M$  và $(P)\parallel (ADF)$ cắt $AB$, $AC$, $CD$, $EF$ lần lượt tại $I$, $N$, $K$, $J$.\\
+			 Ta có $\dfrac{AI}{BI}=\dfrac{AN}{NC}\,\,(IN\parallel BC)$\\
+			Ta  có $\dfrac{EJ}{IS}=\dfrac{ME}{MS}=2\, (IS\parallel JE)$,
+			$BI=EJ$ (tứ giác  $BIJE$ là hình bình hành)\\
+			$\Rightarrow \frac{BI}{IS}=2 \Rightarrow \dfrac{BI}{2} =\dfrac{IS}{1} =\dfrac{BI+IS}{2+1}  =\dfrac{BS}{3}$ $\Rightarrow BI=\dfrac{2}{3}BS;\, IS=\dfrac{1}{3}BS$\\
+			Ta có $AI=AS+AI=BS+\dfrac{1}{3}BS=\dfrac{4}{3}BS \Rightarrow \dfrac{AI}{BI}=\dfrac{\tfrac{4}{3}BS}{\tfrac{2}{3}BS}=2  \Rightarrow \dfrac{AN}{NC}=2$
+		\end{itemchoice}
+	 }
+\end{ex}
+
 %%%%%%%%%%%%%%%% TỰ LUẬN %%%%%%%%%%%%%%%%
 
 % nguồn: Ok_TuanLuan_Toan11_Lan2
@@ -3794,5 +3873,44 @@ Do  đó $\dfrac{AN}{NC}=\dfrac{AH}{BH}=2$.}
 		 \draw (M') node[above]{$\Delta$};
 	\end{tikzpicture}
 	}} 
+\end{bt}
+
+\begin{bt}%[1H4H4-2]%[ma:b553b85c]
+% nguon: Archive/2024/SP-K10-K11-LyVanHoang_TVN-023/K11-C4-HHKG-QHSS/data/Bai-5-Dang1-Hinhlangtru.tex #2317
+%[Bài Giảng 10-11 - Phan Anh]
+	Cho hai hình vuông $ABCD$ và $ABEF$ ở trong hai mặt phẳng khác nhau. Trên các đường chéo $AC$ và $BF$ lần lượt lấy các điểm $M$, $N$ sao cho $AM=BN$. Các đường thẳng song song với $AB$ vẽ từ $M$, $N$ lần lượt cắt $AD$, $AF$ tại $M'$, $N'$.
+	\begin{enumerate}
+		\item Chứng minh $\left(CBE\right)\parallel\left(ADF\right)$.
+		\item Chứng minh $\left(DEF\right)\parallel\left(MNN'M'\right)$.
+	\end{enumerate}
+	\loigiai{
+		\begin{center}
+			\begin{tikzpicture}[scale=.8, font=\footnotesize, line join=round, line cap=round, >=stealth]
+				\path
+				(2,2) coordinate (A)
+				(0,0) coordinate (B)
+				(5,-1) coordinate (C)
+				(7,1) coordinate (D)
+				(1,5) coordinate (E)
+				(3,7) coordinate (F)
+				(3,1) coordinate (M)
+				(0.86,2) coordinate (N)
+				(3.67,1.67) coordinate (M')
+				(2.29,3.43) coordinate (N')
+				;
+				\draw (B)--(C)--(D)--(F)--(E)--(B) (C)--(E)--(D);
+				\draw[dashed] (C)--(A)--(F) (D)--(A)--(B)--(F) (M)--(M')--(N')--(N)--(M);
+				\foreach\x/\g in{A/50, B/-120, C/-60, D/0, E/90, F/90, M/-120, N/150, M'/60, N'/20}
+				\fill[black](\x)circle(1pt)($(\x)+(\g:3mm)$)node{$\x$};
+				\draw[fill=red,opacity=.1](M)--(M')--(N')--(N)--(M);
+			\end{tikzpicture}
+		\end{center}
+		\begin{enumerate}
+			\item Vì $\heva{&BC\parallel AD\\&BE\parallel AF}$ nên $\left(BCE\right)\parallel\left(ADF\right)$.
+			\item Ta có $\dfrac{AM}{AC} =\dfrac{BN}{BF} =\dfrac{AN'}{AF}$. Suy ra $MN'\parallel CF$.\\
+			Mặt khác, lại có $EF\parallel NN'$ (do cùng song song với $AB$).\\
+			Do đó $\left(DEF\right)\parallel\left(MNN'M'\right)$.
+		\end{enumerate}
+	}
 \end{bt}
 

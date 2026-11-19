@@ -3326,6 +3326,45 @@
 	 }
 \end{ex}
 
+\begin{ex}%[1H8H5-3]%[ma:0013dcd1]
+	Cho hình chóp $S.ABC$ có đáy là tam giác  vuông cân tại $B$, $AB=a$. Biết $SA=2a$ và $SA$ vuông góc với mặt phẳng $(ABC)$. Khoảng cách từ điểm $A$ đến mặt phẳng $(SBC)$ bằng
+	\choice 
+		 {$a$}
+		{$2a$} 
+		{\True $\dfrac{2a  \sqrt{5}}{5}$}
+		{$\dfrac{a  \sqrt{5}}{2}$}
+	 \loigiai{
+		\begin{center}
+			\begin{tikzpicture}[scale=1,font=\footnotesize,line join=round,line cap=round,>=stealth]
+					 \def\b{4.5}
+					\def\c{2} 
+					\def\gA{-40} 
+					 \def\h{3.5}
+					\path (0,0) coordinate (A) 
+						(0:\b) coordinate  (C)
+						(\gA:\c)  coordinate (B)
+						(A)+(90:\h) coordinate  (S)
+						($(S)!(A)!(B)$) coordinate  (H);
+					\foreach \i in  {A,B,C}{\draw (S)--(\i);}
+					\draw  (H)--(A)--(B)--(C);
+					\draw[dashed]  (A)--(C);
+					\pic[draw,angle radius=2mm] {right  angle = C--A--S};
+					\pic[draw,angle radius=2mm] {right  angle = B--A--S};
+					\pic[draw,angle  radius=2mm] {right angle = A--H--B};
+					\pic[draw,angle radius=2mm] {right  angle = C--B--A};
+					\foreach \i/\g in {S/90,A/-135,B/-90,C/-45,H/45}{\draw[fill](\i) circle  (1pt)
+						($(\i)+(\g:3mm)$)  node[scale=1]{$\i$};}
+				\end{tikzpicture}
+		\end{center}
+		Trong mặt phẳng $(SAB)$, kẻ  $AH\perp SB$.\\
+		Ta có $\heva{&BC\perp AB\\&BC\perp  SA}$ suy ra $BC\perp(SAB)$.\\
+		Mà $AH\subset(SAB)$  nên $BC\perp AH$.\\
+		 Từ $(1)$ và $(2)$ suy ra $AH\perp(SBC)$ hay $\mathrm{d}(A, (SBC))=AH$.\\
+		Xét $\triangle  SAB$ vuông tại $A$ có
+		$$\dfrac{1}{AH^2}=\dfrac{1}{AS^2}+\dfrac{1}{AB^2}=\dfrac{1}{4a^2}+\dfrac{1}{a^2}=\dfrac{5}{4a^2} \Rightarrow AH=\dfrac{2a \sqrt{5}}{5}.$$ 
+		Vậy $\mathrm{d}(A, (SBC))=AH=\dfrac{2a  \sqrt{5}}{5}$.
+	 }
+\end{ex}
 
 %%%%%%%%%%%%%%%% ĐÚNG/SAI %%%%%%%%%%%%%%%%
 
@@ -3848,6 +3887,72 @@
 	 }
 \end{ex}
 
+\begin{ex}%[1H8H5-3]%[ma:8d5fb2ee]
+ Cho hình chóp $S.ABCD$ có đáy $ABCD$ là hình chữ  nhật với $AB=2a$, $AD=a$. Hình chiếu của $S$ lên mặt phẳng $(ABCD)$ là trung điểm $H$ của $AB$ và $\widehat{SCH}=45^{\circ}$. Khi đó
+ \choiceTF 
+  {\True  $BC\perp (SAB)$}
+  {\True  $\mathrm{d}(H,(SBC))=\dfrac{a\sqrt{6}}{3}$}
+  {\True Gọi $K$ là trung điểm $CD$ khi đó $CD\perp (SHK)$} 
+  {$\mathrm{d}(H, (SCD))=\dfrac{a\sqrt{6}}{2}$} 
+ \loigiai{ 
+  \begin{center}
+   \begin{tikzpicture}[scale=1,font=\footnotesize,line join=round,line cap=round,>=stealth]
+      \def\a{4}
+     \def\b{2.5} 
+      \def\g{55}
+     \def\h{3.5} 
+      \path (0,0) coordinate (B)
+       (0:\a) coordinate (C)
+      (\g:\b)  coordinate (A)
+      (A)+(0:\a) coordinate (D) 
+      ($(A)!0.5!(B)$) coordinate (H) 
+      ($(C)!0.5!(D)$) coordinate  (K)
+      (H)+(90:\h) coordinate  (S)
+      ($(B)!0.3!(S)$) coordinate (E) 
+       ($(S)!(H)!(K)$) coordinate (I);
+     \foreach \i in {B,C,D}{\draw  (S)--(\i);}
+     \draw  (B)--(C)--(D)
+      (S)--(K); 
+      \draw[dashed] (S)--(A)--(B)
+      (D)--(A) 
+       (S)--(H)--(E)
+      (C)--(H)--(I) 
+      (H)--(K); 
+     \pic[draw,thin,angle radius=2mm] {right angle =  A--H--S};
+     \pic[draw,thin,angle radius=2mm] {right angle  = H--K--C};
+     \pic[draw,thin,angle radius=2mm] {right  angle = H--I--K};
+     \pic[draw,thin,angle radius=2mm] {right angle =  B--E--H};
+      \pic[draw,angle radius=15pt,fill=gray!20]{angle= S--C--H};
+     \foreach \i/\g in  {S/90,A/135,B/-135,C/-45,D/45,E/160,K/-45,I/45,H/-80}{\draw[fill=black](\i) circle (1pt)
+      ($(\i)+(\g:3mm)$) node[scale=1]{$\i$};} 
+    \end{tikzpicture}
+  \end{center}
+  \begin{itemchoice}
+   \itemch  Đúng. Kẻ đường cao $HE$ trong tam giác $SBH$. \hfill(1)\\
+    Ta có $\heva{&BC\perp AB\\ &BC\perp SH\ (\text{do } SH\perp(ABCD))} \Rightarrow BC\perp(SAB)$.
+   \itemch Đúng. Ta có $BC\perp(SAB) \Rightarrow BC\perp HE$. \hfill(2)\\ 
+   Từ $(1)$ và  $(2)$ suy ra $HE\perp(SBC)$ hay $\mathrm{d}(H,(SBC))=HE$.\\
+   Tam giác $BCH$ vuông tại  $B$ có
+    $$CH=\sqrt{BC^2+BH^2}=\sqrt{a^2+a^2}=a \sqrt{2}.$$
+    Tam giác $SCH$ vuông tại $H$ có
+   $\tan \widehat{SCH}=\dfrac{SH}{CH}  \Rightarrow SH=a \sqrt{2}$.\\
+   Tam giác $SBH$ vuông tại $H$ có đường  cao $HE$ nên
+   \begin{eqnarray*}
+    \dfrac{1}{HE^2} &=&\dfrac{1}{SH^2}+\dfrac{1}{BH^2} \\ 
+    \Rightarrow  HE&=&\dfrac{SH\cdot BH}{\sqrt{SH^2+BH^2}} \\
+    &=&\dfrac{a \sqrt{2} \cdot  a}{\sqrt{2 a^2+a^2}}=\dfrac{a \sqrt{6}}{3}.
+   \end{eqnarray*}
+   Vậy $\mathrm{d}(H, (SBC))=HE=\dfrac{a  \sqrt{6}}{3}$.
+   \itemch Đúng. Gọi $K$ là trung điểm $CD$ thì $HK$ là đường trung bình của hình chữ nhật $ABCD$  nên ${HK\parallel BC\parallel AD\Rightarrow HK\perp CD}$.\\
+   Ta có ${\heva{&CD\perp HK\\  &CD\perp SH} \Rightarrow CD\perp(SHK)}$.
+   \itemch  Sai. Kẻ đường cao $HI$ của tam giác $SHK$.\\
+   Ta có  $\heva{&HI\perp SK\\ &HI\perp CD\ (\text{do } CD\perp(SHK), HI\subset(SHK))} \Rightarrow HI\perp(SCD)$.\\
+    Tam giác $SHK$ vuông tại $H$ có đường cao $HI$ nên
+   $$\dfrac{1}{HI^2}=\dfrac{1}{SH^2}+\dfrac{1}{HK^2} \Rightarrow HI=\dfrac{SH\cdot HK}{\sqrt{SH^2+HK^2}}=\dfrac{a \sqrt{2} \cdot  a}{\sqrt{2a^2+a^2}}=\dfrac{a \sqrt{6}}{3}.$$
+   Vậy  $\mathrm{d}(H, (SCD))=HI=\dfrac{a \sqrt{6}}{3}$.
+  \end{itemchoice}
+ } 
+\end{ex}
 
 %%%%%%%%%%%%%%%% TRẢ LỜI NGẮN %%%%%%%%%%%%%%%%
 
@@ -5156,7 +5261,6 @@
 			\end{tikzpicture}
 	 }}
 \end{ex}
-
 
 %%%%%%%%%%%%%%%% TỰ LUẬN %%%%%%%%%%%%%%%%
 
