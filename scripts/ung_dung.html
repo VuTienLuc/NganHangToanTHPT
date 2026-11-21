@@ -180,6 +180,19 @@ footer .gian{flex:1}
 #hk-bang .o-so{display:flex;align-items:center;gap:5px;white-space:nowrap}
 #hk-bang input.so-cau{width:48px;padding:2px 4px;text-align:center}
 #hk-bang .hk-kho{font-size:11.5px;margin-top:3px;display:inline-block;padding:1px 6px;border-radius:99px}
+#hk-bang .hk-kho-nut{cursor:pointer;transition:filter .15s}
+#hk-bang .hk-kho-nut:hover{filter:brightness(.92);text-decoration:underline}
+#hop-hk-ai{position:fixed;inset:0;background:rgba(17,24,39,.4);display:none;align-items:center;justify-content:center;z-index:25}
+#hop-hk-ai .noi{background:#fff;border-radius:14px;width:min(1020px,96vw);max-height:90vh;display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.28)}
+#hop-hk-ai h2{margin:0;padding:12px 18px;font-size:16px;border-bottom:1px solid var(--vien);display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+#hop-hk-ai .cai{display:flex;flex-wrap:wrap;gap:8px 12px;padding:9px 18px;border-bottom:1px solid var(--vien);background:#f5f7ff;font-size:13px;align-items:center}
+#hop-hk-ai .than{overflow:auto;flex:1;padding:6px 18px 12px}
+#hkai-bang{border-collapse:collapse;width:100%;font-size:13px}
+#hkai-bang th{position:sticky;top:0;background:#f3f4f6;text-align:left;padding:7px 8px;border-bottom:1px solid var(--vien)}
+#hkai-bang td{padding:6px 8px;border-bottom:1px solid #eef0f3;vertical-align:middle}
+#hkai-bang tr.bo-chon{opacity:.45}
+#hkai-bang input[type=number]{width:62px;padding:4px 6px;border:1px solid var(--vien);border-radius:6px;text-align:center;font:inherit}
+#hop-hk-ai .chan{padding:10px 18px;border-top:1px solid var(--vien);display:flex;gap:8px;align-items:center;flex-wrap:wrap}
 #hk-bang .hk-kho-ok{background:#ecfdf5;color:#047857}
 #hk-bang .hk-kho-it{background:#fffbeb;color:#b45309}
 #hk-bang .hk-kho-0{background:#fef2f2;color:#b91c1c;font-weight:600}
@@ -542,10 +555,12 @@ tr.gop-h td{background:#dbeafe;text-align:left;font-weight:700;padding:8px 12px;
     <label class="hop"><input type="checkbox" id="hk-phan-bien" checked> Tự phản biện, kiểm tra chéo</label>
     <button id="hk-khop" title="Chọn lại bài trong kho theo chữ ở cột Chủ đề (dùng khi thầy đã sửa nhiều chủ đề)">Tự khớp bài theo chủ đề</button>
     <button id="hk-mac-dinh" title="Trả bảng về ma trận mặc định của lớp">Ma trận mặc định</button>
-    <span id="hk-chon-nhanh" style="display:inline-flex;gap:6px;align-items:center">
+    <span id="hk-chon-nhanh" style="display:inline-flex;gap:6px;align-items:center;flex-wrap:wrap">
       <button id="hk-chon-het" title="Tích chọn tất cả các câu/dạng">☑ Chọn tất cả</button>
       <button id="hk-bo-het" title="Bỏ chọn tất cả để tự tích chọn những phần cần lấy câu">☐ Bỏ chọn tất cả</button>
       <button id="hk-chon-thieu" title="Chỉ tích chọn những dòng mà ngân hàng đang thiếu câu để dùng AI tạo thêm">⚠ Chỉ chọn dòng thiếu câu</button>
+      <button id="hk-ai-sinh" class="chinh" style="background:#7c3aed;border-color:#7c3aed" title="Mở menu AI tự sinh câu cho các mục thiếu/ít rồi biên dịch thử và nhập thẳng vào ngân hàng (dùng chung khoá AI với Tạo phiếu bài học)">⚡ AI sinh câu thiếu &amp; nhập kho</button>
+      <a href="#" id="hk-khoa" style="font-size:12.5px;font-weight:600" title="Quản lý khoá API Gemini / DeepSeek / Claude / OpenAI (dùng chung với Tạo phiếu bài học)">⚙ Khoá AI…</a>
     </span>
   </div>
   <div class="cai" id="hk-xuat" style="background:#eaf3ff">
@@ -586,6 +601,37 @@ tr.gop-h td{background:#dbeafe;text-align:left;font-weight:700;padding:8px 12px;
     <button id="hk-nhap-ai" title="Dán / chọn file JSON đề AI trả về: kiểm tra số câu và lỗi, rồi trộn thành mã đề hoặc nhập vào ngân hàng">Nhập đề AI (JSON)</button>
     <button id="hk-prompt" title="Sinh prompt cho ChatGPT/Gemini/Claude tạo đề mới dạng JSON (nhập lại được vào ứng dụng)">Tạo prompt AI (nguồn ngoài)</button>
     <button id="hk-dong">Đóng</button></div>
+</div></div>
+<div id="hop-hk-ai"><div class="noi">
+  <h2>⚡ AI sinh câu bổ sung vào ngân hàng — Lớp <span id="hkai-lop"></span>
+    <span style="margin-left:auto;display:flex;gap:10px;align-items:center;font-size:13px;font-weight:400">
+      <span id="hkai-khoa-tt" style="color:#475569"></span>
+      <a href="#" id="hkai-khoa" style="font-weight:600" title="Quản lý khoá API Gemini / DeepSeek / Claude / OpenAI (dùng chung với Tạo phiếu bài học)">⚙ Khoá AI…</a>
+    </span>
+  </h2>
+  <div class="cai">
+    <button id="hkai-chon-thieu" title="Chỉ tích chọn những mục ngân hàng đang có ít/chưa có câu">⚠ Chỉ chọn mục thiếu/ít</button>
+    <button id="hkai-chon-het">☑ Chọn tất cả</button>
+    <button id="hkai-bo-het">☐ Bỏ chọn</button>
+    <span style="margin-left:auto;display:inline-flex;gap:6px;align-items:center">
+      <label>Đặt chung <input type="number" id="hkai-so-chung" min="1" max="15" value="3" style="width:54px"> câu/mục</label>
+      <button id="hkai-ap-dung">Áp dụng</button>
+    </span>
+  </div>
+  <div class="than">
+    <table id="hkai-bang"><thead><tr>
+      <th style="width:36px">Chọn</th>
+      <th style="width:100px">Loại · Mức</th>
+      <th>Chủ đề &amp; Bài/Dạng trong ngân hàng</th>
+      <th style="width:185px">Hiện có trong kho</th>
+      <th style="width:115px">Số câu AI sinh</th>
+    </tr></thead><tbody></tbody></table>
+  </div>
+  <div class="chan">
+    <span id="hkai-tt" style="color:#475569;font-size:13px"></span>
+    <button id="hkai-chay" class="chinh" style="margin-left:auto;background:#7c3aed;border-color:#7c3aed">⚡ Bắt đầu AI sinh &amp; nhập ngân hàng</button>
+    <button id="hkai-dong">Đóng</button>
+  </div>
 </div></div>
 <div id="hop-hka"><div class="noi">
   <h2>Nhập đề AI (nguồn ngoài) — <span id="hka-tieu"></span></h2>
@@ -1642,10 +1688,10 @@ function veHK(){
     let khoHtml="";
     if(coKho&&r.bai){
       const cls=dk.loai===0?"hk-kho-0":dk.muc<so?"hk-kho-it":"hk-kho-ok";
-      const txt=dk.loai===0?`Kho: 0 câu ${nhanLoai} (tổng bài: ${dk.tong}) · cần tạo thêm`
-        :dk.muc<so?`Kho: ${dk.muc} ${r.muc} / ${dk.loai} ${nhanLoai} (cần ${so} · thiếu ${so-dk.muc})`
+      const txt=dk.loai===0?`Kho: 0 câu ${nhanLoai} (tổng bài: ${dk.tong}) · ⚡ Sinh AI`
+        :dk.muc<so?`Kho: ${dk.muc} ${r.muc} / ${dk.loai} ${nhanLoai} (thiếu ${so-dk.muc}) · ⚡ Sinh AI`
         :`Kho: ${dk.muc} ${r.muc} / ${dk.loai} ${nhanLoai} (đủ)`;
-      khoHtml=`<div><span class="hk-kho ${cls}" title="Trong ngân hàng: bài này có ${dk.muc} câu ${nhanLoai} mức ${r.muc}, tổng ${dk.loai} câu ${nhanLoai}, tổng cả bài ${dk.tong} câu">${txt}</span></div>`;
+      khoHtml=`<div><span class="hk-kho ${cls} hk-kho-nut" data-i="${i}" title="Bấm để mở AI sinh thêm câu cho mục này và nhập vào ngân hàng (hiện có ${dk.muc} câu ${nhanLoai} mức ${r.muc}, tổng ${dk.loai} câu ${nhanLoai}, tổng cả bài ${dk.tong} câu)">${txt}</span></div>`;
     }
     const cotDau=`<div class="o-so"><input type="checkbox" data-f="chon" ${chon?"checked":""} title="Tích để lấy câu ở dòng này"><b>${nhanLoai}${dem[r.loai]}</b><input type="number" class="so-cau" data-f="so" min="1" max="20" value="${so}" title="Số câu cần lấy / AI sinh thêm cho dòng này"></div>`;
     h+=`<tr class="${r.loai}${!chon?" bo-chon":""}" data-i="${i}"><td>${cotDau}</td>
@@ -1690,6 +1736,102 @@ $("#hk-chon-thieu").onclick=()=>{
   });
   hkLuu(); veHK();
   if(!dem) alert("Ngân hàng đã đủ câu cho tất cả các dòng ở lớp này!");
+};
+// ---- AI sinh câu thiếu/ít trong Ôn thi học kì (dùng chung #hop-khoa & ai_khoa.json với Tạo phiếu bài học)
+let HKAI_DS=[];
+async function capNhatKhoaHK(){
+  const r=await api("/api/khoa-ai",{});
+  $("#hkai-khoa-tt").textContent=r.co_khoa?`✓ Đang có ${r.ds.length} khoá AI`:"⚠ Chưa có khoá AI — bấm ⚙ Khoá AI… để dán";
+  return r;
+}
+function moKhoaTuHK(e){
+  if(e) e.preventDefault();
+  $("#khoa-van").value="";$("#khoa-thu").textContent="";
+  api("/api/khoa-ai",{}).then(r=>{veKhoa(r);$("#hop-khoa").style.display="flex"});
+}
+$("#hk-khoa").onclick=moKhoaTuHK;
+$("#hkai-khoa").onclick=moKhoaTuHK;
+function veHKAi(){
+  const nhanL={TN:"TN",DS:"ĐS",TLN:"TLN",TL:"TL"};
+  const baiMap=Object.fromEntries(cacBai(HK_LOP).map(b=>[b.k,b.ten]));
+  let h="", chonSo=0, tongSinh=0;
+  HKAI_DS.forEach((x,i)=>{
+    if(x.chon){chonSo++;tongSinh+=x.so_sinh}
+    const cls=x.dk.loai===0?"hk-kho-0":x.thieu?"hk-kho-it":"hk-kho-ok";
+    const khoTxt=x.dk.loai===0?`0 câu ${nhanL[x.r.loai]} (bài: ${x.dk.tong})`
+      :`${x.dk.muc} ${x.r.muc} / ${x.dk.loai} ${nhanL[x.r.loai]}`;
+    h+=`<tr data-i="${i}" class="${x.chon?"":"bo-chon"}">
+      <td style="text-align:center"><input type="checkbox" class="hkai-cb" ${x.chon?"checked":""}></td>
+      <td><b>${nhanL[x.r.loai]||x.r.loai}</b> · ${esc(x.r.muc)}</td>
+      <td><div><b>${esc(x.r.chu_de)}</b></div><div style="font-size:12px;color:#475569">${esc(x.r.bai?`${x.r.bai} · ${baiMap[x.r.bai]||""}`:"⚠ Chưa gắn bài trong kho")}</div></td>
+      <td><span class="hk-kho ${cls}">${khoTxt}</span></td>
+      <td><input type="number" class="hkai-so" min="1" max="15" value="${x.so_sinh}"></td>
+    </tr>`;
+  });
+  $("#hkai-bang tbody").innerHTML=h||`<tr><td colspan="5" style="color:#666;padding:12px">Không có dòng nào.</td></tr>`;
+  $("#hkai-tt").textContent=chonSo?`Đang chọn ${chonSo} mục · AI sẽ sinh tổng ${tongSinh} câu rồi biên dịch thử & nhập vào ngân hàng.`:"Tích chọn ít nhất 1 mục để AI sinh câu.";
+  $("#hkai-chay").disabled=!chonSo;
+}
+async function moHKAi(chiDong=null){
+  const ds=hkDs(), kb=hkKhoBai(), soDe=Math.max(1,+$("#hk-so-de").value||1);
+  HKAI_DS=ds.map((r,idx)=>{
+    const dk=hkDemKho(r,kb), can=Math.max(1,+r.so||1);
+    const mucTieu=Math.max(3,can*Math.min(soDe,4));
+    const thieu=!r.bai||dk.loai===0||dk.muc<can||dk.muc<3;
+    const goiY=Math.max(1,Math.min(10,Math.max(3,mucTieu-dk.muc)));
+    return {idx,r,dk,thieu,chon:chiDong!==null?idx===chiDong:thieu,so_sinh:goiY};
+  });
+  if(chiDong===null&&!HKAI_DS.some(x=>x.chon)){
+    HKAI_DS.forEach(x=>{if(x.r.chon!==false)x.chon=true});
+  }
+  $("#hkai-lop").textContent=HK_LOP;
+  veHKAi();
+  $("#hop-hk-ai").style.display="flex";
+  capNhatKhoaHK();
+}
+$("#hk-ai-sinh").onclick=()=>moHKAi(null);
+$("#hk-bang").addEventListener("click",e=>{
+  const nut=e.target.closest(".hk-kho-nut");
+  if(nut) moHKAi(+nut.dataset.i);
+});
+$("#hkai-dong").onclick=()=>$("#hop-hk-ai").style.display="none";
+$("#hkai-bang").addEventListener("change",e=>{
+  const tr=e.target.closest("tr[data-i]"); if(!tr)return;
+  const x=HKAI_DS[+tr.dataset.i];
+  if(e.target.classList.contains("hkai-cb")) x.chon=e.target.checked;
+  if(e.target.classList.contains("hkai-so")) x.so_sinh=Math.max(1,Math.min(15,+e.target.value||1));
+  veHKAi();
+});
+$("#hkai-chon-thieu").onclick=()=>{HKAI_DS.forEach(x=>x.chon=x.thieu);veHKAi()};
+$("#hkai-chon-het").onclick=()=>{HKAI_DS.forEach(x=>x.chon=true);veHKAi()};
+$("#hkai-bo-het").onclick=()=>{HKAI_DS.forEach(x=>x.chon=false);veHKAi()};
+$("#hkai-ap-dung").onclick=()=>{const v=Math.max(1,Math.min(15,+$("#hkai-so-chung").value||3));HKAI_DS.forEach(x=>{if(x.chon)x.so_sinh=v});veHKAi()};
+$("#hkai-chay").onclick=async()=>{
+  const chon=HKAI_DS.filter(x=>x.chon);
+  if(!chon.length){alert("Chọn ít nhất một mục để AI sinh câu.");return}
+  const chuaGan=chon.filter(x=>!x.r.bai);
+  if(chuaGan.length){alert(`Có ${chuaGan.length} mục chưa gắn "Bài trong ngân hàng" — thầy chọn bài ở bảng Ôn thi HK trước.`);return}
+  const k=await capNhatKhoaHK();
+  if(!k.co_khoa){alert("Chưa có khoá API AI — bấm ⚙ Khoá AI… để dán khoá Gemini / DeepSeek / Claude / OpenAI.");moKhoaTuHK();return}
+  const b=$("#hkai-chay");b.disabled=true;b.textContent="Đang gửi AI…";
+  try{
+    const muc_tieu=chon.map(x=>({loai:x.r.loai,muc:x.r.muc,bai:x.r.bai,chu_de:x.r.chu_de,ngu_canh:x.r.ngu_canh||"",mau:x.r.mau||"",so_sinh:x.so_sinh}));
+    const r0=await api("/api/hk-sinh-ai",{lop:HK_LOP,muc_tieu});
+    if(!r0.ok){hopThoai("Chưa sinh được câu",r0.nhat_ky||r0.loi||"");return}
+    $("#hop-hk-ai").style.display="none";
+    hopThoai(`⚡ Đang AI sinh câu bổ sung Lớp ${HK_LOP}… (tự kiểm tra, biên dịch thử & nhập kho)`,"Đang kết nối khoá AI…");
+    let s;
+    for(;;){
+      await new Promise(t=>setTimeout(t,1500));
+      s=await api("/api/trang-thai");
+      $("#ht-noi").textContent=s.nhat_ky||"Đang chạy…";$("#ht-noi").scrollTop=1e9;
+      if(s.xong) break;
+    }
+    const r=s.ket_qua||{};
+    await tai(); veHK();
+    if(!r.ok){hopThoai("AI sinh câu chưa hoàn tất",r.nhat_ky||s.nhat_ky||"");return}
+    hopThoai(`✓ Đã sinh & nhập ${r.so_cau}/${r.tong_sinh} câu vào ngân hàng Lớp ${HK_LOP}`,r.nhat_ky||s.nhat_ky||"");
+  }finally{b.disabled=false;b.textContent="⚡ Bắt đầu AI sinh & nhập ngân hàng"}
 };
 $("#nut-on-thi").onclick=moOnThi;
 $("#hk-dong").onclick=()=>$("#hop-hk").style.display="none";
@@ -2047,7 +2189,7 @@ $("#ph-tt-prompt").onclick=async()=>{
 function veKhoa(r){$("#khoa-ds").innerHTML=r.ds.length?`<b>Đang có ${r.ds.length} khoá</b> (dùng theo thứ tự):<table><tr><th>#</th><th>Hãng</th><th>Khoá</th><th>Mô hình</th></tr>`+
   r.ds.map((k,i)=>`<tr><td>${i+1}</td><td>${esc(k.nha)}</td><td><code>${esc(k.khoa)}</code></td><td>${esc(k.mo_hinh||"mặc định")}</td></tr>`).join("")+"</table>":"<i>Chưa có khoá nào.</i>"}
 $("#ph-ts-khoa").onclick=async e=>{e.preventDefault();$("#khoa-van").value="";$("#khoa-thu").textContent="";veKhoa(await api("/api/khoa-ai",{}));$("#hop-khoa").style.display="flex"};
-$("#khoa-dong").onclick=()=>$("#hop-khoa").style.display="none";
+$("#khoa-dong").onclick=()=>{$("#hop-khoa").style.display="none";if($("#hop-hk-ai").style.display==="flex")capNhatKhoaHK()};
 const luuKhoa=async them=>{const van=$("#khoa-van").value.trim();if(!van){alert("Dán khoá vào ô trước.");return}
   if(!them&&!confirm("Thay toàn bộ danh sách khoá cũ bằng các khoá vừa dán?"))return;
   const r=await api("/api/khoa-ai",{luu:true,them,van});$("#khoa-van").value="";veKhoa(r)};

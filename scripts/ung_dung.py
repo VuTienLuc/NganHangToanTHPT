@@ -108,6 +108,150 @@ def tu_sinh_nen(d):
     cong_viec.update(dang_chay=False, xong=True, ket_qua=ra)
 
 
+def _tach_khoi_hk(t, mt_env):
+    """Tách các khối \\begin{ex|bt}…\\end{ex|bt} hoàn chỉnh từ phản hồi AI."""
+    t = re.sub(r"```(?:latex|tex)?", "", t or "")
+    pat = re.compile(r"\\begin\{(ex|bt)\}.*?\\end\{\1\}", re.S)
+    ra = []
+    for m in pat.finditer(t):
+        k = m.group(0).strip()
+        than = k[k.find("\\loigiai"):] if "\\loigiai" in k else ""
+        if not than or than.count("{") != than.count("}"):
+            continue
+        k = re.sub(r"^\\begin\{(ex|bt)\}", rf"\\begin{{{mt_env}}}", k, count=1)
+        k = re.sub(r"\\end\{(ex|bt)\}$", rf"\\end{{{mt_env}}}", k, count=1)
+        ra.append(k)
+    return ra
+
+
+def _prompt_hk_ai(lop, it, thieu, ds_ma, da_de):
+    loai = it.get("loai") or "TN"
+    muc_ten = {"NB": "Nhận biết", "TH": "Thông hiểu", "VD": "Vận dụng", "VDC": "Vận dụng cao"}.get(it.get("muc"), "Thông hiểu")
+    mt_env = "ex" if loai in ("TN", "DS") else "bt"
+    if loai == "TN":
+        quy_tac = (
+            f"- Môi trường `\\begin{{ex}}%[MÃ_DẠNG]` … `\\end{{ex}}`, dùng `\\choice{{PA1}}{{PA2}}{{PA3}}{{PA4}}`.\n"
+            "- Đúng MỘT phương án đúng đánh dấu `\\True` ở đầu ngoặc nhọn (vd `{\\True $3$}`). Không ghi A., B., C., D.\n"
+            "- Trong `\\loigiai{...}` KHÔNG ghi 'Chọn A' hay 'Đáp án B'."
+        )
+    elif loai == "DS":
+        quy_tac = (
+            f"- Môi trường `\\begin{{ex}}%[MÃ_DẠNG]` … `\\end{{ex}}`, dùng `\\choiceTF{{y1}}{{y2}}{{y3}}{{y4}}`.\n"
+            "- Ý đúng đánh dấu `\\True` ở đầu ngoặc nhọn; ý thứ 4 khó nhất.\n"
+            "- Trong `\\loigiai{...}` dùng `\\begin{itemchoice}` đủ 4 `\\itemch`, mỗi ý mở đầu 'Đúng.' hoặc 'Sai.'; không nhắc 'ý a', 'b)'."
+        )
+    elif loai == "TLN":
+        quy_tac = (
+            f"- Môi trường `\\begin{{bt}}%[MÃ_DẠNG]` … `\\end{{bt}}`, có `\\shortans{{đáp số}}` trước `\\loigiai{{...}}`.\n"
+            "- Đáp số trong `\\shortans{...}` là số tối đa 4 ký tự (kể cả dấu - và dấu phẩy thập phân, vd `2,5`, `-12`)."
+        )
+    else:
+        quy_tac = (
+            f"- Môi trường `\\begin{{bt}}%[MÃ_DẠNG]` … `\\end{{bt}}` (KHÔNG có `\\shortans`), lời giải `\\loigiai{{...}}` đủ từng bước rõ ràng."
+        )
+    goi_ma = "\n".join(f"  - {ma}: {ten}" for ma, ten in ds_ma)
+    p = (
+        f"Bạn là giáo viên Toán xuất sắc (chương trình GDPT 2018, sách Kết nối tri thức). "
+        f"Hãy soạn ĐÚNG {thieu} câu hỏi Toán Lớp {lop}, mức độ **{muc_ten}**.\n\n"
+        f"CHỦ ĐỀ: {it.get('chu_de') or ''}\n"
+        + (f"NGỮ CẢNH THỰC TẾ: {it.get('ngu_canh')}\n" if it.get("ngu_canh") else "")
+        + (f"CÂU MẪU THAM KHẢO (soạn câu mới cùng dạng, đổi số liệu/ngữ cảnh):\n{it.get('mau')}\n" if it.get("mau") else "")
+        + f"\nMÃ DẠNG HỢP LỆ (chọn đúng 1 mã trong danh sách sau ghi ngay sau `\\begin{{{mt_env}}}`):\n{goi_ma}\n\n"
+        f"QUY TẮC ĐỊNH DẠNG LATEX NGÂN HÀNG (BẮT BUỘC):\n{quy_tac}\n"
+        "- Công thức toán đặt trong `$...$` hoặc `$$...$$` (KHÔNG dùng `\\(` `\\[`, KHÔNG dùng `\\wideparen` mà dùng `\\overset{\\frown}{AB}`).\n"
+        "- Số thập phân trong công thức viết `15{,}25`. Không dùng Markdown (`**`, `#`) trong khối LaTeX.\n"
+        "- BẮT BUỘC tự giải lại kiểm tra từng phép tính, đáp số khớp 100% với lời giải trước khi xuất.\n"
+        "- CHỈ trả về các khối LaTeX `\\begin{" + mt_env + "}...\\end{" + mt_env + "}`, không viết lời dẫn thừa.\n"
+    )
+    if da_de:
+        p += "\nKHÔNG LẶP LẠI các đề bài đã có sau (soạn câu MỚI khác số liệu):\n" + "\n".join("- " + d[:150] for d in list(da_de)[:12])
+    return p
+
+
+def hk_sinh_ai_nen(d):
+    """Chạy nền cho /api/hk-sinh-ai: dùng chung khoá AI (ai_khoa.json) sinh câu thiếu/ít ở Ôn thi HK và nhập thẳng vào ngân hàng."""
+    import sinh_tuong_tu as ST, nhap_cau
+    def ghi(x):
+        cong_viec["nhat_ky"] += x + "\n"
+    ra = {"ok": False}
+    try:
+        lop = int(d.get("lop") or 12)
+        muc_tieu = [x for x in (d.get("muc_tieu") or []) if int(x.get("so_sinh") or 0) > 0]
+        if not muc_tieu:
+            raise RuntimeError("Chưa chọn dòng nào để AI sinh câu.")
+        id_map = tai_id_map()
+        xoay = ST.XoayKhoa(ghi=ghi)
+        muc_map = {"NB": "N", "TH": "H", "VD": "V", "VDC": "C"}
+        tat_ca = []
+        ghi(f"🤖 AI sinh câu cho Ôn thi HK Lớp {lop} ({len(muc_tieu)} mục · tổng {sum(int(x.get('so_sinh') or 1) for x in muc_tieu)} câu)…")
+        for idx, it in enumerate(muc_tieu, 1):
+            loai = it.get("loai") or "TN"
+            muc_ma = muc_map.get(it.get("muc"), "H")
+            so_can = max(1, min(15, int(it.get("so_sinh") or 3)))
+            mt_env = "ex" if loai in ("TN", "DS") else "bt"
+            bai = (it.get("bai") or "").strip()
+            ds_ma = []
+            if bai:
+                if "-" in bai and bai in id_map:
+                    ds_ma.append((bai.replace("?", muc_ma), (id_map[bai].get("type_name") or bai).strip()))
+                else:
+                    for k, v in id_map.items():
+                        if k == bai or k.startswith(bai + "-"):
+                            ds_ma.append((k.replace("?", muc_ma), (v.get("type_name") or k).strip()))
+            if not ds_ma:
+                ma_tam = (bai or f"{lop if lop <= 9 else lop - 10}D1?1-1").replace("?", muc_ma)
+                ds_ma = [(ma_tam, it.get("chu_de") or ma_tam)]
+            ma_mac_dinh = ds_ma[0][0]
+            ghi(f"  [{idx}/{len(muc_tieu)}] {loai} · {it.get('muc')} · {it.get('chu_de') or bai} → cần {so_can} câu (mã {ma_mac_dinh})")
+            co, da_de = [], set()
+            for lan in range(4):
+                thieu = so_can - len(co)
+                if thieu <= 0:
+                    break
+                p = _prompt_hk_ai(lop, it, thieu, ds_ma[:8], da_de)
+                try:
+                    t, cat, k = xoay.goi(p)
+                except ST.HetKhoa as e:
+                    if not tat_ca and not co:
+                        raise
+                    ghi(f"  ⚠ {e} — giữ các câu đã sinh được.")
+                    break
+                moi = 0
+                for kb in _tach_khoi_hk(t, mt_env):
+                    dong0 = kb.split("\n", 1)[0]
+                    if "%[" not in dong0:
+                        kb = re.sub(r"^(\\begin\{(?:ex|bt)\})", rf"\1%[{ma_mac_dinh}]", kb, count=1)
+                    if "% nguon:" not in kb:
+                        kb = re.sub(r"^(\\begin\{(?:ex|bt)\}[^\n]*\n)", r"\1% nguon: AI tự sinh (Ôn thi HK)\n", kb, count=1)
+                    de = re.sub(r"\s+", " ", re.sub(r"^\\begin\{(?:ex|bt)\}[^\n]*\n", "", kb).split("\\loigiai")[0]).strip()
+                    if not de or de in da_de or len(co) >= so_can:
+                        continue
+                    da_de.add(de); co.append(kb); moi += 1
+                ghi(f"    lượt {lan + 1} ({ST.TEN_NHA.get(k['nha'], k['nha'])} {ST.che(k['khoa'])}): +{moi} câu"
+                    + (" · bị ngắt → hỏi tiếp" if cat else "") + f" · có {len(co)}/{so_can}")
+            tat_ca += co
+        if not tat_ca:
+            raise RuntimeError("AI chưa sinh được câu hợp lệ nào. Thầy kiểm tra lại ⚙ Khoá AI…")
+        os.makedirs(os.path.join(GOC, "ai-nhap"), exist_ok=True)
+        ten_tep = time.strftime("%Y-%m-%d_%H%M%S") + f"_hk_ai_lop{lop}.tex"
+        duong_dan = os.path.join(GOC, "ai-nhap", ten_tep)
+        open(duong_dan, "w", encoding="utf-8").write(f"% AI tự sinh cho Ôn thi HK Lớp {lop}\n\n" + "\n\n".join(tat_ca) + "\n")
+        ghi(f"\n📥 Biên dịch thử & nhập {len(tat_ca)} câu vào ngân hàng…")
+        so_cau = nhap_cau.nhap([duong_dan], thu=False, in_ra=ghi)
+        os.makedirs(os.path.join(GOC, "ai-nhap", "da-nhap"), exist_ok=True)
+        try:
+            shutil.move(duong_dan, os.path.join(GOC, "ai-nhap", "da-nhap", ten_tep))
+        except OSError:
+            pass
+        ghi(f"\n✓ Hoàn tất: đã nhập {so_cau}/{len(tat_ca)} câu hợp lệ vào ngân hàng (câu lỗi nếu có đã tách vào ai-nhap/_loi/).")
+        ra = {"ok": True, "so_cau": so_cau, "tong_sinh": len(tat_ca)}
+    except Exception as e:
+        ghi(f"Lỗi: {e}")
+        ra = {"ok": False}
+    ra["nhat_ky"] = cong_viec["nhat_ky"]
+    cong_viec.update(dang_chay=False, xong=True, ket_qua=ra)
+
+
 def chi_muc_cu():
     p = os.path.join(GOC, "du-lieu", "chi_muc.jsonl")
     if not os.path.exists(p):
@@ -820,6 +964,12 @@ class XuLy(BaseHTTPRequestHandler):
                     return self.gui(200, {"ok": False, "nhat_ky": "Đang có việc khác chạy (biên dịch / đăng web…) — thầy đợi xong rồi bấm lại."})
                 cong_viec.update(dang_chay=True, xong=False, nhat_ky="", ket_qua=None)
                 threading.Thread(target=tu_sinh_nen, args=(dict(d),), daemon=True).start()
+                return self.gui(200, {"ok": True, "nen": True})
+            if u.path == "/api/hk-sinh-ai":           # AI sinh câu thiếu/ít trong Ôn thi HK (dùng chung khoá AI) → biên dịch thử → nhập kho
+                if cong_viec.get("dang_chay"):
+                    return self.gui(200, {"ok": False, "nhat_ky": "Đang có việc khác chạy (biên dịch / đăng web…) — thầy đợi xong rồi bấm lại."})
+                cong_viec.update(dang_chay=True, xong=False, nhat_ky="", ket_qua=None)
+                threading.Thread(target=hk_sinh_ai_nen, args=(dict(d),), daemon=True).start()
                 return self.gui(200, {"ok": True, "nen": True})
             if u.path == "/api/chon-theo-dang":      # phiếu vá lỗ hổng / phiếu cuối giờ: rút câu ngân hàng theo dạng hoặc theo bài
                 import random
