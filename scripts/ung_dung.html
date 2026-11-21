@@ -519,7 +519,9 @@ tr.gop-h td{background:#dbeafe;text-align:left;font-weight:700;padding:8px 12px;
     <input id="lac-tim" placeholder="Gõ nội dung câu, mã dạng hoặc mã câu (không cần dấu), Enter để tìm…" style="display:none"></div>
   <div id="lac-ds"></div>
   <div class="chan"><span id="lac-chon">0 câu được chọn</span>
-    <button id="lac-chuyen-chon" style="margin-left:auto">Chuyển các câu đã chọn (theo ô đang chọn)</button>
+    <button id="lac-chon-het" title="Chọn tất cả các câu đang hiển thị trong danh sách">☑ Chọn tất cả</button>
+    <button id="lac-bo-het" title="Bỏ chọn tất cả">☐ Bỏ chọn</button>
+    <button id="lac-chuyen-chon" class="chinh" style="margin-left:auto">Chuyển các câu đã chọn (theo ô đang chọn)</button>
     <button id="lac-bo-qua-chon">Đúng rồi — bỏ qua</button><button id="lac-xoa-chon">Xoá các câu đã chọn</button><button id="lac-dong">Đóng</button></div>
 </div></div>
 <div id="hop-hk"><div class="noi">
@@ -1467,6 +1469,15 @@ $("#lac-ds").onclick=e=>{
   if(e.target.classList.contains("lac-dung")) lamLac("bo_qua",[the]);
 };
 const theChon=()=>[...document.querySelectorAll("#lac-ds .the-lac")].filter(t=>CHON_LAC.has(t.dataset.ma));
+$("#lac-chon-het").onclick=()=>{
+  document.querySelectorAll("#lac-ds .the-lac").forEach(t=>{CHON_LAC.add(t.dataset.ma);const cb=t.querySelector(".lac-cb");if(cb)cb.checked=true});
+  $("#lac-chon").textContent=`${CHON_LAC.size} câu được chọn`;
+};
+$("#lac-bo-het").onclick=()=>{
+  CHON_LAC.clear();
+  document.querySelectorAll("#lac-ds .lac-cb").forEach(cb=>cb.checked=false);
+  $("#lac-chon").textContent="0 câu được chọn";
+};
 $("#lac-chuyen-chon").onclick=()=>lamLac("chuyen",theChon());
 $("#lac-xoa-chon").onclick=()=>lamLac("xoa",theChon());
 $("#lac-bo-qua-chon").onclick=()=>lamLac("bo_qua",theChon());
