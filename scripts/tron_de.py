@@ -356,6 +356,13 @@ HAI_COT = TIET_KIEM and bool(mt.get("hai_cot"))
 
 CAU_THEO_DE = {}          # mã đề → danh sách câu (đã xáo) cho bản Word K12Online
 
+def chuan_moi_truong(k, mt_dich):
+    """Đồng bộ vỏ \\begin{ex|bt}…\\end{ex|bt} về đúng môi trường của phần (ex cho TN/DS, bt cho TLN/TL)
+    để đánh số Câu 1, 2, 3… liên tục và bảng đáp án (ansbt) không bị nhảy số."""
+    k = re.sub(r"^(\s*)\\begin\{(ex|bt)\}", lambda m: f"{m.group(1)}\\begin{{{mt_dich}}}", k, count=1)
+    k = re.sub(r"\\end\{(ex|bt)\}(\s*)$", lambda m: f"\\end{{{mt_dich}}}{m.group(2)}", k, count=1)
+    return k
+
 def soan_ma_de(bo, ma_de):
     """Trả (thân đề, phần đáp án cuối, các dòng đáp án)."""
     khoi, dap_an_rows, bang = [], [], []
@@ -382,7 +389,7 @@ def soan_ma_de(bo, ma_de):
         if sf:
             khoi.append(f"\\Opensolutionfile{{{sf}}}[{tm}/{tep}]")
         for i, c in enumerate(ds, 1):
-            k, da = c["noi_dung"], c["dap_an"]
+            k, da = chuan_moi_truong(c["noi_dung"], ct), c["dap_an"]
             if loai == "TN" and mt.get("xao_phuong_an", True):
                 k, da = xao_phuong_an(k)
             if loai == "DS" and mt.get("xao_y_dung_sai", True):

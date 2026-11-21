@@ -396,6 +396,10 @@ def tao(cfg, in_ra=print, chi_tinh=False):
     # ---------- II, III: câu hỏi theo phần, chia dạng
     so_dang = {d: j for j, d in enumerate(cac_dang, 1)}
     bang = []
+    def chuan_mt(nd, mt_dich):
+        nd = re.sub(r"^(\s*)\\begin\{(ex|bt)\}", lambda m: f"{m.group(1)}\\begin{{{mt_dich}}}", nd, count=1)
+        return re.sub(r"\\end\{(ex|bt)\}(\s*)$", lambda m: f"\\end{{{mt_dich}}}{m.group(2)}", nd, count=1)
+
     def khoi_phan(muc, nhan_muc):
         k = [r"\phanPhieu{" + nhan_muc + "}"]
         so_phan = 0
@@ -415,7 +419,7 @@ def tao(cfg, in_ra=print, chi_tinh=False):
                     dang_cu = c["dang_key"]
                     k.append(r"\dangPhieu{" + str(so_dang[dang_cu]) + "}{" +
                              thoat((id_map.get(dang_cu, {}).get("type_name") or dang_cu).strip()) + "}")
-                k.append(c["noi_dung"])
+                k.append(chuan_mt(c["noi_dung"], ct))
             k.append(f"\\Closesolutionfile{{{sf}}}")
             bang.append((nhan_muc, so_phan, TEN_PHAN[loai], tm, tep))
         vd = kq[muc].get("VD") or []
@@ -433,7 +437,7 @@ def tao(cfg, in_ra=print, chi_tinh=False):
                 k.append(f"\\Opensolutionfile{{{sf}}}[{tm}/{tep}]")
                 for c in v:
                     k.append(r"\nhanMuc{" + c["_muc_nc"] + "}{" + str(so_dang[c["dang_key"]]) + "}")
-                    k.append(c["noi_dung"])
+                    k.append(chuan_mt(c["noi_dung"], ct))
                 k.append(f"\\Closesolutionfile{{{sf}}}")
                 bang.append((nhan_muc, so_phan, "Vận dụng – VDC · " + TEN_PHAN[loai], tm, tep))
         return "\n".join(k)
