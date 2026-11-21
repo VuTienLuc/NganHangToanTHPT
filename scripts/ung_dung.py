@@ -296,9 +296,10 @@ def hk_sinh_ai_nen(d):
                             if not ten_bai:
                                 ten_bai = (v.get("lesson_name") or "").strip()
                             ds_ma.append((k.replace("?", muc_ma), (v.get("type_name") or k).strip()))
-            if not ds_ma:
-                ma_tam = (bai or f"{lop if lop <= 9 else lop - 10}D1?1-1").replace("?", muc_ma)
-                ds_ma = [(ma_tam, it.get("chu_de") or ma_tam)]
+            if not ds_ma:                                 # không đoán mã (vd 0D1?1-1 = Mệnh đề) → câu sẽ lạc chương; bỏ qua mục này
+                ghi(f"  [{idx}/{len(muc_tieu)}] ⚠ Bỏ qua «{it.get('chu_de') or '(chưa đặt tên)'}»: chưa có mã bài/dạng hợp lệ"
+                    f"{' (' + bai + ')' if bai else ''} — thầy chọn mã bài cho dòng này rồi sinh lại.")
+                continue
             ma_mac_dinh = ds_ma[0][0]
             ghi(f"  [{idx}/{len(muc_tieu)}] {loai} · {muc_code} ({muc_ten_map.get(muc_code, muc_code)}) · {ten_bai or it.get('chu_de') or bai} → cần {so_can} câu đa dạng ({len(ds_ma)} dạng)")
             co, da_de = [], set()
