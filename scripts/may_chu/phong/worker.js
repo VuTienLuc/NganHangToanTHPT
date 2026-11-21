@@ -19,6 +19,45 @@ function tiLe(k, v) {
   if (k.type === 'tf') { const a = Array.isArray(v) ? v : []; return k.answer.reduce((n, x, j) => n + (a[j] === x ? 1 : 0), 0) / 4; }
   return bangDapSo(v, k.answer) ? 1 : 0;
 }
+function xaoMang(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; }
+  return a;
+}
+// Trộn riêng cho từng học sinh ở chế độ tự làm: giữ đúng thứ tự 3 phần (mcq → tf → short), trộn câu trong từng phần;
+// trộn 4 PA trắc nghiệm; Đúng/Sai trộn 3 ý a–c và giữ cố định ý d (chỉ số 3).
+function taoTron(khoa, cau) {
+  const order = [];
+  for (const t of ['mcq', 'tf', 'short']) {
+    const idxs = [];
+    khoa.forEach((k, i) => { if (k.type === t) idxs.push(i); });
+    order.push(...xaoMang(idxs));
+  }
+  const opt = khoa.map((k, i) => {
+    const n = (cau[i] && Array.isArray(cau[i].pa) ? cau[i].pa.length : cau[i]?.so_pa) || (k.type === 'short' ? 0 : 4);
+    if (k.type === 'mcq' && n > 1) return xaoMang(Array.from({ length: n }, (_, j) => j));
+    if (k.type === 'tf' && n >= 4) return xaoMang([0, 1, 2]).concat(Array.from({ length: n - 3 }, (_, m) => m + 3));
+    if (k.type === 'tf' && n > 1) return xaoMang(Array.from({ length: n - 1 }, (_, j) => j)).concat([n - 1]);
+    return null;
+  });
+  return { order, opt };
+}
+function anhXaNguoc(type, v, optMap) {
+  if (!optMap) return v;
+  if (type === 'mcq') return Number.isInteger(v) && v >= 0 && v < optMap.length ? optMap[v] : v;
+  if (type === 'tf' && Array.isArray(v)) {
+    const out = Array(optMap.length).fill(null);
+    optMap.forEach((orig, disp) => { out[orig] = v[disp]; });
+    return out;
+  }
+  return v;
+}
+function anhXaDapAn(type, da, optMap) {
+  if (!optMap) return da;
+  if (type === 'mcq') return optMap.indexOf(da);
+  if (type === 'tf' && Array.isArray(da)) return optMap.map(orig => da[orig]);
+  return da;
+}
 
 export class Phong {
   constructor(ctx, env) { this.ctx = ctx; this.env = env; this.s = null; }
@@ -118,8 +157,22 @@ export class Phong {
       thong_ke: s.nhip === 'tu_do' ? this.thongKe() : null,
       danh_gia: [0, 1, 2].map(j => Object.values(s.nguoi).filter(p => p.danh_gia === j).length) };
   }
-  // câu i gửi cho học sinh (không kèm đáp án)
-  cauHS(i) { const c = this.s.cau[i]; return c ? { i, type: c.type, html: c.html, so_pa: c.so_pa } : null; }
+  // câu gửi cho học sinh (không kèm đáp án; nếu có optMap ở chế độ tự làm thì dựng lại thứ tự phương án đã trộn)
+  cauHS(origIdx, dispIdx = origIdx, optMap = null) {
+    const c = this.s.cau[origIdx];
+    if (!c) return null;
+    let html = c.html;
+    if (optMap && Array.isArray(c.pa) && c.pa.length === optMap.length && c.type !== 'short') {
+      html = (c.de || '') + '<ol class="pa-ds" type="' + (c.type === 'mcq' ? 'A' : 'a') + '">' + optMap.map(j => '<li>' + c.pa[j] + '</li>').join('') + '</ol>';
+    }
+    return { i: dispIdx, type: c.type, html, so_pa: c.so_pa };
+  }
+  damBaoTron(p) {
+    if (!p.tron || !Array.isArray(p.tron.order) || p.tron.order.length !== this.s.khoa.length) {
+      p.tron = taoTron(this.s.khoa, this.s.cau);
+    }
+    return p.tron;
+  }
   trangThaiHS(p) {
     const s = this.s;
     const m = { t: 'trang_thai', kieu: s.kieu, ten: s.ten, nhip: s.nhip, giai_doan: s.giai_doan, so_cau: s.cau.length, bay_gio: Date.now(), giay: s.giay,
@@ -132,9 +185,11 @@ export class Phong {
         if (s.giai_doan === 'dap_an') m.dap_an = s.khoa[s.cur].answer;
       }
     } else if (p && s.giai_doan === 'cau') {
-      const i = p.cur ?? 0;
-      if (i < s.cau.length) { m.cur = i; m.cau = this.cauHS(i); m.het_luc = p.het_luc; }
-      else { m.xong = true; m.danh_gia = p.danh_gia ?? null; }
+      const pos = p.cur ?? 0;
+      if (pos < s.cau.length) {
+        const tr = this.damBaoTron(p), orig = tr.order[pos];
+        m.cur = pos; m.cau = this.cauHS(orig, pos, tr.opt[orig]); m.het_luc = p.het_luc;
+      } else { m.xong = true; m.danh_gia = p.danh_gia ?? null; }
     }
     if (s.giai_doan === 'ket_thuc') m.ket_qua = { top: this.danhSach().sort((a, b) => b.diem - a.diem).slice(0, 5), doi: this.bangDoi() };
     return m;
@@ -165,7 +220,13 @@ export class Phong {
     if (m.t === 'chao') return this.gui(ws, this.trangThaiGV());
     if (m.t === 'nap') {                        // màn hình thầy gửi câu hỏi đã dựng sẵn (HTML, chưa có đáp án)
       if (!Array.isArray(m.cau) || m.cau.length !== s.khoa.length) return this.gui(ws, { t: 'loi', loi: 'Số câu không khớp đáp án trên máy chủ.' });
-      s.cau = m.cau.map((c, i) => ({ type: s.khoa[i].type, html: String(c.html || '').slice(0, 400000), so_pa: c.so_pa | 0 }));
+      s.cau = m.cau.map((c, i) => ({
+        type: s.khoa[i].type,
+        de: typeof c.de === 'string' ? c.de.slice(0, 300000) : '',
+        pa: Array.isArray(c.pa) ? c.pa.map(x => String(x || '').slice(0, 50000)) : null,
+        html: String(c.html || '').slice(0, 400000),
+        so_pa: c.so_pa | 0
+      }));
       await this.luu(); return this.phatTat();
     }
     if (m.t === 'cai_dat' && s.giai_doan === 'cho') {
@@ -180,7 +241,7 @@ export class Phong {
       await this.luu(); return this.phatTat();
     }
     if (m.t === 'bat_dau_phieu' && s.giai_doan === 'cho' && s.kieu === 'phieu' && s.cau.length) {
-      s.giai_doan = 'cau'; for (const p of Object.values(s.nguoi)) { p.cur = 0; p.het_luc = Date.now() + s.giay * 1000; }
+      s.giai_doan = 'cau'; for (const p of Object.values(s.nguoi)) { p.cur = 0; p.tron = taoTron(s.khoa, s.cau); p.het_luc = Date.now() + s.giay * 1000; }
       await this.luu(); return this.phatTat();
     }
     if (m.t === 'bat_dau' && s.giai_doan === 'cho') {
@@ -188,7 +249,7 @@ export class Phong {
       if (s.so_doi && Object.values(s.nguoi).some(p => p.doi == null)) this.chiaDoi();
       if (s.nhip === 'tu_do') {
         s.giai_doan = 'cau';
-        for (const p of Object.values(s.nguoi)) { p.cur = 0; p.het_luc = Date.now() + s.giay * 1000; }
+        for (const p of Object.values(s.nguoi)) { p.cur = 0; p.tron = taoTron(s.khoa, s.cau); p.het_luc = Date.now() + s.giay * 1000; }
         await this.luu(); return this.phatTat();
       }
       return this.moCau(0);
@@ -247,7 +308,7 @@ export class Phong {
         if (Object.keys(s.nguoi).length >= 200) return this.gui(ws, { t: 'loi', loi: 'Phòng đã đủ 200 người.' });
         p = s.nguoi[a.id] = { id: a.id, tk: a.tk, ho_ten: a.ho_ten, ten, lop: a.lop, stt: a.stt, doi: null, diem: 0, chuoi: 0, dung: 0, tl: {} };
         if (s.so_doi) { const dem = Array(s.so_doi).fill(0); for (const x of Object.values(s.nguoi)) if (x.doi != null) dem[x.doi]++; p.doi = dem.indexOf(Math.min(...dem)); }
-        if (s.nhip === 'tu_do' && s.giai_doan === 'cau') { p.cur = 0; p.het_luc = Date.now() + s.giay * 1000; }
+        if (s.nhip === 'tu_do' && s.giai_doan === 'cau') { p.cur = 0; p.tron = taoTron(s.khoa, s.cau); p.het_luc = Date.now() + s.giay * 1000; }
         await this.luu();
       }
       this.gui(ws, this.trangThaiHS(p)); this.guiGV(this.trangThaiGV()); return;
@@ -264,22 +325,28 @@ export class Phong {
         if (Object.values(s.nguoi).every(x => x.tl[s.cur] || !this.wsCua(x.id))) await this.dapAn();
         void kq; return;
       }
-      // tự làm theo tốc độ riêng: chấm ngay, sang câu tiếp
-      if (s.giai_doan !== 'cau' || m.i !== p.cur || p.tl[p.cur]) return;
-      const batDau = p.het_luc - s.giay * 1000, kq = this.chamDiem(p, p.cur, m.v, batDau, Math.max(p.het_luc, Date.now()));
-      const dapAn = s.khoa[p.cur].answer;
+      // tự làm theo tốc độ riêng: ánh xạ câu/phương án đã trộn về chỉ số gốc để chấm, trả đáp án theo thứ tự hiển thị của HS
+      if (s.giai_doan !== 'cau' || m.i !== p.cur) return;
+      const tr = this.damBaoTron(p), orig = tr.order[p.cur], optMap = tr.opt[orig];
+      if (orig == null || p.tl[orig]) return;
+      const k = s.khoa[orig], vGoc = anhXaNguoc(k.type, m.v, optMap);
+      const batDau = p.het_luc - s.giay * 1000, kq = this.chamDiem(p, orig, vGoc, batDau, Math.max(p.het_luc, Date.now()));
+      const dapAnHS = anhXaDapAn(k.type, k.answer, optMap);
       p.cur++; p.het_luc = Date.now() + s.giay * 1000 + 2500;     // +2,5 giây xem đáp án trước câu sau
       await this.luu();
-      this.gui(ws, { t: 'ket_qua_cau', i: m.i, ti_le: kq.ti_le, diem: kq.diem, dap_an: dapAn, tong: p.diem, chuoi: p.chuoi, hang: this.hangCua(p.id) });
+      this.gui(ws, { t: 'ket_qua_cau', i: m.i, ti_le: kq.ti_le, diem: kq.diem, dap_an: dapAnHS, tong: p.diem, chuoi: p.chuoi, hang: this.hangCua(p.id) });
       this.guiGV(this.trangThaiGV());
       return;
     }
     if (m.t === 'tiep' && s.nhip === 'tu_do') return this.gui(ws, this.trangThaiHS(p));
     if (m.t === 'danh_gia' && [0, 1, 2].includes(m.v)) { p.danh_gia = m.v; await this.luu(); this.gui(ws, this.trangThaiHS(p)); this.guiGV(this.trangThaiGV()); return; }
-    if (m.t === 'het_gio_rieng' && s.nhip === 'tu_do' && s.giai_doan === 'cau' && m.i === p.cur && Date.now() >= p.het_luc - 500 && !p.tl[p.cur]) {
-      p.tl[p.cur] = { v: null, ti_le: 0, diem: 0, ms: s.giay * 1000 }; p.chuoi = 0;
-      const dapAn = s.khoa[p.cur].answer; p.cur++; p.het_luc = Date.now() + s.giay * 1000 + 2500; await this.luu();
-      this.gui(ws, { t: 'ket_qua_cau', i: m.i, ti_le: 0, diem: 0, dap_an: dapAn, tong: p.diem, chuoi: 0, hang: this.hangCua(p.id), het_gio: true });
+    if (m.t === 'het_gio_rieng' && s.nhip === 'tu_do' && s.giai_doan === 'cau' && m.i === p.cur && Date.now() >= p.het_luc - 500) {
+      const tr = this.damBaoTron(p), orig = tr.order[p.cur], optMap = tr.opt[orig];
+      if (orig == null || p.tl[orig]) return;
+      p.tl[orig] = { v: null, ti_le: 0, diem: 0, ms: s.giay * 1000 }; p.chuoi = 0;
+      const k = s.khoa[orig], dapAnHS = anhXaDapAn(k.type, k.answer, optMap);
+      p.cur++; p.het_luc = Date.now() + s.giay * 1000 + 2500; await this.luu();
+      this.gui(ws, { t: 'ket_qua_cau', i: m.i, ti_le: 0, diem: 0, dap_an: dapAnHS, tong: p.diem, chuoi: 0, hang: this.hangCua(p.id), het_gio: true });
       this.guiGV(this.trangThaiGV());
     }
   }

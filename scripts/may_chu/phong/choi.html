@@ -13,7 +13,7 @@ h1{font-size:24px;margin:0 0 6px;color:#4c1d95}.nho{color:#64748b;font-size:14px
 input[type=text],input[inputmode]{width:100%;font-size:22px;padding:12px 14px;border:2px solid #c4b5fd;border-radius:12px;text-align:center}
 .nut{width:100%;background:#7c3aed;color:#fff;font-size:19px;margin-top:12px}.nut:disabled{opacity:.55}
 .loi{color:#b91c1c;font-weight:700;min-height:1.4em;margin-top:8px}
-.cau{font-size:18px}.cau img{max-width:100%;height:auto}.cau ol{padding-left:1.6em;margin:8px 0 0}.cau li{margin:4px 0}
+.cau{font-size:18px;user-select:none;-webkit-user-select:none}.cau img{max-width:100%;height:auto}.cau ol{padding-left:1.6em;margin:8px 0 0}.cau li{margin:4px 0}
 .pa{display:grid;grid-template-columns:1fr 1fr;gap:10px}.pa button{color:#fff;font-size:30px;min-height:96px;display:flex;align-items:center;justify-content:center;gap:10px;box-shadow:0 6px 0 rgba(0,0,0,.25)}
 .pa button:active{transform:translateY(3px);box-shadow:0 3px 0 rgba(0,0,0,.25)}.pa button.chon{outline:5px solid #fde68a}
 .tf .dong{display:flex;align-items:center;gap:8px;background:#fff;border-radius:12px;padding:8px 10px;margin:6px 0}.tf .dong b{width:28px}.tf .dong span{flex:1;color:#64748b;font-size:14px}
@@ -26,6 +26,8 @@ input[type=text],input[inputmode]{width:100%;font-size:22px;padding:12px 14px;bo
 </style></head><body><main class="vo" id="vo"><div class="the giua"><h1>🎮 Phòng thi đấu</h1><p class="nho">Đang mở…</p></div></main>
 <script>
 (() => {
+document.addEventListener('copy', e => { if (e.target && e.target.closest && e.target.closest('.cau')) e.preventDefault(); });
+document.addEventListener('contextmenu', e => { if (e.target && e.target.closest && e.target.closest('.cau')) e.preventDefault(); });
 const $ = id => document.getElementById(id), vo = $('vo');
 const e = s => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 const MAU = ['#e11d48', '#2563eb', '#d97706', '#059669'], HINH = ['▲', '◆', '●', '■'];

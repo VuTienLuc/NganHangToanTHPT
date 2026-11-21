@@ -106,7 +106,7 @@ function __pgNhan(m) {
   __PG.lech = m.bay_gio - Date.now(); __PG.st = m;
   if (!m.co_cau && !__PG.nap) {             // nạp câu hỏi (HTML dựng sẵn, không đáp án) cho máy chủ — chỉ một lần
     __PG.nap = true; const d = __pgDuLieu();
-    __pgGui({ t: 'nap', cau: d.questions.map(q => { const c = __pgCau(q); return { html: c.de + (q.type === 'short' ? '' : '<ol class="pa-ds" type="' + (q.type === 'mcq' ? 'A' : 'a') + '">' + c.pa.map(x => '<li>' + x + '</li>').join('') + '</ol>'), so_pa: (q.options || []).length }; }) });
+    __pgGui({ t: 'nap', cau: d.questions.map(q => { const c = __pgCau(q); return { de: c.de, pa: c.pa, html: c.de + (q.type === 'short' ? '' : '<ol class="pa-ds" type="' + (q.type === 'mcq' ? 'A' : 'a') + '">' + c.pa.map(x => '<li>' + x + '</li>').join('') + '</ol>'), so_pa: (q.options || []).length }; }) });
     return;
   }
   if (m.kieu === 'phieu' && m.giai_doan === 'cho' && m.co_cau && !__PG.daBD) { __PG.daBD = true; __pgGui({ t: 'bat_dau_phieu' }); }

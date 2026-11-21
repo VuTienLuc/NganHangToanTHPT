@@ -117,7 +117,7 @@ function __gyCss(){if(document.getElementById('__gy-st'))return;const st=documen
 function __goiYMo(){
  const q=document.getElementById('question');if(!q)return;
  let d=null,i=0;try{d=JSON.parse(document.getElementById('exam-data').textContent)}catch(_){}
- const cur=document.querySelector('#questionNav .current');if(cur)i=+cur.dataset.jump||0;
+ const cur=document.querySelector('#questionNav .current');if(cur)i=+(cur.dataset.orig??cur.dataset.jump)||0;
  const qq=d&&d.questions[i];
  __gyCss();
  const o=document.createElement('div');o.className='__gy-nen';
