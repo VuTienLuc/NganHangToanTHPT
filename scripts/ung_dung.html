@@ -571,7 +571,7 @@ tr.gop-h td{background:#dbeafe;text-align:left;font-weight:700;padding:8px 12px;
         <label class="hop"><input type="checkbox" id="hk-xao-pa" checked> Đảo phương án A/B/C/D</label>
         <label class="hop"><input type="checkbox" id="hk-xao-y" checked> Đảo ý a, b, c Đúng/Sai (giữ ý d)</label>
         <label title="Slide ĐỀ BÀI trên Beamer chừa khoảng trống phía dưới để giáo viên viết">Đề Beamer chiếm <select id="hk-beamer-khung"><option value="2/3">2/3 trên</option><option value="1/2">1/2 trên</option><option value="day">Cả màn hình</option></select></label>
-        <label title="Theo mã đề: mỗi mã đề 1 file đã trộn. Giữ thứ tự: 1 file xếp đúng thứ tự ma trận, không đảo để K12Online tự trộn">Thứ tự Word K12Online <select id="hk-k12-thu-tu"><option value="ma_de">Theo từng mã đề (đã trộn)</option><option value="goc">Giữ thứ tự ma trận (không đảo)</option><option value="ca_hai">Cả hai</option></select></label>
+        <label title="Giữ đúng thứ tự đã chọn theo mục: giữ nguyên thứ tự các mục/dạng thầy đã chọn trong bảng (không đảo câu, không đảo phương án — nếu nhiều đề khác câu thì mỗi đề 1 file). Theo mã đề: mỗi mã đề 1 file đã trộn.">Thứ tự Word K12Online <select id="hk-k12-thu-tu"><option value="goc" selected>Giữ đúng thứ tự đã chọn theo mục (không đảo)</option><option value="ma_de">Theo từng mã đề (đã trộn)</option><option value="ca_hai">Cả hai</option></select></label>
         <label>Công thức trong Word <select id="hk-word-ct"><option value="equation">Equation của Word (sửa được)</option><option value="svg">Ảnh SVG sắc nét, thẳng hàng chữ</option></select></label>
       </div>
     </details>
@@ -1757,10 +1757,11 @@ function hkXuatVe(){
   if(x.word_de) ds.push(`Word đề (${x.word_ct==="svg"?"SVG":"Equation"})`);
   if(x.word_k12) ds.push(`Word K12Online (${k12Nhan})`);
   $("#hk-xuat-tt").textContent=`→ ${x.so} đề (từ ${x.ma_bat_dau})`+(x.so>1?(x.khac?(x.khong_trung?" khác câu, không trùng":" khác câu"):" trộn từ cùng câu"):"")+(ds.length?" · "+ds.join(" · "):" · chỉ xuất .tex");
-  try{localStorage.setItem("hk_xuat",JSON.stringify(x))}catch(_){}
+  try{localStorage.setItem("hk_xuat",JSON.stringify({...x,_k12_v2:1}))}catch(_){}
 }
 (()=>{let x=null;try{x=JSON.parse(localStorage.getItem("hk_xuat")||"null")}catch(_){}
-  if(x)for(const [k,id] of Object.entries(HK_XUAT_ID)){const e=$("#"+id);if(!e||x[k]==null)continue;if(e.type==="checkbox")e.checked=!!x[k];else e.value=x[k]}
+  if(x){if(!x._k12_v2) x.k12_thu_tu="goc";
+    for(const [k,id] of Object.entries(HK_XUAT_ID)){const e=$("#"+id);if(!e||x[k]==null)continue;if(e.type==="checkbox")e.checked=!!x[k];else e.value=x[k]}}
   Object.values(HK_XUAT_ID).forEach(id=>{$("#"+id).addEventListener("input",hkXuatVe);$("#"+id).addEventListener("change",hkXuatVe)});
   hkXuatVe()})();
 function mtHK(){

@@ -659,11 +659,25 @@ with open(os.path.join(out, "danh_sach_cau.csv"), "w", encoding="utf-8-sig", new
         w.writerow([c["ma"], c["loai"], c["id"], c["muc_chuan"], c["ten_dang"], c["file"]])
 json.dump(mt, open(os.path.join(out, "ma_tran_da_dung.json"), "w", encoding="utf-8"), ensure_ascii=False, indent=2)
 json.dump(CAU_THEO_DE, open(os.path.join(out, "_k12_cau.json"), "w", encoding="utf-8"), ensure_ascii=False)
-# Bản K12Online giữ THỨ TỰ ĐÃ CHỌN: câu của mã đề đầu theo đúng thứ tự ma trận (hoặc thứ tự trong file) ở từng phần,
-# nội dung gốc chưa đảo phương án / ý — K12Online tự trộn khi giao bài
-CAU_GOC = [{"loai": l, "noi_dung": c["noi_dung"], "dap_an": c["dap_an"] or "", "muc": c["muc_chuan"]}
-           for l in CAC_LOAI for c in (cac_bo[0].get(l) or [])]
-json.dump({"ThuTuDaChon": CAU_GOC}, open(os.path.join(out, "_k12_cau_goc.json"), "w", encoding="utf-8"), ensure_ascii=False)
+# Bản K12Online giữ THỨ TỰ ĐÃ CHỌN: xếp đúng thứ tự các mục/dạng đã chọn trong ma trận (hoặc thứ tự trong file)
+# ở từng phần, nội dung gốc chưa đảo phương án / ý — K12Online tự trộn khi giao bài.
+# Nếu mỗi mã đề là một bộ câu khác nhau (khac_cau): xuất đủ mỗi đề 1 file giữ đúng thứ tự các mục.
+if khac_cau and so_ma > 1:
+    K12_GOC = {
+        f"{ma}_ThuTuDaChon": [
+            {"loai": l, "noi_dung": c["noi_dung"], "dap_an": c["dap_an"] or "", "muc": c["muc_chuan"]}
+            for l in CAC_LOAI for c in (bo.get(l) or [])
+        ]
+        for ma, bo in zip(cac_ma, cac_bo)
+    }
+else:
+    K12_GOC = {
+        "ThuTuDaChon": [
+            {"loai": l, "noi_dung": c["noi_dung"], "dap_an": c["dap_an"] or "", "muc": c["muc_chuan"]}
+            for l in CAC_LOAI for c in (cac_bo[0].get(l) or [])
+        ]
+    }
+json.dump(K12_GOC, open(os.path.join(out, "_k12_cau_goc.json"), "w", encoding="utf-8"), ensure_ascii=False)
 json.dump({k: mt.get(k) for k in ("so_gd", "truong", "ten_ky_thi", "nam_hoc", "mon", "thoi_gian", "co_chu", "giao_vien")},
           open(os.path.join(out, "_thong_tin_de.json"), "w", encoding="utf-8"), ensure_ascii=False)
 
