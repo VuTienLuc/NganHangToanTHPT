@@ -167,6 +167,9 @@ footer .gian{flex:1}
 #hop-hk .cai{display:flex;flex-wrap:wrap;gap:8px 16px;padding:10px 18px;border-bottom:1px solid var(--vien);font-size:13px;align-items:center;background:#f5f7ff}
 #hop-hk .cai input[type=text]{padding:6px 8px;border:1px solid var(--vien);border-radius:8px;font:inherit;width:330px}
 #hop-hk .cai select{padding:5px 7px;border:1px solid var(--vien);border-radius:8px;font:inherit}
+#hk-xuat-them{flex-basis:100%;margin-top:2px;padding-top:6px;border-top:1px dashed #bfdbfe}
+#hk-xuat-them summary{cursor:pointer;color:#1e3a8a;font-weight:600;user-select:none}
+#hk-xuat-them .luoi-hk{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;margin-top:6px}
 #hk-bang-wrap{overflow:auto;flex:1;padding:0 18px 10px}
 #hk-bang{border-collapse:collapse;width:100%;font-size:12.5px}
 #hk-bang th{position:sticky;top:0;background:#f3f4f6;z-index:1;text-align:left;padding:7px 6px;border-bottom:1px solid var(--vien)}
@@ -545,16 +548,33 @@ tr.gop-h td{background:#dbeafe;text-align:left;font-weight:700;padding:8px 12px;
   </div>
   <div class="cai" id="hk-xuat" style="background:#eaf3ff">
     <b style="color:#1e3a8a">Xuất đề:</b>
-    <label title="Mỗi lần bấm Ra đề / Xác nhận xuất ra bấy nhiêu đề">Số đề mỗi lần <input type="number" id="hk-so-de" min="1" max="20" value="4" style="width:58px"></label>
-    <label class="hop" title="Bật: mỗi đề là bộ câu khác nhau (cùng ma trận). Tắt: các mã đề chỉ trộn thứ tự cùng 22 câu"><input type="checkbox" id="hk-khac" checked> Mỗi đề câu khác nhau</label>
-    <label class="hop" title="Không bao giờ dùng lại một câu ở 2 đề (kể cả câu khác mã nhưng cùng đề bài). Kho thiếu thì báo để bổ sung câu, không lấy trùng"><input type="checkbox" id="hk-khong-trung" checked> 🚫 Tuyệt đối không trùng câu giữa các đề</label>
-    <label class="hop" title="Khi kho không đủ câu đúng mức (nhất là nhiều đề không trùng): lấy câu cùng bài rồi cùng chương ở mức gần nhất (VD thiếu → TH/VDC), thay vì để đề thiếu câu hoặc lấy trùng"><input type="checkbox" id="hk-bu-muc" checked> Thiếu câu → lấy câu cùng nhóm (mức gần nhất)</label>
-    <label class="hop" title="Quyển Câu hỏi (bìa, mục lục, tất cả đề) + quyển Lời giải — 2 file PDF"><input type="checkbox" id="hk-de-cuong" checked> 📚 Gộp PDF thành 1 cuốn đề cương</label>
-    <label class="hop" title="Bản đề có lề trái rộng để học sinh ghi chú (file Leftnote)"><input type="checkbox" id="hk-leftnote"> 📝 Left note (lề ghi chú)</label>
-    <label class="hop" title="Mỗi đề một file lời giải riêng: De_101_LoiGiai.pdf…"><input type="checkbox" id="hk-lg-rieng" checked> Lời giải từng đề file riêng</label>
-    <label class="hop" title="Beamer sửa bài (trắng + xanh)"><input type="checkbox" id="hk-beamer"> Beamer</label>
-    <label class="hop"><input type="checkbox" id="hk-pdf" checked> Biên dịch PDF</label>
-    <span id="hk-xuat-tt" style="color:#555;font-size:12px"></span>
+    <label title="Mỗi lần bấm Ra đề / Xác nhận xuất ra bấy nhiêu đề">Số đề <input type="number" id="hk-so-de" min="1" max="40" value="4" style="width:56px"></label>
+    <label title="Mã đề bắt đầu (vd: 101, 201…)">Mã bắt đầu <input type="number" id="hk-ma-bat-dau" value="101" style="width:66px"></label>
+    <label class="hop" title="Bật: mỗi đề là bộ câu khác nhau (cùng ma trận). Tắt: các mã đề chỉ trộn thứ tự cùng bộ câu"><input type="checkbox" id="hk-khac" checked> Mỗi đề câu khác nhau</label>
+    <label class="hop" title="Không bao giờ dùng lại một câu ở 2 đề (kể cả câu khác mã nhưng cùng đề bài). Kho thiếu thì báo để bổ sung câu, không lấy trùng"><input type="checkbox" id="hk-khong-trung" checked> 🚫 Không trùng câu giữa các đề</label>
+    <label class="hop" title="Khi kho không đủ câu đúng mức (nhất là nhiều đề không trùng): lấy câu cùng bài rồi cùng chương ở mức gần nhất (VD thiếu → TH/VDC), thay vì để đề thiếu câu hoặc lấy trùng"><input type="checkbox" id="hk-bu-muc" checked> Thiếu câu → lấy mức gần nhất</label>
+    <label class="hop" title="Biên dịch file PDF cho từng mã đề (cần MacTeX)"><input type="checkbox" id="hk-pdf" checked> PDF từng mã đề</label>
+    <label class="hop" title="Quyển Câu hỏi (bìa, mục lục, tất cả đề) + quyển Lời giải — 2 file PDF"><input type="checkbox" id="hk-de-cuong" checked> 📚 Gộp đề cương (PDF)</label>
+    <label class="hop" title="Mỗi mã đề thêm Leftnote_101.pdf: đề in 0,7 bề rộng trang, 0,3 bên phải là cột Ghi chú có dòng kẻ"><input type="checkbox" id="hk-leftnote"> 📝 Leftnote</label>
+    <label class="hop" title="Mỗi đề một file lời giải riêng: De_101_LoiGiai.pdf…"><input type="checkbox" id="hk-lg-rieng" checked> Lời giải riêng từng đề</label>
+    <label class="hop" title="Mỗi mã đề thêm BeamerTrang (nền trắng) và BeamerXanh (nền xanh) trình chiếu sửa bài"><input type="checkbox" id="hk-beamer"> Beamer (trắng + xanh)</label>
+    <label class="hop" title="Mỗi mã đề 2 file Word: đề (bố cục giống PDF) và đề kèm lời giải + bảng đáp án"><input type="checkbox" id="hk-word-de"> 📄 Word đề thi (như PDF)</label>
+    <label class="hop" title="Xuất file Word đúng mẫu nhập câu hỏi K12Online"><input type="checkbox" id="hk-word-k12"> 📘 Word K12Online</label>
+    <span id="hk-xuat-tt" style="color:#334155;font-size:12px"></span>
+    <details id="hk-xuat-them">
+      <summary>⚙ Tùy chỉnh trình bày PDF, trộn câu, Beamer &amp; Word K12Online (đủ như trang chủ)</summary>
+      <div class="luoi-hk">
+        <label>Kiểu trình bày <select id="hk-khung"><option value="DeThiChinhThuc">Đề chính thức (đen trắng, Sở/Trường)</option><option value="DeThi">Ôn tập (khung màu)</option></select></label>
+        <label>Khổ in <select id="hk-kho-in"><option value="12">Bình thường – chữ 12</option><option value="11">Tiết kiệm – chữ 11, lề hẹp</option><option value="10">Siêu tiết kiệm – chữ 10, lề hẹp</option></select></label>
+        <label class="hop" title="Chỉ áp dụng khi chọn Đề chính thức + khổ tiết kiệm 10/11"><input type="checkbox" id="hk-hai-cot" disabled> In 2 cột</label>
+        <label>Sắp xếp câu <select id="hk-sap-xep"><option value="ngau_nhien">Ngẫu nhiên</option><option value="do_kho" selected>Theo độ khó (N→C)</option><option value="noi_dung">Theo nội dung (chương, bài)</option><option value="noi_dung_do_kho">Nội dung rồi độ khó</option></select></label>
+        <label class="hop"><input type="checkbox" id="hk-xao-pa" checked> Đảo phương án A/B/C/D</label>
+        <label class="hop"><input type="checkbox" id="hk-xao-y" checked> Đảo ý a, b, c Đúng/Sai (giữ ý d)</label>
+        <label title="Slide ĐỀ BÀI trên Beamer chừa khoảng trống phía dưới để giáo viên viết">Đề Beamer chiếm <select id="hk-beamer-khung"><option value="2/3">2/3 trên</option><option value="1/2">1/2 trên</option><option value="day">Cả màn hình</option></select></label>
+        <label title="Theo mã đề: mỗi mã đề 1 file đã trộn. Giữ thứ tự: 1 file xếp đúng thứ tự ma trận, không đảo để K12Online tự trộn">Thứ tự Word K12Online <select id="hk-k12-thu-tu"><option value="ma_de">Theo từng mã đề (đã trộn)</option><option value="goc">Giữ thứ tự ma trận (không đảo)</option><option value="ca_hai">Cả hai</option></select></label>
+        <label>Công thức trong Word <select id="hk-word-ct"><option value="equation">Equation của Word (sửa được)</option><option value="svg">Ảnh SVG sắc nét, thẳng hàng chữ</option></select></label>
+      </div>
+    </details>
   </div>
   <div id="hk-bang-wrap"><table id="hk-bang"><thead><tr><th style="width:110px">Câu / Số câu</th><th style="width:23%">Chủ đề (sửa được)</th><th style="width:23%">Bài trong ngân hàng</th>
     <th style="width:108px">Mức</th><th style="width:130px">Ngữ cảnh thực tế</th><th>Câu mẫu (tuỳ chọn, cho đề AI)</th></tr></thead><tbody></tbody></table></div>
@@ -1705,14 +1725,44 @@ $("#hk-xoa-bo").onclick=()=>{const L=hkLop(); if(L.bo.length<2) return;
   L.bo.splice(L.i,1); L.i=Math.max(0,L.i-1); hkLuu(); veBoHK(); veHK()};
 // 1) lấy câu từ ngân hàng: mỗi dòng = 1 câu (bài + mức) → xuất đề như nút Xuất đề
 // ---- tuỳ chọn xuất đề của bảng Ôn thi HK (nhớ trên máy)
-const HK_XUAT_ID={so:"hk-so-de",khac:"hk-khac",khong_trung:"hk-khong-trung",bu_muc:"hk-bu-muc",de_cuong:"hk-de-cuong",leftnote:"hk-leftnote",lg_rieng:"hk-lg-rieng",beamer:"hk-beamer",pdf:"hk-pdf"};
-function hkXuat(){const o={};for(const [k,id] of Object.entries(HK_XUAT_ID)){const e=$("#"+id);o[k]=e.type==="checkbox"?e.checked:Math.max(1,Math.min(20,+e.value||1))}return o}
-function hkXuatVe(){const x=hkXuat();
-  $("#hk-xuat-tt").textContent=`→ ${x.so} đề`+(x.so>1?(x.khac?(x.khong_trung?" khác câu, không trùng câu nào":" khác câu"):" trộn từ cùng câu"):"")+`${x.de_cuong?" · 2 cuốn đề cương":""}${x.leftnote?" · Left note":""}${x.lg_rieng?" · lời giải riêng từng đề":""}`;
-  try{localStorage.setItem("hk_xuat",JSON.stringify(x))}catch(_){}}
+const HK_XUAT_ID={
+  so:"hk-so-de",ma_bat_dau:"hk-ma-bat-dau",khac:"hk-khac",khong_trung:"hk-khong-trung",bu_muc:"hk-bu-muc",
+  pdf:"hk-pdf",de_cuong:"hk-de-cuong",leftnote:"hk-leftnote",lg_rieng:"hk-lg-rieng",beamer:"hk-beamer",beamer_khung:"hk-beamer-khung",
+  word_de:"hk-word-de",word_k12:"hk-word-k12",k12_thu_tu:"hk-k12-thu-tu",word_ct:"hk-word-ct",
+  khung:"hk-khung",kho_in:"hk-kho-in",hai_cot:"hk-hai-cot",sap_xep:"hk-sap-xep",xao_pa:"hk-xao-pa",xao_y:"hk-xao-y"
+};
+function hkXuat(){
+  const o={};
+  for(const [k,id] of Object.entries(HK_XUAT_ID)){
+    const e=$("#"+id);
+    if(e.type==="checkbox") o[k]=e.checked;
+    else if(e.type==="number") o[k]=k==="so"?Math.max(1,Math.min(40,+e.value||1)):(+e.value||101);
+    else o[k]=e.value;
+  }
+  return o;
+}
+function hkXuatVe(){
+  const ct=$("#hk-khung").value==="DeThiChinhThuc";
+  $("#hk-kho-in").disabled=!ct;
+  if(!ct||$("#hk-kho-in").value==="12"){$("#hk-hai-cot").disabled=true;$("#hk-hai-cot").checked=false}
+  else $("#hk-hai-cot").disabled=false;
+  const x=hkXuat();
+  const k12Nhan={ma_de:"theo mã đề",goc:"giữ thứ tự",ca_hai:"cả hai"}[x.k12_thu_tu]||"";
+  const ds=[];
+  if(x.pdf) ds.push("PDF từng đề");
+  if(x.de_cuong) ds.push("2 cuốn đề cương");
+  if(x.leftnote) ds.push("Leftnote");
+  if(x.lg_rieng) ds.push("lời giải riêng");
+  if(x.beamer) ds.push(`Beamer (${x.beamer_khung})`);
+  if(x.word_de) ds.push(`Word đề (${x.word_ct==="svg"?"SVG":"Equation"})`);
+  if(x.word_k12) ds.push(`Word K12Online (${k12Nhan})`);
+  $("#hk-xuat-tt").textContent=`→ ${x.so} đề (từ ${x.ma_bat_dau})`+(x.so>1?(x.khac?(x.khong_trung?" khác câu, không trùng":" khác câu"):" trộn từ cùng câu"):"")+(ds.length?" · "+ds.join(" · "):" · chỉ xuất .tex");
+  try{localStorage.setItem("hk_xuat",JSON.stringify(x))}catch(_){}
+}
 (()=>{let x=null;try{x=JSON.parse(localStorage.getItem("hk_xuat")||"null")}catch(_){}
   if(x)for(const [k,id] of Object.entries(HK_XUAT_ID)){const e=$("#"+id);if(!e||x[k]==null)continue;if(e.type==="checkbox")e.checked=!!x[k];else e.value=x[k]}
-  Object.values(HK_XUAT_ID).forEach(id=>$("#"+id).addEventListener("input",hkXuatVe));Object.values(HK_XUAT_ID).forEach(id=>$("#"+id).addEventListener("change",hkXuatVe));hkXuatVe()})();
+  Object.values(HK_XUAT_ID).forEach(id=>{$("#"+id).addEventListener("input",hkXuatVe);$("#"+id).addEventListener("change",hkXuatVe)});
+  hkXuatVe()})();
 function mtHK(){
   const ds=hkChon();
   if(!ds.length){alert("Chưa tích chọn dạng nào để lấy câu.");return null}
@@ -1727,8 +1777,16 @@ function mtHK(){
     ten_ky_thi:($("#hk-ten").value.trim()||"ĐỀ ÔN THI HỌC KÌ")+(nhieu?` (${bo.ten})`:""),
     mon:`TOÁN – Lớp ${HK_LOP}`,bu_cung_nhom:true,mo_rong_dang_khac:true});
   const tr=hkTranh(); if(tr.length) mt.tranh_ma=tr; else delete mt.tranh_ma;
-  const x=hkXuat(); Object.assign(mt,{so_ma_de:x.so,moi_ma_de_cau_khac_nhau:x.khac&&x.so>1,khong_trung_cau:x.khac&&x.khong_trung,bu_khac_muc:x.bu_muc,de_cuong:x.de_cuong,xuat_leftnote:x.leftnote,
-    loi_giai_rieng:x.lg_rieng,xuat_beamer:x.beamer});
+  const x=hkXuat();
+  const coChu=x.khung==="DeThiChinhThuc"?(+x.kho_in||12):12;
+  const tietKiem=coChu<12;
+  Object.assign(mt,{
+    so_ma_de:x.so,ma_de_bat_dau:x.ma_bat_dau,khung:x.khung,co_chu:coChu,tiet_kiem:tietKiem,hai_cot:tietKiem&&x.hai_cot,
+    sap_xep:x.sap_xep,xao_phuong_an:x.xao_pa,xao_y_dung_sai:x.xao_y,
+    moi_ma_de_cau_khac_nhau:x.khac&&x.so>1,khong_trung_cau:x.khac&&x.khong_trung,bu_khac_muc:x.bu_muc,
+    de_cuong:x.de_cuong,xuat_leftnote:x.leftnote,loi_giai_rieng:x.lg_rieng,xuat_beamer:x.beamer,beamer_khung_de:x.beamer_khung,
+    xuat_word_k12:x.word_k12,k12_thu_tu:x.k12_thu_tu,xuat_word_de:x.word_de,word_cong_thuc:x.word_ct
+  });
   $("#bien_dich").checked=x.pdf;
   mt.cau_da_dung=$("#hk-da-dung").value; mt.tranh_cau_da_dung=mt.cau_da_dung!=="khong";
   return mt;
