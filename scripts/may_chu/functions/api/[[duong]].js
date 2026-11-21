@@ -337,8 +337,9 @@ async function phongThiDau(duong, d, env, req) {
       const t = await (await stub(ma).fetch('https://phong/thong-tin')).json();
       if (!t.ok) break;
     }
+    const gl = d.giay_loai && typeof d.giay_loai === 'object' ? { mcq: Math.max(5, Math.min(600, d.giay_loai.mcq | 0 || d.giay | 0 || 30)), tf: Math.max(5, Math.min(600, d.giay_loai.tf | 0 || d.giay | 0 || 60)), short: Math.max(5, Math.min(600, d.giay_loai.short | 0 || d.giay | 0 || 60)) } : null;
     await stub(ma).fetch('https://phong/tao', { method: 'POST', body: JSON.stringify({ ma, slug: de.slug, ten: de.ten, khoa, gv: ph.tk,
-      vao: d.vao === 'biet_danh' ? 'biet_danh' : 'tk', nhip: d.nhip === 'tu_do' ? 'tu_do' : 'gv', doi: d.doi | 0, giay: d.giay | 0 || 20, kieu: d.kieu === 'phieu' ? 'phieu' : 'thi_dau' }) });
+      vao: d.vao === 'biet_danh' ? 'biet_danh' : 'tk', nhip: d.nhip === 'tu_do' ? 'tu_do' : 'gv', doi: d.doi | 0, giay: d.giay | 0 || 30, giay_loai: gl, kieu: d.kieu === 'phieu' ? 'phieu' : 'thi_dau' }) });
     return json({ ok: true, ma, slug: de.slug });
   }
   const m = duong.match(/^(\d{6})\/(thong-tin|ws|luu|ket-qua)$/);

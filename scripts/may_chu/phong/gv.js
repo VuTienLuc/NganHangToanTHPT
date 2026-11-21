@@ -76,13 +76,25 @@ async function __phongGV() {
     <div class="luoi"><label>Học sinh vào phòng bằng<select id="pg-vao"><option value="tk">Tài khoản thầy đã cấp (điểm gắn đúng tên)</option><option value="biet_danh">Nhập biệt danh (không cần tài khoản)</option></select></label>
     <label>Nhịp chạy câu<select id="pg-nhip"><option value="gv">Thầy bấm sang câu — cả lớp cùng câu</option><option value="tu_do">Học sinh tự làm theo tốc độ riêng</option></select></label>
     <label>Chơi theo<select id="pg-doi"><option value="0">Cá nhân</option>${[2, 3, 4, 5, 6, 7, 8].map(n => `<option value="${n}">${n} đội (máy chia ngẫu nhiên)</option>`).join('')}</select></label>
-    <label>Thời gian mỗi câu (giây)<input id="pg-giay" type="number" min="5" max="300" value="30"></label></div>
+    <label>Thời gian Trắc nghiệm (giây)<input id="pg-g-mcq" type="number" min="5" max="600" value="30"></label>
+    <label>Thời gian Đúng / Sai (giây)<input id="pg-g-tf" type="number" min="5" max="600" value="60"></label>
+    <label>Thời gian Trả lời ngắn (giây)<input id="pg-g-short" type="number" min="5" max="600" value="60"></label></div>
     <div style="margin-top:20px;display:flex;gap:12px;flex-wrap:wrap"><button class="chinh" id="pg-mo">🚪 Mở phòng</button><button id="pg-huy">Thoát</button></div>
     <p class="goi" style="margin:14px 0 0">Tính điểm: đúng được 600–1000 điểm tuỳ nhanh chậm, đúng liên tiếp thưởng thêm. Câu Đúng/Sai tính theo số ý đúng. Đội: điểm trung bình các thành viên.</p></div>`;
-  try { const c = JSON.parse(localStorage.getItem('pg_cai') || '{}'); for (const k of ['vao', 'nhip', 'doi', 'giay']) if (c[k] != null) document.getElementById('pg-' + k).value = c[k]; } catch (_) {}
+  try {
+    const c = JSON.parse(localStorage.getItem('pg_cai') || '{}');
+    for (const k of ['vao', 'nhip', 'doi']) if (c[k] != null) document.getElementById('pg-' + k).value = c[k];
+    const gl = c.giay_loai || {};
+    if (gl.mcq || c.giay) document.getElementById('pg-g-mcq').value = gl.mcq || c.giay;
+    if (gl.tf) document.getElementById('pg-g-tf').value = gl.tf;
+    if (gl.short) document.getElementById('pg-g-short').value = gl.short;
+  } catch (_) {}
   document.getElementById('pg-huy').onclick = () => { location.href = location.pathname; };
   document.getElementById('pg-mo').onclick = async ev => {
-    const c = { slug: sl, vao: document.getElementById('pg-vao').value, nhip: document.getElementById('pg-nhip').value, doi: +document.getElementById('pg-doi').value, giay: +document.getElementById('pg-giay').value || 30 };
+    const gMcq = Math.max(5, Math.min(600, +document.getElementById('pg-g-mcq').value || 30));
+    const gTf = Math.max(5, Math.min(600, +document.getElementById('pg-g-tf').value || 60));
+    const gShort = Math.max(5, Math.min(600, +document.getElementById('pg-g-short').value || 60));
+    const c = { slug: sl, vao: document.getElementById('pg-vao').value, nhip: document.getElementById('pg-nhip').value, doi: +document.getElementById('pg-doi').value, giay: gMcq, giay_loai: { mcq: gMcq, tf: gTf, short: gShort } };
     try { localStorage.setItem('pg_cai', JSON.stringify(c)); } catch (_) {}
     ev.target.disabled = true; ev.target.textContent = 'Đang mở…';
     const k = await __pgGoi('phong/tao', c);
@@ -135,7 +147,7 @@ function __pgVe() {
   if (s.giai_doan === 'cho') {
     const url = __pgUrlChoi(s.ma);
     than.innerHTML = `<div class="cho"><div class="the" style="text-align:center"><img class="qr" alt="QR vào phòng" src="${__pgQr(url)}"><div class="goi" style="margin-top:10px">hoặc vào <b style="color:#fff">${__pe(url.replace(/^https?:\/\//, '').replace(/\/choi\/.*/, '/choi'))}</b> nhập mã</div><div class="ma">${s.ma}</div>
-        <div class="goi">${s.vao === 'tk' ? '🔐 Đăng nhập tài khoản đã cấp' : '😀 Nhập biệt danh, không cần tài khoản'} · ${s.nhip === 'gv' ? 'thầy bấm sang câu' : 'tự làm theo tốc độ riêng'} · ${s.giay} giây/câu</div></div>
+        <div class="goi">${s.vao === 'tk' ? '🔐 Đăng nhập tài khoản đã cấp' : '😀 Nhập biệt danh, không cần tài khoản'} · ${s.nhip === 'gv' ? 'thầy bấm sang câu' : 'tự làm theo tốc độ riêng'} · ${s.giay_loai ? `TN ${s.giay_loai.mcq}s · Đ/S ${s.giay_loai.tf}s · TLN ${s.giay_loai.short}s` : `${s.giay} giây/câu`}</div></div>
       <div class="the"><div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:10px"><h2 style="margin:0;flex:1">👥 ${s.nguoi.length} học sinh trong phòng</h2>
         <label style="flex-direction:row;align-items:center">Chơi theo <select id="pg-doi2">${[0, 2, 3, 4, 5, 6, 7, 8].map(n => `<option value="${n}" ${s.so_doi === n ? 'selected' : ''}>${n ? n + ' đội' : 'Cá nhân'}</option>`).join('')}</select></label>
         ${s.so_doi ? '<button id="pg-chia">🎲 Chia đội lại</button>' : ''}<button class="xanh" id="pg-bd" ${s.nguoi.length ? '' : 'disabled'}>▶ Bắt đầu</button></div>

@@ -70,9 +70,13 @@ export class Phong {
 
   async fetch(req) {
     const u = new URL(req.url), duong = u.pathname.replace(/^\/+/, '');
-    if (duong === 'tao') {                       // Pages gửi: {ma, slug, ten, khoa, vao, nhip, doi, giay, gv}
+    if (duong === 'tao') {                       // Pages gửi: {ma, slug, ten, khoa, vao, nhip, doi, giay, giay_loai, gv}
       const d = await req.json();
-      this.s = { ma: d.ma, slug: d.slug, ten: d.ten, khoa: d.khoa, vao: d.vao, nhip: d.nhip, kieu: d.kieu === 'phieu' ? 'phieu' : 'thi_dau', so_doi: Math.max(0, Math.min(8, d.doi | 0)), giay: d.giay || 20,
+      const gMac = Math.max(5, Math.min(600, d.giay | 0 || 30));
+      const gl = d.giay_loai && typeof d.giay_loai === 'object'
+        ? { mcq: Math.max(5, Math.min(600, d.giay_loai.mcq | 0 || gMac)), tf: Math.max(5, Math.min(600, d.giay_loai.tf | 0 || gMac)), short: Math.max(5, Math.min(600, d.giay_loai.short | 0 || gMac)) }
+        : { mcq: gMac, tf: gMac, short: gMac };
+      this.s = { ma: d.ma, slug: d.slug, ten: d.ten, khoa: d.khoa, vao: d.vao, nhip: d.nhip, kieu: d.kieu === 'phieu' ? 'phieu' : 'thi_dau', so_doi: Math.max(0, Math.min(8, d.doi | 0)), giay: gMac, giay_loai: gl,
         gv: d.gv, tao_luc: Date.now(), giai_doan: 'cho', cur: -1, cau: [], nguoi: {}, het_luc: 0 };
       await this.luu();
       await this.ctx.storage.setAlarm(Date.now() + 6 * 3600e3);       // phòng tự xoá sau 6 giờ
@@ -146,12 +150,16 @@ export class Phong {
         type: k.type, dap_an: k.answer, ten_dang: k.ten_dang || '' };
     });
   }
+  giayCau(origIdx) {
+    const s = this.s, k = origIdx >= 0 ? s.khoa[origIdx] : null, gl = s.giay_loai || {};
+    return (k && gl[k.type]) || s.giay || 30;
+  }
   // trạng thái gửi màn hình thầy
   trangThaiGV() {
     const s = this.s, k = s.cur >= 0 ? s.khoa[s.cur] : null;
     const dem = s.cur >= 0 ? Object.values(s.nguoi).filter(p => p.tl[s.cur]).length : 0;
     const chon = k && k.type === 'mcq' ? [0, 1, 2, 3].map(j => Object.values(s.nguoi).filter(p => p.tl[s.cur] && p.tl[s.cur].v === j).length) : null;
-    return { t: 'phong', ma: s.ma, ten: s.ten, vao: s.vao, nhip: s.nhip, so_doi: s.so_doi, giay: s.giay, giai_doan: s.giai_doan, cur: s.cur,
+    return { t: 'phong', ma: s.ma, ten: s.ten, vao: s.vao, nhip: s.nhip, so_doi: s.so_doi, giay: s.cur >= 0 ? this.giayCau(s.cur) : s.giay, giay_loai: s.giay_loai || null, giai_doan: s.giai_doan, cur: s.cur,
       so_cau: s.cau.length, het_luc: s.het_luc, bay_gio: Date.now(), nguoi: this.danhSach(), doi: this.bangDoi(), da_tl: dem, chon,
       dap_an: s.giai_doan === 'dap_an' && k ? k.answer : null, co_cau: s.cau.length > 0, kieu: s.kieu,
       thong_ke: s.nhip === 'tu_do' ? this.thongKe() : null,
@@ -179,6 +187,7 @@ export class Phong {
       toi: p ? { id: p.id, ten: p.ten, doi: p.doi, diem: p.diem, chuoi: p.chuoi, hang: this.hangCua(p.id) } : null, so_doi: s.so_doi };
     if (s.nhip === 'gv') {
       m.cur = s.cur; m.het_luc = s.het_luc;
+      if (s.cur >= 0) m.giay = this.giayCau(s.cur);
       if (s.cur >= 0 && (s.giai_doan === 'cau' || s.giai_doan === 'dap_an')) {
         m.cau = this.cauHS(s.cur); const x = p ? p.tl[s.cur] : null;
         m.da_tl = x ? (s.giai_doan === 'dap_an' ? x : { v: x.v }) : null;      // chưa công bố thì không lộ đúng/sai
@@ -188,7 +197,7 @@ export class Phong {
       const pos = p.cur ?? 0;
       if (pos < s.cau.length) {
         const tr = this.damBaoTron(p), orig = tr.order[pos];
-        m.cur = pos; m.cau = this.cauHS(orig, pos, tr.opt[orig]); m.het_luc = p.het_luc;
+        m.cur = pos; m.cau = this.cauHS(orig, pos, tr.opt[orig]); m.het_luc = p.het_luc; m.giay = this.giayCau(orig);
       } else { m.xong = true; m.danh_gia = p.danh_gia ?? null; }
     }
     if (s.giai_doan === 'ket_thuc') m.ket_qua = { top: this.danhSach().sort((a, b) => b.diem - a.diem).slice(0, 5), doi: this.bangDoi() };
@@ -241,7 +250,7 @@ export class Phong {
       await this.luu(); return this.phatTat();
     }
     if (m.t === 'bat_dau_phieu' && s.giai_doan === 'cho' && s.kieu === 'phieu' && s.cau.length) {
-      s.giai_doan = 'cau'; for (const p of Object.values(s.nguoi)) { p.cur = 0; p.tron = taoTron(s.khoa, s.cau); p.het_luc = Date.now() + s.giay * 1000; }
+      s.giai_doan = 'cau'; for (const p of Object.values(s.nguoi)) { p.cur = 0; p.tron = taoTron(s.khoa, s.cau); p.het_luc = Date.now() + this.giayCau(p.tron.order[0]) * 1000; }
       await this.luu(); return this.phatTat();
     }
     if (m.t === 'bat_dau' && s.giai_doan === 'cho') {
@@ -249,7 +258,7 @@ export class Phong {
       if (s.so_doi && Object.values(s.nguoi).some(p => p.doi == null)) this.chiaDoi();
       if (s.nhip === 'tu_do') {
         s.giai_doan = 'cau';
-        for (const p of Object.values(s.nguoi)) { p.cur = 0; p.tron = taoTron(s.khoa, s.cau); p.het_luc = Date.now() + s.giay * 1000; }
+        for (const p of Object.values(s.nguoi)) { p.cur = 0; p.tron = taoTron(s.khoa, s.cau); p.het_luc = Date.now() + this.giayCau(p.tron.order[0]) * 1000; }
         await this.luu(); return this.phatTat();
       }
       return this.moCau(0);
@@ -263,7 +272,7 @@ export class Phong {
   }
 
   async moCau(i) {
-    const s = this.s; s.cur = i; s.giai_doan = 'cau'; s.bat_dau = Date.now(); s.het_luc = s.bat_dau + s.giay * 1000;
+    const s = this.s; s.cur = i; s.giai_doan = 'cau'; s.bat_dau = Date.now(); s.het_luc = s.bat_dau + this.giayCau(i) * 1000;
     await this.datHen(); await this.luu(); this.phatTat();
   }
   async datHen() { await this.ctx.storage.setAlarm(this.s.het_luc + 300); }
@@ -308,7 +317,7 @@ export class Phong {
         if (Object.keys(s.nguoi).length >= 200) return this.gui(ws, { t: 'loi', loi: 'Phòng đã đủ 200 người.' });
         p = s.nguoi[a.id] = { id: a.id, tk: a.tk, ho_ten: a.ho_ten, ten, lop: a.lop, stt: a.stt, doi: null, diem: 0, chuoi: 0, dung: 0, tl: {} };
         if (s.so_doi) { const dem = Array(s.so_doi).fill(0); for (const x of Object.values(s.nguoi)) if (x.doi != null) dem[x.doi]++; p.doi = dem.indexOf(Math.min(...dem)); }
-        if (s.nhip === 'tu_do' && s.giai_doan === 'cau') { p.cur = 0; p.tron = taoTron(s.khoa, s.cau); p.het_luc = Date.now() + s.giay * 1000; }
+        if (s.nhip === 'tu_do' && s.giai_doan === 'cau') { p.cur = 0; p.tron = taoTron(s.khoa, s.cau); p.het_luc = Date.now() + this.giayCau(p.tron.order[0]) * 1000; }
         await this.luu();
       }
       this.gui(ws, this.trangThaiHS(p)); this.guiGV(this.trangThaiGV()); return;
@@ -329,10 +338,11 @@ export class Phong {
       if (s.giai_doan !== 'cau' || m.i !== p.cur) return;
       const tr = this.damBaoTron(p), orig = tr.order[p.cur], optMap = tr.opt[orig];
       if (orig == null || p.tl[orig]) return;
-      const k = s.khoa[orig], vGoc = anhXaNguoc(k.type, m.v, optMap);
-      const batDau = p.het_luc - s.giay * 1000, kq = this.chamDiem(p, orig, vGoc, batDau, Math.max(p.het_luc, Date.now()));
+      const k = s.khoa[orig], vGoc = anhXaNguoc(k.type, m.v, optMap), gNay = this.giayCau(orig);
+      const batDau = p.het_luc - gNay * 1000, kq = this.chamDiem(p, orig, vGoc, batDau, Math.max(p.het_luc, Date.now()));
       const dapAnHS = anhXaDapAn(k.type, k.answer, optMap);
-      p.cur++; p.het_luc = Date.now() + s.giay * 1000 + 2500;     // +2,5 giây xem đáp án trước câu sau
+      p.cur++; const gSau = p.cur < s.cau.length ? this.giayCau(tr.order[p.cur]) : s.giay;
+      p.het_luc = Date.now() + gSau * 1000 + 2500;     // +2,5 giây xem đáp án trước câu sau
       await this.luu();
       this.gui(ws, { t: 'ket_qua_cau', i: m.i, ti_le: kq.ti_le, diem: kq.diem, dap_an: dapAnHS, tong: p.diem, chuoi: p.chuoi, hang: this.hangCua(p.id) });
       this.guiGV(this.trangThaiGV());
@@ -343,9 +353,11 @@ export class Phong {
     if (m.t === 'het_gio_rieng' && s.nhip === 'tu_do' && s.giai_doan === 'cau' && m.i === p.cur && Date.now() >= p.het_luc - 500) {
       const tr = this.damBaoTron(p), orig = tr.order[p.cur], optMap = tr.opt[orig];
       if (orig == null || p.tl[orig]) return;
-      p.tl[orig] = { v: null, ti_le: 0, diem: 0, ms: s.giay * 1000 }; p.chuoi = 0;
+      const gNay = this.giayCau(orig);
+      p.tl[orig] = { v: null, ti_le: 0, diem: 0, ms: gNay * 1000 }; p.chuoi = 0;
       const k = s.khoa[orig], dapAnHS = anhXaDapAn(k.type, k.answer, optMap);
-      p.cur++; p.het_luc = Date.now() + s.giay * 1000 + 2500; await this.luu();
+      p.cur++; const gSau = p.cur < s.cau.length ? this.giayCau(tr.order[p.cur]) : s.giay;
+      p.het_luc = Date.now() + gSau * 1000 + 2500; await this.luu();
       this.gui(ws, { t: 'ket_qua_cau', i: m.i, ti_le: 0, diem: 0, dap_an: dapAnHS, tong: p.diem, chuoi: 0, hang: this.hangCua(p.id), het_gio: true });
       this.guiGV(this.trangThaiGV());
     }
