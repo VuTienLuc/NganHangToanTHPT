@@ -1497,6 +1497,7 @@ const HK_MAC_DINH={
     ["TLN","Giá trị lớn nhất và giá trị nhỏ nhất của hàm số","VD","Kinh tế - Tài chính"],["TLN","Giá trị lớn nhất, nhỏ nhất – bài toán thực tiễn","VD","Vật lý - Chuyển động"],["TLN","Đường tiệm cận của đồ thị hàm số","VD"],["TLN","Vectơ trong không gian","VD","Vật lý - Chuyển động"],["TLN","Biểu thức tọa độ của các phép toán vectơ","VD","Kiến trúc - Xây dựng"],["TLN","Phương sai, độ lệch chuẩn của mẫu số liệu ghép nhóm","VDC"]]};
 const HK_BAI_MAC_DINH={  // bài trong ngân hàng cho từng dòng của ma trận mặc định
  8:"8D1?1 8D1?3 8D1?4 8D1?5 8D2?6 8D2?8 8D2?9 8D2?9 8D6?21 8D6?23 8D6?24 8H3?10 8H3?11 8H3?12 8H3?13 8H3?14 8H4?15 8H4?16 8H4?17 8H0?38 8H0?39 8D5?18 8D5?19 8D5?20 8H4?15 8H0?39 8D2?9".split(" "),
+ 9:"9D1?1 9D1?2 9D2?4 9D2?5 9D2?6 9D3?7 9D3?9 9D3?10 9H4?11 9H4?12 9H5?13 9H5?16 9D1?3 9D3?9 9H4?12 9H5?16 9D1?2 9D2?6 9D3?8 9H4?12 9H5?14 9H5?15".split(" "),
  10:"0D1?1 0D1?3 0D2?1 0D6?3 0D6?4 0H4?1 0H4?2 0H4?3 0H5?2 0H5?3 0H5?4 0H9?1 0D1?2 0D2?1 0H4?3 0H5?4 0D1?3 0D2?2 0H4?3 0H5?2 0H5?3 0H9?1".split(" "),
  11:"1D1?3 1D1?4 1D1?5 1D2?1 1D2?2 1D2?3 1D3?1 1D3?2 1H4?1 1H4?3 1H4?4 1D5?1 1D1?3 1D2?2 1H4?3 1D5?2 1D1?3 1D1?5 1D2?2 1D2?3 1D3?2 1H4?4".split(" "),
  12:"2D1?1 2D1?2 2D1?3 2D1?4 2D1?5 2D1?5 2H2?1 2H2?2 2H2?2 2H2?2 2D3?1 2D3?2 2D1?1 2D1?3 2H2?2 2D3?2 2D1?3 2D1?3 2D1?4 2H2?1 2H2?2 2D3?2".split(" ")};
@@ -1505,8 +1506,14 @@ const HK_MUC_MA={NB:"N",TH:"H",VD:"V",VDC:"C"};
 let HK_LOP=10, HK={};   // HK[lop] = {i, bo:[{ten, hang:[{loai,chu_de,muc,ngu_canh,bai,mau,form,kho,chon,so}], da_dung:[mã câu]}]}
 function hkLuu(){try{localStorage.setItem("on_thi_hk",JSON.stringify(HK))}catch(_){}}
 function hkTai(){try{HK=JSON.parse(localStorage.getItem("on_thi_hk")||"{}")||{}}catch(_){HK={}}
-  for(const l in HK) if(Array.isArray(HK[l])) HK[l]={i:0,bo:[{ten:"Lần 1",hang:HK[l],da_dung:[]}]};
-  if(HK[8]&&HK[8].bo&&HK[8].bo[0]&&HK[8].bo[0].hang.length===20&&HK[8].bo[0].hang[0].chu_de==="Bài 1. Đơn thức"){HK[8].bo[0].hang=hkMacDinh(8);hkLuu()}}
+  let sua=false;
+  for(const l in HK){
+    if(Array.isArray(HK[l])){HK[l]={i:0,bo:[{ten:"Lần 1",hang:HK[l],da_dung:[]}]};sua=true}
+    const mb=HK_BAI_MAC_DINH[l];
+    if(mb&&HK[l]&&HK[l].bo) HK[l].bo.forEach(b=>(b.hang||[]).forEach((r,i)=>{if(!r.bai&&mb[i]){r.bai=mb[i];sua=true}}));
+  }
+  if(HK[8]&&HK[8].bo&&HK[8].bo[0]&&HK[8].bo[0].hang.length===20&&HK[8].bo[0].hang[0].chu_de==="Bài 1. Đơn thức"){HK[8].bo[0].hang=hkMacDinh(8);sua=true}
+  if(sua) hkLuu();}
 const hkLop=()=>HK[HK_LOP], hkBo=()=>hkLop().bo[hkLop().i], hkDs=()=>hkBo().hang;
 function hkTranh(){ // câu đã ra ở các lần khác của lớp này
   if(!$("#hk-tranh").checked) return [];
