@@ -176,6 +176,10 @@ footer .gian{flex:1}
 #hk-bang tr.bo-chon{opacity:.45}
 #hk-bang .o-so{display:flex;align-items:center;gap:5px;white-space:nowrap}
 #hk-bang input.so-cau{width:48px;padding:2px 4px;text-align:center}
+#hk-bang .hk-kho{font-size:11.5px;margin-top:3px;display:inline-block;padding:1px 6px;border-radius:99px}
+#hk-bang .hk-kho-ok{background:#ecfdf5;color:#047857}
+#hk-bang .hk-kho-it{background:#fffbeb;color:#b45309}
+#hk-bang .hk-kho-0{background:#fef2f2;color:#b91c1c;font-weight:600}
 #hk-bang input[type=text],#hk-bang select,#hk-bang textarea{width:100%;box-sizing:border-box;padding:4px 6px;border:1px solid #e5e7eb;border-radius:6px;font:inherit;font-size:12.5px;background:#fff}
 #hk-bang textarea{resize:vertical;min-height:32px}
 #hk-bang .nho{display:flex;gap:10px;font-size:11.5px;margin-top:3px}
@@ -533,9 +537,10 @@ tr.gop-h td{background:#dbeafe;text-align:left;font-weight:700;padding:8px 12px;
     <label class="hop"><input type="checkbox" id="hk-phan-bien" checked> Tự phản biện, kiểm tra chéo</label>
     <button id="hk-khop" title="Chọn lại bài trong kho theo chữ ở cột Chủ đề (dùng khi thầy đã sửa nhiều chủ đề)">Tự khớp bài theo chủ đề</button>
     <button id="hk-mac-dinh" title="Trả bảng về ma trận mặc định của lớp">Ma trận mặc định</button>
-    <span id="hk-chon-nhanh" style="display:none;gap:6px;align-items:center">
-      <button id="hk-chon-het" title="Tích chọn tất cả các dạng">☑ Chọn hết</button>
-      <button id="hk-bo-het" title="Bỏ chọn tất cả để tự tích chọn những phần cần lấy câu">☐ Bỏ chọn hết</button>
+    <span id="hk-chon-nhanh" style="display:inline-flex;gap:6px;align-items:center">
+      <button id="hk-chon-het" title="Tích chọn tất cả các câu/dạng">☑ Chọn tất cả</button>
+      <button id="hk-bo-het" title="Bỏ chọn tất cả để tự tích chọn những phần cần lấy câu">☐ Bỏ chọn tất cả</button>
+      <button id="hk-chon-thieu" title="Chỉ tích chọn những dòng mà ngân hàng đang thiếu câu để dùng AI tạo thêm">⚠ Chỉ chọn dòng thiếu câu</button>
     </span>
   </div>
   <div class="cai" id="hk-xuat" style="background:#eaf3ff">
@@ -1545,31 +1550,68 @@ function chonLopHK(lop){
   if(!$("#hk-ten").dataset.sua) $("#hk-ten").value=`ĐỀ ÔN THI ${$("#hk-ky").value.toUpperCase()} – TOÁN ${lop}`;
   veHK();
 }
+const HK_MUC_I={NB:0,TH:1,VD:2,VDC:3};
+function hkKhoBai(){ // {bai_key: {TN:[N,H,V,C], DS:[...], TLN:[...], TL:[...], _tong:N}}
+  const m={};
+  for(const d of (DL&&DL.dang)||[]){
+    const bk=d.k.split("-")[0];
+    if(!m[bk]) m[bk]={TN:[0,0,0,0],DS:[0,0,0,0],TLN:[0,0,0,0],TL:[0,0,0,0],_tong:0};
+    for(const l of ["TN","DS","TLN","TL"]){
+      const a=(d.kho&&d.kho[l])||[0,0,0,0];
+      for(let i=0;i<4;i++){m[bk][l][i]+=a[i];m[bk]._tong+=a[i]}
+    }
+  }
+  return m;
+}
+function hkDemKho(r,kb){
+  if(!r.bai||!kb[r.bai]) return {muc:0,loai:0,tong:0};
+  const o=kb[r.bai], arr=o[r.loai]||[0,0,0,0];
+  return {muc:arr[HK_MUC_I[r.muc]??0]||0, loai:arr.reduce((a,b)=>a+b,0), tong:o._tong||0};
+}
 function hkChon(){return hkDs().filter(r=>r.chon!==false)}
 function veHK(){
-  const ds=hkDs(), bai=cacBai(HK_LOP), coKho=bai.length>0;
+  const ds=hkDs(), bai=cacBai(HK_LOP), coKho=bai.length>0, kb=hkKhoBai();
   const chiTL=ds.length&&ds.every(r=>r.loai==="TL");
   const dsChon=ds.filter(r=>r.chon!==false);
   const tongCau=dsChon.reduce((s,r)=>s+Math.max(1,+r.so||1),0);
-  $("#hk-tieu-phu").textContent=chiTL?`Ôn thi học kì — Lớp ${HK_LOP} (Tự luận · chọn ${dsChon.length}/${ds.length} dạng · ${tongCau} câu)`:"Ôn thi học kì — đề 12 TN · 4 Đúng/Sai · 6 Trả lời ngắn";
-  $("#hk-chon-nhanh").style.display=chiTL?"inline-flex":"none";
-  const opBai=['<option value="">— chọn bài —</option>'].concat(bai.map(b=>`<option value="${b.k}">${esc(b.ten)}</option>`)).join("");
-  let h="",cu="",cuCh="",dem={TN:0,DS:0,TLN:0,TL:0};
+  const demChon={TN:0,DS:0,TLN:0,TL:0};
+  dsChon.forEach(r=>{demChon[r.loai]=(demChon[r.loai]||0)+Math.max(1,+r.so||1)});
+  $("#hk-tieu-phu").textContent=chiTL
+    ?`Ôn thi học kì — Lớp ${HK_LOP} (Tự luận · chọn ${dsChon.length}/${ds.length} dạng · ${tongCau} câu)`
+    :`Ôn thi học kì — Lớp ${HK_LOP} (chọn ${demChon.TN} TN · ${demChon.DS} ĐS · ${demChon.TLN} TLN${demChon.TL?` · ${demChon.TL} TL`:""} = ${tongCau} câu)`;
+  const opBai=['<option value="">— chọn bài —</option>'].concat(bai.map(b=>{
+    const o=kb[b.k], tc=o?o._tong:0;
+    return `<option value="${b.k}">${esc(b.ten)} [${tc} câu]</option>`;
+  })).join("");
+  let h="",cu="",cuCh="",dem={TN:0,DS:0,TLN:0,TL:0}, soThieuKho=0;
   ds.forEach((r,i)=>{
     if(r.chuong){
       if(r.chuong!==cuCh){cuCh=r.chuong;
         const nhCh=ds.filter(x=>x.chuong===cuCh);
         const allOn=nhCh.every(x=>x.chon!==false), soOn=nhCh.filter(x=>x.chon!==false).length;
-        h+=`<tr class="phan"><td colspan="6"><label class="hop" style="cursor:pointer"><input type="checkbox" class="hk-ch-cb" data-ch="${esc(cuCh)}" ${allOn?"checked":""}> ${esc(cuCh)} <span style="font-weight:400;color:#475569">(${soOn}/${nhCh.length} dạng)</span></label></td></tr>`;}
-    }else if(r.loai!==cu){cu=r.loai;h+=`<tr class="phan"><td colspan="6">${{TN:"PHẦN I. TRẮC NGHIỆM NHIỀU PHƯƠNG ÁN (12 câu)",DS:"PHẦN II. TRẮC NGHIỆM ĐÚNG/SAI (4 câu)",TLN:"PHẦN III. TRẢ LỜI NGẮN (6 câu)",TL:`PHẦN TỰ LUẬN (${ds.filter(x=>x.loai==="TL").length} bài)`}[cu]}</td></tr>`}
+        h+=`<tr class="phan"><td colspan="6"><label class="hop" style="cursor:pointer"><input type="checkbox" class="hk-nhom-cb" data-kieu="ch" data-val="${esc(cuCh)}" ${allOn?"checked":""}> ${esc(cuCh)} <span style="font-weight:400;color:#475569">(${soOn}/${nhCh.length} dạng)</span></label></td></tr>`;}
+    }else if(r.loai!==cu){cu=r.loai;
+      const nhL=ds.filter(x=>x.loai===cu);
+      const allOn=nhL.every(x=>x.chon!==false), soOn=nhL.filter(x=>x.chon!==false).length;
+      const tenP={TN:"PHẦN I. TRẮC NGHIỆM NHIỀU PHƯƠNG ÁN",DS:"PHẦN II. TRẮC NGHIỆM ĐÚNG/SAI",TLN:"PHẦN III. TRẢ LỜI NGẮN",TL:"PHẦN TỰ LUẬN"}[cu]||cu;
+      h+=`<tr class="phan"><td colspan="6"><label class="hop" style="cursor:pointer"><input type="checkbox" class="hk-nhom-cb" data-kieu="loai" data-val="${cu}" ${allOn?"checked":""}> ${tenP} <span style="font-weight:400;color:#475569">(${soOn}/${nhL.length} câu đang chọn)</span></label></td></tr>`;}
     dem[r.loai]=(dem[r.loai]||0)+1;
     const nhanLoai={TN:"TN",DS:"ĐS",TLN:"TLN",TL:"TL"}[r.loai]||r.loai;
     const chon=r.chon!==false, so=Math.max(1,+r.so||1);
-    const cotDau=chiTL?`<div class="o-so"><input type="checkbox" data-f="chon" ${chon?"checked":""} title="Tích để lấy câu ở dạng này"><b>${nhanLoai}${dem[r.loai]}</b><input type="number" class="so-cau" data-f="so" min="1" max="20" value="${so}" title="Số câu muốn sinh cho dạng này"></div>`
-      :`<b>${nhanLoai}${dem[r.loai]}</b>`;
-    h+=`<tr class="${r.loai}${chiTL&&!chon?" bo-chon":""}" data-i="${i}"><td>${cotDau}</td>
+    const dk=hkDemKho(r,kb);
+    if(chon&&coKho&&(dk.muc<so||dk.loai===0)) soThieuKho++;
+    let khoHtml="";
+    if(coKho&&r.bai){
+      const cls=dk.loai===0?"hk-kho-0":dk.muc<so?"hk-kho-it":"hk-kho-ok";
+      const txt=dk.loai===0?`Kho: 0 câu ${nhanLoai} (tổng bài: ${dk.tong}) · cần tạo thêm`
+        :dk.muc<so?`Kho: ${dk.muc} ${r.muc} / ${dk.loai} ${nhanLoai} (cần ${so} · thiếu ${so-dk.muc})`
+        :`Kho: ${dk.muc} ${r.muc} / ${dk.loai} ${nhanLoai} (đủ)`;
+      khoHtml=`<div><span class="hk-kho ${cls}" title="Trong ngân hàng: bài này có ${dk.muc} câu ${nhanLoai} mức ${r.muc}, tổng ${dk.loai} câu ${nhanLoai}, tổng cả bài ${dk.tong} câu">${txt}</span></div>`;
+    }
+    const cotDau=`<div class="o-so"><input type="checkbox" data-f="chon" ${chon?"checked":""} title="Tích để lấy câu ở dòng này"><b>${nhanLoai}${dem[r.loai]}</b><input type="number" class="so-cau" data-f="so" min="1" max="20" value="${so}" title="Số câu cần lấy / AI sinh thêm cho dòng này"></div>`;
+    h+=`<tr class="${r.loai}${!chon?" bo-chon":""}" data-i="${i}"><td>${cotDau}</td>
      <td><input type="text" data-f="chu_de" value="${esc(r.chu_de)}"></td>
-     <td><select data-f="bai" ${coKho?"":"disabled title='Ngân hàng chưa có bài cho lớp này'"}>${opBai.replace(`value="${r.bai}"`,`value="${r.bai}" selected`)}</select></td>
+     <td><select data-f="bai" ${coKho?"":"disabled title='Ngân hàng chưa có bài cho lớp này'"}>${opBai.replace(`value="${r.bai}"`,`value="${r.bai}" selected`)}</select>${khoHtml}</td>
      <td><select data-f="muc">${["NB","TH","VD","VDC"].map(m=>`<option ${m===r.muc?"selected":""}>${m}</option>`).join("")}</select></td>
      <td><select data-f="ngu_canh">${HK_NGU_CANH.map(n=>`<option value="${n}" ${n===r.ngu_canh?"selected":""}>${n||"— Thuần toán —"}</option>`).join("")}</select></td>
      <td><textarea data-f="mau" rows="1" placeholder="Để trống: AI tự tạo. Dán câu mẫu…">${esc(r.mau)}</textarea>
@@ -1578,27 +1620,38 @@ function veHK(){
   });
   $("#hk-bang tbody").innerHTML=h;
   const thieu=coKho?dsChon.filter(r=>!r.bai).length:0;
-  $("#hk-tt").textContent=coKho?(chiTL&&!dsChon.length?"Chưa tích chọn dạng nào (click vào ô vuông để chọn phần cần lấy câu)."
-    :thieu?`${thieu} dạng đang chọn chưa gắn bài trong kho`
-    :chiTL?`Đang chọn ${dsChon.length} dạng · tổng ${tongCau} câu tự luận.`:`Mọi câu đã gắn bài trong kho.`)
-    :`Lớp ${HK_LOP}: ngân hàng chưa có — dùng đề AI.`;
+  $("#hk-tt").textContent=coKho?(!dsChon.length?"Chưa tích chọn dòng nào (click ô vuông hoặc Chọn tất cả)."
+    :thieu?`${thieu} dòng đang chọn chưa gắn bài trong kho`
+    :`Đang chọn ${dsChon.length} dòng · tổng ${tongCau} câu`+(soThieuKho?` · ⚠ ${soThieuKho} dòng kho đang thiếu/chưa có câu (dùng AI tạo thêm)`:` · ✓ kho đủ câu`))
+    :`Lớp ${HK_LOP}: ngân hàng chưa có — dùng đề AI (${tongCau} câu đang chọn).`;
   $("#hk-ngan-hang").disabled=$("#hk-xem").disabled=!coKho||!dsChon.length;
   const tr=hkTranh().length; $("#hk-tt").textContent+=tr?` · tránh ${tr} câu đã ra ở các lần khác`:"";
 }
 $("#hk-bang").addEventListener("change",e=>{
-  if(e.target.classList.contains("hk-ch-cb")){
-    const ch=e.target.dataset.ch, on=e.target.checked;
-    hkDs().forEach(r=>{if(r.chuong===ch) r.chon=on});
+  if(e.target.classList.contains("hk-nhom-cb")){
+    const k=e.target.dataset.kieu, v=e.target.dataset.val, on=e.target.checked;
+    hkDs().forEach(r=>{if((k==="ch"?r.chuong:r.loai)===v) r.chon=on});
     hkLuu(); veHK(); return;
   }
   const tr=e.target.closest("tr[data-i]"),f=e.target.dataset.f; if(!tr||!f)return;
   const r=hkDs()[+tr.dataset.i];
   r[f]=e.target.type==="checkbox"?e.target.checked:f==="so"?Math.max(1,Math.min(20,+e.target.value||1)):e.target.value;
   if(f==="chu_de"&&cacBai(HK_LOP).length>0){const k=khopBai(r.chu_de,HK_LOP);if(k&&k!==r.bai){r.bai=k;veHK()}}
-  hkLuu(); if(f==="bai"||f==="chon"||f==="so") veHK();
+  hkLuu(); if(f==="bai"||f==="chon"||f==="so"||f==="muc") veHK();
 });
 $("#hk-chon-het").onclick=()=>{hkDs().forEach(r=>r.chon=true);hkLuu();veHK()};
 $("#hk-bo-het").onclick=()=>{hkDs().forEach(r=>r.chon=false);hkLuu();veHK()};
+$("#hk-chon-thieu").onclick=()=>{
+  const kb=hkKhoBai();
+  let dem=0;
+  hkDs().forEach(r=>{
+    const dk=hkDemKho(r,kb), so=Math.max(1,+r.so||1);
+    const thieu=!r.bai||dk.loai===0||dk.muc<so;
+    r.chon=thieu; if(thieu) dem++;
+  });
+  hkLuu(); veHK();
+  if(!dem) alert("Ngân hàng đã đủ câu cho tất cả các dòng ở lớp này!");
+};
 $("#nut-on-thi").onclick=moOnThi;
 $("#hk-dong").onclick=()=>$("#hop-hk").style.display="none";
 document.querySelectorAll("#hop-hk .lop button").forEach(b=>b.onclick=()=>chonLopHK(+b.dataset.l));
