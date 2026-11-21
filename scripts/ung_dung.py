@@ -170,7 +170,7 @@ MO_TA_MUC_HK = {
 }
 
 
-def _prompt_hk_ai(lop, it, thieu, ds_ma, da_de, mau_kho=()):
+def _prompt_hk_ai(lop, it, thieu, ds_ma, da_de, ten_chuong="", ten_bai=""):
     loai = it.get("loai") or "TN"
     muc_code = it.get("muc") or "TH"
     muc_ten = {"NB": "Nhận biết", "TH": "Thông hiểu", "VD": "Vận dụng", "VDC": "Vận dụng cao"}.get(muc_code, "Thông hiểu")
@@ -198,12 +198,6 @@ def _prompt_hk_ai(lop, it, thieu, ds_ma, da_de, mau_kho=()):
             f"- Môi trường `\\begin{{bt}}%[MÃ_DẠNG]` … `\\end{{bt}}` (KHÔNG có `\\shortans`), lời giải `\\loigiai{{...}}` đủ từng bước rõ ràng."
         )
     goi_ma = "\n".join(f"  - {ma}: {ten}" for ma, ten in ds_ma)
-    khung_mau_kho = ""
-    if mau_kho:
-        khung_mau_kho = (
-            "\nVÍ DỤ CHUẨN ĐỘ KHÓ TRONG NGÂN HÀNG (CHỈ dùng để neo tầm độ khó tương đương hoặc cao hơn — TUYỆT ĐỐI KHÔNG lặp lại cùng 1 khuôn bài):\n"
-            + "\n---\n".join(m[:650] for m in mau_kho[:3]) + "\n"
-        )
     da_dang = ""
     if thieu > 1:
         goc_kho = [
@@ -220,27 +214,38 @@ def _prompt_hk_ai(lop, it, thieu, ds_ma, da_de, mau_kho=()):
                 for i in range(thieu)
             )
             da_dang = (
-                "\nYÊU CẦU ĐA DẠNG CÂU HỎI KHÓ (BẮT BUỘC — KHÔNG ĐƯỢC LẶP 1 KIỂU BÀI):\n"
-                "- CẤM TUYỆT ĐỐI sinh nhiều câu cùng một khuôn/ý tưởng rồi chỉ thay số liệu!\n"
-                "- Mỗi câu trong lượt này PHẢI khai thác một hướng tư duy, bối cảnh và phương pháp giải KHÁC NHAU:\n"
+                "\nYÊU CẦU ĐA DẠNG CÂU HỎI KHÓ (BẮT BUỘC — SÁNG TẠO KHÁC NHAU, KHÔNG RẬP KHUÔN MẪU):\n"
+                "- CẤM TUYỆT ĐỐI sinh nhiều câu cùng một khuôn/ý tưởng rồi chỉ thay số liệu! Không nhất thiết giống câu mẫu có sẵn.\n"
+                "- Hãy xoay quanh đúng Lớp, Tên bài, Chủ đề và các Dạng toán bên dưới, mỗi câu khai thác một hướng tư duy, bối cảnh và phương pháp giải KHÁC NHAU:\n"
                 + phan_bo + "\n"
             )
         else:
             da_dang = (
-                "\nYÊU CẦU ĐA DẠNG (BẮT BUỘC):\n"
-                "- Mỗi câu PHẢI khai thác một khía cạnh / kỹ năng / kiểu hỏi KHÁC NHAU (không sinh các câu na ná nhau chỉ thay số liệu).\n"
-                + (f"- Phân bổ đều qua các mã dạng khác nhau trong danh sách MÃ DẠNG HỢP LỆ.\n" if len(ds_ma) > 1 else "")
+                "\nYÊU CẦU ĐA DẠNG (BẮT BUỘC — KHÔNG RẬP KHUÔN MẪU):\n"
+                "- Hãy sáng tạo ĐA DẠNG các câu hỏi mới xoay quanh đúng Lớp, Tên bài, Chủ đề và các Dạng toán bên dưới — KHÔNG nhất thiết giống mẫu, KHÔNG sinh các câu na ná nhau chỉ thay số liệu.\n"
+                + (f"- Phân bổ đều qua các mã dạng khác nhau trong danh sách CÁC DẠNG TOÁN THUỘC BÀI.\n" if len(ds_ma) > 1 else "")
             )
+    thang_muc = (
+        "QUY ƯỚC 4 MỨC ĐỘ NHẬN THỨC (BẮT BUỘC PHÂN BIỆT RÕ):\n"
+        "- NB = Nhận biết (mức 1): nhận diện khái niệm, định lí, công thức cơ bản hoặc tính trực tiếp 1 bước.\n"
+        "- TH = Thông hiểu (mức 2): hiểu bản chất, biến đổi 2–3 bước quen thuộc, kết hợp 2 kiến thức cơ bản trong bài.\n"
+        "- VD = Vận dụng (mức 3 — câu 8–9 điểm): bài toán ≥ 3–4 bước suy luận liên kết (mô hình hoá thực tế, tham số, tìm điểm, kết hợp nhiều tính chất).\n"
+        "- VDC = Vận dụng cao (mức 4 — câu 9,5–10 điểm): bài toán phân hoá sâu ≥ 4–5 bước (cực trị, tối ưu phức tạp, biện luận đa điều kiện).\n"
+    )
     p = (
         f"Bạn là giáo viên Toán THPT/THCS giỏi luyện thi học sinh giỏi và đề thi chuẩn GDPT 2018 (sách Kết nối tri thức). "
-        f"Hãy soạn ĐÚNG {thieu} câu hỏi Toán Lớp {lop}, mức độ **{muc_ten}**.\n\n"
-        f"YÊU CẦU ĐỘ KHÓ BẮT BUỘC ({muc_ten}):\n{MO_TA_MUC_HK.get(muc_code, MO_TA_MUC_HK['TH'])}\n"
+        f"Hãy soạn ĐÚNG {thieu} câu hỏi Toán Lớp {lop}, mức độ **{muc_code} ({muc_ten})**.\n\n"
+        + thang_muc + "\n"
+        f"YÊU CẦU CỤ THỂ CHO MỨC ĐANG SOẠN — {muc_code} ({muc_ten}):\n{MO_TA_MUC_HK.get(muc_code, MO_TA_MUC_HK['TH'])}\n"
         + da_dang + "\n"
-        f"CHỦ ĐỀ: {it.get('chu_de') or ''}\n"
-        + (f"NGỮ CẢNH THỰC TẾ: {it.get('ngu_canh')}\n" if it.get("ngu_canh") else "")
-        + (f"CÂU MẪU GIÁO VIÊN GỢI Ý (soạn câu mới cùng tầm độ khó, đa dạng bối cảnh và cách hỏi):\n{it.get('mau')}\n" if it.get("mau") else "")
-        + khung_mau_kho
-        + f"\nMÃ DẠNG HỢP LỆ (chọn đúng 1 mã trong danh sách sau ghi ngay sau `\\begin{{{mt_env}}}`):\n{goi_ma}\n\n"
+        f"PHẠM VI KIẾN THỨC (SOẠN CÂU XOAY QUANH ĐÚNG BÀI & CHỦ ĐỀ NÀY, ĐA DẠNG CÁC DẠNG TOÁN KHÁC NHAU):\n"
+        f"- Lớp: Toán Lớp {lop} (SGK Kết nối tri thức)\n"
+        + (f"- Chương: {ten_chuong}\n" if ten_chuong else "")
+        + (f"- Tên bài: {ten_bai}\n" if ten_bai else "")
+        + f"- Chủ đề trọng tâm: {it.get('chu_de') or ''}\n"
+        + (f"- Ngữ cảnh thực tế gợi ý: {it.get('ngu_canh')}\n" if it.get("ngu_canh") else "")
+        + (f"- Tham khảo thêm của giáo viên (chỉ tham khảo phạm vi & tầm độ khó, tự do sáng tạo đa dạng câu hỏi khác nhau, KHÔNG nhất thiết giống khuôn mẫu):\n{it.get('mau')}\n" if it.get("mau") else "")
+        + f"\nCÁC DẠNG TOÁN & MÃ DẠNG HỢP LỆ THUỘC BÀI NÀY (chọn đúng 1 mã ghi ngay sau `\\begin{{{mt_env}}}`):\n{goi_ma}\n\n"
         f"QUY TẮC ĐỊNH DẠNG LATEX NGÂN HÀNG (BẮT BUỘC):\n{quy_tac}\n"
         "- Công thức toán đặt trong `$...$` hoặc `$$...$$` (KHÔNG dùng `\\(` `\\[`; vectơ dùng `\\overrightarrow{AB}`, KHÔNG dùng `\\vec`; cung tròn dùng `\\overset{\\frown}{AB}`, KHÔNG dùng `\\wideparen`).\n"
         "- Số thập phân trong công thức viết `15{,}25`. Không dùng Markdown (`**`, `#`) trong khối LaTeX.\n"
@@ -252,39 +257,9 @@ def _prompt_hk_ai(lop, it, thieu, ds_ma, da_de, mau_kho=()):
     return p
 
 
-def _mau_chuan_kho(kho_all, loai, muc_ma, bai):
-    """Lấy tối đa 3 câu mẫu từ các dạng KHÁC NHAU trong cùng bài (hoặc cùng chương) và đúng loại + mức để neo chuẩn độ khó đa dạng."""
-    import random as _rd
-    if not bai or not kho_all:
-        return []
-    uu, phu = {}, {}
-    chuong = bai[:3]
-    for c in kho_all.values():
-        if c.get("loai") != loai or c.get("muc_chuan") != muc_ma:
-            continue
-        dk = c.get("dang_key") or ""
-        nd = (c.get("noi_dung") or "").strip()
-        if not nd or len(nd) > 1200:
-            continue
-        if dk == bai or dk.startswith(bai + "-") or dk.split("-")[0] == bai.split("-")[0]:
-            uu.setdefault(dk, []).append(nd)
-        elif dk.startswith(chuong):
-            phu.setdefault(dk, []).append(nd)
-    nhom = uu if uu else phu
-    keys = list(nhom.keys())
-    _rd.shuffle(keys)
-    ra = []
-    for k in keys:
-        ra.append(_rd.choice(nhom[k]))
-        if len(ra) >= 3:
-            break
-    return ra
-
-
 def hk_sinh_ai_nen(d):
     """Chạy nền cho /api/hk-sinh-ai: dùng chung khoá AI (ai_khoa.json) sinh câu thiếu/ít ở Ôn thi HK và nhập thẳng vào ngân hàng."""
     import sinh_tuong_tu as ST, nhap_cau
-    from xem_truoc import kho as _doc_kho
     def ghi(x):
         cong_viec["nhat_ky"] += x + "\n"
     ra = {"ok": False}
@@ -294,38 +269,44 @@ def hk_sinh_ai_nen(d):
         if not muc_tieu:
             raise RuntimeError("Chưa chọn dòng nào để AI sinh câu.")
         id_map = tai_id_map()
-        kho_all = _doc_kho()
         xoay = ST.XoayKhoa(ghi=ghi)
         muc_map = {"NB": "N", "TH": "H", "VD": "V", "VDC": "C"}
+        muc_ten_map = {"NB": "Nhận biết", "TH": "Thông hiểu", "VD": "Vận dụng", "VDC": "Vận dụng cao"}
         tat_ca = []
         ghi(f"🤖 AI sinh câu cho Ôn thi HK Lớp {lop} ({len(muc_tieu)} mục · tổng {sum(int(x.get('so_sinh') or 1) for x in muc_tieu)} câu)…")
         for idx, it in enumerate(muc_tieu, 1):
             loai = it.get("loai") or "TN"
-            muc_ma = muc_map.get(it.get("muc"), "H")
+            muc_code = it.get("muc") or "TH"
+            muc_ma = muc_map.get(muc_code, "H")
             so_can = max(1, min(15, int(it.get("so_sinh") or 3)))
             mt_env = "ex" if loai in ("TN", "DS") else "bt"
             bai = (it.get("bai") or "").strip()
-            ds_ma = []
+            ds_ma, ten_chuong, ten_bai = [], "", ""
             if bai:
                 if "-" in bai and bai in id_map:
-                    ds_ma.append((bai.replace("?", muc_ma), (id_map[bai].get("type_name") or bai).strip()))
+                    v = id_map[bai]
+                    ten_chuong = (v.get("chap_name") or "").strip()
+                    ten_bai = (v.get("lesson_name") or "").strip()
+                    ds_ma.append((bai.replace("?", muc_ma), (v.get("type_name") or bai).strip()))
                 else:
                     for k, v in id_map.items():
                         if k == bai or k.startswith(bai + "-"):
+                            if not ten_chuong:
+                                ten_chuong = (v.get("chap_name") or "").strip()
+                            if not ten_bai:
+                                ten_bai = (v.get("lesson_name") or "").strip()
                             ds_ma.append((k.replace("?", muc_ma), (v.get("type_name") or k).strip()))
             if not ds_ma:
                 ma_tam = (bai or f"{lop if lop <= 9 else lop - 10}D1?1-1").replace("?", muc_ma)
                 ds_ma = [(ma_tam, it.get("chu_de") or ma_tam)]
             ma_mac_dinh = ds_ma[0][0]
-            mau_kho = _mau_chuan_kho(kho_all, loai, muc_ma, bai)
-            ghi(f"  [{idx}/{len(muc_tieu)}] {loai} · {it.get('muc')} · {it.get('chu_de') or bai} → cần {so_can} câu (mã {ma_mac_dinh}"
-                + (f", neo theo {len(mau_kho)} câu mẫu kho" if mau_kho else "") + ")")
+            ghi(f"  [{idx}/{len(muc_tieu)}] {loai} · {muc_code} ({muc_ten_map.get(muc_code, muc_code)}) · {ten_bai or it.get('chu_de') or bai} → cần {so_can} câu đa dạng ({len(ds_ma)} dạng)")
             co, da_de = [], set()
             for lan in range(4):
                 thieu = so_can - len(co)
                 if thieu <= 0:
                     break
-                p = _prompt_hk_ai(lop, it, thieu, ds_ma[:8], da_de, mau_kho=mau_kho)
+                p = _prompt_hk_ai(lop, it, thieu, ds_ma[:10], da_de, ten_chuong=ten_chuong, ten_bai=ten_bai)
                 try:
                     t, cat, k = xoay.goi(p)
                 except ST.HetKhoa as e:
