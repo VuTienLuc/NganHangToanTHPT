@@ -104,3 +104,59 @@ def doi(ma, tranh, rng=None, da_dung="uu_tien"):
             t["con"] = len(ung) - 1
             return t
     return None
+
+
+def _bo_dau(s):
+    import unicodedata
+    s = str(s or "").replace("đ", "d").replace("Đ", "D")
+    return "".join(ch for ch in unicodedata.normalize("NFD", s) if unicodedata.category(ch) != "Mn").lower()
+
+
+def ds_theo_nhom(loai, lop="", chuong="", bai="", dang="", muc="", tim="", chi_chua_dung=False, tranh=(), offset=0, limit=30):
+    """Lấy danh sách câu theo nhóm (Lớp / Chương / Bài / Dạng / Mức / từ khoá) để giáo viên duyệt & chọn câu thay thế."""
+    K = kho()
+    ls = lich_su()
+    tranh_set = set(tranh or [])
+    q = _bo_dau(tim).strip()
+    lop_str = str(lop or "").strip()
+    thu_muc = {"N": 0, "H": 1, "V": 2, "C": 3}
+    ung = []
+    for x in K.values():
+        if loai and x.get("loai") != loai:
+            continue
+        if not hop_le(x):
+            continue
+        dk = x.get("dang_key") or ""
+        if lop_str and str(x.get("lop") or "") != lop_str:
+            continue
+        if chuong and not dk.startswith(chuong):
+            continue
+        if bai and dk.split("-")[0] != bai:
+            continue
+        if dang and dk != dang:
+            continue
+        if muc and (x.get("muc_chuan") or "") != muc:
+            continue
+        if chi_chua_dung and ls.get(x["ma"]):
+            continue
+        if q:
+            hay = _bo_dau(f"{x.get('ma','')} {x.get('id','')} {x.get('ten_dang','')} {x.get('noi_dung','')}")
+            if q not in hay:
+                continue
+        ung.append(x)
+    ung.sort(key=lambda x: (
+        1 if x["ma"] in tranh_set else 0,
+        len(ls.get(x["ma"], [])),
+        x.get("dang_key") or "",
+        thu_muc.get(x.get("muc_chuan") or "", 9),
+        x["ma"],
+    ))
+    tong = len(ung)
+    offset = max(0, int(offset or 0))
+    limit = max(1, min(60, int(limit or 30)))
+    ds = []
+    for x in ung[offset:offset + limit]:
+        t = the_cau(x["ma"], ls)
+        t["trong_de"] = x["ma"] in tranh_set
+        ds.append(t)
+    return {"ok": True, "tong": tong, "offset": offset, "con_them": offset + len(ds) < tong, "ds": ds}

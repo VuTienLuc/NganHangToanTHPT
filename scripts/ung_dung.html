@@ -302,6 +302,14 @@ tr.gop-h td{background:#dbeafe;text-align:left;font-weight:700;padding:8px 12px;
 .the-cau .muc{display:inline-block;padding:0 6px;border-radius:6px;background:#eef2ff;font-weight:600}
 @keyframes nhay{from{background:#fef9c3}to{background:#fff}}
 #hop-xt .chan{padding:10px 18px;border-top:1px solid var(--vien);display:flex;gap:8px;align-items:center}
+#hop-chon-cau{position:fixed;inset:0;background:rgba(17,24,39,.45);display:none;align-items:center;justify-content:center;z-index:26}
+#hop-chon-cau .noi{background:#fff;border-radius:14px;width:min(1120px,96vw);height:min(92vh,940px);display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.3)}
+#hop-chon-cau h2{margin:0;padding:12px 18px;font-size:16px;border-bottom:1px solid var(--vien);display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+#hop-chon-cau .loc{display:flex;flex-wrap:wrap;gap:8px 10px;padding:10px 18px;border-bottom:1px solid var(--vien);background:#f5f7ff;font-size:13px;align-items:center}
+#hop-chon-cau .loc select,#hop-chon-cau .loc input[type=text]{padding:5px 8px;border:1px solid var(--vien);border-radius:8px;font:inherit;background:#fff}
+#cc-ds{overflow:auto;flex:1;padding:12px 18px}
+#cc-ds .the-cau.trong-de{opacity:.55;background:#f8fafc}
+#hop-chon-cau .chan{padding:10px 18px;border-top:1px solid var(--vien);display:flex;gap:8px;align-items:center;font-size:13px}
 #hop-ts{position:fixed;inset:0;background:rgba(17,24,39,.35);display:none;align-items:center;justify-content:center;z-index:12}
 #hop-ts .noi{background:#fff;border-radius:14px;width:min(1250px,97vw);height:min(94vh,980px);display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.25)}
 #hop-ts h2{margin:0;padding:12px 18px;font-size:16px;border-bottom:1px solid var(--vien);display:flex;gap:10px;align-items:center}
@@ -887,6 +895,22 @@ tr.gop-h td{background:#dbeafe;text-align:left;font-weight:700;padding:8px 12px;
   <div class="chan"><span style="font-size:12px;color:#666">“Đổi câu” lấy ngẫu nhiên câu khác cùng dạng, cùng mức (ưu tiên câu chưa dùng). Hài lòng thì bấm Xác nhận.</span>
     <button id="xt-random" style="margin-left:auto">↻ Random lại tất cả</button><button id="xt-nhatky">Nhật ký chọn câu</button>
     <button id="xt-bg" title="Đăng bộ câu đang xem thành bài giảng trình chiếu HTML (có đáp án, lời giải) lên trang mục lục lớp">📚 Đăng bài giảng</button><button id="xt-thi" title="Đưa bộ câu của mã đề đang xem lên mạng thành link cho học sinh làm bài (Cloudflare Pages), tự chấm, gửi điểm về Google Sheet">🌐 Link thi trực tuyến</button><button id="xt-tc" title="Đưa bộ câu của mã đề đang xem sang ứng dụng Soạn đề &amp; trình chiếu Toán (HTML): trình chiếu, bài kiểm tra cho học sinh, Word, thư viện Google Sheets…">▶ Sang trình chiếu HTML</button><button id="xt-nhanh" class="chinh" style="display:none">⚡ Tạo tất cả</button><button id="xt-ok" class="chinh">Xác nhận &amp; xuất đề</button><button id="xt-dong">Đóng</button></div>
+</div></div>
+<div id="hop-chon-cau"><div class="noi">
+  <h2>🔍 Chọn câu thay thế từ ngân hàng <span id="cc-tieu" style="font-weight:400;font-size:13px;color:#475569"></span></h2>
+  <div class="loc">
+    <label>Lớp <select id="cc-lop"></select></label>
+    <label>Chương <select id="cc-chuong" style="max-width:250px"></select></label>
+    <label>Bài <select id="cc-bai" style="max-width:250px"></select></label>
+    <label>Dạng <select id="cc-dang" style="max-width:250px"></select></label>
+    <label>Mức <select id="cc-muc"><option value="">Mọi mức</option><option value="N">N – Nhận biết</option><option value="H">H – Thông hiểu</option><option value="V">V – Vận dụng</option><option value="C">C – Vận dụng cao</option></select></label>
+    <input type="text" id="cc-tim" placeholder="Tìm nhanh trong nội dung câu…" style="min-width:190px;flex:1">
+    <label class="hop"><input type="checkbox" id="cc-moi"> Chỉ câu chưa dùng</label>
+  </div>
+  <div id="cc-ds"></div>
+  <div class="chan"><span id="cc-tt" style="color:#475569"></span>
+    <button id="cc-them" style="margin-left:auto;display:none">Xem thêm câu…</button>
+    <button id="cc-dong">Đóng</button></div>
 </div></div>
 <div id="hop-ts"><div class="noi">
   <h2>Ngân hàng tuyển sinh 10 – Toán TP.HCM <span style="font-weight:400;font-size:12px;color:#666">7 bài · 10 điểm · 120 phút (cấu trúc đề Sở 2025–26, 2026–27)</span>
@@ -2371,7 +2395,18 @@ function htmlThe(c,so){
   return `<div class="the-cau" data-ma="${c.ma}"><div class="dau">Câu ${so} · <span class="muc">${c.muc||"?"}</span> · ${esc(c.ten_dang||"")} · <b>${c.ma}</b>
       ${c.da_dung?` · <span style="color:#b45309">đã dùng ${c.da_dung} lần</span>`:""}${c.ghi_chu?` · <i>${esc(c.ghi_chu)}</i>`:""}</div>
     <div class="nd">${c.de}${pa}${dap}</div>
-    <div class="nut"><button class="xt-doi">↻ Đổi câu</button></div></div>`;
+    <div class="nut" style="display:flex;gap:6px;flex-wrap:wrap"><button class="xt-doi">↻ Đổi nhanh</button><button class="xt-chon" title="Chuyển đổi qua lại các nhóm (Lớp / Chương / Bài / Dạng / Mức) để tự chọn câu ưng ý nhất">🔍 Chọn theo nhóm…</button></div></div>`;
+}
+function ganNutThe(el,ma){
+  const b1=el.querySelector(".xt-doi"); if(b1) b1.onclick=()=>doiCau(ma,b1);
+  const b2=el.querySelector(".xt-chon"); if(b2) b2.onclick=()=>moChonCau(ma);
+}
+function thayTheXT(maCu,cauMoi){
+  const b=XT.bo[Math.min(XT.tab,XT.bo.length-1)];
+  for(const ds of Object.values(b)){const i=ds.findIndex(c=>c.ma===maCu); if(i>=0){ds[i]=cauMoi;
+    const so=i+1, cu=$("#xt-than").querySelector(`.the-cau[data-ma="${maCu}"]`);
+    const tmp=document.createElement("div");tmp.innerHTML=htmlThe(cauMoi,so);const moi=tmp.firstElementChild;moi.classList.add("moi");
+    cu.replaceWith(moi); ganNutThe(moi,cauMoi.ma); veCong(moi); break}}
 }
 function veXT(){
   $("#hop-xt").style.display="flex";
@@ -2385,20 +2420,98 @@ function veXT(){
   $("#xt-nhanh").style.display=XT.nguon&&XT.nguon.nhanh?"":"none";
   $("#xt-tom").textContent=(XT.nguon&&XT.nguon.nhanh?"⚡ Tạo nhanh · ":"")+`${tong} câu`+(bo.length>1?` · ${bo.length} bộ (mỗi mã đề một bộ)`:" · dùng chung cho mọi mã đề");
   $("#xt-than").innerHTML=h;
-  $("#xt-than").querySelectorAll(".xt-doi").forEach(n=>n.onclick=()=>doiCau(n.closest(".the-cau").dataset.ma,n));
+  $("#xt-than").querySelectorAll(".the-cau[data-ma]").forEach(el=>ganNutThe(el,el.dataset.ma));
   veCong($("#xt-than"));
 }
 async function doiCau(ma,nut){
-  const b=XT.bo[Math.min(XT.tab,XT.bo.length-1)];
   const tranh=XT.bo.flatMap(x=>Object.values(x).flat().map(c=>c.ma)).concat((XT.mt&&XT.mt.tranh_ma)||[]);
   nut.disabled=true;nut.textContent="Đang đổi…";
   const r=await api("/api/doi-cau",{ma,tranh,da_dung:(XT&&XT.mt&&XT.mt.cau_da_dung)||$("#cau_da_dung").value});
-  if(!r.ok){nut.textContent="Hết câu thay";alert("Kho không còn câu khác cùng dạng (cùng loại) để đổi.");return}
-  for(const ds of Object.values(b)){const i=ds.findIndex(c=>c.ma===ma); if(i>=0){ds[i]=r.cau;
-    const so=i+1, cu=$("#xt-than").querySelector(`.the-cau[data-ma="${ma}"]`);
-    const tmp=document.createElement("div");tmp.innerHTML=htmlThe(r.cau,so);const moi=tmp.firstElementChild;moi.classList.add("moi");
-    cu.replaceWith(moi); moi.querySelector(".xt-doi").onclick=()=>doiCau(r.cau.ma,moi.querySelector(".xt-doi")); veCong(moi); break}}
+  if(!r.ok){nut.textContent="Hết câu thay";alert("Kho không còn câu khác cùng dạng (cùng loại) — thầy bấm “🔍 Chọn theo nhóm…” để chuyển sang nhóm khác.");return}
+  thayTheXT(ma,r.cau);
 }
+// ---- Chọn câu thay thế theo nhóm (chuyển qua lại Lớp / Chương / Bài / Dạng / Mức)
+let CC_STATE=null;
+function ccCapNhatChuong(lop,chChon=""){
+  const ds=(DL?.dang||[]).filter(d=>!lop||String(d.lop)===String(lop));
+  const map=new Map();
+  ds.forEach(d=>{const k=d.k.slice(0,3);if(!map.has(k))map.set(k,`${k} · ${d.ten_chuong}`)});
+  $("#cc-chuong").innerHTML=`<option value="">— Tất cả chương —</option>`+[...map.entries()].map(([k,v])=>`<option value="${k}">${esc(v)}</option>`).join("");
+  if(chChon&&map.has(chChon)) $("#cc-chuong").value=chChon;
+}
+function ccCapNhatBai(lop,ch,baiChon=""){
+  const ds=(DL?.dang||[]).filter(d=>(!lop||String(d.lop)===String(lop))&&(!ch||d.k.startsWith(ch)));
+  const map=new Map();
+  ds.forEach(d=>{const k=d.k.split("-")[0];if(!map.has(k))map.set(k,`${k} · ${d.ten_bai}`)});
+  $("#cc-bai").innerHTML=`<option value="">— Tất cả bài —</option>`+[...map.entries()].map(([k,v])=>`<option value="${k}">${esc(v)}</option>`).join("");
+  if(baiChon&&map.has(baiChon)) $("#cc-bai").value=baiChon;
+}
+function ccCapNhatDang(lop,ch,bai,dangChon=""){
+  const ds=(DL?.dang||[]).filter(d=>(!lop||String(d.lop)===String(lop))&&(!ch||d.k.startsWith(ch))&&(!bai||d.k.split("-")[0]===bai));
+  $("#cc-dang").innerHTML=`<option value="">— Tất cả dạng —</option>`+ds.map(d=>`<option value="${d.k}">${d.k} · ${esc(d.ten_dang)}</option>`).join("");
+  if(dangChon&&ds.some(d=>d.k===dangChon)) $("#cc-dang").value=dangChon;
+}
+function htmlTheChon(c,i){
+  const pa=c.pa&&c.pa.length===4?`<div class="pa">${c.pa.map((x,j)=>{const n=c.loai==="TN"?"ABCD"[j]:"abcd"[j];
+      const dung=c.loai==="TN"?c.dap_an===n:(c.dap_an[j]==="Đ");
+      return `<div class="${dung?"dung":""}">${n}${c.loai==="TN"?".":")"} ${x}${c.loai==="DS"?` <small>(${dung?"Đ":"S"})</small>`:""}</div>`}).join("")}</div>`:"";
+  const dap=c.loai==="TLN"?`<div><b>Đáp số:</b> ${esc(c.dap_an)}</div>`:"";
+  return `<div class="the-cau${c.trong_de?" trong-de":""}" data-i="${i}"><div class="dau"><span class="muc">${c.muc||"?"}</span> · ${esc(c.dang_key||"")} · ${esc(c.ten_dang||"")} · <b>${c.ma}</b>
+      ${c.da_dung?` · <span style="color:#b45309">đã dùng ${c.da_dung} lần</span>`:` · <span style="color:#047857">chưa dùng</span>`}
+      ${c.trong_de?` · <b style="color:#b91c1c">đang có trong đề</b>`:""}</div>
+    <div class="nd">${c.de}${pa}${dap}</div>
+    <div class="nut"><button class="cc-lay chinh" ${c.trong_de?"disabled":""}>✓ Chọn câu này</button></div></div>`;
+}
+async function taiChonCau(them=false){
+  if(!CC_STATE) return;
+  if(!them){CC_STATE.offset=0;CC_STATE.ds=[];$("#cc-ds").innerHTML="<p style='color:#666'>Đang tải câu trong nhóm…</p>";}
+  const tranh=XT.bo.flatMap(x=>Object.values(x).flat().map(c=>c.ma)).concat((XT.mt&&XT.mt.tranh_ma)||[]);
+  const r=await api("/api/ds-cau-nhom",{
+    loai:CC_STATE.loai,lop:$("#cc-lop").value,chuong:$("#cc-chuong").value,bai:$("#cc-bai").value,
+    dang:$("#cc-dang").value,muc:$("#cc-muc").value,tim:$("#cc-tim").value.trim(),
+    chi_chua_dung:$("#cc-moi").checked,tranh,offset:CC_STATE.offset,limit:30
+  });
+  if(!r.ok){$("#cc-ds").innerHTML="<p>Không tải được danh sách câu.</p>";return}
+  const batDau=CC_STATE.ds.length;
+  CC_STATE.ds=CC_STATE.ds.concat(r.ds||[]);
+  CC_STATE.offset=CC_STATE.ds.length;
+  if(!them) $("#cc-ds").innerHTML=CC_STATE.ds.length?CC_STATE.ds.map((c,i)=>htmlTheChon(c,i)).join(""):"<p style='color:#666'>Không có câu nào khớp bộ lọc — thầy thử chọn Chương/Bài/Mức khác.</p>";
+  else if(r.ds&&r.ds.length){const tmp=document.createElement("div");tmp.innerHTML=r.ds.map((c,k)=>htmlTheChon(c,batDau+k)).join("");while(tmp.firstChild)$("#cc-ds").appendChild(tmp.firstChild);}
+  $("#cc-ds").querySelectorAll(".cc-lay").forEach(btn=>{if(btn.dataset.g)return;btn.dataset.g="1";btn.onclick=()=>{
+    const c=CC_STATE.ds[+btn.closest(".the-cau").dataset.i]; if(!c)return;
+    thayTheXT(CC_STATE.ma,c); $("#hop-chon-cau").style.display="none";
+  }});
+  $("#cc-tt").textContent=`Tìm thấy ${r.tong} câu (đang hiện ${CC_STATE.ds.length})`;
+  $("#cc-them").style.display=r.con_them?"":"none";
+  veCong($("#cc-ds"));
+}
+function moChonCau(ma){
+  const b=XT.bo[Math.min(XT.tab,XT.bo.length-1)];
+  let cau=null; for(const ds of Object.values(b)){const x=ds.find(c=>c.ma===ma);if(x){cau=x;break}}
+  if(!cau) return;
+  const dk=cau.dang_key||"", ch=dk.slice(0,3), bai=dk.split("-")[0];
+  const dInfo=(DL?.dang||[]).find(d=>d.k===dk||d.k.startsWith(bai+"-"));
+  const lop=dInfo?String(dInfo.lop):"";
+  const lops=[...new Set((DL?.dang||[]).map(d=>d.lop))].sort((a,b)=>a-b);
+  $("#cc-lop").innerHTML=`<option value="">Tất cả</option>`+lops.map(l=>`<option value="${l}">Lớp ${l}</option>`).join("");
+  if(lop) $("#cc-lop").value=lop;
+  ccCapNhatChuong(lop,ch); ccCapNhatBai(lop,ch,bai); ccCapNhatDang(lop,ch,bai,dk);
+  $("#cc-muc").value=cau.muc||""; $("#cc-tim").value=""; $("#cc-moi").checked=false;
+  const tenL={TN:"Trắc nghiệm",DS:"Đúng/Sai",TLN:"Trả lời ngắn",TL:"Tự luận"}[cau.loai]||cau.loai;
+  $("#cc-tieu").textContent=`· Đang thay câu ${ma} (${tenL})`;
+  CC_STATE={ma,loai:cau.loai,offset:0,ds:[]};
+  $("#hop-chon-cau").style.display="flex";
+  taiChonCau(false);
+}
+$("#cc-lop").onchange=()=>{const l=$("#cc-lop").value;ccCapNhatChuong(l,"");ccCapNhatBai(l,"","");ccCapNhatDang(l,"","","");taiChonCau(false)};
+$("#cc-chuong").onchange=()=>{const l=$("#cc-lop").value,c=$("#cc-chuong").value;ccCapNhatBai(l,c,"");ccCapNhatDang(l,c,"","");taiChonCau(false)};
+$("#cc-bai").onchange=()=>{const l=$("#cc-lop").value,c=$("#cc-chuong").value,b=$("#cc-bai").value;ccCapNhatDang(l,c,b,"");taiChonCau(false)};
+$("#cc-dang").onchange=()=>taiChonCau(false);
+$("#cc-muc").onchange=()=>taiChonCau(false);
+$("#cc-moi").onchange=()=>taiChonCau(false);
+let _ccTimer=null; $("#cc-tim").oninput=()=>{clearTimeout(_ccTimer);_ccTimer=setTimeout(()=>taiChonCau(false),280)};
+$("#cc-them").onclick=()=>taiChonCau(true);
+$("#cc-dong").onclick=()=>$("#hop-chon-cau").style.display="none";
 $("#xt-dong").onclick=()=>{$("#hop-xt").style.display="none"; if(XT&&XT.nguon&&XT.nguon.dong) XT.nguon.dong()};
 $("#xt-nhatky").onclick=()=>hopThoai("Nhật ký chọn câu",XT.nhat_ky);
 $("#xt-random").onclick=async()=>{$("#xt-random").disabled=true;$("#xt-random").textContent="Đang chọn lại…";

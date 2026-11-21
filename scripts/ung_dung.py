@@ -875,6 +875,15 @@ class XuLy(BaseHTTPRequestHandler):
                 import xem_truoc
                 t = xem_truoc.doi(d.get("ma"), d.get("tranh") or [], da_dung=d.get("da_dung") or "uu_tien")
                 return self.gui(200, {"ok": bool(t), "cau": t})
+            if u.path == "/api/ds-cau-nhom":
+                import xem_truoc
+                r = xem_truoc.ds_theo_nhom(
+                    loai=d.get("loai") or "", lop=d.get("lop") or "", chuong=d.get("chuong") or "",
+                    bai=d.get("bai") or "", dang=d.get("dang") or "", muc=d.get("muc") or "",
+                    tim=d.get("tim") or "", chi_chua_dung=bool(d.get("chi_chua_dung")),
+                    tranh=d.get("tranh") or [], offset=d.get("offset") or 0, limit=d.get("limit") or 30,
+                )
+                return self.gui(200, r)
             if u.path == "/api/luu-ma-tran":
                 mt = d["ma_tran"]; ten = ten_khong_dau(mt.get("ten") or "MaTran", 60)
                 json.dump({**mt, "ten": ten}, open(os.path.join(GOC, "ma-tran", ten + ".json"), "w", encoding="utf-8"),
