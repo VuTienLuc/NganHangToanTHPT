@@ -748,6 +748,7 @@ tr.gop-h td{background:#dbeafe;text-align:left;font-weight:700;padding:8px 12px;
     <div class="hang"><label>Giao cho lớp <input id="dthi-lop" list="ds-lop-giao" placeholder="10A1, 10A2 · PD10 = lớp phụ đạo khối 10 (trống = mọi lớp)" title="PD10, PD11, PD12…: lớp phụ đạo (các em ⭐ theo dõi của khối)"><datalist id="ds-lop-giao"><option value="PD10">Lớp phụ đạo khối 10</option><option value="PD11">Lớp phụ đạo khối 11</option><option value="PD12">Lớp phụ đạo khối 12</option><option value="PD9">Lớp phụ đạo khối 9</option><option value="PD8">Lớp phụ đạo khối 8</option></datalist></label>
       <label style="flex:0 0 150px">Số lượt làm mỗi em <input id="dthi-luot" type="number" min="0" max="20" value="2" title="0 = không giới hạn"></label></div>
     <label>Cách mở phương án <select id="dthi-lat"><option value="select">Lật phương án nào → chọn phương án đó</option><option value="reveal">Lật để xem → bấm chọn đáp án</option><option value="off">Hiện sẵn tất cả phương án</option></select></label>
+    <label style="flex-direction:row;align-items:center;gap:8px;font-weight:400" title="Tách đề bài theo dấu chấm câu thành các thẻ lật: mở Giả thiết thì Câu hỏi tự đóng và ngược lại, chống học sinh chụp 1 ảnh quét AI"><input type="checkbox" id="dthi-lat-de"> <b>🔒 Lật từng câu trong đề bài</b> (giả thiết mở thì kết luận đóng và ngược lại — chống quét ảnh AI)</label>
     <label>URL nhận điểm Google Sheets (không bắt buộc) <input id="dthi-sheet" placeholder="https://script.google.com/macros/s/…/exec"></label>
     <label style="flex-direction:row;align-items:center;gap:8px;font-weight:400" title="Học sinh bấm nút 💡 trên trang thi: hiện lời nhắn cho AI (giáo viên Toán, hướng dẫn 4 bước Pólya, không cho đáp số) + đề câu đang làm để chụp gửi ChatGPT/Gemini. Số lần mở được ghi vào bảng điểm."><input type="checkbox" id="dthi-goi-y"> <b>💡 Cho dùng Gợi ý AI</b> (kiểu Pólya, không cho đáp số) — nên bật cho đề luyện tập / ôn tập</label>
     <label style="flex-direction:row;align-items:center;gap:8px;font-weight:400"><input type="checkbox" id="dthi-an" checked> <b>Ẩn đáp án &amp; lời giải</b> — trang làm bài không chứa đáp án, máy chủ chấm; thi xong bấm "Mở lời giải"</label>
@@ -2263,7 +2264,7 @@ $("#dthi-ok").onclick=async()=>{
       const r=await api("/api/thi/du-lieu",{ma,ten:teni}); if(!r.ok) throw Error(r.loi+"\n"+(r.nhat_ky||""));
       let d=r.du_lieu;
       if(DTHI.dao&&tat) d=daoDe(d,so*7919+13,$("#xao_phuong_an").checked,$("#xao_y_dung_sai").checked);
-      d.settings={examMinutes:phut,studentExam:w.examSettings({flipMode:$("#dthi-lat").value,scriptUrl:sheet,examId:slugi})};
+      d.settings={examMinutes:phut,studentExam:w.examSettings({flipMode:$("#dthi-lat").value,stemFlip:$("#dthi-lat-de").checked,scriptUrl:sheet,examId:slugi})};
       const r2=await api("/api/thi/dang",{slug:slugi,ten:teni,html:w.createExam(d),an_dap_an:$("#dthi-an").checked,phut,dang_ngay:false,lop_giao:$("#dthi-lop").value,so_luot:+$("#dthi-luot").value,goi_y_ai:$("#dthi-goi-y").checked});
       if(!r2.ok) throw Error(r2.loi); ra.push(r2.slug);
       if($("#dthi-bg-html").checked){
