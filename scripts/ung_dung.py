@@ -108,25 +108,72 @@ def tu_sinh_nen(d):
     cong_viec.update(dang_chay=False, xong=True, ket_qua=ra)
 
 
-def _tach_khoi_hk(t, mt_env):
-    """Tách các khối \\begin{ex|bt}…\\end{ex|bt} hoàn chỉnh từ phản hồi AI."""
+def _tach_khoi_hk(t, mt_env, loai="TN"):
+    """Tách các khối \\begin{ex|bt}…\\end{ex|bt} hoàn chỉnh từ phản hồi AI.
+    Với TLN: hỗ trợ AI viết \\loigiai trước \\shortans (để giải xong mới chốt đáp số, tránh đoán mò sai),
+    sau đó tự chuyển \\shortans về đúng vị trí trước \\loigiai và hậu kiểm cơ bản."""
     t = re.sub(r"```(?:latex|tex)?", "", t or "")
     pat = re.compile(r"\\begin\{(ex|bt)\}.*?\\end\{\1\}", re.S)
     ra = []
     for m in pat.finditer(t):
         k = m.group(0).strip()
-        than = k[k.find("\\loigiai"):] if "\\loigiai" in k else ""
-        if not than or than.count("{") != than.count("}"):
+        if "\\loigiai" not in k:
+            continue
+        if loai == "TLN":
+            ms = re.search(r"\\shortans(?:\[[^\]]*\])?\{([^{}]+)\}", k)
+            if not ms:
+                continue
+            ds_raw = ms.group(1).strip().replace("$", "").replace("{,}", ",").replace(" ", "").replace(".", ",")
+            if not ds_raw or len(ds_raw) > 4:
+                continue
+            # Nếu AI viết \shortans sau \loigiai (do prompt yêu cầu giải trước), đưa về đúng vị trí trước \loigiai
+            pos_lg = k.find("\\loigiai")
+            if ms.start() > pos_lg:
+                k = k[:ms.start()] + k[ms.end():]
+                pos_lg = k.find("\\loigiai")
+                k = k[:pos_lg] + f"\\shortans{{{ds_raw}}}\n\t" + k[pos_lg:]
+            else:
+                k = k[:ms.start()] + f"\\shortans{{{ds_raw}}}" + k[ms.end():]
+            # Hậu kiểm: đáp số (dạng số không dấu cách) phải xuất hiện trong lời giải (tránh AI đoán mò lệch lời giải)
+            lg_txt = k[k.find("\\loigiai"):].replace("{,}", ",").replace("\\,", "").replace(" ", "")
+            so_kiem = ds_raw.lstrip("-")
+            if so_kiem and (so_kiem not in lg_txt and so_kiem.replace(",", ".") not in lg_txt):
+                continue
+        than = k[k.find("\\loigiai"):]
+        if than.count("{") != than.count("}"):
             continue
         k = re.sub(r"^\\begin\{(ex|bt)\}", rf"\\begin{{{mt_env}}}", k, count=1)
         k = re.sub(r"\\end\{(ex|bt)\}$", rf"\\end{{{mt_env}}}", k, count=1)
+        k, _ = chuan_vecto(k)
         ra.append(k)
     return ra
 
 
-def _prompt_hk_ai(lop, it, thieu, ds_ma, da_de):
+MO_TA_MUC_HK = {
+    "NB": (
+        "NHẬN BIẾT (mức 1): 1 bước trực tiếp, nhận diện khái niệm, công thức, tính chất cơ bản hoặc đọc trực tiếp từ đề bài."
+    ),
+    "TH": (
+        "THÔNG HIỂU (mức 2): 2–3 bước biến đổi quen thuộc, kết hợp 2 kiến thức cơ bản trong bài; không quá dễ kiểu 1 phép tính nhưng chưa quá lắt léo."
+    ),
+    "VD": (
+        "VẬN DỤNG (mức 3 — câu phân hoá 8–9 điểm):\n"
+        "  • BẮT BUỘC cần TỐI THIỂU 3–4 bước suy luận/tính toán liên kết nhau (ví dụ: đặt ẩn/tọa độ → lập phương trình hoặc điều kiện hình học → giải tìm đại lượng trung gian → tính kết quả cuối cùng).\n"
+        "  • Ưu tiên: bài toán THỰC TẾ cần mô hình hoá (tọa độ, vectơ, quỹ đạo, tối ưu chi phí/diện tích/lực/vận tốc), HOẶC bài toán tham số, tìm điểm thoả mãn điều kiện hình học–đại số, kết hợp nhiều kiến thức.\n"
+        "  • CẤM TUYỆT ĐỐI câu 1–2 bước kiểu chỉ thay số vào công thức (như chỉ tính trực tiếp tích vô hướng hai vectơ cho sẵn, chỉ tính độ dài đoạn thẳng AB, chỉ giải một phương trình bậc nhất đơn giản). Nếu câu nháp quá dễ phải tự nâng cấp ngay trước khi xuất."
+    ),
+    "VDC": (
+        "VẬN DỤNG CAO (mức 4 — câu phân hoá 9,5–10 điểm):\n"
+        "  • BẮT BUỘC là bài toán sâu, nhiều bước (≥ 4–5 bước): cực trị hình học/đại số, bài toán tối ưu thực tế phức tạp, biện luận đa điều kiện hoặc kết hợp nhiều chủ đề.\n"
+        "  • CẤM TUYỆT ĐỐI câu dễ hoặc câu thông hiểu."
+    ),
+}
+
+
+def _prompt_hk_ai(lop, it, thieu, ds_ma, da_de, mau_kho=()):
     loai = it.get("loai") or "TN"
-    muc_ten = {"NB": "Nhận biết", "TH": "Thông hiểu", "VD": "Vận dụng", "VDC": "Vận dụng cao"}.get(it.get("muc"), "Thông hiểu")
+    muc_code = it.get("muc") or "TH"
+    muc_ten = {"NB": "Nhận biết", "TH": "Thông hiểu", "VD": "Vận dụng", "VDC": "Vận dụng cao"}.get(muc_code, "Thông hiểu")
     mt_env = "ex" if loai in ("TN", "DS") else "bt"
     if loai == "TN":
         quy_tac = (
@@ -137,28 +184,37 @@ def _prompt_hk_ai(lop, it, thieu, ds_ma, da_de):
     elif loai == "DS":
         quy_tac = (
             f"- Môi trường `\\begin{{ex}}%[MÃ_DẠNG]` … `\\end{{ex}}`, dùng `\\choiceTF{{y1}}{{y2}}{{y3}}{{y4}}`.\n"
-            "- Ý đúng đánh dấu `\\True` ở đầu ngoặc nhọn; ý thứ 4 khó nhất.\n"
+            "- Ý đúng đánh dấu `\\True` ở đầu ngoặc nhọn; độ khó tăng dần từ ý 1 đến ý 4 (ý 4 khó nhất, mang tính phân hoá).\n"
             "- Trong `\\loigiai{...}` dùng `\\begin{itemchoice}` đủ 4 `\\itemch`, mỗi ý mở đầu 'Đúng.' hoặc 'Sai.'; không nhắc 'ý a', 'b)'."
         )
     elif loai == "TLN":
         quy_tac = (
-            f"- Môi trường `\\begin{{bt}}%[MÃ_DẠNG]` … `\\end{{bt}}`, có `\\shortans{{đáp số}}` trước `\\loigiai{{...}}`.\n"
-            "- Đáp số trong `\\shortans{...}` là số tối đa 4 ký tự (kể cả dấu - và dấu phẩy thập phân, vd `2,5`, `-12`)."
+            f"- Môi trường `\\begin{{bt}}%[MÃ_DẠNG]` … `\\end{{bt}}`.\n"
+            "- BẮT BUỘC viết `\\loigiai{...}` TRƯỚC để giải trọn vẹn từng bước và tính ra đáp số chính xác, SAU ĐÓ mới viết `\\shortans{đáp số}` ngay trước `\\end{bt}` (để đáp số khớp 100% với lời giải, tuyệt đối không đoán mò).\n"
+            "- Đáp số trong `\\shortans{...}` là số tối đa 4 ký tự (kể cả dấu - và dấu phẩy thập phân, vd `2,5`, `-12`, `47,1`). Nếu kết quả lẻ, ĐỀ BÀI phải nêu rõ quy tắc làm tròn (vd: làm tròn đến hàng phần mười) và đáp số làm tròn đúng quy tắc đó."
         )
     else:
         quy_tac = (
             f"- Môi trường `\\begin{{bt}}%[MÃ_DẠNG]` … `\\end{{bt}}` (KHÔNG có `\\shortans`), lời giải `\\loigiai{{...}}` đủ từng bước rõ ràng."
         )
     goi_ma = "\n".join(f"  - {ma}: {ten}" for ma, ten in ds_ma)
+    khung_mau_kho = ""
+    if mau_kho:
+        khung_mau_kho = (
+            "\nVÍ DỤ CHUẨN ĐỘ KHÓ TRONG NGÂN HÀNG (soạn câu MỚI có độ khó TƯƠNG ĐƯƠNG hoặc CAO HƠN, không được dễ hơn, không chép lại):\n"
+            + "\n---\n".join(m[:650] for m in mau_kho[:2]) + "\n"
+        )
     p = (
-        f"Bạn là giáo viên Toán xuất sắc (chương trình GDPT 2018, sách Kết nối tri thức). "
+        f"Bạn là giáo viên Toán THPT/THCS giỏi luyện thi học sinh giỏi và đề thi chuẩn GDPT 2018 (sách Kết nối tri thức). "
         f"Hãy soạn ĐÚNG {thieu} câu hỏi Toán Lớp {lop}, mức độ **{muc_ten}**.\n\n"
+        f"YÊU CẦU ĐỘ KHÓ BẮT BUỘC ({muc_ten}):\n{MO_TA_MUC_HK.get(muc_code, MO_TA_MUC_HK['TH'])}\n\n"
         f"CHỦ ĐỀ: {it.get('chu_de') or ''}\n"
         + (f"NGỮ CẢNH THỰC TẾ: {it.get('ngu_canh')}\n" if it.get("ngu_canh") else "")
-        + (f"CÂU MẪU THAM KHẢO (soạn câu mới cùng dạng, đổi số liệu/ngữ cảnh):\n{it.get('mau')}\n" if it.get("mau") else "")
+        + (f"CÂU MẪU GIÁO VIÊN GỢI Ý (soạn câu mới cùng dạng và cùng tầm độ khó, đổi số liệu/ngữ cảnh):\n{it.get('mau')}\n" if it.get("mau") else "")
+        + khung_mau_kho
         + f"\nMÃ DẠNG HỢP LỆ (chọn đúng 1 mã trong danh sách sau ghi ngay sau `\\begin{{{mt_env}}}`):\n{goi_ma}\n\n"
         f"QUY TẮC ĐỊNH DẠNG LATEX NGÂN HÀNG (BẮT BUỘC):\n{quy_tac}\n"
-        "- Công thức toán đặt trong `$...$` hoặc `$$...$$` (KHÔNG dùng `\\(` `\\[`, KHÔNG dùng `\\wideparen` mà dùng `\\overset{\\frown}{AB}`).\n"
+        "- Công thức toán đặt trong `$...$` hoặc `$$...$$` (KHÔNG dùng `\\(` `\\[`; vectơ dùng `\\overrightarrow{AB}`, KHÔNG dùng `\\vec`; cung tròn dùng `\\overset{\\frown}{AB}`, KHÔNG dùng `\\wideparen`).\n"
         "- Số thập phân trong công thức viết `15{,}25`. Không dùng Markdown (`**`, `#`) trong khối LaTeX.\n"
         "- BẮT BUỘC tự giải lại kiểm tra từng phép tính, đáp số khớp 100% với lời giải trước khi xuất.\n"
         "- CHỈ trả về các khối LaTeX `\\begin{" + mt_env + "}...\\end{" + mt_env + "}`, không viết lời dẫn thừa.\n"
@@ -168,9 +224,31 @@ def _prompt_hk_ai(lop, it, thieu, ds_ma, da_de):
     return p
 
 
+def _mau_chuan_kho(kho_all, loai, muc_ma, bai):
+    """Lấy tối đa 2 câu mẫu cùng bài (hoặc cùng chương) và đúng loại + mức từ ngân hàng để neo chuẩn độ khó cho AI."""
+    if not bai or not kho_all:
+        return []
+    uu, phu = [], []
+    chuong = bai[:3]
+    for c in kho_all.values():
+        if c.get("loai") != loai or c.get("muc_chuan") != muc_ma:
+            continue
+        dk = c.get("dang_key") or ""
+        nd = (c.get("noi_dung") or "").strip()
+        if not nd or len(nd) > 1200:
+            continue
+        if dk == bai or dk.startswith(bai + "-") or dk.split("-")[0] == bai.split("-")[0]:
+            uu.append(nd)
+        elif dk.startswith(chuong):
+            phu.append(nd)
+    ds = uu if uu else phu
+    return ds[:2]
+
+
 def hk_sinh_ai_nen(d):
     """Chạy nền cho /api/hk-sinh-ai: dùng chung khoá AI (ai_khoa.json) sinh câu thiếu/ít ở Ôn thi HK và nhập thẳng vào ngân hàng."""
     import sinh_tuong_tu as ST, nhap_cau
+    from xem_truoc import kho as _doc_kho
     def ghi(x):
         cong_viec["nhat_ky"] += x + "\n"
     ra = {"ok": False}
@@ -180,6 +258,7 @@ def hk_sinh_ai_nen(d):
         if not muc_tieu:
             raise RuntimeError("Chưa chọn dòng nào để AI sinh câu.")
         id_map = tai_id_map()
+        kho_all = _doc_kho()
         xoay = ST.XoayKhoa(ghi=ghi)
         muc_map = {"NB": "N", "TH": "H", "VD": "V", "VDC": "C"}
         tat_ca = []
@@ -202,13 +281,15 @@ def hk_sinh_ai_nen(d):
                 ma_tam = (bai or f"{lop if lop <= 9 else lop - 10}D1?1-1").replace("?", muc_ma)
                 ds_ma = [(ma_tam, it.get("chu_de") or ma_tam)]
             ma_mac_dinh = ds_ma[0][0]
-            ghi(f"  [{idx}/{len(muc_tieu)}] {loai} · {it.get('muc')} · {it.get('chu_de') or bai} → cần {so_can} câu (mã {ma_mac_dinh})")
+            mau_kho = _mau_chuan_kho(kho_all, loai, muc_ma, bai)
+            ghi(f"  [{idx}/{len(muc_tieu)}] {loai} · {it.get('muc')} · {it.get('chu_de') or bai} → cần {so_can} câu (mã {ma_mac_dinh}"
+                + (f", neo theo {len(mau_kho)} câu mẫu kho" if mau_kho else "") + ")")
             co, da_de = [], set()
             for lan in range(4):
                 thieu = so_can - len(co)
                 if thieu <= 0:
                     break
-                p = _prompt_hk_ai(lop, it, thieu, ds_ma[:8], da_de)
+                p = _prompt_hk_ai(lop, it, thieu, ds_ma[:8], da_de, mau_kho=mau_kho)
                 try:
                     t, cat, k = xoay.goi(p)
                 except ST.HetKhoa as e:
@@ -217,7 +298,7 @@ def hk_sinh_ai_nen(d):
                     ghi(f"  ⚠ {e} — giữ các câu đã sinh được.")
                     break
                 moi = 0
-                for kb in _tach_khoi_hk(t, mt_env):
+                for kb in _tach_khoi_hk(t, mt_env, loai=loai):
                     dong0 = kb.split("\n", 1)[0]
                     if "%[" not in dong0:
                         kb = re.sub(r"^(\\begin\{(?:ex|bt)\})", rf"\1%[{ma_mac_dinh}]", kb, count=1)
@@ -227,7 +308,7 @@ def hk_sinh_ai_nen(d):
                     if not de or de in da_de or len(co) >= so_can:
                         continue
                     da_de.add(de); co.append(kb); moi += 1
-                ghi(f"    lượt {lan + 1} ({ST.TEN_NHA.get(k['nha'], k['nha'])} {ST.che(k['khoa'])}): +{moi} câu"
+                ghi(f"    lượt {lan + 1} ({ST.TEN_NHA.get(k['nha'], k['nha'])} {ST.che(k['khoa'])}): +{moi} câu đạt kiểm tra"
                     + (" · bị ngắt → hỏi tiếp" if cat else "") + f" · có {len(co)}/{so_can}")
             tat_ca += co
         if not tat_ca:
