@@ -104,6 +104,7 @@ def nhap(cac_file, thu=False, in_ra=print, ma_dang=None, bien_dich=True):
             da_co[ma] = "(file đang nhập)"
             k = gan_ma(k, ma)
             k, sua = sua_thap_phan(k)
+            k, _ = chuan_vecto(k)
             tk["sua_tp"] += sua
             info = phan_tich_cau(k)
             for cb in kiem_tra_cau(k, info):

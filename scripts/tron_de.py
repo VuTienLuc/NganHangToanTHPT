@@ -389,7 +389,7 @@ def soan_ma_de(bo, ma_de):
         if sf:
             khoi.append(f"\\Opensolutionfile{{{sf}}}[{tm}/{tep}]")
         for i, c in enumerate(ds, 1):
-            k, da = chuan_moi_truong(c["noi_dung"], ct), c["dap_an"]
+            k, da = chuan_moi_truong(chuan_vecto(c["noi_dung"])[0], ct), c["dap_an"]
             if loai == "TN" and mt.get("xao_phuong_an", True):
                 k, da = xao_phuong_an(k)
             if loai == "DS" and mt.get("xao_y_dung_sai", True):
@@ -427,6 +427,7 @@ def doc_cau_tu_file(cac_tep):
         f = f if os.path.isabs(f) else os.path.join(GOC, f)
         for k in tach_khoi(doc_nhap.doc_tep(f)):
             k, _ = sua_thap_phan(k)                 # 15,25 → 15{,}25 trong công thức
+            k, _ = chuan_vecto(k)                   # \vec{...} → \overrightarrow{...}
             info = phan_tich_cau(k)
             muc = info["muc"] or ""
             info.update(ma=ma_bam(k), muc_chuan=qd.get(muc, muc if muc in CAC_MUC else None), noi_dung=k,
@@ -672,7 +673,7 @@ json.dump(CAU_THEO_DE, open(os.path.join(out, "_k12_cau.json"), "w", encoding="u
 if khac_cau and so_ma > 1:
     K12_GOC = {
         f"{ma}_ThuTuDaChon": [
-            {"loai": l, "noi_dung": c["noi_dung"], "dap_an": c["dap_an"] or "", "muc": c["muc_chuan"]}
+            {"loai": l, "noi_dung": chuan_vecto(c["noi_dung"])[0], "dap_an": c["dap_an"] or "", "muc": c["muc_chuan"]}
             for l in CAC_LOAI for c in (bo.get(l) or [])
         ]
         for ma, bo in zip(cac_ma, cac_bo)
@@ -680,7 +681,7 @@ if khac_cau and so_ma > 1:
 else:
     K12_GOC = {
         "ThuTuDaChon": [
-            {"loai": l, "noi_dung": c["noi_dung"], "dap_an": c["dap_an"] or "", "muc": c["muc_chuan"]}
+            {"loai": l, "noi_dung": chuan_vecto(c["noi_dung"])[0], "dap_an": c["dap_an"] or "", "muc": c["muc_chuan"]}
             for l in CAC_LOAI for c in (cac_bo[0].get(l) or [])
         ]
     }

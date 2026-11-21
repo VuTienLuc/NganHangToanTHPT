@@ -541,3 +541,15 @@ def thu_muc_xuat(ten, dang_keys=None, loai="de", ngay=None):
     while os.path.exists(out):
         out = f"{goc} ({i})"; i += 1
     return out
+
+
+_RE_VEC_NGOAC = re.compile(r"(?<!\\def)(?<!\\renewcommand\{)\\(?:vec|vv)(?![A-Za-z])\s*\{")
+_RE_VEC_TRAN = re.compile(r"(?<!\\def)(?<!\\renewcommand\{)\\(?:vec|vv)(?![A-Za-z])\s*(?!\{)([A-Za-z0-9]|\\[A-Za-z]+)")
+
+def chuan_vecto(t):
+    """Tự động chuyển dấu vectơ ngắn (\\vec{...}, \\vec x, \\vv{...}) sang vectơ dài \\overrightarrow{...}."""
+    if not t or ("\\vec" not in t and "\\vv" not in t):
+        return t, 0
+    t, n1 = _RE_VEC_NGOAC.subn(r"\\overrightarrow{", t)
+    t, n2 = _RE_VEC_TRAN.subn(r"\\overrightarrow{\1}", t)
+    return t, n1 + n2
