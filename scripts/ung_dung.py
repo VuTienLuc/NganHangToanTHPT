@@ -201,16 +201,44 @@ def _prompt_hk_ai(lop, it, thieu, ds_ma, da_de, mau_kho=()):
     khung_mau_kho = ""
     if mau_kho:
         khung_mau_kho = (
-            "\nVÍ DỤ CHUẨN ĐỘ KHÓ TRONG NGÂN HÀNG (soạn câu MỚI có độ khó TƯƠNG ĐƯƠNG hoặc CAO HƠN, không được dễ hơn, không chép lại):\n"
-            + "\n---\n".join(m[:650] for m in mau_kho[:2]) + "\n"
+            "\nVÍ DỤ CHUẨN ĐỘ KHÓ TRONG NGÂN HÀNG (CHỈ dùng để neo tầm độ khó tương đương hoặc cao hơn — TUYỆT ĐỐI KHÔNG lặp lại cùng 1 khuôn bài):\n"
+            + "\n---\n".join(m[:650] for m in mau_kho[:3]) + "\n"
         )
+    da_dang = ""
+    if thieu > 1:
+        goc_kho = [
+            "Bài toán THỰC TẾ / LIÊN MÔN (vật lí, kỹ thuật, xây dựng, kinh tế, chuyển động, đo đạc, tối ưu chi phí/diện tích/quỹ đạo — mô hình hoá sang Toán).",
+            "Bài toán THAM SỐ / TÌM ĐIỂM / BIỆN LUẬN thoả mãn điều kiện hình học–đại số (vuông góc, thẳng hàng, cách đều, góc, đối xứng, ràng buộc miền).",
+            "Bài toán CỰC TRỊ / TỐI ƯU (giá trị lớn nhất – nhỏ nhất, bất đẳng thức, tâm tỉ cự, hình học tối ưu, tam thức bậc hai).",
+            "Bài toán TỔNG HỢP / TƯ DUY NGƯỢC (cho kết quả ngược tìm dữ kiện, kết hợp 2–3 định lí/tính chất khác nhau trong bài).",
+            "Bài toán ĐỌC / KHAI THÁC ĐỒ THỊ, BẢNG SỐ LIỆU hoặc HÌNH HỌC PHỐI HỢP nhiều bước.",
+        ]
+        if muc_code in ("VD", "VDC"):
+            phan_bo = "\n".join(
+                f"  - Câu {i + 1}: {goc_kho[i % len(goc_kho)]}"
+                + (f" (ưu tiên mã dạng `{ds_ma[i % len(ds_ma)][0]}`)" if len(ds_ma) > 1 else "")
+                for i in range(thieu)
+            )
+            da_dang = (
+                "\nYÊU CẦU ĐA DẠNG CÂU HỎI KHÓ (BẮT BUỘC — KHÔNG ĐƯỢC LẶP 1 KIỂU BÀI):\n"
+                "- CẤM TUYỆT ĐỐI sinh nhiều câu cùng một khuôn/ý tưởng rồi chỉ thay số liệu!\n"
+                "- Mỗi câu trong lượt này PHẢI khai thác một hướng tư duy, bối cảnh và phương pháp giải KHÁC NHAU:\n"
+                + phan_bo + "\n"
+            )
+        else:
+            da_dang = (
+                "\nYÊU CẦU ĐA DẠNG (BẮT BUỘC):\n"
+                "- Mỗi câu PHẢI khai thác một khía cạnh / kỹ năng / kiểu hỏi KHÁC NHAU (không sinh các câu na ná nhau chỉ thay số liệu).\n"
+                + (f"- Phân bổ đều qua các mã dạng khác nhau trong danh sách MÃ DẠNG HỢP LỆ.\n" if len(ds_ma) > 1 else "")
+            )
     p = (
         f"Bạn là giáo viên Toán THPT/THCS giỏi luyện thi học sinh giỏi và đề thi chuẩn GDPT 2018 (sách Kết nối tri thức). "
         f"Hãy soạn ĐÚNG {thieu} câu hỏi Toán Lớp {lop}, mức độ **{muc_ten}**.\n\n"
-        f"YÊU CẦU ĐỘ KHÓ BẮT BUỘC ({muc_ten}):\n{MO_TA_MUC_HK.get(muc_code, MO_TA_MUC_HK['TH'])}\n\n"
+        f"YÊU CẦU ĐỘ KHÓ BẮT BUỘC ({muc_ten}):\n{MO_TA_MUC_HK.get(muc_code, MO_TA_MUC_HK['TH'])}\n"
+        + da_dang + "\n"
         f"CHỦ ĐỀ: {it.get('chu_de') or ''}\n"
         + (f"NGỮ CẢNH THỰC TẾ: {it.get('ngu_canh')}\n" if it.get("ngu_canh") else "")
-        + (f"CÂU MẪU GIÁO VIÊN GỢI Ý (soạn câu mới cùng dạng và cùng tầm độ khó, đổi số liệu/ngữ cảnh):\n{it.get('mau')}\n" if it.get("mau") else "")
+        + (f"CÂU MẪU GIÁO VIÊN GỢI Ý (soạn câu mới cùng tầm độ khó, đa dạng bối cảnh và cách hỏi):\n{it.get('mau')}\n" if it.get("mau") else "")
         + khung_mau_kho
         + f"\nMÃ DẠNG HỢP LỆ (chọn đúng 1 mã trong danh sách sau ghi ngay sau `\\begin{{{mt_env}}}`):\n{goi_ma}\n\n"
         f"QUY TẮC ĐỊNH DẠNG LATEX NGÂN HÀNG (BẮT BUỘC):\n{quy_tac}\n"
@@ -220,15 +248,16 @@ def _prompt_hk_ai(lop, it, thieu, ds_ma, da_de, mau_kho=()):
         "- CHỈ trả về các khối LaTeX `\\begin{" + mt_env + "}...\\end{" + mt_env + "}`, không viết lời dẫn thừa.\n"
     )
     if da_de:
-        p += "\nKHÔNG LẶP LẠI các đề bài đã có sau (soạn câu MỚI khác số liệu):\n" + "\n".join("- " + d[:150] for d in list(da_de)[:12])
+        p += "\nKHÔNG LẶP LẠI các đề bài đã có sau (soạn câu MỚI khác hẳn kiểu bài và số liệu):\n" + "\n".join("- " + d[:150] for d in list(da_de)[:12])
     return p
 
 
 def _mau_chuan_kho(kho_all, loai, muc_ma, bai):
-    """Lấy tối đa 2 câu mẫu cùng bài (hoặc cùng chương) và đúng loại + mức từ ngân hàng để neo chuẩn độ khó cho AI."""
+    """Lấy tối đa 3 câu mẫu từ các dạng KHÁC NHAU trong cùng bài (hoặc cùng chương) và đúng loại + mức để neo chuẩn độ khó đa dạng."""
+    import random as _rd
     if not bai or not kho_all:
         return []
-    uu, phu = [], []
+    uu, phu = {}, {}
     chuong = bai[:3]
     for c in kho_all.values():
         if c.get("loai") != loai or c.get("muc_chuan") != muc_ma:
@@ -238,11 +267,18 @@ def _mau_chuan_kho(kho_all, loai, muc_ma, bai):
         if not nd or len(nd) > 1200:
             continue
         if dk == bai or dk.startswith(bai + "-") or dk.split("-")[0] == bai.split("-")[0]:
-            uu.append(nd)
+            uu.setdefault(dk, []).append(nd)
         elif dk.startswith(chuong):
-            phu.append(nd)
-    ds = uu if uu else phu
-    return ds[:2]
+            phu.setdefault(dk, []).append(nd)
+    nhom = uu if uu else phu
+    keys = list(nhom.keys())
+    _rd.shuffle(keys)
+    ra = []
+    for k in keys:
+        ra.append(_rd.choice(nhom[k]))
+        if len(ra) >= 3:
+            break
+    return ra
 
 
 def hk_sinh_ai_nen(d):
