@@ -9,7 +9,7 @@
 import re, json
 from doc_nhap import sua_gach, doc_tep, KHOI
 
-NHOM = {"trac_nghiem": "TN", "dung_sai": "DS", "tra_loi_ngan": "TLN"}
+NHOM = {"trac_nghiem": "TN", "dung_sai": "DS", "tra_loi_ngan": "TLN", "tu_luan": "TL"}
 
 
 def boc_json(t):
@@ -106,7 +106,7 @@ def kiem(van_ban, can=None):
             return {"ok": False, "loi": loi, "ma": []}
         cac = tach_ma(obj)
     if not cac:
-        return {"ok": False, "loi": "Không thấy đề: JSON cần các mục trac_nghiem / dung_sai / tra_loi_ngan.", "ma": []}
+        return {"ok": False, "loi": "Không thấy đề: JSON cần các mục trac_nghiem / dung_sai / tra_loi_ngan / tu_luan.", "ma": []}
     ra = []
     for ten, de in cac:
         so = {l: len(de.get(k) or []) for k, l in NHOM.items()}

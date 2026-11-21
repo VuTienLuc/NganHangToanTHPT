@@ -172,7 +172,7 @@ footer .gian{flex:1}
 #hk-bang th{position:sticky;top:0;background:#f3f4f6;z-index:1;text-align:left;padding:7px 6px;border-bottom:1px solid var(--vien)}
 #hk-bang td{padding:5px 6px;border-bottom:1px solid #eef0f3;vertical-align:top}
 #hk-bang tr.phan td{background:#eef2ff;font-weight:700;color:#1e3a8a}
-#hk-bang tr.TN td:first-child{border-left:4px solid #3b82f6}#hk-bang tr.DS td:first-child{border-left:4px solid #f59e0b}#hk-bang tr.TLN td:first-child{border-left:4px solid #10b981}
+#hk-bang tr.TN td:first-child{border-left:4px solid #3b82f6}#hk-bang tr.DS td:first-child{border-left:4px solid #f59e0b}#hk-bang tr.TLN td:first-child{border-left:4px solid #10b981}#hk-bang tr.TL td:first-child{border-left:4px solid #8b5cf6}
 #hk-bang input[type=text],#hk-bang select,#hk-bang textarea{width:100%;box-sizing:border-box;padding:4px 6px;border:1px solid #e5e7eb;border-radius:6px;font:inherit;font-size:12.5px;background:#fff}
 #hk-bang textarea{resize:vertical;min-height:32px}
 #hk-bang .nho{display:flex;gap:10px;font-size:11.5px;margin-top:3px}
@@ -513,8 +513,8 @@ tr.gop-h td{background:#dbeafe;text-align:left;font-weight:700;padding:8px 12px;
     <button id="lac-bo-qua-chon">Đúng rồi — bỏ qua</button><button id="lac-xoa-chon">Xoá các câu đã chọn</button><button id="lac-dong">Đóng</button></div>
 </div></div>
 <div id="hop-hk"><div class="noi">
-  <h2>Ôn thi học kì — đề 12 TN · 4 Đúng/Sai · 6 Trả lời ngắn
-    <span class="lop" style="margin-left:auto;display:flex;gap:6px"><button data-l="9">Lớp 9</button><button data-l="10">Lớp 10</button><button data-l="11">Lớp 11</button><button data-l="12">Lớp 12</button></span></h2>
+  <h2><span id="hk-tieu-phu">Ôn thi học kì — đề 12 TN · 4 Đúng/Sai · 6 Trả lời ngắn</span>
+    <span class="lop" style="margin-left:auto;display:flex;gap:6px"><button data-l="8">Lớp 8</button><button data-l="9">Lớp 9</button><button data-l="10">Lớp 10</button><button data-l="11">Lớp 11</button><button data-l="12">Lớp 12</button></span></h2>
   <div class="cai">
     <label>Bộ <select id="hk-bo" title="Mỗi lớp có nhiều bộ ma trận: Lần 1, Lần 2, Lần 3…"></select></label>
     <button id="hk-sao" title="Sao chép bộ đang xem thành bộ mới (Lần 2, 3…) để sửa thêm/bớt rồi ra đề tiếp">⧉ Sao chép thành lần mới</button>
@@ -1440,6 +1440,26 @@ $("#lac-bo-qua-chon").onclick=()=>lamLac("bo_qua",theChon());
 
 // ---------------- ÔN THI HỌC KÌ (ma trận 12–4–6 theo từng câu)
 const HK_MAC_DINH={
+ 8:[["TL","Bài 1. Đơn thức","NB","","CHƯƠNG I. ĐA THỨC"],
+    ["TL","Bài 2. Đa thức","NB","","CHƯƠNG I. ĐA THỨC"],
+    ["TL","Bài 3. Phép cộng và phép trừ đa thức","TH","","CHƯƠNG I. ĐA THỨC"],
+    ["TL","Bài 4. Phép nhân đa thức","TH","","CHƯƠNG I. ĐA THỨC"],
+    ["TL","Bài 5. Phép chia đa thức cho đơn thức","TH","","CHƯƠNG I. ĐA THỨC"],
+    ["TL","Bài 6. Hiệu hai bình phương. Bình phương của một tổng hay một hiệu","NB","","CHƯƠNG II. HẰNG ĐẲNG THỨC ĐÁNG NHỚ VÀ ỨNG DỤNG"],
+    ["TL","Bài 7. Lập phương của một tổng hay một hiệu","TH","","CHƯƠNG II. HẰNG ĐẲNG THỨC ĐÁNG NHỚ VÀ ỨNG DỤNG"],
+    ["TL","Bài 8. Tổng và hiệu hai lập phương","TH","","CHƯƠNG II. HẰNG ĐẲNG THỨC ĐÁNG NHỚ VÀ ỨNG DỤNG"],
+    ["TL","Bài 9. Phân tích đa thức thành nhân tử","VD","","CHƯƠNG II. HẰNG ĐẲNG THỨC ĐÁNG NHỚ VÀ ỨNG DỤNG"],
+    ["TL","Bài 10. Tứ giác","NB","","CHƯƠNG III. TỨ GIÁC"],
+    ["TL","Bài 11. Hình thang cân","TH","","CHƯƠNG III. TỨ GIÁC"],
+    ["TL","Bài 12. Hình bình hành","TH","","CHƯƠNG III. TỨ GIÁC"],
+    ["TL","Bài 13. Hình chữ nhật","TH","","CHƯƠNG III. TỨ GIÁC"],
+    ["TL","Bài 14. Hình thoi và hình vuông","VD","","CHƯƠNG III. TỨ GIÁC"],
+    ["TL","Bài 15. Định lí Thalès trong tam giác","TH","","CHƯƠNG IV. ĐỊNH LÍ THALÈS"],
+    ["TL","Bài 16. Đường trung bình của tam giác","TH","","CHƯƠNG IV. ĐỊNH LÍ THALÈS"],
+    ["TL","Bài 17. Tính chất đường phân giác của tam giác","VD","","CHƯƠNG IV. ĐỊNH LÍ THALÈS"],
+    ["TL","Bài 18. Thu thập và phân loại dữ liệu","NB","Đời sống hàng ngày","CHƯƠNG V. DỮ LIỆU VÀ BIỂU ĐỒ"],
+    ["TL","Bài 19. Biểu diễn dữ liệu bằng bảng, biểu đồ","TH","Đời sống hàng ngày","CHƯƠNG V. DỮ LIỆU VÀ BIỂU ĐỒ"],
+    ["TL","Bài 20. Phân tích số liệu thống kê dựa vào biểu đồ","VD","Đời sống hàng ngày","CHƯƠNG V. DỮ LIỆU VÀ BIỂU ĐỒ"]],
  9:[["TN","Phương trình bậc nhất hai ẩn","NB"],["TN","Hệ hai phương trình bậc nhất hai ẩn","NB"],["TN","Phương trình quy về bậc nhất một ẩn","TH"],["TN","Bất đẳng thức","NB"],["TN","Bất phương trình bậc nhất một ẩn","TH"],["TN","Căn bậc hai","NB"],["TN","Biến đổi biểu thức chứa căn bậc hai","TH"],["TN","Căn bậc ba","NB"],["TN","Tỉ số lượng giác của góc nhọn","NB"],["TN","Hệ thức lượng trong tam giác vuông","TH"],["TN","Sự xác định và đối xứng của đường tròn","NB"],["TN","Vị trí tương đối của đường thẳng và đường tròn","TH"],
     ["DS","Giải bài toán bằng cách lập hệ phương trình","TH","Đời sống hàng ngày"],["DS","Rút gọn biểu thức chứa căn","TH"],["DS","Hệ thức lượng trong tam giác vuông","TH","Kiến trúc - Xây dựng"],["DS","Tính chất tiếp tuyến của đường tròn","TH"],
     ["TLN","Giải hệ phương trình bậc nhất hai ẩn","VD"],["TLN","Bất phương trình hoặc phương trình quy về bậc nhất","VD"],["TLN","Tính toán biểu thức chứa căn bậc hai","VD"],["TLN","Toán thực tế dùng tỉ số lượng giác","VD","Kiến trúc - Xây dựng"],["TLN","Đường tròn (góc, độ dài đoạn thẳng)","VD"],["TLN","Đường tròn (tổng hợp, cực trị)","VDC"]],
@@ -1453,6 +1473,7 @@ const HK_MAC_DINH={
     ["DS","Tính đơn điệu và cực trị của hàm số","TH"],["DS","Giá trị lớn nhất, nhỏ nhất – bài toán thực tiễn","TH","Kinh tế - Tài chính"],["DS","Biểu thức tọa độ của các phép toán vectơ","TH"],["DS","Phương sai, độ lệch chuẩn của mẫu số liệu ghép nhóm","TH","Đời sống hàng ngày"],
     ["TLN","Giá trị lớn nhất và giá trị nhỏ nhất của hàm số","VD","Kinh tế - Tài chính"],["TLN","Giá trị lớn nhất, nhỏ nhất – bài toán thực tiễn","VD","Vật lý - Chuyển động"],["TLN","Đường tiệm cận của đồ thị hàm số","VD"],["TLN","Vectơ trong không gian","VD","Vật lý - Chuyển động"],["TLN","Biểu thức tọa độ của các phép toán vectơ","VD","Kiến trúc - Xây dựng"],["TLN","Phương sai, độ lệch chuẩn của mẫu số liệu ghép nhóm","VDC"]]};
 const HK_BAI_MAC_DINH={  // bài trong ngân hàng cho từng dòng của ma trận mặc định
+ 8:"8D1?1 8D1?2 8D1?3 8D1?4 8D1?5 8D2?6 8D2?7 8D2?8 8D2?9 8H3?10 8H3?11 8H3?12 8H3?13 8H3?14 8H4?15 8H4?16 8H4?17 8D5?18 8D5?19 8D5?20".split(" "),
  10:"0D1?1 0D1?3 0D2?1 0D6?3 0D6?4 0H4?1 0H4?2 0H4?3 0H5?2 0H5?3 0H5?4 0H9?1 0D1?2 0D2?1 0H4?3 0H5?4 0D1?3 0D2?2 0H4?3 0H5?2 0H5?3 0H9?1".split(" "),
  11:"1D1?3 1D1?4 1D1?5 1D2?1 1D2?2 1D2?3 1D3?1 1D3?2 1H4?1 1H4?3 1H4?4 1D5?1 1D1?3 1D2?2 1H4?3 1D5?2 1D1?3 1D1?5 1D2?2 1D2?3 1D3?2 1H4?4".split(" "),
  12:"2D1?1 2D1?2 2D1?3 2D1?4 2D1?5 2D1?5 2H2?1 2H2?2 2H2?2 2H2?2 2D3?1 2D3?2 2D1?1 2D1?3 2H2?2 2D3?2 2D1?3 2D1?3 2D1?4 2H2?1 2H2?2 2D3?2".split(" ")};
@@ -1471,7 +1492,7 @@ function veBoHK(){
   $("#hk-bo").innerHTML=L.bo.map((b,i)=>`<option value="${i}" ${i===L.i?"selected":""}>${esc(b.ten)}${(b.da_dung||[]).length?` · đã ra ${b.da_dung.length} câu`:""}</option>`).join("");
   $("#hk-xoa-bo").disabled=L.bo.length<2;
 }
-function hkMacDinh(lop){return HK_MAC_DINH[lop].map(([loai,chu_de,muc,nc],i)=>({loai,chu_de,muc,ngu_canh:nc||"",bai:(HK_BAI_MAC_DINH[lop]||[])[i]||"",mau:"",form:false,kho:false}))}
+function hkMacDinh(lop){return HK_MAC_DINH[lop].map(([loai,chu_de,muc,nc,ch],i)=>({loai,chu_de,muc,ngu_canh:nc||"",chuong:ch||"",bai:(HK_BAI_MAC_DINH[lop]||[])[i]||"",mau:"",form:false,kho:false}))}
 function cacBai(lop){ // bài trong kho của lớp: [{k:"0D1?1", ten, dang:[{k,ten}]}]
   const m=new Map();
   for(const d of (DM_DANG||[])) if(d.lop==lop){const k=d.k.split("-")[0];
@@ -1506,15 +1527,20 @@ function chonLopHK(lop){
   veHK();
 }
 function veHK(){
-  const ds=hkDs(), bai=cacBai(HK_LOP), coKho=HK_LOP>=10;
+  const ds=hkDs(), bai=cacBai(HK_LOP), coKho=bai.length>0;
+  const chiTL=ds.length&&ds.every(r=>r.loai==="TL");
+  $("#hk-tieu-phu").textContent=chiTL?`Ôn thi học kì — Lớp ${HK_LOP} (Tự luận · ${ds.length} bài)`:"Ôn thi học kì — đề 12 TN · 4 Đúng/Sai · 6 Trả lời ngắn";
   const opBai=['<option value="">— chọn bài —</option>'].concat(bai.map(b=>`<option value="${b.k}">${esc(b.ten)}</option>`)).join("");
-  let h="",cu="",dem={TN:0,DS:0,TLN:0};
+  let h="",cu="",cuCh="",dem={TN:0,DS:0,TLN:0,TL:0};
   ds.forEach((r,i)=>{
-    if(r.loai!==cu){cu=r.loai;h+=`<tr class="phan"><td colspan="6">${{TN:"PHẦN I. TRẮC NGHIỆM NHIỀU PHƯƠNG ÁN (12 câu)",DS:"PHẦN II. TRẮC NGHIỆM ĐÚNG/SAI (4 câu)",TLN:"PHẦN III. TRẢ LỜI NGẮN (6 câu)"}[cu]}</td></tr>`}
-    dem[r.loai]++;
-    h+=`<tr class="${r.loai}" data-i="${i}"><td><b>${r.loai==="TN"?"TN":r.loai==="DS"?"ĐS":"TLN"}${dem[r.loai]}</b></td>
+    if(r.chuong){
+      if(r.chuong!==cuCh){cuCh=r.chuong;h+=`<tr class="phan"><td colspan="6">${esc(cuCh)}</td></tr>`}
+    }else if(r.loai!==cu){cu=r.loai;h+=`<tr class="phan"><td colspan="6">${{TN:"PHẦN I. TRẮC NGHIỆM NHIỀU PHƯƠNG ÁN (12 câu)",DS:"PHẦN II. TRẮC NGHIỆM ĐÚNG/SAI (4 câu)",TLN:"PHẦN III. TRẢ LỜI NGẮN (6 câu)",TL:`PHẦN TỰ LUẬN (${ds.filter(x=>x.loai==="TL").length} bài)`}[cu]}</td></tr>`}
+    dem[r.loai]=(dem[r.loai]||0)+1;
+    const nhanLoai={TN:"TN",DS:"ĐS",TLN:"TLN",TL:"TL"}[r.loai]||r.loai;
+    h+=`<tr class="${r.loai}" data-i="${i}"><td><b>${nhanLoai}${dem[r.loai]}</b></td>
      <td><input type="text" data-f="chu_de" value="${esc(r.chu_de)}"></td>
-     <td><select data-f="bai" ${coKho?"":"disabled title='Ngân hàng chỉ có lớp 10–12'"}>${opBai.replace(`value="${r.bai}"`,`value="${r.bai}" selected`)}</select></td>
+     <td><select data-f="bai" ${coKho?"":"disabled title='Ngân hàng chưa có bài cho lớp này'"}>${opBai.replace(`value="${r.bai}"`,`value="${r.bai}" selected`)}</select></td>
      <td><select data-f="muc">${["NB","TH","VD","VDC"].map(m=>`<option ${m===r.muc?"selected":""}>${m}</option>`).join("")}</select></td>
      <td><select data-f="ngu_canh">${HK_NGU_CANH.map(n=>`<option value="${n}" ${n===r.ngu_canh?"selected":""}>${n||"— Thuần toán —"}</option>`).join("")}</select></td>
      <td><textarea data-f="mau" rows="1" placeholder="Để trống: AI tự tạo. Dán câu mẫu…">${esc(r.mau)}</textarea>
@@ -1523,14 +1549,14 @@ function veHK(){
   });
   $("#hk-bang tbody").innerHTML=h;
   const thieu=coKho?ds.filter(r=>!r.bai).length:0;
-  $("#hk-tt").textContent=coKho?(thieu?`${thieu} câu chưa chọn bài trong kho (chỉ cần khi ra đề từ ngân hàng)`:"Mọi câu đã gắn bài trong kho."):"Lớp 9: ngân hàng chưa có — dùng đề AI.";
+  $("#hk-tt").textContent=coKho?(thieu?`${thieu} câu chưa chọn bài trong kho (chỉ cần khi ra đề từ ngân hàng)`:"Mọi câu đã gắn bài trong kho."):`Lớp ${HK_LOP}: ngân hàng chưa có — dùng đề AI.`;
   $("#hk-ngan-hang").disabled=$("#hk-xem").disabled=!coKho;
   const tr=hkTranh().length; $("#hk-tt").textContent+=tr?` · tránh ${tr} câu đã ra ở các lần khác`:"";
 }
 $("#hk-bang").addEventListener("change",e=>{
   const tr=e.target.closest("tr[data-i]"),f=e.target.dataset.f; if(!tr||!f)return;
   const r=hkDs()[+tr.dataset.i]; r[f]=e.target.type==="checkbox"?e.target.checked:e.target.value;
-  if(f==="chu_de"&&HK_LOP>=10){const k=khopBai(r.chu_de,HK_LOP);if(k&&k!==r.bai){r.bai=k;veHK()}}
+  if(f==="chu_de"&&cacBai(HK_LOP).length>0){const k=khopBai(r.chu_de,HK_LOP);if(k&&k!==r.bai){r.bai=k;veHK()}}
   hkLuu(); if(f==="bai") veHK();
 });
 $("#nut-on-thi").onclick=moOnThi;
@@ -1538,7 +1564,7 @@ $("#hk-dong").onclick=()=>$("#hop-hk").style.display="none";
 document.querySelectorAll("#hop-hk .lop button").forEach(b=>b.onclick=()=>chonLopHK(+b.dataset.l));
 $("#hk-ky").onchange=()=>{$("#hk-ten").dataset.sua="";chonLopHK(HK_LOP)};
 $("#hk-ten").oninput=()=>$("#hk-ten").dataset.sua="1";
-$("#hk-khop").onclick=()=>{if(HK_LOP<10)return;hkDs().forEach(r=>r.bai=khopBai(r.chu_de,HK_LOP)||r.bai);hkLuu();veHK()};
+$("#hk-khop").onclick=()=>{if(!cacBai(HK_LOP).length)return;hkDs().forEach(r=>r.bai=khopBai(r.chu_de,HK_LOP)||r.bai);hkLuu();veHK()};
 $("#hk-mac-dinh").onclick=()=>{if(!confirm("Trả bảng lớp này về ma trận mặc định?"))return;hkBo().hang=hkMacDinh(HK_LOP);hkLuu();veHK()};
 $("#hk-bo").onchange=()=>{hkLop().i=+$("#hk-bo").value;hkLuu();veHK()};
 $("#hk-tranh").onchange=()=>veHK();
@@ -1590,7 +1616,7 @@ function mtHK(){
   const ds=hkDs(), thieu=ds.map((r,i)=>[r,i]).filter(([r])=>!r.bai);
   if(thieu.length){alert(`Còn ${thieu.length} câu chưa chọn "Bài trong ngân hàng" (vd: ${thieu.slice(0,3).map(([r])=>r.chu_de).join("; ")}).`);return null}
   const mt=maTran(), phan=[];
-  for(const l of ["TN","DS","TLN"]){const yc=[];
+  for(const l of ["TN","DS","TLN","TL"]){const yc=[];
     for(const r of ds.filter(x=>x.loai===l)) yc.push({dang:r.bai,muc:HK_MUC_MA[r.muc]||"N",so:1});
     if(yc.length) phan.push({loai:l,yeu_cau:yc});}
   const bo=hkBo(), nhieu=hkLop().bo.length>1;
@@ -1632,20 +1658,26 @@ $("#hk-ngan-hang").onclick=async()=>{
 function promptHK(){
   const lop=HK_LOP, ds=hkDs(), so=+$("#hk-ma").value, bai=Object.fromEntries(cacBai(lop).map(b=>[b.k,b]));
   const ky=$("#hk-ky").value, ten=$("#hk-ten").value.trim();
-  let p=`Đóng vai trò là một giáo viên Toán xuất sắc và giàu kinh nghiệm (am hiểu sâu sắc chương trình GDPT 2018 - Sách Kết nối tri thức). Nhiệm vụ của bạn là soạn đề ôn thi ${ky.toLowerCase()} môn Toán Lớp ${lop} theo cấu trúc mới: 12 câu trắc nghiệm, 4 câu đúng/sai, 6 câu trả lời ngắn.\n\n`;
+  const dem={TN:ds.filter(r=>r.loai==="TN").length,DS:ds.filter(r=>r.loai==="DS").length,TLN:ds.filter(r=>r.loai==="TLN").length,TL:ds.filter(r=>r.loai==="TL").length};
+  const chiTL=dem.TL>0&&!dem.TN&&!dem.DS&&!dem.TLN;
+  const moTaCauTruc=chiTL?`theo cấu trúc tự luận: ${dem.TL} bài tự luận (mỗi bài có thể gồm các ý a, b, c tăng dần, trình bày lời giải chi tiết từng bước)`
+    :`theo cấu trúc mới: ${dem.TN} câu trắc nghiệm, ${dem.DS} câu đúng/sai, ${dem.TLN} câu trả lời ngắn${dem.TL?`, ${dem.TL} bài tự luận`:""}`;
+  let p=`Đóng vai trò là một giáo viên Toán xuất sắc và giàu kinh nghiệm (am hiểu sâu sắc chương trình GDPT 2018 - Sách Kết nối tri thức). Nhiệm vụ của bạn là soạn đề ôn thi ${ky.toLowerCase()} môn Toán Lớp ${lop} ${moTaCauTruc}.\n\n`;
   p+=`Hãy tạo đề Toán dưới dạng JSON tương thích chính xác với cấu trúc bên dưới.\n\nYÊU CẦU BẮT BUỘC:\n`;
-  const dem={TN:ds.filter(r=>r.loai==="TN").length,DS:ds.filter(r=>r.loai==="DS").length,TLN:ds.filter(r=>r.loai==="TLN").length};
   const tenFile=`De_on_thi_Toan${lop}_${ky.replace(/\s+/g,"_")}.json`.normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/đ/g,"d").replace(/Đ/g,"D");
   p+=`1. ĐẦU RA BẮT BUỘC LÀ MÃ JSON: trả toàn bộ đề trong ĐÚNG MỘT khối mã \`\`\`json … \`\`\` (để tôi bấm "Copy code"/tải về). Không viết lời dẫn, tiêu đề, giải thích hay bảng ngoài khối mã; không dùng Markdown, không in đậm trong JSON.\n`;
   p+=`   - Nếu bạn tạo được file tải về (ChatGPT: Code Interpreter / Canvas; Claude: tệp hoặc Artifact; Gemini: Canvas), tạo thêm file "${tenFile}" cùng nội dung để tôi tải.\n`;
   p+=`   - Nếu đề quá dài một lượt: dừng ở cuối một câu trọn vẹn, đóng đúng ngoặc JSON, ghi một dòng "CÒN TIẾP" bên ngoài khối mã; tôi nhắn "tiếp" thì viết phần còn lại thành một khối \`\`\`json mới có cùng cấu trúc (chỉ chứa các câu chưa viết).${so>1?" Với nhiều mã đề: mỗi lượt viết trọn 1 mã đề trong 1 khối \`\`\`json.":""}\n`;
-  p+=`   - Trước khi xuất, ĐẾM LẠI: trac_nghiem đúng ${dem.TN} câu, dung_sai đúng ${dem.DS} câu, tra_loi_ngan đúng ${dem.TLN} câu (mỗi mã đề). JSON phải parse được bằng JSON.parse.\n`;
+  p+=`   - Trước khi xuất, ĐẾM LẠI: ${chiTL?`tu_luan đúng ${dem.TL} câu`:`trac_nghiem đúng ${dem.TN} câu, dung_sai đúng ${dem.DS} câu, tra_loi_ngan đúng ${dem.TLN} câu${dem.TL?`, tu_luan đúng ${dem.TL} câu`:""}`} (mỗi mã đề). JSON phải parse được bằng JSON.parse.\n`;
   p+=`2. Giữ nguyên tên trường và kiểu dữ liệu. Không bọc JSON trong một trường khác${so>1?" (trừ phần nhân bản mã đề bên dưới)":""}.\n`;
-  p+=`3. Sử dụng các nhóm trac_nghiem, dung_sai, tra_loi_ngan. Nhóm không có câu hỏi phải là [].\n`;
+  p+=`3. Sử dụng các nhóm ${dem.TL?"trac_nghiem, dung_sai, tra_loi_ngan, tu_luan":"trac_nghiem, dung_sai, tra_loi_ngan"}. Nhóm không có câu hỏi phải là [].\n`;
   p+=`4. Công thức LaTeX đặt trong $...$ (cùng dòng) hoặc $$...$$ (riêng dòng). Trong JSON, mỗi dấu \\ của LaTeX phải viết thành \\\; ví dụ "$\\\\sqrt{2}$". Số thập phân trong công thức viết "$15{,}25$".\n`;
-  p+=`5. trac_nghiem:\n   - phuong_an phải có đúng 4 chuỗi, không ghi nhãn A., B., C., D.\n   - dap_an chỉ nhận "A", "B", "C" hoặc "D"; đáp án đúng rải đều A, B, C, D.\n`;
-  p+=`6. dung_sai:\n   - y phải có đúng 4 đối tượng, ý d) khó nhất.\n   - noi_dung không ghi nhãn a), b), c), d).\n   - dung phải là boolean true hoặc false, không phải chuỗi.\n   - giai_thich viết 4 dòng bắt đầu "a) Đúng/Sai. …", "b) …", "c) …", "d) …".\n`;
-  p+=`7. tra_loi_ngan: dap_an phải là chuỗi số, tối đa 4 ký tự (kể cả dấu - và dấu phẩy thập phân), ví dụ "2,5".\n`;
+  if(!chiTL){
+    p+=`5. trac_nghiem:\n   - phuong_an phải có đúng 4 chuỗi, không ghi nhãn A., B., C., D.\n   - dap_an chỉ nhận "A", "B", "C" hoặc "D"; đáp án đúng rải đều A, B, C, D.\n`;
+    p+=`6. dung_sai:\n   - y phải có đúng 4 đối tượng, ý d) khó nhất.\n   - noi_dung không ghi nhãn a), b), c), d).\n   - dung phải là boolean true hoặc false, không phải chuỗi.\n   - giai_thich viết 4 dòng bắt đầu "a) Đúng/Sai. …", "b) …", "c) …", "d) …".\n`;
+    p+=`7. tra_loi_ngan: dap_an phải là chuỗi số, tối đa 4 ký tự (kể cả dấu - và dấu phẩy thập phân), ví dụ "2,5".\n`;
+  }
+  if(dem.TL) p+=`${chiTL?"5":"7b"}. tu_luan: mỗi bài gồm "cau" (đề bài tự luận, có thể nhiều ý a), b), c)), "giai_thich" (lời giải chi tiết từng bước như bài làm mẫu), "muc", "ma_dang", "figures". Không cần phuong_an hay dap_an.\n`;
   p+=`8. giai_thich phải là một chuỗi; dùng \\n để ngăn cách các bước, không dùng mảng.\n`;
   p+=`9. muc chỉ nhận "NB", "TH", "VD", "VDC".\n`;
   p+=`10. ma_dang: mã dạng của ngân hàng, chọn đúng 1 mã trong danh sách gợi ý của từng câu, thay "?" bằng N/H/V/C theo mức (NB→N, TH→H, VD→V, VDC→C). Câu không có danh sách thì để "".\n`;
@@ -1655,14 +1687,20 @@ function promptHK(){
   if($("#hk-bay").checked) p+=`LƯU Ý KỸ THUẬT BẪY (Distractor Engineering): với các phương án sai trong trac_nghiem, giai_thich phải chỉ rõ học sinh mắc lỗi tư duy nào (quên điều kiện, nhầm dấu…) dẫn đến phương án sai đó.\n\n`;
   if(so>1) p+=`LƯU Ý NHÂN BẢN MÃ ĐỀ: sinh ${so} mã đề tương đương (cùng ma trận, khác số liệu/ngữ cảnh), bọc thành { "ma_de_1": { … }, "ma_de_2": { … } }.\n\n`;
   p+=`MẪU CẤU TRÚC:\n{\n  "loai": "bai_hoc",\n  "lop": ${lop},\n  "bai": 0,\n  "ten_bai": "${ten.replace(/"/g,"'")}",\n  "nguon": "",\n  "muc_tieu": [],\n  "bai_giang": [],\n  "can_nho": [],\n`;
-  p+=`  "trac_nghiem": [\n    {\n      "cau": "Căn bậc hai số học của 9 là:",\n      "phuong_an": ["$-3$", "$3$", "$9$", "$81$"],\n      "dap_an": "B",\n      "giai_thich": "Vì $3\\\\ge 0$ và $3^2=9$ nên $\\\\sqrt{9}=3$.",\n      "muc": "NB",\n      "ma_dang": "0D1N1-1",\n      "figures": []\n    }\n  ],\n`;
-  p+=`  "dung_sai": [\n    {\n      "cau": "Xét tính đúng, sai của các khẳng định sau:",\n      "y": [\n        {"noi_dung": "$\\\\sqrt{16}=4$.", "dung": true},\n        {"noi_dung": "$\\\\sqrt{25}=-5$.", "dung": false},\n        {"noi_dung": "$\\\\sqrt{0}=0$.", "dung": true},\n        {"noi_dung": "$\\\\sqrt{36}=6$.", "dung": true}\n      ],\n      "giai_thich": "a) Đúng.\\nb) Sai vì căn bậc hai số học của 25 là 5.\\nc) Đúng.\\nd) Đúng.",\n      "muc": "TH",\n      "ma_dang": "",\n      "figures": []\n    }\n  ],\n`;
-  p+=`  "tra_loi_ngan": [\n    {\n      "cau": "Tính $\\\\sqrt{49}$.",\n      "dap_an": "7",\n      "giai_thich": "Vì $7\\\\ge 0$ và $7^2=49$ nên $\\\\sqrt{49}=7$.",\n      "muc": "VD",\n      "ma_dang": "",\n      "figures": []\n    }\n  ]\n}\n\n`;
+  if(chiTL){
+    p+=`  "trac_nghiem": [],\n  "dung_sai": [],\n  "tra_loi_ngan": [],\n`;
+    p+=`  "tu_luan": [\n    {\n      "cau": "Thu gọn đơn thức $A = 2x^2y \\\\cdot (-3xy^3)$ rồi xác định hệ số và bậc của đơn thức.",\n      "giai_thich": "Ta có $A = 2 \\\\cdot (-3) \\\\cdot (x^2 \\\\cdot x) \\\\cdot (y \\\\cdot y^3) = -6x^3y^4$.\\nHệ số của $A$ là $-6$, bậc của $A$ là $3 + 4 = 7$.",\n      "muc": "NB",\n      "ma_dang": "8D1N1-2",\n      "figures": []\n    }\n  ]\n}\n\n`;
+  }else{
+    p+=`  "trac_nghiem": [\n    {\n      "cau": "Căn bậc hai số học của 9 là:",\n      "phuong_an": ["$-3$", "$3$", "$9$", "$81$"],\n      "dap_an": "B",\n      "giai_thich": "Vì $3\\\\ge 0$ và $3^2=9$ nên $\\\\sqrt{9}=3$.",\n      "muc": "NB",\n      "ma_dang": "0D1N1-1",\n      "figures": []\n    }\n  ],\n`;
+    p+=`  "dung_sai": [\n    {\n      "cau": "Xét tính đúng, sai của các khẳng định sau:",\n      "y": [\n        {"noi_dung": "$\\\\sqrt{16}=4$.", "dung": true},\n        {"noi_dung": "$\\\\sqrt{25}=-5$.", "dung": false},\n        {"noi_dung": "$\\\\sqrt{0}=0$.", "dung": true},\n        {"noi_dung": "$\\\\sqrt{36}=6$.", "dung": true}\n      ],\n      "giai_thich": "a) Đúng.\\nb) Sai vì căn bậc hai số học của 25 là 5.\\nc) Đúng.\\nd) Đúng.",\n      "muc": "TH",\n      "ma_dang": "",\n      "figures": []\n    }\n  ],\n`;
+    p+=`  "tra_loi_ngan": [\n    {\n      "cau": "Tính $\\\\sqrt{49}$.",\n      "dap_an": "7",\n      "giai_thich": "Vì $7\\\\ge 0$ và $7^2=49$ nên $\\\\sqrt{49}=7$.",\n      "muc": "VD",\n      "ma_dang": "",\n      "figures": []\n    }\n  ]${dem.TL?`,\n  "tu_luan": [\n    {\n      "cau": "Phân tích đa thức $x^2 - 4$ thành nhân tử.",\n      "giai_thich": "$x^2 - 4 = (x-2)(x+2)$.",\n      "muc": "NB",\n      "ma_dang": "",\n      "figures": []\n    }\n  ]`:""}\n}\n\n`;
+  }
   p+=`NỘI DUNG CẦN TẠO:\nCác câu trong mẫu chỉ minh họa cấu trúc. Hãy thay bằng nội dung theo ma trận dưới đây (đúng thứ tự, đúng số câu):\n\n`;
-  const nhan={TN:"[TRẮC NGHIỆM]",DS:"[ĐÚNG/SAI]",TLN:"[TRẢ LỜI NGẮN]"}, ten_c={TN:"Câu TN",DS:"Câu ĐS",TLN:"Câu TLN"};
-  for(const l of ["TN","DS","TLN"]){
+  const nhan={TN:"[TRẮC NGHIỆM]",DS:"[ĐÚNG/SAI]",TLN:"[TRẢ LỜI NGẮN]",TL:"[TỰ LUẬN]"}, ten_c={TN:"Câu TN",DS:"Câu ĐS",TLN:"Câu TLN",TL:"Bài TL"};
+  for(const l of ["TN","DS","TLN","TL"]){
+    const nh=ds.filter(r=>r.loai===l); if(!nh.length) continue;
     p+=nhan[l]+"\n";
-    ds.filter(r=>r.loai===l).forEach((r,i)=>{
+    nh.forEach((r,i)=>{
       let d=`- ${ten_c[l]} ${i+1}: Chủ đề: ${r.chu_de}. Mức độ: ${r.muc}.`;
       if(r.ngu_canh) d+=` Mô hình hóa thực tế: [${r.ngu_canh}].`;
       if(r.kho) d+=` 🔥 Chú ý: câu hỏi phân loại 9–10 (khó, lắt léo).`;
@@ -1700,14 +1738,15 @@ $("#hka-file").onchange=async e=>{const fs=[...e.target.files];e.target.value=""
 function tenTepHKA(m){return `De_AI_Toan${HK_LOP}_${boDau($("#hk-ky").value).replace(/[^a-z0-9]+/gi,"_")}${hkLop().bo.length>1?"_"+boDau(hkBo().ten).replace(/[^a-z0-9]+/gi,"_"):""}_${m.ten.replace(/\D+/g,"")||"1"}.json`}
 $("#hka-kiem").onclick=async()=>{
   const van=$("#hka-van").value.trim(); if(!van){alert("Dán nội dung AI trả về hoặc chọn file .json.");return}
-  const ds=hkDs(), can={TN:ds.filter(r=>r.loai==="TN").length,DS:ds.filter(r=>r.loai==="DS").length,TLN:ds.filter(r=>r.loai==="TLN").length};
+  const ds=hkDs(), can={TN:ds.filter(r=>r.loai==="TN").length,DS:ds.filter(r=>r.loai==="DS").length,TLN:ds.filter(r=>r.loai==="TLN").length,TL:ds.filter(r=>r.loai==="TL").length};
   $("#hka-tt").textContent="Đang kiểm tra…";
   const r=await api("/api/de-ai/kiem",{van_ban:van,can}); HKA=r;
   if(!r.ok){$("#hka-tt").textContent="";$("#hka-kq").innerHTML=`<div class="ma"><b class="hong">✗ ${esc(r.loi).replace(/\n/g,"<br>")}</b></div>`;$("#hka-nhap-het").disabled=true;return}
   $("#hka-tt").textContent=`Đọc được ${r.ma.length} mã đề AI.`;
   $("#hka-kq").innerHTML=r.ma.map((m,i)=>{
     const dat=!m.lech.length, sach=!m.loi.length;
-    return `<div class="ma"><h3>${esc(m.ten)} <span class="${dat?"ok":"canh"}">TN ${m.so.TN} · ĐS ${m.so.DS} · TLN ${m.so.TLN}${dat?" ✓ đúng ma trận":" ⚠ lệch ma trận"}</span>
+    const tom=(m.so.TL&&!m.so.TN&&!m.so.DS&&!m.so.TLN)?`TL ${m.so.TL}`:`TN ${m.so.TN} · ĐS ${m.so.DS} · TLN ${m.so.TLN}${m.so.TL?` · TL ${m.so.TL}`:""}`;
+    return `<div class="ma"><h3>${esc(m.ten)} <span class="${dat?"ok":"canh"}">${tom}${dat?" ✓ đúng ma trận":" ⚠ lệch ma trận"}</span>
       <span class="${sach?"ok":"hong"}">${sach?"· không lỗi":`· ${m.loi.length} lỗi`}</span></h3>
       ${m.lech.length||m.loi.length?`<ul>${[...m.lech.map(x=>`<li class="canh">${esc(x)}</li>`),...m.loi.map(x=>`<li class="hong">${esc(x)}</li>`)].join("")}</ul>`:""}
       <div class="nut"><button class="chinh" data-v="tron" data-i="${i}">Trộn đề từ mã này…</button><button data-v="nhap" data-i="${i}">Nhập vào ngân hàng</button>
