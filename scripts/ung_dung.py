@@ -591,10 +591,43 @@ def bai_giang_pdf(d, log):
         log(f"   ✓ bài giảng PDF: bai-giang/{sl}/")
 
 
-def dang_thi_nen(viec=None):
-    """Đổi đề (nếu có) rồi đăng thư mục thi-truc-tuyen/site lên Cloudflare Pages."""
+def de_in_song_song(x, log):
+    """🖨 Bộ đề PDF in trên lớp — ĐÚNG các câu vừa đăng (link thi / bài giảng), cùng thứ tự, cùng phương án,
+    mã đề trùng mã trên mạng; lưu vào thư mục đề mặc định (de-da-ra/Lớp N/…) kèm lời giải, đáp án Excel."""
+    bo = [b for b in (x.get("bo") or []) if any(b.get(l) for l in ("TN", "DS", "TLN", "TL"))]
+    if not bo:
+        return
+    mt = dict(x.get("mt") or {})
+    ten = (x.get("ten") or mt.get("ten_ky_thi") or "Đề kiểm tra").strip()
+    mt.update({"ten": ten_khong_dau(f"{x.get('slug') or ten}_in_tren_lop", 60) or "De_in_tren_lop", "ten_ky_thi": ten,
+               "so_ma_de": len(bo), "ma_de_bat_dau": int(x.get("bat_dau") or 101), "moi_ma_de_cau_khac_nhau": len(bo) > 1,
+               "chon_san": bo, "sap_xep": "giu_nguyen", "xao_cau": False, "xao_phuong_an": False, "xao_y_dung_sai": False,
+               "loi_giai_rieng": True, "de_cuong": False, "xuat_beamer": False, "xuat_leftnote": False,
+               "xuat_word": False, "xuat_word_k12": False, "xuat_word_de": False})
+    for k in ("tranh_ma", "thu_muc_ra"):
+        mt.pop(k, None)
+    if not mt.get("phan"):                     # bộ câu đến từ nơi khác (bài giảng): dựng ma trận tối thiểu theo số câu
+        mt["phan"] = [{"loai": l, "yeu_cau": [{"dang": "", "muc": "", "so": len(bo[0].get(l) or [])}]} for l in ("TN", "DS", "TLN", "TL") if bo[0].get(l)]
+    log(f"\n🖨 Bộ đề PDF in trên lớp (đúng {sum(len(v) for v in bo[0].values())} câu đã đăng, {len(bo)} mã đề)…")
+    p = os.path.join(GOC, "du-lieu", "_ma_tran_tam.json")
+    json.dump(mt, open(p, "w", encoding="utf-8"), ensure_ascii=False, indent=2)
+    rc, ra = chay([os.path.join(SCRIPTS, "tron_de.py"), p])
+    m = re.search(r"^THU_MUC:(.*)$", ra, re.M)
+    if rc != 0 or not m:
+        log("   ✗ Chưa tạo được bộ đề in:\n" + ra[-600:]); return
+    thu = os.path.join(GOC, m.group(1).strip())
+    if tim_pdflatex():
+        bien_dich_thu_muc(thu, lambda s: log("   " + s) if ("✗" in s or "✓" in s) else None)
+    else:
+        log("   (máy chưa có pdflatex — mở thư mục tex/ bằng TeXstudio để in)")
+    log(f"   ✓ Bộ đề in trên lớp: {os.path.relpath(thu, GOC)}")
+    cong_viec["de_in"] = os.path.relpath(thu, GOC)
+
+
+def dang_thi_nen(viec=None, sau=None):
+    """Đổi đề (nếu có) rồi đăng thư mục thi-truc-tuyen/site lên Cloudflare Pages; `sau` chạy tiếp (vd tạo bộ đề in)."""
     import thi_truc_tuyen as T
-    cong_viec.update(dang_chay=True, xong=False, nhat_ky="", thi_url="")
+    cong_viec.update(dang_chay=True, xong=False, nhat_ky="", thi_url="", de_in="")
     def ghi_log(x):
         cong_viec["nhat_ky"] += x + "\n"
     try:
@@ -605,6 +638,11 @@ def dang_thi_nen(viec=None):
     except Exception as e:
         cong_viec["thi_ok"] = False
         ghi_log(f"✗ {e}")
+    if sau:
+        try:
+            sau(ghi_log)
+        except Exception as e:
+            ghi_log(f"   ✗ bộ đề in: {e}")
     ghi_log("Xong.")
     cong_viec.update(dang_chay=False, xong=True)
 
@@ -814,7 +852,9 @@ class XuLy(BaseHTTPRequestHandler):
                     except Exception as e:
                         return self.gui(200, {"ok": False, "loi": str(e)})
                     if d.get("dang_ngay", True):
-                        threading.Thread(target=dang_thi_nen, daemon=True).start()
+                        de_in = d.get("de_in")
+                        threading.Thread(target=dang_thi_nen, kwargs={"sau": (lambda log: de_in_song_song(de_in, log)) if de_in else None},
+                                         daemon=True).start()
                     return self.gui(200, {"ok": True, "slug": slug, "url": f"{T.goc_url()}/bai-giang/{slug}/",
                                           "muc_luc": f"{T.goc_url()}/toan{int(d.get('lop') or 10)}/"})
                 if viec == "bg-hs":
@@ -866,7 +906,9 @@ class XuLy(BaseHTTPRequestHandler):
                     threading.Thread(target=dang_thi_nen, daemon=True).start()
                     return self.gui(200, {"ok": True, "nhat_ky": "\n".join(dong)})
                 if viec == "bg-pdf":
-                    threading.Thread(target=dang_thi_nen, args=(lambda log: bai_giang_pdf(d, log),), daemon=True).start()
+                    de_in = d.get("de_in")
+                    threading.Thread(target=dang_thi_nen, args=(lambda log: bai_giang_pdf(d, log),),
+                                     kwargs={"sau": (lambda log: de_in_song_song(de_in, log)) if de_in else None}, daemon=True).start()
                     return self.gui(200, {"ok": True})
                 if viec == "bg-trang-thai":
                     sl, tt = d.get("slug"), d.get("tt")
@@ -901,7 +943,9 @@ class XuLy(BaseHTTPRequestHandler):
                                      log(f"Gợi ý AI đề {sl}: {'bật' if bat else 'tắt'}")),), daemon=True).start()
                     return self.gui(200, {"ok": True})
                 if viec == "dang-lai":
-                    threading.Thread(target=dang_thi_nen, daemon=True).start()
+                    de_in = d.get("de_in")
+                    threading.Thread(target=dang_thi_nen, kwargs={"sau": (lambda log: de_in_song_song(de_in, log)) if de_in else None},
+                                     daemon=True).start()
                     return self.gui(200, {"ok": True})
             if u.path == "/api/trinh-chieu":
                 import trinh_chieu

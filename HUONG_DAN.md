@@ -658,6 +658,14 @@ Nút **⚡ Tạo nhanh theo bài** (đầu trang):
 3. **Tạo gì:** Bài giảng online HTML (vào mục lục lớp, GV xem) · Bài kiểm tra online (giao lớp, số lượt; mỗi mã một link + link chung; cần đúng 12–4–6) · File PDF đề + lời giải · Đáp án Excel (mẫu Chấm Phiếu AI).
 4. **Chọn câu & xem trước** → đổi câu nếu muốn → **⚡ Tạo tất cả**. Xong hiện link + QR và nút tải từng file PDF / DapAn.xlsx (file cũng nằm trong `de-da-ra/`).
 
+## 🖨 Đăng link thi / bài giảng → kèm bộ đề PDF in trên lớp
+Hộp **🌐 Link thi trực tuyến** và hộp **📚 Đăng bài giảng** (khi đăng từ bộ câu ra đề) có ô **🖨 Kèm bộ đề PDF in trên lớp**, mặc định đã bật. Đăng xong lên Cloudflare, máy xuất tiếp:
+- đề PDF và lời giải PDF, cùng đáp án Excel;
+- **đúng các câu đã đăng**, cùng thứ tự câu và thứ tự phương án, **mã đề trùng với mã trên mạng** (101, 102…), để học sinh làm giấy và làm online đối chiếu được với nhau;
+- lưu vào **Thư mục đề** mặc định (`de-da-ra/Lớp N/Đề kiểm tra – Ôn thi/…`).
+
+Khung kết quả đăng có nút **Mở thư mục** dẫn tới bộ đề in. Đăng lên Cloudflare lỗi thì bộ đề in vẫn được tạo. Trường hợp một bộ câu được đảo thành nhiều mã đề trên mạng, bản in là mã gốc chưa đảo.
+
 ## 🧑‍🏫 Bàn làm việc giáo viên (trang chính khi GV đăng nhập)
 
 Mở trang chính của site thi (vd https://thi-toan-vtl.pages.dev/) bằng tài khoản giáo viên:
