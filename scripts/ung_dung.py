@@ -1157,7 +1157,8 @@ class XuLy(BaseHTTPRequestHandler):
                         return self.gui(200, {"ok": True})
                     if viec == "tao":
                         dong = []
-                        ham = {"mat_ma": H.mat_ma, "tim_loi": H.tim_loi_sai, "on_tap": H.on_tap}[d.get("kieu")]
+                        ham = {"mat_ma": H.mat_ma, "tim_loi": H.tim_loi_sai, "on_tap": H.on_tap,
+                                "thu_thach": H.thu_thach, "manh_ghep": H.manh_ghep}[d.get("kieu")]
                         out_goc = ham(d.get("cau_hinh") or {}, dong.append)
                         rel = os.path.relpath(out_goc, GOC)
                         dang_bd = bool(d.get("bien_dich")) and bool(tim_pdflatex())

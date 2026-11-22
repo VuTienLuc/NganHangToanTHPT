@@ -519,7 +519,7 @@ tr.gop-h td{background:#dbeafe;text-align:left;font-weight:700;padding:8px 12px;
     <button id="nut-phieu" title="Phiếu bài học / chuyên đề / ôn tập chương: kiến thức trọng tâm, luyện tập, bài tập về nhà — tự lấy câu theo dạng">Phiếu bài học</button>
     <button id="nut-kt" title="Kho kiến thức trọng tâm từng bài (lớp 6 – 12): xem, sửa, soạn bằng AI, nhập nhiều bài một lần">Kho kiến thức</button>
     <button id="nut-so-tay" title="In công thức – kiến thức trọng tâm các dạng toán: chọn dạng cần in, 3 mẫu PDF đẹp, khổ tiết kiệm hoặc bình thường, có tên giáo viên">📐 In công thức – kiến thức trọng tâm</button>
-    <button id="nut-hdp" title="Phiếu hoạt động: 🔐 Mật mã (giải mã thông điệp, tự kiểm tra) · 🔍 Tìm lỗi sai · 🔄 Ôn tập ngắt quãng — kèm prompt AI sinh nội dung">🎲 Phiếu hoạt động (Mật mã · Tìm lỗi sai · Ôn tập)</button>
+    <button id="nut-hdp" title="Phiếu hoạt động: 🔐 Mật mã (giải mã thông điệp, tự kiểm tra) · 🔍 Tìm lỗi sai · 🔄 Ôn tập ngắt quãng · ⭐ Thử thách 3 mức (Leo núi) · 🧩 Mảnh ghép (Jigsaw) — kèm prompt AI sinh nội dung">🎲 Phiếu hoạt động (Mật mã · Lỗi sai · Ôn tập · Leo núi · Mảnh ghép)</button>
     <button id="nut-thi" title="Đề thi trực tuyến đã đăng: link, mã QR, mở lời giải, đóng đề">🌐 Thi trực tuyến</button>
   </div></div>
   <div class="nm" data-nm="ai"><button class="nm-nut">AI</button><div class="nm-ds">
@@ -870,7 +870,7 @@ tr.gop-h td{background:#dbeafe;text-align:left;font-weight:700;padding:8px 12px;
 </div></div>
 <div id="hop-hdp"><div class="noi">
   <h2>🎲 Phiếu hoạt động <span id="hdp-the" style="display:flex;gap:4px">
-      <button data-k="mat_ma" class="on">🔐 Mật mã</button><button data-k="tim_loi">🔍 Tìm lỗi sai</button><button data-k="on_tap">🔄 Ôn tập ngắt quãng</button></span>
+      <button data-k="mat_ma" class="on">🔐 Mật mã</button><button data-k="tim_loi">🔍 Tìm lỗi sai</button><button data-k="on_tap">🔄 Ôn tập ngắt quãng</button><button data-k="thu_thach">⭐ Leo núi 3 mức</button><button data-k="manh_ghep">🧩 Mảnh ghép</button></span>
     <span id="hdp-lop" style="margin-left:auto;display:flex;gap:4px"></span></h2>
   <div class="cai" id="hdp-mo-ta"></div>
   <div class="cai">
@@ -882,6 +882,11 @@ tr.gop-h td{background:#dbeafe;text-align:left;font-weight:700;padding:8px 12px;
       <button id="hdp-ai-loi" class="chinh" style="background:#7c3aed;border-color:#7c3aed" title="AI (khoá API ở ⚙ Khoá AI) viết lời giải có một lỗi thường gặp từ câu có lời giải đúng trong ngân hàng, nhập ngay vào kho lỗi sai">🤖 AI tạo bài lỗi sai ngay</button></span>
     <span class="hdp-k" data-k="on_tap">Câu hôm nay <input type="number" id="hdp-so-nay" value="7" min="1" max="20" style="width:54px"> · Câu ôn lại <input type="number" id="hdp-so-cu" value="3" min="0" max="15" style="width:54px">
       <button id="hdp-goi-y" title="Tự tích cột Ôn lại: dạng đã ra đề khoảng 1 tuần, 2 tuần, 1 tháng trước">🕑 Gợi ý ôn lại theo lịch sử đề</button> <span id="hdp-goi-y-tt" class="nho"></span></span>
+    <span class="hdp-k" data-k="thu_thach">Mỗi chặng: <span title="Cơ bản (NB–TH)">⭐</span> <input type="number" id="hdp-b1" value="2" min="0" max="6" style="width:46px"> câu · <span title="Vận dụng">⭐⭐</span> <input type="number" id="hdp-b2" value="2" min="0" max="6" style="width:46px"> · <span title="Vận dụng cao (thiếu thì lấy câu vận dụng)">⭐⭐⭐</span> <input type="number" id="hdp-b3" value="1" min="0" max="6" style="width:46px">
+      · <label class="hop"><input type="checkbox" id="hdp-tt-tl" checked> có câu tự luận</label>
+      <label class="hop"><input type="checkbox" id="hdp-bxh"> bảng xếp hạng nhóm</label> <input type="number" id="hdp-so-nhom" value="6" min="2" max="10" style="width:46px" title="Số nhóm"> nhóm</span>
+    <span class="hdp-k" data-k="manh_ghep">Sĩ số <input type="number" id="hdp-si-so" value="40" min="4" max="60" style="width:54px"> HS · Bài luyện mỗi tờ chuyên gia <input type="number" id="hdp-so-luyen" value="2" min="1" max="4" style="width:46px">
+      <span class="nho">· chọn 2–6 dạng (mỗi dạng = một nhóm chuyên gia A, B, C…)</span></span>
   </div>
   <div class="than" id="hdp-cay"></div>
   <details class="cai" id="hdp-ai" style="display:block"><summary style="cursor:pointer;font-weight:600;color:#6d28d9">📝 Prompt AI sinh nội dung → dán kết quả để nhập</summary>
@@ -2260,6 +2265,8 @@ const HDP={kieu:"mat_ma",lop:10,chon:new Set(),cu:new Set(),loi:{},td:[]};
 const HDP_MO_TA={
   mat_ma:"🔐 <b>Mật mã</b>: mỗi câu đúng cho một chữ cái → ghép thành thông điệp bí mật. Học sinh tự biết mình sai khi chữ ghép lại vô nghĩa. Câu trắc nghiệm: nhãn phương án là chữ cái; câu trả lời ngắn: tra bảng giải mã. Số câu = số chữ của thông điệp.",
   tim_loi:"🔍 <b>Tìm lỗi sai</b>: lời giải của bạn An có <b>đúng một bước sai</b> (lỗi thường gặp) → học sinh khoanh bước sai, giải thích, sửa lại. Bài lấy từ <b>kho lỗi sai</b>: bấm 🤖 AI tạo ngay (dựa trên lời giải đúng trong ngân hàng) hoặc dùng Prompt AI chép – dán.",
+  thu_thach:"⭐ <b>Thử thách 3 mức (Leo núi)</b>: mỗi dạng là một <b>chặng</b> gồm 3 bậc ⭐ cơ bản → ⭐⭐ vận dụng → ⭐⭐⭐ thử thách (1/2/3 sao mỗi câu). Học sinh tự chọn bậc vừa sức rồi leo dần, tích sao vào <b>Bảng tích sao</b> cuối phiếu — phân hoá tự nhiên, ai cũng có việc làm. Có thể thêm bảng xếp hạng nhóm.",
+  manh_ghep:"🧩 <b>Mảnh ghép (Jigsaw)</b>: mỗi dạng là một <b>nhóm chuyên gia</b> (A, B, C…) nhận tờ riêng: phương pháp + ví dụ mẫu có lời giải + bài luyện + ghi chú. Sau đó về <b>nhóm mảnh ghép</b> (đủ A, B, C…), từng bạn dạy lại dạng của mình và cả nhóm giải tờ mảnh ghép. Đáp án kèm <b>sơ đồ chia nhóm</b> theo sĩ số.",
   on_tap:"🔄 <b>Ôn tập ngắt quãng</b>: ~70% câu bài hôm nay + ~30% câu dạng đã học 1 tuần / 2 tuần / 1 tháng trước — ôn đúng lúc sắp quên giúp nhớ lâu. Tích cột <b>Hôm nay</b> và cột <b>Ôn lại</b> (hoặc 🕑 gợi ý theo lịch sử đề đã ra)."};
 function hdpKhoDang(d){const n=l=>(d.kho[l]||[0,0,0,0]).reduce((a,b)=>a+b,0);return {tn:n("TN"),tln:n("TLN")}}
 async function hdpMoLop(lop){HDP.lop=lop;document.querySelectorAll("#hdp-lop button").forEach(b=>b.classList.toggle("on",+b.dataset.l===lop));
@@ -2292,8 +2299,10 @@ function hdpDem(){
   const k=HDP.kieu, n=HDP.chon.size, td=($("#hdp-td").value||$("#hdp-td").placeholder).replace(/\s+/g,"");
   $("#hdp-td-dem").textContent=`${td.length} chữ = ${td.length} câu`;
   $("#hdp-tt").textContent=k==="on_tap"?`Hôm nay: ${n} dạng · Ôn lại: ${HDP.cu.size?HDP.cu.size+" dạng":"theo lịch sử đề"}`
-    :k==="tim_loi"?`Đã chọn ${n} dạng · kho lỗi sai có ${[...HDP.chon].reduce((a,x)=>a+(HDP.loi[x]||0),0)} bài`:`Đã chọn ${n} dạng`;
-  $("#hdp-tao").disabled=!n;
+    :k==="tim_loi"?`Đã chọn ${n} dạng · kho lỗi sai có ${[...HDP.chon].reduce((a,x)=>a+(HDP.loi[x]||0),0)} bài`
+    :k==="manh_ghep"?`Đã chọn ${n} dạng`+(n&&(n<2||n>6)?" — cần 2–6 dạng":n?` → ${n} nhóm chuyên gia, ${Math.ceil((+$("#hdp-si-so").value||40)/n)} nhóm mảnh ghép`:"")
+    :k==="thu_thach"?`Đã chọn ${n} chặng (mỗi dạng một chặng)`:`Đã chọn ${n} dạng`;
+  $("#hdp-tao").disabled=!n||(k==="manh_ghep"&&(n<2||n>6));
 }
 $("#nut-hdp").onclick=async()=>{
   if(!DL) await tai();
@@ -2305,7 +2314,7 @@ $("#nut-hdp").onclick=async()=>{
 };
 document.querySelectorAll("#hdp-the button").forEach(b=>b.onclick=()=>{HDP.kieu=b.dataset.k;document.querySelectorAll("#hdp-the button").forEach(x=>x.classList.toggle("on",x===b));
   $("#hdp-p").value="";$("#hdp-dan").value="";$("#hdp-nhap-tt").textContent="";veHDP()});
-$("#hdp-tim").oninput=veHDP; $("#hdp-td").oninput=hdpDem;
+$("#hdp-tim").oninput=veHDP; $("#hdp-td").oninput=hdpDem; $("#hdp-si-so").oninput=hdpDem;
 $("#hdp-td-ngau").onclick=()=>{if(HDP.td.length){$("#hdp-td").value=HDP.td[Math.floor(Math.random()*HDP.td.length)];hdpDem()}};
 $("#hdp-dong").onclick=()=>$("#hop-hdp").style.display="none";
 $("#hdp-goi-y").onclick=async()=>{
@@ -2341,6 +2350,8 @@ $("#hdp-tao").onclick=async()=>{
     truong:$("#truong").value.trim(),nam_hoc:$("#nam_hoc").value.trim(),lop:HDP.lop};
   const cfg=k==="mat_ma"?{...chung,thong_diep:$("#hdp-td").value.trim()||$("#hdp-td").placeholder,muc:[...document.querySelectorAll(".hdp-muc:checked")].map(x=>x.value),co_tln:$("#hdp-tln").checked}
     :k==="tim_loi"?{...chung,so:+$("#hdp-so-loi").value||4,ten_ban:$("#hdp-ban").value.trim()||"An"}
+    :k==="thu_thach"?{...chung,so_bac:["#hdp-b1","#hdp-b2","#hdp-b3"].map(x=>+$(x).value||0),co_tl:$("#hdp-tt-tl").checked,bang_nhom:$("#hdp-bxh").checked,so_nhom:+$("#hdp-so-nhom").value||6}
+    :k==="manh_ghep"?{...chung,so_hs:+$("#hdp-si-so").value||40,so_luyen:+$("#hdp-so-luyen").value||2}
     :{...chung,so_nay:+$("#hdp-so-nay").value||7,so_cu:+$("#hdp-so-cu").value||0,dang_cu:[...HDP.cu]};
   const b=$("#hdp-tao");b.disabled=true;b.textContent="Đang tạo…";
   try{const r=await api("/api/hd/tao",{kieu:k,cau_hinh:cfg,bien_dich:$("#bien_dich").checked});

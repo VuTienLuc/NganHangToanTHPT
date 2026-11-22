@@ -685,8 +685,8 @@ Tạo phiếu như cũ (📄 Phiếu bài học, kiểu trắc nghiệm hoặc t
 - Bài giảng bất kỳ cũng cho HS xem được: 🌐 Thi trực tuyến → thẻ Bài giảng → nút **Cho HS xem / Thôi cho HS**.
 - Phiếu tạo từ bản cũ (trước khi có tính năng) cần tạo lại phiếu để có dữ liệu web.
 
-## 🎲 Phiếu hoạt động (menu **Dạy học**): Mật mã · Tìm lỗi sai · Ôn tập ngắt quãng
-Chọn lớp, chọn loại phiếu ở 3 thẻ trên cùng, tích các dạng, chọn mẫu PDF và khổ in, rồi bấm **🖨 Tạo phiếu PDF**. Mỗi phiếu ra 2 file: phiếu học sinh và đáp án. Tên giáo viên in ở chân trang.
+## 🎲 Phiếu hoạt động (menu **Dạy học**): Mật mã · Tìm lỗi sai · Ôn tập ngắt quãng · Leo núi · Mảnh ghép
+Chọn lớp, chọn loại phiếu ở 5 thẻ trên cùng, tích các dạng, chọn mẫu PDF và khổ in, rồi bấm **🖨 Tạo phiếu PDF**. Mỗi phiếu ra 2 file: phiếu học sinh và đáp án. Tên giáo viên in ở chân trang.
 
 **🔐 Mật mã**
 - Gõ thông điệp (hoặc bấm 🎲). Số câu bằng số chữ cái của thông điệp.
@@ -705,7 +705,20 @@ Chọn lớp, chọn loại phiếu ở 3 thẻ trên cùng, tích các dạng, 
 - Tích cột **Hôm nay** (bài đang học) và cột **Ôn lại**. Bấm 🕑 *Gợi ý theo lịch sử đề* để tự chọn các dạng đã ra đề khoảng 1 tuần, 2 tuần, 1 tháng trước.
 - Phiếu khoảng 70% câu mới, 30% câu ôn lại. Mỗi phần ôn lại có ô tự đánh giá mức độ nhớ (nhớ rõ / mang máng / quên).
 
+**⭐ Thử thách 3 mức (Leo núi)**
+- Mỗi dạng đã tích là một **chặng**. Mỗi chặng có 3 bậc: ⭐ *Chân núi – Cơ bản* (câu NB–TH, 1 sao), ⭐⭐ *Sườn núi – Vận dụng* (2 sao), ⭐⭐⭐ *Đỉnh núi – Thử thách* (câu VDC, 3 sao; dạng thiếu câu VDC thì lấy câu vận dụng còn lại).
+- Đặt số câu mỗi bậc (mặc định 2 – 2 – 1), bật/tắt câu tự luận. Học sinh tự chọn bậc vừa sức, làm đúng thì tích ô *Đạt* và tô sao vào **Bảng tích sao** cuối phiếu (có tổng tối đa và danh hiệu *Nhà leo núi* ≥ 50%, *Chinh phục đỉnh* ≥ 80%).
+- Tích **bảng xếp hạng nhóm** để in thêm bảng cộng sao theo nhóm (2–10 nhóm).
+- Nhật ký báo bậc nào thiếu câu để thầy bổ sung bằng Prompt AI.
+
+**🧩 Mảnh ghép (Jigsaw)**
+- Tích **2–6 dạng**. Mỗi dạng thành một **nhóm chuyên gia** A, B, C… (mỗi nhóm một màu).
+- File học sinh gồm: một **tờ chuyên gia** cho mỗi nhóm (phương pháp lấy từ Kho kiến thức, chưa có thì chừa dòng để nhóm tự rút ra; ví dụ mẫu có lời giải; bài luyện; ghi chú để dạy lại bạn) và **tờ mảnh ghép** (mỗi dạng một ô tóm tắt + một bài, cuối có tự đánh giá). Đầu mỗi tờ ghi số bản cần in theo sĩ số.
+- File đáp án có **sơ đồ chia nhóm**: học sinh số *n* theo danh sách vào nhóm chuyên gia nào, nhóm mảnh ghép nào; sau đó là lời giải mọi bài.
+- Tiến trình gợi ý: nhóm chuyên gia 12–15 phút → nhóm mảnh ghép mỗi bạn giảng ~5 phút → giải bài và tự đánh giá.
+
 **📝 Prompt AI → nhập**: mục cuối hộp có ô tạo prompt cho các dạng đã chọn và ô dán kết quả.
+- Leo núi: prompt yêu cầu AI soạn đủ 3 bậc NB-TH / VD / VDC cho mỗi dạng. Mảnh ghép: prompt yêu cầu có câu tự luận lời giải chi tiết để làm ví dụ mẫu. Cả hai đều nhập vào **ngân hàng**.
 - Mật mã và Ôn tập: AI soạn câu JSON, dán vào là nhập **ngân hàng** (biên dịch thử từng câu như mọi lần nhập).
 - Tìm lỗi sai: dán vào là nhập **kho lỗi sai**.
 
