@@ -125,6 +125,6 @@ if muc_la:
     for (n, m), s in sorted(muc_la.items()):
         L.append(f"| {n} | {m} | {s} |")
 ghi(os.path.join(GOC, "du-lieu", "bao_cao_chuyen_doi.md"), "\n".join(L) + "\n")
-json.dump(sorted(rac), open(os.path.join(GOC, "du-lieu", "lenh_rac.json"), "w"), ensure_ascii=False)
+json.dump(sorted(rac), open(os.path.join(GOC, "du-lieu", "lenh_rac.json"), "w", encoding="utf-8"), ensure_ascii=False)
 print(f"\nXong: {tong} câu → {len(theo_file)} file. Báo cáo: du-lieu/bao_cao_chuyen_doi.md")
 print("Tiếp theo: python3 scripts/lap_chi_muc.py")

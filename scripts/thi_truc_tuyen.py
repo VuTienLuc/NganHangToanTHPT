@@ -792,7 +792,7 @@ def _env():
 
 
 def _chay(lenh, in_ra, timeout=600):
-    p = subprocess.Popen(WRANGLER + lenh, cwd=THU, env=_env(), stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
+    p = subprocess.Popen(_wr() + lenh, cwd=THU, env=_env(), stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
                          text=True, errors="ignore")
     ra, t0 = [], time.time()
     for dong in p.stdout:
@@ -809,6 +809,11 @@ def _chay(lenh, in_ra, timeout=600):
 
 def co_node():
     return bool(shutil.which(WRANGLER[0], path=_env()["PATH"]))
+
+
+def _wr():
+    """Lệnh wrangler với đường dẫn đầy đủ (Windows: npx là npx.cmd, Popen không tự tìm đuôi .cmd)."""
+    return [shutil.which(WRANGLER[0], path=_env()["PATH"]) or WRANGLER[0]] + WRANGLER[1:]
 
 
 MAY_CHU = os.path.join(os.path.dirname(os.path.abspath(__file__)), "may_chu")   # mã máy chủ (Functions + schema)
@@ -877,7 +882,7 @@ def dang_phong(c, in_ra):
 def _dat_bi_mat(c, in_ra):
     b = bi_mat()
     for ten, gt in (("ADMIN_TOKEN", b["admin"]), ("SESSION_SECRET", b["phien"])):
-        p = subprocess.run(WRANGLER + ["pages", "secret", "put", ten, "--project-name", c["du_an"]], cwd=THU, env=_env(),
+        p = subprocess.run(_wr() + ["pages", "secret", "put", ten, "--project-name", c["du_an"]], cwd=THU, env=_env(),
                            input=gt + "\n", capture_output=True, text=True, errors="ignore", timeout=180)
         if p.returncode != 0:
             raise RuntimeError(f"Chưa đặt được khoá {ten}: {(p.stdout + p.stderr)[-300:]}")

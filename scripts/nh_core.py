@@ -340,7 +340,11 @@ def ghi_xlsx(duong_dan, cac_sheet):
 def tim_pdflatex():
     import shutil as _sh
     for c in (_sh.which("pdflatex"), "/Library/TeX/texbin/pdflatex", "/opt/homebrew/bin/pdflatex",
-              "/usr/local/texlive/2026/bin/universal-darwin/pdflatex", "/usr/local/texlive/2025/bin/universal-darwin/pdflatex"):
+              "/usr/local/texlive/2026/bin/universal-darwin/pdflatex", "/usr/local/texlive/2025/bin/universal-darwin/pdflatex",
+              # Windows: MiKTeX (cài cho người dùng / cho máy), TeX Live
+              os.path.join(os.environ.get("LOCALAPPDATA", ""), r"Programs\MiKTeX\miktex\bin\x64\pdflatex.exe"),
+              r"C:\Program Files\MiKTeX\miktex\bin\x64\pdflatex.exe",
+              r"C:\texlive\2026\bin\windows\pdflatex.exe", r"C:\texlive\2025\bin\windows\pdflatex.exe"):
         if c and os.path.exists(c):
             return c
     return None
