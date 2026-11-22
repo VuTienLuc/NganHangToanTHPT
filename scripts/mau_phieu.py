@@ -44,11 +44,11 @@ DINH_NGHIA = {
 "hien_dai": r"""
 \definecolor{mauPhieu}{RGB}{30,64,175}\definecolor{mauDang}{RGB}{13,148,136}\definecolor{mauNen}{RGB}{239,246,255}\definecolor{mauNhan}{RGB}{234,88,12}
 \newcommand{\phanPhieu}[2][\faStar]{\par\medskip\noindent
-  \tikz[baseline=(c.base)]\node[fill=mauPhieu,text=white,circle,inner sep=0pt,minimum size=6.2mm,font=\footnotesize](c){#1};%
+  \tikz[reset cm,baseline=(c.base)]\node[fill=mauPhieu,text=white,circle,inner sep=0pt,minimum size=6.2mm,font=\footnotesize](c){#1};%
   \hspace{1.6mm}{\sanS\bfseries\large\color{mauPhieu}#2}\hspace{2mm}{\color{mauPhieu!25}\leaders\hrule height 0.55ex depth -0.38ex\hfill\kern0pt}\par\smallskip}
 \newcommand{\phanCon}[1]{\par\smallskip\noindent{\color{mauPhieu}\rule[-0.2ex]{2.6pt}{2.2ex}}\hspace{1.4mm}{\sanS\bfseries\color{mauPhieu!85!black}#1}\par}
-\newcommand{\dangPhieu}[2]{\par\smallskip\noindent\tikz[baseline=(d.base)]\node[fill=mauDang,text=white,rounded corners=1.6mm,inner xsep=2.2mm,inner ysep=1.6pt,font=\sanS\bfseries\scriptsize](d){DẠNG #1};\ {\color{mauDang!65!black}\itshape #2}\par\nopagebreak}
-\newcommand{\nhanMuc}[2]{\par\smallskip\noindent\tikz[baseline=(m.base)]\node[fill=mauNhan,text=white,rounded corners=1.6mm,inner xsep=2mm,inner ysep=1.4pt,font=\sanS\bfseries\scriptsize](m){#1};\ {\scriptsize\itshape\color{black!55}Dạng #2}\par\nopagebreak}
+\newcommand{\dangPhieu}[2]{\par\smallskip\noindent\tikz[reset cm,baseline=(d.base)]\node[fill=mauDang,text=white,rounded corners=1.6mm,inner xsep=2.2mm,inner ysep=1.6pt,font=\sanS\bfseries\scriptsize](d){DẠNG #1};\ {\color{mauDang!65!black}\itshape #2}\par\nopagebreak}
+\newcommand{\nhanMuc}[2]{\par\smallskip\noindent\tikz[reset cm,baseline=(m.base)]\node[fill=mauNhan,text=white,rounded corners=1.6mm,inner xsep=2mm,inner ysep=1.4pt,font=\sanS\bfseries\scriptsize](m){#1};\ {\scriptsize\itshape\color{black!55}Dạng #2}\par\nopagebreak}
 \newcommand{\dongKe}[1]{\par\foreach \i in {1,...,#1}{\noindent\makebox[\linewidth]{\rule{0pt}{8mm}{\color{mauPhieu!22}\leaders\hrule height 0.45pt\hfill}}\par}}
 \newtcolorbox{khungKT}{enhanced,breakable,colback=mauNen,colframe=mauNen,boxrule=0pt,sharp corners=west,arc=2.5mm,
   borderline west={2.4pt}{0pt}{mauPhieu},left=4mm,right=3mm,top=2mm,bottom=2mm,width=\linewidth}
@@ -65,11 +65,11 @@ DINH_NGHIA = {
 "tuoi_sang": r"""
 \definecolor{mauPhieu}{RGB}{109,40,217}\definecolor{mauDang}{RGB}{234,88,12}\definecolor{mauPhu}{RGB}{16,185,129}\definecolor{mauNen}{RGB}{250,245,255}\colorlet{mauNhan}{mauPhu!85!black}
 \newcommand{\phanPhieu}[2][\faStar]{\par\medskip\noindent
-  \tikz[baseline=(t.base)]\node[fill=mauPhieu,text=white,rounded corners=2.2mm,inner xsep=3mm,inner ysep=2.4pt,font=\sanS\bfseries](t){#1\hspace{1.6mm}#2};\par
+  \tikz[reset cm,baseline=(t.base)]\node[fill=mauPhieu,text=white,rounded corners=2.2mm,inner xsep=3mm,inner ysep=2.4pt,font=\sanS\bfseries](t){#1\hspace{1.6mm}#2};\par
   \vspace{-1.5pt}\noindent{\color{mauPhieu}\rule{\linewidth}{1.3pt}}\par\smallskip}
 \newcommand{\phanCon}[1]{\par\smallskip\noindent{\sanS\bfseries\color{mauDang}\faChevronCircleRight\ #1}\par}
-\newcommand{\dangPhieu}[2]{\par\smallskip\noindent\tikz[baseline=(n.base)]\node[circle,fill=mauDang,text=white,inner sep=0pt,minimum size=5.4mm,font=\sanS\bfseries\footnotesize](n){#1};\ {\sanS\bfseries\color{mauDang!80!black}#2}\par\nopagebreak}
-\newcommand{\nhanMuc}[2]{\par\smallskip\noindent\tikz[baseline=(m.base)]\node[fill=mauNhan,text=white,rounded corners=2mm,inner xsep=2mm,inner ysep=1.4pt,font=\sanS\bfseries\scriptsize](m){\faStar\ #1};\ {\scriptsize\itshape\color{black!55}Dạng #2}\par\nopagebreak}
+\newcommand{\dangPhieu}[2]{\par\smallskip\noindent\tikz[reset cm,baseline=(n.base)]\node[circle,fill=mauDang,text=white,inner sep=0pt,minimum size=5.4mm,font=\sanS\bfseries\footnotesize](n){#1};\ {\sanS\bfseries\color{mauDang!80!black}#2}\par\nopagebreak}
+\newcommand{\nhanMuc}[2]{\par\smallskip\noindent\tikz[reset cm,baseline=(m.base)]\node[fill=mauNhan,text=white,rounded corners=2mm,inner xsep=2mm,inner ysep=1.4pt,font=\sanS\bfseries\scriptsize](m){\faStar\ #1};\ {\scriptsize\itshape\color{black!55}Dạng #2}\par\nopagebreak}
 \newcommand{\dongKe}[1]{\par\foreach \i in {1,...,#1}{\noindent\makebox[\linewidth]{\rule{0pt}{8mm}\color{mauPhieu!30}\dotfill}\par}}
 \newtcolorbox{khungKT}{enhanced,breakable,colback=mauNen,colframe=mauPhieu!45,boxrule=0.9pt,arc=3mm,left=4mm,right=4mm,top=3mm,bottom=2mm,width=\linewidth,
   overlay unbroken and first={\node[circle,fill=mauDang,text=white,inner sep=0pt,minimum size=6mm,font=\small] at ([xshift=5mm]frame.north west){\faLightbulbO};}}
@@ -117,11 +117,11 @@ TU_LUAN_THEM = {
 \renewcommand{\nhanTL}[1]{{\setlength{\fboxsep}{1.2pt}\framebox{\scriptsize\bfseries\MakeUppercase{#1}}}}
 """,
     "tuoi_sang": r"""
-\renewcommand{\nhanTL}[1]{\tikz[baseline=(m.base)]\node[fill=mauNhan,text=white,rounded corners=1.6mm,inner xsep=1.6mm,inner ysep=1pt,font=\sanS\bfseries\scriptsize](m){\faStar\ #1};}
+\renewcommand{\nhanTL}[1]{\tikz[reset cm,baseline=(m.base)]\node[fill=mauNhan,text=white,rounded corners=1.6mm,inner xsep=1.6mm,inner ysep=1pt,font=\sanS\bfseries\scriptsize](m){\faStar\ #1};}
 \backgroundcolor{c[0](1.2mm,0.8mm)}{mauDang!5}\backgroundcolor{c[1](1.2mm,0.8mm)}{mauPhieu!4}
 """,
     "hien_dai": r"""
-\renewcommand{\nhanTL}[1]{\tikz[baseline=(m.base)]\node[fill=mauNhan,text=white,rounded corners=1.6mm,inner xsep=1.6mm,inner ysep=1pt,font=\sanS\bfseries\scriptsize](m){#1};}
+\renewcommand{\nhanTL}[1]{\tikz[reset cm,baseline=(m.base)]\node[fill=mauNhan,text=white,rounded corners=1.6mm,inner xsep=1.6mm,inner ysep=1pt,font=\sanS\bfseries\scriptsize](m){#1};}
 \backgroundcolor{c[0](1.2mm,0.8mm)}{mauDang!6}\backgroundcolor{c[1](1.2mm,0.8mm)}{mauNen}
 """,
 }

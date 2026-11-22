@@ -233,6 +233,25 @@ footer .gian{flex:1}
 .mtb:has(input:checked){border-color:var(--nhan);box-shadow:0 0 0 3px var(--nhan-nhat)}
 .mtb-mau{display:flex;gap:4px}.mtb-mau i{width:22px;height:12px;border-radius:4px;border:1px solid rgba(0,0,0,.12)}
 @media (max-width:900px){.mtb-ds{grid-template-columns:repeat(2,minmax(0,1fr))}}
+#hop-st{position:fixed;inset:0;background:rgba(17,24,39,.4);display:none;align-items:center;justify-content:center;z-index:14}
+#hop-st .noi{background:#fff;border-radius:14px;width:min(1080px,96vw);height:min(94vh,980px);display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.28)}
+#hop-st h2{margin:0;padding:12px 18px;font-size:16px;border-bottom:1px solid var(--vien);display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+#hop-st h2 button{padding:3px 10px;font-size:12.5px}#hop-st h2 button.on{background:var(--nhan);color:#fff;border-color:var(--nhan)}
+#hop-st .cai{display:flex;flex-wrap:wrap;gap:8px 14px;padding:9px 18px;border-bottom:1px solid var(--vien);background:#f5f7ff;font-size:13px;align-items:center}
+#hop-st .st-cai{border-top:1px solid var(--vien);border-bottom:0;background:#fafbfd}
+#hop-st .cai input[type=text],#hop-st .cai input[type=search]{padding:5px 8px;border:1px solid var(--vien);border-radius:7px;font:inherit}
+#hop-st .than{flex:1;overflow:auto;padding:8px 18px 14px;font-size:13px}
+#hop-st .chan{padding:10px 18px;border-top:1px solid var(--vien);display:flex;gap:8px;align-items:center}
+.st-ch{margin:10px 0 4px;border:1px solid var(--vien);border-radius:10px;overflow:hidden}
+.st-ch>.st-ch-dau{display:flex;gap:8px;align-items:center;padding:7px 12px;background:#eef2fb;font-weight:700;color:#1e3a8a;cursor:pointer}
+.st-ch>.st-ch-dau .so{margin-left:auto;font-weight:500;color:var(--phu);font-size:12px}
+.st-bai{padding:6px 12px 6px 14px;border-top:1px solid #eef1f6}
+.st-bai .tb{font-weight:650;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.st-bai .tb small{font-weight:400;color:var(--phu)}
+.st-dang{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:2px 14px;margin:4px 0 0 18px}
+.st-dang label{display:flex;gap:6px;align-items:flex-start;font-size:12.5px;cursor:pointer}
+.st-the{font-size:10.5px;padding:0 6px;border-radius:99px;white-space:nowrap}
+.st-the.co{background:#dcfce7;color:#166534}.st-the.chua{background:#fef3c7;color:#92400e}
 #hop-xb{position:fixed;inset:0;background:rgba(17,24,39,.4);display:none;align-items:center;justify-content:center;z-index:16}
 #hop-xb .noi{background:#fff;border-radius:14px;width:min(780px,95vw);max-height:90vh;display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.3)}
 #hop-xb h2{margin:0;padding:12px 18px;font-size:16px;border-bottom:1px solid var(--vien)}
@@ -485,6 +504,7 @@ tr.gop-h td{background:#dbeafe;text-align:left;font-weight:700;padding:8px 12px;
   <div class="nm" data-nm="day"><button class="nm-nut">Dạy học</button><div class="nm-ds">
     <button id="nut-phieu" title="Phiếu bài học / chuyên đề / ôn tập chương: kiến thức trọng tâm, luyện tập, bài tập về nhà — tự lấy câu theo dạng">Phiếu bài học</button>
     <button id="nut-kt" title="Kho kiến thức trọng tâm từng bài (lớp 6 – 12): xem, sửa, soạn bằng AI, nhập nhiều bài một lần">Kho kiến thức</button>
+    <button id="nut-so-tay" title="In công thức – kiến thức trọng tâm các dạng toán: chọn dạng cần in, 3 mẫu PDF đẹp, khổ tiết kiệm hoặc bình thường, có tên giáo viên">📐 In công thức – kiến thức trọng tâm</button>
     <button id="nut-thi" title="Đề thi trực tuyến đã đăng: link, mã QR, mở lời giải, đóng đề">🌐 Thi trực tuyến</button>
   </div></div>
   <div class="nm" data-nm="ai"><button class="nm-nut">AI</button><div class="nm-ds">
@@ -832,6 +852,26 @@ tr.gop-h td{background:#dbeafe;text-align:left;font-weight:700;padding:8px 12px;
     </div>
   </div>
   <div class="chan"><span id="ph-trang-thai" class="nho"></span><button id="ph-thieu" style="margin-left:auto" title="Kiểm tra ngân hàng đủ câu cho phiếu này chưa; thiếu thì soạn prompt cho AI sinh câu, rồi nhập vào ngân hàng">Kiểm tra kho / Prompt AI soạn câu…</button><button id="ph-xem" title="Máy chọn thử bộ câu cho phiếu → thầy xem từng câu, đổi nhanh hoặc chọn câu khác theo nhóm cho ưng ý → xác nhận mới tạo phiếu">👁 Xem trước &amp; đổi câu</button><button id="ph-tao" class="chinh">Tạo phiếu</button><button id="ph-dong-hop">Đóng</button></div>
+</div></div>
+<div id="hop-st"><div class="noi">
+  <h2>📐 In công thức – kiến thức trọng tâm các dạng toán <span id="st-lop" style="margin-left:auto;display:flex;gap:4px"></span></h2>
+  <div class="cai">
+    <input id="st-tim" type="search" placeholder="🔍 Tìm bài / dạng…" style="width:200px">
+    <label class="hop"><input type="checkbox" id="st-chi-co" checked> Chỉ hiện mục đã có nội dung</label>
+    <button id="st-het" title="Chọn mọi kiến thức chung và mọi dạng đã có phương pháp (theo bộ lọc)">☑ Chọn tất cả</button><button id="st-bo">☐ Bỏ hết</button>
+    <a href="#" id="st-kho" style="margin-left:auto;font-weight:600" title="Soạn / sửa kiến thức trọng tâm và phương pháp từng dạng">✎ Kho kiến thức…</a>
+  </div>
+  <div class="than" id="st-cay"></div>
+  <div class="cai st-cai">
+    <div style="flex-basis:100%"><b>Mẫu PDF</b><div class="mtb-ds" style="grid-template-columns:repeat(3,minmax(0,1fr))"><label class="mtb"><input type="radio" name="st-mau" value="hien_dai" checked><span class="mtb-mau"><i style="background:#1e40af"></i><i style="background:#0d9488"></i><i style="background:#eff6ff"></i></span><b>Hiện đại — xanh dương</b></label><label class="mtb"><input type="radio" name="st-mau" value="tuoi_sang"><span class="mtb-mau"><i style="background:#6d28d9"></i><i style="background:#ea580c"></i><i style="background:#faf5ff"></i></span><b>Tươi sáng — tím cam</b></label><label class="mtb"><input type="radio" name="st-mau" value="toi_gian"><span class="mtb-mau"><i style="background:#262626"></i><i style="background:#7f1d1d"></i><i style="background:#ffffff"></i></span><b>Tối giản — in đen trắng</b></label></div></div>
+    <span><b>Khổ in</b> <label class="hop"><input type="radio" name="st-kho" value="tiet_kiem" checked> Tiết kiệm (2 cột, chữ 10)</label>
+      <label class="hop"><input type="radio" name="st-kho" value="vua"> Vừa (2 cột, chữ 11)</label>
+      <label class="hop"><input type="radio" name="st-kho" value="binh_thuong"> Bình thường (1 cột, chữ 12)</label></span>
+    <label>Tên tài liệu <input type="text" id="st-ten" style="width:300px"></label>
+    <label>Giáo viên <input type="text" id="st-gv" style="width:170px"></label>
+    <label class="hop"><input type="checkbox" id="st-ho-ten"> Dòng Họ tên học sinh</label>
+  </div>
+  <div class="chan"><span id="st-tt" class="nho"></span><button id="st-tao" class="chinh" style="margin-left:auto">🖨 Tạo PDF</button><button id="st-dong">Đóng</button></div>
 </div></div>
 <div id="hop-xb"><div class="noi">
   <h2>📦 Xuất các bộ đề đã lưu — <span id="xb-lop"></span></h2>
@@ -2167,6 +2207,76 @@ $("#hk-ngan-hang").onclick=async()=>{
     hopThoai(`Đã ra đề ôn thi: ${r.thu_muc}`,r.nhat_ky+(r.bien_dich?"\nĐang biên dịch PDF…":""),[["Mở thư mục đề",()=>api("/api/mo",{duong_dan:r.thu_muc}),true]]);
     if(r.bien_dich) theoDoi(r.nhat_ky); tai();
   }finally{b.disabled=false;b.textContent="Ra đề từ ngân hàng"}
+};
+// ---- 📐 SỔ TAY CÔNG THỨC – KIẾN THỨC TRỌNG TÂM (chọn dạng → PDF 3 mẫu)
+let ST={lop:10,cay:[],chon:{}};      // chon[lop] = {dang:Set, bai:Set}
+function stChon(){const c=ST.chon[ST.lop]??={dang:new Set(),bai:new Set()};return c}
+function stLuu(){try{const o={};for(const[l,c]of Object.entries(ST.chon))o[l]={dang:[...c.dang],bai:[...c.bai]};localStorage.setItem("so_tay_chon",JSON.stringify(o))}catch(_){}}
+function stTai(){try{const o=JSON.parse(localStorage.getItem("so_tay_chon")||"{}");for(const[l,c]of Object.entries(o))ST.chon[l]={dang:new Set(c.dang),bai:new Set(c.bai)}}catch(_){}}
+async function stMoLop(lop){
+  ST.lop=lop; document.querySelectorAll("#st-lop button").forEach(b=>b.classList.toggle("on",+b.dataset.l===lop));
+  $("#st-cay").innerHTML="<p class='nho'>Đang tải mục lục…</p>";
+  const r=await api("/api/so-tay-dm",{lop}); ST.cay=r.cay||[];
+  if(!$("#st-ten").dataset.sua) $("#st-ten").value=`Công thức – Kiến thức trọng tâm Toán ${lop}`;
+  veST();
+}
+function veST(){
+  const c=stChon(), q=boDauTC($("#st-tim").value).trim(), chiCo=$("#st-chi-co").checked;
+  let h="", tong=0;
+  ST.cay.forEach((ch,ci)=>{
+    let hb="", n=0;
+    for(const b of ch.bai){
+      const dang=b.dang.filter(d=>(!chiCo||d.co)&&(!q||boDauTC(d.ten+" "+b.ten).includes(q)));
+      const hienKT=b.co_kt&&(!q||boDauTC(b.ten).includes(q));
+      if(!dang.length&&!hienKT&&(chiCo||q))continue;
+      n+=dang.length+(hienKT?1:0);
+      hb+=`<div class="st-bai"><div class="tb">${esc(b.ten)} <label class="hop" style="font-weight:400"><input type="checkbox" class="st-kt" data-b="${b.k}" ${c.bai.has(b.k)?"checked":""} ${b.co_kt?"":"disabled"}> Kiến thức chung ${b.co_kt?'<span class="st-the co">có</span>':'<span class="st-the chua">chưa soạn</span>'}</label></div>
+        <div class="st-dang">${dang.map(d=>`<label><input type="checkbox" class="st-d" data-d="${d.k}" ${c.dang.has(d.k)?"checked":""}> <span>Dạng ${d.k.split("-")[1]}. ${esc(d.ten)} ${d.co?"":'<span class="st-the chua">chưa có PP — in dòng kẻ</span>'}</span></label>`).join("")}</div></div>`;
+    }
+    if(!hb)return; tong+=n;
+    h+=`<div class="st-ch" data-ci="${ci}"><div class="st-ch-dau"><input type="checkbox" class="st-ch-cb" title="Chọn / bỏ cả chương"> ${esc(ch.ten)}<span class="so">${n} mục</span></div>${hb}</div>`;
+  });
+  $("#st-cay").innerHTML=h||`<p class="nho" style="padding:16px">Lớp ${ST.lop} chưa có mục nào khớp. Kho kiến thức trống thì bấm <b>✎ Kho kiến thức…</b> để soạn (có prompt AI), hoặc bỏ tích "Chỉ hiện mục đã có nội dung" để in khung dòng kẻ.</p>`;
+  $("#st-cay").querySelectorAll(".st-d").forEach(x=>x.onchange=()=>{x.checked?c.dang.add(x.dataset.d):c.dang.delete(x.dataset.d);stLuu();stDem()});
+  $("#st-cay").querySelectorAll(".st-kt").forEach(x=>x.onchange=()=>{x.checked?c.bai.add(x.dataset.b):c.bai.delete(x.dataset.b);stLuu();stDem()});
+  $("#st-cay").querySelectorAll(".st-ch").forEach(el=>{const cb=el.querySelector(".st-ch-cb");
+    const o=[...el.querySelectorAll(".st-d,.st-kt:not(:disabled)")]; cb.checked=o.length&&o.every(x=>x.checked);
+    cb.onclick=e=>{e.stopPropagation();o.forEach(x=>{x.checked=cb.checked;x.dispatchEvent(new Event("change"))})};
+    el.querySelector(".st-ch-dau").onclick=e=>{if(e.target!==cb){cb.checked=!cb.checked;cb.onclick(e)}}});
+  stDem();
+}
+function stDem(){const c=stChon();$("#st-tt").textContent=`Đã chọn ${c.dang.size} dạng · ${c.bai.size} phần kiến thức chung`;$("#st-tao").disabled=!(c.dang.size||c.bai.size)}
+$("#nut-so-tay").onclick=async()=>{
+  if(!DL) await tai(); stTai();
+  const lops=[...new Set(DL.dang.map(d=>d.lop))].sort((a,b)=>a-b);
+  $("#st-lop").innerHTML=lops.map(l=>`<button data-l="${l}">Lớp ${l}</button>`).join("");
+  $("#st-lop").querySelectorAll("button").forEach(b=>b.onclick=()=>stMoLop(+b.dataset.l));
+  if(!$("#st-gv").value) $("#st-gv").value=$("#giao_vien").value||"";
+  let m=null,k=null;try{m=localStorage.getItem("st_mau");k=localStorage.getItem("st_kho")}catch(_){}
+  if(m&&document.querySelector(`input[name="st-mau"][value="${m}"]`))document.querySelector(`input[name="st-mau"][value="${m}"]`).checked=true;
+  if(k&&document.querySelector(`input[name="st-kho"][value="${k}"]`))document.querySelector(`input[name="st-kho"][value="${k}"]`).checked=true;
+  $("#hop-st").style.display="flex"; stMoLop(lops.includes(ST.lop)?ST.lop:lops[lops.length-1]);
+};
+document.querySelectorAll('input[name="st-mau"]').forEach(x=>x.onchange=()=>{try{localStorage.setItem("st_mau",x.value)}catch(_){}});
+document.querySelectorAll('input[name="st-kho"]').forEach(x=>x.onchange=()=>{try{localStorage.setItem("st_kho",x.value)}catch(_){}});
+$("#st-ten").oninput=()=>{$("#st-ten").dataset.sua="1"};
+$("#st-tim").oninput=veST; $("#st-chi-co").onchange=veST;
+$("#st-het").onclick=()=>{$("#st-cay").querySelectorAll(".st-d,.st-kt:not(:disabled)").forEach(x=>{if(!x.checked){x.checked=true;x.dispatchEvent(new Event("change"))}});veST()};
+$("#st-bo").onclick=()=>{const c=stChon();c.dang.clear();c.bai.clear();stLuu();veST()};
+$("#st-dong").onclick=()=>$("#hop-st").style.display="none";
+$("#st-kho").onclick=e=>{e.preventDefault();$("#hop-st").style.display="none";$("#nut-kt").click()};
+$("#st-tao").onclick=async()=>{
+  const c=stChon(); if(!c.dang.size&&!c.bai.size)return;
+  const cfg={lop:ST.lop,dang:[...c.dang],bai_kt:[...c.bai],mau_trinh_bay:(document.querySelector('input[name="st-mau"]:checked')||{}).value,
+    kho:(document.querySelector('input[name="st-kho"]:checked')||{}).value,ten:$("#st-ten").value.trim(),giao_vien:$("#st-gv").value.trim(),
+    ho_ten:$("#st-ho-ten").checked,truong:$("#truong").value.trim(),nam_hoc:$("#nam_hoc").value.trim()};
+  const b=$("#st-tao");b.disabled=true;b.textContent="Đang tạo…";
+  try{const r=await api("/api/so-tay",{cau_hinh:cfg,bien_dich:$("#bien_dich").checked});
+    if(!r.ok){hopThoai("Chưa tạo được",r.nhat_ky);return}
+    $("#hop-st").style.display="none";
+    hopThoai(`Đã tạo: ${r.thu_muc}`,r.nhat_ky+(r.bien_dich?"\nĐang biên dịch PDF…":""),[["Mở thư mục",()=>api("/api/mo",{duong_dan:r.thu_muc}),true]]);
+    if(r.bien_dich) theoDoi(r.nhat_ky);}
+  finally{b.disabled=false;b.textContent="🖨 Tạo PDF"}
 };
 // ---- 📦 xuất một lượt các bộ đã xem trước & lưu (mã đề nối tiếp, đề cương gộp)
 function veXB(){
@@ -3706,7 +3816,7 @@ document.addEventListener("click",()=>document.querySelectorAll("header .nm.mo")
 $("#nut-luu").dataset.mo="Lưu ma trận đang điền để lần sau mở lại";
 $("#nut-cap-nhat").dataset.mo="Đọc lại ngân hàng sau khi thêm / sửa câu";
 // --- nhớ chức năng dùng gần đây
-const NUT_LENH=["nut-nhanh","nut-phieu","nut-on-thi","nut-hd","nut-kt","nut-thi","nut-prompt","nut-ts10","nut-tron-file","nut-thu-muc","nut-lich-su",
+const NUT_LENH=["nut-nhanh","nut-phieu","nut-so-tay","nut-on-thi","nut-hd","nut-kt","nut-thi","nut-prompt","nut-ts10","nut-tron-file","nut-thu-muc","nut-lich-su",
   "nut-luu","nut-nhap","nut-cap-nhat","nut-bang-ma","nut-lac","nut-trung","nut-xem","nut-xuat","nut-bo","nut-tu-dong","nut-gop"];
 NUT_LENH.forEach(i=>{const b=$("#"+i);if(b)b.addEventListener("click",()=>{const g=docLS("nh_gan_day",[]).filter(x=>x!==i);g.unshift(i);luuLS("nh_gan_day",g.slice(0,8))})});
 const tenNut=i=>{const b=$("#"+i);return b?(b.textContent.trim()||i):i};
