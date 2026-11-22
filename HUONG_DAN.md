@@ -677,6 +677,18 @@ Tạo phiếu như cũ (📄 Phiếu bài học, kiểu trắc nghiệm hoặc t
 - Bài giảng bất kỳ cũng cho HS xem được: 🌐 Thi trực tuyến → thẻ Bài giảng → nút **Cho HS xem / Thôi cho HS**.
 - Phiếu tạo từ bản cũ (trước khi có tính năng) cần tạo lại phiếu để có dữ liệu web.
 
+## 📐 In công thức – kiến thức trọng tâm (menu **Dạy học**)
+1. Chọn lớp. Danh sách hiện **Chương → Bài → Dạng** lấy từ Kho kiến thức. Nhãn *có* là đã soạn; nhãn *chưa có PP* là dạng chưa có phương pháp, khi in sẽ chừa dòng kẻ để học sinh tự ghi.
+2. Tích **Kiến thức chung** của bài và các **dạng** cần in. Bấm tiêu đề chương để chọn cả chương. Có ô tìm (gõ không dấu được) và nút *Chọn tất cả / Bỏ hết*. App nhớ lựa chọn của từng lớp.
+3. Chọn **Mẫu PDF**: Hiện đại · Tươi sáng · Tối giản (dùng chung bộ mẫu với phiếu bài học).
+4. Chọn **Khổ in**:
+   - **Tiết kiệm**: 2 cột, chữ 10, lề hẹp.
+   - **Vừa**: 2 cột, chữ 11.
+   - **Bình thường**: 1 cột, chữ 12.
+5. Nhập **tên tài liệu** và **tên giáo viên**. Tên giáo viên in ở chân mọi trang và ở dòng *Giáo viên biên soạn* cuối tài liệu. Có thể thêm dòng họ tên học sinh. Bấm **🖨 Tạo PDF**.
+
+Muốn có thêm nội dung thì soạn ở **Kho kiến thức** (có prompt AI): phần chung của bài, phương pháp từng dạng viết sau dòng `%% DANG <mã dạng>`.
+
 ## Phiếu bài học — 3 mẫu trình bày PDF
 Trong hộp **Phiếu bài học** có mục **Mẫu trình bày PDF**. Nội dung phiếu giữ nguyên, chỉ thay giao diện. App nhớ mẫu thầy chọn trên máy này.
 

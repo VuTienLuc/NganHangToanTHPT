@@ -1064,6 +1064,22 @@ class XuLy(BaseHTTPRequestHandler):
             if u.path == "/api/kien-thuc":
                 import phieu_bai_hoc
                 return self.gui(200, {"ok": True, "noi_dung": phieu_bai_hoc.doc_kien_thuc(d.get("pham_vi") or [])})
+            if u.path == "/api/so-tay-dm":           # 📐 sổ tay công thức: cây chương → bài → dạng của một lớp
+                import so_tay_cong_thuc
+                return self.gui(200, {"ok": True, "cay": so_tay_cong_thuc.danh_muc(int(d.get("lop") or 10)),
+                                      "kho": [{"ma": k, "ten": v["ten"]} for k, v in so_tay_cong_thuc.KHO.items()]})
+            if u.path == "/api/so-tay":
+                import so_tay_cong_thuc
+                dong = []
+                try:
+                    out_goc = so_tay_cong_thuc.tao(d.get("cau_hinh") or {}, dong.append)
+                except Exception as e:
+                    return self.gui(200, {"ok": False, "nhat_ky": f"Chưa tạo được: {e}"})
+                rel = os.path.relpath(out_goc, GOC)
+                dang_bd = bool(d.get("bien_dich")) and bool(tim_pdflatex())
+                if dang_bd:
+                    threading.Thread(target=bien_dich_nen, args=(rel,), daemon=True).start()
+                return self.gui(200, {"ok": True, "nhat_ky": "\n".join(x for x in dong if not x.startswith("THU_MUC:")), "thu_muc": rel, "bien_dich": dang_bd})
             if u.path == "/api/phieu-xem-truoc":     # phiếu bài học: chọn thử bộ câu để thầy xem, đổi câu ưng ý rồi mới tạo
                 import phieu_bai_hoc
                 cfg = d.get("cau_hinh") or {}

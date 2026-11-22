@@ -389,7 +389,7 @@ def bien_dich_thu_muc(thu_muc_de, in_ra=print):
         ok_het &= ok
         in_ra(f"  {'✓' if ok else '✗ lỗi (xem tex/' + f[:-4] + '.log)'} {f[:-4]}")
     # phiếu bài học / chuyên đề / ôn tập chương (3 lần cho đúng "Trang x/y")
-    if os.path.exists(os.path.join(tex, "PhieuBaiHoc.tex")) or os.path.exists(os.path.join(tex, "LuyenMoiNgay.tex")):
+    if any(os.path.exists(os.path.join(tex, f)) for f in ("PhieuBaiHoc.tex", "LuyenMoiNgay.tex", "SoTayCongThuc.tex")):
         try:
             ten_p = open(os.path.join(tex, "_ten_phieu.txt"), encoding="utf-8").read().strip() or "Phieu bai hoc"
         except OSError:
@@ -398,7 +398,7 @@ def bien_dich_thu_muc(thu_muc_de, in_ra=print):
                         ("PhieuTrenLop.tex", " - Trên lớp"), ("PhieuTrenLop_LoiGiai.tex", " - Trên lớp - Lời giải"),
                         ("PhieuVeNha.tex", " - Về nhà"), ("PhieuVeNha_LoiGiai.tex", " - Về nhà - Lời giải"),
                         ("PhieuBeamer.tex", " - Trình chiếu"),
-                        ("LuyenMoiNgay.tex", ""), ("LuyenMoiNgay_LoiGiai.tex", " - Lời giải")):
+                        ("LuyenMoiNgay.tex", ""), ("LuyenMoiNgay_LoiGiai.tex", " - Lời giải"), ("SoTayCongThuc.tex", "")):
             if not os.path.exists(os.path.join(tex, f)):
                 continue
             in_ra(f"Biên dịch {ten_p}{duoi}…")
