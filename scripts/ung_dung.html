@@ -739,7 +739,7 @@ tr.gop-h td{background:#dbeafe;text-align:left;font-weight:700;padding:8px 12px;
       <p class="nho" style="margin:0">Chân trang: GV (ô Giáo viên ở khung chính) · tên phiếu · Trang x/y. Xuất PDF + TeX: phiếu đầy đủ, phiếu trên lớp, phiếu về nhà (mỗi phiếu có file câu hỏi và file lời giải riêng) + Beamer trình chiếu.</p>
     </div>
   </div>
-  <div class="chan"><span id="ph-trang-thai" class="nho"></span><button id="ph-thieu" style="margin-left:auto" title="Kiểm tra ngân hàng đủ câu cho phiếu này chưa; thiếu thì soạn prompt cho AI sinh câu, rồi nhập vào ngân hàng">Kiểm tra kho / Prompt AI soạn câu…</button><button id="ph-tao" class="chinh">Tạo phiếu</button><button id="ph-dong-hop">Đóng</button></div>
+  <div class="chan"><span id="ph-trang-thai" class="nho"></span><button id="ph-thieu" style="margin-left:auto" title="Kiểm tra ngân hàng đủ câu cho phiếu này chưa; thiếu thì soạn prompt cho AI sinh câu, rồi nhập vào ngân hàng">Kiểm tra kho / Prompt AI soạn câu…</button><button id="ph-xem" title="Máy chọn thử bộ câu cho phiếu → thầy xem từng câu, đổi nhanh hoặc chọn câu khác theo nhóm cho ưng ý → xác nhận mới tạo phiếu">👁 Xem trước &amp; đổi câu</button><button id="ph-tao" class="chinh">Tạo phiếu</button><button id="ph-dong-hop">Đóng</button></div>
 </div></div>
 <div id="hop-hd"><div class="noi">
   <h2>🧑‍⚖️ Hội đồng AI sinh câu — mọi lớp, mọi bài, mọi dạng
@@ -2433,9 +2433,20 @@ $("#ph-thieu").onclick=async()=>{
       [["Prompt AI bổ sung câu thiếu…",()=>promptBoSung(r.bo_sung),true]]);}
   finally{b.disabled=false}
 };
-$("#ph-tao").onclick=async()=>{
-  const cfg=phCfg(); if(!cfg)return;
-  const b=$("#ph-tao");b.disabled=true;b.textContent="Đang tạo…";
+async function xemTruocPhieu(cfg,b){
+  if(cfg.kieu_cau==="luyen_ngay"){alert("Luyện mỗi ngày chia câu theo ngày nên chưa xem trước được — thầy chọn kiểu Trắc nghiệm hoặc Tự luận.");return}
+  const nhan=b.textContent;b.disabled=true;b.textContent="Đang chọn câu…";
+  try{const r=await api("/api/phieu-xem-truoc",{cau_hinh:cfg});
+    if(!r.ok){hopThoai("Chưa xem trước được",(r.loi||"")+((r.thieu||[]).length?"\n\n"+r.thieu.map(t=>"⚠ "+t).join("\n"):""));return}
+    XT={bo:r.bo,nhat_ky:(r.thieu||[]).length?r.thieu.map(t=>"⚠ "+t).join("\n"):"Kho đủ câu cho phiếu này.",mt:{},tab:0,
+        nguon:{phieu:{...cfg,seed:undefined},tu_luan:r.tu_luan}};
+    veXT();}
+  finally{b.disabled=false;b.textContent=nhan}
+}
+$("#ph-xem").onclick=()=>{const cfg=phCfg(); if(cfg) xemTruocPhieu(cfg,$("#ph-xem"))};
+$("#ph-tao").onclick=()=>{const cfg=phCfg(); if(cfg) taoPhieu(cfg,$("#ph-tao"))};
+async function taoPhieu(cfg,b){
+  b.disabled=true;b.textContent="Đang tạo…";
   try{const r=await api("/api/phieu",{cau_hinh:cfg,bien_dich:$("#bien_dich").checked});
     const nutBS=r.bo_sung?[["Prompt AI bổ sung câu thiếu…",()=>promptBoSung(r.bo_sung),!r.ok]]:[];
     if(!r.ok){hopThoai("Chưa tạo được phiếu",r.nhat_ky+(r.bo_sung?"\n\nNgân hàng chưa đủ câu: bấm “Prompt AI bổ sung câu thiếu…” để AI soạn, rồi nhập vào ngân hàng và tạo lại phiếu.":""),nutBS);return}
@@ -2445,7 +2456,7 @@ $("#ph-tao").onclick=async()=>{
       [["🌐 Phiếu HTML lên web…",()=>phieuWeb(r.thu_muc),!r.bo_sung],["Mở thư mục",()=>api("/api/mo",{duong_dan:r.thu_muc})],...nutBS]);
     if(r.bien_dich) theoDoi(r.nhat_ky);}
   finally{b.disabled=false;b.textContent="Tạo phiếu"}
-};
+}
 
 // ---------------- PHIẾU HỌC TẬP → HTML TRÊN WEB
 function phieuWeb(thu_muc){
@@ -2548,7 +2559,7 @@ function htmlThe(c,so){
       const dung=c.loai==="TN"?c.dap_an===n:(c.dap_an[i]==="Đ");
       return `<div class="${dung?"dung":""}">${n}${c.loai==="TN"?".":")"} ${x}${c.loai==="DS"?` <small>(${dung?"Đ":"S"})</small>`:""}</div>`}).join("")}</div>`:"";
   const dap=c.loai==="TLN"?`<div><b>Đáp số:</b> ${esc(c.dap_an)}</div>`:"";
-  return `<div class="the-cau" data-ma="${c.ma}"><div class="dau">Câu ${so} · <span class="muc">${c.muc||"?"}</span> · ${esc(c.ten_dang||"")} · <b>${c.ma}</b>
+  return `<div class="the-cau" data-ma="${c.ma}"><div class="dau">${c.vai?`<b style="color:#7c3aed">${esc(c.vai)}</b> · `:""}Câu ${so} · <span class="muc">${c.muc||"?"}</span> · ${esc(c.ten_dang||"")} · <b>${c.ma}</b>
       ${c.da_dung?` · <span style="color:#b45309">đã dùng ${c.da_dung} lần</span>`:""}${c.ghi_chu?` · <i>${esc(c.ghi_chu)}</i>`:""}</div>
     <div class="nd">${c.de}${pa}${dap}</div>
     <div class="nut" style="display:flex;gap:6px;flex-wrap:wrap"><button class="xt-doi">↻ Đổi nhanh</button><button class="xt-chon" title="Chuyển đổi qua lại các nhóm (Lớp / Chương / Bài / Dạng / Mức) để tự chọn câu ưng ý nhất">🔍 Chọn theo nhóm…</button></div></div>`;
@@ -2559,7 +2570,9 @@ function ganNutThe(el,ma){
 }
 function thayTheXT(maCu,cauMoi){
   const b=XT.bo[Math.min(XT.tab,XT.bo.length-1)];
-  for(const ds of Object.values(b)){const i=ds.findIndex(c=>c.ma===maCu); if(i>=0){ds[i]=cauMoi;
+  for(const ds of Object.values(b)){const i=ds.findIndex(c=>c.ma===maCu); if(i>=0){
+    if(ds[i].slot) cauMoi={...cauMoi,slot:ds[i].slot,vai:ds[i].vai};      // phiếu bài học: câu mới vào đúng chỗ câu cũ
+    ds[i]=cauMoi;
     const so=i+1, cu=$("#xt-than").querySelector(`.the-cau[data-ma="${maCu}"]`);
     const tmp=document.createElement("div");tmp.innerHTML=htmlThe(cauMoi,so);const moi=tmp.firstElementChild;moi.classList.add("moi");
     cu.replaceWith(moi); ganNutThe(moi,cauMoi.ma); veCong(moi); break}}
@@ -2573,7 +2586,12 @@ function veXT(){
   for(const [l,ds] of Object.entries(b)){ if(!ds.length)continue; tong+=ds.length;
     h+=`<div class="phan">${({TN:"PHẦN I. Trắc nghiệm nhiều phương án",DS:"PHẦN II. Đúng/Sai",TLN:"PHẦN III. Trả lời ngắn",TL:"Tự luận"})[l]||l} (${ds.length} câu)</div>`;
     ds.forEach((c,i)=>h+=htmlThe(c,i+1)); }
+  const laPhieu=!!(XT.nguon&&XT.nguon.phieu);
+  ["#xt-bg","#xt-thi","#xt-tc"].forEach(s=>$(s).style.display=laPhieu?"none":"");
+  $("#xt-ok").textContent=laPhieu?"Xác nhận & tạo phiếu":"Xác nhận & xuất đề";
   $("#xt-nhanh").style.display=XT.nguon&&XT.nguon.nhanh?"":"none";
+  if(laPhieu){$("#xt-than").innerHTML=h;$("#xt-than").querySelectorAll(".the-cau[data-ma]").forEach(el=>ganNutThe(el,el.dataset.ma));veCong($("#xt-than"));
+    $("#xt-tom").textContent=`Phiếu: ${XT.nguon.phieu.ten||"bài học"} · ${tong} câu · ↻ Đổi nhanh = câu khác cùng dạng, cùng mức`;return}
   $("#xt-tom").textContent=(XT.nguon&&XT.nguon.nhanh?"⚡ Tạo nhanh · ":"")+`${tong} câu`+(bo.length>1?` · ${bo.length} bộ (mỗi mã đề một bộ)`:" · dùng chung cho mọi mã đề");
   $("#xt-than").innerHTML=h;
   $("#xt-than").querySelectorAll(".the-cau[data-ma]").forEach(el=>ganNutThe(el,el.dataset.ma));
@@ -2582,7 +2600,7 @@ function veXT(){
 async function doiCau(ma,nut){
   const tranh=XT.bo.flatMap(x=>Object.values(x).flat().map(c=>c.ma)).concat((XT.mt&&XT.mt.tranh_ma)||[]);
   nut.disabled=true;nut.textContent="Đang đổi…";
-  const r=await api("/api/doi-cau",{ma,tranh,da_dung:(XT&&XT.mt&&XT.mt.cau_da_dung)||$("#cau_da_dung").value});
+  const r=await api("/api/doi-cau",{ma,tranh,da_dung:(XT&&XT.mt&&XT.mt.cau_da_dung)||$("#cau_da_dung").value,tu_luan:!!(XT.nguon&&XT.nguon.tu_luan)});
   if(!r.ok){nut.textContent="Hết câu thay";alert("Kho không còn câu khác cùng dạng (cùng loại) — thầy bấm “🔍 Chọn theo nhóm…” để chuyển sang nhóm khác.");return}
   thayTheXT(ma,r.cau);
 }
@@ -2625,7 +2643,7 @@ async function taiChonCau(them=false){
   const r=await api("/api/ds-cau-nhom",{
     loai:CC_STATE.loai,lop:$("#cc-lop").value,chuong:$("#cc-chuong").value,bai:$("#cc-bai").value,
     dang:$("#cc-dang").value,muc:$("#cc-muc").value,tim:$("#cc-tim").value.trim(),
-    chi_chua_dung:$("#cc-moi").checked,tranh,offset:CC_STATE.offset,limit:30
+    chi_chua_dung:$("#cc-moi").checked,tranh,offset:CC_STATE.offset,limit:30,tu_luan:!!(XT.nguon&&XT.nguon.tu_luan)
   });
   if(!r.ok){$("#cc-ds").innerHTML="<p>Không tải được danh sách câu.</p>";return}
   const batDau=CC_STATE.ds.length;
@@ -2670,7 +2688,9 @@ $("#cc-them").onclick=()=>taiChonCau(true);
 $("#cc-dong").onclick=()=>$("#hop-chon-cau").style.display="none";
 $("#xt-dong").onclick=()=>{$("#hop-xt").style.display="none"; if(XT&&XT.nguon&&XT.nguon.dong) XT.nguon.dong()};
 $("#xt-nhatky").onclick=()=>hopThoai("Nhật ký chọn câu",XT.nhat_ky);
-$("#xt-random").onclick=async()=>{$("#xt-random").disabled=true;$("#xt-random").textContent="Đang chọn lại…";
+$("#xt-random").onclick=async()=>{
+  if(XT&&XT.nguon&&XT.nguon.phieu){xemTruocPhieu(XT.nguon.phieu,$("#xt-random"));return}
+  $("#xt-random").disabled=true;$("#xt-random").textContent="Đang chọn lại…";
   try{await xuat(true,null,XT.nguon?XT.mt:null,XT.nguon)}finally{$("#xt-random").disabled=false;$("#xt-random").textContent="↻ Random lại tất cả"}};
 $("#xt-tc").onclick=async()=>{
   const b=XT.bo[Math.min(XT.tab,XT.bo.length-1)];
@@ -3125,6 +3145,10 @@ $("#thi-dong").onclick=()=>$("#hop-thi").style.display="none";
 $("#thi-luu").onclick=async()=>{const r=await api("/api/thi/cau-hinh",{du_an:$("#thi-du-an").value.trim(),ten_mien:$("#thi-mien").value.trim(),script_url:$("#thi-sheet").value.trim()});veThi(await api("/api/thi/ds",{}));};
 $("#thi-dang-lai").onclick=async()=>{const k=await api("/api/thi/dang-lai",{});if(!k.ok){alert(k.loi);return}theoDoiThi(null,"")};
 $("#xt-ok").onclick=async()=>{
+  if(XT.nguon&&XT.nguon.phieu){              // phiếu bài học: tạo đúng bộ câu thầy đã duyệt
+    const chon_san=Object.values(XT.bo[0]).flat().filter(c=>!c.mat).map(c=>({ma:c.ma,slot:c.slot||{}}));
+    if(!chon_san.length){alert("Chưa có câu nào.");return}
+    $("#hop-xt").style.display="none"; await taoPhieu({...XT.nguon.phieu,chon_san},$("#ph-tao")); return}
   const cs=XT.bo.map(b=>Object.fromEntries(Object.entries(b).map(([l,ds])=>[l,ds.filter(c=>!c.mat).map(c=>c.ma)])));
   $("#hop-xt").style.display="none"; await xuat(false,cs,XT.nguon?XT.mt:null,XT.nguon);
 };

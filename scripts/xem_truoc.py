@@ -77,7 +77,21 @@ def bo_cau(bo):
     return [{l: [the_cau(m, ls) for m in ds] for l, ds in b.items()} for b in bo]
 
 
-def doi(ma, tranh, rng=None, da_dung="uu_tien"):
+def _dung_tu_luan(x):
+    """Phiếu tự luận: câu phải chuyển được sang dạng tự luận (TL / TLN / TN hỏi giá trị)."""
+    if x.get("loai") not in ("TL", "TLN", "TN"):
+        return False
+    k = (x["ma"], len(x.get("noi_dung") or ""))
+    if k not in _TL_NHO:
+        from phieu_tu_luan import doi_tu_luan
+        _TL_NHO[k] = bool(doi_tu_luan(x))
+    return _TL_NHO[k]
+
+
+_TL_NHO = {}
+
+
+def doi(ma, tranh, rng=None, da_dung="uu_tien", tu_luan=False):
     """Câu thay thế cho `ma`: cùng loại + cùng dạng + cùng mức → cùng dạng → cùng bài. Ưu tiên câu chưa dùng."""
     rng = rng or random.Random()
     K = kho(); c = K.get(ma)
@@ -96,6 +110,8 @@ def doi(ma, tranh, rng=None, da_dung="uu_tien"):
                      (lambda x: bai and (x.get("dang_key") or "").startswith(bai + "-") and x.get("muc_chuan") == c.get("muc_chuan"),
                       "dạng khác cùng bài")):
         ung = [x for x in cung if loc(x)]
+        if tu_luan:
+            ung = [x for x in ung if _dung_tu_luan(x)]
         if ung:
             moi = [x for x in ung if not ls.get(x["ma"])] if da_dung != "khong" else []
             x = rng.choice(moi or ung)
@@ -112,7 +128,7 @@ def _bo_dau(s):
     return "".join(ch for ch in unicodedata.normalize("NFD", s) if unicodedata.category(ch) != "Mn").lower()
 
 
-def ds_theo_nhom(loai, lop="", chuong="", bai="", dang="", muc="", tim="", chi_chua_dung=False, tranh=(), offset=0, limit=30):
+def ds_theo_nhom(loai, lop="", chuong="", bai="", dang="", muc="", tim="", chi_chua_dung=False, tranh=(), offset=0, limit=30, tu_luan=False):
     """Lấy danh sách câu theo nhóm (Lớp / Chương / Bài / Dạng / Mức / từ khoá) để giáo viên duyệt & chọn câu thay thế."""
     K = kho()
     ls = lich_su()
@@ -143,6 +159,8 @@ def ds_theo_nhom(loai, lop="", chuong="", bai="", dang="", muc="", tim="", chi_c
             hay = _bo_dau(f"{x.get('ma','')} {x.get('id','')} {x.get('ten_dang','')} {x.get('noi_dung','')}")
             if q not in hay:
                 continue
+        if tu_luan and not _dung_tu_luan(x):
+            continue
         ung.append(x)
     ung.sort(key=lambda x: (
         1 if x["ma"] in tranh_set else 0,

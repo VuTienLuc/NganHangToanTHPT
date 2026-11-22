@@ -279,6 +279,103 @@ def tieu_de_ten(ten, thoat):
     return r"\parbox{0.94\linewidth}{\centering" + co + r"\bfseries\linespread{1.05}\selectfont " + noi + "}"
 
 
+def _khoa_dang(k):
+    m = re.match(r"(\d)([A-Z])(\d+)\?(\d+)-(\d+)", k or "")
+    return tuple(int(x) if x.isdigit() else x for x in m.groups()) if m else (k or "",)
+
+
+TEN_VAI = {"vd": "Ví dụ mẫu", "tuong_tu": "Tự luyện – tương tự", "van_dung": "Tự luyện – vận dụng", "nang_cao": "Tự luyện – nâng cao"}
+
+
+def chon_xem_truoc(cfg):
+    """Chọn câu như khi tạo phiếu nhưng KHÔNG ghi file → bộ câu để thầy xem trước, đổi câu ưng ý.
+    → {"bo": [{nhãn nhóm: [thẻ câu (kèm "slot")…]}], "thieu": [...], "tu_luan": bool}"""
+    from xem_truoc import the_cau, lich_su
+    cfg = dict(cfg); cfg.pop("chon_san", None)
+    tu_luan = cfg.get("kieu_cau") == "tu_luan"
+    rng = random.Random(cfg.get("seed") or time.time())
+    cfg.setdefault("so_cau", MAC_DINH_SO_CAU.get(int(cfg.get("thoi_luong") or 45), MAC_DINH_SO_CAU[45]))
+    ls, nhom = lich_su(), {}
+    id_map = tai_id_map()
+    if tu_luan:
+        import phieu_tu_luan
+        ds = [c for c in map(json.loads, open(os.path.join(GOC, "du-lieu", "chi_muc.jsonl"), encoding="utf-8"))
+              if c["loai"] in ("TL", "TLN", "TN") and thuoc(c, cfg["pham_vi"]) and (c["loai"] == "TL" or hop_le(c))
+              and (not cfg.get("dang") or c["dang_key"] in cfg["dang"])]
+        cac_dang = sorted({c["dang_key"] for c in ds if c.get("dang_key")} | set(cfg.get("dang") or []), key=_khoa_dang)
+        kq_tl, thieu = phieu_tu_luan.chon(ds, cac_dang, cfg, rng, khoa_noi_dung, [])
+        for j, d in enumerate([d for d in cac_dang if d in kq_tl], 1):
+            ten = (id_map.get(d) or {}).get("type_name") or d
+            ds_the = []
+            for c, vai in [(kq_tl[d]["vd"], "vd")] + [(c, c["_vai"]) for c in kq_tl[d]["tu_luyen"]]:
+                t = the_cau(c["ma"], ls); t["slot"] = {"dang": d, "vai": vai}; t["vai"] = TEN_VAI.get(vai, vai)
+                ds_the.append(t)
+            nhom[f"Dạng {j}. {ten}"] = ds_the
+    else:
+        cac_dang, kq, thieu = chon_cau(cfg, rng)
+        for phan, ten_phan in (("LT", "Luyện tập"), ("BTVN", "Bài tập về nhà")):
+            for loai in CAC_LOAI + ["VD"]:
+                v = kq[phan].get(loai) or []
+                if not v:
+                    continue
+                ds_the = []
+                for c in v:
+                    t = the_cau(c["ma"], ls); t["slot"] = {"phan": phan, "loai": loai, "nhan": c.get("_muc_nc")}
+                    if c.get("_muc_nc"):
+                        t["vai"] = c["_muc_nc"]
+                    ds_the.append(t)
+                nhom[f"{ten_phan} · {TEN_PHAN.get(loai, 'Vận dụng – Vận dụng cao')}"] = ds_the
+    return {"bo": [nhom], "thieu": thieu, "tu_luan": tu_luan}
+
+
+def tu_chon_san(cfg, tu_luan):
+    """cfg["chon_san"] = danh sách {ma, slot} thầy đã duyệt → (cac_dang, kq, kq_tl, thieu) như khi máy tự chọn."""
+    from xem_truoc import kho
+    K, thieu = kho(), []
+    cs = [x for x in cfg["chon_san"] if x.get("ma")]
+    kq = {"LT": {l: [] for l in CAC_LOAI + ["VD"]}, "BTVN": {l: [] for l in CAC_LOAI + ["VD"]}}
+    kq_tl = {}
+    if tu_luan:
+        import phieu_tu_luan
+        for x in cs:
+            c, s = K.get(x["ma"]), x.get("slot") or {}
+            if not c:
+                thieu.append(f"Câu {x['ma']} không còn trong kho — bỏ qua"); continue
+            t = phieu_tu_luan.doi_tu_luan(c)
+            if not t:
+                thieu.append(f"Câu {x['ma']} không chuyển được sang tự luận — bỏ qua"); continue
+            d = s.get("dang") or c.get("dang_key")
+            o = kq_tl.setdefault(d, {"vd": None, "tu_luyen": []})
+            c = dict(c, _tl=t, _k=khoa_noi_dung(c), _mau=phieu_tu_luan.mau_cua(c))
+            if s.get("vai") == "vd" and o["vd"] is None:
+                o["vd"] = c
+            else:
+                o["tu_luyen"].append(dict(c, _vai=s.get("vai") if s.get("vai") in ("tuong_tu", "van_dung", "nang_cao") else "tuong_tu"))
+        for d, o in list(kq_tl.items()):
+            if o["vd"] is None:                       # mất ví dụ mẫu → lấy câu tự luyện đầu tiên có lời giải làm ví dụ
+                i = next((i for i, c in enumerate(o["tu_luyen"]) if c["_tl"]["lg"]), None)
+                if i is None:
+                    thieu.append(f"{d}: không còn ví dụ mẫu có lời giải — bỏ dạng này"); del kq_tl[d]; continue
+                o["vd"] = o["tu_luyen"].pop(i)
+        cac_dang = sorted(kq_tl, key=_khoa_dang)
+    else:
+        for x in cs:
+            c, s = K.get(x["ma"]), x.get("slot") or {}
+            if not c:
+                thieu.append(f"Câu {x['ma']} không còn trong kho — bỏ qua"); continue
+            phan = s.get("phan") if s.get("phan") in ("LT", "BTVN") else "LT"
+            loai = s.get("loai") if s.get("loai") == "VD" else c["loai"]
+            if loai not in kq[phan]:
+                thieu.append(f"Câu {x['ma']} ({c['loai']}) không thuộc phần nào của phiếu — bỏ qua"); continue
+            kq[phan][loai].append(dict(c, _muc_nc=s.get("nhan") or {"V": "Vận dụng", "C": "Vận dụng cao"}.get(c.get("muc_chuan"), "Vận dụng"))
+                                  if loai == "VD" else c)
+        cac_dang = sorted({c["dang_key"] for p in kq.values() for v in p.values() for c in v if c.get("dang_key")}, key=_khoa_dang)
+        for p in kq.values():                         # giữ thứ tự thầy đã xem; trong mỗi phần xếp theo dạng
+            for l in CAC_LOAI:
+                p[l].sort(key=lambda c: cac_dang.index(c["dang_key"]) if c.get("dang_key") in cac_dang else 99)
+    return cac_dang, kq, kq_tl, thieu
+
+
 def tao(cfg, in_ra=print, chi_tinh=False):
     """chi_tinh=True: chỉ chọn thử câu để tính số câu kho còn thiếu (THIEU_CAU), không ghi file."""
     THIEU_CAU.clear()
@@ -290,8 +387,15 @@ def tao(cfg, in_ra=print, chi_tinh=False):
     cfg.setdefault("so_cau", MAC_DINH_SO_CAU.get(tl, MAC_DINH_SO_CAU[45]))
     tu_luan = cfg.get("kieu_cau") == "tu_luan"
     if tu_luan:
-        import phieu_tu_luan
         cfg["hai_cot"] = False          # khối 2 cột tự dựng, không dùng multicols
+    if cfg.get("chon_san") and not chi_tinh:      # thầy đã xem trước & đổi câu → dùng đúng bộ câu đó
+        cac_dang, kq, kq_tl, thieu = tu_chon_san(cfg, tu_luan)
+        if tu_luan and not kq_tl:
+            raise RuntimeError("Bộ câu đã chọn không còn câu tự luận nào dùng được.")
+        if not tu_luan and not any(kq["LT"][l] for l in CAC_LOAI) and not kq["LT"].get("VD"):
+            raise RuntimeError("Bộ câu đã chọn trống.")
+    elif tu_luan:
+        import phieu_tu_luan
         ds = [c for c in map(json.loads, open(os.path.join(GOC, "du-lieu", "chi_muc.jsonl"), encoding="utf-8"))
               if c["loai"] in ("TL", "TLN", "TN") and thuoc(c, cfg["pham_vi"]) and (c["loai"] == "TL" or hop_le(c))
               and (not cfg.get("dang") or c["dang_key"] in cfg["dang"])]
@@ -311,7 +415,7 @@ def tao(cfg, in_ra=print, chi_tinh=False):
         cac_dang, kq, thieu = chon_cau(cfg, rng)
     if chi_tinh:
         return thieu
-    if not tu_luan and not any(kq["LT"][l] for l in CAC_LOAI):
+    if not tu_luan and not any(kq["LT"][l] for l in CAC_LOAI) and not cfg.get("chon_san"):
         raise RuntimeError("Không tìm thấy câu nào trong phạm vi đã chọn.")
     loai_phieu = cfg.get("loai_phieu") or ("on_tap_chuong" if all("?" not in p for p in cfg["pham_vi"])
                                            else "bai_hoc" if len(cfg["pham_vi"]) == 1 else "chuyen_de")

@@ -664,6 +664,14 @@ Tạo phiếu như cũ (📄 Phiếu bài học, kiểu trắc nghiệm hoặc t
 - Bài giảng bất kỳ cũng cho HS xem được: 🌐 Thi trực tuyến → thẻ Bài giảng → nút **Cho HS xem / Thôi cho HS**.
 - Phiếu tạo từ bản cũ (trước khi có tính năng) cần tạo lại phiếu để có dữ liệu web.
 
+## 👁 Phiếu bài học — xem trước & đổi câu ưng ý
+Trong hộp **Phiếu bài học**, bấm **👁 Xem trước & đổi câu** (cạnh *Tạo phiếu*): máy chọn thử bộ câu đúng như khi tạo phiếu và hiện từng câu theo nhóm.
+- Phiếu trắc nghiệm: Luyện tập / Bài tập về nhà × Trắc nghiệm, Đúng/Sai, Trả lời ngắn, Vận dụng – VDC.
+- Phiếu tự luận: từng dạng, có nhãn **Ví dụ mẫu** / **Tự luyện – tương tự / vận dụng**.
+- **↻ Đổi nhanh**: câu khác cùng dạng, cùng mức (ưu tiên câu chưa dùng). **🔍 Chọn theo nhóm…**: tự duyệt Lớp → Chương → Bài → Dạng → Mức để chọn câu ưng ý. Câu mới vào đúng vị trí câu cũ (ví dụ mẫu vẫn là ví dụ mẫu). Phiếu tự luận chỉ gợi ý câu đổi được sang tự luận.
+- **↻ Random lại tất cả** để máy chọn bộ khác; **Xác nhận & tạo phiếu** tạo đúng bộ câu đang xem (lưu trong `tex/cau_hinh_phieu.json`, mục `chon_san`).
+- Kiểu *Luyện mỗi ngày* chưa có xem trước.
+
 ## Ôn thi học kì — hàng "Xuất đề"
 
 Bảng Ôn thi học kì có hàng **Xuất đề** (máy nhớ lựa chọn):

@@ -880,7 +880,7 @@ class XuLy(BaseHTTPRequestHandler):
                                       "thu_muc": os.path.relpath(os.path.dirname(kq["html"]), GOC)})
             if u.path == "/api/doi-cau":
                 import xem_truoc
-                t = xem_truoc.doi(d.get("ma"), d.get("tranh") or [], da_dung=d.get("da_dung") or "uu_tien")
+                t = xem_truoc.doi(d.get("ma"), d.get("tranh") or [], da_dung=d.get("da_dung") or "uu_tien", tu_luan=bool(d.get("tu_luan")))
                 return self.gui(200, {"ok": bool(t), "cau": t})
             if u.path == "/api/ds-cau-nhom":
                 import xem_truoc
@@ -889,6 +889,7 @@ class XuLy(BaseHTTPRequestHandler):
                     bai=d.get("bai") or "", dang=d.get("dang") or "", muc=d.get("muc") or "",
                     tim=d.get("tim") or "", chi_chua_dung=bool(d.get("chi_chua_dung")),
                     tranh=d.get("tranh") or [], offset=d.get("offset") or 0, limit=d.get("limit") or 30,
+                    tu_luan=bool(d.get("tu_luan")),
                 )
                 return self.gui(200, r)
             if u.path == "/api/luu-ma-tran":
@@ -1020,6 +1021,18 @@ class XuLy(BaseHTTPRequestHandler):
             if u.path == "/api/kien-thuc":
                 import phieu_bai_hoc
                 return self.gui(200, {"ok": True, "noi_dung": phieu_bai_hoc.doc_kien_thuc(d.get("pham_vi") or [])})
+            if u.path == "/api/phieu-xem-truoc":     # phiếu bài học: chọn thử bộ câu để thầy xem, đổi câu ưng ý rồi mới tạo
+                import phieu_bai_hoc
+                cfg = d.get("cau_hinh") or {}
+                if cfg.get("kieu_cau") == "luyen_ngay":
+                    return self.gui(200, {"ok": False, "loi": "Luyện mỗi ngày chưa hỗ trợ xem trước — thầy chọn Trắc nghiệm hoặc Tự luận."})
+                try:
+                    r = phieu_bai_hoc.chon_xem_truoc(cfg)
+                except Exception as e:
+                    return self.gui(200, {"ok": False, "loi": str(e)})
+                if not any(r["bo"][0].values()):
+                    return self.gui(200, {"ok": False, "loi": "Không tìm thấy câu nào trong phạm vi đã chọn.", "thieu": r["thieu"]})
+                return self.gui(200, {"ok": True, **r})
             if u.path == "/api/phieu-thieu":
                 import phieu_bai_hoc
                 cfg = d.get("cau_hinh") or {}
