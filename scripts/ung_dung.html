@@ -366,6 +366,7 @@ tr.gop-h td{background:#dbeafe;text-align:left;font-weight:700;padding:8px 12px;
 #xt-tab{display:flex;gap:4px;flex-wrap:wrap}#xt-tab button{padding:3px 10px;font-size:12px}#xt-tab button.dang{background:#1e3a8a;color:#fff}
 #xt-than{flex:1;overflow:auto;padding:10px 18px;font-size:14px;line-height:1.5}
 #xt-than .phan{font-weight:700;color:#1e3a8a;margin:14px 0 6px;border-bottom:2px solid #dbe4ff}
+#xt-than .muc-nhom{font-size:12.5px;font-weight:650;color:#475569;margin:10px 0 2px;padding:3px 10px;background:#f1f5f9;border-radius:6px;display:inline-block}
 .the-cau{border:1px solid var(--vien);border-radius:10px;padding:8px 12px;margin:6px 0;display:grid;grid-template-columns:1fr auto;gap:4px 12px}
 .the-cau.moi{animation:nhay 1.2s}.the-cau .dau{font-size:12px;color:#555;grid-column:1}.the-cau .dau b{color:#111}
 .the-cau .nd{grid-column:1}.the-cau .pa{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:2px 16px;margin-top:4px}
@@ -1019,7 +1020,10 @@ tr.gop-h td{background:#dbeafe;text-align:left;font-weight:700;padding:8px 12px;
     <button id="gop-ok" class="chinh" style="margin-left:auto">Thêm dòng gộp</button><button id="gop-dong">Đóng</button></div>
 </div></div>
 <div id="hop-xt"><div class="noi">
-  <h2>Xem trước câu được chọn <span id="xt-tom" style="font-weight:400;font-size:12px;color:#666"></span><span id="xt-tab" style="margin-left:auto"></span></h2>
+  <h2>Xem trước câu được chọn <span id="xt-tom" style="font-weight:400;font-size:12px;color:#666"></span>
+    <label id="xt-sx-o" style="margin-left:auto;font-size:12.5px;font-weight:400;display:flex;gap:6px;align-items:center" title="Thứ tự câu trong từng phần — giống ô Sắp xếp câu ở Thông tin đề; mã đề đầu ra đúng thứ tự đang xem">Thứ tự câu
+      <select id="xt-sx" style="padding:3px 6px"><option value="do_kho">Theo độ khó (N→C)</option><option value="noi_dung">Theo nội dung (chương, bài)</option><option value="noi_dung_do_kho">Nội dung rồi độ khó</option><option value="ngau_nhien">Ngẫu nhiên (trộn khi xuất)</option></select></label>
+    <span id="xt-tab"></span></h2>
   <div id="xt-than"></div>
   <div class="chan"><span style="font-size:12px;color:#666">“Đổi câu” lấy ngẫu nhiên câu khác cùng dạng, cùng mức (ưu tiên câu chưa dùng). Hài lòng thì bấm Xác nhận.</span>
     <button id="xt-random" style="margin-left:auto">↻ Random lại tất cả</button><button id="xt-nhatky">Nhật ký chọn câu</button>
@@ -2659,6 +2663,23 @@ $("#ph-prompt-kt").onclick=()=>ktPrompt(phBaiChon());   // dùng prompt của kh
 
 // ---------------- XEM TRƯỚC BỘ CÂU · ĐỔI CÂU · XÁC NHẬN
 let XT=null;
+// ---- thứ tự câu trong xem trước (khớp tron_de.sap_xep)
+const MUC_THU={N:0,H:1,V:2,C:3}, MUC_TEN={N:"Nhận biết",H:"Thông hiểu",V:"Vận dụng",C:"Vận dụng cao"};
+function xtSapXep(){return (XT&&XT.nguon&&XT.mt&&XT.mt.sap_xep)||$("#sap_xep").value||"do_kho"}
+function soSanhKhoa(a,b){const x=a.khoa||[],y=b.khoa||[];for(let i=0;i<5;i++){const d=(x[i]||0)-(y[i]||0);if(d)return d}return 0}
+function xepThe(ds,sx){
+  const v=ds.map((c,i)=>[c,i]), m=c=>MUC_THU[c.muc]??9;
+  const cmp={do_kho:(a,b)=>m(a)-m(b),noi_dung:soSanhKhoa,
+    noi_dung_do_kho:(a,b)=>soSanhKhoa({khoa:(a.khoa||[]).slice(0,3)},{khoa:(b.khoa||[]).slice(0,3)})||m(a)-m(b)}[sx];
+  if(cmp) v.sort((p,q)=>cmp(p[0],q[0])||p[1]-q[1]);
+  return v.map(p=>p[0]);
+}
+function nhanNhom(c,sx){
+  if(sx==="do_kho")return MUC_TEN[c.muc]||"Chưa rõ mức";
+  if(sx==="noi_dung")return [c.ten_chuong,c.ten_bai].filter(Boolean).join(" › ")||c.dang_key||"";
+  if(sx==="noi_dung_do_kho")return (c.ten_chuong||"")+" · "+(MUC_TEN[c.muc]||"?");
+  return null;
+}
 function napMathJax(){
   if(window.MathJax&&MathJax.typesetPromise) return Promise.resolve(true);
   if(window._mjDang) return window._mjDang;
@@ -2691,6 +2712,10 @@ function thayTheXT(maCu,cauMoi){
   for(const ds of Object.values(b)){const i=ds.findIndex(c=>c.ma===maCu); if(i>=0){
     if(ds[i].slot) cauMoi={...cauMoi,slot:ds[i].slot,vai:ds[i].vai};      // phiếu bài học: câu mới vào đúng chỗ câu cũ
     ds[i]=cauMoi;
+    if(!(XT.nguon&&XT.nguon.phieu)){           // ra đề: xếp lại đúng thứ tự (câu mới có thể khác mức / bài) rồi vẽ lại
+      const top=$("#xt-than").scrollTop; veXT(); $("#xt-than").scrollTop=top;
+      const el=$("#xt-than").querySelector(`.the-cau[data-ma="${cauMoi.ma}"]`); if(el){el.classList.add("moi");el.scrollIntoView({block:"nearest"})}
+      return}
     const so=i+1, cu=$("#xt-than").querySelector(`.the-cau[data-ma="${maCu}"]`);
     const tmp=document.createElement("div");tmp.innerHTML=htmlThe(cauMoi,so);const moi=tmp.firstElementChild;moi.classList.add("moi");
     cu.replaceWith(moi); ganNutThe(moi,cauMoi.ma); veCong(moi); break}}
@@ -2701,16 +2726,28 @@ function veXT(){
   $("#xt-tab").innerHTML=bo.length>1?bo.map((_,i)=>`<button data-i="${i}" class="${i===t?"dang":""}">Bộ ${i+1}</button>`).join(""):"";
   $("#xt-tab").querySelectorAll("button").forEach(b=>b.onclick=()=>{XT.tab=+b.dataset.i;veXT()});
   const b=bo[t]; let h="",tong=0;
-  for(const [l,ds] of Object.entries(b)){ if(!ds.length)continue; tong+=ds.length;
-    h+=`<div class="phan">${({TN:"PHẦN I. Trắc nghiệm nhiều phương án",DS:"PHẦN II. Đúng/Sai",TLN:"PHẦN III. Trả lời ngắn",TL:"Tự luận"})[l]||l} (${ds.length} câu)</div>`;
-    ds.forEach((c,i)=>h+=htmlThe(c,i+1)); }
+  const laPhieu0=!!(XT.nguon&&XT.nguon.phieu);
+  $("#xt-sx-o").style.display=laPhieu0?"none":"flex";
+  const sx=laPhieu0?"":xtSapXep(); if(!laPhieu0)$("#xt-sx").value=sx;
+  const THU_PHAN=["TN","DS","TLN","TL"], LA_MA=["I","II","III","IV","V"];
+  const khoaPhan=Object.keys(b).sort((x,y)=>((THU_PHAN.indexOf(x)+1)||9)-((THU_PHAN.indexOf(y)+1)||9));
+  let soPhan=0;
+  for(const l of khoaPhan){const ds=b[l]; if(!ds||!ds.length)continue; tong+=ds.length;
+    if(!laPhieu0) b[l]=xepThe(ds,sx);                    // mảng theo đúng thứ tự hiển thị → xác nhận / xuất giữ thứ tự này
+    const v=b[l];
+    if(laPhieu0) h+=`<div class="phan">${({TN:"PHẦN I. Trắc nghiệm nhiều phương án",DS:"PHẦN II. Đúng/Sai",TLN:"PHẦN III. Trả lời ngắn",TL:"Tự luận"})[l]||l} (${v.length} câu)</div>`;
+    else h+=`<div class="phan">PHẦN ${LA_MA[soPhan]||soPhan+1}. ${({TN:"Trắc nghiệm nhiều phương án",DS:"Đúng/Sai",TLN:"Trả lời ngắn",TL:"Tự luận"})[l]||l} (${v.length} câu)</div>`;
+    soPhan++;
+    let nhomCu=null;
+    v.forEach((c,i)=>{const n=laPhieu0?null:nhanNhom(c,sx); if(n!==null&&n!==nhomCu){nhomCu=n;h+=`<div class="muc-nhom">${esc(n)}</div>`} h+=htmlThe(c,i+1)}); }
   const laPhieu=!!(XT.nguon&&XT.nguon.phieu);
   ["#xt-bg","#xt-thi","#xt-tc"].forEach(s=>$(s).style.display=laPhieu?"none":"");
   $("#xt-ok").textContent=laPhieu?"Xác nhận & tạo phiếu":"Xác nhận & xuất đề";
   $("#xt-nhanh").style.display=XT.nguon&&XT.nguon.nhanh?"":"none";
+  if(!laPhieu)$("#xt-tom").dataset.sx=({do_kho:"câu xếp N → H → V → C",noi_dung:"câu xếp theo chương, bài, dạng",noi_dung_do_kho:"theo chương, trong chương N → C",ngau_nhien:"khi xuất trộn ngẫu nhiên từng mã đề"})[sx]||"";
   if(laPhieu){$("#xt-than").innerHTML=h;$("#xt-than").querySelectorAll(".the-cau[data-ma]").forEach(el=>ganNutThe(el,el.dataset.ma));veCong($("#xt-than"));
     $("#xt-tom").textContent=`Phiếu: ${XT.nguon.phieu.ten||"bài học"} · ${tong} câu · ↻ Đổi nhanh = câu khác cùng dạng, cùng mức`;return}
-  $("#xt-tom").textContent=(XT.nguon&&XT.nguon.nhanh?"⚡ Tạo nhanh · ":"")+`${tong} câu`+(bo.length>1?` · ${bo.length} bộ (mỗi mã đề một bộ)`:" · dùng chung cho mọi mã đề");
+  $("#xt-tom").textContent=(XT.nguon&&XT.nguon.nhanh?"⚡ Tạo nhanh · ":"")+`${tong} câu`+(bo.length>1?` · ${bo.length} bộ (mỗi mã đề một bộ)`:" · dùng chung cho mọi mã đề")+($("#xt-tom").dataset.sx?" · "+$("#xt-tom").dataset.sx:"");
   $("#xt-than").innerHTML=h;
   $("#xt-than").querySelectorAll(".the-cau[data-ma]").forEach(el=>ganNutThe(el,el.dataset.ma));
   veCong($("#xt-than"));
@@ -2804,6 +2841,9 @@ $("#cc-moi").onchange=()=>taiChonCau(false);
 let _ccTimer=null; $("#cc-tim").oninput=()=>{clearTimeout(_ccTimer);_ccTimer=setTimeout(()=>taiChonCau(false),280)};
 $("#cc-them").onclick=()=>taiChonCau(true);
 $("#cc-dong").onclick=()=>$("#hop-chon-cau").style.display="none";
+$("#xt-sx").onchange=()=>{const v=$("#xt-sx").value;
+  if(XT&&XT.nguon&&XT.mt)XT.mt.sap_xep=v; else {$("#sap_xep").value=v;$("#sap_xep").dispatchEvent(new Event("change"))}
+  veXT()};
 $("#xt-dong").onclick=()=>{$("#hop-xt").style.display="none"; if(XT&&XT.nguon&&XT.nguon.dong) XT.nguon.dong()};
 $("#xt-nhatky").onclick=()=>hopThoai("Nhật ký chọn câu",XT.nhat_ky);
 $("#xt-random").onclick=async()=>{

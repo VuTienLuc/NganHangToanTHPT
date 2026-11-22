@@ -66,7 +66,9 @@ def the_cau(ma, ls=None):
     except Exception:
         p = {"de": c.get("noi_dung") or "", "pa": None}
     return {"ma": ma, "loai": c["loai"], "muc": c.get("muc_chuan") or "", "dang_key": c.get("dang_key") or "",
-            "ten_dang": c.get("ten_dang") or "", "ten_bai": c.get("ten_bai") or "",
+            "ten_dang": c.get("ten_dang") or "", "ten_bai": c.get("ten_bai") or "", "ten_chuong": c.get("ten_chuong") or "",
+            # khoá xếp "theo nội dung" — đúng như tron_de.khoa_noi_dung: lớp, môn (Đại/Hình/…), chương, bài, dạng
+            "khoa": [c.get("lop") or 0, {"D": 0, "H": 1, "C": 2}.get(c.get("mon"), 9), c.get("chuong") or 0, c.get("bai") or 0, c.get("dang") or 0],
             "de": sang_html(p.get("de")), "pa": [sang_html(x) for x in (p.get("pa") or [])],
             "dap_an": c.get("dap_an") or "", "da_dung": len(ls.get(ma, [])), "co_hinh": bool(c.get("co_hinh"))}
 

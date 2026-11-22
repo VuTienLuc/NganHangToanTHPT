@@ -589,6 +589,12 @@ số lần đã dùng; công thức vẽ bằng MathJax (cần mạng; không c�
 - **↻ Đổi câu**: thay câu đó bằng câu ngẫu nhiên khác cùng loại, cùng dạng, cùng mức (ưu tiên câu chưa dùng; hết thì khác mức, rồi dạng khác cùng bài).
 - **↻ Random lại tất cả**: chọn lại cả bộ.
 - Chế độ "mỗi mã đề câu khác nhau": có các thẻ *Bộ 1, Bộ 2…* để xem/đổi từng mã đề.
+- Câu hiện theo **đúng thứ tự trong đề**: Phần I Trắc nghiệm → II Đúng/Sai → III Trả lời ngắn. Trong mỗi phần, câu được xếp theo ô **Thứ tự câu** ở góc trên (đồng bộ với ô *Sắp xếp câu*) và có tiêu đề mục:
+  - Theo độ khó: nhóm Nhận biết → Thông hiểu → Vận dụng → Vận dụng cao.
+  - Theo nội dung: nhóm Chương › Bài.
+  - Nội dung rồi độ khó: nhóm theo chương, trong mỗi chương xếp theo mức.
+
+  Đổi câu thì câu mới tự về đúng vị trí. Khi xác nhận, **mã đề đầu (hoặc từng mã nếu mỗi mã một bộ) ra đúng thứ tự đang xem**. Các mã sau vẫn xếp theo cùng quy tắc, chỉ đảo các câu cùng nhóm để chống chép.
 - **Xác nhận & xuất đề**: xuất đúng bộ câu đang xem (vẫn xáo thứ tự câu/phương án theo cài đặt). Ma trận lưu lại không kèm danh sách câu.
 
 

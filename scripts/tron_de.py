@@ -276,11 +276,13 @@ THU_MON = {"D": 0, "H": 1, "C": 2}
 def khoa_noi_dung(c):
     return (c["lop"] or 0, THU_MON.get(c["mon"], 9), c["chuong"] or 0, c["bai"] or 0, c["dang"] or 0)
 
-def sap_xep(ds):
+def sap_xep(ds, giu=False):
+    """giu=True: bộ câu thầy đã xem trước — không xáo trước khi xếp, nên đề ra đúng thứ tự đã xem
+    (các câu cùng mức / cùng bài giữ nguyên thứ tự như màn hình xem trước)."""
     ds = list(ds)
     if mt.get("sap_xep") == "giu_nguyen":
         return ds
-    if mt.get("xao_cau", True):
+    if mt.get("xao_cau", True) and not (giu and mt.get("sap_xep", "ngau_nhien") != "ngau_nhien"):
         rng.shuffle(ds)
     kieu = mt.get("sap_xep", "ngau_nhien")
     if kieu == "do_kho":
@@ -377,7 +379,7 @@ def soan_ma_de(bo, ma_de):
         ds = bo.get(loai) or []
         if not ds:
             continue
-        ds = sap_xep(ds)
+        ds = sap_xep(ds, giu=ma_de in GIU_THU_TU)
         tieu, loi, ct, sf, tm = PHAN[loai]
         tep = f"{ten}_{ma_de}_{loai}"
         so_la_ma = SO_LA_MA[stt]; stt += 1
@@ -554,6 +556,9 @@ if TIET_KIEM:
 def tai_lieu(than, loi_giai):
     return mau.replace("<<CHE_DO_LOI_GIAI>>", "\\hienthiloigiai" if loi_giai else "\\anloigiai").replace("<<NOI_DUNG>>", than)
 
+# mã đề giữ đúng thứ tự câu như màn hình xem trước: bộ dùng chung → mã đề đầu; mỗi mã một bộ → mọi mã đã xem
+GIU_THU_TU = {str(bat_dau + s).zfill(3) for s in range(min(so_ma, len(mt["chon_san"]) if len(mt["chon_san"]) > 1 else 1))} \
+    if mt.get("chon_san") and not TU_FILE else set()
 tat_ca_dap_an, ds_cau_dung, gop_de, gop_lg, gop_cuoi, cac_ma = [], {}, [], [], [], []
 for s in range(so_ma):
     ma_de = str(bat_dau + s).zfill(3); cac_ma.append(ma_de)
