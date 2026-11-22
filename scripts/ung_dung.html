@@ -227,6 +227,15 @@ footer .gian{flex:1}
 #hk-bang .hk-kho{font-size:11.5px;margin-top:3px;display:inline-block;padding:1px 6px;border-radius:99px}
 #hk-bang .hk-kho-nut{cursor:pointer;transition:filter .15s}
 #hk-bang .hk-kho-nut:hover{filter:brightness(.92);text-decoration:underline}
+#hop-xb{position:fixed;inset:0;background:rgba(17,24,39,.4);display:none;align-items:center;justify-content:center;z-index:16}
+#hop-xb .noi{background:#fff;border-radius:14px;width:min(780px,95vw);max-height:90vh;display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.3)}
+#hop-xb h2{margin:0;padding:12px 18px;font-size:16px;border-bottom:1px solid var(--vien)}
+#hop-xb .than{padding:12px 18px;display:flex;flex-direction:column;gap:10px;overflow:auto;font-size:13.5px}
+#hop-xb .hang{display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+#hop-xb input[type=text],#hop-xb input[type=number]{padding:5px 8px;border:1px solid var(--vien);border-radius:7px;font:inherit}
+#xb-ds{border-collapse:collapse;width:100%;font-size:13px}#xb-ds th,#xb-ds td{border-bottom:1px solid var(--vien);padding:6px 8px;text-align:left}
+#xb-ds .cu{color:#b45309;font-size:12px}
+#hop-xb .chan{padding:10px 18px;border-top:1px solid var(--vien);display:flex;gap:8px;align-items:center}
 #hop-ss{position:fixed;inset:0;background:rgba(17,24,39,.45);display:none;align-items:center;justify-content:center;z-index:30}
 #hop-ss .noi{background:#fff;border-radius:14px;width:min(760px,95vw);max-height:90vh;display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.3)}
 #hop-ss h2{margin:0;padding:12px 18px;font-size:16px;border-bottom:1px solid var(--vien)}
@@ -695,7 +704,8 @@ tr.gop-h td{background:#dbeafe;text-align:left;font-weight:700;padding:8px 12px;
   <div id="hk-bang-wrap"><table id="hk-bang"><thead><tr><th style="width:110px">Câu / Số câu</th><th style="width:23%">Chủ đề (sửa được)</th><th style="width:23%">Bài trong ngân hàng</th>
     <th style="width:108px">Mức</th><th style="width:130px">Ngữ cảnh thực tế</th><th>Câu mẫu (tuỳ chọn, cho đề AI)</th></tr></thead><tbody></tbody></table></div>
   <div class="chan"><span id="hk-tt" style="color:#555"></span>
-    <button id="hk-xem" style="margin-left:auto" title="Xem 22 câu được chọn, đổi từng câu hoặc random lại, rồi xác nhận xuất đề">Xem trước &amp; đổi câu</button>
+    <button id="hk-xem" style="margin-left:auto" title="Xem các câu được chọn của từng mã đề, đổi câu, rồi 💾 Lưu bộ này (chưa xuất) hoặc xuất ngay">Xem trước &amp; đổi câu</button>
+    <button id="hk-xuat-bo" class="chinh" style="background:#047857;border-color:#047857" title="Xuất một lượt mọi bộ đã xem trước & lưu (Lần 1, 2, 3…): mã đề nối tiếp, tuỳ chọn in đề cương gộp">📦 Xuất các bộ đã lưu</button>
     <button id="hk-ngan-hang" class="chinh" title="Lấy đúng 22 câu từ ngân hàng theo bài + mức từng dòng, xuất đủ mã đề, PDF, Word, đáp án như nút Xuất đề">Ra đề từ ngân hàng</button>
     <button id="hk-nhap-ai" title="Dán / chọn file JSON đề AI trả về: kiểm tra số câu và lỗi, rồi trộn thành mã đề hoặc nhập vào ngân hàng">Nhập đề AI (JSON)</button>
     <button id="hk-prompt" title="Sinh prompt cho ChatGPT/Gemini/Claude tạo đề mới dạng JSON (nhập lại được vào ứng dụng)">Tạo prompt AI (nguồn ngoài)</button>
@@ -815,6 +825,18 @@ tr.gop-h td{background:#dbeafe;text-align:left;font-weight:700;padding:8px 12px;
     </div>
   </div>
   <div class="chan"><span id="ph-trang-thai" class="nho"></span><button id="ph-thieu" style="margin-left:auto" title="Kiểm tra ngân hàng đủ câu cho phiếu này chưa; thiếu thì soạn prompt cho AI sinh câu, rồi nhập vào ngân hàng">Kiểm tra kho / Prompt AI soạn câu…</button><button id="ph-xem" title="Máy chọn thử bộ câu cho phiếu → thầy xem từng câu, đổi nhanh hoặc chọn câu khác theo nhóm cho ưng ý → xác nhận mới tạo phiếu">👁 Xem trước &amp; đổi câu</button><button id="ph-tao" class="chinh">Tạo phiếu</button><button id="ph-dong-hop">Đóng</button></div>
+</div></div>
+<div id="hop-xb"><div class="noi">
+  <h2>📦 Xuất các bộ đề đã lưu — <span id="xb-lop"></span></h2>
+  <div class="than">
+    <div class="nho">Mỗi bộ ra đúng các câu (và thứ tự) thầy đã xem trước & lưu. Mã đề nối tiếp giữa các bộ.</div>
+    <table id="xb-ds"><thead><tr><th style="width:34px"></th><th>Bộ</th><th>Câu × mã đề</th><th>Lưu lúc</th><th></th></tr></thead><tbody></tbody></table>
+    <div class="hang"><label>Tên bộ đề <input type="text" id="xb-ten" style="width:320px"></label>
+      <label>Mã đề bắt đầu <input type="number" id="xb-ma" value="101" style="width:70px"></label></div>
+    <div class="hang"><label class="hop"><input type="checkbox" id="xb-pdf" checked> Biên dịch PDF từng mã đề + lời giải</label>
+      <label class="hop" title="Gộp mọi mã đề của các bộ đã chọn thành 2 quyển: Câu hỏi và Lời giải (có bìa, mục lục)"><input type="checkbox" id="xb-de-cuong" checked> 📚 In đề cương gộp (quyển Câu hỏi + quyển Lời giải)</label></div>
+  </div>
+  <div class="chan"><span id="xb-tt" class="nho"></span><button id="xb-chay" class="chinh" style="margin-left:auto">📦 Xuất</button><button id="xb-dong">Đóng</button></div>
 </div></div>
 <div id="hop-ss"><div class="noi">
   <h2>🧬 Câu song sinh từ khuôn <span id="ss-ma" style="font-weight:400;font-size:13px;color:#64748b"></span></h2>
@@ -1027,7 +1049,7 @@ tr.gop-h td{background:#dbeafe;text-align:left;font-weight:700;padding:8px 12px;
   <div id="xt-than"></div>
   <div class="chan"><span style="font-size:12px;color:#666">“Đổi câu” lấy ngẫu nhiên câu khác cùng dạng, cùng mức (ưu tiên câu chưa dùng). Hài lòng thì bấm Xác nhận.</span>
     <button id="xt-random" style="margin-left:auto">↻ Random lại tất cả</button><button id="xt-nhatky">Nhật ký chọn câu</button>
-    <button id="xt-bg" title="Đăng bộ câu đang xem thành bài giảng trình chiếu HTML (có đáp án, lời giải) lên trang mục lục lớp">📚 Đăng bài giảng</button><button id="xt-thi" title="Đưa bộ câu của mã đề đang xem lên mạng thành link cho học sinh làm bài (Cloudflare Pages), tự chấm, gửi điểm về Google Sheet">🌐 Link thi trực tuyến</button><button id="xt-tc" title="Đưa bộ câu của mã đề đang xem sang ứng dụng Soạn đề &amp; trình chiếu Toán (HTML): trình chiếu, bài kiểm tra cho học sinh, Word, thư viện Google Sheets…">▶ Sang trình chiếu HTML</button><button id="xt-nhanh" class="chinh" style="display:none">⚡ Tạo tất cả</button><button id="xt-ok" class="chinh">Xác nhận &amp; xuất đề</button><button id="xt-dong">Đóng</button></div>
+    <button id="xt-bg" title="Đăng bộ câu đang xem thành bài giảng trình chiếu HTML (có đáp án, lời giải) lên trang mục lục lớp">📚 Đăng bài giảng</button><button id="xt-thi" title="Đưa bộ câu của mã đề đang xem lên mạng thành link cho học sinh làm bài (Cloudflare Pages), tự chấm, gửi điểm về Google Sheet">🌐 Link thi trực tuyến</button><button id="xt-tc" title="Đưa bộ câu của mã đề đang xem sang ứng dụng Soạn đề &amp; trình chiếu Toán (HTML): trình chiếu, bài kiểm tra cho học sinh, Word, thư viện Google Sheets…">▶ Sang trình chiếu HTML</button><button id="xt-nhanh" class="chinh" style="display:none">⚡ Tạo tất cả</button><button id="xt-luu-bo" class="chinh" style="display:none;background:#047857;border-color:#047857" title="Lưu các mã đề đang xem vào bộ này của Ôn thi học kì — chưa xuất. Làm tiếp các bộ khác rồi xuất một lượt hoặc in đề cương gộp">💾 Lưu bộ này, chưa xuất</button><button id="xt-ok" class="chinh">Xác nhận &amp; xuất đề</button><button id="xt-dong">Đóng</button></div>
 </div></div>
 <div id="hop-chon-cau"><div class="noi">
   <h2>🔍 Chọn câu thay thế từ ngân hàng <span id="cc-tieu" style="font-weight:400;font-size:13px;color:#475569"></span></h2>
@@ -1759,7 +1781,9 @@ function hkTranh(){ // câu đã ra ở các lần khác của lớp này
   return [...new Set(hkLop().bo.filter((_,i)=>i!==hkLop().i).flatMap(b=>b.da_dung||[]))]}
 function veBoHK(){
   const L=hkLop();
-  $("#hk-bo").innerHTML=L.bo.map((b,i)=>`<option value="${i}" ${i===L.i?"selected":""}>${esc(b.ten)}${(b.da_dung||[]).length?` · đã ra ${b.da_dung.length} câu`:""}</option>`).join("");
+  $("#hk-bo").innerHTML=L.bo.map((b,i)=>`<option value="${i}" ${i===L.i?"selected":""}>${esc(b.ten)}${b.luu?` · 💾 đã lưu ${b.luu.so_cau} câu × ${b.luu.chon_san.length>1?b.luu.chon_san.length+" bộ":b.luu.so_ma+" mã"}${b.luu.van_tay!==hkVanTay(b)?" (ma trận đã sửa)":""}`:(b.da_dung||[]).length?` · đã ra ${b.da_dung.length} câu`:""}</option>`).join("");
+  const soLuu=L.bo.filter(b=>b.luu).length;
+  $("#hk-xuat-bo").textContent=`📦 Xuất các bộ đã lưu (${soLuu})`; $("#hk-xuat-bo").disabled=!soLuu;
   $("#hk-xoa-bo").disabled=L.bo.length<2;
 }
 function hkMacDinh(lop){return HK_MAC_DINH[lop].map(([loai,chu_de,muc,nc,ch,kho],i)=>({loai,chu_de,muc,ngu_canh:nc||"",chuong:ch||"",bai:(HK_BAI_MAC_DINH[lop]||[])[i]||"",mau:"",form:false,kho:!!kho,chon:true,so:1}))}
@@ -2106,9 +2130,16 @@ function mtHK(){
   mt.cau_da_dung=$("#hk-da-dung").value; mt.tranh_cau_da_dung=mt.cau_da_dung!=="khong";
   return mt;
 }
+function hkVanTay(b){return JSON.stringify((b.hang||[]).filter(r=>r.chon).map(r=>[r.loai,r.bai,r.muc,+r.so||1]))}
 function nguonHK(){ // xem trước/xuất từ Ôn thi HK: ghi câu đã ra vào đúng bộ, đóng xem trước thì quay lại bảng
   const lop=HK_LOP, bo=hkBo();
-  return {dong:()=>{$("#hop-hk").style.display="flex"},
+  return {hk:true, ten_bo:bo.ten,
+    luuBo:(cs,mt)=>{               // 💾 lưu bộ câu đã xem (chưa xuất): các bộ sau tự tránh những câu này
+      const ma=[...new Set(cs.flatMap(b=>Object.values(b).flat()))];
+      bo.luu={chon_san:cs,mt:{...mt,chon_san:undefined},so_cau:cs[0]?Object.values(cs[0]).reduce((a,v)=>a+v.length,0):0,
+              so_ma:+mt.so_ma_de||1,luc:new Date().toLocaleString("vi-VN"),van_tay:hkVanTay(bo)};
+      bo.da_dung=ma; hkLuu(); if(HK_LOP===lop){veBoHK();veHK()}},
+    dong:()=>{$("#hop-hk").style.display="flex"},
     sauXuat:r=>{if(r.ma_dung&&r.ma_dung.length){bo.da_dung=r.ma_dung;hkLuu();if(HK_LOP===lop){veBoHK();veHK()}}}};
 }
 $("#hk-xem").onclick=async()=>{
@@ -2129,6 +2160,40 @@ $("#hk-ngan-hang").onclick=async()=>{
     hopThoai(`Đã ra đề ôn thi: ${r.thu_muc}`,r.nhat_ky+(r.bien_dich?"\nĐang biên dịch PDF…":""),[["Mở thư mục đề",()=>api("/api/mo",{duong_dan:r.thu_muc}),true]]);
     if(r.bien_dich) theoDoi(r.nhat_ky); tai();
   }finally{b.disabled=false;b.textContent="Ra đề từ ngân hàng"}
+};
+// ---- 📦 xuất một lượt các bộ đã xem trước & lưu (mã đề nối tiếp, đề cương gộp)
+function veXB(){
+  const L=hkLop();
+  $("#xb-ds tbody").innerHTML=L.bo.map((b,i)=>b.luu?`<tr><td><input type="checkbox" class="xb-cb" data-i="${i}" checked></td><td><b>${esc(b.ten)}</b>${b.luu.van_tay!==hkVanTay(b)?` <span class="cu">⚠ ma trận đã sửa sau khi lưu — xuất theo bộ câu đã lưu</span>`:""}</td>
+    <td>${b.luu.so_cau} câu × ${b.luu.chon_san.length>1?b.luu.chon_san.length:b.luu.so_ma} mã</td><td class="nho">${esc(b.luu.luc)}</td>
+    <td><button class="xb-bo" data-i="${i}" title="Bỏ bộ câu đã lưu (để xem trước & lưu lại)">Bỏ lưu</button></td></tr>`
+    :`<tr><td></td><td class="nho">${esc(b.ten)}</td><td class="nho" colspan="3">chưa lưu — Xem trước & đổi câu rồi 💾 Lưu</td></tr>`).join("");
+  $("#xb-ds").querySelectorAll(".xb-bo").forEach(n=>n.onclick=()=>{if(!confirm("Bỏ bộ câu đã lưu của bộ này?"))return;
+    const b=L.bo[+n.dataset.i]; delete b.luu; hkLuu(); veBoHK(); veXB()});
+  const chon=()=>[...document.querySelectorAll(".xb-cb:checked")].map(x=>L.bo[+x.dataset.i]);
+  const capNhat=()=>{const ds=chon(), so=ds.reduce((a,b)=>a+(b.luu.chon_san.length>1?b.luu.chon_san.length:b.luu.so_ma),0), ma=+$("#xb-ma").value||101;
+    $("#xb-tt").textContent=ds.length?`${ds.length} bộ · ${so} mã đề (${ma}–${ma+so-1})`:"Chưa chọn bộ nào";$("#xb-chay").disabled=!ds.length};
+  document.querySelectorAll(".xb-cb").forEach(x=>x.onchange=capNhat); $("#xb-ma").oninput=capNhat; capNhat();
+  return chon;
+}
+let XB_CHON=null;
+$("#hk-xuat-bo").onclick=()=>{
+  $("#xb-lop").textContent="Lớp "+HK_LOP; $("#xb-ten").value=`Ôn thi ${$("#hk-ky").value} – Lớp ${HK_LOP}`;
+  $("#xb-ma").value=$("#hk-ma-bat-dau").value||101; $("#xb-pdf").checked=$("#hk-pdf").checked; $("#xb-de-cuong").checked=$("#hk-de-cuong").checked;
+  XB_CHON=veXB(); $("#hop-xb").style.display="flex"};
+$("#xb-dong").onclick=()=>$("#hop-xb").style.display="none";
+$("#xb-pdf").onchange=()=>{if(!$("#xb-pdf").checked)$("#xb-de-cuong").checked=false};
+$("#xb-de-cuong").onchange=()=>{if($("#xb-de-cuong").checked)$("#xb-pdf").checked=true};
+$("#xb-chay").onclick=async()=>{
+  const ds=XB_CHON(); if(!ds.length)return;
+  const cfg={ten:$("#xb-ten").value.trim()||"Bộ đề ôn thi",ma_de_bat_dau:+$("#xb-ma").value||101,khong_lap:false,de_cuong:$("#xb-de-cuong").checked,
+    cac_lan:ds.map(b=>({ten:b.ten,ma_tran:{...b.luu.mt,chon_san:b.luu.chon_san,so_ma_de:b.luu.chon_san.length>1?b.luu.chon_san.length:b.luu.so_ma,de_cuong:false}}))};
+  const r=await api("/api/bo-de",{cau_hinh:cfg,bien_dich:$("#xb-pdf").checked}); if(!r.ok){alert(r.loi);return}
+  ds.forEach(b=>b.luu.da_xuat=new Date().toLocaleString("vi-VN")); hkLuu();
+  $("#hop-xb").style.display="none"; $("#hop-hk").style.display="none";
+  hopThoai(`Đang xuất ${ds.length} bộ: ${cfg.ten}`,"Đang dựng từng bộ…"+(r.bien_dich?" (sau đó biên dịch PDF"+(cfg.de_cuong?" và gộp đề cương":"")+" — có thể mất vài phút)":""),
+    [["Mở thư mục",async()=>{const s=await api("/api/trang-thai");const m=s.nhat_ky.match(/THU_MUC:(.+)/);if(m)api("/api/mo",{duong_dan:m[1].trim()});else alert("Chưa xong.")},true]]);
+  theoDoi(`Bộ đề: ${cfg.ten} — ${ds.length} bộ`);
 };
 // 2) prompt cho AI (nguồn ngoài) — định dạng JSON trac_nghiem / dung_sai / tra_loi_ngan, kèm mã dạng của ngân hàng
 function promptHK(){
@@ -2741,6 +2806,8 @@ function veXT(){
     let nhomCu=null;
     v.forEach((c,i)=>{const n=laPhieu0?null:nhanNhom(c,sx); if(n!==null&&n!==nhomCu){nhomCu=n;h+=`<div class="muc-nhom">${esc(n)}</div>`} h+=htmlThe(c,i+1)}); }
   const laPhieu=!!(XT.nguon&&XT.nguon.phieu);
+  $("#xt-luu-bo").style.display=XT.nguon&&XT.nguon.hk?"":"none";
+  if(XT.nguon&&XT.nguon.hk) $("#xt-luu-bo").textContent=`💾 Lưu «${XT.nguon.ten_bo}», chưa xuất`;
   ["#xt-bg","#xt-thi","#xt-tc"].forEach(s=>$(s).style.display=laPhieu?"none":"");
   $("#xt-ok").textContent=laPhieu?"Xác nhận & tạo phiếu":"Xác nhận & xuất đề";
   $("#xt-nhanh").style.display=XT.nguon&&XT.nguon.nhanh?"":"none";
@@ -2841,6 +2908,14 @@ $("#cc-moi").onchange=()=>taiChonCau(false);
 let _ccTimer=null; $("#cc-tim").oninput=()=>{clearTimeout(_ccTimer);_ccTimer=setTimeout(()=>taiChonCau(false),280)};
 $("#cc-them").onclick=()=>taiChonCau(true);
 $("#cc-dong").onclick=()=>$("#hop-chon-cau").style.display="none";
+$("#xt-luu-bo").onclick=()=>{
+  if(!(XT&&XT.nguon&&XT.nguon.hk))return;
+  const cs=XT.bo.map(b=>Object.fromEntries(Object.entries(b).map(([l,ds])=>[l,ds.filter(c=>!c.mat).map(c=>c.ma)])));
+  XT.nguon.luuBo(cs,XT.mt);
+  $("#hop-xt").style.display="none"; $("#hop-hk").style.display="flex";
+  const L=hkLop(), con=L.bo.filter(b=>!b.luu).map(b=>b.ten);
+  $("#hk-tt").innerHTML=`<b style="color:#047857">✓ Đã lưu «${esc(XT.nguon.ten_bo)}».</b> `+(con.length?`Chọn bộ tiếp (${esc(con.join(", "))}) ở ô Bộ, hoặc ⧉ Sao chép thành lần mới, rồi Xem trước.`:`Bấm ⧉ Sao chép thành lần mới để làm thêm bộ, hoặc 📦 Xuất các bộ đã lưu.`);
+};
 $("#xt-sx").onchange=()=>{const v=$("#xt-sx").value;
   if(XT&&XT.nguon&&XT.mt)XT.mt.sap_xep=v; else {$("#sap_xep").value=v;$("#sap_xep").dispatchEvent(new Event("change"))}
   veXT()};

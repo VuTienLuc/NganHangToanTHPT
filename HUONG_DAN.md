@@ -710,6 +710,18 @@ Nút cạnh "Tránh câu đã ra ở lần khác":
 - **Reset toàn bộ lịch sử lớp**: mọi câu lớp đó từng dùng ở bất kỳ đề nào.
 Mỗi lần reset đều sao lưu `du-lieu/_cu/lich_su_dung_<ngày-giờ>.json`, có nút **↶ Hoàn tác**.
 
+### Ôn thi học kì — xem trước, lưu từng bộ, rồi mới xuất
+1. Chọn **Bộ** (Lần 1), bấm **Xem trước & đổi câu**. Xem từng mã đề (các thẻ Bộ 1, 2… khi bật *Mỗi đề câu khác nhau*), đổi câu cho ưng ý.
+2. Bấm **💾 Lưu «Lần 1», chưa xuất**. Bộ câu được lưu lại; ô Bộ hiện *💾 đã lưu 22 câu × 4 mã*. Các bộ sau tự **tránh các câu này** (khi tích *Tránh câu đã ra ở lần khác*).
+3. Chọn bộ khác, hoặc **⧉ Sao chép thành lần mới** rồi sửa ma trận, sau đó lặp lại bước 1–2.
+4. Bấm **📦 Xuất các bộ đã lưu**: tích các bộ cần xuất, đặt tên bộ đề và mã bắt đầu (mã đề nối tiếp giữa các bộ), chọn:
+   - **Biên dịch PDF** từng mã đề + lời giải;
+   - **📚 In đề cương gộp**: hai quyển *Câu hỏi* và *Lời giải* cho tất cả các bộ, có bìa và mục lục.
+
+   Mỗi bộ ra đúng các câu và thứ tự đã lưu. Bộ nào sửa ma trận sau khi lưu thì app báo ⚠; thầy bấm *Bỏ lưu* để xem trước và lưu lại.
+
+Nút *Xác nhận & xuất đề* trong xem trước vẫn xuất ngay một bộ như trước.
+
 ## 🗂 Thư mục đề (de-da-ra) — xếp theo lớp, chương, kỳ thi
 
 Mọi đề / phiếu / bài kiểm tra xuất ra tự vào đúng chỗ, tên bắt đầu bằng ngày (sắp xếp, tìm kiếm dễ):

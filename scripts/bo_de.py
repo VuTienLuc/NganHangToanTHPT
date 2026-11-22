@@ -38,6 +38,8 @@ def chay(cfg, in_ra=print, bien_dich=False):
         mt = dict(l["ma_tran"])
         nhan = (l.get("ten") or f"Lần {i}").strip()
         so = int(mt.get("so_ma_de") or 1)
+        if mt.get("chon_san"):
+            in_ra(f"   (dùng đúng bộ câu đã xem trước & lưu: {len(mt['chon_san'])} bộ)")
         mt.update(ma_de_bat_dau=ma, thu_muc_ra=os.path.relpath(os.path.join(out, ten_tm(f"{i:02d}. {nhan}")), GOC),
                   ten=(ten_khong_dau(f"{ten} {nhan}", 50) or f"BoDe_{i}").replace(" ", "_"))   # tên tệp đáp án: không dấu, không cách
         if cfg.get("ten_ky_thi_chung"):
@@ -68,18 +70,20 @@ def chay(cfg, in_ra=print, bien_dich=False):
     in_ra(f"Đã tạo bộ {len(muc_luc)} lần · {sum(len(x['ma']) for x in muc_luc)} mã đề"
           + (" · không lặp câu giữa các lần" if khong_lap else ""))
     if bien_dich:
-        bien_dich_bo(out, muc_luc, ten, in_ra)
+        bien_dich_bo(out, muc_luc, ten, in_ra, gop_de_cuong=cfg.get("de_cuong", True))
     in_ra(f"THU_MUC:{os.path.relpath(out, GOC)}")
     return out
 
 
-def bien_dich_bo(out, muc_luc, ten, in_ra=print):
+def bien_dich_bo(out, muc_luc, ten, in_ra=print, gop_de_cuong=True):
     if not tim_pdflatex():
         in_ra("Không tìm thấy pdflatex — mở thư mục tex/ của từng lần bằng TeXstudio để biên dịch."); return
     for x in muc_luc:
         in_ra(f"— Biên dịch {x['nhan']}…")
         bien_dich_thu_muc(x["thu_muc"], in_ra)
-    gop(out, muc_luc, ten, in_ra)
+    if gop_de_cuong:
+        in_ra("— Gộp đề cương (quyển Câu hỏi + quyển Lời giải)…")
+        gop(out, muc_luc, ten, in_ra)
 
 
 def gop(out, muc_luc, ten, in_ra=print):
