@@ -363,8 +363,8 @@ def sinh_python(cfg, so, kieu, rng):
 import time as _time
 
 KHOA = os.path.join(GOC, "ai_khoa.json")
-TEN_NHA = {"gemini": "Gemini", "deepseek": "DeepSeek", "claude": "Claude", "openai": "OpenAI"}
-MO_MAC_DINH = {"gemini": "gemini-flash-latest", "deepseek": "deepseek-chat", "claude": "claude-sonnet-5-5", "openai": "gpt-4o-mini"}
+TEN_NHA = {"gemini": "Gemini", "deepseek": "DeepSeek", "claude": "Claude", "openai": "ChatGPT"}
+MO_MAC_DINH = {"gemini": "gemini-flash-latest", "deepseek": "deepseek-chat", "claude": "claude-sonnet-5-5", "openai": "gpt-4.1"}
 
 
 def nhan_dang(khoa):
@@ -408,7 +408,10 @@ def luu_khoa(van, mo_hinh=None, them=False):
             continue
         da.add(tok)
         ds.append({"khoa": tok, "nha": nha or nhan_dang(tok), "mo_hinh": mo or (mo_hinh or {}).get(nha or nhan_dang(tok), "")})
-    json.dump({"ds": ds}, open(KHOA, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
+    cu = doc_khoa()
+    cu.pop("khoa", None); cu.pop("nha", None); cu.pop("mo_hinh", None)
+    cu["ds"] = ds                                            # giữ các mục khác (vd "vai" của Hội đồng AI)
+    json.dump(cu, open(KHOA, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
     gi = os.path.join(GOC, ".gitignore")
     try:
         t = open(gi, encoding="utf-8").read()
@@ -463,15 +466,43 @@ def goi_mot(k, prompt, timeout=240, max_tok=8000):
     """Gọi MỘT khoá → (văn bản, bị_cắt)."""
     nha, khoa, mo = k["nha"], k["khoa"], k.get("mo_hinh") or MO_MAC_DINH.get(k["nha"])
     if nha == "claude":
-        r = _http("https://api.anthropic.com/v1/messages", {"model": mo, "max_tokens": max_tok, "messages": [{"role": "user", "content": prompt}]},
-                  {"x-api-key": khoa, "anthropic-version": "2023-06-01"}, timeout)
-        return "".join(x.get("text", "") for x in r.get("content", [])), r.get("stop_reason") == "max_tokens"
+        def cla(m):
+            r = _http("https://api.anthropic.com/v1/messages", {"model": m, "max_tokens": max_tok, "messages": [{"role": "user", "content": prompt}]},
+                      {"x-api-key": khoa, "anthropic-version": "2023-06-01"}, timeout)
+            return "".join(x.get("text", "") for x in r.get("content", [])), r.get("stop_reason") == "max_tokens"
+        try:
+            return cla(mo)
+        except urllib.error.HTTPError as e:
+            if e.code != 404:
+                raise
+            k["mo_hinh"] = _moi_nhat(nha, khoa)            # tên mô hình đã cũ → bản Claude mới nhất đang có
+            return cla(k["mo_hinh"])
     if nha in ("deepseek", "openai"):
         url = "https://api.deepseek.com/chat/completions" if nha == "deepseek" else "https://api.openai.com/v1/chat/completions"
-        r = _http(url, {"model": mo, "messages": [{"role": "user", "content": prompt}], "max_tokens": max_tok, "temperature": 0.7, "stream": False},
-                  {"authorization": "Bearer " + khoa}, timeout)
-        c = (r.get("choices") or [{}])[0]
-        return (c.get("message") or {}).get("content") or "", c.get("finish_reason") in ("length", "insufficient_system_resource")
+        def oai(m, gon=False):
+            body = {"model": m, "messages": [{"role": "user", "content": prompt}], "stream": False}
+            if nha == "openai":                            # OpenAI đời mới: max_completion_tokens; mô hình suy luận không nhận temperature
+                body["max_completion_tokens"] = max_tok
+                if not gon:
+                    body["temperature"] = 0.7
+            else:
+                body.update(max_tokens=max_tok, temperature=0.7) if not m.endswith("reasoner") else body.update(max_tokens=max_tok)
+            r = _http(url, body, {"authorization": "Bearer " + khoa}, timeout)
+            c = (r.get("choices") or [{}])[0]
+            return (c.get("message") or {}).get("content") or "", c.get("finish_reason") in ("length", "insufficient_system_resource")
+        try:
+            return oai(mo)
+        except urllib.error.HTTPError as e:
+            try:
+                noi = e.read().decode("utf-8", "ignore")
+            except Exception:
+                noi = ""
+            if nha == "openai" and e.code == 400 and "temperature" in noi:
+                return oai(mo, gon=True)
+            if nha == "openai" and (e.code == 404 or (e.code == 400 and "model" in noi and "not" in noi)):
+                k["mo_hinh"] = _moi_nhat(nha, khoa)
+                return oai(k["mo_hinh"], gon=True)
+            raise urllib.error.HTTPError(e.url, e.code, e.msg, e.hdrs, __import__("io").BytesIO(noi.encode()))
 
     def gem(m):
         r = _http(f"https://generativelanguage.googleapis.com/v1beta/models/{m}:generateContent",
@@ -488,6 +519,19 @@ def goi_mot(k, prompt, timeout=240, max_tok=8000):
         return gem(k["mo_hinh"])
 
 
+def _moi_nhat(nha, khoa):
+    """OpenAI / Claude: tên mô hình mặc định đã cũ → lấy danh sách mô hình của khoá, chọn bản mới nhất phù hợp."""
+    if nha == "openai":
+        ds = [m["id"] for m in _http("https://api.openai.com/v1/models", None, {"authorization": "Bearer " + khoa}, 60).get("data", [])]
+        tot = [t for t in ds if re.fullmatch(r"gpt-\d+(\.\d+)?", t)] or [t for t in ds if t.startswith("gpt-") and not re.search(r"audio|realtime|image|tts|search|transcribe|nano", t)]
+    else:
+        ds = [m["id"] for m in _http("https://api.anthropic.com/v1/models?limit=100", None, {"x-api-key": khoa, "anthropic-version": "2023-06-01"}, 60).get("data", [])]
+        tot = [t for t in ds if "sonnet" in t] or ds
+    if not tot:
+        raise RuntimeError(f"Khoá {TEN_NHA.get(nha, nha)} không có mô hình phù hợp.")
+    return max(tot, key=lambda t: [int(x) for x in re.findall(r"\d+", t)[:3]] or [0])
+
+
 def _gemini_moi_nhat(khoa):
     ds = _http("https://generativelanguage.googleapis.com/v1beta/models?pageSize=200", None, {"x-goog-api-key": khoa}, 60).get("models", [])
     ten = [m["name"].split("/")[-1] for m in ds if "generateContent" in (m.get("supportedGenerationMethods") or [])]
@@ -501,8 +545,9 @@ class XoayKhoa:
     """Dùng lần lượt các khoá; khoá hết lượt / lỗi thì nghỉ một lúc và chuyển khoá khác; tất cả đang nghỉ thì chờ."""
     NGHI = {401: 3600, 403: 3600, 402: 3600, 429: 60, "mang": 20, "khac": 30}
 
-    def __init__(self, ds=None, ghi=print):
+    def __init__(self, ds=None, ghi=print, timeout=240, max_tok=8000):
         self.ds = [dict(x) for x in (ds if ds is not None else doc_khoa()["ds"])]
+        self.timeout, self.max_tok = timeout, max_tok
         if not self.ds:
             raise HetKhoa("Chưa có khoá API AI — bấm ⚙ Khoá AI… trong hộp Phiếu bài học.")
         self.nghi = {}
@@ -517,7 +562,7 @@ class XoayKhoa:
                 k = self.ds[self.i % len(self.ds)]
                 if self.nghi.get(k["khoa"], 0) <= now:
                     try:
-                        t, cat = goi_mot(k, prompt)
+                        t, cat = goi_mot(k, prompt, timeout=self.timeout, max_tok=self.max_tok)
                         if not t.strip():
                             raise RuntimeError("trả về rỗng")
                         return t, cat, k
@@ -567,7 +612,7 @@ def _de_cua(k):
     return re.sub(r"\s+", " ", t.split("\\loigiai")[0]).strip()
 
 
-def sinh_ai(mau, so, kieu, lop, ghi=print, xoay=None, lan_toi_da=6):
+def sinh_ai(mau, so, kieu, lop, ghi=print, xoay=None, lan_toi_da=6, hoi_dong=None):
     """mau: [{"ma", "dang_key", "muc", "ten_dang", "ten_bai", "de", "lg"}] → (danh sách khối LaTeX, {dạng: mã mẫu}).
     Mỗi lượt gọi CHỈ MỘT mẫu (câu trả lời ngắn, ít bị ngắt); thiếu câu (bị cắt / AI trả thiếu) → tự hỏi tiếp phần còn thiếu."""
     import tao_prompt
@@ -605,6 +650,13 @@ def sinh_ai(mau, so, kieu, lop, ghi=print, xoay=None, lan_toi_da=6):
             ghi(f"    lượt {lan + 1} ({TEN_NHA.get(k['nha'], k['nha'])} {che(k['khoa'])}): +{moi} câu"
                 + (" · bị ngắt giữa chừng → hỏi tiếp phần còn thiếu" if cat else "")
                 + f" · có {len(co['giong'])}/{can['giong']}" + (f" + {len(co['nang_cao'])}/{can['nang_cao']}" if n_nc else ""))
+        if hoi_dong and (co["giong"] or co["nang_cao"]):     # Hội đồng AI giải lại – phản biện – biên tập trước khi nhận
+            qua = hoi_dong.duyet(co["giong"] + co["nang_cao"], muc=m.get("muc") or "",
+                                 ngu_canh=f"Toán lớp {lop}, {m.get('ten_bai') or ''} — dạng {m.get('ten_dang') or m['dang_key']}. "
+                                          f"Câu phải CÙNG DẠNG với câu mẫu (câu ghi 'nang_cao' ở dòng % mau được phép khó hơn một chút). Câu mẫu: "
+                                          + re.sub(r"\s+", " ", m["de"])[:500])
+            co = {"giong": [k for k in qua if not re.search(r"%\s*mau:\s*\S+\s+nang_cao", k)],
+                  "nang_cao": [k for k in qua if re.search(r"%\s*mau:\s*\S+\s+nang_cao", k)]}
         if co["giong"] or co["nang_cao"]:
             ra += co["giong"] + co["nang_cao"]; vdm[m["dang_key"]] = m["ma"]
         if len(co["giong"]) < can["giong"] or len(co["nang_cao"]) < can["nang_cao"]:

@@ -711,3 +711,19 @@ Bật khi đăng đề (ô **💡 Cho dùng Gợi ý AI** trong 🌐 Link thi tr
 Nút **▶ Trình chiếu** (phím **P**) trên phiếu HTML: bìa → kiến thức trọng tâm (mỗi phần/dạng một slide) → từng câu một slide.
 Phím: ←/→/Space đổi slide · **A** đáp án · **S** lời giải · **G** mục lục · **T** nền sáng/tối · **F** toàn màn hình · **Esc** thoát; vuốt trái/phải trên điện thoại.
 Chữ tự co cho vừa màn hình (A−/A+ chỉnh tay), bấm vào phương án để đánh dấu lựa chọn của lớp. Nút **🌓** trên thanh công cụ đổi nền cả trang: Tự động / Sáng / Tối.
+
+## 🧑‍⚖️ Hội đồng AI — nhiều AI soạn và phản biện chéo
+Nút **🧑‍⚖️ Hội đồng AI sinh câu** trên thanh công cụ: chọn lớp (4 – 12) → chương → tích các dạng cần thêm câu (lọc "chỉ dạng ít câu"), đặt loại (TN / Đúng-Sai / TLN / Tự luận), mức, số câu → bấm **Hội đồng soạn & duyệt → nhập kho**.
+
+| Vai | Mặc định | Vì sao |
+|---|---|---|
+| ✍ Soạn câu | Gemini | nhanh, rẻ, tiếng Việt tốt, ngữ cảnh dài |
+| 🔎 Giải độc lập | DeepSeek (`deepseek-reasoner`) | giải lại đề **đã xoá đáp án**, máy tự so đáp số với người soạn |
+| 🧑‍🏫 Phản biện sư phạm | ChatGPT | đúng chương trình, đúng dạng/mức, phương án nhiễu, câu chữ, đủ dữ kiện |
+| ✅ Tổng biên tập | Claude | chỉ sửa câu bị gắn cờ (lệch đáp án / phản biện chê), hoặc loại |
+
+- Câu đã sửa được **giải lại**; vẫn lệch → loại. Sau đó vẫn qua bước biên dịch thử của `nhap_cau` như mọi câu khác.
+- Câu nhập kho có dòng `% nguon: Hội đồng AI (Gemini soạn · DeepSeek giải · ChatGPT phản biện · Claude duyệt)`.
+- Đổi vai: **⚙ Khoá AI…** → bảng *Phân vai Hội đồng AI* (lưu trong `ai_khoa.json`, mục `vai`). Thiếu hãng nào thì app tự dồn vai, cố để người giải và người phản biện khác người soạn. Chỉ có một hãng vẫn chạy được nhưng kém tác dụng.
+- Cũng có ô **🧑‍⚖️ Hội đồng phản biện** ở *Ôn thi học kì → AI sinh câu* và *Phiếu bài học → Ngân hàng tự sinh* (cách AI).
+- Mỗi câu tốn 3 – 4 lượt gọi AI; nhiều câu thì để máy chạy, theo dõi nhật kí.

@@ -182,6 +182,23 @@ footer .gian{flex:1}
 #hk-bang .hk-kho{font-size:11.5px;margin-top:3px;display:inline-block;padding:1px 6px;border-radius:99px}
 #hk-bang .hk-kho-nut{cursor:pointer;transition:filter .15s}
 #hk-bang .hk-kho-nut:hover{filter:brightness(.92);text-decoration:underline}
+#hop-hd{position:fixed;inset:0;background:rgba(17,24,39,.4);display:none;align-items:center;justify-content:center;z-index:25}
+#hop-hd .noi{background:#fff;border-radius:14px;width:min(1080px,96vw);max-height:92vh;display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.28)}
+#hop-hd h2{margin:0;padding:12px 18px;font-size:16px;border-bottom:1px solid var(--vien);display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+#hop-hd .cai{display:flex;flex-wrap:wrap;gap:8px 12px;padding:9px 18px;border-bottom:1px solid var(--vien);background:#f5f7ff;font-size:13px;align-items:center}
+#hop-hd .than{overflow:auto;flex:1;padding:6px 18px 12px}
+#hop-hd .chan{padding:10px 18px;border-top:1px solid var(--vien);display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+#hd-vai{display:flex;gap:6px;flex-wrap:wrap;padding:8px 18px;border-bottom:1px solid var(--vien);font-size:12.5px;background:#faf5ff}
+#hd-vai .the,#khoa-vai .the{padding:3px 9px;border-radius:99px;background:#fff;border:1px solid #ddd6fe}
+#hd-bang{border-collapse:collapse;width:100%;font-size:13px}
+#hd-bang th{position:sticky;top:0;background:#f3f4f6;text-align:left;padding:7px 8px;border-bottom:1px solid var(--vien);z-index:1}
+#hd-bang td{padding:5px 8px;border-bottom:1px solid #eef0f3;vertical-align:middle;text-align:left}
+#hd-bang tr.bo-chon td:not(:first-child){opacity:.5}
+#hd-bang tr.dau-chuong td{background:#eef2ff;font-weight:600;color:#3730a3}
+#hd-bang input[type=number]{width:54px;padding:3px 5px;border:1px solid var(--vien);border-radius:6px;text-align:center;font:inherit}
+#hd-bang select{padding:3px 4px;font:inherit;font-size:12.5px}
+#hd-bang .it{color:#b45309;font-weight:600}#hd-bang .khong{color:#b91c1c;font-weight:600}
+#khoa-vai table select{font:inherit;padding:3px 4px}
 #hop-hk-ai{position:fixed;inset:0;background:rgba(17,24,39,.4);display:none;align-items:center;justify-content:center;z-index:25}
 #hop-hk-ai .noi{background:#fff;border-radius:14px;width:min(1020px,96vw);max-height:90vh;display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.28)}
 #hop-hk-ai h2{margin:0;padding:12px 18px;font-size:16px;border-bottom:1px solid var(--vien);display:flex;gap:10px;align-items:center;flex-wrap:wrap}
@@ -391,6 +408,7 @@ tr.gop-h td{background:#dbeafe;text-align:left;font-weight:700;padding:8px 12px;
   <button id="nut-phieu" title="Phiếu bài học / chuyên đề / ôn tập chương: kiến thức trọng tâm, luyện tập, bài tập về nhà — tự lấy câu theo dạng">Phiếu bài học</button>
   <button id="nut-nhanh" class="chinh" title="Chọn lớp → chương → bài, chế độ Tìm hiểu bài / Chuẩn: tự lấy câu ngẫu nhiên theo mức độ, tạo một lần bài giảng HTML online, bài kiểm tra online theo lớp, PDF đề + lời giải, đáp án Excel">⚡ Tạo nhanh theo bài</button>
   <button id="nut-thi" title="Đề thi trực tuyến đã đăng: link, mã QR, mở lời giải, đóng đề">🌐 Thi trực tuyến</button>
+  <button id="nut-hd" title="Chọn lớp → chương → bài → dạng bất kì; Gemini soạn, DeepSeek giải lại, ChatGPT phản biện, Claude biên tập — câu qua hội đồng mới nhập kho">🧑‍⚖️ Hội đồng AI sinh câu</button>
   <button id="nut-on-thi" title="Ma trận đề ôn thi học kì 12–4–6: lấy câu từ ngân hàng hoặc sinh prompt cho AI tạo đề">Ôn thi học kì</button>
   <button id="nut-lac" title="Tìm câu có nội dung không khớp bài/dạng đang gắn; chuyển sang đúng dạng hoặc xoá">Câu lạc bài</button>
   <button id="nut-trung" title="Dò câu trùng / gần giống trong ngân hàng và xoá bản thừa">Câu trùng</button>
@@ -637,7 +655,8 @@ tr.gop-h td{background:#dbeafe;text-align:left;font-weight:700;padding:8px 12px;
   </div>
   <div class="chan">
     <span id="hkai-tt" style="color:#475569;font-size:13px"></span>
-    <button id="hkai-chay" class="chinh" style="margin-left:auto;background:#7c3aed;border-color:#7c3aed">⚡ Bắt đầu AI sinh &amp; nhập ngân hàng</button>
+    <label class="hop" style="margin-left:auto" title="Câu AI soạn được AI khác giải lại (đề đã xoá đáp án), phản biện sư phạm, biên tập; câu lệch đáp án bị sửa hoặc loại trước khi nhập kho"><input type="checkbox" id="hkai-hd" checked> 🧑‍⚖️ Hội đồng AI phản biện chéo</label>
+    <button id="hkai-chay" class="chinh" style="background:#7c3aed;border-color:#7c3aed">⚡ Bắt đầu AI sinh &amp; nhập ngân hàng</button>
     <button id="hkai-dong">Đóng</button>
   </div>
 </div></div>
@@ -689,6 +708,7 @@ tr.gop-h td{background:#dbeafe;text-align:left;font-weight:700;padding:8px 12px;
             <option value="python_ai">🐍 Python trước, dạng còn lại 🤖 AI</option>
             <option value="ai">🤖 AI tự động (Gemini / DeepSeek / … — nhiều khoá, tự đổi khoá)</option></select>
           <button id="ph-ts-chay" class="chinh" title="Rút ví dụ mẫu trong kho → sinh câu tương tự → nhập ngân hàng → in phiếu riêng theo mẫu">⚡ Tự sinh &amp; in phiếu theo mẫu</button>
+          <label class="hop" id="ph-ts-hd-o" style="display:none" title="Câu AI soạn được AI khác giải lại, phản biện, biên tập trước khi nhập kho (chậm hơn, chắc hơn)"><input type="checkbox" id="ph-ts-hd" checked> 🧑‍⚖️ Hội đồng phản biện</label>
           <a href="#" id="ph-ts-khoa" title="Khoá API cho cách AI tự động (lưu trên máy này)">⚙ Khoá AI…</a>
           <span class="nho" style="width:100%">hoặc chép – dán thủ công:
           <button id="ph-tt-prompt" title="Chọn ví dụ mẫu cho từng dạng, soạn prompt để AI viết câu tương tự theo đúng mẫu">📝 Prompt AI soạn câu tương tự theo mẫu…</button></span></span>
@@ -721,10 +741,30 @@ tr.gop-h td{background:#dbeafe;text-align:left;font-weight:700;padding:8px 12px;
   </div>
   <div class="chan"><span id="ph-trang-thai" class="nho"></span><button id="ph-thieu" style="margin-left:auto" title="Kiểm tra ngân hàng đủ câu cho phiếu này chưa; thiếu thì soạn prompt cho AI sinh câu, rồi nhập vào ngân hàng">Kiểm tra kho / Prompt AI soạn câu…</button><button id="ph-tao" class="chinh">Tạo phiếu</button><button id="ph-dong-hop">Đóng</button></div>
 </div></div>
+<div id="hop-hd"><div class="noi">
+  <h2>🧑‍⚖️ Hội đồng AI sinh câu — mọi lớp, mọi bài, mọi dạng
+    <span style="margin-left:auto;font-size:13px;font-weight:400"><a href="#" id="hd-khoa" style="font-weight:600">⚙ Khoá AI &amp; phân vai…</a></span></h2>
+  <div id="hd-vai"></div>
+  <div class="cai">
+    <label>Lớp <select id="hd-lop" style="width:auto"></select></label>
+    <label>Chương <select id="hd-chuong" style="width:auto;max-width:300px"></select></label>
+    <input id="hd-tim" type="search" placeholder="Tìm bài / dạng…" style="width:170px">
+    <label class="hop"><input type="checkbox" id="hd-it"> chỉ dạng ít câu (&lt; <input type="number" id="hd-it-n" min="1" max="50" value="5" style="width:44px">)</label>
+    <span style="margin-left:auto;display:inline-flex;gap:6px;align-items:center;flex-wrap:wrap">
+      Dòng đã chọn: <select id="hd-loai-c" style="width:auto"><option>TN</option><option value="DS">Đúng/Sai</option><option>TLN</option><option value="TL">Tự luận</option></select>
+      <select id="hd-muc-c" style="width:auto"><option value="NB">Nhận biết</option><option value="TH" selected>Thông hiểu</option><option value="VD">Vận dụng</option><option value="VDC">Vận dụng cao</option></select>
+      <input type="number" id="hd-so-c" min="1" max="15" value="3" style="width:50px"> câu <button id="hd-ap">Áp dụng</button></span>
+  </div>
+  <div class="than"><table id="hd-bang"><thead><tr><th style="width:34px"><input type="checkbox" id="hd-tat-ca" title="Chọn / bỏ mọi dòng đang hiện"></th>
+    <th>Bài · Dạng</th><th style="width:120px">Đang có trong kho</th><th style="width:96px">Loại</th><th style="width:118px">Mức</th><th style="width:70px">Số câu</th></tr></thead><tbody></tbody></table></div>
+  <div class="chan"><span id="hd-tt" class="nho"></span>
+    <button id="hd-chay" class="chinh" style="margin-left:auto;background:#7c3aed;border-color:#7c3aed">🧑‍⚖️ Hội đồng soạn &amp; duyệt → nhập kho</button><button id="hd-dong">Đóng</button></div>
+</div></div>
 <div id="hop-khoa"><div class="noi">
   <h2>⚙ Khoá API AI — nhiều khoá, tự nhận dạng, hết lượt tự đổi khoá</h2>
   <div class="than">
     <div id="khoa-ds"></div>
+    <div id="khoa-vai"></div>
     <label><b>Dán khoá</b> — mỗi dòng một khoá. App tự nhận: <code>AIza…</code> = Gemini · <code>sk-…</code> = DeepSeek · <code>sk-ant-…</code> = Claude · <code>sk-proj-…</code> = OpenAI.
       Muốn chọn mô hình: <code>gemini@gemini-3.5-flash:AIza…</code>, <code>deepseek@deepseek-reasoner:sk-…</code>.
       <textarea id="khoa-van" placeholder="AIzaSy…&#10;sk-…&#10;AIzaSy… (khoá Gemini thứ hai)"></textarea></label>
@@ -1840,7 +1880,7 @@ $("#hkai-chay").onclick=async()=>{
   const b=$("#hkai-chay");b.disabled=true;b.textContent="Đang gửi AI…";
   try{
     const muc_tieu=chon.map(x=>({loai:x.r.loai,muc:x.r.muc,bai:x.r.bai,chu_de:x.r.chu_de,ngu_canh:x.r.ngu_canh||"",mau:x.r.mau||"",so_sinh:x.so_sinh}));
-    const r0=await api("/api/hk-sinh-ai",{lop:HK_LOP,muc_tieu});
+    const r0=await api("/api/hk-sinh-ai",{lop:HK_LOP,muc_tieu,hoi_dong:$("#hkai-hd").checked});
     if(!r0.ok){hopThoai("Chưa sinh được câu",r0.nhat_ky||r0.loi||"");return}
     $("#hop-hk-ai").style.display="none";
     hopThoai(`⚡ Đang AI sinh câu bổ sung Lớp ${HK_LOP}… (tự kiểm tra, biên dịch thử & nhập kho)`,"Đang kết nối khoá AI…");
@@ -2210,10 +2250,126 @@ $("#ph-tt-prompt").onclick=async()=>{
        ["Dán kết quả AI → nhập kho & in phiếu…",()=>{$("#hop-thoai").style.display="none";moTT()}]]);}
   finally{b.disabled=false}
 };
-function veKhoa(r){$("#khoa-ds").innerHTML=r.ds.length?`<b>Đang có ${r.ds.length} khoá</b> (dùng theo thứ tự):<table><tr><th>#</th><th>Hãng</th><th>Khoá</th><th>Mô hình</th></tr>`+
+function veKhoa(r){veVai(r);$("#khoa-ds").innerHTML=r.ds.length?`<b>Đang có ${r.ds.length} khoá</b> (dùng theo thứ tự):<table><tr><th>#</th><th>Hãng</th><th>Khoá</th><th>Mô hình</th></tr>`+
   r.ds.map((k,i)=>`<tr><td>${i+1}</td><td>${esc(k.nha)}</td><td><code>${esc(k.khoa)}</code></td><td>${esc(k.mo_hinh||"mặc định")}</td></tr>`).join("")+"</table>":"<i>Chưa có khoá nào.</i>"}
+// ---- Phân vai Hội đồng AI (lưu trong ai_khoa.json, mục "vai")
+function veVai(r){
+  const o=$("#khoa-vai"); if(!o)return;
+  if(!r.vai||!r.vai.length){o.innerHTML="";return}
+  const chon=r.vai_chon||{};
+  o.innerHTML=`<b>🧑‍⚖️ Phân vai Hội đồng AI</b> <span class="nho">— mặc định theo sở trường; thiếu hãng nào thì tự dồn vai, người giải luôn cố khác người soạn</span>
+  <table><tr><th>Vai</th><th>Hãng</th><th>Vì sao</th></tr>`+r.vai.map(v=>`<tr><td><b>${esc(v.ten)}</b></td>
+    <td><select data-vai="${v.vai}"><option value="">Tự động (${esc(v.ten_nha)})</option>${(r.co_nha||[]).map(n=>`<option value="${n.nha}" ${chon[v.vai]===n.nha?"selected":""}>${esc(n.ten)}</option>`).join("")}</select></td>
+    <td class="nho">${esc(v.ly_do)}</td></tr>`).join("")+`</table><button id="khoa-tu-vai" style="margin-top:6px">↺ Tự phân vai theo sở trường</button>`;
+  const luu=async vai=>{const r2=await api("/api/khoa-ai",{vai});veKhoa(r2);veVaiHD(r2)};
+  o.querySelectorAll("select[data-vai]").forEach(s=>s.onchange=()=>{const v={};o.querySelectorAll("select[data-vai]").forEach(x=>{if(x.value)v[x.dataset.vai]=x.value});luu(v)});
+  $("#khoa-tu-vai").onclick=()=>luu({});
+}
+$("#ph-ts-cach").addEventListener("change",()=>{$("#ph-ts-hd-o").style.display=$("#ph-ts-cach").value==="python"?"none":""});
 $("#ph-ts-khoa").onclick=async e=>{e.preventDefault();$("#khoa-van").value="";$("#khoa-thu").textContent="";veKhoa(await api("/api/khoa-ai",{}));$("#hop-khoa").style.display="flex"};
-$("#khoa-dong").onclick=()=>{$("#hop-khoa").style.display="none";if($("#hop-hk-ai").style.display==="flex")capNhatKhoaHK()};
+$("#khoa-dong").onclick=()=>{$("#hop-khoa").style.display="none";if($("#hop-hk-ai").style.display==="flex")capNhatKhoaHK();
+  if($("#hop-hd").style.display==="flex")api("/api/khoa-ai",{}).then(veVaiHD)};
+// ---------------- HỘI ĐỒNG AI SINH CÂU (mọi lớp / chương / bài / dạng)
+let HD={lop:null,chon:{}};          // chon[k] = {loai, muc, so}
+const HD_MUC={NB:0,TH:1,VD:2,VDC:3};
+function veVaiHD(r){
+  const o=$("#hd-vai");
+  if(!r||!r.co_khoa){o.innerHTML=`<span style="color:#b91c1c">⚠ Chưa có khoá AI — bấm <b>⚙ Khoá AI &amp; phân vai…</b> để dán khoá Gemini / DeepSeek / ChatGPT / Claude.</span>`;return}
+  const icon={soan:"✍",giai:"🔎",phan_bien:"🧑‍🏫",bien_tap:"✅"};
+  o.innerHTML=r.vai.map(v=>`<span class="the" title="${esc(v.ly_do)}">${icon[v.vai]||""} ${esc(v.ten)}: <b>${esc(v.ten_nha)}</b></span>`).join("")+
+    (new Set(r.vai.map(v=>v.nha)).size<2?`<span style="color:#b45309">⚠ Mới có khoá một hãng — nên thêm hãng khác để phản biện chéo thật sự.</span>`:"");
+}
+const hdLoaiMacDinh=lop=>lop<=5?"TL":"TN";
+function hdDangCuaLop(){return DL.dang.filter(d=>d.lop===HD.lop)}
+function hdChuongKey(d){return d.lop<=9?`${d.k[0]}${d.k[1]}${d.k[2]}`:d.k.slice(0,3)}
+function veHD(){
+  const ds=hdDangCuaLop(), ch=$("#hd-chuong").value, tim=$("#hd-tim").value.trim().toLowerCase(), it=$("#hd-it").checked, itN=+$("#hd-it-n").value||5;
+  let h="", cu="", hien=0, chonSo=0, tong=0;
+  for(const d of ds){
+    const tongKho=Object.values(d.kho).reduce((a,x)=>a+x.reduce((p,q)=>p+q,0),0);
+    const c=HD.chon[d.k];
+    if(c){chonSo++;tong+=c.so}
+    if(ch&&hdChuongKey(d)!==ch)continue;
+    if(tim&&!(`${d.ten_bai} ${d.ten_dang} ${d.k}`.toLowerCase().includes(tim)))continue;
+    if(it&&tongKho>=itN)continue;
+    hien++;
+    const kc=hdChuongKey(d);
+    if(kc!==cu){cu=kc;h+=`<tr class="dau-chuong"><td></td><td colspan="5">${esc(d.ten_chuong)}</td></tr>`}
+    const x=c||{loai:hdLoaiMacDinh(d.lop),muc:"TH",so:3};
+    const theoLoai=(d.kho[x.loai]||[0,0,0,0]), theoMuc=theoLoai[HD_MUC[x.muc]]||0;
+    h+=`<tr data-k="${d.k}" class="${c?"":"bo-chon"}"><td><input type="checkbox" class="hd-cb" ${c?"checked":""}></td>
+      <td><div>${esc(d.ten_bai)}</div><div class="nho">${esc(d.k)} · ${esc(d.ten_dang)}</div></td>
+      <td><span class="${tongKho===0?"khong":tongKho<itN?"it":""}">${tongKho} câu</span><div class="nho">${x.loai} ${x.muc}: ${theoMuc}</div></td>
+      <td><select class="hd-loai"><option ${x.loai==="TN"?"selected":""}>TN</option><option value="DS" ${x.loai==="DS"?"selected":""}>Đúng/Sai</option><option ${x.loai==="TLN"?"selected":""}>TLN</option><option value="TL" ${x.loai==="TL"?"selected":""}>Tự luận</option></select></td>
+      <td><select class="hd-muc">${["NB","TH","VD","VDC"].map(m=>`<option value="${m}" ${x.muc===m?"selected":""}>${{NB:"Nhận biết",TH:"Thông hiểu",VD:"Vận dụng",VDC:"Vận dụng cao"}[m]}</option>`).join("")}</select></td>
+      <td><input type="number" class="hd-so" min="1" max="15" value="${x.so}"></td></tr>`;
+  }
+  $("#hd-bang tbody").innerHTML=h||`<tr><td colspan="6" class="nho" style="padding:12px">Không có dạng nào khớp bộ lọc.</td></tr>`;
+  $("#hd-tt").textContent=chonSo?`Đã chọn ${chonSo} dạng · hội đồng soạn ${tong} câu (đang hiện ${hien} dạng)`:`Đang hiện ${hien} dạng — tích chọn dạng cần sinh câu.`;
+  $("#hd-chay").disabled=!chonSo;
+}
+function hdChonLop(lop){
+  HD.lop=lop; HD.chon={};
+  const seen=new Map();
+  for(const d of hdDangCuaLop()){const k=hdChuongKey(d);if(!seen.has(k))seen.set(k,d.ten_chuong)}
+  $("#hd-chuong").innerHTML=`<option value="">Tất cả chương</option>`+[...seen].map(([k,t])=>`<option value="${k}">${esc(t)}</option>`).join("");
+  $("#hd-loai-c").value=hdLoaiMacDinh(lop);
+  veHD();
+}
+$("#nut-hd").onclick=async()=>{
+  if(!DL)await tai();
+  const lops=[...new Set(DL.dang.map(d=>d.lop))].sort((a,b)=>a-b);
+  $("#hd-lop").innerHTML=lops.map(l=>`<option value="${l}">Lớp ${l}</option>`).join("");
+  if(!lops.includes(HD.lop))HD.lop=lops.includes(10)?10:lops[0];
+  $("#hd-lop").value=HD.lop; hdChonLop(HD.lop);
+  $("#hop-hd").style.display="flex";
+  veVaiHD(await api("/api/khoa-ai",{}));
+};
+$("#hd-lop").onchange=()=>hdChonLop(+$("#hd-lop").value);
+["#hd-chuong","#hd-it","#hd-it-n"].forEach(s=>$(s).onchange=veHD);
+$("#hd-tim").oninput=veHD;
+$("#hd-dong").onclick=()=>$("#hop-hd").style.display="none";
+$("#hd-khoa").onclick=e=>{e.preventDefault();$("#khoa-van").value="";$("#khoa-thu").textContent="";api("/api/khoa-ai",{}).then(r=>{veKhoa(r);$("#hop-khoa").style.display="flex"})};
+$("#hd-bang").addEventListener("change",e=>{
+  const tr=e.target.closest("tr[data-k]"); if(!tr)return; const k=tr.dataset.k;
+  const lay=()=>({loai:tr.querySelector(".hd-loai").value,muc:tr.querySelector(".hd-muc").value,so:Math.max(1,Math.min(15,+tr.querySelector(".hd-so").value||3))});
+  if(e.target.classList.contains("hd-cb")){if(e.target.checked)HD.chon[k]=lay();else delete HD.chon[k]}
+  else{HD.chon[k]=lay()}            // đổi loại / mức / số → tự chọn dòng
+  veHD();
+});
+$("#hd-tat-ca").onchange=e=>{
+  document.querySelectorAll("#hd-bang tr[data-k]").forEach(tr=>{const k=tr.dataset.k;
+    if(e.target.checked)HD.chon[k]=HD.chon[k]||{loai:$("#hd-loai-c").value,muc:$("#hd-muc-c").value,so:Math.max(1,Math.min(15,+$("#hd-so-c").value||3))};
+    else delete HD.chon[k]});
+  veHD();
+};
+$("#hd-ap").onclick=()=>{const v={loai:$("#hd-loai-c").value,muc:$("#hd-muc-c").value,so:Math.max(1,Math.min(15,+$("#hd-so-c").value||3))};
+  const ks=Object.keys(HD.chon); if(!ks.length){alert("Tích chọn dạng trước rồi bấm Áp dụng.");return}
+  ks.forEach(k=>HD.chon[k]={...v}); veHD()};
+$("#hd-chay").onclick=async()=>{
+  const ks=Object.keys(HD.chon); if(!ks.length)return;
+  const k=await api("/api/khoa-ai",{}); veVaiHD(k);
+  if(!k.co_khoa){alert("Chưa có khoá API AI — bấm ⚙ Khoá AI & phân vai… để dán khoá.");return}
+  const theoK=Object.fromEntries(DL.dang.map(d=>[d.k,d]));
+  const muc_tieu=ks.map(x=>{const d=theoK[x], c=HD.chon[x];
+    return {lop:d.lop,loai:c.loai,muc:c.muc,so_sinh:c.so,bai:d.k,chu_de:d.ten_dang,ten_dang:d.ten_dang,ten_bai:d.ten_bai,ten_chuong:d.ten_chuong}});
+  const tong=muc_tieu.reduce((a,x)=>a+x.so_sinh,0);
+  if(tong>60&&!confirm(`Hội đồng sẽ soạn ${tong} câu (mỗi câu qua 3–4 lượt AI) — có thể mất khá lâu và tốn lượt API. Tiếp tục?`))return;
+  const b=$("#hd-chay");b.disabled=true;
+  try{
+    const r0=await api("/api/ai-hoi-dong",{lop:HD.lop,muc_tieu,nhan:`Hội đồng AI · Lớp ${HD.lop}`});
+    if(!r0.ok){hopThoai("Chưa chạy được",r0.nhat_ky||r0.loi||"");return}
+    $("#hop-hd").style.display="none";
+    hopThoai(`🧑‍⚖️ Hội đồng AI đang soạn & duyệt ${tong} câu Lớp ${HD.lop}… (chạy tự động, thầy có thể để đó)`,"Đang chuẩn bị…");
+    let s;
+    for(;;){await new Promise(t=>setTimeout(t,1500));s=await api("/api/trang-thai");
+      $("#ht-noi").textContent=s.nhat_ky||"Đang chạy…";$("#ht-noi").scrollTop=1e9;if(s.xong)break}
+    const r=s.ket_qua||{}; await tai();
+    if(!r.ok){hopThoai("Hội đồng chưa hoàn tất",r.nhat_ky||s.nhat_ky||"");return}
+    HD.chon={};
+    hopThoai(`✓ Hội đồng đã duyệt & nhập ${r.so_cau}/${r.tong_sinh} câu vào ngân hàng Lớp ${HD.lop}`,r.nhat_ky||s.nhat_ky||"");
+  }finally{b.disabled=false}
+};
 const luuKhoa=async them=>{const van=$("#khoa-van").value.trim();if(!van){alert("Dán khoá vào ô trước.");return}
   if(!them&&!confirm("Thay toàn bộ danh sách khoá cũ bằng các khoá vừa dán?"))return;
   const r=await api("/api/khoa-ai",{luu:true,them,van});$("#khoa-van").value="";veKhoa(r)};
@@ -2226,7 +2382,7 @@ $("#ph-ts-chay").onclick=async()=>{
   const cfg=phCfg(); if(!cfg)return; const so=Math.max(1,+$("#ph-tt").value||3), cach=$("#ph-ts-cach").value;
   if(cach!=="python"){const k=await api("/api/khoa-ai",{});if(!k.co_khoa){alert("Cách này cần khoá API AI — bấm ⚙ Khoá AI… trước (hoặc chọn 🐍 Python).");return}}
   const b=$("#ph-ts-chay");b.disabled=true;b.textContent="Đang tự sinh…";
-  try{const r0=await api("/api/tu-sinh",{cau_hinh:cfg,so,kieu:ttKieu(),cach,bien_dich:$("#bien_dich").checked});
+  try{const r0=await api("/api/tu-sinh",{cau_hinh:cfg,so,kieu:ttKieu(),cach,bien_dich:$("#bien_dich").checked,hoi_dong:cach!=="python"&&$("#ph-ts-hd").checked});
     if(!r0.ok){hopThoai("Chưa tự sinh được",r0.nhat_ky||r0.loi||"");return}
     hopThoai("⚡ Đang tự sinh câu tương tự theo mẫu… (chạy tự động, thầy có thể để đó)","Đang chuẩn bị…");
     let s;

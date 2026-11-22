@@ -86,7 +86,11 @@ def tu_sinh_nen(d):
                         "de": kq[k]["vd"]["_tl"]["de"], "lg": kq[k]["vd"]["_tl"]["lg"]} for k in con_lai]
                 ghi(f"🤖 AI soạn {len(mau)} mẫu (mỗi lượt một mẫu; bị ngắt / thiếu → tự hỏi tiếp; khoá hết lượt → đổi khoá):")
                 try:
-                    kb, vd_ai = ST.sinh_ai(mau, so, kieu, lop_tu_so(con_lai[0][0]), ghi)
+                    hd, xoay = None, None
+                    if d.get("hoi_dong"):
+                        import hoi_dong_ai as HD
+                        hd = HD.HoiDong(ghi=ghi); hd.gioi_thieu(); xoay = hd.xoay("soan")
+                    kb, vd_ai = ST.sinh_ai(mau, so, kieu, lop_tu_so(con_lai[0][0]), ghi, xoay=xoay, hoi_dong=hd)
                     khoi += kb; vdm.update(vd_ai)
                 except ST.HetKhoa as e:
                     if cach == "ai" and not khoi:
@@ -96,7 +100,8 @@ def tu_sinh_nen(d):
             raise RuntimeError("Chưa sinh được câu nào. Thầy thử cách khác hoặc 📝 Prompt AI (chép – dán).")
         ghi("\n📥 Nhập ngân hàng và tạo phiếu…")
         ra = nhap_tuong_tu_va_tao_phieu("\n\n".join(khoi), cfg, so, vdm, False,
-                                        "Ngân hàng tự sinh (" + {"python": "Python", "ai": "AI", "python_ai": "Python + AI"}.get(cach, cach) + ")")
+                                        "Ngân hàng tự sinh (" + {"python": "Python", "ai": "AI", "python_ai": "Python + AI"}.get(cach, cach)
+                                        + (" · Hội đồng AI" if d.get("hoi_dong") and cach != "python" else "") + ")")
         ghi(ra.get("nhat_ky", ""))
         if ra.get("ok") and d.get("bien_dich") and tim_pdflatex():
             ghi("Biên dịch PDF…")
@@ -269,12 +274,21 @@ def hk_sinh_ai_nen(d):
         if not muc_tieu:
             raise RuntimeError("Chưa chọn dòng nào để AI sinh câu.")
         id_map = tai_id_map()
-        xoay = ST.XoayKhoa(ghi=ghi)
+        hd = None
+        if d.get("hoi_dong"):                             # Hội đồng AI: vai Soạn dùng hãng được phân, rồi giải – phản biện – biên tập
+            import hoi_dong_ai as HD
+            hd = HD.HoiDong(ghi=ghi)
+            hd.gioi_thieu()
+            xoay = hd.xoay("soan")
+        else:
+            xoay = ST.XoayKhoa(ghi=ghi)
+        nhan = d.get("nhan") or f"Ôn thi HK Lớp {lop}"
         muc_map = {"NB": "N", "TH": "H", "VD": "V", "VDC": "C"}
         muc_ten_map = {"NB": "Nhận biết", "TH": "Thông hiểu", "VD": "Vận dụng", "VDC": "Vận dụng cao"}
         tat_ca = []
-        ghi(f"🤖 AI sinh câu cho Ôn thi HK Lớp {lop} ({len(muc_tieu)} mục · tổng {sum(int(x.get('so_sinh') or 1) for x in muc_tieu)} câu)…")
+        ghi(f"🤖 AI sinh câu cho {nhan} ({len(muc_tieu)} mục · tổng {sum(int(x.get('so_sinh') or 1) for x in muc_tieu)} câu)…")
         for idx, it in enumerate(muc_tieu, 1):
+            lop_i = int(it.get("lop") or lop)
             loai = it.get("loai") or "TN"
             muc_code = it.get("muc") or "TH"
             muc_ma = muc_map.get(muc_code, "H")
@@ -288,6 +302,9 @@ def hk_sinh_ai_nen(d):
                     ten_chuong = (v.get("chap_name") or "").strip()
                     ten_bai = (v.get("lesson_name") or "").strip()
                     ds_ma.append((bai.replace("?", muc_ma), (v.get("type_name") or bai).strip()))
+                elif re.fullmatch(r"\d[DHC][0-9A-Z]\?\d+-\d+", bai) and it.get("ten_dang"):   # dạng có trong mục lục SGK nhưng chưa có trong id_map
+                    ten_chuong, ten_bai = it.get("ten_chuong") or "", it.get("ten_bai") or ""
+                    ds_ma.append((bai.replace("?", muc_ma), it["ten_dang"]))
                 else:
                     for k, v in id_map.items():
                         if k == bai or k.startswith(bai + "-"):
@@ -307,7 +324,7 @@ def hk_sinh_ai_nen(d):
                 thieu = so_can - len(co)
                 if thieu <= 0:
                     break
-                p = _prompt_hk_ai(lop, it, thieu, ds_ma[:10], da_de, ten_chuong=ten_chuong, ten_bai=ten_bai)
+                p = _prompt_hk_ai(lop_i, it, thieu, ds_ma[:10], da_de, ten_chuong=ten_chuong, ten_bai=ten_bai)
                 try:
                     t, cat, k = xoay.goi(p)
                 except ST.HetKhoa as e:
@@ -315,6 +332,9 @@ def hk_sinh_ai_nen(d):
                         raise
                     ghi(f"  ⚠ {e} — giữ các câu đã sinh được.")
                     break
+                except Exception as e:                    # lỗi lạ của một lượt (mạng, JSON…) → thử lượt sau
+                    ghi(f"  ⚠ {str(e)[:120]}")
+                    continue
                 moi = 0
                 for kb in _tach_khoi_hk(t, mt_env, loai=loai):
                     dong0 = kb.split("\n", 1)[0]
@@ -328,13 +348,18 @@ def hk_sinh_ai_nen(d):
                     da_de.add(de); co.append(kb); moi += 1
                 ghi(f"    lượt {lan + 1} ({ST.TEN_NHA.get(k['nha'], k['nha'])} {ST.che(k['khoa'])}): +{moi} câu đạt kiểm tra"
                     + (" · bị ngắt → hỏi tiếp" if cat else "") + f" · có {len(co)}/{so_can}")
+            if hd and co:
+                co = hd.duyet(co, ngu_canh=f"Toán lớp {lop_i}, {ten_chuong} — {ten_bai}; chủ đề: {it.get('chu_de') or ''}; loại {loai}", muc=muc_code)
             tat_ca += co
+        if hd:
+            tk = hd.thong_ke
+            ghi(f"\n🧑‍⚖️ Hội đồng: {tk['vao']} câu soạn → {tk['dat']} đạt ngay · {tk['sua']} đã sửa · {tk['loai']} bị loại")
         if not tat_ca:
             raise RuntimeError("AI chưa sinh được câu hợp lệ nào. Thầy kiểm tra lại ⚙ Khoá AI…")
         os.makedirs(os.path.join(GOC, "ai-nhap"), exist_ok=True)
-        ten_tep = time.strftime("%Y-%m-%d_%H%M%S") + f"_hk_ai_lop{lop}.tex"
+        ten_tep = time.strftime("%Y-%m-%d_%H%M%S") + (f"_hoi_dong_ai_lop{lop}.tex" if hd else f"_hk_ai_lop{lop}.tex")
         duong_dan = os.path.join(GOC, "ai-nhap", ten_tep)
-        open(duong_dan, "w", encoding="utf-8").write(f"% AI tự sinh cho Ôn thi HK Lớp {lop}\n\n" + "\n\n".join(tat_ca) + "\n")
+        open(duong_dan, "w", encoding="utf-8").write(f"% AI tự sinh cho {nhan}\n\n" + "\n\n".join(tat_ca) + "\n")
         ghi(f"\n📥 Biên dịch thử & nhập {len(tat_ca)} câu vào ngân hàng…")
         so_cau = nhap_cau.nhap([duong_dan], thu=False, in_ra=ghi)
         os.makedirs(os.path.join(GOC, "ai-nhap", "da-nhap"), exist_ok=True)
@@ -1064,6 +1089,12 @@ class XuLy(BaseHTTPRequestHandler):
                 ra = {"ok": True, "ds": [{"nha": ST.TEN_NHA.get(k["nha"], k["nha"]), "khoa": ST.che(k["khoa"]), "mo_hinh": k.get("mo_hinh") or ""}
                                          for k in ST.doc_khoa()["ds"]]}
                 ra["co_khoa"] = bool(ra["ds"])
+                import hoi_dong_ai as HD                     # phân vai Hội đồng AI
+                if isinstance(d.get("vai"), dict):
+                    HD.luu_vai(d["vai"])
+                ra["vai"] = HD.mo_ta_vai(HD.phan_vai())
+                ra["vai_chon"] = ST.doc_khoa().get("vai") or {}
+                ra["co_nha"] = [{"nha": n, "ten": ST.TEN_NHA.get(n, n)} for n in HD.cac_nha()]
                 if d.get("thu"):
                     ra["thu"] = [{"nha": a, "khoa": b, "ok": c, "ghi": e} for a, b, c, e in ST.kiem_tra_khoa()]
                 return self.gui(200, ra)
@@ -1073,7 +1104,10 @@ class XuLy(BaseHTTPRequestHandler):
                 cong_viec.update(dang_chay=True, xong=False, nhat_ky="", ket_qua=None)
                 threading.Thread(target=tu_sinh_nen, args=(dict(d),), daemon=True).start()
                 return self.gui(200, {"ok": True, "nen": True})
-            if u.path == "/api/hk-sinh-ai":           # AI sinh câu thiếu/ít trong Ôn thi HK (dùng chung khoá AI) → biên dịch thử → nhập kho
+            if u.path in ("/api/hk-sinh-ai", "/api/ai-hoi-dong"):   # AI sinh câu (Ôn thi HK / Hội đồng AI mọi mục) → phản biện chéo → biên dịch thử → nhập kho
+                if u.path == "/api/ai-hoi-dong":
+                    d["hoi_dong"] = True
+                    d.setdefault("nhan", "Hội đồng AI")
                 if cong_viec.get("dang_chay"):
                     return self.gui(200, {"ok": False, "nhat_ky": "Đang có việc khác chạy (biên dịch / đăng web…) — thầy đợi xong rồi bấm lại."})
                 cong_viec.update(dang_chay=True, xong=False, nhat_ky="", ket_qua=None)
