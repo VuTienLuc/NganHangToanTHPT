@@ -677,6 +677,18 @@ Tạo phiếu như cũ (📄 Phiếu bài học, kiểu trắc nghiệm hoặc t
 - Bài giảng bất kỳ cũng cho HS xem được: 🌐 Thi trực tuyến → thẻ Bài giảng → nút **Cho HS xem / Thôi cho HS**.
 - Phiếu tạo từ bản cũ (trước khi có tính năng) cần tạo lại phiếu để có dữ liệu web.
 
+## Phiếu bài học — 3 mẫu trình bày PDF
+Trong hộp **Phiếu bài học** có mục **Mẫu trình bày PDF**. Nội dung phiếu giữ nguyên, chỉ thay giao diện. App nhớ mẫu thầy chọn trên máy này.
+
+| Mẫu | Dáng | Hợp với |
+|---|---|---|
+| **Hiện đại — xanh dương** (mặc định) | Thanh màu bên trái đầu phiếu, tiêu đề chữ không chân, mỗi mục có biểu tượng tròn, nhãn DẠNG bo góc, dòng kẻ làm bài liền nét nhạt | In màu, chiếu màn hình |
+| **Tươi sáng — tím cam** | Băng tiêu đề tím có chấm màu, mục dạng thẻ có biểu tượng (💡 kiến thức, ✏ luyện tập, 🏠 về nhà), số dạng trong vòng tròn cam | Học sinh THCS, phiếu dán vở |
+| **Tối giản — in đen trắng** | Chữ Palatino, kẻ đôi thanh lịch, gần như không tô nền, nhãn mức đóng khung | Photo đen trắng, tiết kiệm mực |
+| Cổ điển (như trước) | Mẫu cũ | — |
+
+Mẫu áp dụng cho cả phiếu trắc nghiệm lẫn phiếu tự luận, và cả file lời giải. Riêng *Luyện mỗi ngày* và Beamer vẫn giữ giao diện riêng. Muốn sửa màu hay kiểu dáng thì sửa `scripts/mau_phieu.py`.
+
 ## Phiếu bài học — tắt lí thuyết các dạng toán
 Ở mục *I. Kiến thức trọng tâm trên phiếu*, tích **Tắt lí thuyết các dạng toán**: phiếu in chỉ còn **kiến thức trọng tâm + đề bài**.
 - Ô kiến thức: chỉ in phần chung. Phương pháp từng dạng (đoạn `%% DANG <mã>` hoặc `\textbf{Dạng n…}`) được bỏ khỏi bản in nhưng vẫn lưu và vẫn dùng cho Beamer.

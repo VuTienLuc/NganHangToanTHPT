@@ -227,6 +227,12 @@ footer .gian{flex:1}
 #hk-bang .hk-kho{font-size:11.5px;margin-top:3px;display:inline-block;padding:1px 6px;border-radius:99px}
 #hk-bang .hk-kho-nut{cursor:pointer;transition:filter .15s}
 #hk-bang .hk-kho-nut:hover{filter:brightness(.92);text-decoration:underline}
+.mtb-ds{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-top:6px}
+.mtb{border:1.5px solid var(--vien);border-radius:10px;padding:8px 10px;cursor:pointer;display:flex;flex-direction:column;gap:3px;font-size:12.5px;background:#fff}
+.mtb input{display:none}.mtb small{color:var(--phu);line-height:1.35}
+.mtb:has(input:checked){border-color:var(--nhan);box-shadow:0 0 0 3px var(--nhan-nhat)}
+.mtb-mau{display:flex;gap:4px}.mtb-mau i{width:22px;height:12px;border-radius:4px;border:1px solid rgba(0,0,0,.12)}
+@media (max-width:900px){.mtb-ds{grid-template-columns:repeat(2,minmax(0,1fr))}}
 #hop-xb{position:fixed;inset:0;background:rgba(17,24,39,.4);display:none;align-items:center;justify-content:center;z-index:16}
 #hop-xb .noi{background:#fff;border-radius:14px;width:min(780px,95vw);max-height:90vh;display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.3)}
 #hop-xb h2{margin:0;padding:12px 18px;font-size:16px;border-bottom:1px solid var(--vien)}
@@ -818,6 +824,7 @@ tr.gop-h td{background:#dbeafe;text-align:left;font-weight:700;padding:8px 12px;
         <textarea id="ph-kt" placeholder="\begin{itemize}&#10;\item ...&#10;\end{itemize}"></textarea></label>
       <div style="display:flex;gap:8px;flex-wrap:wrap"><button id="ph-prompt-kt">Prompt AI soạn kiến thức trọng tâm…</button><button id="ph-kho-kt">Kho kiến thức…</button><button id="ph-nhap-kho">Nhập kho câu hỏi…</button></div>
       <div style="display:flex;gap:14px;flex-wrap:wrap;align-items:center"><b>In ấn</b>
+        <div class="mtb-hang" style="flex-basis:100%"><b>Mẫu trình bày PDF</b><div class="mtb-ds"><label class="mtb" data-m="hien_dai"><input type="radio" name="ph-mau" value="hien_dai" checked><span class="mtb-mau"><i style="background:#1e40af"></i><i style="background:#0d9488"></i><i style="background:#eff6ff"></i></span><b>Hiện đại — xanh dương</b><small>Thanh màu bên trái, tiêu đề chữ không chân, nhãn dạng bo tròn; sáng sủa, chuyên nghiệp</small></label><label class="mtb" data-m="tuoi_sang"><input type="radio" name="ph-mau" value="tuoi_sang"><span class="mtb-mau"><i style="background:#6d28d9"></i><i style="background:#ea580c"></i><i style="background:#faf5ff"></i></span><b>Tươi sáng — tím cam</b><small>Nhiều màu, biểu tượng từng mục, số dạng trong vòng tròn; vui mắt cho học sinh THCS</small></label><label class="mtb" data-m="toi_gian"><input type="radio" name="ph-mau" value="toi_gian"><span class="mtb-mau"><i style="background:#262626"></i><i style="background:#7f1d1d"></i><i style="background:#ffffff"></i></span><b>Tối giản — in đen trắng</b><small>Chữ Palatino, kẻ đôi thanh lịch, gần như không tô nền; photo đen trắng vẫn đẹp, tiết kiệm mực</small></label><label class="mtb" data-m="co_dien"><input type="radio" name="ph-mau" value="co_dien"><span class="mtb-mau"><i style="background:#15438c"></i><i style="background:#00796b"></i><i style="background:#f3f6fb"></i></span><b>Cổ điển (như trước)</b><small>Mẫu cũ: khung xanh đậm, ô dạng màu xanh lục</small></label></div></div>
         <label class="hop">Cỡ chữ <select id="ph-co" style="width:auto"><option value="10">10</option><option value="11" selected>11</option><option value="12">12</option></select></label>
         <label class="hop"><input type="checkbox" id="ph-hai-cot" checked> 2 cột (tiết kiệm giấy)</label>
         <label class="hop"><input type="checkbox" id="ph-beamer" checked> Beamer trình chiếu (phương pháp từng dạng, câu 1 ví dụ, câu 2 HS tự làm)</label></div>
@@ -2597,6 +2604,10 @@ $("#tt-nhap").onclick=async()=>{
     if(r.bien_dich) theoDoi(r.nhat_ky);}
   finally{b.disabled=false}
 };
+// mẫu trình bày phiếu: nhớ lựa chọn trên máy này
+(()=>{let m=null;try{m=localStorage.getItem("ph_mau")}catch(_){}
+  const r=m&&document.querySelector(`input[name="ph-mau"][value="${m}"]`); if(r)r.checked=true;
+  document.querySelectorAll('input[name="ph-mau"]').forEach(x=>x.onchange=()=>{try{localStorage.setItem("ph_mau",x.value)}catch(_){}})})();
 $("#ph-nc").onchange=e=>{$("#ph-vd").disabled=$("#ph-vdc").disabled=!e.target.checked};
 function phCfg(){
   const bai=phBaiChon(); if(!bai.length){alert("Chọn ít nhất một bài.");return null}
@@ -2605,7 +2616,7 @@ function phCfg(){
   const cfg={pham_vi:loai==="on_tap_chuong"?[$("#ph-chuong").value]:bai,dang,loai_phieu:loai,ten:$("#ph-ten").value.trim(),thoi_luong:tl,
     so_cau:{TN:+$("#ph-tn").value||0,DS:+$("#ph-ds").value||0,TLN:+$("#ph-tln").value||0},kien_thuc:$("#ph-kt").value,
     co_chu:+$("#ph-co").value,hai_cot:$("#ph-hai-cot").checked,beamer:$("#ph-beamer").checked,kieu_cau:document.querySelector('input[name="ph-kieu"]:checked').value,so_tuong_tu:+$("#ph-tt").value,bo_cuc_tl:$("#ph-bo-cuc").value,so_dang_ngay:+$("#ph-ln-n").value,theo_mau:$("#ph-tt-kieu").value!=="kho",
-    so_van_dung:$("#ph-tt-kieu").value!=="kho"?0:+$("#ph-vdtl").value,so_dong_lam_bai:+$("#ph-dong").value,nang_cao:$("#ph-nc").checked?{V:+$("#ph-vd").value||0,C:+$("#ph-vdc").value||0}:{},kien_thuc_in:document.querySelector('input[name="ph-kt-in"]:checked').value,an_ly_thuyet_dang:$("#ph-an-pp").checked,giao_vien:$("#giao_vien").value.trim(),truong:$("#truong").value.trim(),
+    so_van_dung:$("#ph-tt-kieu").value!=="kho"?0:+$("#ph-vdtl").value,so_dong_lam_bai:+$("#ph-dong").value,nang_cao:$("#ph-nc").checked?{V:+$("#ph-vd").value||0,C:+$("#ph-vdc").value||0}:{},kien_thuc_in:document.querySelector('input[name="ph-kt-in"]:checked').value,mau_trinh_bay:(document.querySelector('input[name="ph-mau"]:checked')||{}).value,an_ly_thuyet_dang:$("#ph-an-pp").checked,giao_vien:$("#giao_vien").value.trim(),truong:$("#truong").value.trim(),
     nam_hoc:$("#nam_hoc").value.trim(),so_gd:$("#so_gd").value.trim()};
   return cfg;
 }
