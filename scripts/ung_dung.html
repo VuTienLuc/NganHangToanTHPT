@@ -1033,6 +1033,7 @@ tr.gop-h td{background:#dbeafe;text-align:left;font-weight:700;padding:8px 12px;
         <label style="flex-direction:row;align-items:center;gap:6px;font-weight:400"><input type="checkbox" id="dthi-bg-html" checked> Trình chiếu HTML</label>
         <label style="flex-direction:row;align-items:center;gap:6px;font-weight:400"><input type="checkbox" id="dthi-bg-pdf"> PDF Beamer sửa bài <span style="color:#888;font-size:11.5px">(biên dịch thêm 1–3 phút)</span></label>
         <label style="flex-direction:row;align-items:center;gap:6px;font-weight:400">Mục lục <select id="dthi-bg-lop"><option value="6">Toán 6</option><option value="7">Toán 7</option><option value="8">Toán 8</option><option value="9">Toán 9</option><option value="10">Toán 10</option><option value="11">Toán 11</option><option value="12">Toán 12</option></select></label></div></div>
+    <label style="flex-direction:row;align-items:center;gap:8px;font-weight:400;background:#eff6ff;border-radius:8px;padding:7px 10px" title="Sau khi đăng, máy xuất thêm bộ đề PDF (đề + lời giải + đáp án Excel) đúng các câu, đúng thứ tự và mã đề như trên mạng, lưu vào thư mục đề mặc định để in cho học sinh làm trên lớp"><input type="checkbox" class="de-in-cb" id="dthi-de-in" checked> <b>🖨 Kèm bộ đề PDF in trên lớp</b> — đúng các câu, cùng mã đề, lưu vào Thư mục đề</label>
     <div style="color:#555;font-size:12px">Học sinh phải <b>đăng nhập</b> bằng tài khoản thầy cấp (thẻ 👥 Tài khoản); lớp, STT, họ tên tự điền theo tài khoản.</div>
   </div>
   <div class="chan"><span style="font-size:12px;color:#666">Cần đúng 12 TN · 4 Đ/S · 6 TLN.</span>
@@ -1053,6 +1054,7 @@ tr.gop-h td{background:#dbeafe;text-align:left;font-weight:700;padding:8px 12px;
       <label class="o" style="flex:1">Đường dẫn <input id="bg-slug"></label></div>
     <div id="bg-link" style="color:#1e3a8a;font-size:12.5px"></div>
     <label><input type="checkbox" id="bg-ghi-de"> Thay bản cũ ở đúng link này (học sinh giữ link cũ)</label>
+    <label id="bg-de-in-o" title="Chỉ khi đăng từ bộ câu ra đề: máy xuất thêm đề PDF + lời giải đúng các câu này, lưu vào Thư mục đề để in cho học sinh làm trên lớp"><input type="checkbox" class="de-in-cb" id="bg-de-in" checked> 🖨 Kèm đề PDF in trên lớp (đúng các câu của bài giảng)</label>
   </div>
   <div class="chan"><span id="bg-tt" style="font-size:12px;color:#666"></span><button id="bg-ok" class="chinh" style="margin-left:auto">Đăng bài giảng</button><button id="bg-dong">Đóng</button></div>
 </div></div>
@@ -3130,10 +3132,12 @@ $("#dthi-ok").onclick=async()=>{
     n.textContent="Đang đăng lên Cloudflare…";
     let chinh=ra[0];
     if(tat&&$("#dthi-chung").checked){const g=await api("/api/thi/nhom",{slug:goc,ten,con:ra,lop_giao:$("#dthi-lop").value,so_luot:+$("#dthi-luot").value,dang_ngay:false}); if(!g.ok) throw Error(g.loi); chinh=g.slug}
+    const deIn=$("#dthi-de-in").checked?{bo:(DTHI.dao?[XT.bo[0]]:cac.map(i=>boCua(i))).map(b=>Object.fromEntries(["TN","DS","TLN"].map(l=>[l,(b[l]||[]).filter(c=>!c.mat).map(c=>c.ma)]))),
+      mt:XT.mt,ten,slug:goc,bat_dau:DTHI.dao?DTHI.bat_dau:DTHI.bat_dau+cac[0]}:null;
     if($("#dthi-bg-pdf").checked){
       const boPdf=(DTHI.dao?[XT.bo[0]]:cac.map(i=>boCua(i))).map(b=>Object.fromEntries(["TN","DS","TLN"].map(l=>[l,(b[l]||[]).filter(c=>!c.mat).map(c=>c.ma)])));
-      const k=await api("/api/thi/bg-pdf",{mt:XT.mt,bo:boPdf,bat_dau:DTHI.dao?DTHI.bat_dau:DTHI.bat_dau+cac[0],slug:goc,ten,lop:+$("#dthi-bg-lop").value}); if(!k.ok) throw Error(k.loi);
-    } else {const k=await api("/api/thi/dang-lai",{}); if(!k.ok) throw Error(k.loi)}
+      const k=await api("/api/thi/bg-pdf",{mt:XT.mt,bo:boPdf,bat_dau:DTHI.dao?DTHI.bat_dau:DTHI.bat_dau+cac[0],slug:goc,ten,lop:+$("#dthi-bg-lop").value,de_in:deIn}); if(!k.ok) throw Error(k.loi);
+    } else {const k=await api("/api/thi/dang-lai",{de_in:deIn}); if(!k.ok) throw Error(k.loi)}
     $("#hop-dthi").style.display="none"; $("#hop-xt").style.display="none";
     await moThi(); theoDoiThi(chinh,ten,ra.length>1?ra:null);
   }catch(e){alert("Chưa tạo được link: "+e.message)}
@@ -3162,7 +3166,7 @@ async function theoDoiThi(slug,ten,cacMa){
       <div style="margin-top:8px;display:flex;gap:6px"><button onclick="navigator.clipboard.writeText('${url}');this.textContent='Đã chép'">Chép link</button>
       <button onclick="window.open('https://api.qrserver.com/v1/create-qr-code/?size=900x900&margin=20&data=${encodeURIComponent(url)}')">QR khổ lớn (chiếu lớp)</button></div>
       <div style="color:#666;margin-top:6px;font-size:12px">Link mới có thể cần 1–2 phút để chạy ở mọi nơi.</div>
-      ${cacMa?`<div style="margin-top:8px;font-size:12.5px">${slug!==cacMa[0]?"<b>Link chung</b> ở trên chia ngẫu nhiên mã đề. ":""}Link từng mã:<br>${cacMa.map(x=>`<a href="${r.goc}/${x}/" target="_blank" style="font-size:12.5px;font-weight:400">${r.goc}/${x}/</a>`).join("<br>")}</div>`:""}</div></div>`;}
+      ${cacMa?`<div style="margin-top:8px;font-size:12.5px">${slug!==cacMa[0]?"<b>Link chung</b> ở trên chia ngẫu nhiên mã đề. ":""}Link từng mã:<br>${cacMa.map(x=>`<a href="${r.goc}/${x}/" target="_blank" style="font-size:12.5px;font-weight:400">${r.goc}/${x}/</a>`).join("<br>")}</div>`:""}${htmlDeIn(s)}</div></div>`;}
   else if(!s.thi_ok) $("#thi-kq").innerHTML+=`<p style="color:#b91c1c"><b>Chưa đăng xong.</b> Sửa theo nhật ký rồi bấm "Đăng lại tất cả".</p>`;
 }
 const TT_TEN={dang_mo:"Đang mở · ẩn đáp án",da_cong_bo:"Đã công bố lời giải",da_dong:"Đã đóng"};
@@ -3432,7 +3436,7 @@ function veBg(r){
 
 function doanLop(t){t=String(t||"");const m=/(?:to[aá]n|l[oớ]p|lop|L)\s*_?(1[0-2]|[6-9])\b/i.exec(t)||/\b(1[0-2])\b/.exec(t);return m?+m[1]:10}
 function veLinkBg(){const sl=boDauSlug($("#bg-slug").value)||"…";$("#bg-link").textContent=BG.goc?`Link: ${BG.goc}/bai-giang/${sl}/ · Mục lục: ${BG.goc}/toan${$("#bg-lop").value}/`:""}
-function nguonBg(){const v=document.querySelector('input[name="bg-nguon"]:checked').value;$("#bg-ud").style.display=v==="ud"?"":"none";$("#bg-may").style.display=v==="may"?"":"none";return v}
+function nguonBg(){const v=document.querySelector('input[name="bg-nguon"]:checked').value;$("#bg-de-in-o").style.display=v==="bo"?"":"none";$("#bg-ud").style.display=v==="ud"?"":"none";$("#bg-may").style.display=v==="may"?"":"none";return v}
 document.querySelectorAll('input[name="bg-nguon"]').forEach(x=>x.onchange=nguonBg);
 function veNguonBg(){const q=boDau($("#bg-loc").value||"").toLowerCase();
   $("#bg-ds").innerHTML=BG.nguon.filter(x=>!q||boDau(x.duong_dan).toLowerCase().includes(q)).map(x=>`<option value="${esc(x.duong_dan)}">${x.kieu==="pdf"?"📄":"📺"} ${esc(x.ten)} — ${esc(x.thu_muc)} · ${x.luc} · ${x.kb} KB</option>`).join("")}
@@ -3458,7 +3462,8 @@ $("#bg-dong").onclick=()=>$("#hop-bg").style.display="none";
 $("#xt-bg").onclick=()=>{const b=XT.bo[Math.min(XT.tab,XT.bo.length-1)];
   const ma=["TN","DS","TLN"].flatMap(l=>(b[l]||[]).filter(c=>!c.mat).map(c=>c.ma));
   const ten=((XT.nguon&&XT.mt.ten_ky_thi)||$("#ten_ky_thi").value.trim()||"Bài giảng");
-  moBg({ma,ten,lop:XT.nguon?(XT.nguon.lop||HK_LOP):doanLop(ten+" "+($("#mon").value||""))},null)};
+  const cs=Object.fromEntries(["TN","DS","TLN","TL"].map(l=>[l,(b[l]||[]).filter(c=>!c.mat).map(c=>c.ma)]));
+  moBg({ma,ten,cs,mt:XT.mt,lop:XT.nguon?(XT.nguon.lop||HK_LOP):doanLop(ten+" "+($("#mon").value||""))},null)};
 const docFile=(f,b64)=>new Promise((ok,loi)=>{const r=new FileReader();r.onload=()=>ok(b64?String(r.result).split(",")[1]:r.result);r.onerror=loi;b64?r.readAsDataURL(f):r.readAsText(f)});
 $("#bg-ok").onclick=async()=>{
   const n=$("#bg-ok"), v=nguonBg(), ten=$("#bg-ten").value.trim(), lop=+$("#bg-lop").value, slug=boDauSlug($("#bg-slug").value||ten);
@@ -3477,12 +3482,17 @@ $("#bg-ok").onclick=async()=>{
       if(f.size>25*1048576) throw Error("File lớn hơn 25 MB — Cloudflare không nhận.");
       const pdf=/\.pdf$/i.test(f.name); Object.assign(g,pdf?{kieu:"pdf",base64:await docFile(f,true)}:{kieu:"html",html:await docFile(f,false)},{nguon:f.name});}
     n.textContent="Đang đăng lên Cloudflare…";
+    if(v==="bo"&&BG.bo.cs&&$("#bg-de-in").checked) g.de_in={bo:[BG.bo.cs],mt:BG.bo.mt||null,ten,slug,bat_dau:+$("#ma_de_bat_dau").value||101};
     const k=await api("/api/thi/bg-dang",g); if(!k.ok) throw Error(k.loi);
     $("#hop-bg").style.display="none"; $("#hop-xt").style.display="none";
     await moThi(); theThi(true); theoDoiBg(k.url,k.muc_luc,ten);
   }catch(e){alert("Chưa đăng được: "+e.message)}
   finally{n.disabled=false;n.textContent="Đăng bài giảng"}
 };
+function htmlDeIn(s){return s&&s.de_in?`<div style="margin-top:10px;padding:8px 10px;background:#eff6ff;border-radius:8px;font-size:13px">🖨 <b>Bộ đề PDF in trên lớp</b> (đúng các câu đã đăng): <code>${esc(s.de_in)}</code>
+  <button style="margin-left:6px;padding:2px 10px" onclick='api("/api/mo",{duong_dan:${JSON.stringify(s.de_in)}})'>Mở thư mục</button></div>`:""}
+document.querySelectorAll(".de-in-cb").forEach(x=>{try{const v=localStorage.getItem("de_in_tren_lop");if(v!==null)x.checked=v==="1"}catch(_){}
+  x.addEventListener("change",()=>{try{localStorage.setItem("de_in_tren_lop",x.checked?"1":"0")}catch(_){};document.querySelectorAll(".de-in-cb").forEach(y=>y.checked=x.checked)})});
 async function theoDoiBg(url,ml,ten){
   const s=await api("/api/trang-thai");
   $("#thi-kq").innerHTML=`<pre style="white-space:pre-wrap;background:#f8fafc;border:1px solid var(--vien);border-radius:8px;padding:8px;max-height:200px;overflow:auto;margin:0">${esc(s.nhat_ky||"Đang chuẩn bị…")}</pre>`;
@@ -3491,7 +3501,7 @@ async function theoDoiBg(url,ml,ten){
   if(s.thi_ok) $("#thi-kq").innerHTML=`<div class="thi-kq"><img alt="QR" src="${qrUrl(url,340)}"><div><div style="color:#047857;font-weight:700;margin-bottom:6px">✓ Đã đăng bài giảng: ${esc(ten)}</div>
     <a href="${url}" target="_blank">${url}</a><div style="margin-top:6px;font-size:13px">Mục lục lớp: <a href="${ml}" target="_blank" style="font-size:13px">${ml}</a></div>
     <div style="margin-top:8px;display:flex;gap:6px"><button onclick="navigator.clipboard.writeText('${url}');this.textContent='Đã chép'">Chép link</button><button onclick="window.open(qrUrl('${url}'))">QR khổ lớn</button>
-    <button onclick="window.open(qrUrl('${ml}'))">QR mục lục lớp</button></div></div></div>`;
+    <button onclick="window.open(qrUrl('${ml}'))">QR mục lục lớp</button></div>${htmlDeIn(s)}</div></div>`;
   else $("#thi-kq").innerHTML+=`<p style="color:#b91c1c"><b>Chưa đăng xong.</b> Xem nhật ký rồi bấm "Đăng lại tất cả".</p>`;
 }
 $("#nut-thi").onclick=moThi;
