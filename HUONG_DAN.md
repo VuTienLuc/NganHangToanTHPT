@@ -685,6 +685,30 @@ Tạo phiếu như cũ (📄 Phiếu bài học, kiểu trắc nghiệm hoặc t
 - Bài giảng bất kỳ cũng cho HS xem được: 🌐 Thi trực tuyến → thẻ Bài giảng → nút **Cho HS xem / Thôi cho HS**.
 - Phiếu tạo từ bản cũ (trước khi có tính năng) cần tạo lại phiếu để có dữ liệu web.
 
+## 🎲 Phiếu hoạt động (menu **Dạy học**): Mật mã · Tìm lỗi sai · Ôn tập ngắt quãng
+Chọn lớp, chọn loại phiếu ở 3 thẻ trên cùng, tích các dạng, chọn mẫu PDF và khổ in, rồi bấm **🖨 Tạo phiếu PDF**. Mỗi phiếu ra 2 file: phiếu học sinh và đáp án. Tên giáo viên in ở chân trang.
+
+**🔐 Mật mã**
+- Gõ thông điệp (hoặc bấm 🎲). Số câu bằng số chữ cái của thông điệp.
+- Câu trắc nghiệm: nhãn phương án là chữ cái, chữ đúng là chữ của thông điệp. Câu trả lời ngắn: học sinh tra đáp số trong bảng giải mã (có số nhiễu).
+- Học sinh ghi chữ vào ô giải mã. Chữ ghép ra vô nghĩa nghĩa là có câu sai, nên phiếu tự kiểm tra.
+
+**🔍 Tìm lỗi sai**
+- Lời giải "của bạn An" có đúng **một bước sai** (lỗi thường gặp). Học sinh khoanh bước sai, giải thích, rồi sửa lại.
+- Bài lấy từ **kho lỗi sai** `du-lieu/tim_loi_sai/<dạng>.json`. Có 2 cách thêm bài:
+  - **🤖 AI tạo ngay**: dùng khoá API, vai *Tổng biên tập*;
+  - **📝 Prompt AI**: chép prompt sang AI, dán kết quả lại.
+
+  Cả hai cách đều lấy câu **có lời giải đúng trong ngân hàng** làm gốc rồi cho AI cài một lỗi, nên đề và đáp án đúng luôn chuẩn.
+
+**🔄 Ôn tập ngắt quãng**
+- Tích cột **Hôm nay** (bài đang học) và cột **Ôn lại**. Bấm 🕑 *Gợi ý theo lịch sử đề* để tự chọn các dạng đã ra đề khoảng 1 tuần, 2 tuần, 1 tháng trước.
+- Phiếu khoảng 70% câu mới, 30% câu ôn lại. Mỗi phần ôn lại có ô tự đánh giá mức độ nhớ (nhớ rõ / mang máng / quên).
+
+**📝 Prompt AI → nhập**: mục cuối hộp có ô tạo prompt cho các dạng đã chọn và ô dán kết quả.
+- Mật mã và Ôn tập: AI soạn câu JSON, dán vào là nhập **ngân hàng** (biên dịch thử từng câu như mọi lần nhập).
+- Tìm lỗi sai: dán vào là nhập **kho lỗi sai**.
+
 ## 📐 In công thức – kiến thức trọng tâm (menu **Dạy học**)
 1. Chọn lớp. Danh sách hiện **Chương → Bài → Dạng** lấy từ Kho kiến thức. Nhãn *có* là đã soạn; nhãn *chưa có PP* là dạng chưa có phương pháp, khi in sẽ chừa dòng kẻ để học sinh tự ghi.
 2. Tích **Kiến thức chung** của bài và các **dạng** cần in. Bấm tiêu đề chương để chọn cả chương. Có ô tìm (gõ không dấu được) và nút *Chọn tất cả / Bỏ hết*. App nhớ lựa chọn của từng lớp.

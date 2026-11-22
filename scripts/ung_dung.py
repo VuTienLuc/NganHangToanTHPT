@@ -123,6 +123,31 @@ def tu_sinh_nen(d):
     cong_viec.update(dang_chay=False, xong=True, ket_qua=ra)
 
 
+def ai_loi_sai_nen(d):
+    """🤖 AI tạo lời giải có lỗi (vai Tổng biên tập — cẩn thận nhất) cho phiếu Tìm lỗi sai → kho lỗi sai."""
+    def ghi(x):
+        cong_viec["nhat_ky"] += x + "\n"
+    ra = {"ok": False}
+    try:
+        import phieu_hoat_dong as H, hoi_dong_ai as HD
+        vai = HD.phan_vai()
+        if not vai:
+            raise RuntimeError("Chưa có khoá API AI — bấm ⚙ Khoá AI… hoặc dùng 📝 Prompt AI (chép – dán).")
+        nha = vai.get("bien_tap")
+        p, n = H.prompt_loi(d.get("dang") or [], int(d.get("so") or 4))
+        ghi(f"🤖 {HD.ST.TEN_NHA.get(nha, nha)} viết {n} lời giải có lỗi từ câu gốc trong ngân hàng…")
+        t, _, _ = HD.xoay_cho("bien_tap", nha, ghi=ghi).goi(p)
+        so, bo = H.nhap_loi(t)
+        for x in bo:
+            ghi("  ⚠ bỏ " + x)
+        ghi(f"✓ Đã thêm {so} bài vào kho lỗi sai.")
+        ra = {"ok": True, "so": so}
+    except Exception as e:
+        ghi(f"Lỗi: {e}")
+    ra["nhat_ky"] = cong_viec["nhat_ky"]
+    cong_viec.update(dang_chay=False, xong=True, ket_qua=ra)
+
+
 def khuon_nen(d):
     """🧬 Song sinh: các câu chỉ định → khuôn (dùng lại / AI viết) → N câu giống + M nâng cao, đã kiểm chứng → nhập kho."""
     def ghi(x):
@@ -1108,6 +1133,40 @@ class XuLy(BaseHTTPRequestHandler):
             if u.path == "/api/kien-thuc":
                 import phieu_bai_hoc
                 return self.gui(200, {"ok": True, "noi_dung": phieu_bai_hoc.doc_kien_thuc(d.get("pham_vi") or [])})
+            if u.path.startswith("/api/hd/"):          # 🎲 phiếu hoạt động: Mật mã · Tìm lỗi sai · Ôn tập ngắt quãng
+                import phieu_hoat_dong as H
+                viec = u.path.rsplit("/", 1)[1]
+                try:
+                    if viec == "thong-tin":
+                        dang = d.get("dang") or []
+                        g = H.goi_y_on(set(d.get("dang_nay") or []), d.get("lop")) if d.get("goi_y") else {}
+                        return self.gui(200, {"ok": True, "loi": H.dem_loi(dang), "goi_y": g, "thong_diep": H.THONG_DIEP_MAU})
+                    if viec == "prompt":
+                        if d.get("kieu") == "tim_loi":
+                            p, n = H.prompt_loi(d.get("dang") or [], int(d.get("so") or 4))
+                            return self.gui(200, {"ok": True, "prompt": p, "so": n})
+                        return self.gui(200, {"ok": True, "prompt": H.prompt_cau(d.get("dang") or [], int(d.get("so") or 4), d.get("kieu") or "mat_ma")})
+                    if viec == "nhap-loi":
+                        so, bo = H.nhap_loi(d.get("van") or "")
+                        return self.gui(200, {"ok": True, "so": so, "bo": bo})
+                    if viec == "ai-loi":
+                        if cong_viec.get("dang_chay"):
+                            return self.gui(200, {"ok": False, "loi": "Đang có việc khác chạy, đợi xong rồi bấm lại."})
+                        cong_viec.update(dang_chay=True, xong=False, nhat_ky="", ket_qua=None)
+                        threading.Thread(target=ai_loi_sai_nen, args=(dict(d),), daemon=True).start()
+                        return self.gui(200, {"ok": True})
+                    if viec == "tao":
+                        dong = []
+                        ham = {"mat_ma": H.mat_ma, "tim_loi": H.tim_loi_sai, "on_tap": H.on_tap}[d.get("kieu")]
+                        out_goc = ham(d.get("cau_hinh") or {}, dong.append)
+                        rel = os.path.relpath(out_goc, GOC)
+                        dang_bd = bool(d.get("bien_dich")) and bool(tim_pdflatex())
+                        if dang_bd:
+                            threading.Thread(target=bien_dich_nen, args=(rel,), daemon=True).start()
+                        return self.gui(200, {"ok": True, "nhat_ky": "\n".join(dong), "thu_muc": rel, "bien_dich": dang_bd})
+                except Exception as e:
+                    return self.gui(200, {"ok": False, "loi": str(e)})
+                return self.gui(404, {"loi": "không có"})
             if u.path == "/api/so-tay-dm":           # 📐 sổ tay công thức: cây chương → bài → dạng của một lớp
                 import so_tay_cong_thuc
                 return self.gui(200, {"ok": True, "cay": so_tay_cong_thuc.danh_muc(int(d.get("lop") or 10)),

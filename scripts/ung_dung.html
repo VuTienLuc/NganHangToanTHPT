@@ -233,6 +233,20 @@ footer .gian{flex:1}
 .mtb:has(input:checked){border-color:var(--nhan);box-shadow:0 0 0 3px var(--nhan-nhat)}
 .mtb-mau{display:flex;gap:4px}.mtb-mau i{width:22px;height:12px;border-radius:4px;border:1px solid rgba(0,0,0,.12)}
 @media (max-width:900px){.mtb-ds{grid-template-columns:repeat(2,minmax(0,1fr))}}
+#hop-hdp{position:fixed;inset:0;background:rgba(17,24,39,.4);display:none;align-items:center;justify-content:center;z-index:14}
+#hop-hdp .noi{background:#fff;border-radius:14px;width:min(1120px,97vw);height:min(95vh,1000px);display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.28)}
+#hop-hdp h2{margin:0;padding:10px 18px;font-size:16px;border-bottom:1px solid var(--vien);display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+#hop-hdp h2 button{padding:4px 10px;font-size:12.5px}#hop-hdp h2 button.on{background:var(--nhan);color:#fff;border-color:var(--nhan)}
+#hop-hdp .cai{display:flex;flex-wrap:wrap;gap:6px 12px;padding:8px 18px;border-bottom:1px solid var(--vien);background:#f5f7ff;font-size:13px;align-items:center}
+#hop-hdp .st-cai{border-top:1px solid var(--vien);border-bottom:0;background:#fafbfd}
+#hop-hdp .cai input[type=text],#hop-hdp .cai input[type=search],#hop-hdp .cai input[type=number]{padding:4px 7px;border:1px solid var(--vien);border-radius:7px;font:inherit}
+#hdp-mo-ta{background:#fffbeb;color:#78350f;font-size:12.5px}
+#hop-hdp .than{flex:1;overflow:auto;padding:6px 18px 12px;font-size:13px}
+#hop-hdp .chan{padding:10px 18px;border-top:1px solid var(--vien);display:flex;gap:8px;align-items:center}
+.hdp-dang{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:2px 14px;margin:4px 0 0 14px}
+.hdp-dang .d{display:flex;gap:6px;align-items:flex-start;font-size:12.5px}
+.hdp-dang .so{font-size:10.5px;color:var(--phu);white-space:nowrap}
+.hdp-dang .cu{accent-color:#b45309}
 #hop-st{position:fixed;inset:0;background:rgba(17,24,39,.4);display:none;align-items:center;justify-content:center;z-index:14}
 #hop-st .noi{background:#fff;border-radius:14px;width:min(1080px,96vw);height:min(94vh,980px);display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.28)}
 #hop-st h2{margin:0;padding:12px 18px;font-size:16px;border-bottom:1px solid var(--vien);display:flex;gap:10px;align-items:center;flex-wrap:wrap}
@@ -505,6 +519,7 @@ tr.gop-h td{background:#dbeafe;text-align:left;font-weight:700;padding:8px 12px;
     <button id="nut-phieu" title="Phiếu bài học / chuyên đề / ôn tập chương: kiến thức trọng tâm, luyện tập, bài tập về nhà — tự lấy câu theo dạng">Phiếu bài học</button>
     <button id="nut-kt" title="Kho kiến thức trọng tâm từng bài (lớp 6 – 12): xem, sửa, soạn bằng AI, nhập nhiều bài một lần">Kho kiến thức</button>
     <button id="nut-so-tay" title="In công thức – kiến thức trọng tâm các dạng toán: chọn dạng cần in, 3 mẫu PDF đẹp, khổ tiết kiệm hoặc bình thường, có tên giáo viên">📐 In công thức – kiến thức trọng tâm</button>
+    <button id="nut-hdp" title="Phiếu hoạt động: 🔐 Mật mã (giải mã thông điệp, tự kiểm tra) · 🔍 Tìm lỗi sai · 🔄 Ôn tập ngắt quãng — kèm prompt AI sinh nội dung">🎲 Phiếu hoạt động (Mật mã · Tìm lỗi sai · Ôn tập)</button>
     <button id="nut-thi" title="Đề thi trực tuyến đã đăng: link, mã QR, mở lời giải, đóng đề">🌐 Thi trực tuyến</button>
   </div></div>
   <div class="nm" data-nm="ai"><button class="nm-nut">AI</button><div class="nm-ds">
@@ -852,6 +867,36 @@ tr.gop-h td{background:#dbeafe;text-align:left;font-weight:700;padding:8px 12px;
     </div>
   </div>
   <div class="chan"><span id="ph-trang-thai" class="nho"></span><button id="ph-thieu" style="margin-left:auto" title="Kiểm tra ngân hàng đủ câu cho phiếu này chưa; thiếu thì soạn prompt cho AI sinh câu, rồi nhập vào ngân hàng">Kiểm tra kho / Prompt AI soạn câu…</button><button id="ph-xem" title="Máy chọn thử bộ câu cho phiếu → thầy xem từng câu, đổi nhanh hoặc chọn câu khác theo nhóm cho ưng ý → xác nhận mới tạo phiếu">👁 Xem trước &amp; đổi câu</button><button id="ph-tao" class="chinh">Tạo phiếu</button><button id="ph-dong-hop">Đóng</button></div>
+</div></div>
+<div id="hop-hdp"><div class="noi">
+  <h2>🎲 Phiếu hoạt động <span id="hdp-the" style="display:flex;gap:4px">
+      <button data-k="mat_ma" class="on">🔐 Mật mã</button><button data-k="tim_loi">🔍 Tìm lỗi sai</button><button data-k="on_tap">🔄 Ôn tập ngắt quãng</button></span>
+    <span id="hdp-lop" style="margin-left:auto;display:flex;gap:4px"></span></h2>
+  <div class="cai" id="hdp-mo-ta"></div>
+  <div class="cai">
+    <input id="hdp-tim" type="search" placeholder="🔍 Tìm bài / dạng…" style="width:190px">
+    <span class="hdp-k" data-k="mat_ma">Thông điệp <input type="text" id="hdp-td" style="width:230px" placeholder="TOÁN HỌC THẬT VUI"> <button id="hdp-td-ngau" title="Chọn thông điệp ngẫu nhiên">🎲</button> <span id="hdp-td-dem" class="nho"></span>
+      · Mức <label class="hop"><input type="checkbox" class="hdp-muc" value="N" checked>NB</label><label class="hop"><input type="checkbox" class="hdp-muc" value="H" checked>TH</label><label class="hop"><input type="checkbox" class="hdp-muc" value="V">VD</label>
+      <label class="hop"><input type="checkbox" id="hdp-tln" checked> kèm câu trả lời ngắn (bảng giải mã)</label></span>
+    <span class="hdp-k" data-k="tim_loi">Số bài <input type="number" id="hdp-so-loi" value="4" min="1" max="12" style="width:54px"> · Tên bạn trong lời giải <input type="text" id="hdp-ban" value="An" style="width:80px">
+      <button id="hdp-ai-loi" class="chinh" style="background:#7c3aed;border-color:#7c3aed" title="AI (khoá API ở ⚙ Khoá AI) viết lời giải có một lỗi thường gặp từ câu có lời giải đúng trong ngân hàng, nhập ngay vào kho lỗi sai">🤖 AI tạo bài lỗi sai ngay</button></span>
+    <span class="hdp-k" data-k="on_tap">Câu hôm nay <input type="number" id="hdp-so-nay" value="7" min="1" max="20" style="width:54px"> · Câu ôn lại <input type="number" id="hdp-so-cu" value="3" min="0" max="15" style="width:54px">
+      <button id="hdp-goi-y" title="Tự tích cột Ôn lại: dạng đã ra đề khoảng 1 tuần, 2 tuần, 1 tháng trước">🕑 Gợi ý ôn lại theo lịch sử đề</button> <span id="hdp-goi-y-tt" class="nho"></span></span>
+  </div>
+  <div class="than" id="hdp-cay"></div>
+  <details class="cai" id="hdp-ai" style="display:block"><summary style="cursor:pointer;font-weight:600;color:#6d28d9">📝 Prompt AI sinh nội dung → dán kết quả để nhập</summary>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:8px">
+      <div><div class="nho" id="hdp-p-mo-ta"></div><textarea id="hdp-p" readonly style="width:100%;height:150px;font:12px ui-monospace,Menlo,monospace"></textarea>
+        <button id="hdp-p-tao">Tạo prompt cho các dạng đã chọn</button> <button id="hdp-p-chep">📋 Chép</button> <label>mỗi dạng <input type="number" id="hdp-p-so" value="4" min="1" max="10" style="width:50px"></label></div>
+      <div><div class="nho">Dán nguyên câu trả lời của AI (khối <code>```json</code>):</div><textarea id="hdp-dan" style="width:100%;height:150px;font:12px ui-monospace,Menlo,monospace"></textarea>
+        <button id="hdp-nhap" class="chinh">📥 Nhập</button> <span id="hdp-nhap-tt" class="nho"></span></div></div></details>
+  <div class="cai st-cai">
+    <div style="flex-basis:100%"><b>Mẫu PDF</b><div class="mtb-ds" style="grid-template-columns:repeat(3,minmax(0,1fr))"><label class="mtb"><input type="radio" name="hdp-mau" value="hien_dai"><span class="mtb-mau"><i style="background:#1e40af"></i><i style="background:#0d9488"></i><i style="background:#eff6ff"></i></span><b>Hiện đại — xanh dương</b></label><label class="mtb"><input type="radio" name="hdp-mau" value="tuoi_sang" checked><span class="mtb-mau"><i style="background:#6d28d9"></i><i style="background:#ea580c"></i><i style="background:#faf5ff"></i></span><b>Tươi sáng — tím cam</b></label><label class="mtb"><input type="radio" name="hdp-mau" value="toi_gian"><span class="mtb-mau"><i style="background:#262626"></i><i style="background:#7f1d1d"></i><i style="background:#ffffff"></i></span><b>Tối giản — in đen trắng</b></label></div></div>
+    <span><b>Khổ in</b> <label class="hop"><input type="radio" name="hdp-kho" value="tiet_kiem" checked> Tiết kiệm (chữ 11)</label><label class="hop"><input type="radio" name="hdp-kho" value="binh_thuong"> Bình thường (chữ 12)</label></span>
+    <label>Tên phiếu <input type="text" id="hdp-ten" style="width:260px" placeholder="(tự đặt)"></label>
+    <label>Giáo viên <input type="text" id="hdp-gv" style="width:170px"></label>
+  </div>
+  <div class="chan"><span id="hdp-tt" class="nho"></span><button id="hdp-tao" class="chinh" style="margin-left:auto">🖨 Tạo phiếu PDF</button><button id="hdp-dong">Đóng</button></div>
 </div></div>
 <div id="hop-st"><div class="noi">
   <h2>📐 In công thức – kiến thức trọng tâm các dạng toán <span id="st-lop" style="margin-left:auto;display:flex;gap:4px"></span></h2>
@@ -2210,6 +2255,100 @@ $("#hk-ngan-hang").onclick=async()=>{
     if(r.bien_dich) theoDoi(r.nhat_ky); tai();
   }finally{b.disabled=false;b.textContent="Ra đề từ ngân hàng"}
 };
+// ---- 🎲 PHIẾU HOẠT ĐỘNG: Mật mã · Tìm lỗi sai · Ôn tập ngắt quãng
+const HDP={kieu:"mat_ma",lop:10,chon:new Set(),cu:new Set(),loi:{},td:[]};
+const HDP_MO_TA={
+  mat_ma:"🔐 <b>Mật mã</b>: mỗi câu đúng cho một chữ cái → ghép thành thông điệp bí mật. Học sinh tự biết mình sai khi chữ ghép lại vô nghĩa. Câu trắc nghiệm: nhãn phương án là chữ cái; câu trả lời ngắn: tra bảng giải mã. Số câu = số chữ của thông điệp.",
+  tim_loi:"🔍 <b>Tìm lỗi sai</b>: lời giải của bạn An có <b>đúng một bước sai</b> (lỗi thường gặp) → học sinh khoanh bước sai, giải thích, sửa lại. Bài lấy từ <b>kho lỗi sai</b>: bấm 🤖 AI tạo ngay (dựa trên lời giải đúng trong ngân hàng) hoặc dùng Prompt AI chép – dán.",
+  on_tap:"🔄 <b>Ôn tập ngắt quãng</b>: ~70% câu bài hôm nay + ~30% câu dạng đã học 1 tuần / 2 tuần / 1 tháng trước — ôn đúng lúc sắp quên giúp nhớ lâu. Tích cột <b>Hôm nay</b> và cột <b>Ôn lại</b> (hoặc 🕑 gợi ý theo lịch sử đề đã ra)."};
+function hdpKhoDang(d){const n=l=>(d.kho[l]||[0,0,0,0]).reduce((a,b)=>a+b,0);return {tn:n("TN"),tln:n("TLN")}}
+async function hdpMoLop(lop){HDP.lop=lop;document.querySelectorAll("#hdp-lop button").forEach(b=>b.classList.toggle("on",+b.dataset.l===lop));
+  const ds=DL.dang.filter(d=>d.lop===lop).map(d=>d.k); const r=await api("/api/hd/thong-tin",{dang:ds}); HDP.loi=r.loi||{}; HDP.td=r.thong_diep||[]; veHDP()}
+function veHDP(){
+  const k=HDP.kieu, q=boDauTC($("#hdp-tim").value).trim();
+  $("#hdp-mo-ta").innerHTML=HDP_MO_TA[k];
+  document.querySelectorAll(".hdp-k").forEach(x=>x.style.display=x.dataset.k===k?"":"none");
+  $("#hdp-p-mo-ta").innerHTML=k==="tim_loi"?"Prompt lấy câu <b>có lời giải đúng</b> trong ngân hàng, nhờ AI viết lời giải có 1 lỗi → dán kết quả để nhập <b>kho lỗi sai</b>."
+    :"Prompt nhờ AI soạn thêm câu (JSON) cho các dạng đã chọn → dán kết quả để nhập <b>ngân hàng</b> (biên dịch thử từng câu).";
+  const ds=DL.dang.filter(d=>d.lop===HDP.lop&&(!q||boDauTC(d.ten_dang+" "+d.ten_bai+" "+d.k).includes(q)));
+  const nhom=new Map(); for(const d of ds){const key=d.ten_chuong+" › "+d.ten_bai;(nhom.get(key)||nhom.set(key,[]).get(key)).push(d)}
+  let h="";
+  for(const [t,v] of nhom){
+    h+=`<div class="st-ch"><div class="st-ch-dau"><input type="checkbox" class="hdp-cb-nhom"> ${esc(t)}<span class="so">${v.length} dạng</span></div><div class="hdp-dang">`;
+    for(const d of v){const n=hdpKhoDang(d), soLoi=HDP.loi[d.k]||0;
+      const so=k==="tim_loi"?`kho lỗi sai: ${soLoi} bài`:`${n.tn} TN · ${n.tln} TLN`;
+      h+=`<div class="d"><label title="${k==="on_tap"?"Dạng của bài hôm nay":"Chọn dạng"}"><input type="checkbox" class="hdp-cb" data-k="${d.k}" ${HDP.chon.has(d.k)?"checked":""}>${k==="on_tap"?"<small>Hôm nay</small>":""}</label>
+        ${k==="on_tap"?`<label title="Ôn lại dạng này"><input type="checkbox" class="hdp-cu cu" data-k="${d.k}" ${HDP.cu.has(d.k)?"checked":""}><small>Ôn lại</small></label>`:""}
+        <span>${esc(d.ten_dang)} <span class="so">· ${so}</span></span></div>`}
+    h+=`</div></div>`;}
+  $("#hdp-cay").innerHTML=h||`<p class="nho" style="padding:14px">Không có dạng nào khớp.</p>`;
+  $("#hdp-cay").querySelectorAll(".hdp-cb").forEach(x=>x.onchange=()=>{x.checked?HDP.chon.add(x.dataset.k):HDP.chon.delete(x.dataset.k);hdpDem()});
+  $("#hdp-cay").querySelectorAll(".hdp-cu").forEach(x=>x.onchange=()=>{x.checked?HDP.cu.add(x.dataset.k):HDP.cu.delete(x.dataset.k);hdpDem()});
+  $("#hdp-cay").querySelectorAll(".st-ch").forEach(el=>{const cb=el.querySelector(".hdp-cb-nhom"),o=[...el.querySelectorAll(".hdp-cb")];
+    cb.checked=o.length&&o.every(x=>x.checked); cb.onchange=()=>{o.forEach(x=>{x.checked=cb.checked;x.dispatchEvent(new Event("change"))})}});
+  hdpDem();
+}
+function hdpDem(){
+  const k=HDP.kieu, n=HDP.chon.size, td=($("#hdp-td").value||$("#hdp-td").placeholder).replace(/\s+/g,"");
+  $("#hdp-td-dem").textContent=`${td.length} chữ = ${td.length} câu`;
+  $("#hdp-tt").textContent=k==="on_tap"?`Hôm nay: ${n} dạng · Ôn lại: ${HDP.cu.size?HDP.cu.size+" dạng":"theo lịch sử đề"}`
+    :k==="tim_loi"?`Đã chọn ${n} dạng · kho lỗi sai có ${[...HDP.chon].reduce((a,x)=>a+(HDP.loi[x]||0),0)} bài`:`Đã chọn ${n} dạng`;
+  $("#hdp-tao").disabled=!n;
+}
+$("#nut-hdp").onclick=async()=>{
+  if(!DL) await tai();
+  const lops=[...new Set(DL.dang.map(d=>d.lop))].sort((a,b)=>a-b);
+  $("#hdp-lop").innerHTML=lops.map(l=>`<button data-l="${l}">Lớp ${l}</button>`).join("");
+  $("#hdp-lop").querySelectorAll("button").forEach(b=>b.onclick=()=>hdpMoLop(+b.dataset.l));
+  if(!$("#hdp-gv").value) $("#hdp-gv").value=$("#giao_vien").value||"";
+  $("#hop-hdp").style.display="flex"; hdpMoLop(lops.includes(HDP.lop)?HDP.lop:lops[lops.length-1]);
+};
+document.querySelectorAll("#hdp-the button").forEach(b=>b.onclick=()=>{HDP.kieu=b.dataset.k;document.querySelectorAll("#hdp-the button").forEach(x=>x.classList.toggle("on",x===b));
+  $("#hdp-p").value="";$("#hdp-dan").value="";$("#hdp-nhap-tt").textContent="";veHDP()});
+$("#hdp-tim").oninput=veHDP; $("#hdp-td").oninput=hdpDem;
+$("#hdp-td-ngau").onclick=()=>{if(HDP.td.length){$("#hdp-td").value=HDP.td[Math.floor(Math.random()*HDP.td.length)];hdpDem()}};
+$("#hdp-dong").onclick=()=>$("#hop-hdp").style.display="none";
+$("#hdp-goi-y").onclick=async()=>{
+  const r=await api("/api/hd/thong-tin",{dang:[],dang_nay:[...HDP.chon],lop:HDP.lop,goi_y:true});
+  const g=r.goi_y||{}; let n=0; for(const v of Object.values(g)) for(const k of v){HDP.cu.add(k);n++}
+  $("#hdp-goi-y-tt").textContent=n?Object.entries(g).filter(([,v])=>v.length).map(([t,v])=>`${t}: ${v.length} dạng`).join(" · "):"Chưa có đề nào ra 1 tuần – 1 tháng trước — thầy tự tích cột Ôn lại.";
+  veHDP()};
+$("#hdp-p-tao").onclick=async()=>{
+  if(!HDP.chon.size){alert("Tích chọn dạng trước.");return}
+  const r=await api("/api/hd/prompt",{kieu:HDP.kieu,dang:[...HDP.chon],so:+$("#hdp-p-so").value||4});
+  if(!r.ok){alert(r.loi);return} $("#hdp-p").value=r.prompt;};
+$("#hdp-p-chep").onclick=e=>{navigator.clipboard.writeText($("#hdp-p").value);e.target.textContent="Đã chép ✓";setTimeout(()=>e.target.textContent="📋 Chép",1500)};
+$("#hdp-nhap").onclick=async()=>{
+  const van=$("#hdp-dan").value.trim(); if(!van){alert("Dán kết quả AI vào ô bên phải.");return}
+  const b=$("#hdp-nhap");b.disabled=true;$("#hdp-nhap-tt").textContent="Đang nhập…";
+  try{
+    if(HDP.kieu==="tim_loi"){const r=await api("/api/hd/nhap-loi",{van}); if(!r.ok){$("#hdp-nhap-tt").textContent="✗ "+r.loi;return}
+      $("#hdp-nhap-tt").textContent=`✓ Thêm ${r.so} bài vào kho lỗi sai`+(r.bo.length?` · bỏ ${r.bo.length} mục thiếu thông tin`:""); hdpMoLop(HDP.lop);}
+    else{const m=van.match(/```(?:json)?\s*([\s\S]*?)```/); const nd=m?m[1]:van;
+      const r=await api("/api/nhap",{tep:[{ten:"ai_phieu_hoat_dong.json",noi_dung:nd}],thu:false});
+      $("#hdp-nhap-tt").textContent=r.ok?`✓ Đã nhập ${r.so_cau} câu vào ngân hàng`:"✗ "+(r.nhat_ky||r.loi||"");
+      if(r.ok){await tai();veHDP()} if(r.nhat_ky) hopThoai("Nhập câu AI vào ngân hàng",r.nhat_ky);}
+  }finally{b.disabled=false}};
+$("#hdp-ai-loi").onclick=async()=>{
+  if(!HDP.chon.size){alert("Tích chọn dạng trước.");return}
+  const r0=await api("/api/hd/ai-loi",{dang:[...HDP.chon],so:+$("#hdp-so-loi").value||4}); if(!r0.ok){alert(r0.loi);return}
+  hopThoai("🤖 AI đang viết bài Tìm lỗi sai…","Đang chuẩn bị…");
+  let s; for(;;){await new Promise(t=>setTimeout(t,1500));s=await api("/api/trang-thai");$("#ht-noi").textContent=s.nhat_ky||"…";if(s.xong)break}
+  hdpMoLop(HDP.lop)};
+$("#hdp-tao").onclick=async()=>{
+  const k=HDP.kieu, chung={dang:[...HDP.chon],mau_trinh_bay:(document.querySelector('input[name="hdp-mau"]:checked')||{}).value,
+    kho:(document.querySelector('input[name="hdp-kho"]:checked')||{}).value,ten:$("#hdp-ten").value.trim(),giao_vien:$("#hdp-gv").value.trim(),
+    truong:$("#truong").value.trim(),nam_hoc:$("#nam_hoc").value.trim(),lop:HDP.lop};
+  const cfg=k==="mat_ma"?{...chung,thong_diep:$("#hdp-td").value.trim()||$("#hdp-td").placeholder,muc:[...document.querySelectorAll(".hdp-muc:checked")].map(x=>x.value),co_tln:$("#hdp-tln").checked}
+    :k==="tim_loi"?{...chung,so:+$("#hdp-so-loi").value||4,ten_ban:$("#hdp-ban").value.trim()||"An"}
+    :{...chung,so_nay:+$("#hdp-so-nay").value||7,so_cu:+$("#hdp-so-cu").value||0,dang_cu:[...HDP.cu]};
+  const b=$("#hdp-tao");b.disabled=true;b.textContent="Đang tạo…";
+  try{const r=await api("/api/hd/tao",{kieu:k,cau_hinh:cfg,bien_dich:$("#bien_dich").checked});
+    if(!r.ok){hopThoai("Chưa tạo được phiếu",r.loi||"");return}
+    $("#hop-hdp").style.display="none";
+    hopThoai(`Đã tạo: ${r.thu_muc}`,r.nhat_ky+(r.bien_dich?"\nĐang biên dịch PDF…":""),[["Mở thư mục",()=>api("/api/mo",{duong_dan:r.thu_muc}),true]]);
+    if(r.bien_dich) theoDoi(r.nhat_ky);}
+  finally{b.disabled=false;b.textContent="🖨 Tạo phiếu PDF"}};
 // ---- 📐 SỔ TAY CÔNG THỨC – KIẾN THỨC TRỌNG TÂM (chọn dạng → PDF 3 mẫu)
 let ST={lop:10,cay:[],chon:{}};      // chon[lop] = {dang:Set, bai:Set}
 function stChon(){const c=ST.chon[ST.lop]??={dang:new Set(),bai:new Set()};return c}
@@ -3826,7 +3965,7 @@ document.addEventListener("click",()=>document.querySelectorAll("header .nm.mo")
 $("#nut-luu").dataset.mo="Lưu ma trận đang điền để lần sau mở lại";
 $("#nut-cap-nhat").dataset.mo="Đọc lại ngân hàng sau khi thêm / sửa câu";
 // --- nhớ chức năng dùng gần đây
-const NUT_LENH=["nut-nhanh","nut-phieu","nut-so-tay","nut-on-thi","nut-hd","nut-kt","nut-thi","nut-prompt","nut-ts10","nut-tron-file","nut-thu-muc","nut-lich-su",
+const NUT_LENH=["nut-nhanh","nut-phieu","nut-so-tay","nut-hdp","nut-on-thi","nut-hd","nut-kt","nut-thi","nut-prompt","nut-ts10","nut-tron-file","nut-thu-muc","nut-lich-su",
   "nut-luu","nut-nhap","nut-cap-nhat","nut-bang-ma","nut-lac","nut-trung","nut-xem","nut-xuat","nut-bo","nut-tu-dong","nut-gop"];
 NUT_LENH.forEach(i=>{const b=$("#"+i);if(b)b.addEventListener("click",()=>{const g=docLS("nh_gan_day",[]).filter(x=>x!==i);g.unshift(i);luuLS("nh_gan_day",g.slice(0,8))})});
 const tenNut=i=>{const b=$("#"+i);return b?(b.textContent.trim()||i):i};
