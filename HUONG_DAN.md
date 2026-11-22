@@ -41,6 +41,13 @@ Nhấp đúp **`Ra de theo ma tran.app`** trong thư mục này. Giao diện m�
 Nếu macOS báo không mở được ứng dụng: nhấp phải vào file `.app` → **Mở** → **Mở** (chỉ cần làm một lần),
 hoặc nhấp đúp `Ra de theo ma tran.command` (mở bằng Terminal). Nhật ký lỗi: `/tmp/ra_de_theo_ma_tran.log`.
 
+### Trang chủ gọn
+- Thanh đầu chỉ còn 4 nhóm menu: **Ra đề** · **Dạy học** · **AI** · **Ngân hàng**. Mỗi mục trong menu có một dòng mô tả ngắn. Nút **⚡ Tạo nhanh theo bài** luôn nằm bên phải.
+- **🔎 Tìm chức năng** (`Ctrl K` / `⌘K` hoặc phím `/`): gõ không dấu để tìm chức năng, ma trận đã lưu hoặc lớp, rồi bấm Enter để mở. Khi chưa gõ gì, danh sách hiện các chức năng **dùng gần đây** lên đầu.
+- Chưa tích chương nào thì giữa màn hình hiện 4 việc hay làm và các chức năng dùng gần đây.
+- Cột trái có ô **Lọc chương** (gõ không dấu được). App tự mở lớp thầy dùng gần nhất, hoặc lớp có chương đang tích.
+- Khung **Thông tin đề & tuỳ chọn xuất** gập gọn và hiện một dòng tóm tắt (kỳ thi · lớp · thời gian · số mã đề · PDF/Beamer). Thầy bấm vào để mở; lần sau app nhớ khung đang mở hay đóng.
+
 ## Thêm câu hỏi mới vào ngân hàng
 
 **Cách 1: thêm vài câu.** Mở file dạng tương ứng trong `cau-hoi/lopXX/<chương>/<dạng>.tex`, chép một khối mẫu từ
