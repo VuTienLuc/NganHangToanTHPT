@@ -735,3 +735,19 @@ Nút **🧑‍⚖️ Hội đồng AI sinh câu** trên thanh công cụ: chọn
 - Đổi vai: **⚙ Khoá AI…** → bảng *Phân vai Hội đồng AI* (lưu trong `ai_khoa.json`, mục `vai`). Thiếu hãng nào thì app tự dồn vai, cố để người giải và người phản biện khác người soạn. Chỉ có một hãng vẫn chạy được nhưng kém tác dụng.
 - Cũng có ô **🧑‍⚖️ Hội đồng phản biện** ở *Ôn thi học kì → AI sinh câu* và *Phiếu bài học → Ngân hàng tự sinh* (cách AI).
 - Mỗi câu tốn 3 – 4 lượt gọi AI; nhiều câu thì để máy chạy, theo dõi nhật kí.
+
+## 🧬 Khuôn câu — một câu mẫu thành vô số câu song sinh có kiểm chứng
+**Dùng ở đâu**
+- Nút **🧬 Song sinh…** trên mỗi thẻ câu khi *Xem trước* (đề theo ma trận, phiếu bài học): chọn số câu giống mẫu và số câu nâng cao, rồi bấm **Sinh & nhập kho**.
+- *Phiếu bài học → Ngân hàng tự sinh*: chọn cách **🧬 Khuôn câu** để mỗi dạng lấy một ví dụ mẫu, sinh câu song sinh rồi in phiếu theo mẫu.
+
+**Cách làm việc**
+1. AI (vai *Viết khuôn câu*, mặc định Claude, đổi được ở ⚙ Khoá AI → Phân vai) đọc câu mẫu và viết **một lần** một khuôn Python gồm: `tham_so` (bốc số) · `dap_an` (công thức) · `kiem` (tính lại bằng **cách khác hẳn**) · `viet` (đề, phương án, lời giải LaTeX) · `MAU` (bộ số của chính câu mẫu).
+2. Máy chạy khuôn trong **hộp cách ly**: không mở file, không vào mạng, chỉ dùng math/fractions…; quá 45 giây thì dừng. Khuôn bị loại khi:
+   - `dap_an` và `kiem` lệch nhau ở bất kì bộ số nào;
+   - khuôn không tái tạo đúng đáp án câu mẫu;
+   - phương án trùng nhau, hoặc đáp số trả lời ngắn quá 4 ô.
+
+   Mỗi lần bị loại, máy gửi lỗi cụ thể cho AI sửa, tối đa 3 lần.
+3. Khuôn đạt được lưu ở `du-lieu/khuon/<mã câu mẫu>.py` (đồng bộ qua git), lần sau sinh tiếp **không tốn lượt AI**. Thầy sửa tay được; tích **AI viết lại khuôn** để làm mới.
+4. Câu sinh ra có các dòng `% mau: <mã>` (dùng cho phiếu theo mẫu), `% khuon: <mã>`, và với câu TN có thêm `% nhieu: B=quên chia 2; …` (lỗi sai sinh ra từng phương án nhiễu). Sau đó câu vẫn qua bước biên dịch thử của `nhap_cau`.

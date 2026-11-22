@@ -182,6 +182,15 @@ footer .gian{flex:1}
 #hk-bang .hk-kho{font-size:11.5px;margin-top:3px;display:inline-block;padding:1px 6px;border-radius:99px}
 #hk-bang .hk-kho-nut{cursor:pointer;transition:filter .15s}
 #hk-bang .hk-kho-nut:hover{filter:brightness(.92);text-decoration:underline}
+#hop-ss{position:fixed;inset:0;background:rgba(17,24,39,.45);display:none;align-items:center;justify-content:center;z-index:30}
+#hop-ss .noi{background:#fff;border-radius:14px;width:min(760px,95vw);max-height:90vh;display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.3)}
+#hop-ss h2{margin:0;padding:12px 18px;font-size:16px;border-bottom:1px solid var(--vien)}
+#hop-ss .than{padding:12px 18px;display:flex;flex-direction:column;gap:10px;overflow:auto;font-size:13.5px}
+#hop-ss .hang{display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+#hop-ss input[type=number]{width:60px;padding:4px 6px;border:1px solid var(--vien);border-radius:6px;text-align:center;font:inherit}
+#ss-log{background:#0f172a;color:#e2e8f0;border-radius:10px;padding:10px 12px;font:12px/1.5 ui-monospace,Menlo,monospace;white-space:pre-wrap;max-height:42vh;overflow:auto;display:none;margin:0}
+#ss-code{background:#f8fafc;border:1px solid var(--vien);border-radius:10px;padding:10px;font:12px/1.45 ui-monospace,Menlo,monospace;white-space:pre;max-height:36vh;overflow:auto;display:none;margin:0}
+#hop-ss .chan{padding:10px 18px;border-top:1px solid var(--vien);display:flex;gap:8px;align-items:center}
 #hop-hd{position:fixed;inset:0;background:rgba(17,24,39,.4);display:none;align-items:center;justify-content:center;z-index:25}
 #hop-hd .noi{background:#fff;border-radius:14px;width:min(1080px,96vw);max-height:92vh;display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.28)}
 #hop-hd h2{margin:0;padding:12px 18px;font-size:16px;border-bottom:1px solid var(--vien);display:flex;gap:10px;align-items:center;flex-wrap:wrap}
@@ -706,7 +715,8 @@ tr.gop-h td{background:#dbeafe;text-align:left;font-weight:700;padding:8px 12px;
           <select id="ph-ts-cach" style="width:auto" title="Cách sinh câu tương tự từ ví dụ mẫu rút trong kho">
             <option value="python" selected>🐍 Python – đổi số liệu, tính lại lời giải (không cần mạng)</option>
             <option value="python_ai">🐍 Python trước, dạng còn lại 🤖 AI</option>
-            <option value="ai">🤖 AI tự động (Gemini / DeepSeek / … — nhiều khoá, tự đổi khoá)</option></select>
+            <option value="ai">🤖 AI tự động (Gemini / DeepSeek / … — nhiều khoá, tự đổi khoá)</option>
+            <option value="khuon">🧬 Khuôn câu – AI viết khuôn 1 lần, Python sinh &amp; kiểm từng câu (đúng 100%, dùng lại mãi)</option></select>
           <button id="ph-ts-chay" class="chinh" title="Rút ví dụ mẫu trong kho → sinh câu tương tự → nhập ngân hàng → in phiếu riêng theo mẫu">⚡ Tự sinh &amp; in phiếu theo mẫu</button>
           <label class="hop" id="ph-ts-hd-o" style="display:none" title="Câu AI soạn được AI khác giải lại, phản biện, biên tập trước khi nhập kho (chậm hơn, chắc hơn)"><input type="checkbox" id="ph-ts-hd" checked> 🧑‍⚖️ Hội đồng phản biện</label>
           <a href="#" id="ph-ts-khoa" title="Khoá API cho cách AI tự động (lưu trên máy này)">⚙ Khoá AI…</a>
@@ -740,6 +750,21 @@ tr.gop-h td{background:#dbeafe;text-align:left;font-weight:700;padding:8px 12px;
     </div>
   </div>
   <div class="chan"><span id="ph-trang-thai" class="nho"></span><button id="ph-thieu" style="margin-left:auto" title="Kiểm tra ngân hàng đủ câu cho phiếu này chưa; thiếu thì soạn prompt cho AI sinh câu, rồi nhập vào ngân hàng">Kiểm tra kho / Prompt AI soạn câu…</button><button id="ph-xem" title="Máy chọn thử bộ câu cho phiếu → thầy xem từng câu, đổi nhanh hoặc chọn câu khác theo nhóm cho ưng ý → xác nhận mới tạo phiếu">👁 Xem trước &amp; đổi câu</button><button id="ph-tao" class="chinh">Tạo phiếu</button><button id="ph-dong-hop">Đóng</button></div>
+</div></div>
+<div id="hop-ss"><div class="noi">
+  <h2>🧬 Câu song sinh từ khuôn <span id="ss-ma" style="font-weight:400;font-size:13px;color:#64748b"></span></h2>
+  <div class="than">
+    <div class="nho">AI đọc câu mẫu và viết <b>một lần</b> một khuôn Python: cách bốc số, công thức đáp án, <b>một cách tính lại khác hẳn</b>, cách viết đề và lời giải.
+      Python sinh câu từ khuôn; câu nào hai cách tính cho hai đáp án khác nhau thì bỏ. Phương án nhiễu được tính từ lỗi sai thường gặp (ghi ở dòng <code>% nhieu</code>).
+      Khuôn đạt được lưu lại, lần sau sinh tiếp không tốn lượt AI.</div>
+    <div class="hang"><label>Câu giống mẫu <input type="number" id="ss-so" min="0" max="30" value="5"></label>
+      <label>Câu nâng cao (số lớn hơn, mức cao hơn một bậc) <input type="number" id="ss-nc" min="0" max="15" value="1"></label>
+      <label class="hop" title="Bỏ khuôn đã lưu, nhờ AI viết khuôn mới"><input type="checkbox" id="ss-viet-lai"> AI viết lại khuôn</label>
+      <a href="#" id="ss-xem-code">Xem khuôn đã lưu</a></div>
+    <pre id="ss-code"></pre>
+    <pre id="ss-log"></pre>
+  </div>
+  <div class="chan"><span id="ss-tt" class="nho"></span><button id="ss-chay" class="chinh" style="margin-left:auto">🧬 Sinh &amp; nhập kho</button><button id="ss-dong">Đóng</button></div>
 </div></div>
 <div id="hop-hd"><div class="noi">
   <h2>🧑‍⚖️ Hội đồng AI sinh câu — mọi lớp, mọi bài, mọi dạng
@@ -2265,17 +2290,41 @@ function veVai(r){
   o.querySelectorAll("select[data-vai]").forEach(s=>s.onchange=()=>{const v={};o.querySelectorAll("select[data-vai]").forEach(x=>{if(x.value)v[x.dataset.vai]=x.value});luu(v)});
   $("#khoa-tu-vai").onclick=()=>luu({});
 }
-$("#ph-ts-cach").addEventListener("change",()=>{$("#ph-ts-hd-o").style.display=$("#ph-ts-cach").value==="python"?"none":""});
+$("#ph-ts-cach").addEventListener("change",()=>{$("#ph-ts-hd-o").style.display=["python","khuon"].includes($("#ph-ts-cach").value)?"none":""});
 $("#ph-ts-khoa").onclick=async e=>{e.preventDefault();$("#khoa-van").value="";$("#khoa-thu").textContent="";veKhoa(await api("/api/khoa-ai",{}));$("#hop-khoa").style.display="flex"};
 $("#khoa-dong").onclick=()=>{$("#hop-khoa").style.display="none";if($("#hop-hk-ai").style.display==="flex")capNhatKhoaHK();
   if($("#hop-hd").style.display==="flex")api("/api/khoa-ai",{}).then(veVaiHD)};
+// ---------------- 🧬 KHUÔN CÂU — câu song sinh có kiểm chứng
+let SS_MA=[];
+function moSongSinh(ds){
+  SS_MA=ds; $("#ss-ma").textContent="· mẫu "+ds.join(", ");
+  $("#ss-log").style.display="none";$("#ss-log").textContent="";$("#ss-code").style.display="none";$("#ss-tt").textContent="";
+  $("#ss-chay").disabled=false;$("#hop-ss").style.display="flex";
+}
+$("#ss-dong").onclick=()=>$("#hop-ss").style.display="none";
+$("#ss-xem-code").onclick=async e=>{e.preventDefault();
+  const r=await api("/api/khuon-xem",{ma:SS_MA[0]}); const o=$("#ss-code");
+  o.textContent=r.code||"(Câu này chưa có khuôn — bấm Sinh để AI viết khuôn lần đầu.)"; o.style.display=o.style.display==="block"?"none":"block"};
+$("#ss-chay").onclick=async()=>{
+  const so=+$("#ss-so").value||0, so_nc=+$("#ss-nc").value||0;
+  if(!so&&!so_nc){alert("Nhập số câu cần sinh.");return}
+  const b=$("#ss-chay");b.disabled=true;const log=$("#ss-log");log.style.display="block";log.textContent="Đang chuẩn bị…";
+  try{
+    const r0=await api("/api/khuon",{ma:SS_MA,so,so_nc,viet_lai:$("#ss-viet-lai").checked});
+    if(!r0.ok){log.textContent=r0.nhat_ky||r0.loi||"Chưa chạy được.";return}
+    let s; for(;;){await new Promise(t=>setTimeout(t,1200));s=await api("/api/trang-thai");log.textContent=s.nhat_ky||"Đang chạy…";log.scrollTop=1e9;if(s.xong)break}
+    const r=s.ket_qua||{};
+    $("#ss-tt").textContent=r.ok?`✓ Đã nhập ${r.so_cau}/${r.tong_sinh} câu song sinh`+(r.khuon_moi?` · ${r.khuon_moi} khuôn mới đã lưu`:" · dùng khuôn đã lưu"):"Chưa xong — xem nhật kí.";
+    if(r.ok){await tai(); $("#ss-viet-lai").checked=false}
+  }finally{b.disabled=false}
+};
 // ---------------- HỘI ĐỒNG AI SINH CÂU (mọi lớp / chương / bài / dạng)
 let HD={lop:null,chon:{}};          // chon[k] = {loai, muc, so}
 const HD_MUC={NB:0,TH:1,VD:2,VDC:3};
 function veVaiHD(r){
   const o=$("#hd-vai");
   if(!r||!r.co_khoa){o.innerHTML=`<span style="color:#b91c1c">⚠ Chưa có khoá AI — bấm <b>⚙ Khoá AI &amp; phân vai…</b> để dán khoá Gemini / DeepSeek / ChatGPT / Claude.</span>`;return}
-  const icon={soan:"✍",giai:"🔎",phan_bien:"🧑‍🏫",bien_tap:"✅"};
+  const icon={soan:"✍",giai:"🔎",phan_bien:"🧑‍🏫",bien_tap:"✅",khuon:"🧬"};
   o.innerHTML=r.vai.map(v=>`<span class="the" title="${esc(v.ly_do)}">${icon[v.vai]||""} ${esc(v.ten)}: <b>${esc(v.ten_nha)}</b></span>`).join("")+
     (new Set(r.vai.map(v=>v.nha)).size<2?`<span style="color:#b45309">⚠ Mới có khoá một hãng — nên thêm hãng khác để phản biện chéo thật sự.</span>`:"");
 }
@@ -2382,7 +2431,7 @@ $("#ph-ts-chay").onclick=async()=>{
   const cfg=phCfg(); if(!cfg)return; const so=Math.max(1,+$("#ph-tt").value||3), cach=$("#ph-ts-cach").value;
   if(cach!=="python"){const k=await api("/api/khoa-ai",{});if(!k.co_khoa){alert("Cách này cần khoá API AI — bấm ⚙ Khoá AI… trước (hoặc chọn 🐍 Python).");return}}
   const b=$("#ph-ts-chay");b.disabled=true;b.textContent="Đang tự sinh…";
-  try{const r0=await api("/api/tu-sinh",{cau_hinh:cfg,so,kieu:ttKieu(),cach,bien_dich:$("#bien_dich").checked,hoi_dong:cach!=="python"&&$("#ph-ts-hd").checked});
+  try{const r0=await api("/api/tu-sinh",{cau_hinh:cfg,so,kieu:ttKieu(),cach,bien_dich:$("#bien_dich").checked,hoi_dong:!["python","khuon"].includes(cach)&&$("#ph-ts-hd").checked});
     if(!r0.ok){hopThoai("Chưa tự sinh được",r0.nhat_ky||r0.loi||"");return}
     hopThoai("⚡ Đang tự sinh câu tương tự theo mẫu… (chạy tự động, thầy có thể để đó)","Đang chuẩn bị…");
     let s;
@@ -2562,11 +2611,12 @@ function htmlThe(c,so){
   return `<div class="the-cau" data-ma="${c.ma}"><div class="dau">${c.vai?`<b style="color:#7c3aed">${esc(c.vai)}</b> · `:""}Câu ${so} · <span class="muc">${c.muc||"?"}</span> · ${esc(c.ten_dang||"")} · <b>${c.ma}</b>
       ${c.da_dung?` · <span style="color:#b45309">đã dùng ${c.da_dung} lần</span>`:""}${c.ghi_chu?` · <i>${esc(c.ghi_chu)}</i>`:""}</div>
     <div class="nd">${c.de}${pa}${dap}</div>
-    <div class="nut" style="display:flex;gap:6px;flex-wrap:wrap"><button class="xt-doi">↻ Đổi nhanh</button><button class="xt-chon" title="Chuyển đổi qua lại các nhóm (Lớp / Chương / Bài / Dạng / Mức) để tự chọn câu ưng ý nhất">🔍 Chọn theo nhóm…</button></div></div>`;
+    <div class="nut" style="display:flex;gap:6px;flex-wrap:wrap"><button class="xt-doi">↻ Đổi nhanh</button><button class="xt-chon" title="Chuyển đổi qua lại các nhóm (Lớp / Chương / Bài / Dạng / Mức) để tự chọn câu ưng ý nhất">🔍 Chọn theo nhóm…</button><button class="xt-ss" title="Khuôn câu: từ câu này sinh nhiều câu song sinh (cùng cấu trúc, đổi số), mỗi câu được tính lại đáp án bằng hai cách rồi mới nhập kho">🧬 Song sinh…</button></div></div>`;
 }
 function ganNutThe(el,ma){
   const b1=el.querySelector(".xt-doi"); if(b1) b1.onclick=()=>doiCau(ma,b1);
   const b2=el.querySelector(".xt-chon"); if(b2) b2.onclick=()=>moChonCau(ma);
+  const b3=el.querySelector(".xt-ss"); if(b3) b3.onclick=()=>moSongSinh([ma]);
 }
 function thayTheXT(maCu,cauMoi){
   const b=XT.bo[Math.min(XT.tab,XT.bo.length-1)];

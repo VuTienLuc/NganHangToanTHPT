@@ -75,6 +75,16 @@ def tu_sinh_nen(d):
             if t_py:
                 khoi.append(t_py)
             vdm.update(vd_py)
+        if cach == "khuon":                       # 🧬 khuôn câu: AI viết khuôn 1 lần / mẫu, Python sinh & kiểm chứng
+            import luyen_moi_ngay, khuon_cau as KC
+            kq, cac_dang, _ = luyen_moi_ngay.chon(dict(cfg, so_tuong_tu=0, so_van_dung=0, theo_mau=False), rng)
+            ds_ma = [kq[k]["vd"]["ma"] for k in cac_dang if k in kq]
+            n_nc = so if kieu == "nang_cao" else (1 if kieu == "giong_nc" and so > 1 else 0)
+            ghi(f"🧬 Khuôn câu cho {len(ds_ma)} mẫu ({so - n_nc} giống mẫu + {n_nc} nâng cao mỗi mẫu; mọi câu đều được tính lại đáp án):")
+            kb, vd_k, tk = KC.sinh(ds_ma, so - n_nc, n_nc, ghi, seed=rng.randrange(1 << 30))
+            khoi += kb; vdm.update(vd_k)
+            ghi(f"   → {tk['cau']} câu từ {tk['mau']} khuôn ({tk['khuon_moi']} khuôn mới, {tk['khuon_cu']} khuôn dùng lại)"
+                + (f"; {len(tk['bo'])} mẫu chưa làm khuôn được: {', '.join(tk['bo'])}" if tk["bo"] else ""))
         if cach in ("ai", "python_ai"):
             import luyen_moi_ngay
             kq, cac_dang, _ = luyen_moi_ngay.chon(dict(cfg, so_tuong_tu=0, so_van_dung=0, theo_mau=False), rng)
@@ -100,7 +110,7 @@ def tu_sinh_nen(d):
             raise RuntimeError("Chưa sinh được câu nào. Thầy thử cách khác hoặc 📝 Prompt AI (chép – dán).")
         ghi("\n📥 Nhập ngân hàng và tạo phiếu…")
         ra = nhap_tuong_tu_va_tao_phieu("\n\n".join(khoi), cfg, so, vdm, False,
-                                        "Ngân hàng tự sinh (" + {"python": "Python", "ai": "AI", "python_ai": "Python + AI"}.get(cach, cach)
+                                        "Ngân hàng tự sinh (" + {"python": "Python", "ai": "AI", "python_ai": "Python + AI", "khuon": "Khuôn câu"}.get(cach, cach)
                                         + (" · Hội đồng AI" if d.get("hoi_dong") and cach != "python" else "") + ")")
         ghi(ra.get("nhat_ky", ""))
         if ra.get("ok") and d.get("bien_dich") and tim_pdflatex():
@@ -109,6 +119,39 @@ def tu_sinh_nen(d):
     except Exception as e:
         ghi(f"Lỗi: {e}")
         ra = {"ok": False}
+    ra["nhat_ky"] = cong_viec["nhat_ky"]
+    cong_viec.update(dang_chay=False, xong=True, ket_qua=ra)
+
+
+def khuon_nen(d):
+    """🧬 Song sinh: các câu chỉ định → khuôn (dùng lại / AI viết) → N câu giống + M nâng cao, đã kiểm chứng → nhập kho."""
+    def ghi(x):
+        cong_viec["nhat_ky"] += x + "\n"
+    ra = {"ok": False}
+    try:
+        import khuon_cau as KC, nhap_cau
+        ds_ma = [m for m in (d.get("ma") or []) if re.fullmatch(r"[0-9a-f]{8}", m or "")]
+        so = max(0, min(30, int(d.get("so") or 5))); so_nc = max(0, min(15, int(d.get("so_nc") or 0)))
+        if not ds_ma or not (so or so_nc):
+            raise RuntimeError("Chưa chọn câu mẫu hoặc số câu.")
+        ghi(f"🧬 Khuôn câu: {len(ds_ma)} mẫu × ({so} giống + {so_nc} nâng cao)")
+        kb, vdm, tk = KC.sinh(ds_ma, so, so_nc, ghi, viet_lai=bool(d.get("viet_lai")))
+        if not kb:
+            raise RuntimeError("Chưa sinh được câu nào." + (f" Mẫu chưa làm khuôn được: {', '.join(tk['bo'])}" if tk["bo"] else ""))
+        ten = time.strftime("%Y-%m-%d_%H%M%S") + "_khuon_cau.tex"
+        p = os.path.join(GOC, "ai-nhap", ten)
+        open(p, "w", encoding="utf-8").write("% Khuôn câu — câu song sinh có kiểm chứng\n\n" + "\n\n".join(kb) + "\n")
+        ghi(f"\n📥 Biên dịch thử & nhập {len(kb)} câu vào ngân hàng…")
+        so_cau = nhap_cau.nhap([p], thu=False, in_ra=ghi)
+        os.makedirs(os.path.join(GOC, "ai-nhap", "da-nhap"), exist_ok=True)
+        try:
+            shutil.move(p, os.path.join(GOC, "ai-nhap", "da-nhap", ten))
+        except OSError:
+            pass
+        ghi(f"\n✓ Đã nhập {so_cau}/{len(kb)} câu song sinh (câu lỗi nếu có ở ai-nhap/_loi/).")
+        ra = {"ok": True, "so_cau": so_cau, "tong_sinh": len(kb), "khuon_moi": tk["khuon_moi"], "bo": tk["bo"]}
+    except Exception as e:
+        ghi(f"Lỗi: {e}")
     ra["nhat_ky"] = cong_viec["nhat_ky"]
     cong_viec.update(dang_chay=False, xong=True, ket_qua=ra)
 
@@ -1117,6 +1160,15 @@ class XuLy(BaseHTTPRequestHandler):
                 cong_viec.update(dang_chay=True, xong=False, nhat_ky="", ket_qua=None)
                 threading.Thread(target=tu_sinh_nen, args=(dict(d),), daemon=True).start()
                 return self.gui(200, {"ok": True, "nen": True})
+            if u.path == "/api/khuon":                # 🧬 câu song sinh từ khuôn (chạy nền)
+                if cong_viec.get("dang_chay"):
+                    return self.gui(200, {"ok": False, "nhat_ky": "Đang có việc khác chạy — thầy đợi xong rồi bấm lại."})
+                cong_viec.update(dang_chay=True, xong=False, nhat_ky="", ket_qua=None)
+                threading.Thread(target=khuon_nen, args=(dict(d),), daemon=True).start()
+                return self.gui(200, {"ok": True, "nen": True})
+            if u.path == "/api/khuon-xem":            # xem khuôn đã lưu của một câu
+                import khuon_cau as KC
+                return self.gui(200, {"ok": True, "code": KC.doc_khuon(d.get("ma") or "") or ""})
             if u.path in ("/api/hk-sinh-ai", "/api/ai-hoi-dong"):   # AI sinh câu (Ôn thi HK / Hội đồng AI mọi mục) → phản biện chéo → biên dịch thử → nhập kho
                 if u.path == "/api/ai-hoi-dong":
                     d["hoi_dong"] = True

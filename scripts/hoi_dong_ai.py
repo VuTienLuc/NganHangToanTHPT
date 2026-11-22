@@ -21,8 +21,14 @@ VAI = {
     "giai":      {"ten": "Giải độc lập",      "uu_tien": ["deepseek", "openai", "claude", "gemini"]},
     "phan_bien": {"ten": "Phản biện sư phạm", "uu_tien": ["openai", "claude", "gemini", "deepseek"]},
     "bien_tap":  {"ten": "Tổng biên tập",     "uu_tien": ["claude", "openai", "gemini", "deepseek"]},
+    "khuon":     {"ten": "Viết khuôn câu (code)", "uu_tien": ["claude", "openai", "deepseek", "gemini"]},
 }
-THU_TU = ["soan", "giai", "phan_bien", "bien_tap"]
+THU_TU = ["soan", "giai", "phan_bien", "bien_tap", "khuon"]
+HOI_DONG = ["soan", "giai", "phan_bien", "bien_tap"]
+LY_DO_VAI = {("khuon", "claude"): "viết code Python chặt chẽ, ít lỗi — hợp viết khuôn câu",
+             ("khuon", "openai"): "viết code tốt, sửa lỗi theo phản hồi nhanh",
+             ("khuon", "deepseek"): "giỏi toán và code, rẻ",
+             ("khuon", "gemini"): "nhanh, rẻ; code đôi khi cần sửa nhiều lần"}
 LY_DO = {
     "gemini": "nhanh, rẻ, tiếng Việt tốt, ngữ cảnh dài — hợp soạn nhiều câu đa dạng",
     "deepseek": "mô hình suy luận mạnh về toán — hợp giải lại để bắt đáp án sai",
@@ -62,7 +68,7 @@ def phan_vai(cau_hinh=None, co=None):
 
 def mo_ta_vai(vai):
     return [{"vai": v, "ten": VAI[v]["ten"], "nha": vai.get(v), "ten_nha": ST.TEN_NHA.get(vai.get(v), vai.get(v) or "—"),
-             "ly_do": LY_DO.get(vai.get(v), "")} for v in THU_TU]
+             "ly_do": LY_DO_VAI.get((v, vai.get(v))) or LY_DO.get(vai.get(v), "")} for v in THU_TU]
 
 
 def xoay_cho(vai_ten, nha, ghi=print):
@@ -220,8 +226,8 @@ class HoiDong:
         return ST.TEN_NHA.get(self.vai[v], self.vai[v])
 
     def gioi_thieu(self):
-        self.ghi("🧑‍⚖️ Hội đồng AI: " + " · ".join(f"{VAI[v]['ten']} = {self.ten(v)}" for v in THU_TU))
-        if len(set(self.vai.values())) == 1:
+        self.ghi("🧑‍⚖️ Hội đồng AI: " + " · ".join(f"{VAI[v]['ten']} = {self.ten(v)}" for v in HOI_DONG))
+        if len({self.vai[v] for v in HOI_DONG}) == 1:
             self.ghi("   ⚠ Chỉ có khoá một hãng — hội đồng vẫn chạy nhưng tự kiểm chính mình, nên thêm khoá hãng khác.")
 
     def _goi(self, v, prompt):
