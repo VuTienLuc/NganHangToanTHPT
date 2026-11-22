@@ -107,14 +107,17 @@ def _tai_lieu(cfg, nhan, ten, noi_hs, noi_gv, phu, dang_keys, hai_cot=False):
             r"\newcommand{\hopNhom}[1]{\par\smallskip\noindent{\color{mauDang}\bfseries #1}\par\nopagebreak}",
             r"\usepackage{multicol}\setlength{\columnsep}{0.6cm}\setlength{\columnseprule}{0.3pt}"]
     mau = mau.replace("\\begin{document}", "\n".join(them) + "\n\\begin{document}", 1)
-    def dau(tieu, ho_ten):
+    def dau(tieu, ho_ten, phu_=None, ten_=None):
         return (r"\dauPhieuKhung{" + thoat(tt.get("truong") or "") + "}{" + thoat(tt.get("nam_hoc") or "") + "}{" + tieu + "}{"
-                + tieu_de_ten(ten, thoat) + "}{" + phu + "}{" + ("1" if ho_ten else "0") + "}")
+                + tieu_de_ten(ten_ or ten, thoat) + "}{" + (phu_ if phu_ is not None else phu) + "}{" + ("1" if ho_ten else "0") + "}")
+    # phiếu nhiều tờ (vd Mảnh ghép): mỗi tờ tự đặt đầu phiếu bằng <<DAU|tiêu đề|tên|dòng phụ>>
+    tu_dau = noi_hs.lstrip().startswith("<<DAU|")
+    noi_hs = re.sub(r"<<DAU\|(.*?)\|(.*?)\|(.*?)>>", lambda m: dau(m.group(1), True, m.group(3), m.group(2)), noi_hs)
     ky = (r"\par\bigskip\noindent\hfill{\small\itshape Giáo viên: }{\small\bfseries " + thoat(gv) + r"}\par" if gv else "")
     bat, tat = ("\\begin{multicols}{2}\n", "\n\\end{multicols}") if hai_cot and co == "11" else ("", "")
     het = "\n\\par\\bigskip\\begin{center}{\\small\\itshape --- Hết ---}\\end{center}" + ky + "\n\\label{trangCuoiPhieu}\n"
     ghi(os.path.join(out, "PhieuHoatDong.tex"), mau_phieu.gan_bieu_tuong(
-        mau.replace("<<CHE_DO_LOI_GIAI>>", "\\anloigiai").replace("<<NOI_DUNG>>", dau(nhan, True) + "\n" + bat + noi_hs + tat + het)))
+        mau.replace("<<CHE_DO_LOI_GIAI>>", "\\anloigiai").replace("<<NOI_DUNG>>", ("" if tu_dau else dau(nhan, True) + "\n") + bat + noi_hs + tat + het)))
     ghi(os.path.join(out, "PhieuHoatDong_LoiGiai.tex"), mau_phieu.gan_bieu_tuong(
         mau.replace("<<CHE_DO_LOI_GIAI>>", "\\hienthiloigiai").replace("<<NOI_DUNG>>", dau("ĐÁP ÁN – " + nhan, False) + "\n" + noi_gv + het)))
     ghi(os.path.join(out, "_ten_phieu.txt"), ten_tep(f"{nhan.title()} - {ten}", 90))
@@ -493,23 +496,179 @@ def on_tap(cfg, in_ra=print):
     return out
 
 
-# ------------------------------------------------------------------ prompt AI sinh câu nhập ngân hàng (Mật mã, Ôn tập)
+# ------------------------------------------------------------------ ⭐ THỬ THÁCH 3 MỨC (LEO NÚI)
+BAC = [("⭐", "Chân núi – Cơ bản", {"N", "H"}, 1), ("⭐⭐", "Sườn núi – Vận dụng", {"V"}, 2), ("⭐⭐⭐", "Đỉnh núi – Thử thách", {"C"}, 3)]
+
+
+def _sao(n):
+    return r"{\color{mauDang}" + r"\,".join([r"\faStar"] * n) + "}"
+
+
+def thu_thach(cfg, in_ra=print):
+    dang = list(cfg.get("dang") or [])
+    if not dang:
+        raise ValueError("Chưa chọn dạng.")
+    so = [max(0, min(6, int(x))) for x in (cfg.get("so_bac") or [2, 2, 1])][:3]
+    random.seed(cfg.get("seed") or time.time())
+    loai = ["TN", "TLN", "TL"] if cfg.get("co_tl", True) else ["TN", "TLN"]
+    id_map = tai_id_map()
+    hs, gv, bang, dem, da, tong_sao, thieu = [], [], [], 0, set(), 0, []
+    for j, d in enumerate(dang, 1):
+        ten_d = (id_map.get(d, {}).get("type_name") or d).strip()
+        hs.append(r"\phanPhieu[\faFlag]{CHẶNG " + str(j) + ". " + thoat(ten_d.upper()) + "}")
+        hang = []
+        for b, (ky, ten_b, muc, diem) in enumerate(BAC):
+            if not so[b]:
+                hang.append("—"); continue
+            ds = _ung_vien([d], loai, muc, da)[:so[b]]
+            if len(ds) < so[b] and b == 2:              # thiếu VDC → lấy thêm câu vận dụng khó nhất
+                ds += _ung_vien([d], loai, {"V"}, da | {c["ma"] for c in ds})[:so[b] - len(ds)]
+            if len(ds) < so[b]:
+                thieu.append(f"{d} bậc {ky}: có {len(ds)}/{so[b]} câu")
+            if not ds:
+                hang.append("—"); continue
+            da |= {c["ma"] for c in ds}
+            hs.append(r"\par\smallskip\noindent\tikz[reset cm,baseline=(b.base)]\node[fill=mauDang!" + str(12 + 10 * b) +
+                      r",rounded corners=1.5mm,inner xsep=2mm,inner ysep=1.5pt,font=\small\bfseries](b){" + _sao(diem) + r"\ \ " + ten_b +
+                      r"};\hfill{\small " + str(diem) + r" sao / câu}\par")
+            for c in ds:
+                dem += 1; tong_sao += diem
+                hs.append((_cau_tn(c, None, dem) if c["loai"] == "TN" else _cau_tln(c, dem) if c["loai"] == "TLN" else _cau_tl(c, dem, 4))
+                          + r"\vspace{-2pt}\noindent\hfill{\scriptsize Đạt:\ \fbox{\rule{0pt}{1.6ex}\hspace{3mm}}}\par")
+                p = _tach(c)
+                gv.append(r"\par\noindent\textbf{Câu " + str(dem) + r"} (" + _sao(diem) + r"). " + (r"Đáp án \textbf{" + thoat(_dap(c)) + "}. " if _dap(c) else "") + (p["lg"] or "") + r"\par")
+            hang.append(f"{len(ds)} câu × {diem}")
+        bang.append((j, ten_d, hang))
+    if not dem:
+        raise ValueError("Các dạng đã chọn chưa có câu phù hợp.")
+    # bảng tích sao: mỗi chặng × 3 bậc
+    tich = (r"\phanPhieu[\faTrophy]{BẢNG TÍCH SAO}" + "\n" + r"{\small Mỗi câu làm đúng: tô sao tương ứng. Chinh phục đủ một bậc mới lên bậc tiếp theo! Tổng tối đa: \textbf{"
+            + str(tong_sao) + r" sao}.}\par\smallskip\noindent\begin{tabular}{|p{0.40\linewidth}|p{0.13\linewidth}|p{0.13\linewidth}|p{0.13\linewidth}|}\hline \textbf{Chặng} & " +
+            " & ".join(r"\hfill" + _sao(diem) + r"\hfill\null" for _, _, _, diem in BAC) + r"\\\hline " +
+            r"\\\hline ".join(f"{j}. " + thoat(t if len(t) <= 46 else t[:44].rsplit(" ", 1)[0] + "…") + " & " + " & ".join(r"\rule{0pt}{4mm}" for _ in BAC) for j, t, _ in bang) +
+            r"\\\hline\multicolumn{4}{|r|}{\rule{0pt}{4.5mm}Tổng số sao: \makebox[1.6cm]{\dotfill}\ /\ " + str(tong_sao) +
+            r"\qquad Danh hiệu: \faFlag\ Nhà leo núi ($\ge 50\%$)\quad \faTrophy\ Chinh phục đỉnh ($\ge 80\%$)}\\\hline\end{tabular}\par")
+    if cfg.get("bang_nhom"):
+        so_nhom = max(2, min(10, int(cfg.get("so_nhom") or 6)))
+        tich += (r"\par\medskip\noindent{\bfseries\color{mauDang}Bảng xếp hạng nhóm} {\small(tổng sao các thành viên)}\par\smallskip\noindent"
+                 r"\begin{tabular}{|l|" + r"p{8mm}|" * so_nhom + r"}\hline Nhóm & " + " & ".join(str(i) for i in range(1, so_nhom + 1)) +
+                 r"\\\hline Sao & " + " & ".join(r"\rule{0pt}{5mm}" for _ in range(so_nhom)) + r"\\\hline\end{tabular}\par")
+    noi_hs = (r"{\small Mỗi chặng là một dạng toán với 3 bậc: " + _sao(1) + r" cơ bản, " + _sao(2) + r" vận dụng, " + _sao(3) +
+              r" thử thách. Em tự chọn bậc phù hợp, làm đúng được tích sao — cố gắng leo tới đỉnh!}\par" + "\n" + "\n".join(hs) + "\n" + tich)
+    noi_gv = r"\phanPhieu[\faKey]{ĐÁP ÁN – LỜI GIẢI}" + "\n" + "\n".join(gv)
+    ten = (cfg.get("ten") or "").strip() or (id_map.get(dang[0], {}).get("lesson_name") or "Leo núi").strip()
+    out = _tai_lieu(cfg, "THỬ THÁCH LEO NÚI", ten, noi_hs, noi_gv, _phu(dang, f"{len(dang)} chặng · {dem} câu · tối đa {tong_sao} sao"), dang)
+    in_ra(f"⭐ Phiếu Thử thách 3 mức: {len(dang)} chặng, {dem} câu, tối đa {tong_sao} sao")
+    for x in thieu:
+        in_ra("  ⚠ " + x)
+    return out
+
+
+# ------------------------------------------------------------------ 🧩 MẢNH GHÉP (JIGSAW)
+MAU_NHOM = ["mauPhieu", "mauDang", "orange!80!black", "teal!70!black", "violet!75!black", "red!70!black"]
+
+
+def manh_ghep(cfg, in_ra=print):
+    """Mỗi dạng = một nhóm chuyên gia (A, B, C…). Tờ chuyên gia: phương pháp + ví dụ mẫu có lời giải + bài luyện + ghi chú để dạy lại.
+    Tờ mảnh ghép: mỗi dạng một ô tóm tắt (nghe bạn chuyên gia dạy) + bài tập. Đáp án kèm sơ đồ chia nhóm cho cả lớp."""
+    import beamer_phieu
+    dang = list(cfg.get("dang") or [])
+    if not 2 <= len(dang) <= 6:
+        raise ValueError("Mảnh ghép cần chọn 2–6 dạng (mỗi dạng là một nhóm chuyên gia).")
+    random.seed(cfg.get("seed") or time.time())
+    so_hs = max(len(dang), min(60, int(cfg.get("so_hs") or 40)))
+    so_luyen = max(1, min(4, int(cfg.get("so_luyen") or 2)))
+    id_map = tai_id_map()
+    nhom = "ABCDEF"
+    so_manh = -(-so_hs // len(dang))
+    to, gv, mg, da = [], [], [], set()
+    ten = (cfg.get("ten") or "").strip() or (id_map.get(dang[0], {}).get("lesson_name") or "Học nhóm mảnh ghép").strip()
+    phu = _phu(dang, f"{len(dang)} nhóm chuyên gia · {so_manh} nhóm mảnh ghép")
+    for j, d in enumerate(dang):
+        ten_d = (id_map.get(d, {}).get("type_name") or d).strip()
+        mau = MAU_NHOM[j % len(MAU_NHOM)]
+        the = (r"\tikz[reset cm,baseline=(n.base)]\node[circle,fill=" + mau + r",text=white,minimum size=7mm,inner sep=0pt,font=\bfseries](n){" + nhom[j] + "};")
+        ds = _ung_vien([d], ["TL", "TLN", "TN"], None, da)
+        vd = next((c for c in ds if len(re.sub(r"\s", "", (_tach(c) or {}).get("lg") or "")) > 40), None)
+        if vd:
+            da.add(vd["ma"])
+        luyen = [c for c in ds if c["ma"] not in da][:so_luyen]
+        da |= {c["ma"] for c in luyen}
+        bt_mg = [c for c in _ung_vien([d], ["TN", "TLN", "TL"], {"N", "H", "V"}, da)][:1]
+        da |= {c["ma"] for c in bt_mg}
+        pp = beamer_phieu.doc_pp(d).strip()
+        from phieu_bai_hoc import chuan_kien_thuc
+        t = [r"<<DAU|PHIẾU CHUYÊN GIA – NHÓM " + nhom[j] + "|" + ten_d + "|" + thoat(f"In {so_manh} bản · mỗi bạn nhóm {nhom[j]} một bản") + ">>",
+             r"\par\noindent" + the + r"\ {\large\bfseries\color{" + mau + r"}Nhiệm vụ của chuyên gia " + nhom[j] + r"}\par"
+             r"{\small Cả nhóm cùng đọc phương pháp, hiểu kĩ ví dụ mẫu, làm bài luyện và thống nhất cách giảng. Sau đó mỗi bạn về nhóm mảnh ghép "
+             r"\textbf{dạy lại} dạng này cho các bạn trong khoảng 5 phút.}\par",
+             r"\phanPhieu[\faLightbulbO]{1. PHƯƠNG PHÁP}",
+             (r"\begin{khungKT}" + chuan_kien_thuc(pp) + r"\end{khungKT}") if pp else r"{\small\itshape Cả nhóm cùng rút ra các bước giải:}\dongKe{3}"]
+        if vd:
+            p = _tach(vd)
+            t += [r"\phanPhieu[\faBook]{2. VÍ DỤ MẪU}", r"\par\noindent\textbf{Ví dụ.} " + p["de"] +
+                  (r"\par\noindent " + r"\quad ".join(f"\\textbf{{{'ABCD'[i]}.}} {x}" for i, x in enumerate(p["pa"])) if vd["loai"] == "TN" and p.get("pa") else "") +
+                  r"\par\noindent{\bfseries\color{" + mau + r"}Lời giải.} " + p["lg"] + r"\par"]
+        t.append(r"\phanPhieu[\faPencil]{3. CHUYÊN GIA LUYỆN TẬP}")
+        for k, c in enumerate(luyen, 1):
+            t.append(_cau_tn(c, None, k) if c["loai"] == "TN" else _cau_tln(c, k) if c["loai"] == "TLN" else _cau_tl(c, k, 3))
+            gv.append(r"\par\noindent\textbf{Nhóm " + nhom[j] + " – luyện " + str(k) + ".} " + (r"Đáp án \textbf{" + thoat(_dap(c)) + "}. " if _dap(c) else "") + (_tach(c)["lg"] or "") + r"\par")
+        t += [r"\phanPhieu[\faCommentO]{4. GHI CHÚ ĐỂ DẠY LẠI BẠN}", r"{\small Các bước chính / lỗi hay gặp / mẹo nhớ:}\dongKe{3}", r"\newpage"]
+        to.append("\n".join(t))
+        # ô trên tờ mảnh ghép
+        o = [r"\par\medskip\noindent" + the + r"\ {\bfseries\color{" + mau + r"}Dạng " + nhom[j] + ". " + thoat(ten_d) + r"}{\small\ — bạn chuyên gia " + nhom[j] + r" giảng}\par",
+             r"{\small Tóm tắt cách làm:}\dongKe{2}"]
+        for c in bt_mg:
+            x = _cau_tn(c, None, "#") if c["loai"] == "TN" else _cau_tln(c, "#") if c["loai"] == "TLN" else _cau_tl(c, "#", 3)
+            o.append(x.replace(r"\color{mauPhieu}Câu #.}", r"\color{" + mau + "}Bài " + nhom[j] + ".}"))
+            gv.append(r"\par\noindent\textbf{Mảnh ghép – bài " + nhom[j] + ".} " + (r"Đáp án \textbf{" + thoat(_dap(c)) + "}. " if _dap(c) else "") + (_tach(c)["lg"] or "") + r"\par")
+        mg.append("\n".join(o))
+    to.append(r"<<DAU|PHIẾU MẢNH GHÉP|" + thoat(ten) + "|" + thoat(f"In {so_hs} bản · mỗi học sinh một bản") + ">>" + "\n" +
+              r"{\small Mỗi nhóm mảnh ghép có đủ chuyên gia " + ", ".join(nhom[:len(dang)]) + r". Lần lượt từng bạn giảng dạng của mình (≈5 phút), "
+              r"cả nhóm ghi tóm tắt rồi cùng giải bài tương ứng. Cuối giờ tự đánh giá.}\par" + "\n".join(mg) +
+              r"\phanPhieu[\faCheckSquareO]{TỰ ĐÁNH GIÁ}" + r"{\small Dạng em hiểu rõ nhất: \makebox[4cm]{\dotfill}\quad Dạng cần hỏi thêm: \makebox[4cm]{\dotfill}"
+              r"\par\smallskip Bạn chuyên gia giảng dễ hiểu nhất: \makebox[5cm]{\dotfill}}\par")
+    # sơ đồ chia nhóm cho giáo viên
+    chia = [[] for _ in range(so_manh)]
+    for i in range(so_hs):
+        chia[i // len(dang)].append((i + 1, nhom[i % len(dang)]))
+    so_do = (r"\phanPhieu[\faUsers]{SƠ ĐỒ CHIA NHÓM (" + str(so_hs) + r" học sinh)}" + "\n" +
+             r"{\small Học sinh số $n$ (theo danh sách) vào \textbf{nhóm chuyên gia} theo chữ cái và \textbf{nhóm mảnh ghép} theo số dòng. "
+             r"Mỗi nhóm chuyên gia có khoảng " + str(so_manh) + r" bạn; mỗi nhóm mảnh ghép có " + str(len(dang)) + r" bạn (một bạn mỗi dạng).}\par\smallskip"
+             r"\noindent\begin{tabular}{|c|" + "c|" * len(dang) + r"}\hline\textbf{Mảnh ghép} & " +
+             " & ".join(r"\textbf{" + nhom[k] + "}" for k in range(len(dang))) + r"\\\hline " +
+             r"\\\hline ".join(f"{m + 1} & " + " & ".join("HS " + str(n) for n, _ in r) + " & " * (len(dang) - len(r)) for m, r in enumerate(chia)) +
+             r"\\\hline\end{tabular}\par")
+    noi_gv = so_do + r"\phanPhieu[\faKey]{ĐÁP ÁN – LỜI GIẢI}" + "\n" + "\n".join(gv)
+    out = _tai_lieu(cfg, "HỌC NHÓM MẢNH GHÉP", ten, "\n".join(to), noi_gv, phu, dang)
+    in_ra(f"🧩 Phiếu Mảnh ghép: {len(dang)} tờ chuyên gia (A–{nhom[len(dang) - 1]}) + tờ mảnh ghép; {so_hs} HS → {so_manh} nhóm mảnh ghép")
+    return out
+
+
+# ------------------------------------------------------------------ prompt AI sinh câu nhập ngân hàng (Mật mã, Ôn tập, Leo núi, Mảnh ghép)
 def prompt_cau(dang, so_moi=4, kieu="mat_ma", lop=None):
     id_map = tai_id_map()
     dem = {d: collections.Counter(c["loai"] for c in _kho().values() if c.get("dang_key") == d) for d in dang}
     tn_tln = kieu == "mat_ma"
-    p = ["Bạn là giáo viên Toán giỏi (chương trình GDPT 2018, sách Kết nối tri thức). Soạn câu hỏi MỚI cho các dạng toán dưới đây "
-         + ("để làm PHIẾU MẬT MÃ: câu ngắn, làm trong 1–2 phút, mỗi câu một đáp án rõ ràng." if tn_tln else
-            "để làm PHIẾU ÔN TẬP NGẮT QUÃNG: câu gọn, kiểm tra đúng kiến thức cốt lõi của dạng, mức nhận biết – thông hiểu là chính."),
+    muc_dich = {"mat_ma": "để làm PHIẾU MẬT MÃ: câu ngắn, làm trong 1–2 phút, mỗi câu một đáp án rõ ràng.",
+                "on_tap": "để làm PHIẾU ÔN TẬP NGẮT QUÃNG: câu gọn, kiểm tra đúng kiến thức cốt lõi của dạng, mức nhận biết – thông hiểu là chính.",
+                "thu_thach": "để làm PHIẾU THỬ THÁCH 3 MỨC (leo núi): mỗi dạng đủ 3 bậc — ⭐ cơ bản (NB/TH), ⭐⭐ vận dụng (VD), "
+                             "⭐⭐⭐ thử thách (VDC: nhiều bước, tình huống thực tế hoặc biện luận) — bậc sau khó hơn rõ rệt nhưng vẫn cùng dạng.",
+                "manh_ghep": "để làm PHIẾU MẢNH GHÉP (học nhóm): mỗi dạng cần 1 ví dụ mẫu tự luận có LỜI GIẢI ĐẦY ĐỦ TỪNG BƯỚC (để học sinh "
+                             "chuyên gia đọc hiểu rồi dạy lại bạn) và vài bài luyện cùng dạng, mức thông hiểu – vận dụng."}.get(kieu, "")
+    p = ["Bạn là giáo viên Toán giỏi (chương trình GDPT 2018, sách Kết nối tri thức). Soạn câu hỏi MỚI cho các dạng toán dưới đây " + muc_dich,
          "", "YÊU CẦU:",
          "1. Trả về DUY NHẤT một khối ```json có dạng {\"trac_nghiem\": [...], \"tra_loi_ngan\": [...]} (nhóm không có câu thì để []).",
          "2. trac_nghiem: {\"cau\", \"phuong_an\": [4 chuỗi, không ghi A./B.], \"dap_an\": \"A\"|\"B\"|\"C\"|\"D\", \"giai_thich\", \"muc\": \"NB\"|\"TH\"|\"VD\", "
          "\"ma_dang\", \"figures\": []}. Đáp án đúng rải đều A–D. Phương án nhiễu sinh từ lỗi sai thường gặp, 4 phương án khác nhau.",
-         "3. tra_loi_ngan: {\"cau\", \"dap_an\": chuỗi số tối đa 4 ký tự (vd \"2,5\", \"-3\"), \"giai_thich\", \"muc\", \"ma_dang\", \"figures\": []}.",
-         "4. ma_dang: lấy đúng mã dạng ở danh sách, thay \"?\" bằng N (NB) / H (TH) / V (VD).",
+         "3. tra_loi_ngan: {\"cau\", \"dap_an\": chuỗi số tối đa 4 ký tự (vd \"2,5\", \"-3\"), \"giai_thich\", \"muc\", \"ma_dang\", \"figures\": []}."
+         + (" tu_luan: {\"cau\", \"giai_thich\": lời giải đầy đủ từng bước, \"muc\", \"ma_dang\", \"figures\": []} (thêm khoá \"tu_luan\": [...] vào JSON)."
+            if kieu in ("thu_thach", "manh_ghep") else ""),
+         "4. ma_dang: lấy đúng mã dạng ở danh sách, thay \"?\" bằng N (NB) / H (TH) / V (VD) / C (VDC); \"muc\" ghi NB/TH/VD/VDC tương ứng.",
          "5. LaTeX trong $...$, mỗi dấu \\ viết thành \\\\ trong JSON. Tự giải lại từng câu trước khi trả lời; đáp án phải khớp lời giải.",
-         "", "DANH SÁCH DẠNG (mỗi dạng " + str(so_moi) + " câu" + (", khoảng 2/3 trắc nghiệm, 1/3 trả lời ngắn" if tn_tln else
-                                                                  ", trộn trắc nghiệm và trả lời ngắn") + "):"]
+         "", "DANH SÁCH DẠNG (mỗi dạng " + str(so_moi) + " câu" + {"mat_ma": ", khoảng 2/3 trắc nghiệm, 1/3 trả lời ngắn",
+                                                                  "thu_thach": ", chia đều 3 bậc NB-TH / VD / VDC, trộn TN, trả lời ngắn và tự luận",
+                                                                  "manh_ghep": ", trong đó ít nhất 1 câu tự luận có lời giải chi tiết làm ví dụ mẫu"}.get(kieu, ", trộn trắc nghiệm và trả lời ngắn") + "):"]
     for d in dang:
         v = id_map.get(d, {})
         p.append(f"- {d}: {(v.get('type_name') or '').strip()} — bài {(v.get('lesson_name') or '').strip()} "
