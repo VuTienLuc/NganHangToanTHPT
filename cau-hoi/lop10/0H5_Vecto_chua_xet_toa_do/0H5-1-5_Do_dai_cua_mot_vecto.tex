@@ -542,3 +542,40 @@
 			\end{tikzpicture}}
 	}  
 \end{bt}
+
+% nguồn: chuyen_dang (nhập 22/11/2026)
+\begin{bt}%[0H5V1-5]%[ma:2fba63d4]
+	Cho hình vuông $ABCD$ tâm $O$ cạnh bằng  $5$. Gọi $M$ là trung điểm của $AB$, $N$ là điểm đối xứng với $C$ qua $D$. Hãy tính độ dài của vectơ $\overrightarrow{MN}$ (kết quả làm tròn đến hàng phần trăm).
+	 \shortans{9,01}
+	\loigiai{\begin{center}
+		\begin{tikzpicture}[>=stealth,line join=round,line cap=round,font=\footnotesize,scale=0.8]
+				\path 
+					 (0,4) coordinate (B)
+					 (0,0) coordinate (A)
+					(4,0) coordinate  (D)
+					 (4,4) coordinate (C)
+					($(A)!0.5!(C)$) coordinate (O) 
+					($(A)!0.5!(B)$) coordinate  (M)
+					($(C)!2!(D)$) coordinate  (N);
+				\draw  (A)--(B)--(C)--(D)--(A)
+					(A)--(C) 
+					 (B)--(D)
+					(D)--(N)--(M)--(D); 
+				\foreach \x/\g in {B/90,A/200,C/30,D/30,O/90,M/160,N/-60} \fill  (\x) circle (1pt) +(\g:3mm) node[scale=.8] {$\x$};
+				\draw pic[thin,draw,angle radius=2mm] {right angle=  B--A--D};
+				\draw pic[thin,draw,angle radius=2mm] {right  angle= C--B--A};
+				\draw pic[thin,draw,angle radius=2mm]  {right angle= D--C--B};
+				 \draw pic[thin,draw,angle radius=2mm] {right angle= A--D--C};
+			\end{tikzpicture}
+	\end{center}
+	Áp dụng  định lý Pytago trong tam giác vuông $MAD$ ta có
+	$DM^2=AM^2+AD^2=\left(\dfrac{5}{2}\right)^2+5^2=\dfrac{125}{4}$.\\ 
+	$\Rightarrow DM=\dfrac{5  \sqrt{5}}{2}$.\\
+	Qua  $N$ kẻ đường thẳng song song với $AD$ cắt $AB$ tại $P$.\\
+	Khi  đó tứ giác $ADNP$là hình vuông và $PM=PA+AM=5+\dfrac{5}{2}=\dfrac{15}{2}$.\\
+	Áp dụng định lý Pytago trong tam giác vuông  $NPM$ ta có
+	 $MN^2=NP^2+PM^2=5^2+\left(\dfrac{15}{2}\right)^2=\dfrac{325}{4}$.\\
+	 $\Rightarrow MN=\dfrac{5\sqrt{13}}{2}$.\\
+	Suy ra $\left|\overrightarrow{MN}\right|=MN=\dfrac{5\sqrt{13}}{2} \approx 9{,}01$. 
+ }
+\end{bt}

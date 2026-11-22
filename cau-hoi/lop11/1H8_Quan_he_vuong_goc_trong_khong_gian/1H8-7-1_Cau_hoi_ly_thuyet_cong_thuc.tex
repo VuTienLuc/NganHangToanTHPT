@@ -303,41 +303,6 @@
 \end{ex}
 
 % nguồn: Ok_TracNghiemLop11_Lan1
-\begin{ex}%[1H8H7-1]%[ma:d48c8f51]
-	Cho hình lập phương $ABCD.A'B'C'D'$. Tính góc giữa hai đường thẳng $AC$  và $A'B$.
-	\choice 
-		 {\True $60^\circ$}
-		 {$45^\circ$}
-		 {$75^\circ$}
-		 {$90^\circ$}
-	 \loigiai{
-	\immini{ 
-		Do $A'BCD'$ là hình bình hành nên $A'B\parallel D'C$. Suy ra góc  giữa hai đường thẳng $AC$ và $A'B$ bằng góc giữa hai đường thẳng $AC$ và $D'C$ và đó chính là góc $\widehat{ACD'}=60^\circ$ (do $\triangle ACD'$ đều).
-		} 
-		 {
-		\begin{tikzpicture}[declare function={r=2;}]
-				\path (0:0) coordinate (A) 
-					(0:r) coordinate  (B)
-					++(37:{0.65*r}) coordinate  (C)
-					++(180:r)  coordinate (D)
-				\foreach \x in  {A,B,C,D}{(\x)++(90:r) coordinate (\x')};
-				\draw[dash pattern=on 2pt off  2 pt] (D')--(D)--(A)
-					 (D)--(C)--(D')--(A)--(C);
-				\draw  (A)--(B)--(C)
-					(A)--(A') 
-					 (B)--(B')
-					 (C)--(C')
-					(A')--(B')--(C')--(D')--cycle (A')--(B); 
-				\foreach \x  in {A,B,C,D,A',B',C',D'}
-				\draw[fill]  (\x) circle (1pt);
-				 \foreach \t/\g in {A/-90,B/-90,C/0,D/180,A'/180,B'/-20,C'/90,D'/90}{
-					\draw[fill]  (\t) circle (1pt) node[shift={(\g:7pt)},font=\scriptsize]{$ \t $};
-				} 
-			\end{tikzpicture}
-		 }
-	} 
-\end{ex}
-
 % nguồn: Ok_TracNghiemLop11_Lan1
 \begin{ex}%[1H8Y7-1]%[ma:38619787]
 	Cho hình chóp tam giác đều $S.ABC$. Khẳng định nào sau đây là  \textbf{sai} về hình chóp đã cho?
@@ -350,3 +315,49 @@
 		Hình chóp tam giác đều có các mặt bên là  các tam giác cân.
 	 }
 \end{ex}
+
+% nguồn: chuyen_dang (nhập 22/11/2026)
+\begin{bt}%[1H8H7-1]%[ma:3b69a2ac]
+% nguon: Archive/2024/0. [LVH] BG - 12 New - 4in1-20240625T224301Z-001/0. [LVH] BG - 12 New - 4in1/2. [LVH] TEX SGK 12 NEW-20240418T074833Z-001/2. [LVH] TEX SGK 12 NEW/[LVH] SGK-12-KNTT/data/C4/12-c4-bai13-ungdunghinhhoccuatichphan.tex #1163
+%[TeX hóa SGK KNTT 12]%[Anh Hoàng Lê]
+	Tính thể tích của khối lăng trụ có diện tích đáy bằng $S$ và chiều cao bằng $h$.
+	\loigiai{
+		\immini{
+			Chọn trục $Ox$ song song với đường cao của khối lăng trụ và hai đáy nằm trên hai mặt phẳng vuông góc với $Ox$ tại $x=0$ và $x=h$.
+			Mỗi mặt phẳng vuông góc với trục $Ox$ tại điểm có hoành độ bằng $x \,(0 \leq x \leq h)$ cắt khối lăng trụ theo mặt cắt có diện tích không đổi là $S(x)=S$.\\
+			Do đó, thể tích của khối lăng trụ là
+			$$
+			V=\displaystyle\int_0^h S(x) \mathrm{\,d} x=\displaystyle\int_0^h S \mathrm{\,d}x=\left. Sx \bigg|_0^h \right.=Sh.
+			$$}{
+			\begin{tikzpicture}[line join = round, line cap = round,>=stealth,font=\footnotesize,scale=1]
+				\def \h{4}
+				\path
+				(0,0) coordinate (A)
+				(3,0) coordinate (B)
+				(4,1) coordinate (C)
+				($(A)+(C)-(B)$) coordinate (D)
+				($(A)+(-.5,\h)$) coordinate (A')
+				($(B)+(-.5,\h)$) coordinate (B')
+				($(C)+(-.5,\h)$) coordinate (C')
+				($(D)+(-.5,\h)$) coordinate (D')
+				($(A)!0.4!(A')$) coordinate (E)
+				($(B)!0.4!(B')$) coordinate (F)
+				($(C)!0.4!(C')$) coordinate (G)
+				($(D)!0.4!(D')$) coordinate (H)
+				(1.5,0.5) coordinate (O)
+				($(O)+(0,4.2)$) coordinate (h)
+				($(O)+(0,6)$) coordinate (t)
+				($(O)!0.4!(h)$) coordinate (x)
+				;
+				%\fill[cyan!50] (E) -- (F) -- (G) -- (H) -- cycle;
+				\draw (A) -- (A') (B) -- (B') (C) -- (C') (A) -- (B) -- (C) (A') -- (B') -- (C') -- (D') -- (A') (E) -- (F) -- (G)	(O)--(1.5,-0.5);
+				\draw[dashed] (A) -- (D) -- (C) (D) -- (D') (G)  -- (H) -- (E) (O) -- (h)	(A)--(O)	(A')--(h)	(E)--(x); 
+				\foreach \x/\g in {A/-90,B/-90,C/0,D/180,A'/180,B'/0,C'/45,D'/90,h/0,x/0,O/0} \fill[black](\x) circle (1pt)+(\g:3mm) node{$\x$};
+				\draw[-{Latex[length=3mm,width=2mm]}] (5,5) -- (3,2.5);
+				\node[right] at (5,5) {$S(x)$};
+				\draw[-{Latex[length=3mm,width=2mm]}] (h) -- (t) node[right] {$x$};
+				\node[below] at (1.5,-0.5) {Hình $4.22$};
+			\end{tikzpicture}
+		}
+	}
+\end{bt}

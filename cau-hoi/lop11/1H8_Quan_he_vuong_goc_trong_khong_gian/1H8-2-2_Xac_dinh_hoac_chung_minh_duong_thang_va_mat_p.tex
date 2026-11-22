@@ -156,31 +156,6 @@
 \end{ex}
 
 % nguồn: Ok_TracNghiemLop11_Lan1
-\begin{ex}%[1H8N2-2]%[ma:17953241]
-	\immini{Cho hình chóp $S.A B C$ có $S A \perp(A B C)$ và $\triangle A B C$ vuông tại $B$. Có  bao nhiêu mặt của hình chóp đã cho là tam giác vuông?
-	\choice 
-		 {$1$}
-		{$2$} 
-		 {$3$}
-		{\True $4$}}{\begin{tikzpicture}[scale=.75,font=\footnotesize,line join=round,line cap=round,>=stealth]
-		 \def\h{3}
-		 \path
-			(0,0) coordinate  (A)
-			 (0:4) coordinate (C)
-			 --++(-160:3) coordinate (B)
-			 (90:3) coordinate (S);
-		 \draw (B)--(A)--(S)--(B)
-			 (S)--(C)--(B);
-		 \draw[dashed] (A)--(C);
-		\foreach  \x/\g in {B/-90,S/90,A/180,C/-90} \fill (\x) circle (1pt)+(\g:.25) node {$\x$};
-		\draw pic[angle radius=3mm,draw=blue,fill=green!50,opacity=.5,angle eccentricity=2] {right angle = A--B--C} 
-			pic[angle radius=3mm,draw=blue,fill=green!50,opacity=.5,angle eccentricity=2] {right angle = A--A--B}; 
-	\end{tikzpicture}
-		} 
-	\loigiai{Có $4$ mặt phẳng là tam giác vuông  là $(SAB)$, $(SAC)$, $(ABC)$ và $(SBC)$.
-	} 
-\end{ex}
-
 % nguồn: Ok_TracNghiemLop11_Lan1
 \begin{ex}%[1H8N2-2]%[ma:079e46d6]
 	 \immini{
@@ -5296,3 +5271,123 @@ Từ $(3)$ và $(4)$ ta suy ra được $IG\perp (BCD)$.
 		Chứng minh tương tự ta cũng có: $SC\perp AK$.
 		Vậy $SC\perp(AHK)$.}
 	\end{bt}
+
+% nguồn: chuyen_dang (nhập 22/11/2026)
+\begin{bt}%[1H8V2-2]%[ma:9e27f5ce]
+% nguon: Archive/SP_SauLuoi_2024-2025/Sp_GHKII/data/GHKII/1-TN-DS-TLN-THPT-NgocLac-ThanhHoa-GHKII-NH24-25.tex #344
+%[KNTT - Lớp 11 - Ôn tập giữa học kì 2 -THPT Ngọc Lạc - Thanh Hoá]%[TheHung Nguyễn]
+	Cho tứ diện $S.ABC$ trong đó $SA \perp (ABC)$, tam giác $ABC$ vuông tại $A$ và $SA = 1$, $AB = 2$, $AC = 3$. Gọi $K$ là trực tâm của tam giác $SBC$. Tính độ dài $AK$.	
+	\loigiai{\immini{	Chọn hệ tọa độ vuông góc $Oxyz$ sao cho $A$ là gốc tọa độ $A(0; 0; 0)$. Vì tam giác $ABC$ vuông tại $A$, ta có thể đặt các cạnh $AB$ và $AC$ nằm trên các trục $Ox$ và $Oy$ tương ứng. Vì $SA \perp (ABC)$, cạnh $SA$ nằm trên trục $Oz$.\\
+			Khi đó 	$A(0; 0; 0)$,  $B(2; 0; 0)$, $C(0; 3; 0)$, $S(0; 0; 1)$, $\overrightarrow{BC}(-2; 3; 0)$, $\overrightarrow{SC}(0; 3; -1)$.
+		}{\begin{tikzpicture}[scale=.75, font=\footnotesize, line join=round, line cap=round, >=stealth]
+				\def\h{3}
+				\path
+				(0,0) coordinate (A)
+				(0:4) coordinate (B)
+				--++(-160:3) coordinate (C)
+				(90:3)coordinate (S);			
+				\coordinate (H) at ($(C)!1/3!(B)$);
+				\coordinate (L) at ($(C)!1/3!(S)$);
+				\coordinate (x) at ($(A)!1.45!(C)$);
+				\coordinate (y) at ($(A)!1.45!(B)$);
+				\coordinate (z) at ($(A)!1.45!(S)$);
+				\path(intersection of S--H and B--L) coordinate (K);
+				 	\draw [->] (B)--(y) node[below]{$y$} ;
+				 	\draw [->] (C)--(x) node[below]{$x$} ;
+					\draw [->] (S)--(z) node[left]{$z$} ;
+				\draw (C)--(A)--(S)--(B) (S)--(C)--(B) (S)--(H) (B)--(L) ;
+				\draw[dashed] (A)--(B);			
+				\foreach \x/\g in {B/-90,S/45,A/180,C/200,H/-90,L/180,K/45}  \fill (\x) circle (1pt)+(\g:.35)node {$\x$};	
+				\draw pic[angle radius=3mm,draw=blue,fill=green!50,opacity=.5,angle eccentricity=2] {right angle = S--A--C};
+				\draw pic[angle radius=3mm,draw=blue,fill=green!50,opacity=.5,angle eccentricity=2] {right angle = S--H--B};			
+		\end{tikzpicture}}
+		Phương trình đường thẳng $BC\colon\heva{&x=2-2t\\&y=3t\\&z=0}$ và $SC\colon\heva{&x=0\\&y=3u\\&z=1-u.}$\\
+		Gọi $H(2-2t;3t;0)$ là chân đường cao kẻ từ $S$ tới $BC$. Suy ra $\overrightarrow{SH} = (2 - 2t; 3t; -1)$.\\
+		Ta có 
+		$\overrightarrow{SH} \cdot \overrightarrow{BC} = 0\Leftrightarrow
+		(2 - 2t)(-2) + (3t)(3) + (-1)(0) = 0 \Rightarrow t = \dfrac{4}{13}$.
+		Do đó $H\left(\dfrac{18}{13}; \dfrac{12}{13}; 0\right)$.
+		Tương tự $L$ là chân đường cao kẻ từ $B$ tới $SC$. Suy ra $L\left(0, \dfrac{3}{10}, \dfrac{9}{10}\right)$.\\
+		Ta có $\overrightarrow{SH}=\left(\dfrac{18}{13};\dfrac{12}{13}; -1\right)$ và $\overrightarrow{BL}=\left(-2;\dfrac{3}{10};\dfrac{9}{10}\right) $.\\
+		Phương trình đường thẳng $SH\colon\heva{&x=\dfrac{18}{13}t\\&y=\dfrac{12}{13}t\\&z=1-t}$ và $BL\colon \heva{&x=2-2u\\&y=\dfrac{3}{10}u\\&z=\dfrac{9}{10}u.}$\\
+		Gọi $K$ là trực tâm $\triangle SBC$ nên $K$ là giao điểm của $SH$ và $BL$.\\
+		Khi đó tọa độ điểm $K$ là nghiệm của hệ phương trình $\heva{&x=\dfrac{18}{13}t\\&y=\dfrac{12}{13}t\\&z=1-t\\&x=2-2u\\&y=\dfrac{3}{10}u\\&z=\dfrac{9}{10}u}\Leftrightarrow \heva{&t=\dfrac{13}{49}\\&u=\dfrac{40}{49}}.$\\
+		Vậy tọa độ điểm $K\left(\dfrac{18}{49};\dfrac{12}{49};\dfrac{36}{49}.\right)$\\
+		Suy ra $\overrightarrow{AK}=\left(\dfrac{18}{49};\dfrac{12}{49};\dfrac{36}{49}\right)\Rightarrow AK=\sqrt{\left(\dfrac{18}{49}\right)^2 + \left(\dfrac{12}{49}\right)^2 + \left(\dfrac{36}{49}\right)^2}=\dfrac{6}{7}$.\\
+		Vậy độ dài $AK = \dfrac{6}{7}$.
+	}
+	
+\end{bt}
+
+% nguồn: chuyen_dang (nhập 22/11/2026)
+\begin{ex}%[1H8H2-2]%[ma:5b591150]
+	Cho tứ diện $A B C D$ có $A B=A  C=2$, $D B=D C=3$. Khẳng định nào sau đây đúng?
+	\choice 
+		{\True $B C  \perp A D$}
+		{$A C \perp B D$} 
+		{$A B \perp(B C D)$} 
+		{$D C \perp(A  B C)$}
+	\loigiai{ 
+		Do $A B=A C=2$,  $D B=D C=3$ nên $A$ và $D$ nằm trên mặt phẳng trung trực của $BC$.
+		 \\
+		Suy  ra $B C \perp A D$.
+	 }
+\end{ex}
+
+% nguồn: chuyen_dang (nhập 22/11/2026)
+\begin{ex}%[1H8H2-2]%[ma:a52f4749]
+ Cho hình chóp $ S.ABCD$, có đáy $ ABCD$ là hình vuông, $ SA\perp\left(ABCD\right)$. Gọi  $ H$, $ K$ lần lượt là hình chiếu vuông góc của $ A$ lên $ SB$, $ SD$.
+  \choiceTF
+   {\True $ SA\perp CD$}
+   {$\Delta SAC$ vuông tại $ C$}
+  {$\widehat{SBC}=60^\circ  $}
+  {\True  $ AH$ và $ AK$ cùng vuông góc với $ SC$}
+ \loigiai{\begin{center}
+  \begin{tikzpicture}[font=\footnotesize]
+     \def\a{3}
+    \def\h{3} 
+    \path  (0:0) coordinate (A)
+      ++(0:\a) coordinate (D)
+     ++(-130:\a/2)  coordinate (C)
+      ($(A)+(C)-(D)$) coordinate (B)
+     ($(A)+(90:\h)$) coordinate (S) 
+     (intersection of A--C  and B--D) coordinate (O)
+     ($(S)!0.5!(B)$) coordinate  (H)
+     ($(S)!0.5!(D)$) coordinate  (K);
+     \draw[dashed,thick] (A)--(H)--(K)--(A)
+      (B)--(A)--(D)
+     (A)--(S); 
+    \draw[thick]  (B)-- (C)--(D)
+     (B)--(S) 
+     (C)--(S) 
+     (D)--(S); 
+    \foreach \x/\g  in {H/-180,K/0,A/-80,B/-135,C/-45,D/45,S/90}
+    \fill[black] (\x)  circle (1pt)
+      ($(\g:3mm)+(\x)$) node {$\x$};
+    \draw pic[draw,angle  radius=3mm]{right angle=D--A--S};
+   \end{tikzpicture}
+ \end{center}\begin{itemchoice} \itemch Đúng. Ta có: $\heva{&
+ SA\perp\left(ABCD\right)\\& 
+  CD\subset\left(ABCD\right)
+  }\Rightarrow SA\perp CD$.
+ \itemch Sai. Ta có:  $\heva{&
+ SA\perp\left(ABCD\right)\\& 
+ AC\subset\left(ABCD\right) 
+ }\Rightarrow SA\perp AC$. Vậy $\Delta SAC$ vuông tại  $ A$.
+ \itemch Sai. Ta có: $\heva{& 
+ BC\perp  SA\left(SA\perp\left(ABCD\right)\right)\\&
+ BC\perp AB\left(gt\right)\\& 
+ SA,AB\subset\left(SAB\right){\rm{,}}SA\cap  AB=A
+ }\\\Rightarrow BC\perp\left(SAB\right)\Rightarrow  BC\perp SB\Rightarrow\widehat{SBC}=90^\circ $.
+  \itemch Đúng. Ta có: $\heva{&
+ AH\perp SB\left(gt\right)\\& 
+  AH\perp BC\left(BC\perp\left(SAB\right)\right)\\&
+  SB,BC\subset\left(SBC\right){\rm{;}}SB\cap BC=B
+ }\\\Rightarrow AH\perp\left(SBC\right)\Rightarrow AH\perp SC$.\\ 
+  $\heva{&
+ AK\perp  SD\left(gt\right)\\&
+  AK\perp CD\left(CD\perp\left(SAD\right)\right)\\&
+ SD,CD\subset\left(SCD\right){\rm{,}}SD\cap CD=D}\\\Rightarrow AK\perp\left(SCD\right)\Rightarrow AK\perp SC$.\\ 
+ Vậy $AH$ và $ AK$ cùng vuông góc với $SC$. 
+\end{itemchoice}}
+\end{ex}

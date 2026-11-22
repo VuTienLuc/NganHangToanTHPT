@@ -3649,40 +3649,6 @@ Vì vậy, diện  tích thiết diện là $S=\dfrac{1}{2}(NP+MQ) \cdot NI=\dfr
 \end{ex}
 
 % nguồn: Ok_TuanLuan_Toan11_Lan2
-\begin{ex}%[1H4H3-5]%[ma:931b5f01]
-	Cho hình lăng trụ tam giác $ABC.A'B'C'$. Một mặt phẳng song song với  mặt đáy của hình lăng trụ cắt các cạnh bên của hình lăng trụ lần lượt tại $A''$, $B''$, $C''$. Chứng minh rằng $ABC.A''B''C''$ là hình lăng trụ.
-	\loigiai{ 
-		\begin{center}
-			\begin{tikzpicture}[line join=round,line cap=round,line width=.6pt,font=\footnotesize,scale=1]
-					\coordinate[label=left:$A$] (A)  at (0,0);
-					\coordinate[label=below left:$B$] (B) at  (1,-1);
-					\coordinate[label=right:$C$]  (C) at (4,0);
-					\coordinate (H) at ($(B)!.5!(C)$); 
-					\coordinate[label=left:$A'$]  (A1) at ($(H)+(90:4)$);
-					\coordinate[label=left:$B'$] (B1)  at ($(B)-(A)+(A1)$);
-					\coordinate[label=right:$C'$] (C1) at ($(C)-(A)+(A1)$); 
-					\coordinate[label=left:$A''$] (A2) at  ($(A)!1/2!(A1)$);
-					\coordinate[label=left:$B''$] (B2)  at ($(B)!1/2!(B1)$);
-					 \coordinate[label=right:$C''$] (C2) at ($(C)!1/2!(C1)$);
-					\draw (A1)--(A)--(B)--(C)--(C1)--(A1)--(B1)--(C1) 
-						(B)--(B1) 
-						 (A2)--(B2)--(C2);
-					\draw[dashed]  (A)--(C)
-						(A2)--(C2); 
-					 \fill (A) circle (1pt)
-						(B) circle  (1pt)
-						(C)  circle (1pt)
-						 (A1) circle (1pt)
-						(B1) circle (1pt) 
-						 (C1) circle (1pt)
-						 (A2) circle (1pt)
-						(B2)  circle (1pt)
-						(C2) circle (1pt); 
-				\end{tikzpicture}
-		\end{center}
-	Vì các cạnh bên của hình lăng trụ $ABC'A'B'C'$ đôi một song song nên $AA''$, $BB''$, $CC''$ đôi một  song song. Mặt phẳng $\left(ABC\right)$ song song với mặt phẳng $\left(A''B''C''\right)$ nên $ABC.A''B''C''$ là hình lăng trụ.}
-\end{ex}
-
 % nguồn: Ok_TuanLuan_Toan11_Lan2
 \begin{ex}%[1H4H3-5]%[ma:0c6dc430]
 	Cho tứ diện $ABCD$. Điểm $M$ tùy ý trên cạnh $BC$. Mặt phẳng $(\alpha)$ đi qua $M$ và song song với cạnh $AD$, $AC$.  Xác định thiết diện của tứ diện cắt bởi mặt phẳng $(\alpha)$.
@@ -4638,3 +4604,68 @@ Cho khối chóp $S . A B C D$ có độ dài tất cả các cạnh đều bằ
         \end{tikzpicture}}
     }
 \end{bt}
+
+% nguồn: chuyen_dang (nhập 22/11/2026)
+\begin{ex}%[1H4H3-5]%[ma:272f8e79]
+ Cho hình chóp $S.ABCD$ có đáy  $ABCD$ là một tứ giác lồi. Gọi $M$, $N$, $T$ lần lượt là trung điểm của $SA$, $SC$ và $SD$.
+  \choiceTF
+   {\True$MN\parallel (ABC)$}
+  {\True$(MNT)\parallel  (ABCD)$}
+  {Gọi $(\alpha)$ là mặt phẳng đi qua $M$ và song song với $(SBD)$. Thiết  diện của hình chóp với $(\alpha)$ là một tứ giác}
+  {Gọi $(\beta)$ là mặt phẳng đi qua $N$ và song song với $(\alpha)$. Gọi $I$ và $J$ lần lượt là giao điểm của  $AC$ với mặt phẳng $(\alpha)$ và $(\beta)$. Khi đó $AC=\dfrac{19}{10}IJ$}
+ \loigiai{ 
+  \begin{center}
+   \begin{tikzpicture}[scale=1,font=\footnotesize,line join=round,line cap=round,>=stealth]
+     \def\ad{7} 
+      \def\ab{3}
+      \def\bc{4}
+      \def\as{5}
+     \def\gocA{50} 
+     \def\gocB{120} 
+     \coordinate[label=left:$A$] (A) at (0,0); 
+     \coordinate[label=below  left:$B$] (B) at (-\gocA:\ab);
+     \coordinate[label=below right:$C$] (C)  at ($(B)+(-5:\bc)$);
+     \coordinate[label=right:$D$] (D) at  (\ad,0);
+     \coordinate[label=above:$S$] (S) at  (60:\as);
+     \coordinate[label=left:$M$] (M) at ($(S)!.5!(A)$); 
+     \coordinate[label=right:$N$] (N) at ($(S)!.5!(C)$); 
+     \coordinate[label=right:$T$]  (T) at ($(S)!.5!(D)$);
+     \coordinate[label=below  right:$K$] (K) at ($(A)!.5!(D)$);
+     \coordinate[label=below left:$R$]  (R) at ($(A)!.5!(B)$);
+     \coordinate[label=below: $P$] (P) at ($(C)!.5!(B)$); 
+     \coordinate[label=right:$Q$] (Q) at  ($(C)!.5!(D)$);
+     \path[name path=rk] (R)--(K); 
+     \path[name path=ac] (A)--(C); 
+     \path[name  path=bd] (B)--(D);
+      \path[name path=pq] (P)--(Q);
+      \path[name intersections={of= rk and ac,by=I}];
+     \path[name intersections={of= bd and  ac,by=O}];
+     \path[name intersections={of= pq  and ac,by=J}];
+     \coordinate[label=below: $J$] (J)  at (J);
+     \coordinate[label=below: $I$] (I) at (I); 
+     \coordinate[label=below: $O$] (O) at (O); 
+     \draw (A)--(B)--(C)--(D)--(S)--cycle  (B)--(S)--(C)
+      (N)--(T) 
+      (M)--(R) 
+       (P)--(N)--(Q);
+      \draw[dashed] (C)--(A)--(D)
+       (T)--(M)--(N)
+      (P)--(Q) 
+      (M)--(K)--(R) 
+       (D)--(B)--(K);
+     \foreach \diem in {A,B,C,D,I,S,M,N,T,O,K,R,P,J,Q} \fill (\diem) circle (1pt); 
+    \end{tikzpicture}
+  \end{center}
+  \begin{itemchoice}
+   \itemch Đúng. Xét tam giác $ASC$ có $MN$ là đường trung bình nên $MN\parallel AC$.\\ $MN$ không nằm  trong $(ABCD)$, $AC\subset (ABCD)$ suy ra $MN\parallel (ABCD)$.
+   \itemch Đúng. Theo chứng minh trên ta có $MN\parallel  (ABCD)$, tương tự suy ra $MT \parallel (ABCD)$.\\
+   Vậy trong mặt phẳng $(MNT)$ có hai đường thẳng cắt nhau $MN$ và $MT$ cùng song song với $(ABCD)$  nên $(MNT)\parallel (ABCD)$.
+   \itemch Sai. Gọi $K, R$ lần lượt là trung điểm của $AD$ và $AB$. Do mặt phẳng $(\alpha)$ đi qua $M$  và song song với $(SBD)$ nên giao tuyến của $(\alpha)$ với $(SAB)$ và $(SAD)$ là $MR$ và $MK$.\\
+   Từ đó ta có thiết diện của hình chóp với $(\alpha)$ là tam  giác $MRK$.
+   \itemch Sai. Tương tự ta có thiết diện của hình chóp với $(\beta)$ là tam  giác $NPQ$.\\
+   Gọi $I, O, J$  lần lượt là giao điểm của $AC$ với $RK, BD, PQ$ ta suy ra $I, J$ chính là giao điểm của $AC$ với $(\alpha)$ và $(\beta)$.\\
+   Do $RK$ và $PQ$ là các đường trung bình của tam giác $ABD$ và  tam giác $CBD$ nên ta có $I$ là trung điểm của $AO$, $J$ là trung điểm của $CO$.\\
+    Suy ra $AX=XO$, $CY=OY$ và ta có $AC=2IJ$.
+  \end{itemchoice}
+ } 
+\end{ex}

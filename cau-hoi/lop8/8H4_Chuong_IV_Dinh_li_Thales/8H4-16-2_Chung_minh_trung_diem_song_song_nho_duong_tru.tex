@@ -183,3 +183,80 @@ Từ $OM \parallel BC$, $ON \parallel AD$ và $AD \parallel BC$, theo tiên đ�
 Hơn nữa $OM = \dfrac{1}{2}BC = \dfrac{1}{2}AD = ON$, nên $O$ là trung điểm của đoạn thẳng $MN$.
 	}
 \end{bt}
+
+% nguồn: chuyen_dang (nhập 22/11/2026)
+\begin{bt}%[8H4V16-2]%[ma:f09a2c34]
+	
+	Cho tứ giác $ABCD$. Gọi $M,N$ lần lượt là trung điểm hai đường chéo $AC$, $BD$. Chứng minh $AB^2+BC^2+CD^2+AD^2=AC^2+BD^2+4MN^2$.
+	\loigiai{
+		\begin{center}
+			\begin{tikzpicture}[scale=0.9,font=\footnotesize,line join=round,line cap=round,>=stealth]
+				\path 
+				(0,0) coordinate (A)
+				(4,0) coordinate (D)
+				(60:3) coordinate (B)
+				(35:4) coordinate (C)
+				($(A)!0.5!(C)$) coordinate (M)
+				($(B)!0.5!(D)$) coordinate (N)
+				;
+				\draw[thick] (A)--(B)--(C)--(D)--(A)--(C) (B)--(D) (M)--(N);
+				\foreach \x/\g in {A/180,B/90,C/45,D/0,M/90,N/45}
+				\fill[black] 	(\x) circle (1pt)
+				($(\g:3mm)+(\x)$) node {$\x$};
+			\end{tikzpicture}
+		\end{center}
+		Trong tam giác $ABD,CBD$, ta có	\\
+		$AB^2+AD^2=2AN^2+\dfrac{BD^2}{2}$ và $ CB^2+CD^2=2CN^2+\dfrac{BD^2}{2}$.\\
+		Vậy nên $AB^2+BC^2+CD^2+DA^2=2\left( A{N^2}+C{N^2} \right)+BD^2$.\\
+		Vì $M$ là trung điểm của $AC$ nên $NA^2+NC^2=2MN^2+\dfrac{AC^2}{2}$.\\
+		Do đó $AB^2+BC^2+CD^2+DA^2=2\left( 2MN^2+\dfrac{AC^2}{2} \right)+BD^2=AC^2+BD^2+4MN^2$.}
+\end{bt}
+
+% nguồn: chuyen_dang (nhập 22/11/2026)
+\begin{bt}%[8H4H16-2]%[ma:797fdccf]
+	Cho tứ giác lồi $ABCD$, hai đường chéo $AC$ và $BD$ cắt nhau tại $O$. Gọi $H$ và $K$ lần lượt là trực tâm các tam giác $ABO$ và $CDO$. Gọi $I$, $J$ lần lượt là trung điểm $AD$ và $BC$. Chứng  minh $HK\perp IJ$.
+	\loigiai{ 
+		Hình vẽ 
+		\begin{center}
+			\begin{tikzpicture}[line join = round,line cap = round,>=stealth,font=\footnotesize,scale=.5]
+					\coordinate (D) at  ($(0,0)$);
+					 \coordinate (A) at ($(D)+(9,0)$);
+					\coordinate (B) at ($(D)+(7,6)$); 
+					\coordinate (C)  at ($(D)+(1,5)$);
+					\coordinate (I)  at ($(D)!0.5!(A)$);
+					\coordinate (J) at  ($(B)!0.5!(C)$);
+					\coordinate (O) at (intersection of A--C and  B--D);
+					\coordinate (H1)  at ($(A)!(B)!(O)$);
+					\coordinate (H2) at  ($(A)!(O)!(B)$);
+					\coordinate (H) at (intersection of B--H1 and O--H2); 
+					\coordinate (K1) at  ($(O)!(D)!(C)$);
+					 \coordinate (K2) at ($(O)!(C)!(D)$);
+					\coordinate (K) at (intersection of  D--K1 and C--K2);
+					 \draw (D)--(A)--(B)--(C)--(D)--(B)
+						 (A)--(C)
+						 (B)--(H1)
+						 (O)--(H2)
+						 (D)--(K1)
+						 (C)--(K2)
+						 (I)--(J);
+					\path  pic[draw,angle radius=6]{right angle=A--H1--B};
+					\path pic[draw,angle radius=6]{right angle=O--H2--A}; 
+					\path pic[draw,angle  radius=6]{right angle=D--K1--C};
+					\path  pic[draw,angle radius=6]{right angle=C--K2--D};
+					\foreach \x/\y in  {A/-90,B/90,C/90,D/-90,O/90,H/-30,K/180,I/-90,J/90}
+					\draw[fill=black] (\x) circle (1.1pt) + (\y:0.5cm)  node{$\x$};
+				\end{tikzpicture}
+		\end{center}
+		Ta có 
+		 \[\heva{& \overrightarrow{IJ}=\overrightarrow{IA}+\overrightarrow{AC}+\overrightarrow{CJ} \\
+		&\overrightarrow{IJ}=\overrightarrow{ID}+\overrightarrow{DB}+\overrightarrow{BJ}}\Rightarrow 2 \overrightarrow{IJ}=\overrightarrow{AC}+\overrightarrow{DB}.\] 
+		Suy ra \begin{eqnarray*}
+		\overrightarrow{HK}  \cdot 2 \overrightarrow{IJ}&=&\overrightarrow{HK}\left(\overrightarrow{AC}+\overrightarrow{DB}\right)\\
+		&=&\overrightarrow{HK} \cdot \overrightarrow{AC}+\overrightarrow{HK} \cdot  \overrightarrow{DB}.\\
+		&=&\left(\overrightarrow{HB}+\overrightarrow{BD}+\overrightarrow{DK}\right)\cdot \overrightarrow{AC}+\left(\overrightarrow{HA}+\overrightarrow{AC}+\overrightarrow{CK}\right) \cdot  \overrightarrow{DB}\\
+		&=&\overrightarrow{AC}\cdot \left(\overrightarrow{BD}+\overrightarrow{DB}\right)\\ 
+		&=&\overrightarrow{AC} \cdot \overrightarrow 0=0. 
+	\end{eqnarray*}
+	 Vậy $\overrightarrow{HK} \cdot \overrightarrow{IJ}=0$ hay $HK\perp IJ$.
+ }
+\end{bt}

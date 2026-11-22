@@ -4451,3 +4451,155 @@ Gọi $ E $ là trung điểm $ SA $, $ M $ là trọng tâm $ \triangle SAD $, 
             \end{tikzpicture}}
     }
 \end{bt}
+
+% nguồn: chuyen_dang (nhập 22/11/2026)
+\begin{ex}%[1H4V3-3]%[ma:450994df]
+ Cho hình chóp $S.ABCD$ có đáy  là hình bình hành, các điểm $M, N, E$ lần lượt là trung điểm của các cạnh $SB, SD$ và $CD$.
+ \choiceTF 
+   {Giao tuyến của mặt phẳng $(SAB)$ và mặt phẳng $(SCD)$ là đường thẳng qua $S$ và song song $BC$}
+  {\True $ME \parallel (SAD)$} 
+  {Hai mặt phẳng $(MBD)$ và $(MAC)$  cắt nhau theo giao tuyến $ME$}
+  {Thiết diện của hình chóp $S.ABCD$ khi cắt bởi mặt phẳng  $(MNE)$ là một tứ giác lồi}
+ \loigiai{ 
+  \begin{itemchoice}
+   \itemch Sai. Vì $AB \parallel CD$ nên giao tuyến của $(SAB)$ và $(SCD)$ là $Sx  \parallel AB \parallel CD$.
+   \itemch Đúng. \begin{center}
+   \begin{tikzpicture}[scale=1,font=\footnotesize,line join=round,line cap=round,>=stealth]
+      \def\bc{4}
+     \def\ba{2} 
+      \def\h{4}
+     \def\gocB{30} 
+     \coordinate[label=below left:$B$] (B) at (0,0); 
+     \coordinate[label=above left:$A$] (A) at (\gocB:\ba); 
+      \coordinate[label=below:$C$] (C) at (\bc,0);
+      \coordinate[label=right:$D$] (D) at ($(C)-(B)+(A)$);
+      \coordinate[label=above:$S$] (S) at ($(A)+(0:1)+(90:\h)$);
+      \coordinate[label=above:$x$] (x) at ($(B)-(A)+(S)$);
+     \coordinate[label=left:$F$] (F)  at ($(B)!.5!(A)$);
+     \coordinate[label=below  right:$E$] (E) at ($(C)!.5!(D)$);
+     \coordinate[label=left:$M$] (M)  at ($(B)!.5!(S)$);
+     \draw (B)--(C)--(D)--(S)--cycle  (S)--(C)
+       (x)--(S)--($(A)-(B)+(S)$);
+     \draw[dashed]  (A)--(D)
+      (S)--(A)--(B) 
+      (M)--(E)--(F)--(M); 
+     \foreach \diem in {A,B,C,D,S,M,E,F} \fill (\diem) circle  (1pt);
+    \end{tikzpicture}
+  \end{center}
+  Từ $E$ kẻ $EF \parallel  AD$. Ta có $(MFE) \parallel (SAD)$ suy ra $ME \parallel (SAD)$.
+  \itemch Sai. Gọi $O$  là tâm hình bình hành $ABCD$ suy ra $\heva{&O\in AC\subset(MAC)\\&O\in BD\subset(MBD)}\Rightarrow MO=(MAC)\cap(MBD)$.
+  \itemch Sai.  Dựng thiết diện của hình chóp $S.ABCD$ khi cắt bởi mặt phẳng $(MNE)$. \\
+  $(MNE) \cap (SCD)=EN$.  \\
+  Kẻ $MI \parallel SC$ suy ra $M, N, E,  I$ đồng phẳng. Ta có
+  $(MNE) \cap  (SBC)=SI$.\\
+  Trong mặt phẳng $(ABCD)$  có $EI \cap AD=L$.\\
+  Trong mặt phẳng $(SAD)$, có $LN  \cap SA=P$.\\
+  Suy ra $(MNE)  \cap (SAD)=NP$,
+   $(MNE) \cap (SAD)=MP$. \\
+  Vậy  thiết diện cần tìm là ngũ giác $MIENP$.
+ \end{itemchoice}
+} 
+\end{ex}
+
+% nguồn: chuyen_dang (nhập 22/11/2026)
+\begin{ex}%[1H4V3-3]%[ma:8d1db816]
+ Cho hình chóp $ S.ABCD $ có đáy $ ABCD $ là hình thang có đáy lớn là $ AD $. Gọi $ M $,  $ N $ lần lượt là các điểm trên các đoạn thẳng $ SA $ và $ SC $ sao cho $AM = 2MS$; $CN = 2NS$.
+ \choiceTF 
+  {Đường thẳng $CD$ và mặt phẳng $(SAB)$ không giao  nhau}
+  {\True Giao  tuyến của hai mặt phẳng $(SAD)$ và $(SBC)$ song song với $AD$}
+  {\True Đường thẳng $MN$  song song mặt phẳng $(BCD)$}
+  {\True Thiết diện của hình chóp $S.ABCD$ cắt bởi mặt phẳng $(BMN)$ là một tứ  giác}
+  \loigiai{
+  \begin{center}
+   \begin{tikzpicture}[scale=1,font=\footnotesize,line join=round,line cap=round,>=stealth]
+     \def\ac{7} 
+      \def\ab{3}
+     \def\as{4.5} 
+     \def\gocA{50} 
+     \coordinate[label=left:$A$] (A) at  (0,0);
+      \coordinate[label=right:$D$] (D) at (\ac,0);
+     \coordinate[label=below left:$I$] (I) at (-\gocA:\ab); 
+      \coordinate[label=above:$S$] (S) at (60:\as);
+     \coordinate[label=below  left:$B$] (B) at ($(A)!.7!(I)$);
+     \coordinate[label=below  right:$C$] (C) at ($(D)!.7!(I)$);
+     \coordinate[label=left:$M$] (M) at ($(A)!2/3!(S)$); 
+     \coordinate[label=  right:$N$] (N) at ($(C)!2/3!(S)$);
+     \coordinate[label=below left:$B$] (B) at  ($(A)!.7!(I)$);
+     \path[name  path=ac] (A)--(C);
+     \path[name path=bd]  (B)--(D);
+     \path[name intersections={of=  ac and bd,by=O}];
+     \coordinate[label=below:$O$] (O) at (O); 
+     \path[name path=so] (S)--(O); 
+     \path[name  path=mn] (M)--(N);
+      \path[name intersections={of= so and mn,by=J}];
+     \coordinate[label=below left:$J$] (J) at  (J);
+     \path[name  path=bj] (B)--($(J)+.35*(J)-.35*(B)$);
+     \path[name  path=sd] (S)--(D);
+     \path[name intersections={of= bj and sd,by=K}]; 
+      \coordinate[label=above right:$K$] (K) at (K);
+     \draw  (A)--(I)--(D)--(S)--cycle (M)--(B)--(N)--(K)
+      (B)--(S)--(C)--(B); 
+     \draw[dashed] (C)--(A)--(D)--(B) 
+       (O)--(S)
+       (B)--(K)--(M)--(N);
+      \foreach \diem in {A,I,D,S,O,B,C,M,N,J,K}\fill (\diem) circle (1pt);
+    \end{tikzpicture}
+  \end{center}
+  \begin{itemchoice}
+   \itemch Sai.  Do $ABCD$ là hình thang có $ AB $ và $ CD $ không song song, gọi $I = AB \cap CD$.\\
+   Khi đó, $I \in AB \Rightarrow  I \in (SAB)$ nên I là giao điểm.
+   \itemch Đúng. Ta có, $S$ là  điểm chung của hai mặt phẳng.\\
+   Trong hai mặt phẳng $ (SAD) $  và $ (SBC) $ lần lượt có $ AD \parallel BC $.\\
+   Nên giao tuyến cần tìm là đường thẳng  $ Sx \parallel AD \parallel BC $.
+   \itemch Sai. Ta có, $MN$ không thuộc mp$(BCD)$.\\ 
+   Mà $\dfrac{SM}{SA}  = \dfrac{1}{3};\dfrac{SN}{SC} = \dfrac{1}{3}$ nên $ MN \parallel AC$.\\
+   Vậy $ MN \parallel (ABCD)$ hay  $MN \parallel (BCD)$.
+   \itemch Đúng. Gọi $ O=AC \cap BD $. Khi đó, $ SO\cap  MN = J $.\\
+    Trong $ (SBD) $ có $ BJ\cap SD $ tại $K$. \\
+   Như vậy, thiết diện  cận tìm là tứ giác $ BMKN $.
+  \end{itemchoice}
+  }
+\end{ex}
+
+% nguồn: chuyen_dang (nhập 22/11/2026)
+\begin{ex}%[1H4V3-3]%[ma:7b45ae3e]
+	Cho hình chóp $S.ABCD$, đáy $ABCD$ là hình bình hành có $O$ là giao điểm của của $AC$ và $BD$, $AC=6$, $BD=8$; tam giác $SBD$ là tam giác đều. Gọi $I$ là điểm nằm trên doạn thẳng $AC$ sao cho $AI=x\,(0<x<3)$, $(P)$ là mặt phẳng đi qua diểm $I$ và song song với mặt phẳng $(SBD)$. Diện tích của hình tạo bởi các đoạn giao tuyến của mặt phẳng $(P)$ với các mặt  của hình chóp $S.ABCD$ bằng $\dfrac{m^2x^2\sqrt{3}}{n^2}$. Tính giá trị của biểu thức $P=m^2+n^2$.
+	 \shortans{73}
+	\loigiai{ 
+		\begin{center}
+			\begin{tikzpicture}[scale=1,line join=round,font=\footnotesize,line cap=round]
+					 \coordinate (A) at (0,0);
+					\coordinate (B)  at (-2,-2);
+					 \coordinate (D) at (5,0);
+					\coordinate (C) at  ($(B)+(D)-(A)$);
+					\coordinate (S) at  ($(A)+(1,4)$);
+					\path ($(A)!0.5!(C)$) coordinate (O); 
+					\path ($(A)!0.4!(O)$) coordinate (I); 
+					\path  ($(A)!0.4!(B)$) coordinate (M);
+					\path ($(A)!0.4!(D)$) coordinate  (N);
+					 \path ($(S)!0.6!(A)$) coordinate (J);
+					\draw (S)--(B) 
+						(S)--(C) 
+						 (S)--(D)
+						(B)--(C)--(D); 
+					\draw[dashed,thin](S)--(A) 
+						(A)--(B) 
+						 (A)--(D)
+						(A)--(C) 
+						(B)--(D) 
+						 (M)--(N)--(J)--cycle;
+					\foreach \i/\g  in {S/90,A/45,B/-90,C/-90,D/0,O/-90,M/180,N/-90,J/45,I/-90}{\draw[fill=black](\i) circle (1pt)
+						($(\i)+(\g:3mm)$)  node[scale=1]{$\i$};}
+				\end{tikzpicture}
+		\end{center}
+		Trong mặt phẳng $(ABCD)$, kẻ $MN$ đi qua  $I$ và $MN\parallel BD\,(M\in AB, N\in AD)$.\\
+		Trong mặt phẳng  $(SAD)$, kẻ $IJ\parallel SD\,(J\in SA)$.\\
+		Trong mặt phẳng $(SAB)$ nối  $JM$.\\
+		Khi đó  $(P)\cap (SAB)=JM$, $(P)\cap (SAD)=JN$, $(P)\cap (ABCD)=MN$.\\
+		Do đó các đoạn giao tuyến của mặt phẳng $(P)$ với các mặt của hình chóp $S.ABCD$ tạo thành tam giác  $JMN$.\\
+		Ta có $\triangle JMN\backsim \triangle SBD$ nên  $\triangle JMN$ là tam giác đều.\\
+		Khi đó $MN\parallel BD$, suy ra  $\dfrac{MN}{BD}=\dfrac{AI}{AO}=\dfrac{x}{3}\Rightarrow MN=\dfrac{8x}{3}$\\
+		 $\Rightarrow S_{\triangle JMN}=\dfrac{8^2x^2\sqrt{3}}{3^2}\Rightarrow m^2=8^2$ và $n^2=3^2$.\\
+		 Vậy $P=m^2+n^2=8^2+3^2=73$.
+	 }
+\end{ex}

@@ -4710,3 +4710,127 @@
 		\end{eqnarray*}
 	}
 \end{bt}
+
+% nguồn: chuyen_dang (nhập 22/11/2026)
+\begin{bt}%[2D4H3-5]%[ma:18b2835f]
+	Xét chiếc chén trong một bộ ấm chén uống trà, bạn Dương ước lượng được  rằng chiếc chén được tạo thành khi cho hình phẳng giới hạn bởi đồ thị hàm số $f(x)=0{,}14x^3-0{,}87x^2+1{,}92x+0{,}85$, trục hoành và hai đường thẳng $x=0$, $x=3$ quay quanh trục $Ox$ (đơn vị trên mỗi trục toạ độ là centimét). Tính thể tích của chiếc chén (làm tròn đến hàng đơn vị của centimét khối).
+	\begin{center}
+		\resizebox{!}{5cm}{\begin{tikzpicture}[line cap=butt,line join=miter,>=stealth]
+		\draw[->]  (-1,0)--(0,0)
+			(3,0)--(4.5,0) 
+			node[shift={(-100:7pt)},font=\normalsize]{$x$}; 
+		 \draw[->] (0,-3)--(0,3.5)
+			node[shift={(180:7pt)},font=\normalsize]{$y$}; 
+		\draw[dashed] (0,0)--(3,0); 
+		\draw (5pt,0) |-  (0,5pt)
+			(0,0) node[shift={(225:9pt)},font=\normalsize]{$O$}; 
+		\foreach \x in {-1,1,2,3}{ 
+			 \draw (\x,1.5pt)--(\x,-1.5pt) node[font=\scriptsize,shift={(-90:5pt)}]{\x};
+		} 
+		\foreach \y in  {-2,-1,1,2,3}{
+			 \draw (1.5pt,\y)--(-1.5pt,\y) node[font=\scriptsize,shift={(180:5pt)}]{\y};
+		 }
+		\tikzset{declare function={f  (\x)=(14/100)*(\x)^3-(87/100)*(\x)^2+(192/100)*(\x)+85/100; a=f (3);}}
+		 \draw[samples=100] plot[domain=0:3] (\x,{f (\x)});
+		\draw[samples=100] plot[domain=0:3] (\x,{-f  (\x)});
+		\draw (3.05,0) ellipse ({0.25*a} and  a);
+		 \path (1.5,{f (1.5)}) node[above]{$y=f (x)$};
+	\end{tikzpicture}}
+	\end{center}
+	\loigiai{ 
+		Thể tích của chiếc chén  là: $V=\pi\displaystyle\int_0^3\left(0{,}14x^3-0{,}87x^2+1{,}92x+0{,}85\right)^2\mathrm{d}x=41{,}87\,(\mathrm{cm}^3)$.
+	 }
+\end{bt}
+
+% nguồn: chuyen_dang (nhập 22/11/2026)
+\begin{bt}%[2D4C3-5]%[ma:efa45eee]
+% nguon: Archive/SP-4Phan-Dot3/Data/CD_2-OTGK2-De01.tex #4456
+
+	Cho hai đường tròn $(O_1;10)$ và $(O_2;6)$ cắt nhau tại hai điểm $A$, $B$ sao cho $AB$ là một đường kính của đường tròn $(O_2;6)$. Gọi $(D)$ là hình phẳng được giới hạn bởi hai đường tròn (ở ngoài đường tròn lớn, phần được gạch chéo như hình vẽ). Quay $(D)$ quanh trục $O_1 O_2$ ta được một khối tròn xoay. Tính thể tích $V$ của khối tròn xoay được tạo thành.
+\begin{center}
+\begin{tikzpicture}[scale=0.75, font=\footnotesize, line join=round, line cap=round, >=stealth]
+	\draw (-{sqrt(13)},0)--(5,0); % Vẽ trục hoành
+	% Vẽ tâm O1 và O2
+	\fill[black] (0,0) circle (1pt) node[below] {$O_1$};
+	\fill[black] (3,0) circle (1pt) node[below left] {$O_2$};
+	% Vẽ đường tròn c1 và c2
+	\draw[name path=c1] (0,0) circle[radius=sqrt(13)];
+	\draw[name path=c2] (3,0) circle (2);
+	% Tìm và nối giao điểm A và B
+	\path [name intersections={of=c1 and c2, by={A, B}}];
+	\draw (A)--(B);
+	% Vẽ các điểm A và B
+	\foreach \x/\g in {A/70,B/-70}
+	\fill[black] (\x) circle (1pt) ($(\g:3mm)+(\x)$) node {$\x$};
+	% Vẽ điểm C
+	\draw (5,0) node[right] {$C$};
+	\fill[black] (5,0) circle (1pt);
+	% Tô màu miền giới hạn bởi hai cung AB của O1 và O2
+	\fill[opacity=.8,pattern=north west lines] 
+	(B) arc ({-asin(2/sqrt(13))}:{asin(2/sqrt(13))}:{sqrt(13)}) % Cung tròn từ B đến A trên O1
+	arc (90:-90:{2});  % Cung tròn từ A đến B trên O2
+\end{tikzpicture}
+\end{center}
+	
+	\loigiai
+	{
+		Chọn hệ tọa độ $Oxy$ với $O_2 \equiv O$, $O_2 C \equiv Ox$, $O_2 A \equiv Oy$.\\
+		Cạnh $O_1 O_2=\sqrt{O_1 A^2-O_2 A^2}=\sqrt{10^2-6^2}=8 \Rightarrow(O_1)\colon (x+8)^2+y^2=100$.\\
+		Phương trình đường tròn $(O_2)\colon x^2+y^2=36$.\\
+		Kí hiệu $(H_1)$ là hình phẳng giới hạn bởi các đường $y=\sqrt{100-(x+8)^2}$, trục $Ox$, $x=0$, $x=2$.\\	
+		Kí hiệu $(H_2)$ là hình phẳng giới hạn bởi các đường $y=\sqrt{36-x^2}$, trục $Ox$, $x=0$, $x=6$.\\
+		Khi đó thể tích $V$ cần tính chính bằng thể tích $V_2$ của khối tròn xoay thu được khi quay hình $(H_2)$ xung quanh trục $Ox$ trừ đi thể tích $V_1$ của khối tròn xoay thu được khi quay hình $(H_1)$ xung quanh trục $Ox$.\\
+		Ta có $V_2=\dfrac{1}{2} \cdot \dfrac{4}{3} \pi r^3=\dfrac{2}{3} \pi \cdot 6^3=144 \pi$.\\
+		Lại có $V_1=\pi \displaystyle\int_0^2 y^2 \mathrm{\,d}x=\pi \displaystyle\int_0^2 [100-(x+8)^2] \mathrm{\,d}x=\dfrac{112 \pi}{3}$.\\
+		Do đó $V=V_2-V_1=144 \pi-\dfrac{112 \pi}{3}=\dfrac{320 \pi}{3}$.
+	}
+\end{bt}
+
+% nguồn: chuyen_dang (nhập 22/11/2026)
+\begin{bt}%[2D4V3-5]%[ma:3dd55735]
+	\immini{Một quả bóng bầu dục theo quy định được sử dụng trong giải bầu dục quốc gia có kích thước $28$ cm từ đầu  này đến đầu kia và đường kính $17$ cm ở phần dày nhất (quy định có phép thay đổi một chút về các kích thước này) (Nguồn: NFL).\\
+	Hình dạng của một quả bóng bầu dục có kích thước nói trên có thể được tạo thành khi quay quanh trục $Ox$ phần diện tích hình phẳng giới hạn bởi đồ thị hàm số $f(x)=ax^2+bx+c$, trục hoành và các đường thẳng $x=-4$; $x=24$, trong đó $x$ tính bằng centimet (cm). Thể tích (đơn vị: cm$^3$, kết quả làm tròn đến hàng đơn vị) của quả bóng bầu dục có kích thước nói trên bằng bao nhiêu?}{\begin{tikzpicture}[scale=1.5]
+		 \fill[orange!100!black!100!]
+			 (-2,0).. controls (-1.1,1.4) and (1.1,1.4).. (2,0)
+			.. controls (1.1,-1.4)  and (-1.1,-1.4).. cycle;
+		 \fill[white!95!brown!10]
+			(-1.6,0).. controls (-1.8,0.9) and  (-1.55,0.9).. (-1.35,0)
+			.. controls (-1.55,-0.9)  and (-1.8,-0.9).. cycle;
+		 \fill[white!95!brown!10]
+			(1.6,0).. controls (1.8,0.9) and  (1.55,0.9).. (1.35,0)
+			.. controls  (1.55,-0.9) and (1.8,-0.9).. cycle;
+		\draw[white,line width=1mm,line  cap=round] (-0.9,0) -- (0.9,0);
+		\foreach \x in {-0.7,-0.5,-0.3,-0.1,0.1,0.3,0.5,0.7} 
+		\draw[white,line width=0.6mm,line cap=round] (\x,-0.18)  -- (\x,0.18);
+		\draw[brown!60!black,line width=0.45mm] 
+			(-2,0).. controls (-1.1,1.4) and (1.1,1.4).. (2,0) 
+			.. controls (1.1,-1.4) and (-1.1,-1.4)..  cycle;
+	\end{tikzpicture}
+	 }
+	\shortans{3390} 
+	\loigiai{ 
+		\begin{center}
+			\begin{tikzpicture}[line join=round,line cap=round,>=stealth,scale=0.6]
+					\tikzset{every  node/.style={scale=0.9}}
+					 \draw[->] (-6.1,0)--(25.1,0) node[below left] {$x$};
+					\draw[->] (0,-2.1)--(0,10.1) node[below  left] {$y$};
+					\draw (0,0) node [below  left] {$O$};
+					\foreach \x/\nx in {-4/-4,10/10,24/24} 
+					\draw[thin]  (\x,1pt)--(\x,-1pt) node [below] {$\nx$};
+					\foreach  \y/\ny in {8.5/8.5}
+					 \draw[thin] (1pt,\y)--(-1pt,\y) node [left] {$\ny$};
+					 \fill[pattern=north east lines,pattern color=black!60]
+						plot[domain=-4:24,samples=200] (\x,{-17/392*(\x)^2+85/98*(\x)+204/49}) 
+						 -- (24,0) -- (-4,0) -- cycle;
+					 \draw[samples=200,domain=-4:24,smooth,variable=\x]
+						 plot (\x,{-17/392*(\x)^2+85/98*(\x)+204/49});
+					\coordinate (A) at  (10,8.5);
+					\draw[dashed] (A)  -- (10,0);
+					\draw[dashed] (A) --  (0,8.5);
+				\end{tikzpicture}
+		\end{center}Ta thấy đồ thị hàm số $f(x)=ax^2+bx+c$ đi qua các điểm $(-4;0)$, $(24;0)$ và $\left(10;\dfrac{17}{2}\right)$ nên ta có
+		hệ phương trình 
+		\[\heva{&(-4)^2a+(-4)b+c=0\\&24^2a+24b+c=0\\ &10^2a+10b+c=\dfrac{17}{2}}\Rightarrow \heva{&a=-\dfrac{17}{392}  \\&b=\dfrac{85}{98} \\&c=\dfrac{204}{49}.}\]
+		Vậy thể tích của quả  bóng bầu dục trên là
+	\[V=\pi\displaystyle\int_{-4}^{24} \left(-\dfrac{17}{392}x^2+\dfrac{85}{98}x+\dfrac{204}{49}\right)^2 \mathrm{\,d}x=\dfrac{16\,284}{15}\pi \approx 3\,390\,(\text{cm}^3).\]} 
+\end{bt}

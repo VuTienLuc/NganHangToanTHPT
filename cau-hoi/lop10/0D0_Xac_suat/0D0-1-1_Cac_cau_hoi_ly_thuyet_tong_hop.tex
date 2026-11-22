@@ -106,3 +106,133 @@
 		Vậy số phần tử của không gian mẫu trong phép thử trên là $n(\Omega)=4\cdot 4=16$.
 	}
 \end{bt}
+
+% nguồn: chuyen_dang (nhập 22/11/2026)
+\begin{bt}%[0D0H1-1]%[ma:700a3070]
+% nguon: Archive/2024/Update-SP-BG10-11-3/SP-3/BG11-3/data_1C5/DS11-C5-B2-Dang6-SoDoHinhCay-TranTony.tex #1491
+%[Bài giảng 11, Trần Tony]
+	Gieo ngẫu nhiên một đồng xu và một con xúc xắc. Sử dụng sơ đồ hình cây mô tả số phần tử của không gian mẫu.
+	\loigiai{
+		\immini{
+			Dựa vào sơ đồ hình cây ta thấy không gian mẫu có $12$ phần tử như sau\\
+			$\Omega =\{S1; S2;S3;S4;S5;S6;N1;N2;N3;N4;N5;N6\}$.
+		}{
+			\begin{tikzpicture}[>=stealth,scale=1, line join=round, line cap=round]
+				\node[circle, fill=red!30] (a) at (0,0)  {};
+				\node[circle, fill=red!30] (b) at (2,1.5)  {\text{S}};
+				\node[circle, fill=red!30] (c) at (2,-1.5)  {\text{N}};
+				\node[circle, fill=red!30] (d1) at (4,3)  {$1$};
+				\node[circle, fill=red!30] (d2) at (4,2.5)  {$2$};
+				\node[circle, fill=red!30] (d3) at (4,2)  {$3$};
+				\node[circle, fill=red!30] (d4) at (4,1.5)  {$4$};
+				\node[circle, fill=red!30] (d5) at (4,1)  {$5$};
+				\node[circle, fill=red!30] (d6) at (4,0.5)  {$6$};
+				
+				\node[circle, fill=red!30] (e1) at (4,-3)  {$6$};
+				\node[circle, fill=red!30] (e2) at (4,-2.5)  {$5$};
+				\node[circle, fill=red!30] (e3) at (4,-2)  {$4$};
+				\node[circle, fill=red!30] (e4) at (4,-1.5)  {$3$};
+				\node[circle, fill=red!30] (e5) at (4,-1)  {$2$};
+				\node[circle, fill=red!30] (e6) at (4,-0.5)  {$1$};
+				\draw[->](a)--(b);\draw[->](a)--(c);
+				\draw[->](b)--(d1);\draw[->](b)--(d2);\draw[->](b)--(d3);\draw[->](b)--(d4);\draw[->](b)--(d5);\draw[->](b)--(d6);
+				\draw[->](c)--(e1);\draw[->](c)--(e2);\draw[->](c)--(e3);\draw[->](c)--(e4);\draw[->](c)--(e5);\draw[->](c)--(e6);
+			\end{tikzpicture}
+		}
+	}
+\end{bt}
+
+% nguồn: 2026-11-22_072309_hoi_dong_ai_lop10 (nhập 22/11/2026)
+\begin{ex}%[0D0H1-1]%[ma:e9ad8564]
+% nguon: Hội đồng AI (Gemini soạn · DeepSeek giải · DeepSeek phản biện · Gemini duyệt)
+Một hộp chứa $5$ quả cầu màu xanh và $4$ quả cầu màu đỏ có kích thước và khối lượng như nhau. Lấy ngẫu nhiên đồng thời $3$ quả cầu từ hộp. Xét các biến cố sau:
+\begin{itemize}
+    \item $A$: "Trong ba quả cầu lấy ra, có ít nhất một quả cầu màu đỏ";
+    \item $B$: "Cả ba quả cầu lấy ra đều có màu xanh";
+    \item $C$: "Trong ba quả cầu lấy ra, có nhiều nhất hai quả cầu màu xanh".
+\end{itemize}
+Khẳng định nào sau đây là \textbf{sai}?
+\choice
+{$A$ và $B$ là hai biến cố đối nhau}
+{$A$ và $C$ là hai biến cố bằng nhau}
+{$B$ và $C$ là hai biến cố đối nhau}
+{\True $A$ và $C$ là hai biến cố xung khắc}
+\loigiai{
+Tổng số quả cầu lấy ra là $3$.
+\begin{itemize}
+    \item Biến cố $A$ xảy ra khi số quả cầu màu đỏ lấy ra nhận một trong các giá trị $\{1; 2; 3\}$, tương ứng số quả cầu màu xanh nhận một trong các giá trị $\{2; 1; 0\}$, nghĩa là có nhiều nhất $2$ quả cầu màu xanh. Do đó, $A$ và $C$ là hai biến cố bằng nhau ($A = C$).
+    \item Biến cố đối của $A$ là $\overline{A}$: "Không có quả cầu màu đỏ nào được lấy ra", tức là "Cả ba quả cầu lấy ra đều có màu xanh", chính là biến cố $B$. Do đó $\overline{A} = B$, suy ra $A$ và $B$ là hai biến cố đối nhau. Vì $A = C$ nên $B$ và $C$ cũng là hai biến cố đối nhau.
+    \item Do hộp có $4$ quả cầu đỏ và $5$ quả cầu xanh nên ta hoàn toàn có thể lấy ra $3$ quả cầu thoả mãn có ít nhất một quả cầu đỏ (chẳng hạn $1$ quả đỏ và $2$ quả xanh), tức là $A \neq \emptyset$. Vì $A = C$ và $A \neq \emptyset$ nên $A \cap C = A \neq \emptyset$. Do đó, $A$ và $C$ không phải là hai biến cố xung khắc.
+\end{itemize}
+Vậy khẳng định "$A$ và $C$ là hai biến cố xung khắc" là khẳng định sai.
+}
+\end{ex}
+
+% nguồn: 2026-11-22_072309_hoi_dong_ai_lop10 (nhập 22/11/2026)
+\begin{ex}%[0D0H1-1]%[ma:e14c0f0d]
+% nguon: Hội đồng AI (Gemini soạn · DeepSeek giải · DeepSeek phản biện · Gemini duyệt)
+Gieo đồng thời hai con xúc xắc cân đối và đồng chất. Gọi $\Omega$ là không gian mẫu của phép thử. Xét hai biến cố:
+\begin{itemize}
+    \item $A$: "Tổng số chấm xuất hiện trên hai con xúc xắc chia hết cho $4$";
+    \item $B$: "Có ít nhất một con xúc xắc xuất hiện mặt $2$ chấm".
+\end{itemize}
+Số phần tử của biến cố giao $A \cap B$ là
+\choice
+{$2$}
+{\True $3$}
+{$4$}
+{$5$}
+\loigiai{
+Biến cố giao $A \cap B$ là biến cố: "Tổng số chấm xuất hiện chia hết cho $4$ và có ít nhất một con xúc xắc xuất hiện mặt $2$ chấm".
+
+Gọi kết quả của phép thử là cặp số $(x; y)$ với $x, y \in \{1; 2; 3; 4; 5; 6\}$.
+
+Tổng số chấm $S = x + y \in \{2; 3; \ldots; 12\}$. Do $S$ chia hết cho $4$ nên $S \in \{4; 8; 12\}$.
+\begin{itemize}
+    \item Trường hợp $S = 4$: Kết hợp điều kiện có ít nhất một số bằng $2$, ta có cặp kết quả $(2; 2)$.
+    \item Trường hợp $S = 8$: Kết hợp điều kiện có ít nhất một số bằng $2$, ta có các cặp kết quả $(2; 6)$ và $(6; 2)$.
+    \item Trường hợp $S = 12$: Chỉ có cặp $(6; 6)$, không có con xúc xắc nào xuất hiện mặt $2$ chấm.
+\end{itemize}
+Vậy biến cố $A \cap B = \{(2; 2); (2; 6); (6; 2)\}$, suy ra số phần tử của biến cố $A \cap B$ là $n(A \cap B) = 3$.
+}
+\end{ex}
+
+% nguồn: 2026-11-22_072309_hoi_dong_ai_lop10 (nhập 22/11/2026)
+\begin{ex}%[0D0H1-1]%[ma:89bd19ed]
+% nguon: Hội đồng AI (Gemini soạn · DeepSeek giải · DeepSeek phản biện · Gemini duyệt)
+Gieo một đồng xu cân đối và đồng chất ba lần liên tiếp. Kí hiệu $S$ là kết quả xuất hiện mặt sấp, $N$ là kết quả xuất hiện mặt ngửa. Xét hai biến cố:
+\begin{itemize}
+    \item $A$: "Có đúng một lần xuất hiện mặt ngửa";
+    \item $B$: "Lần gieo thứ nhất xuất hiện mặt sấp".
+\end{itemize}
+Cho các khẳng định sau:
+\begin{enumerate}[(I)]
+    \item Không gian mẫu $\Omega$ có $8$ phần tử.
+    \item Tập hợp mô tả biến cố $A$ là $A = \{SSN; SNS; NSS\}$.
+    \item Biến cố giao $A \cap B = \{SSN; SNS\}$.
+    \item Hai biến cố $A$ và $B$ xung khắc với nhau.
+\end{enumerate}
+Trong các khẳng định trên, có bao nhiêu khẳng định đúng?
+\choice
+{$1$}
+{$2$}
+{\True $3$}
+{$4$}
+\loigiai{
+Mỗi lần gieo có $2$ kết quả có thể xảy ra ($S$ hoặc $N$). Khi gieo $3$ lần liên tiếp, số phần tử của không gian mẫu là $n(\Omega) = 2^3 = 8$. Do đó khẳng định (I) đúng.
+
+Biến cố $A$ là "Có đúng một lần xuất hiện mặt ngửa", các kết quả thuận lợi cho $A$ là:
+$$A = \{SSN; SNS; NSS\}.$$
+Do đó khẳng định (II) đúng.
+
+Biến cố $B$ là "Lần gieo thứ nhất xuất hiện mặt sấp", tức là:
+$$B = \{SSS; SSN; SNS; SNN\}.$$
+Khi đó, biến cố giao $A \cap B$ gồm các kết quả vừa thuộc $A$ vừa thuộc $B$:
+$$A \cap B = \{SSN; SNS\}.$$
+Do đó khẳng định (III) đúng.
+
+Vì $A \cap B = \{SSN; SNS\} \neq \emptyset$ nên $A$ và $B$ không phải là hai biến cố xung khắc. Do đó khẳng định (IV) sai.
+
+Vậy có tất cả $3$ khẳng định đúng.
+}
+\end{ex}

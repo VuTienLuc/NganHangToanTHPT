@@ -1586,43 +1586,6 @@ Vậy góc giữa đường thẳng $SB$ và  mặt phẳng đáy bằng $60^\ci
 \end{ex}
 
 % nguồn: Ok_TracNghiemLop11_Lan1
-\begin{ex}%[1H8H6-1]%[ma:3624f345]
-	Cho  hình lập phương $ABCD.A'B'C'D'$. Góc giữa hai đường thẳng $A'C'$ và $BD$ bằng
-	\choice 
-		{$60^{\circ}$} 
-		 {$30^{\circ}$}
-		{$45^{\circ}$} 
-		{\True  $90^{\circ}$}
-	 \loigiai{
-	\immini{Ta  có $(A'C',BD)=(AC,BD)=90^{\circ}$.}{
-		\begin{tikzpicture}[scale=.8,>=stealth,font=\footnotesize,line join=round,line cap=round]
-				\def\a{3.5} 
-				\path (0:0)  coordinate (A)
-					++(0:\a) coordinate (D) 
-					++(-130:\a/2) coordinate (C) 
-					 ($(A)+(C)-(D)$) coordinate (B)
-					 ($(A)+(90:\a)$) coordinate (A')
-					($(B)+(90:\a)$) coordinate (B') 
-					($(C)+(90:\a)$) coordinate (C') 
-					($(D)+(90:\a)$) coordinate (D'); 
-				 \draw[dashed] (B)--(A)--(D)
-					(A)--(A') 
-					(A)--(C) 
-					 (B)--(D);
-				\draw[thick] (A')--(C') 
-					(C)--(C') 
-					(D)--(D') 
-					 (B)--(B')
-					 (B)--(C)--(D)
-					(A')--(B')--(C')--(D')--cycle; 
-				\foreach \x/\g  in {A/180,B/180,C/0,D/0,A'/180,B'/180,C'/0,D'/0}
-				\fill[black]  (\x) circle (1pt)
-					($(\g:4mm)+(\x)$)  node {$\x$};
-			\end{tikzpicture}
-		} 
-	 }
-\end{ex}
-
 % nguồn: Ok_TracNghiemLop11_Lan1
 \begin{ex}%[1H8H6-1]%[ma:2b2d2f88]
 	\immini{ Cho hình chóp $S.ABC$. Hình chiếu vuông góc của  $S$ lên $\left(ABC\right)$ trùng với trung điểm $H$ của cạnh $BC$. Biết tam giác $SBC$ là tam giác đều.
@@ -7061,5 +7024,224 @@ Vậy góc giữa đường thẳng $SB$ và  mặt phẳng đáy bằng $60^\ci
 			Do đó, $\widehat{ASO}=45^\circ$.
 		\end{enumerate}
 		
+	}
+\end{bt}
+
+% nguồn: chuyen_dang (nhập 22/11/2026)
+\begin{ex}%[1H8V6-1]%[ma:fa2c804c]
+	Cho hình chóp $S.ABCD$ có đáy $ABCD$ là hình vuông cạnh $a$. Cạnh bên $SA$ vuông góc với đáy. Góc giữa $SC$ và mặt đáy bằng $45^\circ$. Gọi $E$ là trung điểm $BC$. Tính khoảng cách  giữa hai đường thẳng $DE$ và $SC$.
+	\loigiai{ 
+		Do tam giác $SCA$ vuông tại $A$, góc $\widehat{SCA} = 45^\circ$ nên 
+		 $$
+		SA = AC = a\sqrt{2}, \quad SC = 2a,\quad SB  = SD = a\sqrt{3}.
+		$$ 
+		Chọn hệ trục tọa độ $Oxyz$ sao cho $Ox$, $Oy$, $Oz$ lần lượt trùng  với các tia $AB$, $AD$, $AS$.\\
+		Tọa độ các  điểm
+		$ 
+		D(0; a; 0)$, $E\left(a; \dfrac{a}{2}; 0\right)$, $C(a; a; 0)$, $ S\left(0; 0;  a\sqrt{2}\right).
+		$ 
+		\begin{center}
+			\tdplotsetmaincoords{70}{110} 
+			\begin{tikzpicture}[tdplot_main_coords,scale=1.4]
+					\coordinate (A) at (0,0,0); 
+					\coordinate (B) at (3,0,0); 
+					 \coordinate (D) at (0,3,0);
+					\coordinate (C)  at (3,3,0);
+					\coordinate (S) at (0,0,3.24); 
+					\coordinate (E) at ($(B)!0.5!(C)$); 
+					\coordinate (M)  at ($(S)!0.5!(B)$);
+					\draw[dashed]  (B) -- (A) -- (D);
+					 \draw (B) -- (C) -- (D);
+					 \draw[dashed] (S) -- (A);
+					\draw (S) -- (B); 
+					\draw  (S) -- (D);
+					\draw (S) --  (C);
+					\draw[dashed] (M) --  (D) -- (E);
+					\draw (S) --  (C);
+					\draw  (S) -- (M);
+					\draw (B) -- (M)  -- (E);
+					\node at (A) [below]  {$A$};
+					\node at (B) [below right] {$B$}; 
+					 \node at (C) [below right] {$C$};
+					\node at (D) [below right] {$D$}; 
+					 \node at (S) [left] {$S$};
+					\node  at (E) [below right] {$E$};
+					 \node at (M) [above right] {$M$};
+					\draw[->] (B) -- (4.5,0,0) node[below] {$x$}; 
+					\draw[->]  (D) -- (0,4.5,0) node[above] {$y$};
+					\draw[->] (S)  -- (0,0,4) node[above] {$z$};
+					\fill  (A) circle (1pt);
+					 \fill (B) circle (1pt);
+					\fill (C) circle  (1pt);
+					 \fill (D) circle (1pt);
+					\fill (S)  circle (1pt);
+					 \fill (E) circle (1pt);
+					\fill  (M) circle (1pt);
+				\end{tikzpicture}
+		\end{center}
+		Ta  có
+		$ 
+		\overrightarrow{DE} = \left(a, -\dfrac{a}{2}, 0\right)$, $ \overrightarrow{SC} = \left(-a, -a, a\sqrt{2}\right)$, $ \overrightarrow{DC} =  (a, 0, 0)$.
+		\begin{eqnarray*}
+			& & \left[\overrightarrow{DE}, \overrightarrow{SC}\right] = 
+			\left(-\dfrac{a^2\sqrt{2}}{2}; -a^2\sqrt{2};  -\dfrac{3a^2}{2} \right).\\
+			& & \left[\overrightarrow{DE}, \overrightarrow{SC}\right] \cdot \overrightarrow{DC} = \left(-\dfrac{a^2\sqrt{2}}{2}; -a^2\sqrt{2}; -\dfrac{3a^2}{2} \right)  \cdot (a; 0; 0) = -\dfrac{a^3\sqrt{2}}{2}.\\
+			&\Rightarrow&\mathrm{d}(DE, SC) = \dfrac{\left|\left[\overrightarrow{DE}, \overrightarrow{SC}\right] \cdot \overrightarrow{DC}\right|}{\left|\left[\overrightarrow{DE}, \overrightarrow{SC}\right]\right|} = \dfrac{\dfrac{a^3\sqrt{2}}{2}}{\sqrt{\left(\dfrac{a^2\sqrt{2}}{2}\right)^2 + \left(a^2\sqrt{2}\right)^2 + \left(\dfrac{3a^2}{2}\right)^2}}  = \dfrac{a\sqrt{38}}{19}.
+		\end{eqnarray*}
+	} 
+\end{ex}
+
+% nguồn: chuyen_dang (nhập 22/11/2026)
+\begin{bt}%[1H8V6-1]%[ma:116b23aa]
+	Cho hình chóp $S.ABCD$ có đáy $ABCD$ là hình vuông cạnh $a$. Cạnh bên $SA$ vuông góc với đáy. Góc giữa $SC$ và mặt đáy bằng  $45^\circ$. Gọi $E$ là trung điểm $BC$. Tính khoảng cách giữa hai đường thẳng $DE$ và $SC$.
+	 \loigiai{
+		Do tam giác $SCA$ vuông tại $A$,  góc $\widehat{SCA} = 45^\circ$ nên
+		$$ 
+		SA = AC = a\sqrt{2}, \quad SC = 2a,\quad SB = SD = a\sqrt{3}. 
+		 $$
+		Chọn hệ trục tọa độ $Oxyz$ sao cho $Ox$, $Oy$, $Oz$  lần lượt trùng với các tia $AB$, $AD$, $AS$.\\
+		Tọa  độ các điểm
+		 $
+		 D(0; a; 0)$, $E\left(a; \dfrac{a}{2}; 0\right)$, $C(a; a; 0)$, $ S\left(0; 0; a\sqrt{2}\right).
+		$ 
+		\begin{center}
+			\tdplotsetmaincoords{70}{110} 
+			\begin{tikzpicture}[tdplot_main_coords,scale=1.4]
+					 \coordinate (A) at (0,0,0);
+					\coordinate (B) at (3,0,0); 
+					\coordinate  (D) at (0,3,0);
+					\coordinate (C) at (3,3,0); 
+					 \coordinate (S) at (0,0,3.24);
+					 \coordinate (E) at ($(B)!0.5!(C)$);
+					\coordinate (M)  at ($(S)!0.5!(B)$);
+					\draw[dashed] (B) --  (A) -- (D);
+					\draw (B) -- (C) --  (D);
+					 \draw[dashed] (S) -- (A);
+					\draw (S) --  (B);
+					\draw (S) -- (D); 
+					 \draw (S) -- (C);
+					 \draw[dashed] (M) -- (D) -- (E);
+					 \draw (S) -- (C);
+					\draw (S)  -- (M);
+					\draw (B) -- (M) --  (E);
+					\node at  (A) [below] {$A$};
+					 \node at (B) [below right] {$B$};
+					\node at (C) [below right] {$C$}; 
+					\node at (D)  [below right] {$D$};
+					\node at (S)  [left] {$S$};
+					 \node at (E) [below right] {$E$};
+					 \node at (M) [above right] {$M$};
+					\draw[->] (B) --  (4.5,0,0) node[below] {$x$};
+					\draw[->] (D)  -- (0,4.5,0) node[above] {$y$};
+					 \draw[->] (S) -- (0,0,4) node[above] {$z$};
+					\fill (A) circle (1pt); 
+					\fill (B) circle (1pt); 
+					 \fill (C) circle (1pt);
+					\fill (D) circle  (1pt);
+					\fill (S) circle  (1pt);
+					\fill (E) circle (1pt); 
+					\fill (M) circle  (1pt);
+				\end{tikzpicture}
+		\end{center}
+		 Ta có
+		 $
+		 \overrightarrow{DE} = \left(a, -\dfrac{a}{2}, 0\right)$, $ \overrightarrow{SC} = \left(-a, -a, a\sqrt{2}\right)$, $ \overrightarrow{DC} = (a, 0, 0)$.
+		\begin{eqnarray*}
+			& & \left[\overrightarrow{DE},  \overrightarrow{SC}\right] =
+			\left(-\dfrac{a^2\sqrt{2}}{2}; -a^2\sqrt{2}; -\dfrac{3a^2}{2}  \right).\\
+			& & \left[\overrightarrow{DE}, \overrightarrow{SC}\right] \cdot \overrightarrow{DC} = \left(-\dfrac{a^2\sqrt{2}}{2}; -a^2\sqrt{2}; -\dfrac{3a^2}{2} \right)  \cdot (a; 0; 0) = -\dfrac{a^3\sqrt{2}}{2}.\\
+			&\Rightarrow&\mathrm{d}(DE, SC) = \dfrac{\left|\left[\overrightarrow{DE},  \overrightarrow{SC}\right] \cdot \overrightarrow{DC}\right|}{\left|\left[\overrightarrow{DE}, \overrightarrow{SC}\right]\right|} = \dfrac{\dfrac{a^3\sqrt{2}}{2}}{\sqrt{\left(\dfrac{a^2\sqrt{2}}{2}\right)^2 + \left(a^2\sqrt{2}\right)^2 + \left(\dfrac{3a^2}{2}\right)^2}} = \dfrac{a\sqrt{38}}{19}.
+		\end{eqnarray*}
+	 }
+\end{bt}
+
+% nguồn: chuyen_dang (nhập 22/11/2026)
+\begin{bt}%[1H8H6-1]%[ma:bca387b1]
+	Cho hình  chóp $S.ABCD$ có đáy là hình thang vuông tại $A$ và $B$, thỏa mãn điều kiện $AB = BC = a,\ AD = 2a,\ SA \perp (ABCD),\ SA = a$. Gọi $M, N$ lần lượt là trung điểm của $SB, CD$. Tính cosin của góc giữa $MN$ và $(SAC)$. (Kết quả làm tròn đến hàng phần trăm).
+	\shortans{0,74} 
+	\loigiai{ 
+		Chọn hệ trục  tọa độ như hình vẽ.
+		\begin{center}
+			\begin{tikzpicture}[scale=0.8,font=\footnotesize,>=stealth]
+					\path 
+						(0,0) coordinate (A) 
+						(-2,-2)  coordinate (B)
+						 (5,0) coordinate (D)
+						($(B)+(3,0)$) coordinate (C) 
+						($(A)+(0,3)$) coordinate  (S)
+						($(S)!0.5!(B)$)  coordinate (M)
+						($(C)!0.5!(D)$)  coordinate (N);
+					\draw[->] (D)--(7,0)  node[below]{$y$};
+					 \draw[->] (B)--(-3,-3) node[below]{$x$};
+					\draw[->] (S)--(0,4)  node[left]{$z$};
+					 \draw (C)--(D)--(S)--(C)--(B)--(S);
+					 \draw[dashed] (S)--(A)--(D)--(B)--(A)--(C)
+						 (M)--(N);
+					\pic[draw,thin,angle radius=2mm] {right angle = B--A--D}; 
+					\pic[draw,thin,angle radius=2mm]  {right angle = A--C--D};
+					\pic[draw,thin,angle radius=2mm] {right angle  = A--B--C};
+					 \foreach \x/\g in {A/180,B/-90,C/-100,D/-80,S/170,M/150,N/-30}\draw (\x) circle (.04) +(\g:.5) node{\footnotesize$\x$};
+				\end{tikzpicture}
+		\end{center}
+		Ta có $A(0;0;0)$, $B(1;0;0)$, $C(1;1;0)$, $D(0;2;0)$, $S(0;0;1)$, $M\left(\dfrac{1}{2};0;\dfrac{1}{2}\right)$,  $N\left(\dfrac{1}{2};\dfrac{3}{2};0\right)$.\\
+		Vectơ chỉ phương của $MN$  là $\overrightarrow{MN} = \left(0; \dfrac{3}{2}; -\dfrac{1}{2}\right) \Rightarrow 2\overrightarrow{MN} = (0;3;-1)$.\\
+		Vectơ pháp tuyến của mặt phẳng $(SAC)$ là $\overrightarrow{n} = \left[\overrightarrow{AC},\overrightarrow{AS}\right] =  (1;-1;0)$.\\
+		Vậy $\sin((MN),(SAC)) =  \dfrac{|3|}{\sqrt{9+1+1^2}} = \dfrac{3\sqrt{5}}{10}$.\\
+		Vậy $\cos((MN),(SAC)) = \sqrt{1-\left(\dfrac{3\sqrt{5}}{10}\right)^2} = \dfrac{\sqrt{55}}{10} \approx  0{,}74$.
+	 }
+\end{bt}
+
+% nguồn: chuyen_dang (nhập 22/11/2026)
+\begin{bt}%[1H8V6-1]%[ma:646b9018]
+% nguon: Archive/2024/0. [LVH] BG - 12 New - 4in1-20240625T224301Z-001/0. [LVH] BG - 12 New - 4in1/data/data_C5/Bai2-Dang4.tex #1228
+
+	Cho hình chóp $S.ABCD$ có đáy $ABCD$ là hình chữ nhật và $SA\perp (ABCD)$. Cho biết $AB=2a$, $AD=3a$ và $SA=2a$. Tính góc giữa:
+	\begin{enumerate}
+		\item Hai đường thẳng $SC$ và $BD$;
+		\item Mặt phẳng $(SBD)$ và mặt đáy;
+		\item Đường thẳng $SC$ và mặt phẳng $(SBD)$.
+	\end{enumerate}
+	\loigiai
+	{
+		\immini{
+			Chọn hệ tọa độ $Oxyz$ sao cho các điểm có tọa độ như sau: $A(0;0;0)$, $B(2a;0;0)$, $D(0;3a;0)$, $S(0;0;2a)$. \\Trong không gian $Oxyz$ vừa chọn, ta có $C(2a;3a;0)$, $\overrightarrow{SC}=(2a;3a;-2a)$, $\overrightarrow{BD}=(-2a;3a;0)$.
+			\begin{listEX}[1]
+				\item Hai đường thẳng $SC$ và $BD$ có vectơ chỉ phương lần lượt là $\overrightarrow{u}=(2;3;-2)$, $\overrightarrow{v}=(-2;3;0)$.\\
+				Ta có 
+				\begin{eqnarray*}
+					\cos (SC,BD)=\dfrac{\left |2\cdot (-2)+3\cdot 3+(-2)\cdot 0 \right |}{\sqrt{2^2+3^2+(-2)^2}\cdot\sqrt{(-2)^2+3^2+0^2}}=\dfrac{5}{\sqrt{221}}.
+				\end{eqnarray*}
+			\end{listEX}
+		}{
+			\begin{tikzpicture}[line cap=round,line join=round,scale=.7,>=stealth,font=\footnotesize ]
+				\coordinate (A) at (0,0);
+				\coordinate (S) at (0,3);
+				\coordinate (z) at (0,4);
+				\coordinate (D) at (3,0);
+				\coordinate (y) at (4,0);
+				\coordinate (C) at (2,-2);
+				\coordinate (B) at (-1,-2);
+				\coordinate (x) at ($(A)!1.5!(B)$);
+				\draw[dashed](S)--(A)--(B)--(D)--(A);
+				\draw (D)--(C)--(B)--(S)--(C)(S)--(D);
+				\draw[->](B)--(x);
+				\draw[->](S)--(z);
+				\draw[->](D)--(y);
+				\foreach \x/\g in {z/90,S/180,D/90,y/0,A/-45,B/180,x/-90,C/-90}
+				\fill[black](\x) circle (1pt)
+				($(\x)+(\g:3mm)$) node{\x};
+			\end{tikzpicture}
+		}
+		Suy ra $(SC,BD)\approx 70^{\circ}21'$.
+		\begin{enumerate}
+			\setcounter{enumi}{1}
+			\item Ta có phương trình mặt phẳng $(SBD)$ theo đoạn chắn là $\dfrac{x}{2a}+\dfrac{y}{3a}+\dfrac{z}{2a}=1$ hay $3x+2y+3z-6a=0$.\\
+			Mặt phẳng $(SBD)$ có vectơ pháp tuyến $\overrightarrow{n}=(3;2;3)$, mặt đáy $(ABCD)$ có vectơ pháp tuyến $\overrightarrow{k}=(0;0;1)$. Gọi $\alpha$ là góc giữa mặt phẳng $(SBD)$ và mặt đáy.\\
+			Ta có $\cos\alpha =\dfrac{\left |\overrightarrow{n}\cdot\overrightarrow{k} \right |}{\left |\overrightarrow{n} \right |\cdot\left |\overrightarrow{k} \right |}=\dfrac{\left |3\cdot 0+2\cdot 0+3\cdot 1 \right |}{\sqrt{3^2+2^2+3^2}\cdot\sqrt{0^2+0^2+1^2}}=\dfrac{3}{\sqrt{22}}$.\\
+			Suy ra $\left ((SBD),(ABCD) \right )\approx 50^{\circ}14'$.
+			\item Gọi $\beta$ là góc giữa đường thẳng $SC$ và mặt phẳng $(SBD)$.\\
+			Ta có $\sin\beta =\dfrac{\left |\overrightarrow{u}\cdot\overrightarrow{n} \right |}{\left |\overrightarrow{u} \right |\cdot\left |\overrightarrow{n} \right |}=\dfrac{\left |2\cdot 3+3\cdot 2+(-2)\cdot 3 \right |}{\sqrt{2^2+3^2+(-2)^2}\cdot\sqrt{3^2+2^2+3^2}}=\dfrac{6}{\sqrt{374}}$.\\
+			Suy ra $\left (SC,(SBD) \right )\approx 18^{\circ}4'$.
+		\end{enumerate}
 	}
 \end{bt}

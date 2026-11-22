@@ -269,40 +269,6 @@
 \end{ex}
 
 % nguồn: Phan1_Lop_12_Dai_so_Chuong_1
-\begin{ex}%[2D1H4-2]%[ma:d38d7da5]
-	Cho hàm số $y=f(x)=\dfrac{nx^2+1}{mx+1} (mn\neq 0)$  có đồ thị $(C)$ như hình vẽ:
-	\begin{center}
-		\begin{tikzpicture}[scale=1,font=\footnotesize,line join=round,line cap=round,>=stealth]
-			\def\a{1} \def\b{0} \def\c{1} \def\d{2} \def\e{1} 
-			\def\xmin{-6}  \def\xmax{5}
-			\def\ymin{-5}  \def\ymax{5}
-			\draw[->] (\xmin,0)--(\xmax,0) node [below]{$x$}; 
-			 \draw[->] (0,\ymin)--(0,\ymax) node [right]{$y$};
-			 \node at (0,0) [above right]{$O$};
-			\clip (\xmin+0.1,\ymin+0.1) rectangle (\xmax-0.1,\ymax-0.1); 
-			 \draw[smooth,samples=300,domain=\xmin:(-\e/\d-0.1)] plot (\x,{(\a*(\x)^2+\b*(\x)+\c)/(\d*(\x)+\e)});
-			\draw[smooth,samples=300,domain=(-\e/\d+0.1:\xmax)] plot (\x,{(\a*(\x)^2+\b*(\x)+\c)/(\d*(\x)+\e)}); 
-			\draw[smooth,samples=300,domain=\xmin:\xmax] plot (\x,{(0.5*(\x)-0.25)}); 
-			\draw  (-\e/\d,\ymin)--(-\e/\d,\ymax);
-			\fill (-0.5,0) circle (1.0pt) node[above  left]{$-\dfrac{1}{2}$};
-			\node at  (-4.1,-1)[below]{$y=\dfrac{1}{2}x-\dfrac{1}{4}$};
-		\end{tikzpicture}
-	\end{center}
-	\choiceTF 
-		 {$\dfrac{n}{m}=-\dfrac{1}{4}$}
-		 {$m=-\dfrac{1}{2}$}
-		 {\True $m+n=3$}
-		{$\lim\limits_{x\to+\infty}\left[f(x)-\dfrac{1}{2}x\right]=0$} 
-	\loigiai{ 
-		\begin{itemchoice}
-			\itemch $\lim\limits_{x\to+\infty}\dfrac{f(x)}{x}=\lim\limits_{x\to+\infty}\dfrac{nx^2+1}{mx^2+x}=\dfrac{n}{m}=\dfrac{1}{2}$. 
-			\itemch Đường tiệm cận đứng của đồ thị là $x=-\dfrac{1}{m}=-\dfrac{1}{2}\Rightarrow m=2$. 
-			\itemch Từ hai ý a) và b) ta có $\heva{&m=2n\\&m=2}\Rightarrow\heva{&m=2\\&n=1}\Rightarrow  m+n=3$; $n=2\Rightarrow m+n=3$.\\
-			\itemch Đường  tiệm cận xiên $y=\dfrac{1}{2}x-\dfrac{1}{4}\Rightarrow\lim\limits_{x\to+\infty}\left[f(x)-\dfrac{1}{2}x\right]=-\dfrac{1}{4}$.
-		\end{itemchoice}
-	 }
-\end{ex}
-
 % nguồn: Phan1_Lop_12_Dai_so_Chuong_1
 \begin{ex}%[2D1V4-2]%[ma:12d90ce6]
 	Cho hàm số $y=\dfrac{mx^2+\left(3m^2-2\right)x-2}{x+3m}$ có  đồ thị là $(C)$ với $m$ là tham số.
@@ -725,3 +691,78 @@ $$
 		Vậy có $2$ giá trị $m$ thỏa mãn yêu cầu bài toán.		
 	}
 \end{bt}
+
+% nguồn: chuyen_dang (nhập 22/11/2026)
+\begin{ex}%[2D1N4-2]%[ma:5bd97acc]
+	Đồ  thị hàm số $y=\dfrac{x-2}{x^{2}-4}$ có mấy đường tiệm cận?
+	\choice 
+		{$3$} 
+		 {$1$}
+		 {\True$2$}
+		 {$0$}
+	\loigiai{Ta có  $y = \dfrac{x-2}{x^{2}-4} = \dfrac{x-2}{(x-2)(x+2)}= \dfrac{1}{x+2}$.\\
+		Do $\heva{&\displaystyle\lim_{x\to +\infty  }\dfrac{1}{x+2}=0\\&
+		\displaystyle\lim_{x\to -\infty }\dfrac{1}{x+2}=0}$. Suy  ra đường thẳng $y=0$ là tiệm cận ngang của hàm số.\\
+		Đồ  thị hàm số có tiệm cận ngang thì không có tiệm cận xiên.\\
+		Do $\heva{&\displaystyle\lim_{x\to -2^-  }\dfrac{1}{x+2}= - \infty \\&
+		\displaystyle\lim_{x\to -2^+ }\dfrac{1}{x+2}= + \infty}$. Suy  ra đường thẳng $x=-2$ là tiệm cận đứng của hàm số.\\
+		Vậy hàm số có hai đường tiệm cận. 
+	} 
+\end{ex}
+
+% nguồn: chuyen_dang (nhập 22/11/2026)
+\begin{ex}%[2D1V4-2]%[ma:81ae365f]
+	 Đồ thị hàm số $y = \dfrac{2x}{\sqrt{x^2-1}}$ có số đường tiệm cận là
+	 \choice
+		{$2$} 
+		 {$1$}
+		{$3$} 
+		{\True$4$} 
+	\loigiai{Ta có $\lim\limits_{x\to +\infty }\dfrac{2x}{\sqrt{x^2-1}} = \lim\limits_{x\to +\infty }\dfrac{2x}{|x|\sqrt{1-\dfrac{1}x^2}} =  \lim\limits_{x\to +\infty }\dfrac{2x}{x\sqrt{1-\dfrac{1}x^2}} = \lim\limits_{x\to +\infty }\dfrac{2}{\sqrt{1-\dfrac{1}x^2}}=2$.\\
+		$\lim\limits_{x\to -\infty }\dfrac{2x}{\sqrt{x^2-1}}=\lim\limits_{x\to -\infty} \dfrac{2x}{|x|\sqrt{1-\dfrac{1}x^2}} = \lim\limits_{x\to -\infty} \dfrac{2x}{-x\sqrt{1-\dfrac{1}x^2}} =  \lim\limits_{x\to -\infty} \dfrac{-2}{\sqrt{1-\dfrac{1}x^2}}=-2$.\\
+		Suy ra $y=-2$ và $y=2$ là phương trình  hai đường tiệm cận ngang của đồ thị hàm số đã cho.\\
+		Mặt khác $\lim\limits_{x\to 1^-} y =  \lim\limits_{x\to (-1)^-} \dfrac{2x}{\sqrt{x^2-1}} = -\infty$; $\lim\limits_{x\to 1^+}y = \lim\limits_{x\to 1^+} \dfrac{2x}{\sqrt{x^2-1}} = +\infty$.\\
+		Nên đồ thị hàm số có hai tiệm  cận đứng là đường thẳng $x=-1$ và đường thẳng $x=1$.\\
+		 Vậy đồ thị hàm số có $4$ tiệm cận.
+	 }
+\end{ex}
+
+% nguồn: chuyen_dang (nhập 22/11/2026)
+\begin{bt}%[2D1C4-2]%[ma:df981945]
+	Số giá trị nguyên của tham số $m$ để hàm số $y = \dfrac{1 + \sqrt{x + 1}}{x^2 - (1-m)x + 2m}$ có $3$ đường tiệm cận  (bao gồm tiệm cận đứng và tiệm cận ngang) là
+	\shortans{2} 
+	\loigiai{ 
+		Điều kiện xác định $\heva{&x  \geq -1\\&x^2 - (1-m)x + 2m \neq 0}.$\\
+		Ta  có $y = \dfrac{1 + \sqrt{x+1}}{x^2 - (1-m)x + 2m.}$\\
+		 Đồ thị hàm số $y=\dfrac{1+\sqrt{x+1}}{x^2-(1-m)x+2m}$ với $x \geq-1$ có tiệm cận ngang là đường thẳng $y=0$.\\
+		Do đó để đồ thị  hàm số có $3$ đường tiệm cận thì đồ thị hàm số phải có $2$ tiệm cận đứng.\\
+		Khi đó phương trình $x^2-(1-m)x+2m=0$ có $2$ nghiệm phân biệt lớn  hơn $-1$\\
+		$\Leftrightarrow \heva{&\Delta > 0\\&(x_1 + 1)(x_2 + 1) > 0\\&x_1 + 1 + x_2 + 1 >  0} \Leftrightarrow \heva{&(1-m)^2-8m>0\\&x_1x_2 + (x_1 + x_2) + 1 > 0\\&x_1 + x_2 + 2 > 0} \Leftrightarrow \heva{&1 - 2m + m^2 - 8m > 0\\&2m + 1 - m + 1 > 0\\&1 - m + 2 > 0}$\\
+		$\Leftrightarrow \heva{&1 - 2m + m^2 - 8m > 0\\&m + 2 > 0\\&m < 3} \Leftrightarrow \heva{&m^2 - 10m + 1 > 0\\&m > -2\\&m < 3} \Leftrightarrow \heva{&\hoac{&m  > 5 + 2\sqrt{6}\\&m < 5 - 2\sqrt{6}}\\&-2 < m < 3}$ \\$ \Leftrightarrow -2 < m < 5 - 2\sqrt{6}$.\\
+		Vậy $m\in\{-1;0\}$. Suy ra có $2$ giá trị $m$ thỏa  mãn.
+	 }
+\end{bt}
+
+% nguồn: chuyen_dang (nhập 22/11/2026)
+\begin{ex}%[2D1H4-2]%[ma:43d9abff]
+	Cho hàm  số $y=\dfrac{mx-1}{2x+m}$ có đồ thị là $\left(C_m \right)$ với $m$ là tham số
+	\choiceTF 
+		{\True Khi $m=2$ thì đồ thị hàm số  có đường tiệm cận ngang $y=1$}
+		{Khi $m=2$  thì giao điểm của các đường tiệm cận có toạ độ $I\left(1;-1\right)$}
+		{\True Đường tiệm cận đứng của đồ  thị hàm số đi qua điểm $A\left(-1; \sqrt{2} \right)$ thì $m=2$}
+		{\True Với mọi giá trị của tham số $m$ thì hàm số luôn đồng biến trên mỗi khoảng  xác định của nó}
+	\loigiai{ 
+		\begin{itemchoice}
+			 \itemch
+			Khi $m=2$ thì đồ thị  hàm số có đường tiệm cận ngang $y=1$.
+			\itemch 
+			Khi $m=2$ thì giao điểm của các đường  tiệm cận có toạ độ $I\left(-1; 1\right)$.
+			 \itemch
+			Đồ thị hàm số có tiệm cận đứng khi và chỉ khi $m\left(-\dfrac{m}{2} \right)-1\ne 0\Leftrightarrow m^2+2\ne 0$  đúng với mọi giá trị $m$.\\
+			Khi đó, TCĐ là đường thẳng $x=-\dfrac{m}{2}$. Vì TCĐ đi qua điểm $A(-1; \sqrt{2})$ nên ta có $-\dfrac{m}{2}=-1\Leftrightarrow m=2$. 
+			 \itemch
+			Ta có $y'=\dfrac{m^2+2}{\left(2x+m\right)^2}  > 0, \forall x\ne-\dfrac{m}{2}$.\\
+			Vậy hàm số đồng biến trên từng khoảng xác định  của nó.
+		\end{itemchoice}
+	} 
+\end{ex}

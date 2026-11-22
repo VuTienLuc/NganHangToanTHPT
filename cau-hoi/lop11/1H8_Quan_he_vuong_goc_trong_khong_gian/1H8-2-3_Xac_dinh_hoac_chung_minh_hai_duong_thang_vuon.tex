@@ -765,36 +765,6 @@
 \end{ex}
 
 % nguồn: Ok_TracNghiemLop11_Lan1
-\begin{ex}%[1H8H2-3]%[ma:b5ed1c7e]
-	Cho tứ diện $MNPQ$ có hai tam giác $MNP$  và $QNP$ là hai tam giác cân lần lượt tại $M$ và $Q$. Góc giữa hai đường thẳng $MQ$ và $NP$ bằng
-	\choice 
-		{$45^{\circ}$} 
-		{$30^{\circ}$} 
-		{$60^{\circ}$} 
-		{\True $90^{\circ}$} 
-	\loigiai{ 
-	\immini{Gọi $I$ là trung điểm của $NP$.\\ 
-		Khi đó $\triangle{MNP}$ cân tại $M$  nên $NP \perp MI$.\\
-		Tương tự $\triangle{QNP}$ cân tại $Q$ nên $NP  \perp QI$.\\
-		Ta có $\heva{&NP \perp MI\\ &NP \perp QI} \Rightarrow NP \perp  (MQI) \Rightarrow NP \perp MQ$.\\
-		Suy ra góc giữa hai đường  thẳng $MQ$ và $NP$ bằng $90^{\circ}$.}{
-		\begin{tikzpicture}[line join=round,line cap=round,>=stealth,scale=0.7]
-				\path 
-					(0,0)  coordinate (N) node[left]{$N$}
-					(2,-2) coordinate  (P) node[below]{$P$}
-					(5,0) coordinate  (Q) node[right]{$Q$}
-					(3,4) coordinate (M) node[above]{$M$}; 
-				\coordinate[label=below left:$I$]  (I) at ($(N)!0.5!(P)$);
-				\draw  (I)--(M)--(N)--(P)--(Q)--(M)--(P);
-				\draw[dashed] (N)--(Q)--(I); 
-				\draw pic[draw,angle  radius=2mm,angle eccentricity=1.5]{right angle = Q--I--P};
-				\draw pic[draw,angle radius=2mm,angle eccentricity=1.5]{right angle =  M--I--N};
-				 \foreach \i in {M,N,P,Q,I}{\draw[fill](\i) circle (1pt);}
-			\end{tikzpicture}
-		 }
-	 }
-\end{ex}
-
 % nguồn: Ok_TracNghiemLop11_Lan1
 \begin{ex}%[1H8H2-3]%[ma:1abfcd25]
 	Cho hình chóp $S.ABC$ có tam giác $ABC$ nhọn, $SA\perp(ABC)$ và $H$ là hình chiếu vuông góc của $S$ lên $BC$ ($H$ không trùng với $B$,  $C$). Trong các khẳng định sau, khẳng định nào đúng?
@@ -1503,67 +1473,7 @@
 \end{ex}
 
 % nguồn: Ok_TraLoiNgan_Lop11_Lan2
-\begin{ex}%[1H8H2-3]%[ma:9a7ceb4b]
-	Cho tứ diện $ABCD$ có $AC=AD$, $BC=BD$. Xác định số đo góc  hai đường thẳng $CD$, $AB$. (đơn vị độ)
-	 \shortans{90}
-	\loigiai{ 
-	\immini{Gọi $I$ là trung điểm của $CD$.\\ 
-		Ta có $\heva{&CD\perp BI\\&CD\perp AI}\Rightarrow CD\perp(ABI)\Rightarrow  CD\perp AB$.\\
-		Vậy  $(AB,CD)=90^\circ$.
-		}{ 
-		\begin{tikzpicture}[scale=1,font=\footnotesize,line join=round,line cap=round,>=stealth]
-				\path (0,0) coordinate  (B)
-					(4,0) coordinate (D) 
-					(3,-1.3)  coordinate (C)
-					 ($(D)!0.5!(C)$) coordinate (I)
-					($(B)!0.6!(I)$) coordinate (H) 
-					 ($(H)+(0,2.5)$) coordinate (A);
-				 \draw (A)--(B)--(C)--(D)--cycle (I)--(A)--(C);
-				\draw[dashed] (I)--(B)--(D); 
-				\foreach \p/\g in {B/180,C/-90,D/0,A/90,I/-30} \fill (\p) circle (1pt)+(\g:0.3)  node{$\p$};
-				 \foreach \x/\y/\z in {A/I/D,B/I/C} \draw pic[draw,angle radius=0.2cm]{right angle=\x--\y--\z};
-			\end{tikzpicture}
-		 }
-	 }
-\end{ex}
-
 % nguồn: Ok_TraLoiNgan_Lop11_Lan2
-\begin{ex}%[1H8H2-3]%[ma:aea7229a]
-	Cho hình lập phương $ABCD.A'B'C'D'$ có cạnh bằng $a$. Gọi $M$, $N$  lần lượt là trung điểm của $A'B'$, $B'C'$. Góc giữa hai đường thẳng $MN$ và $BD$ là (đơn vị độ)
-	 \shortans{90}
-	\loigiai{ 
-	 \immini{
-		 Ta có $MN\parallel AC$ mà $AC\perp BD\Rightarrow MN\perp BD$.\\
-		Vậy $(MN,BD)=90^\circ$. 
-		}{ 
-		\begin{tikzpicture}[line cap=round,line join=round,>=stealth,>=latex,font=\footnotesize,scale=.75]
-				\def\h{4} 
-				 \path
-					(0,0) coordinate (A') 
-					(4,0) coordinate  (D')
-					(-2,-1) coordinate  (B')
-					($(B')+(D')-(A')$) coordinate (C') 
-					($(A')+(90:\h)$) coordinate (A) 
-					($(B')+(90:\h)$) coordinate (B) 
-					($(C')+(90:\h)$) coordinate (C) 
-					($(D')+(90:\h)$) coordinate  (D)
-					($(B')!.5!(A')$)  coordinate (M)
-					($(B')!.5!(C')$) coordinate (N); 
-				 \draw (A)--(B)--(C)--(D)--cycle (B)--(B')--(C')--(C)
-					 (C')--(D')--(D)
-					 (B)--(D)
-					 (A)--(C);
-				\draw[dashed] (A)--(A') 
-					 (B')--(A')--(D')
-					 (M)--(N);
-				\foreach \x/\g in {A/90,B/180,C/-45,D/0,A'/135,B'/180,C'/-45,D'/0,M/135,N/-90} 
-				\fill  (\x) circle (1pt)
-					($(\g:3mm)+(\x)$) node  {$\x$};
-			\end{tikzpicture}
-		 }
-	} 
-\end{ex}
-
 % nguồn: Ok_TraLoiNgan_Lop11_Lan2
 \begin{ex}%[1H8H2-3]%[ma:71eed040]
 	Cho hình chóp $S.ABCD$ có đáy là hình vuông $ABCD$ cạnh $a\sqrt{2}$ và $SA=SD=a$. Gọi  $M$ và $N$ lần lượt là trung điểm của $AB$ và $SB$. Số đo góc $(MN,SD)$ bằng (đơn vị độ)
