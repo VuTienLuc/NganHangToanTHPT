@@ -664,6 +664,13 @@ Tạo phiếu như cũ (📄 Phiếu bài học, kiểu trắc nghiệm hoặc t
 - Bài giảng bất kỳ cũng cho HS xem được: 🌐 Thi trực tuyến → thẻ Bài giảng → nút **Cho HS xem / Thôi cho HS**.
 - Phiếu tạo từ bản cũ (trước khi có tính năng) cần tạo lại phiếu để có dữ liệu web.
 
+## Phiếu bài học — tắt lí thuyết các dạng toán
+Ở mục *I. Kiến thức trọng tâm trên phiếu*, tích **Tắt lí thuyết các dạng toán**: phiếu in chỉ còn **kiến thức trọng tâm + đề bài**.
+- Ô kiến thức: chỉ in phần chung. Phương pháp từng dạng (đoạn `%% DANG <mã>` hoặc `\textbf{Dạng n…}`) được bỏ khỏi bản in nhưng vẫn lưu và vẫn dùng cho Beamer.
+- Kiểu *Dòng trống*: chỉ chừa dòng ghi kiến thức, không có dòng "Phương pháp" của từng dạng.
+- Phiếu tự luận: ví dụ mẫu in như một bài tập (không kèm lời giải), mục đổi tên thành *Bài tập theo dạng*. File lời giải có đủ lời giải mọi bài, kể cả bài vốn là ví dụ mẫu.
+- Đáp số viết kèm trong đề (`\dapso{…}`) không còn lộ trên phiếu học sinh.
+
 ## 👁 Phiếu bài học — xem trước & đổi câu ưng ý
 Trong hộp **Phiếu bài học**, bấm **👁 Xem trước & đổi câu** (cạnh *Tạo phiếu*): máy chọn thử bộ câu đúng như khi tạo phiếu và hiện từng câu theo nhóm.
 - Phiếu trắc nghiệm: Luyện tập / Bài tập về nhà × Trắc nghiệm, Đúng/Sai, Trả lời ngắn, Vận dụng – VDC.

@@ -148,7 +148,31 @@ def chon(ds, cac_dang, cfg, rng, khoa_noi_dung, ghi_thieu=None):
     return kq, thieu
 
 
-def khoi(kq, cac_dang, ten_dang, loi_giai, so_dong, thoat, bo_cuc="song_song"):
+def bo_dap_so(de):
+    """Bỏ \\dapso{…} (đáp số viết kèm trong đề) khỏi đề bài phát học sinh — phiếu tự luận bật hiển thị lời giải nên \\dapso sẽ lộ."""
+    ra, i = [], 0
+    while True:
+        j = de.find("\\dapso", i)
+        if j < 0:
+            ra.append(de[i:]); break
+        k = j + len("\\dapso")
+        while k < len(de) and de[k] in " \t\n":
+            k += 1
+        if k >= len(de) or de[k] != "{":
+            ra.append(de[i:k]); i = k; continue
+        sau, muc = k, 0
+        while sau < len(de):
+            if de[sau] == "\\":
+                sau += 2; continue
+            muc += de[sau] == "{"; muc -= de[sau] == "}"
+            sau += 1
+            if muc == 0:
+                break
+        ra.append(de[i:j]); i = sau
+    return re.sub(r"\\\\\s*$", "", "".join(ra).rstrip())
+
+
+def khoi(kq, cac_dang, ten_dang, loi_giai, so_dong, thoat, bo_cuc="song_song", chi_de=False):
     """Nội dung LaTeX các khối dạng. loi_giai=True: in lời giải thay cho dòng kẻ.
     bo_cuc: "song_song" (trái ví dụ mẫu – phải tự luyện) | "tren_duoi" (ví dụ mẫu + lời giải ở trên, bài tự luyện bên dưới, cả bề ngang)."""
     ra, so_bai, so_vd = [], 0, 0
@@ -156,6 +180,8 @@ def khoi(kq, cac_dang, ten_dang, loi_giai, so_dong, thoat, bo_cuc="song_song"):
         if d not in kq:
             continue
         vd, tl = kq[d]["vd"], kq[d]["tu_luyen"]
+        if chi_de:                                   # chỉ đề bài: ví dụ mẫu thành Bài đầu tiên của dạng (không in lời giải mẫu)
+            tl = [dict(vd, _vai="tuong_tu")] + list(tl)
         so_vd += 1
         trai = (r"\textbf{\color{mauDang}Ví dụ " + str(so_vd) + r".}\ " + vd["_tl"]["de"] + "\n\\par\\smallskip\n" +
                 r"{\color{mauPhieu}\bfseries\small Lời giải.}\ " + vd["_tl"]["lg"] +
@@ -164,7 +190,7 @@ def khoi(kq, cac_dang, ten_dang, loi_giai, so_dong, thoat, bo_cuc="song_song"):
         for c in tl:
             so_bai += 1
             nhan = (r"\ \nhanTL{Vận dụng}" if c["_vai"] == "van_dung" else r"\ \nhanTL{Nâng cao}" if c["_vai"] == "nang_cao" else "")
-            s = r"\textbf{\color{mauDang}Bài " + str(so_bai) + r".}" + nhan + r"\ " + c["_tl"]["de"]
+            s = r"\textbf{\color{mauDang}Bài " + str(so_bai) + r".}" + nhan + r"\ " + (c["_tl"]["de"] if loi_giai else bo_dap_so(c["_tl"]["de"]))
             if loi_giai:
                 if c["_tl"]["lg"]:
                     s += "\n\\par{\\color{mauPhieu}\\bfseries\\small Lời giải.}\\ " + c["_tl"]["lg"]
@@ -176,8 +202,8 @@ def khoi(kq, cac_dang, ten_dang, loi_giai, so_dong, thoat, bo_cuc="song_song"):
         if not phai:
             phai = [r"{\small\itshape\color{black!55} Kho chưa có câu tương tự cho dạng này — giáo viên cho thêm bài:}" +
                     ("" if loi_giai else r"\dongKe{6}")]
-        if loi_giai:
-            ra.append(r"\dangPhieu{" + str(j) + "}{" + thoat(ten_dang.get(d, d)) + "}\n" + "\n\\par\\smallskip\n".join(phai))
+        if loi_giai or chi_de:
+            ra.append(r"\dangPhieu{" + str(j) + "}{" + thoat(ten_dang.get(d, d)) + "}\n" + ("\n\\par\\smallskip\n" if loi_giai else "\n\\par\\medskip\n").join(phai))
             continue
         ra.append((r"\khoiDangDoc{" if bo_cuc == "tren_duoi" else r"\khoiDangTL{") + str(j) + "}{" + thoat(ten_dang.get(d, d)) + "}{" + trai + "}{" + "\n\\par\\medskip\n".join(phai) + "}")
     return "\n".join(ra)

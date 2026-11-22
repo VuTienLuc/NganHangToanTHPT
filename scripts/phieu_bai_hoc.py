@@ -484,17 +484,24 @@ def tao(cfg, in_ra=print, chi_tinh=False):
         kt = chuan_kien_thuc(kt)          # chữ thường / markdown → LaTeX an toàn để in PDF
     # in_san: in sẵn nội dung đã soạn; dong_trong: khung dòng kẻ để học sinh tự ghi (nội dung soạn vẫn dùng cho Beamer)
     in_san = (cfg.get("kien_thuc_in") or "in_san") != "dong_trong"
+    an_pp = bool(cfg.get("an_ly_thuyet_dang"))     # chỉ in kiến thức trọng tâm + đề bài: bỏ phương pháp / lí thuyết từng dạng
+    kt_in = kt
+    if kt and an_pp:
+        import beamer_phieu
+        kt_in = beamer_phieu.tach_phuong_phap(kt, list(cac_dang))[0].strip() or kt
     if kt and in_san:
         kien = (r"\begin{tcolorbox}[colback=white,colframe=mauPhieu!60,boxrule=0.5pt,arc=1mm,left=3mm,right=3mm,top=1.5mm,bottom=1.5mm,breakable,width=\linewidth]"
-                + "\n{\\setstretch{1.3}\n" + kt + "\n\\par}\n\\end{tcolorbox}")
+                + "\n{\\setstretch{1.3}\n" + kt_in + "\n\\par}\n\\end{tcolorbox}")
     else:
         dong = [r"\par\smallskip{\small\bfseries Kiến thức cần nhớ (định nghĩa, tính chất, công thức):}\dongKe{" + ("8" if tl >= 90 else "6") + "}"]
         so_ke = "4" if tl >= 90 else "3"
-        for j, d in enumerate(cac_dang, 1):
+        if an_pp:                                   # chỉ chừa chỗ ghi kiến thức trọng tâm, không dòng phương pháp từng dạng
+            dong[0] = dong[0].replace("{" + ("8" if tl >= 90 else "6") + "}", "{" + ("10" if tl >= 90 else "8") + "}")
+        for j, d in enumerate([] if an_pp else cac_dang, 1):
             dong.append(r"\dangPhieu{" + str(j) + "}{" + thoat((id_map.get(d, {}).get("type_name") or d).strip()) + r"}" "\n"
                         r"{\small Phương pháp:}\dongKe{" + so_ke + "}")
         kien = (r"\begin{tcolorbox}[colback=white,colframe=mauPhieu!60,boxrule=0.5pt,arc=1mm,left=3mm,right=3mm,top=1.5mm,bottom=1.5mm,breakable,width=\linewidth]"
-                "\n{\\small\\itshape Học sinh tự ghi: tóm tắt kiến thức và phương pháp giải từng dạng.}\n" + "\n".join(dong) + "\n\\end{tcolorbox}")
+                "\n{\\small\\itshape Học sinh tự ghi: tóm tắt kiến thức" + ("" if an_pp else " và phương pháp giải từng dạng") + ".}\n" + "\n".join(dong) + "\n\\end{tcolorbox}")
     if tu_luan:
         return _ghi_tu_luan(locals())
     # ---------- II, III: câu hỏi theo phần, chia dạng
@@ -610,7 +617,7 @@ def tao(cfg, in_ra=print, chi_tinh=False):
         if nhom:
             web_phan.append({"tieu": tieu, "nhom": nhom})
     _ghi_web(out, {"kieu": "trac_nghiem", "nhan": nhan, "ten": ten, "lop": lop, "chuong": chuong, "thoi_luong": tl,
-                   "giao_vien": gv, "kien_thuc": "" if khong_kt else kt, "phan": web_phan,
+                   "giao_vien": gv, "kien_thuc": "" if khong_kt else kt_in, "phan": web_phan,
                    "bai": [b for b in cfg.get("pham_vi") or []]})
     so_lt = {l: len(kq["LT"][l]) for l in CAC_LOAI}; so_bt = {l: len(kq["BTVN"][l]) for l in CAC_LOAI}
     in_ra(f"{nhan}: {ten} — {len(cac_dang)} dạng · Luyện tập TN {so_lt['TN']}, ĐS {so_lt['DS']}, TLN {so_lt['TLN']}"
@@ -641,11 +648,14 @@ def _ghi_tu_luan(L):
     so_dong = int(cfg.get("so_dong_lam_bai", 2))
     het = "\n\\par\\bigskip\\begin{center}{\\small\\itshape --- Hết ---}\\end{center}\\label{trangCuoiPhieu}\n"
     muc_kt = "" if kt_in == "khong" else (r"\phanPhieu{I. KIẾN THỨC TRỌNG TÂM}" + "\n" + kien + "\n")
-    tieu_muc = r"\phanPhieu{" + ("I" if kt_in == "khong" else "II") + r". CÁC DẠNG TOÁN – VÍ DỤ MẪU VÀ TỰ LUYỆN}" + "\n"
-    hs = dau_phieu(nhan + " – TỰ LUẬN") + "\n" + muc_kt + tieu_muc + phieu_tu_luan.khoi(kq_tl, cac_dang, ten_dang, False, so_dong, thoat, cfg.get("bo_cuc_tl") or "song_song")
+    an_pp = bool(cfg.get("an_ly_thuyet_dang"))      # chỉ kiến thức trọng tâm + đề bài: ví dụ mẫu thành bài tập, không in lời giải mẫu
+    tieu_muc = (r"\phanPhieu{" + ("I" if kt_in == "khong" else "II") +
+                (r". BÀI TẬP THEO DẠNG}" if an_pp else r". CÁC DẠNG TOÁN – VÍ DỤ MẪU VÀ TỰ LUYỆN}") + "\n")
+    hs = dau_phieu(nhan + " – TỰ LUẬN") + "\n" + muc_kt + tieu_muc + phieu_tu_luan.khoi(kq_tl, cac_dang, ten_dang, False, so_dong, thoat, cfg.get("bo_cuc_tl") or "song_song", chi_de=an_pp)
     lg = (dau_phieu("LỜI GIẢI " + nhan + " – TỰ LUẬN", ho_ten=False) + "\n" +
-          r"\phanPhieu{LỜI GIẢI CÁC BÀI TỰ LUYỆN}" + "\n{\\small\\itshape (Ví dụ mẫu đã có lời giải trên phiếu học sinh.)}\n" +
-          "\\begin{multicols}{2}\\nhoHinh\n" + phieu_tu_luan.khoi(kq_tl, cac_dang, ten_dang, True, 0, thoat) + "\n\\end{multicols}")
+          (r"\phanPhieu{LỜI GIẢI CÁC BÀI TẬP}" + "\n" if an_pp else
+           r"\phanPhieu{LỜI GIẢI CÁC BÀI TỰ LUYỆN}" + "\n{\\small\\itshape (Ví dụ mẫu đã có lời giải trên phiếu học sinh.)}\n") +
+          "\\begin{multicols}{2}\\nhoHinh\n" + phieu_tu_luan.khoi(kq_tl, cac_dang, ten_dang, True, 0, thoat, chi_de=an_pp) + "\n\\end{multicols}")
     chan_goc = thoat(f"{nhan.title()}: {ten_ngan(ten)}")
     ghi(os.path.join(out, "PhieuBaiHoc.tex"), mau.replace("<<CHE_DO_LOI_GIAI>>", "\\hienthiloigiai").replace("<<NOI_DUNG>>", hs + het))
     ghi(os.path.join(out, "PhieuBaiHoc_LoiGiai.tex"),
@@ -675,7 +685,7 @@ def _ghi_tu_luan(L):
                          loi_ket=r"Hoàn thành các bài \textbf{tự luyện} còn lại trên phiếu")
     loai_tl = lambda c: "TL" if c["loai"] == "TL" or not c["_tl"]["dap"] else "TLN"
     _ghi_web(out, {"kieu": "tu_luan", "nhan": nhan, "ten": ten, "lop": L["lop"], "chuong": L["chuong"], "thoi_luong": tl,
-                   "giao_vien": L["gv"], "kien_thuc": "" if kt_in == "khong" else (L["kt"] or ""), "bai": cfg.get("pham_vi") or [],
+                   "giao_vien": L["gv"], "kien_thuc": "" if kt_in == "khong" else ((L["kt_in"] if an_pp else L["kt"]) or ""), "bai": cfg.get("pham_vi") or [],
                    "dang": [{"ten": f"Dạng {j}. {ten_dang.get(d, d)}",
                              "vi_du": dict(kq_tl[d]["vd"]["_tl"], loai=loai_tl(kq_tl[d]["vd"]), ma=kq_tl[d]["vd"]["ma"]),
                              "tu_luyen": [dict(c["_tl"], loai=loai_tl(c), vai=c["_vai"], ma=c["ma"]) for c in kq_tl[d]["tu_luyen"]]}

@@ -738,7 +738,8 @@ tr.gop-h td{background:#dbeafe;text-align:left;font-weight:700;padding:8px 12px;
       <div style="display:flex;gap:14px;flex-wrap:wrap;align-items:center"><b>I. Kiến thức trọng tâm trên phiếu</b>
         <label class="hop"><input type="radio" name="ph-kt-in" value="in_san" checked> In sẵn nội dung</label>
         <label class="hop"><input type="radio" name="ph-kt-in" value="dong_trong"> Dòng trống để học sinh tự ghi</label>
-        <label class="hop"><input type="radio" name="ph-kt-in" value="khong"> Không in (tiết kiệm giấy)</label></div>
+        <label class="hop"><input type="radio" name="ph-kt-in" value="khong"> Không in (tiết kiệm giấy)</label>
+        <label class="hop" style="flex-basis:100%" title="Bỏ phần phương pháp / lí thuyết riêng của từng dạng trong ô kiến thức; phiếu tự luận in ví dụ mẫu như một bài tập (không kèm lời giải). Lời giải vẫn đầy đủ ở file LoiGiai, Beamer không đổi."><input type="checkbox" id="ph-an-pp"> <b>Tắt lí thuyết các dạng toán</b> — phiếu in chỉ gồm kiến thức trọng tâm + đề bài các câu hỏi</label></div>
       <label>Nội dung kiến thức trọng tâm (LaTeX; để trống → phiếu có dòng kẻ; nội dung luôn được lưu và dùng cho Beamer)
         <textarea id="ph-kt" placeholder="\begin{itemize}&#10;\item ...&#10;\end{itemize}"></textarea></label>
       <div style="display:flex;gap:8px;flex-wrap:wrap"><button id="ph-prompt-kt">Prompt AI soạn kiến thức trọng tâm…</button><button id="ph-kho-kt">Kho kiến thức…</button><button id="ph-nhap-kho">Nhập kho câu hỏi…</button></div>
@@ -2468,7 +2469,7 @@ function phCfg(){
   const cfg={pham_vi:loai==="on_tap_chuong"?[$("#ph-chuong").value]:bai,dang,loai_phieu:loai,ten:$("#ph-ten").value.trim(),thoi_luong:tl,
     so_cau:{TN:+$("#ph-tn").value||0,DS:+$("#ph-ds").value||0,TLN:+$("#ph-tln").value||0},kien_thuc:$("#ph-kt").value,
     co_chu:+$("#ph-co").value,hai_cot:$("#ph-hai-cot").checked,beamer:$("#ph-beamer").checked,kieu_cau:document.querySelector('input[name="ph-kieu"]:checked').value,so_tuong_tu:+$("#ph-tt").value,bo_cuc_tl:$("#ph-bo-cuc").value,so_dang_ngay:+$("#ph-ln-n").value,theo_mau:$("#ph-tt-kieu").value!=="kho",
-    so_van_dung:$("#ph-tt-kieu").value!=="kho"?0:+$("#ph-vdtl").value,so_dong_lam_bai:+$("#ph-dong").value,nang_cao:$("#ph-nc").checked?{V:+$("#ph-vd").value||0,C:+$("#ph-vdc").value||0}:{},kien_thuc_in:document.querySelector('input[name="ph-kt-in"]:checked').value,giao_vien:$("#giao_vien").value.trim(),truong:$("#truong").value.trim(),
+    so_van_dung:$("#ph-tt-kieu").value!=="kho"?0:+$("#ph-vdtl").value,so_dong_lam_bai:+$("#ph-dong").value,nang_cao:$("#ph-nc").checked?{V:+$("#ph-vd").value||0,C:+$("#ph-vdc").value||0}:{},kien_thuc_in:document.querySelector('input[name="ph-kt-in"]:checked').value,an_ly_thuyet_dang:$("#ph-an-pp").checked,giao_vien:$("#giao_vien").value.trim(),truong:$("#truong").value.trim(),
     nam_hoc:$("#nam_hoc").value.trim(),so_gd:$("#so_gd").value.trim()};
   return cfg;
 }
