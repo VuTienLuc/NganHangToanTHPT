@@ -1024,6 +1024,34 @@ class XuLy(BaseHTTPRequestHandler):
                 json.dump({**mt, "ten": ten}, open(os.path.join(GOC, "ma-tran", ten + ".json"), "w", encoding="utf-8"),
                           ensure_ascii=False, indent=2)
                 return self.gui(200, {"ok": True, "ten": ten})
+            if u.path == "/api/sao-luu":          # sao lưu những gì GitHub không giữ + tình trạng an toàn dữ liệu
+                import sao_luu as SL
+                if d.get("viec") == "tao":
+                    dong = []
+                    try:
+                        p = SL.tao(d.get("dich"), d.get("de_ra") or "ket_qua", d.get("kem_kho", True), dong.append)
+                    except (ValueError, OSError) as e:
+                        return self.gui(200, {"ok": False, "loi": str(e)})
+                    return self.gui(200, {"ok": True, "tep": p, "nhat_ky": "\n".join(dong), **SL.tinh_trang()})
+                if d.get("viec") == "dong-bo":
+                    f = "Dong bo (Windows).bat" if sys.platform.startswith("win") else "Dong bo (Mac).command"
+                    p = os.path.join(GOC, f)
+                    if not os.path.exists(p):
+                        return self.gui(200, {"ok": False, "loi": "Không thấy file " + f})
+                    if sys.platform.startswith("win"):
+                        os.startfile(p)
+                    else:
+                        subprocess.Popen(["open", "-a", "Terminal", p] if sys.platform == "darwin" else ["xdg-open", p])
+                    return self.gui(200, {"ok": True})
+                if d.get("viec") == "mo-dich":
+                    p = os.path.expanduser(d.get("dich") or "")
+                    if os.path.isdir(p):
+                        if sys.platform.startswith("win"):
+                            os.startfile(p)
+                        else:
+                            subprocess.Popen(["open", p] if sys.platform == "darwin" else ["xdg-open", p])
+                    return self.gui(200, {"ok": True})
+                return self.gui(200, {"ok": True, **SL.tinh_trang()})
             if u.path == "/api/mo":
                 p = os.path.realpath(os.path.join(GOC, d.get("duong_dan", "")))
                 if not p.startswith(os.path.realpath(GOC)) or not os.path.exists(p):
