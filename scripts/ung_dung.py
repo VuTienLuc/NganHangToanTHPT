@@ -1018,6 +1018,38 @@ class XuLy(BaseHTTPRequestHandler):
                 else:
                     subprocess.Popen(["open", p] if sys.platform == "darwin" else ["xdg-open", p])
                 return self.gui(200, {"ok": True})
+            if u.path.startswith("/api/ngoai/"):        # ĐỀ TỪ NGUỒN NGOÀI: prompt → dán kết quả AI → xem trước, chèn hình → trộn
+                import de_ngoai as DN
+                v = u.path.rsplit("/", 1)[1]
+                try:
+                    if v == "prompt":
+                        return self.gui(200, {"ok": True, "noi_dung": DN.prompt(d.get("kieu"), d.get("cfg") or {})})
+                    if v == "doc":
+                        ks = DN.doc(d.get("van_ban") or "", d.get("ten") or "de_ai.tex") if d.get("van_ban") is not None else \
+                            [DN.chuan(k) for k in (d.get("khoi") or [])]
+                        if not ks:
+                            return self.gui(200, {"ok": False, "loi": "Không thấy câu nào: kết quả AI cần các khối \\begin{ex}…\\end{ex} / \\begin{bt}…\\end{bt} hoặc JSON trac_nghiem / dung_sai / tra_loi_ngan."})
+                        return self.gui(200, {"ok": True, **DN.kiem_tat_ca(ks)})
+                    if v == "xem":
+                        return self.gui(200, DN.xem_truoc(d.get("khoi") or [], bat_dau=int(d.get("bat_dau") or 0)))
+                    if v == "chen-hinh":
+                        k = DN.chen_hinh(d.get("tex") or "", d.get("tikz") or "", d.get("vi_tri") or "giua", bool(d.get("thay")))
+                        return self.gui(200, {"ok": True, "tex": k, **DN.thong_tin(k)})
+                    if v == "bo-cho-hinh":
+                        k = DN.bo_cho_hinh(d.get("tex") or "")
+                        return self.gui(200, {"ok": True, "tex": k, **DN.thong_tin(k)})
+                    if v == "sua":
+                        ks = DN.doc(d.get("tex") or "")
+                        if len(ks) != 1:
+                            return self.gui(200, {"ok": False, "loi": "Mã câu phải là đúng MỘT khối \\begin{ex}…\\end{ex} hoặc \\begin{bt}…\\end{bt}."})
+                        return self.gui(200, {"ok": True, "tex": ks[0], **DN.thong_tin(ks[0])})
+                    if v == "prompt-hinh":
+                        return self.gui(200, {"ok": True, "noi_dung": DN.prompt_ve_hinh(d.get("tex") or "")})
+                    if v == "ghep":
+                        return self.gui(200, {"ok": True, "noi_dung": DN.ghep(d.get("khoi") or [], d.get("nguon") or "")})
+                except ValueError as e:
+                    return self.gui(200, {"ok": False, "loi": str(e)})
+                return self.gui(404, {"ok": False})
             if u.path == "/api/tron-file":
                 # TRỘN ĐỀ CÓ SẴN: lưu file đề vào de-da-ra/_nguon/, chạy tron_de với tu_file
                 t = d.get("tep") or {}

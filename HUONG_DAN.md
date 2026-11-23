@@ -685,6 +685,33 @@ Tạo phiếu như cũ (📄 Phiếu bài học, kiểu trắc nghiệm hoặc t
 - Bài giảng bất kỳ cũng cho HS xem được: 🌐 Thi trực tuyến → thẻ Bài giảng → nút **Cho HS xem / Thôi cho HS**.
 - Phiếu tạo từ bản cũ (trước khi có tính năng) cần tạo lại phiếu để có dữ liệu web.
 
+## 📥 Đề từ nguồn ngoài (menu **Ra đề**): Word · PDF · ảnh → nhiều mã đề
+Dùng khi thầy có một đề kiểm tra, phiếu hoặc bài học ở dạng Word / PDF / ảnh chụp. Hộp có 3 bước.
+
+**① Prompt cho AI** — chọn một trong hai chế độ:
+- **📄 Gõ lại đề có sẵn**: AI gõ lại *nguyên văn* thành 3 loại câu (Trắc nghiệm · Đúng/Sai · Trả lời ngắn; tự luận nếu tích),
+  **giải lại từng câu để kiểm đáp án** (đề ghi khác kết quả giải → AI đánh đáp án đúng và ghi `% KIEM_TRA: đề ghi …, giải ra …`),
+  câu có hình thì gõ mã TikZ ngay trong câu đó; hình khó để chỗ trống `% CAN_VE_HINH` cho thầy bổ sung.
+- **✨ AI soạn đề từ tài liệu**: AI đọc tài liệu rồi soạn đề mới theo bảng số câu loại × mức (nút **12 – 4 – 6** điền nhanh),
+  chọn cách soạn (bám sát / soạn mới / kết hợp), lời giải chi tiết từng bước để chiếu Beamer.
+- Chọn lớp, tên tài liệu, *Kèm mã dạng* (cần khi muốn nhập kho sau; bỏ tích cho prompt ngắn), yêu cầu thêm → **Tạo prompt** → **Chép**.
+- Mở ChatGPT / Gemini / Claude, **đính kèm file** đề/tài liệu, dán prompt, gửi.
+
+**② Dán kết quả AI** — dán nguyên văn (khối `latex` hoặc JSON) hoặc mở file .tex/.txt/.json → **Đọc & kiểm tra**.
+
+**③ Xem trước · hình · trộn**
+- Mỗi câu một thẻ: loại, mức, mã dạng, đáp án; nhãn ⚠ lỗi (thiếu đáp án, sai số phương án, đáp số TLN > 4 kí tự, lỗi LaTeX…),
+  🖼 *cần vẽ hình* (kèm mô tả hình gốc), ❓ *KIEM_TRA* (đáp án đề khác kết quả giải — thầy xem lại).
+- **🖨 Biên dịch xem trước**: biên dịch cả đề bằng LaTeX, mỗi câu hiện đúng bản in (hình, đáp án, lời giải). Tự chạy sau khi đọc nếu máy có LaTeX.
+- **🖼 Chèn hình TikZ**: dán khối `tikzpicture` (dán cả khối ```latex cũng được), chọn *giữa đề* hoặc *bên phải đề* (immini),
+  tích *Bỏ hình cũ* nếu thay hình → câu được biên dịch lại ngay. Hình được đặt đúng chỗ trống `% CAN_VE_HINH` của câu đó.
+- **📋 Prompt vẽ hình**: chép prompt nhờ AI vẽ riêng hình của câu (dán kèm ảnh hình gốc). **Không cần hình** bỏ chỗ trống.
+- **✎ Sửa mã câu**, ↑ ↓ đổi thứ tự, 🗑 bỏ câu, **＋ Thêm câu** (dán lượt AI tiếp theo nối vào cuối), *Chỉ câu cần xử lý* để lọc.
+- Công việc đang làm được lưu tự động trong trình duyệt: đóng hộp mở lại vẫn còn.
+- Cuối hộp: **Tên kỳ thi** (in ở đầu đề) · **⬇ .tex** · **📥 Nhập ngân hàng** · **🔀 Trộn đề & xuất…** → hộp Trộn đề
+  (số mã đề, đảo câu/phương án/ý) xuất PDF đề + lời giải, Word, **DapAn.xlsx** (mẫu Chấm Phiếu AI) và **Beamer** trình chiếu lời giải
+  (BeamerTrang / BeamerXanh từng mã đề) vào Thư mục đề.
+
 ## 🎲 Phiếu hoạt động (menu **Dạy học**): Mật mã · Tìm lỗi sai · Ôn tập ngắt quãng · Leo núi · Mảnh ghép
 Chọn lớp, chọn loại phiếu ở 5 thẻ trên cùng, tích các dạng, chọn mẫu PDF và khổ in, rồi bấm **🖨 Tạo phiếu PDF**. Mỗi phiếu ra 2 file: phiếu học sinh và đáp án. Tên giáo viên in ở chân trang.
 
