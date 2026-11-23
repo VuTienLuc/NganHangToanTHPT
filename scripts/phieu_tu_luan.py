@@ -65,6 +65,7 @@ def chon(ds, cac_dang, cfg, rng, khoa_noi_dung, ghi_thieu=None):
     so_vd = int(cfg.get("so_van_dung") if cfg.get("so_van_dung") is not None else 1)
     chi_dinh = cfg.get("vi_du_mau") or {}
     theo_mau = bool(cfg.get("theo_mau"))
+    chi = set(cfg.get("chi_ma") or [])              # mã các câu AI vừa sinh & nhập → tự luyện dùng đúng & đủ các câu này
     theo = collections.defaultdict(list)
     for c in ds:
         if c["loai"] not in UU_TIEN:
@@ -87,13 +88,20 @@ def chon(ds, cac_dang, cfg, rng, khoa_noi_dung, ghi_thieu=None):
         muc = lambda c: THU_TU_MUC.get(c.get("muc_chuan") or "", 1)
         # ----- theo mẫu: ví dụ chỉ định, hoặc câu (không phải câu con) có nhiều câu con nhất
         vd = next((c for c in v if c["ma"] == chi_dinh.get(d) and c["_tl"]["lg"]), None)
+        if chi:                                         # chỉ câu vừa sinh: ví dụ mẫu là câu mẹ của chúng
+            if not vd or not any(c["ma"] in chi for c in con.get(vd["ma"], [])):
+                co_con = [c for c in v if any(x["ma"] in chi for x in con.get(c["ma"], [])) and c["_tl"]["lg"]]
+                vd = max(co_con, key=lambda c: sum(x["ma"] in chi for x in con[c["ma"]])) if co_con else None
+            if not vd:
+                thieu.append(f"{d}: không có câu nào vừa sinh cho dạng này — bỏ dạng")
+                continue
         if not vd:
             co_con = [c for c in v if con.get(c["ma"]) and not c["_mau"] and c["_tl"]["lg"] and moi(c)]
             vd = max(co_con, key=lambda c: (len(con[c["ma"]]), -muc(c))) if co_con else None
         if vd:
             da_k.add(vd["_k"])
-            cc = sorted((c for c in con.get(vd["ma"], []) if moi(c)), key=lambda c: (c["_mau"][1], muc(c)))
-            can = so_tt + (0 if theo_mau else so_vd)
+            cc = sorted((c for c in con.get(vd["ma"], []) if moi(c) and (not chi or c["ma"] in chi)), key=lambda c: (c["_mau"][1], muc(c)))
+            can = len(cc) if chi else so_tt + (0 if theo_mau else so_vd)
             tl = []
             for c in cc[:can]:
                 da_k.add(c["_k"]); tl.append(dict(c, _vai="nang_cao" if c["_mau"][1] else "tuong_tu"))

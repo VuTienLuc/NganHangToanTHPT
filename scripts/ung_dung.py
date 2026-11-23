@@ -20,15 +20,31 @@ def chay(args, timeout=600):
     r = subprocess.run([PY] + args, cwd=GOC, capture_output=True, text=True, timeout=timeout)
     return r.returncode, (r.stdout or "") + (r.stderr or "")
 
+def dang_cua_ma(ds_ma):
+    """{mã câu: mã dạng} đọc từ chỉ mục (sau khi nhập)."""
+    can, ra = set(ds_ma or []), {}
+    if not can:
+        return ra
+    try:
+        for dong in open(os.path.join(GOC, "du-lieu", "chi_muc.jsonl"), encoding="utf-8"):
+            if '"ma"' in dong:
+                c = json.loads(dong)
+                if c.get("ma") in can:
+                    ra[c["ma"]] = c.get("dang_key") or ""
+    except OSError:
+        pass
+    return ra
+
+
 def nhap_tuong_tu_va_tao_phieu(t, cfg, so, vi_du_mau, bien_dich, nguon="Câu tương tự theo mẫu – AI soạn, nhập từ ứng dụng (Phiếu bài học)"):
     """Câu tương tự theo mẫu (LaTeX, có dòng % mau:) → ai-nhap → nhập kho (biên dịch thử từng câu) → tạo phiếu riêng theo mẫu."""
     import nhap_cau
     ten_tep_ai = time.strftime("%Y-%m-%d_%H%M%S") + "_tuong-tu-theo-mau.tex"
     p = os.path.join(GOC, "ai-nhap", ten_tep_ai)
     open(p, "w", encoding="utf-8").write("% " + nguon + "\n" + t + "\n")
-    dong = []
+    dong, ma_ra = [], []
     try:
-        so_cau = nhap_cau.nhap([p], thu=False, in_ra=dong.append)
+        so_cau = nhap_cau.nhap([p], thu=False, in_ra=dong.append, ma_ra=ma_ra)
     except Exception as e:
         return {"ok": False, "nhat_ky": f"Chưa nhập được: {e}\n" + "\n".join(dong)}
     os.makedirs(os.path.join(GOC, "ai-nhap", "da-nhap"), exist_ok=True)
@@ -36,8 +52,9 @@ def nhap_tuong_tu_va_tao_phieu(t, cfg, so, vi_du_mau, bien_dich, nguon="Câu tư
         shutil.move(p, os.path.join(GOC, "ai-nhap", "da-nhap", ten_tep_ai))
     except OSError:
         pass
-    cfg.update(theo_mau=True, so_tuong_tu=int(so or cfg.get("so_tuong_tu") or 3), so_van_dung=0, vi_du_mau=vi_du_mau or cfg.get("vi_du_mau") or {})
-    dong.append(f"→ Đã nhập {so_cau} câu vào ngân hàng.\n")
+    cfg.update(theo_mau=True, so_tuong_tu=int(so or cfg.get("so_tuong_tu") or 3), so_van_dung=0, vi_du_mau=vi_du_mau or cfg.get("vi_du_mau") or {},
+               chi_ma=ma_ra)                           # phiếu dùng ĐÚNG các câu vừa sinh (đủ số câu đã sinh), không rút câu cũ trong kho
+    dong.append(f"→ Đã nhập {so_cau} câu vào ngân hàng — phiếu dùng đúng {len(ma_ra)} câu vừa sinh.\n")
     try:
         if cfg.get("kieu_cau") == "luyen_ngay":
             import luyen_moi_ngay
@@ -137,11 +154,12 @@ def ai_loi_sai_nen(d):
         p, n = H.prompt_loi(d.get("dang") or [], int(d.get("so") or 4))
         ghi(f"🤖 {HD.ST.TEN_NHA.get(nha, nha)} viết {n} lời giải có lỗi từ câu gốc trong ngân hàng…")
         t, _, _ = HD.xoay_cho("bien_tap", nha, ghi=ghi).goi(p)
-        so, bo = H.nhap_loi(t)
+        ids = []
+        so, bo = H.nhap_loi(t, ids)
         for x in bo:
             ghi("  ⚠ bỏ " + x)
         ghi(f"✓ Đã thêm {so} bài vào kho lỗi sai.")
-        ra = {"ok": True, "so": so}
+        ra = {"ok": True, "so": so, "id": ids}
     except Exception as e:
         ghi(f"Lỗi: {e}")
     ra["nhat_ky"] = cong_viec["nhat_ky"]
@@ -1233,8 +1251,9 @@ class XuLy(BaseHTTPRequestHandler):
                             return self.gui(200, {"ok": True, "prompt": p, "so": n})
                         return self.gui(200, {"ok": True, "prompt": H.prompt_cau(d.get("dang") or [], int(d.get("so") or 4), d.get("kieu") or "mat_ma")})
                     if viec == "nhap-loi":
-                        so, bo = H.nhap_loi(d.get("van") or "")
-                        return self.gui(200, {"ok": True, "so": so, "bo": bo})
+                        ids = []
+                        so, bo = H.nhap_loi(d.get("van") or "", ids)
+                        return self.gui(200, {"ok": True, "so": so, "bo": bo, "id": ids})
                     if viec == "ai-loi":
                         if cong_viec.get("dang_chay"):
                             return self.gui(200, {"ok": False, "loi": "Đang có việc khác chạy, đợi xong rồi bấm lại."})
@@ -1423,10 +1442,10 @@ class XuLy(BaseHTTPRequestHandler):
                     p = os.path.join(thu_muc, ten)
                     open(p, "w", encoding="utf-8").write(t["noi_dung"])
                     duong.append(p)
-                dong = []
-                so = nhap_cau.nhap(duong, thu=d.get("thu", True), in_ra=dong.append, ma_dang=(d.get("ma_dang") or None))
+                dong, ma_ra = [], []
+                so = nhap_cau.nhap(duong, thu=d.get("thu", True), in_ra=dong.append, ma_dang=(d.get("ma_dang") or None), ma_ra=ma_ra)
                 shutil.rmtree(thu_muc, ignore_errors=True)
-                return self.gui(200, {"ok": True, "so_cau": so, "nhat_ky": "\n".join(dong)})
+                return self.gui(200, {"ok": True, "so_cau": so, "nhat_ky": "\n".join(dong), "ma": ma_ra, "dang_cua": dang_cua_ma(ma_ra)})
             if u.path == "/api/lich-su":
                 p = os.path.join(GOC, "du-lieu", "lich_su_dung.json")
                 cu_dir = os.path.join(GOC, "du-lieu", "_cu")

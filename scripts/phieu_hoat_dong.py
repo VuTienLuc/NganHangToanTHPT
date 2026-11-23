@@ -51,12 +51,24 @@ def _tach(c):
     return p
 
 
-def _ung_vien(dang, loai, muc=None, tranh=()):
-    """Câu hợp lệ của các dạng; xếp: câu chưa dùng trước, ngẫu nhiên trong nhóm."""
+_CHI = None          # tập mã: phiếu CHỈ dùng các câu AI vừa sinh & nhập (cfg["chi_ma"]), không rút thêm từ ngân hàng
+
+
+def _dat_chi(cfg):
+    global _CHI
+    _CHI = set(cfg.get("chi_ma") or []) or None
+    return _CHI is not None
+
+
+def _ung_vien(dang, loai, muc=None, tranh=(), giu_muc=False):
+    """Câu hợp lệ của các dạng; xếp: câu chưa dùng trước, ngẫu nhiên trong nhóm.
+    Đang ở chế độ 'chỉ câu AI vừa nhập' (_CHI): chỉ lấy các mã đó và bỏ lọc mức (trừ khi giu_muc — vd chia bậc Leo núi)."""
     from xem_truoc import hop_le
     ls, tr = _lich_su(), set(tranh)
+    if _CHI is not None and not giu_muc:
+        muc = None
     ds = [c for c in _kho().values() if c.get("dang_key") in dang and c.get("loai") in loai and hop_le(c)
-          and c["ma"] not in tr and (not muc or (c.get("muc_chuan") or "H") in muc)]
+          and c["ma"] not in tr and (not muc or (c.get("muc_chuan") or "H") in muc) and (_CHI is None or c["ma"] in _CHI)]
     random.shuffle(ds)
     ds.sort(key=lambda c: bool(ls.get(c["ma"])))
     return ds
@@ -199,6 +211,7 @@ def mat_ma(cfg, in_ra=print):
     if not 3 <= len(chu) <= 32:
         raise ValueError("Thông điệp cần 3–32 chữ cái (không tính dấu cách).")
     rng = random.Random(cfg.get("seed") or time.time()); random.seed(rng.random())
+    chi = _dat_chi(cfg)
     muc = set(cfg.get("muc") or ["N", "H"])
     loai = ["TN", "TLN"] if cfg.get("co_tln", True) else ["TN"]
     hang = [sorted(_ung_vien([d], loai, muc), key=lambda c: c["loai"] != "TN") for d in dang]   # ưu tiên câu TN
@@ -220,6 +233,9 @@ def mat_ma(cfg, in_ra=print):
         if not c:
             break
         cau.append((c, l))
+    if len(cau) < len(chu) and chi:
+        raise ValueError(f"Thông điệp {len(chu)} chữ nhưng AI mới sinh {len(cau)} câu dùng được (TN / trả lời ngắn không trùng đáp số) "
+                         f"— rút thông điệp còn ≤ {len(cau)} chữ, hoặc bỏ tích “Chỉ dùng câu AI vừa nhập”.")
     if len(cau) < len(chu):
         raise ValueError(f"Thông điệp {len(chu)} chữ nhưng kho chỉ có {len(cau)} câu phù hợp (TN"
                          + (" / trả lời ngắn" if "TLN" in loai else "") + f", mức {'/'.join(sorted(muc))}) cho các dạng đã chọn. "
@@ -336,8 +352,9 @@ def prompt_loi(dang, so=4):
     return "\n".join(p), len(goc)
 
 
-def nhap_loi(van_ban):
-    """Kết quả AI (JSON mảng) → kho lỗi sai theo dạng. → (số bài nhập, danh sách lỗi bỏ qua)."""
+def nhap_loi(van_ban, id_ra=None):
+    """Kết quả AI (JSON mảng) → kho lỗi sai theo dạng. → (số bài nhập, danh sách lỗi bỏ qua).
+    id_ra (list, tuỳ chọn): nhận id các bài vừa nhập (kể cả bài trùng đã có) để phiếu dùng đúng các bài đó."""
     from doc_nhap import sua_gach
     t = re.sub(r"```(?:json)?", "", van_ban or "")
     i, j = t.find("["), t.rfind("]")
@@ -368,6 +385,9 @@ def nhap_loi(van_ban):
     for dang, v in moi.items():
         cu = doc_loi(dang)
         da = {(y.get("nguon_ma"), y.get("buoc_sai"), y.get("de")) for y in cu}
+        if id_ra is not None:
+            id_cu = {(y.get("nguon_ma"), y.get("buoc_sai"), y.get("de")): y.get("id") for y in cu}
+            id_ra.extend(id_cu.get((y["nguon_ma"], y["buoc_sai"], y["de"])) or y["id"] for y in v)
         v = [y for y in v if (y["nguon_ma"], y["buoc_sai"], y["de"]) not in da]
         json.dump(cu + v, open(_tep_loi(dang), "w", encoding="utf-8"), ensure_ascii=False, indent=1)
         so += len(v)
@@ -379,8 +399,12 @@ def tim_loi_sai(cfg, in_ra=print):
     so = max(1, min(12, int(cfg.get("so") or 4)))
     rng = random.Random(cfg.get("seed") or time.time())
     theo = collections.OrderedDict()
+    chi_id = set(cfg.get("chi_id") or [])
     for d in dang:
-        v = doc_loi(d); rng.shuffle(v); theo[d] = v
+        v = doc_loi(d); rng.shuffle(v)
+        theo[d] = [x for x in v if x.get("id") in chi_id] if chi_id else v
+    if chi_id:                                                # chỉ bài AI vừa viết: dùng hết
+        so = sum(len(v) for v in theo.values())
     chon = _xoay_vong(theo, so)
     if not chon:
         raise ValueError("Kho lỗi sai chưa có bài nào cho các dạng đã chọn — bấm 🤖 AI tạo ngay hoặc 📝 Prompt AI rồi nhập kết quả.")
@@ -453,13 +477,22 @@ def on_tap(cfg, in_ra=print):
     random.seed(cfg.get("seed") or time.time())
     loai = ["TN", "TLN"] + (["TL"] if cfg.get("co_tl") else [])
     nhom = []
-    if cfg.get("dang_cu"):                                     # thầy tự chọn dạng ôn lại
+    if _dat_chi(cfg):                                         # chỉ câu AI vừa nhập: dùng hết, đúng số câu AI sinh
+        K = _kho()
+        loai = ["TN", "TLN", "TL"]
+        dang_ai = sorted({K[m]["dang_key"] for m in _CHI if m in K})
+        cu = [d for d in dang_ai if d not in dang_nay]
+        so_nay = len(_ung_vien(dang_nay, loai))
+        so_cu = len(_ung_vien(cu, loai)) if cu else 0
+        if cu:
+            nhom.append(("Nhớ lại bài đã học", cu))
+    elif cfg.get("dang_cu"):                                     # thầy tự chọn dạng ôn lại
         cu = [d for d in cfg["dang_cu"] if d not in dang_nay]
         nhom.append(("Nhớ lại bài đã học", cu))
     else:
         g = goi_y_on(dang_nay, cfg.get("lop"))
         nhom = [(f"Nhớ lại – {t}", v) for t, v in g.items() if v]
-    if so_cu and not any(v for _, v in nhom):
+    if so_cu and not any(v for _, v in nhom) and _CHI is None:
         in_ra("  ⚠ Chưa có lịch sử ra đề 1 tuần – 1 tháng trước (hoặc chưa chọn dạng ôn lại) — phiếu chỉ có phần hôm nay.")
     da = set()
     cau_nay = _xoay_vong(collections.OrderedDict((d, _ung_vien([d], loai)) for d in dang_nay), so_nay)
@@ -510,20 +543,26 @@ def thu_thach(cfg, in_ra=print):
         raise ValueError("Chưa chọn dạng.")
     so = [max(0, min(6, int(x))) for x in (cfg.get("so_bac") or [2, 2, 1])][:3]
     random.seed(cfg.get("seed") or time.time())
-    loai = ["TN", "TLN", "TL"] if cfg.get("co_tl", True) else ["TN", "TLN"]
+    chi = _dat_chi(cfg)
+    loai = ["TN", "TLN", "TL"] if cfg.get("co_tl", True) or chi else ["TN", "TLN"]
     id_map = tai_id_map()
     hs, gv, bang, dem, da, tong_sao, thieu = [], [], [], 0, set(), 0, []
     for j, d in enumerate(dang, 1):
         ten_d = (id_map.get(d, {}).get("type_name") or d).strip()
         hs.append(r"\phanPhieu[\faFlag]{CHẶNG " + str(j) + ". " + thoat(ten_d.upper()) + "}")
-        hang = []
+        hang, vt = [], len(hs)
         for b, (ky, ten_b, muc, diem) in enumerate(BAC):
-            if not so[b]:
+            if not so[b] and not chi:
                 hang.append("—"); continue
-            ds = _ung_vien([d], loai, muc, da)[:so[b]]
-            if len(ds) < so[b] and b == 2:              # thiếu VDC → lấy thêm câu vận dụng khó nhất
+            ds = _ung_vien([d], loai, muc, da, giu_muc=True)
+            if chi:                                       # chỉ câu AI vừa nhập: lấy hết câu đúng mức của bậc
+                if not ds:
+                    hang.append("—"); continue
+            else:
+                ds = ds[:so[b]]
+            if not chi and len(ds) < so[b] and b == 2:    # thiếu VDC → lấy thêm câu vận dụng khó nhất
                 ds += _ung_vien([d], loai, {"V"}, da | {c["ma"] for c in ds})[:so[b] - len(ds)]
-            if len(ds) < so[b]:
+            if not chi and len(ds) < so[b]:
                 thieu.append(f"{d} bậc {ky}: có {len(ds)}/{so[b]} câu")
             if not ds:
                 hang.append("—"); continue
@@ -538,6 +577,8 @@ def thu_thach(cfg, in_ra=print):
                 p = _tach(c)
                 gv.append(r"\par\noindent\textbf{Câu " + str(dem) + r"} (" + _sao(diem) + r"). " + (r"Đáp án \textbf{" + thoat(_dap(c)) + "}. " if _dap(c) else "") + (p["lg"] or "") + r"\par")
             hang.append(f"{len(ds)} câu × {diem}")
+        if chi and len(hs) == vt + 1:                     # dạng này AI không sinh câu nào → bỏ chặng
+            hs.pop(); continue
         bang.append((j, ten_d, hang))
     if not dem:
         raise ValueError("Các dạng đã chọn chưa có câu phù hợp.")
@@ -578,6 +619,7 @@ def manh_ghep(cfg, in_ra=print):
     random.seed(cfg.get("seed") or time.time())
     so_hs = max(len(dang), min(60, int(cfg.get("so_hs") or 40)))
     so_luyen = max(1, min(4, int(cfg.get("so_luyen") or 2)))
+    chi = _dat_chi(cfg)
     id_map = tai_id_map()
     nhom = "ABCDEF"
     so_manh = -(-so_hs // len(dang))
@@ -592,7 +634,11 @@ def manh_ghep(cfg, in_ra=print):
         vd = next((c for c in ds if len(re.sub(r"\s", "", (_tach(c) or {}).get("lg") or "")) > 40), None)
         if vd:
             da.add(vd["ma"])
-        luyen = [c for c in ds if c["ma"] not in da][:so_luyen]
+        if chi and not ds:
+            in_ra(f"  ⚠ Nhóm {nhom[j]} ({ten_d}): không có câu AI vừa nhập — tờ chuyên gia chỉ có phương pháp; nên sinh thêm câu cho dạng này.")
+        con = [c for c in ds if c["ma"] not in da]
+        # chỉ câu AI vừa nhập: dùng hết — chừa 1 câu cho tờ mảnh ghép, còn lại là bài luyện của chuyên gia
+        luyen = (con[:-1] if len(con) >= 2 else con) if chi else con[:so_luyen]
         da |= {c["ma"] for c in luyen}
         bt_mg = [c for c in _ung_vien([d], ["TN", "TLN", "TL"], {"N", "H", "V"}, da)][:1]
         da |= {c["ma"] for c in bt_mg}

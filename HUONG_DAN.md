@@ -518,6 +518,7 @@ Vấn đề cũ: câu "tự luyện" chỉ cùng dạng nên không giống ví 
    câu được biên dịch thử, nhập ngân hàng (câu lỗi để riêng ở `ai-nhap/_loi`), file lưu `ai-nhap/da-nhap/…_tuong-tu-theo-mau.tex`,
    rồi tạo **phiếu riêng** "… – tương tự theo mẫu": mỗi dạng = ví dụ mẫu + đúng các câu con (câu nâng cao gắn nhãn *Nâng cao*).
 - **⚡ Ngân hàng tự sinh** (không phải chép – dán): chọn *phải* = giống mẫu / … → khung *Ngân hàng tự sinh* → chọn cách → **⚡ Tự sinh & in phiếu theo mẫu**.
+- Phiếu in ra (cả khi chép – dán prompt) dùng **đúng và đủ các câu vừa sinh** làm bài tự luyện của ví dụ mẫu — không rút câu tương tự cũ trong kho.
   App rút ví dụ mẫu trong kho → sinh câu tương tự → biên dịch thử → nhập ngân hàng → in phiếu riêng theo mẫu (như trên).
   - **🐍 Python** (không cần mạng): đọc số liệu trong đề và các phép tính trong lời giải mẫu, chọn số liệu mới (cùng số chữ số, cùng chẵn/lẻ,
     giữ số tròn, giữ thứ tự lớn – bé), **tính lại toàn bộ lời giải**; chỉ nhận khi mọi kết quả là số tự nhiên dương, chia hết, dòng "thử lại" vẫn đúng.
@@ -767,6 +768,11 @@ Chọn lớp, chọn loại phiếu ở 5 thẻ trên cùng, tích các dạng, 
 
 **📝 Prompt AI → nhập**: mục cuối hộp có ô tạo prompt cho các dạng đã chọn và ô dán kết quả.
 - Leo núi: prompt yêu cầu AI soạn đủ 3 bậc NB-TH / VD / VDC cho mỗi dạng. Mảnh ghép: prompt yêu cầu có câu tự luận lời giải chi tiết để làm ví dụ mẫu. Cả hai đều nhập vào **ngân hàng**.
+- **✨ Chỉ dùng câu AI vừa nhập** (hiện cạnh nút Tạo phiếu sau khi nhập kết quả AI, tích sẵn): phiếu chỉ gồm đúng các câu AI vừa sinh,
+  **số câu theo đúng số AI sinh ra** — Ôn tập: hết câu bài hôm nay + câu của dạng ôn lại (prompt Ôn tập gồm cả dạng ôn lại đã tích);
+  Leo núi: câu chia vào bậc theo mức; Mảnh ghép: mỗi nhóm chuyên gia dùng hết câu của dạng mình (chừa 1 câu cho tờ mảnh ghép);
+  Mật mã: thông điệp tối đa bằng số câu AI; Tìm lỗi sai: đúng các bài AI vừa viết. Dạng của câu AI được tự tích.
+  Câu AI trùng câu đã có trong kho vẫn được dùng (không nhập lại). Bỏ tích để lấy từ cả ngân hàng như cũ.
 - Mật mã và Ôn tập: AI soạn câu JSON, dán vào là nhập **ngân hàng** (biên dịch thử từng câu như mọi lần nhập).
 - Tìm lỗi sai: dán vào là nhập **kho lỗi sai**.
 

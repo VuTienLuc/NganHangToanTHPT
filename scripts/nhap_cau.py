@@ -54,13 +54,21 @@ def kiem_tra_cau(k, info):
         canh_bao.append("lời giải nhắc 'Chọn/Đáp án A..D' (sẽ sai khi đảo phương án)")
     return canh_bao
 
-def nhap(cac_file, thu=False, in_ra=print, ma_dang=None, bien_dich=True):
+def nhap(cac_file, thu=False, in_ra=print, ma_dang=None, bien_dich=True, ma_ra=None):
+    """ma_ra: list (tuỳ chọn) — nhận mã [ma:…] của mọi câu trong file có mặt trong kho sau lần nhập này
+    (câu mới nhập được + câu trùng đã có sẵn), theo đúng thứ tự trong file; câu lỗi bị loại không có mặt.
+    Dùng để phiếu in ra lấy ĐÚNG các câu AI vừa sinh, không rút thêm từ ngân hàng."""
     id_map = tai_id_map()
     # 1. băm toàn bộ câu đang có để chống trùng
-    da_co = {}
+    da_co, ma_cu = {}, {}
     for f in glob.glob(os.path.join(GOC, "cau-hoi", "**", "*.tex"), recursive=True):
         for k in tach_khoi(doc(f)):
-            da_co[ma_bam(k)] = os.path.relpath(f, GOC)
+            h = ma_bam(k)
+            da_co[h] = os.path.relpath(f, GOC)
+            m = re.search(r"%\[ma:([0-9a-f]{8})\]", k)
+            if m:
+                ma_cu[h] = m.group(1)
+    thu_tu = []                                     # (mã, câu mới?) theo thứ tự trong file
     # 2. lệnh thật đã biết (để nhận ra lệnh rác)
     sty = (glob.glob(os.path.join(GOC, "khung", "*", "*.sty")) +
            glob.glob(os.path.join(GOC, "khung", "*", "Khaibao", "*.tex")))
@@ -100,13 +108,19 @@ def nhap(cac_file, thu=False, in_ra=print, ma_dang=None, bien_dich=True):
         for k in khoi:
             ma = ma_bam(k)
             if ma in da_co:
-                tk["trung"] += 1; continue
+                tk["trung"] += 1
+                m = re.search(r"%\[ma:([0-9a-f]{8})\]", k)
+                cu = ma_cu.get(ma) or (m.group(1) if m else None)
+                if cu:
+                    thu_tu.append((cu, False))
+                continue
             da_co[ma] = "(file đang nhập)"
             k = gan_ma(k, ma)
             k, sua = sua_thap_phan(k)
             k, _ = chuan_vecto(k)
             tk["sua_tp"] += sua
             info = phan_tich_cau(k)
+            thu_tu.append((info.get("ma") or ma, True))
             for cb in kiem_tra_cau(k, info):
                 canh_bao_tep.append(f"   ⚠ {info.get('id') or 'chưa có mã'} [{info['loai']}] {cb}")
             p = duong_dan_dang(info, id_map) or os.path.join("_chua_phan_loai", ten_khong_dau(ten_nguon, 60) + ".tex")
@@ -159,6 +173,9 @@ def nhap(cac_file, thu=False, in_ra=print, ma_dang=None, bien_dich=True):
         ghi(p_loi, "% CÂU LỖI — KHÔNG NHẬP KHO. Sửa xong thì nhập lại file này (Nhập câu hỏi).\n\n" +
             "".join(f"% LỖI: {'; '.join(l)}\n% nguồn: {x[2]}\n{x[1]}\n\n" for x, l in bi_loai))
         in_ra(f"→ {len(bi_loai)} câu lỗi để riêng ở {os.path.relpath(p_loi, GOC)} (sửa xong nhập lại).")
+    if ma_ra is not None and not thu:
+        loai_bo = {x[0].get("ma") for x, _ in bi_loai}
+        ma_ra.extend(m for m, la_moi in thu_tu if not (la_moi and m in loai_bo))
     if thu or not moi:
         if thu: in_ra("(Chế độ xem trước: chưa ghi gì.)")
         return moi
