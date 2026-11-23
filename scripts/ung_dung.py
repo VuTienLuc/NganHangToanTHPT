@@ -769,6 +769,21 @@ class XuLy(BaseHTTPRequestHandler):
             if u.path == "/api/thu-muc-de":  # cây thư mục đề + sắp xếp thư mục cũ theo lớp / chương / kỳ
                 import sap_xep_de as SX
                 v = d.get("viec") or "xem"
+                if v in ("ds", "ghim", "ghi", "cat"):          # giao diện Thư mục đề theo lớp
+                    import thu_muc_de as TM
+                    try:
+                        moi = None
+                        if v == "ghim":
+                            TM.ghim(d.get("p"), bool(d.get("bat", True)))
+                        elif v == "ghi":
+                            TM.ghi_chu(d.get("p"), d.get("noi"))
+                        elif v == "cat":
+                            moi = TM.cat(d.get("p"))
+                    except ValueError as e:
+                        return self.gui(200, {"ok": False, "loi": str(e)})
+                    import glob as _g
+                    return self.gui(200, {"ok": True, **TM.danh_sach(), "moi": moi, "so_cu": len(SX.ke_hoach()),
+                                          "co_hoan_tac": bool(_g.glob(os.path.join(SX.NHAT_KY, "*.json")))})
                 dong = []
                 if v == "lam":
                     SX.lam(dong.append)

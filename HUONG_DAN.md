@@ -833,7 +833,18 @@ de-da-ra/
   Tuyển sinh 10/2026-11-15 Đề luyện tuyển sinh 10/
   Khác/                                    ← không xác định được lớp
 ```
-Nút **🗂 Thư mục đề**: xem cây thư mục, **Sắp xếp N thư mục cũ** vào cấu trúc mới (chỉ di chuyển, lịch sử dùng câu đổi tên theo), **↶ Hoàn tác**, **Mở thư mục**.
+Nút **🗂 Thư mục đề** mở trình duyệt đề đã xuất:
+- **Cột trái**: 🕘 *Gần đây* (chia Hôm nay / Hôm qua / 7 ngày / 30 ngày), ⭐ *Đã ghim*, rồi từng **Lớp 12 → 6**, *Tuyển sinh 10*, *Khác* kèm số bộ.
+  Bấm một lớp: hiện danh sách chương / kỳ thi của lớp đó để nhảy thẳng tới.
+- **Ô tìm** (phím `/`): gõ không dấu, nhiều từ, tìm cả tên đề, chương, ngày (`23/11`), ghi chú. Viết tắt: `gk` = giữa kì, `ck` = cuối kì,
+  `ts10` = tuyển sinh, số `10` / `11`… = đúng lớp đó. Ví dụ: `gk 10`, `ck 11`, `thales`, `10a1`. Enter mở file đầu tiên.
+- Lọc theo loại: Đề kiểm tra · Phiếu bài học · Phiếu hoạt động · Công thức · Trình chiếu. Sắp xếp: mới nhất / cũ nhất / tên.
+- **Gộp bản trùng tên**: các bộ “… (2)”, “… (3)” cùng chương/kỳ gộp một dòng (hiện bản mới nhất, nhãn *n bản*); mở ra để xem bản cũ.
+- Mỗi bộ có nút mở nhanh: 📄 Đề · ✅ Lời giải · 🖥 Trình chiếu · 📊 Đáp án · W Word · 🌐 Web (PDF mở ở tab mới, Excel/Word tải về);
+  ▾ hiện **mọi file** từng mã đề, các bản, ghi chú; 📂 mở thư mục trong Finder; ☆ **ghim** lên đầu.
+- **✎ Ghi chú** (vd “đã dùng 10A1, 10A3 – 15/11”, “đề chính thức”) hiện ngay dưới tên và tìm kiếm được. Ghim, ghi chú lưu ở `de-da-ra/_thu_muc.json`.
+- **🗄 Cất vào _cu**: chuyển bộ không dùng nữa vào `de-da-ra/_cu/` (không xoá) cho danh sách gọn.
+- **🧹 Sắp xếp N thư mục cũ** vào cấu trúc mới (chỉ di chuyển, lịch sử dùng câu đổi tên theo), **↶ Hoàn tác**; **📂 de-da-ra** mở thư mục gốc.
 
 ## 💡 Gợi ý AI khi học sinh làm bài (kiểu Pólya)
 
