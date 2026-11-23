@@ -233,6 +233,18 @@ footer .gian{flex:1}
 .mtb:has(input:checked){border-color:var(--nhan);box-shadow:0 0 0 3px var(--nhan-nhat)}
 .mtb-mau{display:flex;gap:4px}.mtb-mau i{width:22px;height:12px;border-radius:4px;border:1px solid rgba(0,0,0,.12)}
 @media (max-width:900px){.mtb-ds{grid-template-columns:repeat(2,minmax(0,1fr))}}
+#hop-sl{position:fixed;inset:0;background:rgba(17,24,39,.4);display:none;align-items:center;justify-content:center;z-index:14}
+#hop-sl .noi{background:#fff;border-radius:14px;width:min(760px,96vw);max-height:94vh;overflow:auto;box-shadow:0 20px 60px rgba(0,0,0,.28)}
+#hop-sl h2{margin:0;padding:12px 18px;font-size:16px;border-bottom:1px solid var(--vien);display:flex;align-items:center}
+#hop-sl .than{padding:12px 18px;font-size:13.5px;line-height:1.55}
+#hop-sl .o{border:1px solid var(--vien);border-radius:11px;padding:10px 12px;margin-bottom:10px}
+#hop-sl .o h3{margin:0 0 6px;font-size:14px}
+#hop-sl .ok{color:#15803d}#hop-sl .canh{color:#b45309}#hop-sl .xau{color:#b91c1c}
+#hop-sl ul{margin:4px 0;padding-left:20px}
+#hop-sl .tuy{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;margin:6px 0}
+#hop-sl input[type=text]{flex:1;min-width:260px;padding:6px 9px;border:1px solid var(--vien);border-radius:8px;font:inherit}
+#hop-sl pre{background:#f8fafc;border:1px solid var(--vien);border-radius:8px;padding:8px 10px;white-space:pre-wrap;font-size:12.5px;margin:6px 0 0}
+#hop-sl ol{margin:4px 0;padding-left:20px}
 #hop-tm{position:fixed;inset:0;background:rgba(17,24,39,.4);display:none;align-items:center;justify-content:center;z-index:13}
 #hop-tm .noi{background:#fff;border-radius:14px;width:min(1240px,98vw);height:min(94vh,1060px);display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.28);overflow:hidden}
 #hop-tm .tm-dau{display:flex;gap:8px;align-items:center;padding:10px 14px;border-bottom:1px solid var(--vien);flex-wrap:wrap}
@@ -606,6 +618,7 @@ tr.gop-h td{background:#dbeafe;text-align:left;font-weight:700;padding:8px 12px;
     <button id="nut-nhap" title="Thêm câu từ file .tex / .txt / .json (đúng cấu trúc \\begin{ex}…, hoặc JSON các trường Nội dung, Lựa chọn, Đáp án, Lời giải) vào ngân hàng">Nhập câu hỏi</button>
     <input type="file" id="tep-nhap" accept=".tex,.txt,.md,.json" multiple hidden>
     <button id="nut-cap-nhat" title="Đọc lại cau-hoi/ sau khi thầy thêm/sửa câu">Cập nhật kho</button>
+    <button id="nut-sao-luu" title="Kiểm tra ngân hàng đã lên GitHub chưa; tạo file sao lưu khoá AI, bí mật thi trực tuyến, thư mục đề, toàn bộ kho; hướng dẫn cài sang máy mới (Mac / Windows)">💾 Sao lưu &amp; chuyển máy</button>
     <button id="nut-bang-ma" title="Tra cứu mã dạng %[..] theo lớp – chương – bài – dạng">Bảng mã dạng</button>
     <div class="nm-tieu">Làm sạch kho</div>
     <button id="nut-lac" title="Tìm câu có nội dung không khớp bài/dạng đang gắn; chuyển sang đúng dạng hoặc xoá">Câu lạc bài</button>
@@ -943,6 +956,26 @@ tr.gop-h td{background:#dbeafe;text-align:left;font-weight:700;padding:8px 12px;
     </div>
   </div>
   <div class="chan"><span id="ph-trang-thai" class="nho"></span><button id="ph-thieu" style="margin-left:auto" title="Kiểm tra ngân hàng đủ câu cho phiếu này chưa; thiếu thì soạn prompt cho AI sinh câu, rồi nhập vào ngân hàng">Kiểm tra kho / Prompt AI soạn câu…</button><button id="ph-xem" title="Máy chọn thử bộ câu cho phiếu → thầy xem từng câu, đổi nhanh hoặc chọn câu khác theo nhóm cho ưng ý → xác nhận mới tạo phiếu">👁 Xem trước &amp; đổi câu</button><button id="ph-tao" class="chinh">Tạo phiếu</button><button id="ph-dong-hop">Đóng</button></div>
+</div></div>
+<div id="hop-sl"><div class="noi">
+  <h2>💾 Sao lưu &amp; chuyển máy <button id="sl-dong" style="margin-left:auto">Đóng</button></h2>
+  <div class="than">
+    <div class="o"><h3>1. Ngân hàng trên GitHub</h3><div id="sl-gh">Đang kiểm tra…</div></div>
+    <div class="o"><h3>2. Những thứ GitHub không giữ — cần file sao lưu</h3><div id="sl-bm"></div>
+      <div class="tuy"><label>Lưu vào <input type="text" id="sl-dich" title="Nên chọn USB, ổ ngoài, hoặc thư mục Google Drive / OneDrive — đừng chỉ để trên chính máy này"></label>
+        <button id="sl-mo-dich" title="Mở thư mục lưu">📂</button></div>
+      <div class="tuy"><label>Thư mục đề <select id="sl-de-ra"><option value="ket_qua">Chỉ file kết quả (PDF, Word, Excel) — gọn</option><option value="tat_ca">Kèm cả mã nguồn tex/ (biên dịch lại được)</option><option value="khong">Không kèm</option></select></label>
+        <label class="hop" title="Gói toàn bộ ngân hàng + ứng dụng kèm lịch sử vào file zip (khoảng 20 MB): khôi phục được cả khi không vào được GitHub"><input type="checkbox" id="sl-kho" checked> Kèm cả kho (dự phòng khi mất GitHub)</label></div>
+      <div class="tuy"><button id="sl-tao" class="chinh">💾 Tạo file sao lưu</button><span id="sl-tt" style="color:#555"></span></div>
+      <pre id="sl-nk" hidden></pre></div>
+    <div class="o"><h3>3. Cài sang máy mới (Mac hoặc Windows)</h3>
+      <ol><li>Chép <b>file sao lưu .zip</b> và file cài đặt — <b>Cai dat tren Mac.command</b> (Mac) hoặc <b>Cai dat tren Windows.bat</b> (Windows) — vào <b>cùng một thư mục</b> trên máy mới
+        (file cài đặt có trong thư mục ngân hàng, hoặc tải từ GitHub).</li>
+        <li>Nhấp đúp file cài đặt. Máy tự cài Python, Git, LaTeX nếu thiếu → tải ngân hàng từ GitHub (không vào được thì lấy từ file zip)
+          → chép khoá AI, bí mật thi trực tuyến, thư mục đề → tạo lối tắt <b>Ra de theo ma tran</b> trên Desktop.</li>
+        <li>Mở ứng dụng; lần đầu lập chỉ mục khoảng 1 phút.</li></ol>
+      <div class="tuy"><button id="sl-mo-goc" title="Mở thư mục ngân hàng để lấy file cài đặt">📂 Mở thư mục có file cài đặt</button></div></div>
+  </div>
 </div></div>
 <div id="hop-tm"><div class="noi">
   <div class="tm-dau"><h2>🗂 Thư mục đề</h2>
@@ -2080,6 +2113,41 @@ $("#tm-ds").onclick=async e=>{
   if(v==="cat"){if(!confirm(`Cất bộ “${b.ten}” vào de-da-ra/_cu?\n(Không xoá — muốn lấy lại thì kéo thư mục từ _cu về chỗ cũ.)`))return;
     const r=await api("/api/thu-muc-de",{viec:"cat",p});if(!r.ok){alert(r.loi);return}TM.mo.delete(p);moTM(r);return}
 };
+// ---------------- SAO LƯU & CHUYỂN MÁY
+function slVe(r){
+  const ngay=s=>s?new Date(s).toLocaleString("vi-VN",{dateStyle:"short",timeStyle:"short"}):"";
+  let gh;
+  if(!r.co_github) gh=`<span class="xau">✗ Thư mục này chưa nối với GitHub</span> — chạy file cài đặt để tải ngân hàng từ GitHub.`;
+  else{const ok=!r.chua_luu&&!r.chua_day;
+    gh=(ok?`<span class="ok">✓ Ngân hàng đã lưu đủ lên GitHub</span>`:`<span class="canh">⚠ Còn thay đổi chưa lên GitHub</span>`)
+      +` · lần lưu gần nhất ${ngay(r.lan_luu_cuoi)}<ul>`
+      +(r.chua_luu?`<li>${r.chua_luu} file câu hỏi / dữ liệu chưa lưu${r.chua_luu_vd.length?`: <small>${r.chua_luu_vd.map(esc).join(", ")}${r.chua_luu>r.chua_luu_vd.length?"…":""}</small>`:""}</li>`:"")
+      +(r.chua_day?`<li>${r.chua_day} lần lưu chưa đẩy lên GitHub</li>`:"")
+      +`<li>GitHub giữ: ứng dụng, ngân hàng câu hỏi, kiến thức, ma trận, lịch sử dùng câu — máy hư vẫn lấy lại được.</li></ul>`
+      +(ok?"":`<button id="sl-db" class="chinh">📤 Đồng bộ lên GitHub ngay</button> <small>(mở cửa sổ Terminal chạy file “Dong bo”)</small>`)}
+  $("#sl-gh").innerHTML=gh;
+  const bm=r.bi_mat.map(x=>`${x.co?"🔑":"○"} ${x.ten}${x.co?"":" <small>(máy này chưa có)</small>"}`).join(" · ");
+  const lt=r.lan_truoc;
+  $("#sl-bm").innerHTML=`<ul><li>Khoá AI &amp; bí mật thi trực tuyến: ${bm}</li>
+    <li>Thư mục đề đã xuất (de-da-ra): ${r.de_ra.so_tep} file, khoảng ${r.de_ra.mb} MB</li></ul>`
+    +(lt?`<div class="${(Date.now()-new Date(lt.luc))/864e5>14?"canh":"ok"}">Lần sao lưu trước: ${ngay(lt.luc)} · ${lt.mb} MB · <small>${esc(lt.tep)}</small></div>`
+        :`<div class="canh">⚠ Chưa sao lưu lần nào trên máy này.</div>`);
+  if(!$("#sl-dich").value) $("#sl-dich").value=(lt&&lt.tep?lt.tep.replace(/[\\/][^\\/]+$/,""):"")||r.dich;
+  const db=$("#sl-db");if(db)db.onclick=async()=>{await api("/api/sao-luu",{viec:"dong-bo"});
+    $("#sl-gh").insertAdjacentHTML("beforeend",`<div class="ok" style="margin-top:6px">Đã mở cửa sổ đồng bộ — xong thì bấm lại “Sao lưu &amp; chuyển máy” để xem tình trạng mới.</div>`)};
+}
+$("#nut-sao-luu").onclick=async()=>{$("#hop-sl").style.display="flex";$("#sl-nk").hidden=true;$("#sl-tt").textContent="";slVe(await api("/api/sao-luu",{viec:"xem"}))};
+$("#sl-dong").onclick=()=>$("#hop-sl").style.display="none";
+$("#sl-mo-dich").onclick=()=>api("/api/sao-luu",{viec:"mo-dich",dich:$("#sl-dich").value.trim()});
+$("#sl-mo-goc").onclick=()=>api("/api/mo",{duong_dan:"."});
+$("#sl-tao").onclick=async()=>{
+  const b=$("#sl-tao");b.disabled=true;$("#sl-tt").textContent="Đang gói… (thư mục đề lớn có thể mất 1–2 phút)";
+  try{const r=await api("/api/sao-luu",{viec:"tao",dich:$("#sl-dich").value.trim(),de_ra:$("#sl-de-ra").value,kem_kho:$("#sl-kho").checked});
+    if(!r.ok){$("#sl-tt").textContent="";alert(r.loi);return}
+    $("#sl-nk").hidden=false;$("#sl-nk").textContent=r.nhat_ky;$("#sl-tt").innerHTML=`<span class="ok">✓ Xong</span> — chép file này sang USB / Google Drive và giữ kín (có khoá AI).`;
+    slVe(r)}finally{b.disabled=false}
+};
+
 // ---------------- BẢNG MÃ DẠNG
 async function moBangMa(){
   if(!DM_DANG){const r=await api("/api/danh-muc-dang",{});DM_DANG=r.dang}
@@ -4399,7 +4467,7 @@ document.addEventListener("click",()=>document.querySelectorAll("header .nm.mo")
 $("#nut-luu").dataset.mo="Lưu ma trận đang điền để lần sau mở lại";
 $("#nut-cap-nhat").dataset.mo="Đọc lại ngân hàng sau khi thêm / sửa câu";
 // --- nhớ chức năng dùng gần đây
-const NUT_LENH=["nut-nhanh","nut-phieu","nut-so-tay","nut-hdp","nut-on-thi","nut-hd","nut-kt","nut-thi","nut-prompt","nut-ts10","nut-ngoai","nut-tron-file","nut-thu-muc","nut-lich-su",
+const NUT_LENH=["nut-nhanh","nut-phieu","nut-so-tay","nut-hdp","nut-on-thi","nut-hd","nut-kt","nut-thi","nut-prompt","nut-ts10","nut-sao-luu","nut-ngoai","nut-tron-file","nut-thu-muc","nut-lich-su",
   "nut-luu","nut-nhap","nut-cap-nhat","nut-bang-ma","nut-lac","nut-trung","nut-xem","nut-xuat","nut-bo","nut-tu-dong","nut-gop"];
 NUT_LENH.forEach(i=>{const b=$("#"+i);if(b)b.addEventListener("click",()=>{const g=docLS("nh_gan_day",[]).filter(x=>x!==i);g.unshift(i);luuLS("nh_gan_day",g.slice(0,8))})});
 const tenNut=i=>{const b=$("#"+i);return b?(b.textContent.trim()||i):i};

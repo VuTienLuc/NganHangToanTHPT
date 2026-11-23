@@ -685,6 +685,19 @@ Tạo phiếu như cũ (📄 Phiếu bài học, kiểu trắc nghiệm hoặc t
 - Bài giảng bất kỳ cũng cho HS xem được: 🌐 Thi trực tuyến → thẻ Bài giảng → nút **Cho HS xem / Thôi cho HS**.
 - Phiếu tạo từ bản cũ (trước khi có tính năng) cần tạo lại phiếu để có dữ liệu web.
 
+## 💾 Sao lưu & chuyển máy (menu **Ngân hàng**) — phòng hư máy, cài máy mới
+**GitHub đã giữ** (mỗi lần Đồng bộ): ứng dụng, ngân hàng câu hỏi, kiến thức, ma trận, lịch sử dùng câu.
+**GitHub không giữ** (cố ý): khoá AI `ai_khoa.json`, bí mật thi trực tuyến `thi-truc-tuyen/bi_mat.json`, `mat_khau_dau.json`,
+và thư mục đề đã xuất `de-da-ra/`. Hộp **💾 Sao lưu & chuyển máy**:
+1. Báo ngân hàng đã lên GitHub đủ chưa (còn bao nhiêu file chưa lưu); nút **📤 Đồng bộ lên GitHub ngay** chạy
+   `Dong bo (Mac).command` / `Dong bo (Windows).bat` (nhấp đúp hai file này cũng được).
+2. **Tạo file sao lưu** `SaoLuu_NganHang_<ngày giờ>.zip` gồm khoá AI + bí mật, thư mục đề (chỉ file kết quả / kèm tex / không),
+   và *kho.bundle* — toàn bộ kho kèm lịch sử (khôi phục được cả khi không vào được GitHub). Nên lưu vào USB / Google Drive và **giữ kín** (có khoá AI).
+   Chạy bằng lệnh: `python3 scripts/sao_luu.py --dich ~/Desktop`.
+3. **Cài sang máy mới**: chép file zip + file cài đặt (`Cai dat tren Mac.command` hoặc `Cai dat tren Windows.bat`) vào cùng thư mục → nhấp đúp file cài đặt.
+   Máy tự cài phần mềm thiếu, tải kho từ GitHub (hoặc từ kho.bundle), chép bí mật, chép lại `de-da-ra` (không ghi đè file đã có), tạo lối tắt trên Desktop.
+   Trên Mac kho cài vào `~/NganHangCaNhan` (ngoài iCloud cho git chạy ổn định).
+
 ## 📥 Đề từ nguồn ngoài (menu **Ra đề**): Word · PDF · ảnh → nhiều mã đề
 Dùng khi thầy có một đề kiểm tra, phiếu hoặc bài học ở dạng Word / PDF / ảnh chụp. Hộp có 3 bước.
 
