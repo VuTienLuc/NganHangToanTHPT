@@ -1033,6 +1033,17 @@ class XuLy(BaseHTTPRequestHandler):
                     except (ValueError, OSError) as e:
                         return self.gui(200, {"ok": False, "loi": str(e)})
                     return self.gui(200, {"ok": True, "tep": p, "nhat_ky": "\n".join(dong), **SL.tinh_trang()})
+                if d.get("viec") == "tu-dong":         # bật/tắt, đổi nơi lưu, chạy ngay, lịch của máy
+                    dong, ghi = [], ""
+                    try:
+                        SL.dat_tu_dong(d.get("bat"), d.get("dich"), d.get("giu"), d.get("kem_kho"))
+                        if d.get("lich") is not None and bool(d.get("lich")) != SL.co_lich():
+                            ghi = SL.dat_lich(bool(d.get("lich")))
+                        if d.get("chay"):
+                            SL.tu_dong(bat_buoc=True, in_ra=dong.append)
+                    except (ValueError, OSError) as e:
+                        return self.gui(200, {"ok": False, "loi": str(e), **SL.tinh_trang()})
+                    return self.gui(200, {"ok": True, "nhat_ky": "\n".join(([ghi] if ghi else []) + dong), **SL.tinh_trang()})
                 if d.get("viec") == "dong-bo":
                     f = "Dong bo (Windows).bat" if sys.platform.startswith("win") else "Dong bo (Mac).command"
                     p = os.path.join(GOC, f)
@@ -1484,6 +1495,19 @@ def khoi_dong_lai(cong):
 SV = [None]
 
 
+def tu_sao_luu():
+    """Khi ứng dụng mở: mỗi 3 giờ kiểm tra, đủ 7 ngày thì tự sao lưu lên Google Drive (nếu thầy đã bật)."""
+    import sao_luu as SL
+    time.sleep(90)
+    while True:
+        if not cong_viec.get("dang_chay"):
+            try:
+                SL.tu_dong(in_ra=lambda *_: None)
+            except Exception:
+                pass                                  # lỗi đã ghi vào du-lieu/_sao_luu.json, hiện trong hộp Sao lưu
+        time.sleep(3 * 3600)
+
+
 def cong_trong():
     if "--cong" in sys.argv:                       # khởi động lại: giữ cổng cũ để trang đang mở chạy tiếp
         c = int(sys.argv[sys.argv.index("--cong") + 1])
@@ -1510,6 +1534,7 @@ if __name__ == "__main__":
     url = f"http://127.0.0.1:{cong}/"
     print("Ứng dụng ra đề đang chạy tại", url)
     threading.Thread(target=canh_gac, daemon=True).start()
+    threading.Thread(target=tu_sao_luu, daemon=True).start()
     if "--khong-mo" not in sys.argv:
         webbrowser.open(url)
     sv.serve_forever()

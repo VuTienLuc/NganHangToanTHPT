@@ -113,6 +113,10 @@ if exist "%TAM%\de-da-ra" (
   echo  - Chep lai thu muc de da xuat ^(de-da-ra^) tu ban sao luu ^(khong ghi de file da co^)...
   robocopy "%TAM%\de-da-ra" "%DICH%\de-da-ra" /E /XC /XN /XO /NFL /NDL /NJH /NJS /NP >nul
 )
+if exist "%NGUON%de-da-ra" (
+  echo  - Chep lai thu muc de tu thu muc tai tu Google Drive ^(khong ghi de file da co^)...
+  robocopy "%NGUON%de-da-ra" "%DICH%\de-da-ra" /E /XC /XN /XO /NFL /NDL /NJH /NJS /NP >nul
+)
 
 echo.
 echo  === BUOC 4/4: Tao loi tat tren Desktop ===
