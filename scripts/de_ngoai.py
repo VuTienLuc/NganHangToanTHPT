@@ -42,6 +42,8 @@ def prompt(kieu, cfg):
         chung = chung[:chung.find("# CHỌN MÃ DẠNG")] + chung[chung.find("# TỰ KIỂM TRA"):] if "# CHỌN MÃ DẠNG" in chung else chung
         chung = chung.replace("- [ ] Mọi mã `%[…]` có trong DANH MỤC (sau khi thay `?` bằng N/H/V/C).\n", "")
         ma_dang = ("- Dòng mở khối chỉ cần mức: `\\begin{ex}%[?]` — KHÔNG cần mã dạng (thầy chỉ trộn đề, chưa nhập kho).\n")
+        chung = chung.replace("Mã lấy từ DANH MỤC DẠNG ở cuối: chép mã `2D1?1-2` rồi **thay dấu `?` bằng chữ mức**:",
+                              "**Lần này KHÔNG cần mã dạng** (không có danh mục): mọi câu ghi `%[?]`. Thang mức để tham khảo:")
     else:
         ma_dang = ""
     nguon = (cfg.get("nguon") or "").strip()
