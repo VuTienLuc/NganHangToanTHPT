@@ -697,6 +697,14 @@ và thư mục đề đã xuất `de-da-ra/`. Hộp **💾 Sao lưu & chuyển m
 3. **Cài sang máy mới**: chép file zip + file cài đặt (`Cai dat tren Mac.command` hoặc `Cai dat tren Windows.bat`) vào cùng thư mục → nhấp đúp file cài đặt.
    Máy tự cài phần mềm thiếu, tải kho từ GitHub (hoặc từ kho.bundle), chép bí mật, chép lại `de-da-ra` (không ghi đè file đã có), tạo lối tắt trên Desktop.
    Trên Mac kho cài vào `~/NganHangCaNhan` (ngoài iCloud cho git chạy ổn định).
+4. **☁️ Tự sao lưu mỗi tuần lên Google Drive** (theo cây /luu-drive: *Drive của tôi › claude › Sao lưu ngân hàng*).
+   Cần ứng dụng **Google Drive cho máy tính** (https://www.google.com/drive/download/) đã đăng nhập. Tích *Bật tự sao lưu mỗi 7 ngày*:
+   - mỗi 7 ngày tạo `SaoLuu_NganHang_<ngày>.zip` (khoá AI, bí mật, kho.bundle) trong thư mục đó, giữ N bản mới nhất (mặc định 4, bản cũ vào Thùng rác Drive);
+   - chép **thư mục đề** sang `Sao lưu ngân hàng/de-da-ra/` (chỉ file mới / đã đổi, không xoá gì) — mở được đề trên điện thoại;
+   - chạy khi ứng dụng đang mở (kiểm tra mỗi 3 giờ); tích *Chạy cả khi không mở ứng dụng* để đặt lịch của máy
+     (launchd trên Mac / Task Scheduler trên Windows, kiểm tra mỗi ngày 12:30; nhật ký Mac ở `/tmp/nganhang_saoluu.log`).
+   - **☁️ Sao lưu lên Drive ngay** để chạy tức thì. Lệnh tay: `python3 scripts/sao_luu.py --tu-dong --ngay`.
+   - Máy mới: tải nguyên thư mục *Sao lưu ngân hàng* về, đặt file cài đặt vào trong đó rồi nhấp đúp — tự lấy zip mới nhất và thư mục đề.
 
 ## 📥 Đề từ nguồn ngoài (menu **Ra đề**): Word · PDF · ảnh → nhiều mã đề
 Dùng khi thầy có một đề kiểm tra, phiếu hoặc bài học ở dạng Word / PDF / ảnh chụp. Hộp có 3 bước.

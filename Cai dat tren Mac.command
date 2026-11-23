@@ -81,11 +81,13 @@ chep() {   # $1 tên file   $2 đích
 chep ai_khoa.json "$DICH/ai_khoa.json"
 chep bi_mat.json "$DICH/thi-truc-tuyen/bi_mat.json"
 chep mat_khau_dau.json "$DICH/thi-truc-tuyen/mat_khau_dau.json"
-if [ -d "$TAM/de-da-ra" ]; then
-  echo " - Chép lại thư mục đề đã xuất (không ghi đè file đã có)…"
-  mkdir -p "$DICH/de-da-ra"
-  rsync -a --ignore-existing "$TAM/de-da-ra/" "$DICH/de-da-ra/" 2>/dev/null || cp -Rn "$TAM/de-da-ra/." "$DICH/de-da-ra/"
-fi
+for NG in "$TAM/de-da-ra" "$NGUON/de-da-ra"; do      # trong zip, hoặc thư mục tải từ Google Drive (Sao lưu ngân hàng/de-da-ra)
+  if [ -d "$NG" ]; then
+    echo " - Chép lại thư mục đề đã xuất từ $(basename "$(dirname "$NG")") (không ghi đè file đã có)…"
+    mkdir -p "$DICH/de-da-ra"
+    rsync -a --ignore-existing "$NG/" "$DICH/de-da-ra/" 2>/dev/null || cp -Rn "$NG/." "$DICH/de-da-ra/"
+  fi
+done
 rm -rf "$TAM"
 
 echo

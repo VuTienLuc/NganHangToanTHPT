@@ -968,9 +968,19 @@ tr.gop-h td{background:#dbeafe;text-align:left;font-weight:700;padding:8px 12px;
         <label class="hop" title="Gói toàn bộ ngân hàng + ứng dụng kèm lịch sử vào file zip (khoảng 20 MB): khôi phục được cả khi không vào được GitHub"><input type="checkbox" id="sl-kho" checked> Kèm cả kho (dự phòng khi mất GitHub)</label></div>
       <div class="tuy"><button id="sl-tao" class="chinh">💾 Tạo file sao lưu</button><span id="sl-tt" style="color:#555"></span></div>
       <pre id="sl-nk" hidden></pre></div>
-    <div class="o"><h3>3. Cài sang máy mới (Mac hoặc Windows)</h3>
+    <div class="o" id="sl-td-o"><h3>3. ☁️ Tự sao lưu mỗi tuần lên Google Drive <small style="font-weight:400;color:#666">(Drive của tôi › claude › Sao lưu ngân hàng)</small></h3>
+      <div id="sl-td"></div>
+      <div class="tuy"><label class="hop"><input type="checkbox" id="sl-td-bat"> <b>Bật tự sao lưu mỗi 7 ngày</b></label>
+        <label class="hop" title="Đặt lịch của máy (launchd trên Mac, Task Scheduler trên Windows) chạy cả khi thầy không mở ứng dụng"><input type="checkbox" id="sl-td-lich"> Chạy cả khi không mở ứng dụng</label></div>
+      <div class="tuy"><label>Thư mục Drive <input type="text" id="sl-td-dich"></label></div>
+      <div class="tuy"><label>Giữ <input type="number" id="sl-td-giu" min="0" max="52" value="4" style="width:54px"> bản zip mới nhất <small>(0 = giữ hết; bản cũ hơn vào Thùng rác Drive)</small></label>
+        <label class="hop"><input type="checkbox" id="sl-td-kho" checked> Kèm cả kho (~20 MB)</label></div>
+      <div class="tuy"><button id="sl-td-luu">Lưu cài đặt</button><button id="sl-td-chay" class="chinh">☁️ Sao lưu lên Drive ngay</button><span id="sl-td-tt" style="color:#555"></span></div>
+      <pre id="sl-td-nk" hidden></pre></div>
+    <div class="o"><h3>4. Cài sang máy mới (Mac hoặc Windows)</h3>
       <ol><li>Chép <b>file sao lưu .zip</b> và file cài đặt — <b>Cai dat tren Mac.command</b> (Mac) hoặc <b>Cai dat tren Windows.bat</b> (Windows) — vào <b>cùng một thư mục</b> trên máy mới
         (file cài đặt có trong thư mục ngân hàng, hoặc tải từ GitHub).</li>
+        <li>Hoặc tải nguyên thư mục <b>claude › Sao lưu ngân hàng</b> trên Google Drive về, đặt file cài đặt vào trong đó.</li>
         <li>Nhấp đúp file cài đặt. Máy tự cài Python, Git, LaTeX nếu thiếu → tải ngân hàng từ GitHub (không vào được thì lấy từ file zip)
           → chép khoá AI, bí mật thi trực tuyến, thư mục đề → tạo lối tắt <b>Ra de theo ma tran</b> trên Desktop.</li>
         <li>Mở ứng dụng; lần đầu lập chỉ mục khoảng 1 phút.</li></ol>
@@ -2132,10 +2142,37 @@ function slVe(r){
     <li>Thư mục đề đã xuất (de-da-ra): ${r.de_ra.so_tep} file, khoảng ${r.de_ra.mb} MB</li></ul>`
     +(lt?`<div class="${(Date.now()-new Date(lt.luc))/864e5>14?"canh":"ok"}">Lần sao lưu trước: ${ngay(lt.luc)} · ${lt.mb} MB · <small>${esc(lt.tep)}</small></div>`
         :`<div class="canh">⚠ Chưa sao lưu lần nào trên máy này.</div>`);
+  slTd(r.tu_dong||{});
   if(!$("#sl-dich").value) $("#sl-dich").value=(lt&&lt.tep?lt.tep.replace(/[\\/][^\\/]+$/,""):"")||r.dich;
   const db=$("#sl-db");if(db)db.onclick=async()=>{await api("/api/sao-luu",{viec:"dong-bo"});
     $("#sl-gh").insertAdjacentHTML("beforeend",`<div class="ok" style="margin-top:6px">Đã mở cửa sổ đồng bộ — xong thì bấm lại “Sao lưu &amp; chuyển máy” để xem tình trạng mới.</div>`)};
 }
+function slTd(td){
+  const ngay=s=>s?new Date(s).toLocaleString("vi-VN",{dateStyle:"short",timeStyle:"short"}):"";
+  const kq=td.ket_qua;
+  let h=td.drive&&td.drive.length?`<div class="ok">✓ Thấy Google Drive trên máy: <small>${esc(td.drive[0])}</small></div>`
+    :`<div class="canh">⚠ Chưa thấy <b>Google Drive cho máy tính</b> trên máy này. Thầy cài tại <a href="https://www.google.com/drive/download/" target="_blank">google.com/drive/download</a>, đăng nhập tài khoản Google, rồi mở lại hộp này.</div>`;
+  h+=td.lan_cuoi?`<div>Lần tự sao lưu gần nhất: <b>${ngay(td.lan_cuoi)}</b>${kq?` · ${esc(kq.tep)} (${kq.mb} MB) · thư mục đề: chép ${kq.de_ra_moi} file mới`:""}${td.bat?` · lần tới: sau ${7-Math.min(7,Math.floor((Date.now()-new Date(td.lan_cuoi))/864e5))} ngày`:""}</div>`
+    :`<div>${td.bat?"Chưa chạy lần nào — sẽ chạy khi ứng dụng mở (trong vòng 2 phút).":"Chưa bật."}</div>`;
+  if(td.loi) h+=`<div class="xau">✗ Lần trước lỗi: ${esc(td.loi)}</div>`;
+  $("#sl-td").innerHTML=h;
+  $("#sl-td-bat").checked=!!td.bat; $("#sl-td-lich").checked=!!td.co_lich;
+  if(!$("#sl-td-dich").value) $("#sl-td-dich").value=td.dich||td.dich_goi_y||"";
+  $("#sl-td-giu").value=td.giu??4; $("#sl-td-kho").checked=td.kem_kho!==false;
+}
+async function slTdGui(chay){
+  const b=chay?$("#sl-td-chay"):$("#sl-td-luu");b.disabled=true;$("#sl-td-tt").textContent=chay?"Đang sao lưu lên Drive… (lần đầu chép cả thư mục đề, có thể vài phút)":"";
+  try{const r=await api("/api/sao-luu",{viec:"tu-dong",bat:$("#sl-td-bat").checked,lich:$("#sl-td-lich").checked,dich:$("#sl-td-dich").value.trim(),
+      giu:+$("#sl-td-giu").value||0,kem_kho:$("#sl-td-kho").checked,chay});
+    slTd(r.tu_dong||{});
+    if(r.nhat_ky){$("#sl-td-nk").hidden=false;$("#sl-td-nk").textContent=r.nhat_ky}
+    $("#sl-td-tt").innerHTML=r.ok?`<span class="ok">✓ ${chay?"Đã sao lưu lên Drive":"Đã lưu cài đặt"}</span>`:`<span class="xau">✗ ${esc(r.loi)}</span>`;
+  }finally{b.disabled=false}
+}
+$("#sl-td-luu").onclick=()=>slTdGui(false);
+$("#sl-td-chay").onclick=()=>slTdGui(true);
+$("#sl-td-bat").onchange=()=>slTdGui(false);
+$("#sl-td-lich").onchange=()=>slTdGui(false);
 $("#nut-sao-luu").onclick=async()=>{$("#hop-sl").style.display="flex";$("#sl-nk").hidden=true;$("#sl-tt").textContent="";slVe(await api("/api/sao-luu",{viec:"xem"}))};
 $("#sl-dong").onclick=()=>$("#hop-sl").style.display="none";
 $("#sl-mo-dich").onclick=()=>api("/api/sao-luu",{viec:"mo-dich",dich:$("#sl-dich").value.trim()});
