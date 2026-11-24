@@ -404,12 +404,13 @@ def bien_dich_thu_muc(thu_muc_de, in_ra=print):
         pdf = os.path.join(tex, f[:-4] + ".pdf")
         ok = os.path.exists(pdf) and os.path.getmtime(pdf) >= bat_dau - 1
         if ok:
-            ten_ra = f[:-4].replace("De_", "LoiGiai_", 1).replace("_LoiGiai", "") if f.endswith("_LoiGiai.tex") else f[:-4]
+            ten_ra = (f[:-4].replace("De_", "LoiGiai_", 1).replace("_LoiGiai", "") if f.endswith("_LoiGiai.tex") else
+                      f[:-4].replace("De_", "TietKiem_", 1).replace("_TietKiem", "") if f.endswith("_TietKiem.tex") else f[:-4])
             _sh.copyfile(pdf, os.path.join(thu_muc_de, ten_ra + ".pdf"))
         ok_het &= ok
         in_ra(f"  {'✓' if ok else '✗ lỗi (xem tex/' + f[:-4] + '.log)'} {f[:-4]}")
     # bản Leftnote (lề ghi chú) và Beamer trình chiếu sửa bài (trắng / xanh) cho từng mã đề
-    phu = sorted(f for f in os.listdir(tex) if re.match(r"(Leftnote|BeamerTrang|BeamerXanh)_\d+\.tex$", f))
+    phu = sorted(f for f in os.listdir(tex) if re.match(r"(Leftnote|BeamerTrang|BeamerXanh|TrinhChieu)_\d+\.tex$", f))
     if phu:
         in_ra(f"Biên dịch {len(phu)} file Leftnote / Beamer…")
     for f in phu:
