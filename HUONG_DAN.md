@@ -742,6 +742,9 @@ Một bài học SGK → phiếu nhiều mã đề, đọc rõ trên điện tho
   → **✍ Áp dụng tương tự**: các câu chọn theo mẫu — câu soạn “tương tự theo mẫu” của chính ví dụ đó trước, rồi cùng dạng, mức gần nhất, xếp dễ → khó.
 - Thầy chọn **số câu thực hành** từng loại, **số ví dụ minh hoạ** mỗi loại (nhiều ví dụ: mỗi ví dụ một dạng theo trình tự bài, câu thực hành chia đều),
   dạng dùng làm mẫu, tên phiếu. **🔍 Xem / đổi bộ khác** để xem trước ví dụ và số câu; phiếu tạo ra đúng bộ đang xem.
+- **Mỗi dạng một ví dụ minh hoạ riêng** (tích sẵn): mỗi dạng đã tích có ví dụ của riêng nó, câu áp dụng đứng ngay sau ví dụ cùng dạng
+  (câu 1–2 theo ví dụ 1 dạng A, câu 3–4 theo ví dụ 2 dạng B…). Loại có ít câu hơn số dạng thì xoay vòng để dạng nào cũng có mặt.
+  Bỏ tích thì dùng số ví dụ cố định mỗi loại như trước.
 - **Nhiều mã đề** (mã đầu mặc định 001): ví dụ giữ nguyên; câu thực hành đảo thứ tự, đảo phương án trắc nghiệm, đảo ý a–c Đúng/Sai (mã đầu giữ thứ tự dễ → khó).
 - **Cỡ chữ 14** (A4, hoặc khổ **A5** vừa màn hình điện thoại) hoặc 12 tiết kiệm; 3 mẫu màu; tên giáo viên ở chân trang.
 - **Xuất thêm** (tích sẵn):
@@ -754,7 +757,8 @@ Một bài học SGK → phiếu nhiều mã đề, đọc rõ trên điện tho
   trả lời ngắn dùng dấu chấm (phân số đổi ra số thập phân). Trộn đề thi thường giờ cũng xuất thêm `DapAn_UNT.xlsx`.
 - **🤖 Soạn bằng AI đúng cấu trúc phiếu** (khung tím): đặt số câu, số ví dụ, dạng → **📝 Tạo prompt** → **📋 Chép** sang ChatGPT / Gemini / Claude
   (đính kèm SGK nếu có). Prompt chia sẵn bảng nhóm `%%% NHOM TN1`, `DS1`, `TLN1`… — mỗi nhóm 1 *ví dụ minh hoạ* (`% vai: vi_du`, lời giải từng bước)
-  + đúng số *câu tương tự* cùng dạng, cùng cách giải; tích *Kèm soạn kiến thức trọng tâm* thì AI viết thêm phần kiến thức (giữa `%%% KIEN_THUC` … `%%% HET_KIEN_THUC`).
+  + đúng số *câu tương tự* cùng dạng, cùng cách giải. Prompt chỉ cho soạn **các dạng đã tích**, dòng mở nhóm ghi kèm mã dạng (`%%% NHOM TN2 0D3?2-2`);
+  khi nhập, câu nào AI ghi sai / thiếu mã dạng được tự chỉnh về đúng dạng của nhóm (giữ mức); tích *Kèm soạn kiến thức trọng tâm* thì AI viết thêm phần kiến thức (giữa `%%% KIEN_THUC` … `%%% HET_KIEN_THUC`).
   Dán kết quả → **📥 Nhập vào ngân hàng**: câu biên dịch thử, câu lỗi bị loại; câu tương tự tự gắn `% mau: <mã ví dụ>`; kiến thức lưu vào kho kiến thức
   (chỉ khi bài chưa có / ghi đè / không lưu). Hoặc **⚡ Nhờ AI soạn luôn (API)** nếu đã cài khoá AI.
 - Mỗi lần nhập thành một **lượt AI** (lưu `du-lieu/pnc_ai.json`, 10 lượt gần nhất mỗi bài). Ô **Nguồn câu cho phiếu**: *🏦 Ngân hàng — tự chọn theo mẫu*

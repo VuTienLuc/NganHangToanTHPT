@@ -1002,8 +1002,9 @@ tr.gop-h td{background:#dbeafe;text-align:left;font-weight:700;padding:8px 12px;
           <label style="background:#eef2ff;color:#3730a3">Trắc nghiệm <input type="number" id="pnc-tn" min="0" max="30" value="6"><small>câu chọn đáp án A–D</small></label>
           <label style="background:#f0fdfa;color:#115e59">Đúng / Sai <input type="number" id="pnc-ds-so" min="0" max="12" value="2"><small>mỗi câu 4 ý a–d</small></label>
           <label style="background:#fff7ed;color:#9a3412">Trả lời ngắn <input type="number" id="pnc-tln" min="0" max="20" value="4"><small>đáp số ≤ 4 kí tự</small></label></div>
-        <div class="hang"><label>Ví dụ minh hoạ mỗi loại <input type="number" id="pnc-vd" min="1" max="4" value="1"></label>
-          <small style="color:#64748b">(nhiều ví dụ: mỗi ví dụ một dạng, câu thực hành chia đều theo ví dụ)</small></div></div>
+        <div class="hang"><label class="hop" title="Mỗi dạng đã tích ở trên có một ví dụ minh hoạ riêng; câu áp dụng đứng ngay sau ví dụ cùng dạng (câu 1–2 theo ví dụ 1, câu 3–4 theo ví dụ 2…). Loại có ít câu hơn số dạng thì xoay vòng để dạng nào cũng được dùng."><input type="checkbox" id="pnc-vd-dang" checked> <b>Mỗi dạng một ví dụ minh hoạ riêng</b></label>
+          <label>hoặc cố định <input type="number" id="pnc-vd" min="1" max="4" value="1"> ví dụ mỗi loại</label>
+          <small style="color:#64748b">câu thực hành chia đều theo ví dụ, câu nào cũng đúng dạng của ví dụ đứng trước</small></div></div>
       <div class="o"><h3>Mã đề · khổ in</h3>
         <div class="hang"><label>Số mã đề <input type="number" id="pnc-so-ma" min="1" max="12" value="4"></label>
           <label>Mã đầu <input type="text" id="pnc-ma-dau" value="001" style="width:64px;text-align:center"></label>
@@ -1015,7 +1016,7 @@ tr.gop-h td{background:#dbeafe;text-align:left;font-weight:700;padding:8px 12px;
           <label class="hop"><input type="checkbox" id="pnc-pp"> Kiến thức kèm phương pháp từng dạng</label>
           <label>GV <input type="text" id="pnc-gv" style="width:160px"></label></div>
         <div class="hang"><b>Mẫu PDF</b><div class="mtb-ds" style="grid-template-columns:repeat(3,minmax(0,1fr));flex:1"><label class="mtb"><input type="radio" name="pnc-mau" value="hien_dai" checked><span class="mtb-mau"><i style="background:#1e40af"></i><i style="background:#0d9488"></i><i style="background:#eff6ff"></i></span><b>Hiện đại</b></label><label class="mtb"><input type="radio" name="pnc-mau" value="tuoi_sang"><span class="mtb-mau"><i style="background:#6d28d9"></i><i style="background:#ea580c"></i><i style="background:#faf5ff"></i></span><b>Tươi sáng</b></label><label class="mtb"><input type="radio" name="pnc-mau" value="toi_gian"><span class="mtb-mau"><i style="background:#262626"></i><i style="background:#7f1d1d"></i><i style="background:#ffffff"></i></span><b>Tối giản</b></label></div></div></div>
-      <div class="o" style="border-color:#c4b5fd;background:#faf5ff"><h3>🤖 Soạn bằng AI đúng cấu trúc phiếu <small style="font-weight:400;color:#6b21a8">(theo số câu, số ví dụ, dạng đã chọn ở trên)</small></h3>
+      <div class="o" style="border-color:#c4b5fd;background:#faf5ff"><h3>🤖 Soạn bằng AI đúng cấu trúc phiếu <small style="font-weight:400;color:#6b21a8">(chỉ các dạng đã tích ở trên · mỗi nhóm một dạng có ví dụ riêng · đúng số câu)</small></h3>
         <div class="hang"><label class="hop"><input type="checkbox" id="pnc-ai-kt" checked> Kèm soạn kiến thức trọng tâm</label>
           <select id="pnc-ai-ghi" title="Kiến thức AI soạn lưu vào kho kiến thức của bài"><option value="neu_trong">Lưu kiến thức khi bài chưa có</option><option value="ghi_de">Ghi đè kiến thức cũ</option><option value="khong">Không lưu kiến thức</option></select></div>
         <div class="hang"><button id="pnc-ai-p">📝 Tạo prompt</button><button id="pnc-ai-chep">📋 Chép prompt</button>
@@ -2228,11 +2229,12 @@ async function pncTaiLo(chon){
   pncNguon();
 }
 function pncNguon(){const ai=!!$("#pnc-nguon").value;
-  document.querySelectorAll("#pnc-tn,#pnc-ds-so,#pnc-tln,#pnc-vd,#pnc-dang input").forEach(x=>x.disabled=ai);
+  document.querySelectorAll("#pnc-tn,#pnc-ds-so,#pnc-tln,#pnc-vd,#pnc-vd-dang,#pnc-dang input").forEach(x=>x.disabled=ai);
+  if(!ai)$("#pnc-vd").disabled=$("#pnc-vd-dang").checked;
   $("#pnc-xem-nut").textContent=ai?"🔍 Xem lượt AI":"🔍 Xem / đổi bộ khác"}
 function pncCfg(){const b=PNC.chon,[co,kho]=$("#pnc-co").value.split("|");
   return {bai:b.bai,dang:[...document.querySelectorAll("#pnc-dang input:checked")].map(x=>x.value),
-    so:{TN:+$("#pnc-tn").value||0,DS:+$("#pnc-ds-so").value||0,TLN:+$("#pnc-tln").value||0},so_vd:+$("#pnc-vd").value||1,
+    so:{TN:+$("#pnc-tn").value||0,DS:+$("#pnc-ds-so").value||0,TLN:+$("#pnc-tln").value||0},so_vd:+$("#pnc-vd").value||1,vd_theo_dang:$("#pnc-vd-dang").checked,
     so_ma:+$("#pnc-so-ma").value||1,ma_bat_dau:$("#pnc-ma-dau").value.trim()||"001",co_chu:+co,kho,kem_pp:$("#pnc-pp").checked,
     tiet_kiem:$("#pnc-tk").checked,trinh_chieu:$("#pnc-tc").checked,
     giao_vien:$("#pnc-gv").value.trim(),ten:$("#pnc-ten").value.trim(),mau_trinh_bay:document.querySelector('input[name="pnc-mau"]:checked').value,seed:PNC.seed,
@@ -2290,6 +2292,7 @@ $("#pnc-ai-api").onclick=async()=>{
   let s; for(;;){await new Promise(t=>setTimeout(t,2000));s=await api("/api/trang-thai");$("#ht-noi").textContent=s.nhat_ky||"…";if(s.xong)break}
   await pncSauNhap(s.ket_qua); await tai();};
 ["#pnc-tn","#pnc-ds-so","#pnc-tln","#pnc-vd"].forEach(x=>$(x).onchange=pncXem);
+$("#pnc-vd-dang").onchange=()=>{$("#pnc-vd").disabled=$("#pnc-vd-dang").checked;pncXem()};
 $("#pnc-dang").onchange=pncXem;
 $("#pnc-so-ma").oninput=()=>{if(PNC.chon)$("#pnc-tt").textContent=$("#pnc-tt").textContent.replace(/× \d+ mã/,`× ${+$("#pnc-so-ma").value||1} mã`)};
 $("#pnc-tao").onclick=async()=>{

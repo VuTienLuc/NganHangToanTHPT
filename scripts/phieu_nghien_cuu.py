@@ -13,7 +13,7 @@
 """
 import os, re, json, time, random, shutil, subprocess
 from nh_core import (GOC, tai_id_map, doc as doc_tep, ghi, cau_hinh, thu_muc_xuat, chuan_vecto, lop_tu_so,
-                     tim_lenh, doc_tham_so, ghi_dap_an_unt)
+                     tim_lenh, doc_tham_so, ghi_dap_an_unt, MA_DANG)
 
 LOAI = [("TN", "TRẮC NGHIỆM NHIỀU PHƯƠNG ÁN", "mauTN", r"\faListUl",
          "Mỗi câu chỉ chọn một phương án A, B, C hoặc D."),
@@ -93,6 +93,14 @@ def bai_cua_lop(lop):
     return ra
 
 
+def _dang_cho_loai(dang, n, dem):
+    """Mỗi dạng một ví dụ: n ≥ số dạng → mọi dạng; ít câu hơn → n dạng ít được dùng nhất ở các loại trước (giữ thứ tự bài)."""
+    ds = list(dang) if n >= len(dang) else sorted(sorted(dang, key=lambda d: (dem.get(d, 0), dang.index(d)))[:n], key=dang.index)
+    for d in ds:
+        dem[d] = dem.get(d, 0) + 1
+    return ds
+
+
 def chon(cfg, rng):
     """→ {"TN": [ {"vd": câu, "dang": mã, "tt": [câu thực hành…]} …], …}, danh sách thiếu."""
     from phieu_bai_hoc import khoa_noi_dung
@@ -102,6 +110,8 @@ def chon(cfg, rng):
     dang = [d for d in (cfg.get("dang") or tat_ca_dang) if d in tat_ca_dang] or tat_ca_dang
     so = {l: max(0, min(30, int((cfg.get("so") or {}).get(l, 0) or 0))) for l, *_ in LOAI}
     so_vd = max(1, min(4, int(cfg.get("so_vd") or 1)))
+    theo_dang = bool(cfg.get("vd_theo_dang"))
+    dem_dang = {}
     chi = set(cfg.get("chi_ma") or [])
     K, ls = _kho(), _lich_su()
     con = {}                                         # mã ví dụ → các câu con "% mau:"
@@ -132,7 +142,9 @@ def chon(cfg, rng):
             thieu.append(f"{ten_l}: bài này chưa có câu nào dùng được — bỏ phần này.")
             continue
         nhom = []
-        n_vd = min(so_vd, max(1, so[l]))
+        if theo_dang:                                # mỗi dạng đã chọn một ví dụ minh hoạ riêng
+            thu_dang = _dang_cho_loai([d for d in dang if co.get(d)], so[l], dem_dang)
+        n_vd = len(thu_dang) if theo_dang else min(so_vd, max(1, so[l]))
         for i in range(n_vd):
             d = thu_dang[i % len(thu_dang)]
             ung = [c for c in theo[d] if moi(c)]
@@ -183,14 +195,15 @@ def ke_hoach(cfg):
     tat_ca = (kho_kien_thuc.cac_bai().get(bai) or {}).get("dang") or []
     dang = [d for d in (cfg.get("dang") or tat_ca) if d in tat_ca] or tat_ca
     so_vd = max(1, min(4, int(cfg.get("so_vd") or 1)))
-    ra = []
+    ra, dem = [], {}
     for l, *_ in LOAI:
         n = max(0, min(30, int((cfg.get("so") or {}).get(l, 0) or 0)))
         if not n or not dang:
             continue
-        k = min(so_vd, n)
-        for i in range(k):
-            ra.append((f"{l}{i + 1}", l, dang[i % len(dang)], n // k + (1 if i < n % k else 0)))
+        ds = _dang_cho_loai(dang, n, dem) if cfg.get("vd_theo_dang") else [dang[i % len(dang)] for i in range(min(so_vd, n))]
+        k = len(ds)
+        for i, d in enumerate(ds):
+            ra.append((f"{l}{i + 1}", l, d, n // k + (1 if i < n % k else 0)))
     return ra
 
 
@@ -208,7 +221,9 @@ def prompt_ai(cfg, kem_kt=True):
     lop = x["lop"]
     chung, dm, so_dm = de_ngoai._phan_chung([bai])
     ten = lambda d: (id_map.get(d, {}).get("type_name") or d).strip()
-    bang = "\n".join(f"| `%%% NHOM {g}` | {TEN_LOAI[l]} | {ten(d)} (mã `{d}`) | 1 | {n} |" for g, l, d, n in kh)
+    bang = "\n".join(f"| `%%% NHOM {g} {d}` | {TEN_LOAI[l]} | {ten(d)} (mã `{d}`) | 1 | {n} |" for g, l, d, n in kh)
+    cac_d = list(dict.fromkeys(d for _, _, d, _ in kh))
+    ds_dang = "\n".join(f"- `{d}` — {ten(d)}" for d in cac_d)
     kt = ""
     if kem_kt:
         p = kho_kien_thuc.prompt([bai])
@@ -221,6 +236,10 @@ Bạn là giáo viên Toán lớp {lop} giỏi (chương trình GDPT 2018, sách
 — **Bài {x['so_bai']}. {x['ten_bai']}** ({x['ten_chuong']}) — đính kèm SGK / tài liệu nếu có thì bám sát.
 Phiếu gồm {'kiến thức trọng tâm của bài, sau đó ' if kem_kt else ''}phần thực hành theo mẫu với 3 loại câu như đề thi 2025. Mỗi nhóm:
 **1 VÍ DỤ MINH HOẠ có lời giải thật chi tiết** (học sinh đọc để học cách làm) → **các CÂU TƯƠNG TỰ** để học sinh tự làm theo đúng cách đó.
+
+**Chỉ soạn các dạng sau** (giáo viên đã chọn) — **mỗi nhóm là MỘT dạng, có ví dụ minh hoạ RIÊNG của dạng đó**; câu thuộc dạng khác
+thì nằm ở nhóm khác với ví dụ khác (vd câu 1–2 dạng A theo ví dụ 1, câu 3–4 dạng B theo ví dụ 2):
+{ds_dang}
 {kt}
 ## PHẦN {'B' if kem_kt else 'A'} — CÁC NHÓM VÍ DỤ + CÂU TƯƠNG TỰ (đúng bảng sau, đúng thứ tự)
 | Dòng mở nhóm | Loại câu | Dạng | Ví dụ | Câu tương tự |
@@ -228,7 +247,7 @@ Phiếu gồm {'kiến thức trọng tâm của bài, sau đó ' if kem_kt else
 {bang}
 
 Quy tắc từng nhóm:
-1. Mở nhóm bằng một dòng riêng đúng như cột 1 (vd `%%% NHOM TN1`).
+1. Mở nhóm bằng một dòng riêng **chép đúng nguyên cột 1** (gồm cả mã dạng, vd `%%% NHOM TN1 {kh[0][2]}`).
 2. Câu ĐẦU TIÊN của nhóm là **ví dụ minh hoạ**: dòng mở khối có thêm ` % vai: vi_du`, vd `\\begin{{ex}}%[mã] % vai: vi_du`.
    Mức Nhận biết – Thông hiểu, tiêu biểu cho dạng; **lời giải từng bước** (mỗi bước một dòng, nêu rõ công thức / lí do), cuối kết luận đáp án.
 3. Sau đó đúng số **câu tương tự** ở cột 5: **cùng dạng, cùng cách giải** với ví dụ, đổi số liệu / hàm số / ngữ cảnh (không chép lại ví dụ),
@@ -236,7 +255,8 @@ Quy tắc từng nhóm:
 4. Mọi câu trong nhóm đúng loại của nhóm: TN → `\\begin{{ex}}` + `\\choice` (4 phương án, đúng một `\\True`, đáp án đúng rải đều A–D);
    Đúng/Sai → `\\begin{{ex}}` + `\\choiceTF` (4 ý a–d, lời giải `\\begin{{itemchoice}}` đủ 4 `\\itemch`); Trả lời ngắn → `\\begin{{bt}}` + `\\shortans{{…}}`
    (đáp số là một số, tối đa 4 kí tự kể cả dấu `-` và dấu `,`).
-5. Mã `%[…]` dùng đúng mã dạng của nhóm (cột 3), thay `?` bằng chữ mức N / H / V / C.
+5. **Ví dụ và MỌI câu tương tự của nhóm đều đúng dạng ở cột 3** (cùng kiểu bài, cùng phương pháp giải) — không lấn sang dạng khác,
+   không soạn dạng ngoài danh sách trên. Mã `%[…]` của từng câu là mã dạng của nhóm, thay `?` bằng chữ mức N / H / V / C.
 6. Tự giải lại từng câu, tính lại từng phép tính trước khi viết đáp án.
 
 """ + chung + f"""# KẾT QUẢ TRẢ VỀ
@@ -279,16 +299,34 @@ def nhap_ai(bai, van_ban, ghi_kt="neu_trong", in_ra=print):
         elif kt:
             ra["kien_thuc"] = "giữ kiến thức cũ (bài đã có)"
             in_ra("📘 Kiến thức trọng tâm: bài đã có — giữ bản cũ (tích “ghi đè” nếu muốn thay).")
-    phan = re.split(r"^[ \t]*%%%[ \t]*NHOM[ \t]+(\S+)[ \t]*$", t, flags=re.M)
-    nhom = []                                       # [(mã nhóm, [khối…])]
+    phan = re.split(r"^[ \t]*%%%[ \t]*NHOM[ \t]+(\S+)(?:[ \t]+(\d[A-Z]\d+[?A-Z]\d+-\d+))?[^\n]*$", t, flags=re.M)
+    nhom = []                                       # [(mã nhóm, mã dạng, [khối…])]
     if len(phan) > 1:
-        for i in range(1, len(phan) - 1, 2):
-            nhom.append((phan[i].strip().upper(), tach_khoi(phan[i + 1])))
+        for i in range(1, len(phan) - 2, 3):
+            nhom.append((phan[i].strip().upper(), phan[i + 1], tach_khoi(phan[i + 2])))
     else:
-        nhom.append(("?", tach_khoi(t)))
-    van, cau_truc = [], []
-    for g, ks in nhom:
+        nhom.append(("?", None, tach_khoi(t)))
+    van, cau_truc, sua_dang = [], [], 0
+
+    def ep_dang(k, d):                               # câu trong nhóm phải đúng dạng của nhóm: giữ mức, thay mã dạng
+        nonlocal sua_dang
+        dau, nl, sau = k.partition("\n")
+        m = MA_DANG.search(dau)
+        if m:
+            muc = m.group(4) if m.group(4) != "?" else "H"
+            moi = d.replace("?", muc)
+            if m.group(0).strip("%[] ") == moi:
+                return k
+            sua_dang += 1
+            return dau[:m.start()] + "%[" + moi + "]" + dau[m.end():] + nl + sau
+        sua_dang += 1
+        mb = re.match(r"\\begin\{(ex|bt)\}", dau)
+        return (dau[:mb.end()] + "%[" + d.replace("?", "H") + "]" + dau[mb.end():] + nl + sau) if mb else k
+
+    for g, dg, ks in nhom:
         ks = [k for k in ks if k.strip()]
+        if dg:
+            ks = [ep_dang(k, dg) for k in ks]
         if not ks:
             continue
         iv = next((i for i, k in enumerate(ks) if re.search(r"%\s*vai:\s*vi_du", k.split("\n", 1)[0])), 0)
@@ -306,10 +344,12 @@ def nhap_ai(bai, van_ban, ghi_kt="neu_trong", in_ra=print):
             l = phan_tich_cau(vd)["loai"]
         except Exception:
             l = re.sub(r"\d+$", "", g) or "?"
-        cau_truc.append({"nhom": g, "loai": l, "vd": h_vd, "tt": [ma_bam(k) for k in tt]})
-        van += [f"%%% NHOM {g}", vd] + tt
+        cau_truc.append({"nhom": g, "loai": l, "dang": dg, "vd": h_vd, "tt": [ma_bam(k) for k in tt]})
+        van += [f"%%% NHOM {g}" + (f" {dg}" if dg else ""), vd] + tt
     if not cau_truc:
         raise ValueError("Không thấy câu nào: kết quả AI cần các khối \\begin{ex}…\\end{ex} / \\begin{bt}…\\end{bt} (mỗi nhóm mở bằng %%% NHOM …).")
+    if sua_dang:
+        in_ra(f"🏷 Đã chỉnh mã dạng {sua_dang} câu cho đúng dạng của nhóm (theo dòng %%% NHOM).")
     thu = os.path.join(GOC, "ai-nhap")
     os.makedirs(thu, exist_ok=True)
     p = os.path.join(thu, time.strftime("%Y-%m-%d_%H%M%S") + f"_nghien_cuu_{re.sub(r'[^0-9A-Za-z]+', '_', bai)}.tex")
@@ -325,7 +365,7 @@ def nhap_ai(bai, van_ban, ghi_kt="neu_trong", in_ra=print):
         if not vd:
             in_ra(f"  ⚠ Nhóm {g['nhom']}: ví dụ minh hoạ bị loại (lỗi) — bỏ nhóm này.")
             continue
-        lo["nhom"].append({"nhom": g["nhom"], "loai": g["loai"], "vd": vd, "tt": tt})
+        lo["nhom"].append({"nhom": g["nhom"], "loai": g["loai"], "dang": g.get("dang"), "vd": vd, "tt": tt})
     if not lo["nhom"]:
         raise ValueError("Mọi ví dụ minh hoạ đều bị loại vì lỗi — xem nhật ký, sửa rồi nhập lại.")
     d = _doc_lo()
