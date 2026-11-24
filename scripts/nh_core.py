@@ -269,8 +269,9 @@ def duong_dan_dang(info, id_map):
 
 # ---------------------------------------------------------------- xuất Excel (không cần cài openpyxl)
 def ghi_xlsx(duong_dan, cac_sheet):
-    """cac_sheet: [(ten_sheet, rows, {"do_rong": [..], "kieu": "bang"|"van_ban"})]. Mọi ô ghi dạng chữ.
-    Bảng: dòng 1 và cột A in đậm nền xanh nhạt, mọi ô có viền, căn giữa, ô trống tô vàng. Phông Times New Roman."""
+    """cac_sheet: [(ten_sheet, rows, {"do_rong": [..], "kieu": "bang"|"van_ban"|"unt"})]. Mọi ô ghi dạng chữ.
+    Bảng: dòng 1 và cột A in đậm nền xanh nhạt, mọi ô có viền, căn giữa, ô trống tô vàng. Phông Times New Roman.
+    unt: mẫu đáp án phần mềm chấm UNT — Times New Roman 13, dòng tiêu đề đậm nền vàng nhạt, dòng xen xám, viền, căn giữa, cố định dòng 1."""
     import zipfile
     from xml.sax.saxutils import escape as xe
     def ten_cot(i):
@@ -282,33 +283,41 @@ def ghi_xlsx(duong_dan, cac_sheet):
     styles = """<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <styleSheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main">
 <numFmts count="0"/>
-<fonts count="3"><font><sz val="12"/><name val="Times New Roman"/></font><font><b/><sz val="12"/><name val="Times New Roman"/></font><font><b/><sz val="14"/><name val="Times New Roman"/></font></fonts>
-<fills count="4"><fill><patternFill patternType="none"/></fill><fill><patternFill patternType="gray125"/></fill>
+<fonts count="5"><font><sz val="12"/><name val="Times New Roman"/></font><font><b/><sz val="12"/><name val="Times New Roman"/></font><font><b/><sz val="14"/><name val="Times New Roman"/></font><font><sz val="13"/><name val="Times New Roman"/></font><font><b/><sz val="13"/><name val="Times New Roman"/></font></fonts>
+<fills count="6"><fill><patternFill patternType="none"/></fill><fill><patternFill patternType="gray125"/></fill>
 <fill><patternFill patternType="solid"><fgColor rgb="FFE8ECF9"/><bgColor indexed="64"/></patternFill></fill>
-<fill><patternFill patternType="solid"><fgColor rgb="FFFCEFD5"/><bgColor indexed="64"/></patternFill></fill></fills>
+<fill><patternFill patternType="solid"><fgColor rgb="FFFCEFD5"/><bgColor indexed="64"/></patternFill></fill>
+<fill><patternFill patternType="solid"><fgColor rgb="FFFFF2CC"/><bgColor indexed="64"/></patternFill></fill>
+<fill><patternFill patternType="solid"><fgColor rgb="FFF2F2F2"/><bgColor indexed="64"/></patternFill></fill></fills>
 <borders count="2"><border><left/><right/><top/><bottom/><diagonal/></border>
 <border><left style="thin"><color rgb="FF9AA3AF"/></left><right style="thin"><color rgb="FF9AA3AF"/></right><top style="thin"><color rgb="FF9AA3AF"/></top><bottom style="thin"><color rgb="FF9AA3AF"/></bottom><diagonal/></border></borders>
 <cellStyleXfs count="1"><xf numFmtId="0" fontId="0" fillId="0" borderId="0"/></cellStyleXfs>
-<cellXfs count="6">
+<cellXfs count="9">
 <xf numFmtId="49" fontId="0" fillId="0" borderId="0" xfId="0" applyNumberFormat="1"/>
 <xf numFmtId="49" fontId="1" fillId="2" borderId="1" xfId="0" applyNumberFormat="1" applyFont="1" applyFill="1" applyBorder="1" applyAlignment="1"><alignment horizontal="center" vertical="center"/></xf>
 <xf numFmtId="49" fontId="0" fillId="0" borderId="1" xfId="0" applyNumberFormat="1" applyBorder="1" applyAlignment="1"><alignment horizontal="center" vertical="center"/></xf>
 <xf numFmtId="49" fontId="0" fillId="3" borderId="1" xfId="0" applyNumberFormat="1" applyFill="1" applyBorder="1" applyAlignment="1"><alignment horizontal="center" vertical="center"/></xf>
 <xf numFmtId="49" fontId="2" fillId="0" borderId="0" xfId="0" applyNumberFormat="1" applyFont="1"/>
 <xf numFmtId="49" fontId="0" fillId="0" borderId="0" xfId="0" applyNumberFormat="1" applyAlignment="1"><alignment wrapText="1" vertical="top"/></xf>
+<xf numFmtId="49" fontId="4" fillId="4" borderId="1" xfId="0" applyNumberFormat="1" applyFont="1" applyFill="1" applyBorder="1" applyAlignment="1"><alignment horizontal="center" vertical="center"/></xf>
+<xf numFmtId="49" fontId="3" fillId="0" borderId="1" xfId="0" applyNumberFormat="1" applyFont="1" applyBorder="1" applyAlignment="1"><alignment horizontal="center" vertical="center"/></xf>
+<xf numFmtId="49" fontId="3" fillId="5" borderId="1" xfId="0" applyNumberFormat="1" applyFont="1" applyFill="1" applyBorder="1" applyAlignment="1"><alignment horizontal="center" vertical="center"/></xf>
 </cellXfs>
 <cellStyles count="1"><cellStyle name="Normal" xfId="0" builtinId="0"/></cellStyles>
 </styleSheet>"""
     sheets_xml = []
     for ten, rows, opt in cac_sheet:
-        bang = opt.get("kieu", "bang") == "bang"
+        unt = opt.get("kieu") == "unt"
+        bang = opt.get("kieu", "bang") in ("bang", "unt")
         cols = "".join(f'<col min="{i + 1}" max="{i + 1}" width="{w}" customWidth="1"/>' for i, w in enumerate(opt.get("do_rong", [])))
         sd = []
         for r, row in enumerate(rows):
             cells = []
             for c, v in enumerate(row):
                 v = "" if v is None else str(v)
-                if bang:
+                if unt:
+                    st = 6 if r == 0 else (8 if r % 2 == 0 else 7)
+                elif bang:
                     st = 1 if (r == 0 or c == 0) else (3 if v == "" else 2)
                 else:
                     st = 4 if r == 0 else 5
@@ -318,7 +327,9 @@ def ghi_xlsx(duong_dan, cac_sheet):
                 else:
                     cells.append(f'<c r="{ref}" s="{st}" t="inlineStr"><is><t xml:space="preserve">{xe(v)}</t></is></c>')
             sd.append(f'<row r="{r + 1}">{"".join(cells)}</row>')
-        pane = ('<sheetViews><sheetView workbookViewId="0"><pane xSplit="1" ySplit="1" topLeftCell="B2" activePane="bottomRight" state="frozen"/></sheetView></sheetViews>'
+        pane = ('<sheetViews><sheetView workbookViewId="0"><pane ySplit="1" topLeftCell="A2" activePane="bottomLeft" state="frozen"/></sheetView></sheetViews>'
+                if unt else
+                '<sheetViews><sheetView workbookViewId="0"><pane xSplit="1" ySplit="1" topLeftCell="B2" activePane="bottomRight" state="frozen"/></sheetView></sheetViews>'
                 if bang else '<sheetViews><sheetView workbookViewId="0"/></sheetViews>')
         sheets_xml.append(f'<?xml version="1.0" encoding="UTF-8" standalone="yes"?><worksheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main">{pane}'
                           + (f"<cols>{cols}</cols>" if cols else "") + f'<sheetData>{"".join(sd)}</sheetData></worksheet>')
@@ -337,6 +348,30 @@ def ghi_xlsx(duong_dan, cac_sheet):
             z.writestr(f"xl/worksheets/sheet{i + 1}.xml", x)
 
 # ---------------------------------------------------------------- biên dịch PDF
+def so_unt(v):
+    """Đáp số trả lời ngắn → dạng phần mềm chấm UNT: dấu chấm thập phân, phân số đổi ra số thập phân (-1,5 → -1.5; 3/4 → 0.75)."""
+    t = (v or "").replace("$", "").replace("{,}", ",").replace(" ", "").replace("−", "-").replace("\\text", "")
+    m = re.fullmatch(r"(-?)\\[dt]?frac\{(-?\d+)\}\{(\d+)\}", t) or re.fullmatch(r"(-?)(\d+)/(\d+)", t)
+    if m and int(m.group(3)):
+        x = (-1 if m.group(1) else 1) * int(m.group(2)) / int(m.group(3))
+        t = ("%.4f" % x).rstrip("0").rstrip(".")
+    return t.replace(",", ".")
+
+
+def ghi_dap_an_unt(duong_dan, cac_ma, cot):
+    """Excel đáp án dạng UNT: sheet "Đáp án", A1 = Câu (đánh số liên tục qua cả 3 phần), mỗi mã đề một cột "001"…
+    cot: {mã đề: [(loại, đáp án), …] theo thứ tự câu}. TN: A–D · Đúng/Sai: ĐSĐS · Trả lời ngắn: số dùng dấu chấm."""
+    n = max((len(v) for v in cot.values()), default=0)
+    bang = [["Câu"] + list(cac_ma)]
+    for i in range(n):
+        dong = [str(i + 1)]
+        for m in cac_ma:
+            l, v = cot[m][i] if i < len(cot[m]) else ("", "")
+            dong.append(so_unt(v) if l == "TLN" else (v or ""))
+        bang.append(dong)
+    ghi_xlsx(duong_dan, [("Đáp án", bang, {"kieu": "unt", "do_rong": [8] + [11] * len(cac_ma)})])
+
+
 def tim_pdflatex():
     import shutil as _sh
     for c in (_sh.which("pdflatex"), "/Library/TeX/texbin/pdflatex", "/opt/homebrew/bin/pdflatex",

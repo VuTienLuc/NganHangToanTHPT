@@ -80,6 +80,8 @@ def _nhan(f, ten):
         return (ten_k + " " + m.group(2)).strip() + (" (thứ tự đã chọn)" if m.group(3) else "")
     if g == "PhieuHocTap_Web":
         return "Phiếu web"
+    if g == "DapAn_UNT":
+        return "Đáp án UNT"
     hau = HAU_TO.search(g)
     hau = re.sub(r"\s*[-–]\s*", " – ", hau.group(1)).strip(" –") if hau else ""
     m = re.match(r"^(Đề \d+|Đề cương)", g)

@@ -13,6 +13,7 @@ Tuỳ chọn:
 Kết quả: thư mục de-da-ra/Lớp N/<chương | Đề kiểm tra – Ôn thi/<kỳ>>/<yyyy-mm-dd> <Tên kỳ thi>/ gồm
   De_101.pdf…  LoiGiai_101.pdf…   (khi có --bien-dich và máy có pdflatex)
   DapAn.xlsx                      đáp án mọi mã đề theo mẫu Chấm Phiếu AI (sheet "Đáp án")
+  DapAn_UNT.xlsx                  đáp án dạng phần mềm chấm UNT (Câu 1…n liên tục, TLN dấu chấm)
   tex/                            De_101.tex, De_101_LoiGiai.tex, TatCa_De.tex, khung LaTeX, dap_an.csv
 """
 import os, sys, json, re, random, shutil, csv, argparse, subprocess, time, collections
@@ -663,6 +664,9 @@ hd = [[f"{mt['ten_ky_thi']} · {mt['mon'].replace('--', '–')} · {ngay}"],
       ["Ô tô vàng ở sheet Đáp án là ô còn trống."]] + [[f"⚠ {w}"] for w in canh_bao]
 ghi_xlsx(os.path.join(out_goc, "DapAn.xlsx"), [("Đáp án", bang, {"do_rong": [8] + [10] * len(cac_ma)}),
                                               ("Hướng dẫn", hd, {"kieu": "van_ban", "do_rong": [110]})])
+# ---- Đáp án Excel dạng UNT (phần mềm chấm UNT): Câu đánh số liên tục qua 3 phần, mã đề 3 chữ số, TLN dấu chấm
+ghi_dap_an_unt(os.path.join(out_goc, "DapAn_UNT.xlsx"), cac_ma,
+               {m: [(l, tra.get((m, l, i), "")) for l in ("TN", "DS", "TLN") for i in range(1, so[l] + 1)] for m in cac_ma})
 
 with open(os.path.join(out, "dap_an.csv"), "w", encoding="utf-8-sig", newline="") as fo:
     w = csv.writer(fo); w.writerow(["ma_de", "phan", "cau", "dap_an", "ma_cau", "ma_dang"]); w.writerows(tat_ca_dap_an)

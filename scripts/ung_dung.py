@@ -1273,6 +1273,25 @@ class XuLy(BaseHTTPRequestHandler):
                 except Exception as e:
                     return self.gui(200, {"ok": False, "loi": str(e)})
                 return self.gui(404, {"loi": "không có"})
+            if u.path.startswith("/api/pnc/"):       # 🔬 phiếu nghiên cứu bài học
+                import phieu_nghien_cuu as PNC
+                viec = u.path.rsplit("/", 1)[1]
+                try:
+                    if viec == "bai":
+                        return self.gui(200, {"ok": True, "bai": PNC.bai_cua_lop(int(d.get("lop") or 10))})
+                    if viec == "xem":
+                        return self.gui(200, {"ok": True, **PNC.tao(d.get("cau_hinh") or {}, chi_tinh=True)})
+                    if viec == "tao":
+                        dong = []
+                        out_goc = PNC.tao(d.get("cau_hinh") or {}, dong.append)
+                        rel = os.path.relpath(out_goc, GOC)
+                        dang_bd = bool(d.get("bien_dich")) and bool(tim_pdflatex())
+                        if dang_bd:
+                            threading.Thread(target=bien_dich_nen, args=(rel,), daemon=True).start()
+                        return self.gui(200, {"ok": True, "nhat_ky": "\n".join(dong), "thu_muc": rel, "bien_dich": dang_bd})
+                except Exception as e:
+                    return self.gui(200, {"ok": False, "loi": str(e)})
+                return self.gui(404, {"loi": "không có"})
             if u.path == "/api/so-tay-dm":           # 📐 sổ tay công thức: cây chương → bài → dạng của một lớp
                 import so_tay_cong_thuc
                 return self.gui(200, {"ok": True, "cay": so_tay_cong_thuc.danh_muc(int(d.get("lop") or 10)),

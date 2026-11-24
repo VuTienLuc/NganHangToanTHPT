@@ -734,6 +734,20 @@ Dùng khi thầy có một đề kiểm tra, phiếu hoặc bài học ở dạn
   (số mã đề, đảo câu/phương án/ý) xuất PDF đề + lời giải, Word, **DapAn.xlsx** (mẫu Chấm Phiếu AI) và **Beamer** trình chiếu lời giải
   (BeamerTrang / BeamerXanh từng mã đề) vào Thư mục đề.
 
+## 🔬 Phiếu nghiên cứu bài học (menu **Dạy học**)
+Một bài học SGK → phiếu nhiều mã đề, đọc rõ trên điện thoại.
+- Chọn lớp → chọn **bài** ở cột trái (mỗi bài hiện số câu TN / Đ-S / TLN có trong kho và đã có kiến thức trọng tâm chưa).
+- Cấu trúc phiếu: **I. Kiến thức trọng tâm** của bài (từ kho kiến thức; chưa có thì chừa dòng kẻ) → **II. Thực hành theo mẫu** gồm
+  Phần 1 Trắc nghiệm · Phần 2 Đúng/Sai · Phần 3 Trả lời ngắn, mỗi phần một màu. Mỗi phần: **🔎 Ví dụ minh hoạ** (đề + đáp án + lời giải đầy đủ)
+  → **✍ Áp dụng tương tự**: các câu chọn theo mẫu — câu soạn “tương tự theo mẫu” của chính ví dụ đó trước, rồi cùng dạng, mức gần nhất, xếp dễ → khó.
+- Thầy chọn **số câu thực hành** từng loại, **số ví dụ minh hoạ** mỗi loại (nhiều ví dụ: mỗi ví dụ một dạng theo trình tự bài, câu thực hành chia đều),
+  dạng dùng làm mẫu, tên phiếu. **🔍 Xem / đổi bộ khác** để xem trước ví dụ và số câu; phiếu tạo ra đúng bộ đang xem.
+- **Nhiều mã đề** (mã đầu mặc định 001): ví dụ giữ nguyên; câu thực hành đảo thứ tự, đảo phương án trắc nghiệm, đảo ý a–c Đúng/Sai (mã đầu giữ thứ tự dễ → khó).
+- **Cỡ chữ 14** (A4, hoặc khổ **A5** vừa màn hình điện thoại) hoặc 12 tiết kiệm; 3 mẫu màu; tên giáo viên ở chân trang.
+- Kết quả: `De_<mã>.pdf` (phiếu học sinh, cuối có bảng trả lời) · `LoiGiai_<mã>.pdf` (bảng đáp án + lời giải chi tiết từng câu) ·
+  **`DapAn_UNT.xlsx`** — sheet “Đáp án”, cột *Câu* đánh số liên tục qua 3 phần, mỗi mã đề một cột “001”…; TN A–D, Đúng/Sai “ĐSĐS”,
+  trả lời ngắn dùng dấu chấm (phân số đổi ra số thập phân). Trộn đề thi thường giờ cũng xuất thêm `DapAn_UNT.xlsx`.
+
 ## 🎲 Phiếu hoạt động (menu **Dạy học**): Mật mã · Tìm lỗi sai · Ôn tập ngắt quãng · Leo núi · Mảnh ghép
 Chọn lớp, chọn loại phiếu ở 5 thẻ trên cùng, tích các dạng, chọn mẫu PDF và khổ in, rồi bấm **🖨 Tạo phiếu PDF**. Mỗi phiếu ra 2 file: phiếu học sinh và đáp án. Tên giáo viên in ở chân trang.
 
