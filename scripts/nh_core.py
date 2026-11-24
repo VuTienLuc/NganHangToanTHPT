@@ -405,7 +405,8 @@ def bien_dich_thu_muc(thu_muc_de, in_ra=print):
         ok = os.path.exists(pdf) and os.path.getmtime(pdf) >= bat_dau - 1
         if ok:
             ten_ra = (f[:-4].replace("De_", "LoiGiai_", 1).replace("_LoiGiai", "") if f.endswith("_LoiGiai.tex") else
-                      f[:-4].replace("De_", "TietKiem_", 1).replace("_TietKiem", "") if f.endswith("_TietKiem.tex") else f[:-4])
+                      f[:-4].replace("De_", "TietKiem_", 1).replace("_TietKiem", "") if f.endswith("_TietKiem.tex") else
+                      f[:-4].replace("De_", "LamBai_", 1).replace("_LamBai", "") if f.endswith("_LamBai.tex") else f[:-4])
             _sh.copyfile(pdf, os.path.join(thu_muc_de, ten_ra + ".pdf"))
         ok_het &= ok
         in_ra(f"  {'✓' if ok else '✗ lỗi (xem tex/' + f[:-4] + '.log)'} {f[:-4]}")

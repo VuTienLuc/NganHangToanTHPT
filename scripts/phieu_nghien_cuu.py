@@ -621,6 +621,15 @@ def tao(cfg, in_ra=print, chi_tinh=False):
     if co == "14" and not co_ext:                  # máy không có gói extsizes: phóng chữ thường lên 14pt
         them.append(r"\usepackage{anyfontsize}\makeatletter\renewcommand\normalsize{\@setfontsize\normalsize{14}{17}}\normalsize\makeatother")
     mau = mau.replace("\\begin{document}", "\n".join(them) + "\n\\begin{document}", 1)
+    mau_goc = mau_tk
+    if cfg.get("lam_bai"):                          # ✏ phiếu làm bài tiết kiệm: chữ 10, 2 cột, mỗi câu 1 dòng làm bài
+        mau_lb = re.sub(r"\\documentclass\[\d+pt,", r"\\documentclass[10pt,", mau_goc, count=1)
+        mau_lb = re.sub(r"\\usepackage\[a4paper,[^\]]*\]\{geometry\}",
+                        lambda m: "\\usepackage[a4paper,left=0.9cm,right=0.8cm,top=0.8cm,bottom=1.1cm,footskip=0.5cm]{geometry}", mau_lb, count=1)
+        mau_lb = mau_lb.replace("\\setlength{\\parskip}{6pt}", "\\setlength{\\parskip}{1pt}").replace("\\setstretch{1.1}", "\\setstretch{1.0}")
+        them_lb = [x for x in them if x is not TIEN_TO and "anyfontsize" not in x] + [TIEN_TO_TK,
+                   r"\newcommand{\dongLam}{\par\nopagebreak\noindent\makebox[\linewidth]{\rule{0pt}{6.5mm}{\color{black!40}\dotfill}}\par\medskip}"]
+        mau_lb = mau_lb.replace("\\begin{document}", "\n".join(them_lb) + "\n\\begin{document}", 1)
     if cfg.get("tiet_kiem"):
         mau_tk = re.sub(r"\\documentclass\[\d+pt,", r"\\documentclass[11pt,", mau_tk, count=1)
         mau_tk = re.sub(r"\\usepackage\[a4paper,[^\]]*\]\{geometry\}",
@@ -683,7 +692,7 @@ def tao(cfg, in_ra=print, chi_tinh=False):
                         k = xao_tn(k, r_ma) if l == "TN" else xao_ds(k, r_ma) if l == "DS" else k
                     so += 1
                     hs.append(cau_latex(k, l, so, mau_l))
-                    hs_tk.append(cau_latex(k, l, so, mau_l, hep=True))
+                    hs_tk.append(cau_latex(k, l, so, mau_l, hep=True) + "\n<<DONG_LAM>>")
                     gv_.append(cau_latex(k, l, so, mau_l, giai=True))
                     if mi == 0:
                         tc_nhom[-1]["tt"].append((so, k))
@@ -713,7 +722,14 @@ def tao(cfg, in_ra=print, chi_tinh=False):
                        + r"\phanPhieu{II. THỰC HÀNH THEO MẪU}" + "\n\\begin{multicols}{2}\n" + "\n".join(hs_tk) + "\n\\end{multicols}\n"
                        + (r"\phanPhieu{BẢNG TRẢ LỜI}" + "\n" + bang(False) if cot_unt[ma] else "") + "\n" + het)
             ghi(os.path.join(out, f"De_{ma}_TietKiem.tex"), mau_phieu.gan_bieu_tuong(
-                mau_tk.replace("<<CHE_DO_LOI_GIAI>>", "\\anloigiai").replace("<<NOI_DUNG>>", than_tk)))
+                mau_tk.replace("<<CHE_DO_LOI_GIAI>>", "\\anloigiai").replace("<<NOI_DUNG>>", than_tk.replace("<<DONG_LAM>>", ""))))
+        if cfg.get("lam_bai"):
+            than_lb = ("\\def\\maDeNC{" + ma + "}\n" + dau("PHIẾU NGHIÊN CỨU BÀI HỌC", ma, True) + "\n"
+                       + r"\phanPhieu{I. KIẾN THỨC TRỌNG TÂM}" + "\n" + kien.replace("\\dongKe{7}", "\\dongKe{4}") + "\n"
+                       + r"\phanPhieu{II. THỰC HÀNH THEO MẪU}" + "\n\\begin{multicols}{2}\n" + "\n".join(hs_tk).replace("<<DONG_LAM>>", r"\dongLam")
+                       + "\n\\end{multicols}\n" + (r"\phanPhieu{BẢNG TRẢ LỜI}" + "\n" + bang(False) if cot_unt[ma] else "") + "\n" + het)
+            ghi(os.path.join(out, f"De_{ma}_LamBai.tex"), mau_phieu.gan_bieu_tuong(
+                mau_lb.replace("<<CHE_DO_LOI_GIAI>>", "\\anloigiai").replace("<<NOI_DUNG>>", than_lb)))
         ghi(os.path.join(out, f"De_{ma}_LoiGiai.tex"), mau_phieu.gan_bieu_tuong(mau.replace("<<CHE_DO_LOI_GIAI>>", "\\hienthiloigiai").replace("<<NOI_DUNG>>", than_gv)))
         tom.append(f"Mã {ma}: " + " ".join(d.replace("{,}", ",") for _, d in cot_unt[ma]))
     if tong_tt:
@@ -732,6 +748,8 @@ def tao(cfg, in_ra=print, chi_tinh=False):
         in_ra("  ⚠ " + x)
     if tong_tt:
         in_ra("📊 DapAn_UNT.xlsx — " + str(tong_tt) + " câu × " + str(len(cac_ma)) + " mã đề")
+    if cfg.get("lam_bai"):
+        in_ra("✏ Phiếu làm bài tiết kiệm: LamBai_<mã>.pdf (chữ 10, 2 cột, mỗi câu 1 dòng làm bài)")
     if cfg.get("tiet_kiem"):
         in_ra("📄 Bản in tiết kiệm giấy: TietKiem_<mã>.pdf (chữ 11, phần thực hành 2 cột, ít mực)")
     if cfg.get("trinh_chieu"):

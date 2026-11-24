@@ -73,11 +73,11 @@ HAU_TO = re.compile(r"((?:\s*[-–]\s*(?:Trên lớp|Về nhà|Trình chiếu|L�
 def _nhan(f, ten):
     """Nhãn ngắn cho file (nút bấm): Đề 101, Lời giải 101, Beamer xanh 101, Trên lớp – Lời giải, Phiếu web…"""
     g, e = os.path.splitext(f)
-    m = re.match(r"^(De|LoiGiai|BeamerXanh|BeamerTrang|Leftnote|Word_De|Word_LoiGiai|DapAn|Word_K12Online|TietKiem|TrinhChieu)_?(\d*)(_ThuTuDaChon)?$", g)
+    m = re.match(r"^(De|LoiGiai|BeamerXanh|BeamerTrang|Leftnote|Word_De|Word_LoiGiai|DapAn|Word_K12Online|TietKiem|TrinhChieu|LamBai)_?(\d*)(_ThuTuDaChon)?$", g)
     if m:
         ten_k = {"De": "Đề", "LoiGiai": "Lời giải", "BeamerXanh": "Beamer xanh", "BeamerTrang": "Beamer trắng", "Leftnote": "Leftnote",
                  "Word_De": "Word đề", "Word_LoiGiai": "Word lời giải", "DapAn": "Đáp án Excel", "Word_K12Online": "Word K12Online",
-                 "TietKiem": "Tiết kiệm giấy", "TrinhChieu": "Trình chiếu"}[m.group(1)]
+                 "TietKiem": "Tiết kiệm giấy", "LamBai": "Phiếu làm bài", "TrinhChieu": "Trình chiếu"}[m.group(1)]
         return (ten_k + " " + m.group(2)).strip() + (" (thứ tự đã chọn)" if m.group(3) else "")
     if g == "PhieuHocTap_Web":
         return "Phiếu web"
