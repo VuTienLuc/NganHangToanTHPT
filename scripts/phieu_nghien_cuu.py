@@ -497,7 +497,7 @@ TIEN_TO = r"""
 TIEN_TO_TK = r"""
 %==================== PHIẾU NGHIÊN CỨU BÀI HỌC — BẢN IN TIẾT KIỆM (chữ 11, 2 cột, ít mực) ====================
 \definecolor{mauTN}{HTML}{4F46E5}\definecolor{mauDS}{HTML}{0D9488}\definecolor{mauTLN}{HTML}{EA580C}\definecolor{mauVD}{HTML}{0284C7}
-\newcommand{\phanNC}[4]{\par\smallskip\noindent{\color{#1}\bfseries #2\ PHẦN #3. #4}\par\nopagebreak\noindent{\color{#1}\rule{\linewidth}{0.6pt}}\par\nopagebreak}
+\newcommand{\phanNC}[4]{\par\smallskip\noindent{\raggedright\color{#1}\bfseries #2\ PHẦN #3. #4\par}\nopagebreak\noindent{\color{#1}\rule{\linewidth}{0.6pt}}\par\nopagebreak}
 \newtcolorbox{vdMau}[2]{enhanced,breakable,colback=white,colframe=#1!70,boxrule=0.4pt,arc=1mm,left=1.5mm,right=1.5mm,top=0.8mm,bottom=0.8mm,
   title={\faSearch\ #2},fonttitle=\bfseries\small,coltitle=#1,colbacktitle=white,toptitle=0.3mm,bottomtitle=0mm,titlerule=0pt}
 \newcommand{\apDung}[2]{\par\smallskip\noindent{\color{#1}\bfseries\small\faPencilSquareO\ ÁP DỤNG TƯƠNG TỰ}\ {\scriptsize\color{black!60}#2}\par\nopagebreak}

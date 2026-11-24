@@ -1008,6 +1008,9 @@ tr.gop-h td{background:#dbeafe;text-align:left;font-weight:700;padding:8px 12px;
         <div class="hang"><label>Số mã đề <input type="number" id="pnc-so-ma" min="1" max="12" value="4"></label>
           <label>Mã đầu <input type="text" id="pnc-ma-dau" value="001" style="width:64px;text-align:center"></label>
           <small style="color:#64748b">mã sau đảo thứ tự câu, phương án, ý Đúng/Sai — ví dụ mẫu giữ nguyên</small></div>
+        <div class="hang" style="background:#f8fafc;border-radius:9px;padding:6px 8px"><b>Xuất thêm</b>
+          <label class="hop" title="Bản phiếu học sinh chữ 11, phần thực hành chia 2 cột, khung viền mảnh ít tô nền — thường còn khoảng một nửa số trang"><input type="checkbox" id="pnc-tk" checked> 📄 Bản in tiết kiệm giấy <small>(chữ 11 · 2 cột · ít mực)</small></label>
+          <label class="hop" title="Beamer 16:9: bìa, lộ trình, kiến thức trọng tâm, từng phần: ví dụ (đề → bấm hiện đáp án → lời giải) rồi các câu tự làm (đề → đáp án → lời giải để chữa)"><input type="checkbox" id="pnc-tc" checked> 🖥 PDF trình chiếu trên lớp <small>(16:9)</small></label></div>
         <div class="hang"><label>Cỡ chữ <select id="pnc-co"><option value="14|a4" selected>14 — A4, đọc rõ trên điện thoại</option><option value="14|a5">14 — khổ A5 (vừa màn hình điện thoại)</option><option value="12|a4">12 — A4 tiết kiệm giấy</option></select></label>
           <label class="hop"><input type="checkbox" id="pnc-pp"> Kiến thức kèm phương pháp từng dạng</label>
           <label>GV <input type="text" id="pnc-gv" style="width:160px"></label></div>
@@ -1025,7 +1028,7 @@ tr.gop-h td{background:#dbeafe;text-align:left;font-weight:700;padding:8px 12px;
           <button id="pnc-xem-nut" style="margin-left:8px">🔍 Xem / đổi bộ khác</button></h3><div id="pnc-xem" class="nho">Chọn bài rồi bấm xem trước.</div></div>
     </div>
   </div>
-  <div class="chan"><span id="pnc-tt" class="nho"></span><button id="pnc-tao" class="chinh" style="margin-left:auto" disabled>🖨 Tạo phiếu + lời giải + Excel UNT</button></div>
+  <div class="chan"><span id="pnc-tt" class="nho"></span><button id="pnc-tao" class="chinh" style="margin-left:auto" disabled>🖨 Tạo phiếu · lời giải · Excel UNT</button></div>
 </div></div>
 <div id="hop-sl"><div class="noi">
   <h2>💾 Sao lưu &amp; chuyển máy <button id="sl-dong" style="margin-left:auto">Đóng</button></h2>
@@ -2231,6 +2234,7 @@ function pncCfg(){const b=PNC.chon,[co,kho]=$("#pnc-co").value.split("|");
   return {bai:b.bai,dang:[...document.querySelectorAll("#pnc-dang input:checked")].map(x=>x.value),
     so:{TN:+$("#pnc-tn").value||0,DS:+$("#pnc-ds-so").value||0,TLN:+$("#pnc-tln").value||0},so_vd:+$("#pnc-vd").value||1,
     so_ma:+$("#pnc-so-ma").value||1,ma_bat_dau:$("#pnc-ma-dau").value.trim()||"001",co_chu:+co,kho,kem_pp:$("#pnc-pp").checked,
+    tiet_kiem:$("#pnc-tk").checked,trinh_chieu:$("#pnc-tc").checked,
     giao_vien:$("#pnc-gv").value.trim(),ten:$("#pnc-ten").value.trim(),mau_trinh_bay:document.querySelector('input[name="pnc-mau"]:checked').value,seed:PNC.seed,
     lo:$("#pnc-nguon").value||undefined}}
 async function pncXem(){
@@ -2295,7 +2299,7 @@ $("#pnc-tao").onclick=async()=>{
     $("#hop-pnc").style.display="none";
     hopThoai(`Đã tạo: ${r.thu_muc}`,r.nhat_ky+(r.bien_dich?"\nĐang biên dịch PDF…":""),[["Mở thư mục",()=>api("/api/mo",{duong_dan:r.thu_muc}),true]]);
     if(r.bien_dich) theoDoi(r.nhat_ky);}
-  finally{b.disabled=false;b.textContent="🖨 Tạo phiếu + lời giải + Excel UNT"}};
+  finally{b.disabled=false;b.textContent="🖨 Tạo phiếu · lời giải · Excel UNT"}};
 
 // ---------------- SAO LƯU & CHUYỂN MÁY
 function slVe(r){

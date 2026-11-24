@@ -744,6 +744,11 @@ Một bài học SGK → phiếu nhiều mã đề, đọc rõ trên điện tho
   dạng dùng làm mẫu, tên phiếu. **🔍 Xem / đổi bộ khác** để xem trước ví dụ và số câu; phiếu tạo ra đúng bộ đang xem.
 - **Nhiều mã đề** (mã đầu mặc định 001): ví dụ giữ nguyên; câu thực hành đảo thứ tự, đảo phương án trắc nghiệm, đảo ý a–c Đúng/Sai (mã đầu giữ thứ tự dễ → khó).
 - **Cỡ chữ 14** (A4, hoặc khổ **A5** vừa màn hình điện thoại) hoặc 12 tiết kiệm; 3 mẫu màu; tên giáo viên ở chân trang.
+- **Xuất thêm** (tích sẵn):
+  - **📄 Bản in tiết kiệm giấy** `TietKiem_<mã>.pdf`: chữ 11, lề hẹp, phần thực hành chia 2 cột, khung viền mảnh ít tô nền — thường còn khoảng nửa số trang;
+  - **🖥 PDF trình chiếu trên lớp** `TrinhChieu_<mã đầu>.pdf` (Beamer 16:9, cùng giao diện Phiếu bài học): bìa → lộ trình bài học → kiến thức trọng tâm →
+    mỗi phần một màu: slide mở phần → **ví dụ** (đề → bấm tiếp hiện đáp án → lời giải từng bước) → “Áp dụng tương tự” → từng **câu tự làm**
+    (đề → đáp án → lời giải để chữa, đúng số câu trên phiếu mã đầu) → tổng kết.
 - Kết quả: `De_<mã>.pdf` (phiếu học sinh, cuối có bảng trả lời) · `LoiGiai_<mã>.pdf` (bảng đáp án + lời giải chi tiết từng câu) ·
   **`DapAn_UNT.xlsx`** — sheet “Đáp án”, cột *Câu* đánh số liên tục qua 3 phần, mỗi mã đề một cột “001”…; TN A–D, Đúng/Sai “ĐSĐS”,
   trả lời ngắn dùng dấu chấm (phân số đổi ra số thập phân). Trộn đề thi thường giờ cũng xuất thêm `DapAn_UNT.xlsx`.
