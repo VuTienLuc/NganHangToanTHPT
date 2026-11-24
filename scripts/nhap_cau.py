@@ -54,10 +54,11 @@ def kiem_tra_cau(k, info):
         canh_bao.append("lời giải nhắc 'Chọn/Đáp án A..D' (sẽ sai khi đảo phương án)")
     return canh_bao
 
-def nhap(cac_file, thu=False, in_ra=print, ma_dang=None, bien_dich=True, ma_ra=None):
+def nhap(cac_file, thu=False, in_ra=print, ma_dang=None, bien_dich=True, ma_ra=None, bam_ra=None):
     """ma_ra: list (tuỳ chọn) — nhận mã [ma:…] của mọi câu trong file có mặt trong kho sau lần nhập này
     (câu mới nhập được + câu trùng đã có sẵn), theo đúng thứ tự trong file; câu lỗi bị loại không có mặt.
-    Dùng để phiếu in ra lấy ĐÚNG các câu AI vừa sinh, không rút thêm từ ngân hàng."""
+    Dùng để phiếu in ra lấy ĐÚNG các câu AI vừa sinh, không rút thêm từ ngân hàng.
+    bam_ra: dict (tuỳ chọn) — {ma_bam(khối trong file): mã câu trong kho} cho các câu có mặt sau lần nhập (đối chiếu từng khối)."""
     id_map = tai_id_map()
     # 1. băm toàn bộ câu đang có để chống trùng
     da_co, ma_cu = {}, {}
@@ -112,7 +113,7 @@ def nhap(cac_file, thu=False, in_ra=print, ma_dang=None, bien_dich=True, ma_ra=N
                 m = re.search(r"%\[ma:([0-9a-f]{8})\]", k)
                 cu = ma_cu.get(ma) or (m.group(1) if m else None)
                 if cu:
-                    thu_tu.append((cu, False))
+                    thu_tu.append((cu, False, ma))
                 continue
             da_co[ma] = "(file đang nhập)"
             k = gan_ma(k, ma)
@@ -120,7 +121,7 @@ def nhap(cac_file, thu=False, in_ra=print, ma_dang=None, bien_dich=True, ma_ra=N
             k, _ = chuan_vecto(k)
             tk["sua_tp"] += sua
             info = phan_tich_cau(k)
-            thu_tu.append((info.get("ma") or ma, True))
+            thu_tu.append((info.get("ma") or ma, True, ma))
             for cb in kiem_tra_cau(k, info):
                 canh_bao_tep.append(f"   ⚠ {info.get('id') or 'chưa có mã'} [{info['loai']}] {cb}")
             p = duong_dan_dang(info, id_map) or os.path.join("_chua_phan_loai", ten_khong_dau(ten_nguon, 60) + ".tex")
@@ -175,7 +176,10 @@ def nhap(cac_file, thu=False, in_ra=print, ma_dang=None, bien_dich=True, ma_ra=N
         in_ra(f"→ {len(bi_loai)} câu lỗi để riêng ở {os.path.relpath(p_loi, GOC)} (sửa xong nhập lại).")
     if ma_ra is not None and not thu:
         loai_bo = {x[0].get("ma") for x, _ in bi_loai}
-        ma_ra.extend(m for m, la_moi in thu_tu if not (la_moi and m in loai_bo))
+        ma_ra.extend(m for m, la_moi, _ in thu_tu if not (la_moi and m in loai_bo))
+    if bam_ra is not None and not thu:
+        loai_bo = {x[0].get("ma") for x, _ in bi_loai}
+        bam_ra.update({h: m for m, la_moi, h in thu_tu if not (la_moi and m in loai_bo)})
     if thu or not moi:
         if thu: in_ra("(Chế độ xem trước: chưa ghi gì.)")
         return moi

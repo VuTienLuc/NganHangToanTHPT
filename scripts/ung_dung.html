@@ -1012,7 +1012,17 @@ tr.gop-h td{background:#dbeafe;text-align:left;font-weight:700;padding:8px 12px;
           <label class="hop"><input type="checkbox" id="pnc-pp"> Kiến thức kèm phương pháp từng dạng</label>
           <label>GV <input type="text" id="pnc-gv" style="width:160px"></label></div>
         <div class="hang"><b>Mẫu PDF</b><div class="mtb-ds" style="grid-template-columns:repeat(3,minmax(0,1fr));flex:1"><label class="mtb"><input type="radio" name="pnc-mau" value="hien_dai" checked><span class="mtb-mau"><i style="background:#1e40af"></i><i style="background:#0d9488"></i><i style="background:#eff6ff"></i></span><b>Hiện đại</b></label><label class="mtb"><input type="radio" name="pnc-mau" value="tuoi_sang"><span class="mtb-mau"><i style="background:#6d28d9"></i><i style="background:#ea580c"></i><i style="background:#faf5ff"></i></span><b>Tươi sáng</b></label><label class="mtb"><input type="radio" name="pnc-mau" value="toi_gian"><span class="mtb-mau"><i style="background:#262626"></i><i style="background:#7f1d1d"></i><i style="background:#ffffff"></i></span><b>Tối giản</b></label></div></div></div>
-      <div class="o"><h3>Xem trước bộ câu <button id="pnc-xem-nut" style="margin-left:8px">🔍 Xem / đổi bộ khác</button></h3><div id="pnc-xem" class="nho">Chọn bài rồi bấm xem trước.</div></div>
+      <div class="o" style="border-color:#c4b5fd;background:#faf5ff"><h3>🤖 Soạn bằng AI đúng cấu trúc phiếu <small style="font-weight:400;color:#6b21a8">(theo số câu, số ví dụ, dạng đã chọn ở trên)</small></h3>
+        <div class="hang"><label class="hop"><input type="checkbox" id="pnc-ai-kt" checked> Kèm soạn kiến thức trọng tâm</label>
+          <select id="pnc-ai-ghi" title="Kiến thức AI soạn lưu vào kho kiến thức của bài"><option value="neu_trong">Lưu kiến thức khi bài chưa có</option><option value="ghi_de">Ghi đè kiến thức cũ</option><option value="khong">Không lưu kiến thức</option></select></div>
+        <div class="hang"><button id="pnc-ai-p">📝 Tạo prompt</button><button id="pnc-ai-chep">📋 Chép prompt</button>
+          <button id="pnc-ai-api" title="Gọi thẳng AI bằng khoá API đã cài (vai Soạn đề) rồi tự nhập vào ngân hàng">⚡ Nhờ AI soạn luôn (API)</button>
+          <small style="color:#6b21a8">Chép – dán: mở ChatGPT / Gemini / Claude, đính kèm SGK nếu có, dán prompt → chép khối mã trả về vào ô dưới.</small></div>
+        <textarea id="pnc-ai-pv" rows="6" readonly hidden style="width:100%;font:12px ui-monospace,monospace;border:1px solid var(--vien);border-radius:8px;padding:6px"></textarea>
+        <textarea id="pnc-ai-dan" rows="4" placeholder="Dán kết quả AI ở đây (khối latex có các dòng %%% NHOM TN1, %%% NHOM DS1…)" style="width:100%;font:12px ui-monospace,monospace;border:1px solid var(--vien);border-radius:8px;padding:6px;margin-top:6px"></textarea>
+        <div class="hang"><button id="pnc-ai-nhap" class="chinh">📥 Nhập vào ngân hàng</button><span id="pnc-ai-tt" style="color:#6b21a8"></span></div></div>
+      <div class="o"><h3>Nguồn câu cho phiếu <select id="pnc-nguon" style="margin-left:8px;max-width:100%"><option value="">🏦 Ngân hàng — tự chọn theo mẫu</option></select>
+          <button id="pnc-xem-nut" style="margin-left:8px">🔍 Xem / đổi bộ khác</button></h3><div id="pnc-xem" class="nho">Chọn bài rồi bấm xem trước.</div></div>
     </div>
   </div>
   <div class="chan"><span id="pnc-tt" class="nho"></span><button id="pnc-tao" class="chinh" style="margin-left:auto" disabled>🖨 Tạo phiếu + lời giải + Excel UNT</button></div>
@@ -2203,17 +2213,32 @@ function pncChon(b){PNC.chon=b;PNC.seed=Date.now();pncVeDs();
   $("#pnc-bai-ten").innerHTML=`Bài ${b.so_bai}. ${esc(b.ten_bai)} <small style="font-weight:400;color:#64748b">· ${esc(b.ten_chuong)}</small>`;
   $("#pnc-ten").value="";$("#pnc-ten").placeholder=b.ten_bai;
   $("#pnc-dang").innerHTML="<span>Dạng dùng làm mẫu:</span>"+b.dang.map(d=>`<label class="hop"><input type="checkbox" value="${esc(d.k)}" checked> ${esc(d.ten)}</label>`).join("");
-  $("#pnc-tao").disabled=false;pncXem()}
+  $("#pnc-tao").disabled=false;$("#pnc-ai-kt").checked=!b.co_kt;$("#pnc-ai-pv").hidden=true;$("#pnc-ai-pv").value="";$("#pnc-ai-tt").textContent="";
+  pncTaiLo().then(pncXem)}
+async function pncTaiLo(chon){
+  const r=await api("/api/pnc/lo",{bai:PNC.chon.bai});const ten={TN:"TN",DS:"Đ/S",TLN:"TLN"};
+  $("#pnc-nguon").innerHTML=`<option value="">🏦 Ngân hàng — tự chọn theo mẫu</option>`+(r.lo||[]).map(x=>{
+    const t={};x.nhom.forEach(g=>{const v=t[g.loai]??=[0,0];v[0]++;v[1]+=g.tt.length});
+    const d=x.luc.replace(/^(\d+)-(\d+)-(\d+)T/,"$3/$2 ");
+    return `<option value="${x.id}">🤖 Lượt AI ${d} — `+Object.entries(t).map(([l,v])=>`${ten[l]||l} ${v[0]}+${v[1]}`).join(" · ")+"</option>"}).join("");
+  if(chon) $("#pnc-nguon").value=chon;
+  pncNguon();
+}
+function pncNguon(){const ai=!!$("#pnc-nguon").value;
+  document.querySelectorAll("#pnc-tn,#pnc-ds-so,#pnc-tln,#pnc-vd,#pnc-dang input").forEach(x=>x.disabled=ai);
+  $("#pnc-xem-nut").textContent=ai?"🔍 Xem lượt AI":"🔍 Xem / đổi bộ khác"}
 function pncCfg(){const b=PNC.chon,[co,kho]=$("#pnc-co").value.split("|");
   return {bai:b.bai,dang:[...document.querySelectorAll("#pnc-dang input:checked")].map(x=>x.value),
     so:{TN:+$("#pnc-tn").value||0,DS:+$("#pnc-ds-so").value||0,TLN:+$("#pnc-tln").value||0},so_vd:+$("#pnc-vd").value||1,
     so_ma:+$("#pnc-so-ma").value||1,ma_bat_dau:$("#pnc-ma-dau").value.trim()||"001",co_chu:+co,kho,kem_pp:$("#pnc-pp").checked,
-    giao_vien:$("#pnc-gv").value.trim(),ten:$("#pnc-ten").value.trim(),mau_trinh_bay:document.querySelector('input[name="pnc-mau"]:checked').value,seed:PNC.seed}}
+    giao_vien:$("#pnc-gv").value.trim(),ten:$("#pnc-ten").value.trim(),mau_trinh_bay:document.querySelector('input[name="pnc-mau"]:checked').value,seed:PNC.seed,
+    lo:$("#pnc-nguon").value||undefined}}
 async function pncXem(){
   if(!PNC.chon)return;$("#pnc-xem").textContent="Đang chọn câu…";
   const r=await api("/api/pnc/xem",{cau_hinh:pncCfg()});
   if(!r.ok){$("#pnc-xem").textContent=r.loi;return}
   const ten={TN:["Trắc nghiệm","#4f46e5"],DS:["Đúng / Sai","#0d9488"],TLN:["Trả lời ngắn","#ea580c"]};let h="",tong=0;
+  if($("#pnc-nguon").value) h+=`<div style="color:#6b21a8;margin-bottom:4px">🤖 Phiếu dùng đúng các câu của lượt AI này (ví dụ + câu tương tự AI soạn).</div>`;
   for(const l of ["TN","DS","TLN"]){const v=r.nhom[l];if(!v)continue;
     for(const g of v){tong+=g.tt.length;h+=`<div class="nhom" style="border-left-color:${ten[l][1]}"><b style="color:${ten[l][1]}">${ten[l][0]}</b> · 🔎 ví dụ (mức ${g.vd.muc||"?"}) — ${esc(g.ten_dang)} · ✍ <b>${g.tt.length}</b> câu theo mẫu
       <div class="vd">${g.vd.de}${g.vd.de.length>=220?"…":""}</div></div>`}}
@@ -2233,6 +2258,33 @@ $("#pnc-dong").onclick=()=>$("#hop-pnc").style.display="none";
 $("#pnc-tim").oninput=pncVeDs;
 $("#pnc-ds").onclick=e=>{const b=e.target.closest(".b");if(b)pncChon(PNC.bai.find(x=>x.bai===b.dataset.b))};
 $("#pnc-xem-nut").onclick=()=>{PNC.seed=Date.now();pncXem()};
+$("#pnc-nguon").onchange=()=>{pncNguon();pncXem()};
+async function pncPrompt(){if(!PNC.chon){alert("Chọn bài trước.");return null}
+  const r=await api("/api/pnc/prompt",{cau_hinh:{...pncCfg(),lo:undefined},kem_kt:$("#pnc-ai-kt").checked});
+  if(!r.ok){alert(r.loi);return null} $("#pnc-ai-pv").value=r.noi_dung;$("#pnc-ai-pv").hidden=false;
+  $("#pnc-ai-tt").textContent=`Prompt ${r.noi_dung.length.toLocaleString("vi")} kí tự`;return r.noi_dung}
+$("#pnc-ai-p").onclick=pncPrompt;
+$("#pnc-ai-chep").onclick=async e=>{const p=$("#pnc-ai-pv").value||await pncPrompt();if(!p)return;
+  try{await navigator.clipboard.writeText(p);e.target.textContent="Đã chép ✓"}catch(_){$("#pnc-ai-pv").select();alert("Bôi đen ô prompt rồi Cmd+C.")}
+  setTimeout(()=>e.target.textContent="📋 Chép prompt",1600)};
+async function pncSauNhap(r){
+  if(!r||!r.ok)return; await pncTaiLo(r.lo.id); await pncXem();
+  const ten={TN:"Trắc nghiệm",DS:"Đúng/Sai",TLN:"Trả lời ngắn"};
+  $("#pnc-ai-tt").textContent="✓ Đã nhập: "+Object.entries(r.tom||{}).map(([l,v])=>`${ten[l]||l} ${v[0]} ví dụ + ${v[1]} câu tương tự`).join(" · ")+" — đã chọn lượt này làm nguồn câu."}
+$("#pnc-ai-nhap").onclick=async()=>{
+  const v=$("#pnc-ai-dan").value.trim();if(!v){alert("Dán kết quả AI trước.");return}
+  const b=$("#pnc-ai-nhap");b.disabled=true;b.textContent="Đang kiểm tra & nhập…";
+  try{const r=await api("/api/pnc/nhap",{bai:PNC.chon.bai,van_ban:v,ghi_kt:$("#pnc-ai-ghi").value});
+    if(!r.ok){hopThoai("Chưa nhập được",r.loi||"");return}
+    hopThoai("Nhập câu AI – phiếu nghiên cứu bài học",r.nhat_ky); await pncSauNhap(r); await tai();}
+  finally{b.disabled=false;b.textContent="📥 Nhập vào ngân hàng"}};
+$("#pnc-ai-api").onclick=async()=>{
+  if(!PNC.chon){alert("Chọn bài trước.");return}
+  const r0=await api("/api/pnc/ai",{cau_hinh:{...pncCfg(),lo:undefined},kem_kt:$("#pnc-ai-kt").checked,ghi_kt:$("#pnc-ai-ghi").value});
+  if(!r0.ok){alert(r0.loi);return}
+  hopThoai("🤖 AI đang soạn phiếu nghiên cứu bài học…","Đang chuẩn bị…");
+  let s; for(;;){await new Promise(t=>setTimeout(t,2000));s=await api("/api/trang-thai");$("#ht-noi").textContent=s.nhat_ky||"…";if(s.xong)break}
+  await pncSauNhap(s.ket_qua); await tai();};
 ["#pnc-tn","#pnc-ds-so","#pnc-tln","#pnc-vd"].forEach(x=>$(x).onchange=pncXem);
 $("#pnc-dang").onchange=pncXem;
 $("#pnc-so-ma").oninput=()=>{if(PNC.chon)$("#pnc-tt").textContent=$("#pnc-tt").textContent.replace(/× \d+ mã/,`× ${+$("#pnc-so-ma").value||1} mã`)};

@@ -166,6 +166,33 @@ def ai_loi_sai_nen(d):
     cong_viec.update(dang_chay=False, xong=True, ket_qua=ra)
 
 
+def pnc_ai_nen(d):
+    """🔬 Phiếu nghiên cứu bài học: gọi AI (vai Soạn đề) theo prompt đúng cấu trúc → nhập ngân hàng → lưu lượt AI."""
+    def ghi(x):
+        cong_viec["nhat_ky"] += x + "\n"
+    ra = {"ok": False}
+    try:
+        import phieu_nghien_cuu as PNC, hoi_dong_ai as HD
+        vai = HD.phan_vai()
+        if not vai:
+            raise RuntimeError("Chưa có khoá API AI — bấm ⚙ Khoá AI… hoặc dùng 📝 Prompt (chép – dán sang ChatGPT / Gemini / Claude).")
+        cfg = d.get("cau_hinh") or {}
+        p = PNC.prompt_ai(cfg, bool(d.get("kem_kt", True)))
+        nha = vai.get("soan")
+        ghi(f"🤖 {HD.ST.TEN_NHA.get(nha, nha)} đang soạn ví dụ minh hoạ + câu tương tự cho phiếu (1–3 phút)…")
+        xk = HD.xoay_cho("soan", nha, ghi=ghi)
+        xk.max_tok = max(xk.max_tok, 16000)            # nhiều câu kèm lời giải chi tiết → cần câu trả lời dài
+        t, cat, _ = xk.goi(p)
+        if cat:
+            ghi("  ⚠ AI trả lời bị cắt giữa chừng — câu cuối dở dang sẽ bị bỏ; nên giảm số câu hoặc chạy lại.")
+        r = PNC.nhap_ai(cfg.get("bai") or "", t, d.get("ghi_kt") or "neu_trong", ghi)
+        ra = {"ok": True, "lo": r["lo"], "tom": r["tom"]}
+    except Exception as e:
+        ghi(f"Lỗi: {e}")
+    ra["nhat_ky"] = cong_viec["nhat_ky"]
+    cong_viec.update(dang_chay=False, xong=True, ket_qua=ra)
+
+
 def khuon_nen(d):
     """🧬 Song sinh: các câu chỉ định → khuôn (dùng lại / AI viết) → N câu giống + M nâng cao, đã kiểm chứng → nhập kho."""
     def ghi(x):
@@ -1281,6 +1308,20 @@ class XuLy(BaseHTTPRequestHandler):
                         return self.gui(200, {"ok": True, "bai": PNC.bai_cua_lop(int(d.get("lop") or 10))})
                     if viec == "xem":
                         return self.gui(200, {"ok": True, **PNC.tao(d.get("cau_hinh") or {}, chi_tinh=True)})
+                    if viec == "prompt":
+                        return self.gui(200, {"ok": True, "noi_dung": PNC.prompt_ai(d.get("cau_hinh") or {}, bool(d.get("kem_kt", True)))})
+                    if viec == "lo":
+                        return self.gui(200, {"ok": True, "lo": PNC.lo_ai(d.get("bai") or "")})
+                    if viec == "nhap":
+                        dong = []
+                        r = PNC.nhap_ai(d.get("bai") or "", d.get("van_ban") or "", d.get("ghi_kt") or "neu_trong", dong.append)
+                        return self.gui(200, {"ok": True, "lo": r["lo"], "tom": r["tom"], "kien_thuc": r["kien_thuc"], "nhat_ky": "\n".join(dong)})
+                    if viec == "ai":
+                        if cong_viec.get("dang_chay"):
+                            return self.gui(200, {"ok": False, "loi": "Đang có việc khác chạy, đợi xong rồi bấm lại."})
+                        cong_viec.update(dang_chay=True, xong=False, nhat_ky="", ket_qua=None)
+                        threading.Thread(target=pnc_ai_nen, args=(dict(d),), daemon=True).start()
+                        return self.gui(200, {"ok": True})
                     if viec == "tao":
                         dong = []
                         out_goc = PNC.tao(d.get("cau_hinh") or {}, dong.append)

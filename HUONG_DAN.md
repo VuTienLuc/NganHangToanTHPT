@@ -747,6 +747,13 @@ Một bài học SGK → phiếu nhiều mã đề, đọc rõ trên điện tho
 - Kết quả: `De_<mã>.pdf` (phiếu học sinh, cuối có bảng trả lời) · `LoiGiai_<mã>.pdf` (bảng đáp án + lời giải chi tiết từng câu) ·
   **`DapAn_UNT.xlsx`** — sheet “Đáp án”, cột *Câu* đánh số liên tục qua 3 phần, mỗi mã đề một cột “001”…; TN A–D, Đúng/Sai “ĐSĐS”,
   trả lời ngắn dùng dấu chấm (phân số đổi ra số thập phân). Trộn đề thi thường giờ cũng xuất thêm `DapAn_UNT.xlsx`.
+- **🤖 Soạn bằng AI đúng cấu trúc phiếu** (khung tím): đặt số câu, số ví dụ, dạng → **📝 Tạo prompt** → **📋 Chép** sang ChatGPT / Gemini / Claude
+  (đính kèm SGK nếu có). Prompt chia sẵn bảng nhóm `%%% NHOM TN1`, `DS1`, `TLN1`… — mỗi nhóm 1 *ví dụ minh hoạ* (`% vai: vi_du`, lời giải từng bước)
+  + đúng số *câu tương tự* cùng dạng, cùng cách giải; tích *Kèm soạn kiến thức trọng tâm* thì AI viết thêm phần kiến thức (giữa `%%% KIEN_THUC` … `%%% HET_KIEN_THUC`).
+  Dán kết quả → **📥 Nhập vào ngân hàng**: câu biên dịch thử, câu lỗi bị loại; câu tương tự tự gắn `% mau: <mã ví dụ>`; kiến thức lưu vào kho kiến thức
+  (chỉ khi bài chưa có / ghi đè / không lưu). Hoặc **⚡ Nhờ AI soạn luôn (API)** nếu đã cài khoá AI.
+- Mỗi lần nhập thành một **lượt AI** (lưu `du-lieu/pnc_ai.json`, 10 lượt gần nhất mỗi bài). Ô **Nguồn câu cho phiếu**: *🏦 Ngân hàng — tự chọn theo mẫu*
+  hoặc chọn một *🤖 Lượt AI* → phiếu dùng **đúng** ví dụ và câu tương tự AI đã soạn (số câu theo đúng lượt đó). Vừa nhập xong là tự chọn lượt mới.
 
 ## 🎲 Phiếu hoạt động (menu **Dạy học**): Mật mã · Tìm lỗi sai · Ôn tập ngắt quãng · Leo núi · Mảnh ghép
 Chọn lớp, chọn loại phiếu ở 5 thẻ trên cùng, tích các dạng, chọn mẫu PDF và khổ in, rồi bấm **🖨 Tạo phiếu PDF**. Mỗi phiếu ra 2 file: phiếu học sinh và đáp án. Tên giáo viên in ở chân trang.

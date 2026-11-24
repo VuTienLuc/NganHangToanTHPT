@@ -171,6 +171,194 @@ def chon(cfg, rng):
     return ra, thieu
 
 
+# ------------------------------------------------------------------ 🤖 AI SOẠN ĐÚNG CẤU TRÚC PHIẾU
+P_LO = os.path.join(GOC, "du-lieu", "pnc_ai.json")
+TEN_LOAI = {"TN": "Trắc nghiệm nhiều phương án", "DS": "Đúng/Sai", "TLN": "Trả lời ngắn"}
+
+
+def ke_hoach(cfg):
+    """Các nhóm 'ví dụ + câu tương tự' cần soạn: [(mã nhóm, loại, mã dạng, số câu tương tự)] — dạng theo trình tự bài."""
+    import kho_kien_thuc
+    bai = cfg["bai"]
+    tat_ca = (kho_kien_thuc.cac_bai().get(bai) or {}).get("dang") or []
+    dang = [d for d in (cfg.get("dang") or tat_ca) if d in tat_ca] or tat_ca
+    so_vd = max(1, min(4, int(cfg.get("so_vd") or 1)))
+    ra = []
+    for l, *_ in LOAI:
+        n = max(0, min(30, int((cfg.get("so") or {}).get(l, 0) or 0)))
+        if not n or not dang:
+            continue
+        k = min(so_vd, n)
+        for i in range(k):
+            ra.append((f"{l}{i + 1}", l, dang[i % len(dang)], n // k + (1 if i < n % k else 0)))
+    return ra
+
+
+def prompt_ai(cfg, kem_kt=True):
+    """Prompt nhờ AI soạn ĐÚNG cấu trúc phiếu: (kiến thức trọng tâm) + từng nhóm ví dụ minh hoạ có lời giải → câu tương tự theo mẫu."""
+    import kho_kien_thuc, de_ngoai
+    bai = cfg["bai"]
+    x = kho_kien_thuc.cac_bai().get(bai)
+    if not x:
+        raise ValueError("Chưa chọn bài.")
+    id_map = tai_id_map()
+    kh = ke_hoach(cfg)
+    if not kh:
+        raise ValueError("Chưa nhập số câu thực hành.")
+    lop = x["lop"]
+    chung, dm, so_dm = de_ngoai._phan_chung([bai])
+    ten = lambda d: (id_map.get(d, {}).get("type_name") or d).strip()
+    bang = "\n".join(f"| `%%% NHOM {g}` | {TEN_LOAI[l]} | {ten(d)} (mã `{d}`) | 1 | {n} |" for g, l, d, n in kh)
+    kt = ""
+    if kem_kt:
+        p = kho_kien_thuc.prompt([bai])
+        dinh = p[p.index("# YÊU CẦU NỘI DUNG"):]
+        kt = ("\n## PHẦN A — KIẾN THỨC TRỌNG TÂM (đặt ĐẦU khối mã, giữa hai dòng `%%% KIEN_THUC` và `%%% HET_KIEN_THUC`)\n"
+              + dinh.replace("# YÊU CẦU NỘI DUNG", "### Yêu cầu nội dung").replace("# ĐỊNH DẠNG BẮT BUỘC (LaTeX, để dán thẳng vào phần mềm)", "### Định dạng")
+              .replace("- Trả về DUY NHẤT một khối ```latex … ```; không \\documentclass, không \\begin{document}.\n", "") + "\n")
+    p = f"""# NHIỆM VỤ
+Bạn là giáo viên Toán lớp {lop} giỏi (chương trình GDPT 2018, sách Kết nối tri thức). Soạn nội dung cho **PHIẾU NGHIÊN CỨU BÀI HỌC**
+— **Bài {x['so_bai']}. {x['ten_bai']}** ({x['ten_chuong']}) — đính kèm SGK / tài liệu nếu có thì bám sát.
+Phiếu gồm {'kiến thức trọng tâm của bài, sau đó ' if kem_kt else ''}phần thực hành theo mẫu với 3 loại câu như đề thi 2025. Mỗi nhóm:
+**1 VÍ DỤ MINH HOẠ có lời giải thật chi tiết** (học sinh đọc để học cách làm) → **các CÂU TƯƠNG TỰ** để học sinh tự làm theo đúng cách đó.
+{kt}
+## PHẦN {'B' if kem_kt else 'A'} — CÁC NHÓM VÍ DỤ + CÂU TƯƠNG TỰ (đúng bảng sau, đúng thứ tự)
+| Dòng mở nhóm | Loại câu | Dạng | Ví dụ | Câu tương tự |
+|---|---|---|---|---|
+{bang}
+
+Quy tắc từng nhóm:
+1. Mở nhóm bằng một dòng riêng đúng như cột 1 (vd `%%% NHOM TN1`).
+2. Câu ĐẦU TIÊN của nhóm là **ví dụ minh hoạ**: dòng mở khối có thêm ` % vai: vi_du`, vd `\\begin{{ex}}%[mã] % vai: vi_du`.
+   Mức Nhận biết – Thông hiểu, tiêu biểu cho dạng; **lời giải từng bước** (mỗi bước một dòng, nêu rõ công thức / lí do), cuối kết luận đáp án.
+3. Sau đó đúng số **câu tương tự** ở cột 5: **cùng dạng, cùng cách giải** với ví dụ, đổi số liệu / hàm số / ngữ cảnh (không chép lại ví dụ),
+   độ khó bằng hoặc nhỉnh hơn ví dụ một chút, câu sau khó hơn câu trước. Mỗi câu tương tự cũng có lời giải đầy đủ.
+4. Mọi câu trong nhóm đúng loại của nhóm: TN → `\\begin{{ex}}` + `\\choice` (4 phương án, đúng một `\\True`, đáp án đúng rải đều A–D);
+   Đúng/Sai → `\\begin{{ex}}` + `\\choiceTF` (4 ý a–d, lời giải `\\begin{{itemchoice}}` đủ 4 `\\itemch`); Trả lời ngắn → `\\begin{{bt}}` + `\\shortans{{…}}`
+   (đáp số là một số, tối đa 4 kí tự kể cả dấu `-` và dấu `,`).
+5. Mã `%[…]` dùng đúng mã dạng của nhóm (cột 3), thay `?` bằng chữ mức N / H / V / C.
+6. Tự giải lại từng câu, tính lại từng phép tính trước khi viết đáp án.
+
+""" + chung + f"""# KẾT QUẢ TRẢ VỀ
+Một khối mã duy nhất ```latex … ``` gồm lần lượt: {'phần kiến thức (giữa `%%% KIEN_THUC` … `%%% HET_KIEN_THUC`), rồi ' if kem_kt else ''}các nhóm theo đúng bảng
+(`%%% NHOM …` → ví dụ → câu tương tự). Không lời dẫn ngoài khối mã.
+
+# DANH MỤC DẠNG CỦA BÀI ({so_dm} dạng)
+{dm}"""
+    return re.sub(r"\n{3,}", "\n\n", p)
+
+
+def _doc_lo():
+    try:
+        return json.load(open(P_LO, encoding="utf-8"))
+    except (OSError, ValueError):
+        return {}
+
+
+def lo_ai(bai):
+    """Các lượt AI đã nhập cho bài (mới nhất trước)."""
+    return list(reversed(_doc_lo().get(bai) or []))
+
+
+def nhap_ai(bai, van_ban, ghi_kt="neu_trong", in_ra=print):
+    """Kết quả AI → (kiến thức vào kho kiến thức) + câu vào ngân hàng (câu tương tự gắn '% mau: <mã ví dụ>')
+    → lưu một 'lượt AI' (đúng nhóm ví dụ → câu tương tự) để tạo phiếu. ghi_kt: neu_trong | ghi_de | khong."""
+    import kho_kien_thuc, nhap_cau
+    from nh_core import tach_khoi, ma_bam, phan_tich_cau
+    t = kho_kien_thuc.bo_khoi_ma(van_ban) if "```" in (van_ban or "") else (van_ban or "")
+    ra = {"kien_thuc": None}
+    m = re.search(r"^[ \t]*%%%[ \t]*KIEN_THUC[ \t]*$(.*?)^[ \t]*%%%[ \t]*HET_KIEN_THUC[ \t]*$", t, re.S | re.M)
+    if m:
+        kt = m.group(1).strip()
+        t = t[:m.start()] + t[m.end():]
+        co = bool(kho_kien_thuc.doc(bai).strip())
+        if kt and (ghi_kt == "ghi_de" or (ghi_kt == "neu_trong" and not co)):
+            kho_kien_thuc.luu(bai, kt)
+            ra["kien_thuc"] = "đã lưu vào kho kiến thức"
+            in_ra("📘 Kiến thức trọng tâm: đã lưu vào kho kiến thức của bài.")
+        elif kt:
+            ra["kien_thuc"] = "giữ kiến thức cũ (bài đã có)"
+            in_ra("📘 Kiến thức trọng tâm: bài đã có — giữ bản cũ (tích “ghi đè” nếu muốn thay).")
+    phan = re.split(r"^[ \t]*%%%[ \t]*NHOM[ \t]+(\S+)[ \t]*$", t, flags=re.M)
+    nhom = []                                       # [(mã nhóm, [khối…])]
+    if len(phan) > 1:
+        for i in range(1, len(phan) - 1, 2):
+            nhom.append((phan[i].strip().upper(), tach_khoi(phan[i + 1])))
+    else:
+        nhom.append(("?", tach_khoi(t)))
+    van, cau_truc = [], []
+    for g, ks in nhom:
+        ks = [k for k in ks if k.strip()]
+        if not ks:
+            continue
+        iv = next((i for i, k in enumerate(ks) if re.search(r"%\s*vai:\s*vi_du", k.split("\n", 1)[0])), 0)
+        vd = ks[iv]
+        h_vd = ma_bam(vd)
+        tt = []
+        for j, k in enumerate(ks):
+            if j == iv:
+                continue
+            if not MAU.search(k):
+                dau, _, sau = k.partition("\n")
+                k = dau + "\n% mau: " + h_vd + "\n" + sau
+            tt.append(k)
+        try:
+            l = phan_tich_cau(vd)["loai"]
+        except Exception:
+            l = re.sub(r"\d+$", "", g) or "?"
+        cau_truc.append({"nhom": g, "loai": l, "vd": h_vd, "tt": [ma_bam(k) for k in tt]})
+        van += [f"%%% NHOM {g}", vd] + tt
+    if not cau_truc:
+        raise ValueError("Không thấy câu nào: kết quả AI cần các khối \\begin{ex}…\\end{ex} / \\begin{bt}…\\end{bt} (mỗi nhóm mở bằng %%% NHOM …).")
+    thu = os.path.join(GOC, "ai-nhap")
+    os.makedirs(thu, exist_ok=True)
+    p = os.path.join(thu, time.strftime("%Y-%m-%d_%H%M%S") + f"_nghien_cuu_{re.sub(r'[^0-9A-Za-z]+', '_', bai)}.tex")
+    ghi(p, "% nguon: AI soạn phiếu nghiên cứu bài học " + bai + "\n\n" + "\n\n".join(van) + "\n")
+    bam = {}
+    so_moi = nhap_cau.nhap([p], thu=False, in_ra=in_ra, bam_ra=bam)
+    lo = {"id": time.strftime("%Y%m%d%H%M%S"), "luc": time.strftime("%Y-%m-%dT%H:%M"), "nhom": [], "so_moi": so_moi}
+    mat = 0
+    for g in cau_truc:
+        vd = bam.get(g["vd"])
+        tt = [bam[h] for h in g["tt"] if h in bam]
+        mat += (0 if vd else 1) + len(g["tt"]) - len(tt)
+        if not vd:
+            in_ra(f"  ⚠ Nhóm {g['nhom']}: ví dụ minh hoạ bị loại (lỗi) — bỏ nhóm này.")
+            continue
+        lo["nhom"].append({"nhom": g["nhom"], "loai": g["loai"], "vd": vd, "tt": tt})
+    if not lo["nhom"]:
+        raise ValueError("Mọi ví dụ minh hoạ đều bị loại vì lỗi — xem nhật ký, sửa rồi nhập lại.")
+    d = _doc_lo()
+    d[bai] = (d.get(bai) or [])[-9:] + [lo]
+    json.dump(d, open(P_LO, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
+    tom = {}
+    for g in lo["nhom"]:
+        x = tom.setdefault(g["loai"], [0, 0]); x[0] += 1; x[1] += len(g["tt"])
+    in_ra("✅ Lượt AI đã lưu: " + " · ".join(f"{TEN_LOAI.get(l, l)} {v[0]} ví dụ + {v[1]} câu tương tự" for l, v in tom.items())
+          + (f" (bị loại {mat} câu lỗi)" if mat else ""))
+    ra.update(lo=lo, tom=tom)
+    return ra
+
+
+def _nhom_tu_lo(bai, lo_id):
+    """Dựng nhóm phiếu đúng theo một lượt AI đã nhập."""
+    lo = next((x for x in (_doc_lo().get(bai) or []) if x["id"] == lo_id), None)
+    if not lo:
+        raise ValueError("Không thấy lượt AI đã chọn.")
+    K = _kho()
+    ra, thieu = {}, []
+    for g in lo["nhom"]:
+        vd = K.get(g["vd"])
+        if not vd:
+            thieu.append(f"Nhóm {g['nhom']}: không còn ví dụ trong kho."); continue
+        tt = [K[m] for m in g["tt"] if m in K]
+        if len(tt) < len(g["tt"]):
+            thieu.append(f"Nhóm {g['nhom']}: {len(g['tt']) - len(tt)} câu tương tự không còn trong kho.")
+        l = vd.get("loai") or g["loai"]
+        ra.setdefault(l, []).append({"vd": vd, "dang": vd.get("dang_key") or "", "tt": tt})
+    return {l: ra[l] for l, *_ in LOAI if l in ra}, thieu
+
+
 # ------------------------------------------------------------------ ĐẢO PHƯƠNG ÁN / Ý (mỗi mã đề)
 def _dap_tn(k):
     m = tim_lenh(k, "choice")
@@ -330,7 +518,7 @@ def tao(cfg, in_ra=print, chi_tinh=False):
     tt_bai = kho_kien_thuc.cac_bai().get(bai)
     if not tt_bai:
         raise ValueError("Chưa chọn bài học.")
-    nhom, thieu = chon(cfg, rng)
+    nhom, thieu = _nhom_tu_lo(bai, cfg["lo"]) if cfg.get("lo") else chon(cfg, rng)
     id_map = tai_id_map()
     ten_dang = lambda d: (id_map.get(d, {}).get("type_name") or d).strip()
     if chi_tinh:
