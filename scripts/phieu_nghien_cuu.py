@@ -9,6 +9,8 @@
       số ví dụ mẫu mỗi loại.
   Nhiều mã đề (001, 002…): ví dụ giữ nguyên; câu thực hành đảo thứ tự trong nhóm, đảo phương án TN, đảo ý a–c Đúng/Sai.
   Ra: De_<mã>.pdf (phiếu học sinh) · LoiGiai_<mã>.pdf (đáp án + lời giải) · DapAn_UNT.xlsx (phần mềm chấm UNT).
+  Chế độ 'tu_luan' (cfg che_do): thực hành chỉ gồm câu TỰ LUẬN — ví dụ có lời giải → câu tương tự có dòng kẻ làm bài
+  (cfg so_dong dòng mỗi câu); không bảng trả lời, không Excel UNT; LoiGiai_<mã>.pdf có lời giải chi tiết.
   Cỡ chữ 14 (đọc rõ trên điện thoại), khổ A4 hoặc A5 (điện thoại); phiếu nhiều màu: mỗi loại câu một màu.
 """
 import os, re, json, time, random, shutil, subprocess
@@ -20,7 +22,20 @@ LOAI = [("TN", "TRẮC NGHIỆM NHIỀU PHƯƠNG ÁN", "mauTN", r"\faListUl",
         ("DS", "TRẮC NGHIỆM ĐÚNG – SAI", "mauDS", r"\faCheckSquareO",
          "Mỗi ý a), b), c), d) em ghi Đúng (Đ) hoặc Sai (S)."),
         ("TLN", "TRẢ LỜI NGẮN", "mauTLN", r"\faPencil",
-         "Ghi đáp số vào ô (tối đa 4 kí tự, kể cả dấu - và dấu phẩy).")]
+         "Ghi đáp số vào ô (tối đa 4 kí tự, kể cả dấu - và dấu phẩy)."),
+        ("TL", "TỰ LUẬN", "mauTL", r"\faFileTextO",
+         "Trình bày lời giải đầy đủ vào phần dòng kẻ dưới mỗi câu.")]
+CO_DAP_AN = ("TN", "DS", "TLN")                    # loại có đáp án chấm máy (bảng trả lời, Excel UNT)
+
+
+def so_cau(cfg):
+    """Số câu thực hành mỗi loại. Chế độ 'tu_luan' → chỉ câu tự luận."""
+    so = {l: max(0, min(30, int((cfg.get("so") or {}).get(l, 0) or 0))) for l, *_ in LOAI}
+    if cfg.get("che_do") == "tu_luan":
+        so = {l: (so["TL"] or 6) if l == "TL" else 0 for l in so}
+    else:
+        so["TL"] = 0
+    return so
 MAU = re.compile(r"%\s*mau:\s*([0-9a-f]{8})")
 MUC = {"N": 0, "H": 1, "V": 2, "C": 3}
 GOI_Y_DAP_AN = re.compile(r"([Cc]họn|[Đđ]áp án|[Pp]hương án)\s*(đúng\s*)?(là\s*)?\(?\s*(\\\w+\{)?[A-D]\b")
@@ -60,9 +75,11 @@ def _tach(c):
 
 def _dung_duoc(c):
     from xem_truoc import hop_le
-    if c.get("loai") not in ("TN", "DS", "TLN") or not hop_le(c):
+    if c.get("loai") not in ("TN", "DS", "TLN", "TL") or not hop_le(c):
         return False
     p = _tach(c)
+    if c["loai"] == "TL":                            # tự luận: cần đề + lời giải (phiếu lời giải, ví dụ minh hoạ)
+        return bool(p and len(p["de"]) >= 15 and len(re.sub(r"\s", "", p["lg"] or "")) >= 20)
     return bool(p and p["de"] and (c["loai"] == "TLN" or (p["pa"] and len(p["pa"]) == 4)))
 
 
@@ -79,9 +96,9 @@ def bai_cua_lop(lop):
     dem = {}
     for c in K.values():
         d = c.get("dang_key") or ""
-        if c.get("loai") in ("TN", "DS", "TLN"):
+        if c.get("loai") in ("TN", "DS", "TLN", "TL"):
             b = d.split("-")[0]
-            x = dem.setdefault(b, {"TN": 0, "DS": 0, "TLN": 0})
+            x = dem.setdefault(b, {"TN": 0, "DS": 0, "TLN": 0, "TL": 0})
             x[c["loai"]] += 1
     ra = []
     for b, v in kho_kien_thuc.cac_bai(id_map).items():
@@ -89,7 +106,7 @@ def bai_cua_lop(lop):
             continue
         ra.append({"bai": b, "ten_bai": v["ten_bai"], "ten_chuong": v["ten_chuong"], "so_bai": v["so_bai"],
                    "dang": [{"k": d, "ten": (id_map.get(d, {}).get("type_name") or d).strip()} for d in v["dang"]],
-                   "dem": dem.get(b, {"TN": 0, "DS": 0, "TLN": 0}), "co_kt": bool(kho_kien_thuc.doc(b).strip())})
+                   "dem": dem.get(b, {"TN": 0, "DS": 0, "TLN": 0, "TL": 0}), "co_kt": bool(kho_kien_thuc.doc(b).strip())})
     return ra
 
 
@@ -108,7 +125,7 @@ def chon(cfg, rng):
     bai = cfg["bai"]
     tat_ca_dang = (kho_kien_thuc.cac_bai().get(bai) or {}).get("dang") or []
     dang = [d for d in (cfg.get("dang") or tat_ca_dang) if d in tat_ca_dang] or tat_ca_dang
-    so = {l: max(0, min(30, int((cfg.get("so") or {}).get(l, 0) or 0))) for l, *_ in LOAI}
+    so = so_cau(cfg)
     so_vd = max(1, min(4, int(cfg.get("so_vd") or 1)))
     theo_dang = bool(cfg.get("vd_theo_dang"))
     dem_dang = {}
@@ -185,7 +202,7 @@ def chon(cfg, rng):
 
 # ------------------------------------------------------------------ 🤖 AI SOẠN ĐÚNG CẤU TRÚC PHIẾU
 P_LO = os.path.join(GOC, "du-lieu", "pnc_ai.json")
-TEN_LOAI = {"TN": "Trắc nghiệm nhiều phương án", "DS": "Đúng/Sai", "TLN": "Trả lời ngắn"}
+TEN_LOAI = {"TN": "Trắc nghiệm nhiều phương án", "DS": "Đúng/Sai", "TLN": "Trả lời ngắn", "TL": "Tự luận"}
 
 
 def ke_hoach(cfg):
@@ -196,8 +213,9 @@ def ke_hoach(cfg):
     dang = [d for d in (cfg.get("dang") or tat_ca) if d in tat_ca] or tat_ca
     so_vd = max(1, min(4, int(cfg.get("so_vd") or 1)))
     ra, dem = [], {}
+    so = so_cau(cfg)
     for l, *_ in LOAI:
-        n = max(0, min(30, int((cfg.get("so") or {}).get(l, 0) or 0)))
+        n = so[l]
         if not n or not dang:
             continue
         ds = _dang_cho_loai(dang, n, dem) if cfg.get("vd_theo_dang") else [dang[i % len(dang)] for i in range(min(so_vd, n))]
@@ -205,6 +223,13 @@ def ke_hoach(cfg):
         for i, d in enumerate(ds):
             ra.append((f"{l}{i + 1}", l, d, n // k + (1 if i < n % k else 0)))
     return ra
+
+
+LUAT_LOAI = ("Mọi câu trong nhóm đúng loại của nhóm: TN → `\\begin{ex}` + `\\choice` (4 phương án, đúng một `\\True`, đáp án đúng rải đều A–D);\n"
+             "   Đúng/Sai → `\\begin{ex}` + `\\choiceTF` (4 ý a–d, lời giải `\\begin{itemchoice}` đủ 4 `\\itemch`); Trả lời ngắn → `\\begin{bt}` + `\\shortans{…}`\n"
+             "   (đáp số là một số, tối đa 4 kí tự kể cả dấu `-` và dấu `,`).")
+LUAT_LOAI_TL = ("Mọi câu là **TỰ LUẬN**: `\\begin{bt}%[mã] … \\loigiai{…} \\end{bt}` — KHÔNG `\\choice`, KHÔNG `\\choiceTF`, KHÔNG `\\shortans`.\n"
+                "   Đề có thể gồm vài ý nhỏ a), b) (cùng dạng); lời giải trình bày đầy đủ như bài làm mẫu của học sinh giỏi, có kết luận.")
 
 
 def prompt_ai(cfg, kem_kt=True):
@@ -218,6 +243,7 @@ def prompt_ai(cfg, kem_kt=True):
     kh = ke_hoach(cfg)
     if not kh:
         raise ValueError("Chưa nhập số câu thực hành.")
+    tu_luan = all(l == "TL" for _, l, _, _ in kh)
     lop = x["lop"]
     chung, dm, so_dm = de_ngoai._phan_chung([bai])
     ten = lambda d: (id_map.get(d, {}).get("type_name") or d).strip()
@@ -234,7 +260,7 @@ def prompt_ai(cfg, kem_kt=True):
     p = f"""# NHIỆM VỤ
 Bạn là giáo viên Toán lớp {lop} giỏi (chương trình GDPT 2018, sách Kết nối tri thức). Soạn nội dung cho **PHIẾU NGHIÊN CỨU BÀI HỌC**
 — **Bài {x['so_bai']}. {x['ten_bai']}** ({x['ten_chuong']}) — đính kèm SGK / tài liệu nếu có thì bám sát.
-Phiếu gồm {'kiến thức trọng tâm của bài, sau đó ' if kem_kt else ''}phần thực hành theo mẫu với 3 loại câu như đề thi 2025. Mỗi nhóm:
+Phiếu gồm {'kiến thức trọng tâm của bài, sau đó ' if kem_kt else ''}phần thực hành theo mẫu {'**chỉ gồm câu TỰ LUẬN** (học sinh trình bày lời giải đầy đủ)' if tu_luan else 'với 3 loại câu như đề thi 2025'}. Mỗi nhóm:
 **1 VÍ DỤ MINH HOẠ có lời giải thật chi tiết** (học sinh đọc để học cách làm) → **các CÂU TƯƠNG TỰ** để học sinh tự làm theo đúng cách đó.
 
 **Chỉ soạn các dạng sau** (giáo viên đã chọn) — **mỗi nhóm là MỘT dạng, có ví dụ minh hoạ RIÊNG của dạng đó**; câu thuộc dạng khác
@@ -247,14 +273,12 @@ thì nằm ở nhóm khác với ví dụ khác (vd câu 1–2 dạng A theo ví
 {bang}
 
 Quy tắc từng nhóm:
-1. Mở nhóm bằng một dòng riêng **chép đúng nguyên cột 1** (gồm cả mã dạng, vd `%%% NHOM TN1 {kh[0][2]}`).
-2. Câu ĐẦU TIÊN của nhóm là **ví dụ minh hoạ**: dòng mở khối có thêm ` % vai: vi_du`, vd `\\begin{{ex}}%[mã] % vai: vi_du`.
-   Mức Nhận biết – Thông hiểu, tiêu biểu cho dạng; **lời giải từng bước** (mỗi bước một dòng, nêu rõ công thức / lí do), cuối kết luận đáp án.
+1. Mở nhóm bằng một dòng riêng **chép đúng nguyên cột 1** (gồm cả mã dạng, vd `%%% NHOM {kh[0][0]} {kh[0][2]}`).
+2. Câu ĐẦU TIÊN của nhóm là **ví dụ minh hoạ**: dòng mở khối có thêm ` % vai: vi_du`, vd `\\begin{{{'bt' if tu_luan else 'ex'}}}%[mã] % vai: vi_du`.
+   Mức Nhận biết – Thông hiểu, tiêu biểu cho dạng; **lời giải từng bước** (mỗi bước một dòng, nêu rõ công thức / lí do), cuối kết luận {'kết quả' if tu_luan else 'đáp án'}.
 3. Sau đó đúng số **câu tương tự** ở cột 5: **cùng dạng, cùng cách giải** với ví dụ, đổi số liệu / hàm số / ngữ cảnh (không chép lại ví dụ),
    độ khó bằng hoặc nhỉnh hơn ví dụ một chút, câu sau khó hơn câu trước. Mỗi câu tương tự cũng có lời giải đầy đủ.
-4. Mọi câu trong nhóm đúng loại của nhóm: TN → `\\begin{{ex}}` + `\\choice` (4 phương án, đúng một `\\True`, đáp án đúng rải đều A–D);
-   Đúng/Sai → `\\begin{{ex}}` + `\\choiceTF` (4 ý a–d, lời giải `\\begin{{itemchoice}}` đủ 4 `\\itemch`); Trả lời ngắn → `\\begin{{bt}}` + `\\shortans{{…}}`
-   (đáp số là một số, tối đa 4 kí tự kể cả dấu `-` và dấu `,`).
+4. {LUAT_LOAI_TL if tu_luan else LUAT_LOAI}
 5. **Ví dụ và MỌI câu tương tự của nhóm đều đúng dạng ở cột 3** (cùng kiểu bài, cùng phương pháp giải) — không lấn sang dạng khác,
    không soạn dạng ngoài danh sách trên. Mã `%[…]` của từng câu là mã dạng của nhóm, thay `?` bằng chữ mức N / H / V / C.
 6. Tự giải lại từng câu, tính lại từng phép tính trước khi viết đáp án.
@@ -422,7 +446,7 @@ def _dap_tln(k):
 
 
 def dap_an(k, loai):
-    return {"TN": _dap_tn, "DS": _dap_ds, "TLN": _dap_tln}[loai](k)
+    return {"TN": _dap_tn, "DS": _dap_ds, "TLN": _dap_tln}.get(loai, lambda _: "")(k)
 
 
 def xao_tn(k, rng):
@@ -499,7 +523,7 @@ def _o_tln(mau, dap=None):
         + x + "};" for x in ch) + r"\par")
 
 
-def cau_latex(k, loai, so, mau, giai=False, nhan=None, hep=False):
+def cau_latex(k, loai, so, mau, giai=False, nhan=None, hep=False, dong=0):
     """Một câu (đã đảo nếu cần) → LaTeX in thường. giai: kèm đáp án + lời giải."""
     p = _tach({"loai": loai, "noi_dung": k})
     da = dap_an(k, loai)
@@ -508,8 +532,10 @@ def cau_latex(k, loai, so, mau, giai=False, nhan=None, hep=False):
         t.append(_pa_tn(p["pa"], mau, da if giai else None, hep))
     elif loai == "DS":
         t.append(_bang_ds(p["pa"], mau, da if giai else None))
-    else:
+    elif loai == "TLN":
         t.append(_o_tln(mau, da.replace("{,}", ",") if giai else None))
+    elif dong and not giai:                          # tự luận: dòng kẻ làm bài
+        t.append(r"\par\nopagebreak\dongKe{" + str(dong) + "}")
     if giai:
         lg = p["lg"]
         if loai == "DS" and p.get("y_giai"):
@@ -517,14 +543,14 @@ def cau_latex(k, loai, so, mau, giai=False, nhan=None, hep=False):
             lg = (dau_lg.strip() + r"\par" if dau_lg.strip() else "") + "".join(
                 r"\par\noindent\textbf{" + "abcd"[i] + r")} " + chuan_vecto(y)[0].strip() for i, y in enumerate(ys)) + (r"\par " + cuoi_lg if cuoi_lg.strip() else "")
         t.append(r"\par\noindent\begin{tcolorbox}[enhanced,breakable,colback=" + mau + r"!4,colframe=" + mau + r"!45,boxrule=0.5pt,arc=1.5mm,"
-                 r"left=2mm,right=2mm,top=1mm,bottom=1mm,title={\small\bfseries Lời giải}\hfill{\small Đáp án: \textbf{" + thoat(da.replace('{,}', ',')) + r"}},"
+                 r"left=2mm,right=2mm,top=1mm,bottom=1mm,title={\small\bfseries Lời giải}" + (r"\hfill{\small Đáp án: \textbf{" + thoat(da.replace('{,}', ',')) + "}}" if da else "") + ","
                  r"coltitle=white,colbacktitle=" + mau + r"!80,fonttitle=\small]" + (lg or r"\textit{(chưa có lời giải)}") + r"\end{tcolorbox}")
     return "\n".join(t)
 
 
 TIEN_TO = r"""
 %==================== PHIẾU NGHIÊN CỨU BÀI HỌC ====================
-\definecolor{mauTN}{HTML}{4F46E5}\definecolor{mauDS}{HTML}{0D9488}\definecolor{mauTLN}{HTML}{EA580C}\definecolor{mauVD}{HTML}{0284C7}
+\definecolor{mauTN}{HTML}{4F46E5}\definecolor{mauDS}{HTML}{0D9488}\definecolor{mauTLN}{HTML}{EA580C}\definecolor{mauTL}{HTML}{BE185D}\definecolor{mauVD}{HTML}{0284C7}
 \newcommand{\phanNC}[4]{\par\bigskip\noindent\begin{tcolorbox}[enhanced,colback=#1,colframe=#1,arc=2mm,boxrule=0pt,left=3mm,right=3mm,top=1.2mm,bottom=1.2mm,
   fontupper=\color{white}\bfseries]{#2}\ \ PHẦN #3. #4\end{tcolorbox}\par\nopagebreak}
 \newtcolorbox{vdMau}[2]{enhanced,breakable,colback=#1!5,colframe=#1,boxrule=0.9pt,arc=2.5mm,left=3mm,right=3mm,top=1.5mm,bottom=2mm,
@@ -536,7 +562,7 @@ TIEN_TO = r"""
 
 TIEN_TO_TK = r"""
 %==================== PHIẾU NGHIÊN CỨU BÀI HỌC — BẢN IN TIẾT KIỆM (chữ 11, 2 cột, ít mực) ====================
-\definecolor{mauTN}{HTML}{4F46E5}\definecolor{mauDS}{HTML}{0D9488}\definecolor{mauTLN}{HTML}{EA580C}\definecolor{mauVD}{HTML}{0284C7}
+\definecolor{mauTN}{HTML}{4F46E5}\definecolor{mauDS}{HTML}{0D9488}\definecolor{mauTLN}{HTML}{EA580C}\definecolor{mauTL}{HTML}{BE185D}\definecolor{mauVD}{HTML}{0284C7}
 \newcommand{\phanNC}[4]{\par\smallskip\noindent{\raggedright\color{#1}\bfseries #2\ PHẦN #3. #4\par}\nopagebreak\noindent{\color{#1}\rule{\linewidth}{0.6pt}}\par\nopagebreak}
 \newtcolorbox{vdMau}[2]{enhanced,breakable,colback=white,colframe=#1!70,boxrule=0.4pt,arc=1mm,left=1.5mm,right=1.5mm,top=0.8mm,bottom=0.8mm,
   title={\faSearch\ #2},fonttitle=\bfseries\small,coltitle=#1,colbacktitle=white,toptitle=0.3mm,bottomtitle=0mm,titlerule=0pt}
@@ -622,6 +648,8 @@ def tao(cfg, in_ra=print, chi_tinh=False):
         them.append(r"\usepackage{anyfontsize}\makeatletter\renewcommand\normalsize{\@setfontsize\normalsize{14}{17}}\normalsize\makeatother")
     mau = mau.replace("\\begin{document}", "\n".join(them) + "\n\\begin{document}", 1)
     mau_goc = mau_tk
+    so_dong = max(0, min(25, int(cfg.get("so_dong") if cfg.get("so_dong") not in (None, "") else 6)))   # tự luận: dòng làm bài mỗi câu
+    dong_lb_tl = "".join([r"\dongLam"] * max(2, min(6, so_dong // 2 or 2)))
     hai_cot = cfg.get("so_cot_tk", 2) != 1           # bản tiết kiệm / phiếu làm bài: 2 cột (mặc định) hoặc 1 cột
     cot_mo, cot_dong = ("\n\\begin{multicols}{2}\n", "\n\\end{multicols}\n") if hai_cot else ("\n", "\n")
     if cfg.get("lam_bai"):                          # ✏ phiếu làm bài tiết kiệm: chữ 10, 2 cột, mỗi câu 1 dòng làm bài
@@ -655,7 +683,7 @@ def tao(cfg, in_ra=print, chi_tinh=False):
                 + tieu_de_ten(ten, thoat) + "}{" + phu + r" · \textbf{Mã " + ma + "}}{" + ("1" if ho_ten else "0") + "}")
 
     cot_unt, tom, tc_nhom = {}, [], []
-    tong_tt = sum(len(g["tt"]) for v in nhom.values() for g in v)
+    tong_tt = sum(len(g["tt"]) for l, v in nhom.items() if l in CO_DAP_AN for g in v)
     for mi, ma in enumerate(cac_ma):
         r_ma = random.Random(f"{cfg.get('seed') or ''}{ma}{bai}")
         hs, gv_, hs_tk = [], [], []
@@ -693,12 +721,13 @@ def tao(cfg, in_ra=print, chi_tinh=False):
                     if mi:
                         k = xao_tn(k, r_ma) if l == "TN" else xao_ds(k, r_ma) if l == "DS" else k
                     so += 1
-                    hs.append(cau_latex(k, l, so, mau_l))
-                    hs_tk.append(cau_latex(k, l, so, mau_l, hep=hai_cot) + "\n<<DONG_LAM>>")
+                    hs.append(cau_latex(k, l, so, mau_l, dong=so_dong))
+                    hs_tk.append(cau_latex(k, l, so, mau_l, hep=hai_cot) + ("\n<<DONG_LAM_TL>>" if l == "TL" else "\n<<DONG_LAM>>"))
                     gv_.append(cau_latex(k, l, so, mau_l, giai=True))
                     if mi == 0:
                         tc_nhom[-1]["tt"].append((so, k))
-                    cot_unt[ma].append((l, dap_an(k, l)))
+                    if l in CO_DAP_AN:
+                        cot_unt[ma].append((l, dap_an(k, l)))
         # bảng trả lời của học sinh + bảng đáp án
         def bang(dien):
             o, hang = [], []
@@ -724,11 +753,11 @@ def tao(cfg, in_ra=print, chi_tinh=False):
                        + r"\phanPhieu{II. THỰC HÀNH THEO MẪU}" + cot_mo + "\n".join(hs_tk) + cot_dong
                        + (r"\phanPhieu{BẢNG TRẢ LỜI}" + "\n" + bang(False) if cot_unt[ma] else "") + "\n" + het)
             ghi(os.path.join(out, f"De_{ma}_TietKiem.tex"), mau_phieu.gan_bieu_tuong(
-                mau_tk.replace("<<CHE_DO_LOI_GIAI>>", "\\anloigiai").replace("<<NOI_DUNG>>", than_tk.replace("<<DONG_LAM>>", ""))))
+                mau_tk.replace("<<CHE_DO_LOI_GIAI>>", "\\anloigiai").replace("<<NOI_DUNG>>", than_tk.replace("<<DONG_LAM_TL>>", "").replace("<<DONG_LAM>>", ""))))
         if cfg.get("lam_bai"):
             than_lb = ("\\def\\maDeNC{" + ma + "}\n" + dau("PHIẾU NGHIÊN CỨU BÀI HỌC", ma, True) + "\n"
                        + r"\phanPhieu{I. KIẾN THỨC TRỌNG TÂM}" + "\n" + kien.replace("\\dongKe{7}", "\\dongKe{4}") + "\n"
-                       + r"\phanPhieu{II. THỰC HÀNH THEO MẪU}" + cot_mo + "\n".join(hs_tk).replace("<<DONG_LAM>>", r"\dongLam")
+                       + r"\phanPhieu{II. THỰC HÀNH THEO MẪU}" + cot_mo + "\n".join(hs_tk).replace("<<DONG_LAM_TL>>", dong_lb_tl).replace("<<DONG_LAM>>", r"\dongLam")
                        + cot_dong + (r"\phanPhieu{BẢNG TRẢ LỜI}" + "\n" + bang(False) if cot_unt[ma] else "") + "\n" + het)
             ghi(os.path.join(out, f"De_{ma}_LamBai.tex"), mau_phieu.gan_bieu_tuong(
                 mau_lb.replace("<<CHE_DO_LOI_GIAI>>", "\\anloigiai").replace("<<NOI_DUNG>>", than_lb)))
@@ -760,7 +789,7 @@ def tao(cfg, in_ra=print, chi_tinh=False):
 
 
 # ------------------------------------------------------------------ 🖥 TRÌNH CHIẾU TRÊN LỚP (Beamer 16:9)
-MAU_TC = {"TN": ("4F46E5", "EEF2FF"), "DS": ("0D9488", "F0FDFA"), "TLN": ("EA580C", "FFF7ED"), "VD": ("0284C7", "E0F2FE")}
+MAU_TC = {"TN": ("4F46E5", "EEF2FF"), "DS": ("0D9488", "F0FDFA"), "TLN": ("EA580C", "FFF7ED"), "TL": ("BE185D", "FDF2F8"), "VD": ("0284C7", "E0F2FE")}
 
 
 def tao_trinh_chieu(out_tex, ten, tt, lop, chuong, gv, kt, tc_nhom, ma):
@@ -784,12 +813,12 @@ def tao_trinh_chieu(out_tex, ten, tt, lop, chuong, gv, kt, tc_nhom, ma):
              r"{\normalsize Toán " + str(lop) + (r" \,·\, " + tho(chuong) if chuong else "") + r"}\par\vfill" "\n"
              r"{\small GV: " + tho(gv) + r"}\par\vspace*{0.6cm}\end{frame}" "\n")
     # lộ trình
-    ten_l = {"TN": "Trắc nghiệm nhiều phương án", "DS": "Trắc nghiệm Đúng – Sai", "TLN": "Trả lời ngắn"}
+    ten_l = {"TN": "Trắc nghiệm nhiều phương án", "DS": "Trắc nghiệm Đúng – Sai", "TLN": "Trả lời ngắn", "TL": "Tự luận"}
     dem = {}
     for g in tc_nhom:
         x = dem.setdefault(g["loai"], [0, 0]); x[0] += 1; x[1] += len(g["tt"])
     dong = [r"\item[{\tikz[baseline=(n.base)]\node[rounded corners=2pt,fill=mauHT,text=white,font=\bfseries\scriptsize,inner sep=2.5pt](n){I};}] Kiến thức trọng tâm"]
-    for j, l in enumerate([l for l in ("TN", "DS", "TLN") if l in dem], 1):
+    for j, l in enumerate([l for l in ("TN", "DS", "TLN", "TL") if l in dem], 1):
         dong.append(r"\definecolor{mauMuc}{HTML}{" + MAU_TC[l][0] + r"}\item[{\tikz[baseline=(n.base)]\node[rounded corners=2pt,fill=mauMuc,text=white,font=\bfseries\scriptsize,inner sep=2.5pt](n){Phần "
                     + str(j) + "};}] " + ten_l[l] + r" \,—\, {\small\color{black!60}" + str(dem[l][0]) + " ví dụ minh hoạ · " + str(dem[l][1]) + " câu tự làm}")
     f.append(r"\begin{frame}[t]{Lộ trình bài học}{" + tho(ten) + r"}\hieuung\nenTrangTri" "\n"
@@ -803,7 +832,7 @@ def tao_trinh_chieu(out_tex, ten, tt, lop, chuong, gv, kt, tc_nhom, ma):
                      r"\begin{hopKT}{\setlength\caoToiDa{0.66\textheight}\vuaKhung{\kieuKT " + kt + r"}}\end{hopKT}" "\n\\end{frame}\n")
     # từng phần
     phan = 0
-    for l in ("TN", "DS", "TLN"):
+    for l in ("TN", "DS", "TLN", "TL"):
         ds = [g for g in tc_nhom if g["loai"] == l]
         if not ds:
             continue

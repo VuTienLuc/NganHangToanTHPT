@@ -742,6 +742,10 @@ Một bài học SGK → phiếu nhiều mã đề, đọc rõ trên điện tho
   → **✍ Áp dụng tương tự**: các câu chọn theo mẫu — câu soạn “tương tự theo mẫu” của chính ví dụ đó trước, rồi cùng dạng, mức gần nhất, xếp dễ → khó.
 - Thầy chọn **số câu thực hành** từng loại, **số ví dụ minh hoạ** mỗi loại (nhiều ví dụ: mỗi ví dụ một dạng theo trình tự bài, câu thực hành chia đều),
   dạng dùng làm mẫu, tên phiếu. **🔍 Xem / đổi bộ khác** để xem trước ví dụ và số câu; phiếu tạo ra đúng bộ đang xem.
+- **Chế độ ✍ Chỉ tự luận** (ô *Chế độ* trong khung số câu): phần thực hành chỉ gồm câu **tự luận** — ví dụ minh hoạ có lời giải từng bước →
+  câu tương tự cùng dạng, dưới mỗi câu có **dòng kẻ làm bài** (ô *Dòng làm bài mỗi câu*, mặc định 6; 0 = không kẻ). Không có bảng trả lời
+  và Excel UNT; `LoiGiai_<mã>.pdf` có lời giải chi tiết; bản tiết kiệm, phiếu làm bài (3 dòng mỗi câu) và trình chiếu vẫn xuất bình thường.
+  Prompt AI ở chế độ này yêu cầu toàn câu `\begin{bt}` có `\loigiai`, nhóm `%%% NHOM TL1 …`. Câu tự luận lấy từ ngân hàng phải có lời giải.
 - **Mỗi dạng một ví dụ minh hoạ riêng** (tích sẵn): mỗi dạng đã tích có ví dụ của riêng nó, câu áp dụng đứng ngay sau ví dụ cùng dạng
   (câu 1–2 theo ví dụ 1 dạng A, câu 3–4 theo ví dụ 2 dạng B…). Loại có ít câu hơn số dạng thì xoay vòng để dạng nào cũng có mặt.
   Bỏ tích thì dùng số ví dụ cố định mỗi loại như trước.

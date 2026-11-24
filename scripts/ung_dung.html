@@ -246,7 +246,7 @@ footer .gian{flex:1}
 #pnc-ds .b:hover{border-color:var(--nhan)}#pnc-ds .b.on{border-color:var(--nhan);background:#eef2ff;box-shadow:0 0 0 2px rgba(79,70,229,.15)}
 #pnc-ds .b small{display:flex;gap:6px;margin-top:3px;color:#64748b;flex-wrap:wrap}
 #pnc-ds .b i{font-style:normal;border-radius:999px;padding:0 7px;font-size:11.5px}
-.pnc-tn{background:#e0e7ff;color:#3730a3}.pnc-ds{background:#ccfbf1;color:#115e59}.pnc-tln{background:#ffedd5;color:#9a3412}.pnc-kt{background:#dcfce7;color:#166534}.pnc-kt0{background:#f1f5f9;color:#64748b}
+.pnc-tn{background:#e0e7ff;color:#3730a3}.pnc-ds{background:#ccfbf1;color:#115e59}.pnc-tln{background:#ffedd5;color:#9a3412}.pnc-tl{background:#fce7f3;color:#9d174d}.pnc-kt{background:#dcfce7;color:#166534}.pnc-kt0{background:#f1f5f9;color:#64748b}
 #hop-pnc .phai{overflow:auto;padding:12px 16px;font-size:13.5px}
 #hop-pnc .o{border:1px solid var(--vien);border-radius:11px;padding:9px 12px;margin-bottom:10px}
 #hop-pnc .o h3{margin:0 0 6px;font-size:14px}
@@ -991,14 +991,20 @@ tr.gop-h td{background:#dbeafe;text-align:left;font-weight:700;padding:8px 12px;
     <div class="trai"><input id="pnc-tim" type="search" placeholder="🔍 Tìm bài (không dấu)…"><div id="pnc-ds"></div></div>
     <div class="phai">
       <div class="o" style="background:#f8fafc"><b>Cấu trúc phiếu:</b> I. Kiến thức trọng tâm của bài → II. Thực hành theo mẫu gồm 3 phần
-        <b style="color:#4f46e5">Trắc nghiệm</b> · <b style="color:#0d9488">Đúng/Sai</b> · <b style="color:#ea580c">Trả lời ngắn</b>; mỗi phần:
+        <b style="color:#4f46e5">Trắc nghiệm</b> · <b style="color:#0d9488">Đúng/Sai</b> · <b style="color:#ea580c">Trả lời ngắn</b> (hoặc <b style="color:#be185d">chỉ tự luận</b>); mỗi phần:
         🔎 <b>Ví dụ minh hoạ</b> có lời giải → ✍ <b>Áp dụng tương tự</b> (câu chọn theo mẫu: cùng dạng, mức gần nhất, ưu tiên câu soạn “tương tự theo mẫu”).
         Ra nhiều mã đề: PDF phiếu + PDF lời giải từng mã, <b>đáp án Excel dạng UNT</b>.</div>
       <div class="o"><h3 id="pnc-bai-ten">Chọn một bài ở cột trái</h3>
         <div class="hang"><label style="flex:1">Tên phiếu <input type="text" id="pnc-ten" style="width:100%" placeholder="(tên bài)"></label></div>
         <div id="pnc-dang" class="hang" style="font-size:13px"></div></div>
       <div class="o"><h3>Số câu thực hành theo mẫu</h3>
-        <div class="so3">
+        <div class="hang" style="margin-bottom:6px"><b>Chế độ</b>
+          <label class="hop"><input type="radio" name="pnc-che" value="3loai" checked> 3 loại câu như đề thi 2025 <small>(TN · Đúng/Sai · Trả lời ngắn)</small></label>
+          <label class="hop" title="Phần thực hành chỉ gồm câu tự luận: ví dụ minh hoạ có lời giải → câu tương tự có dòng kẻ để học sinh trình bày. Không có bảng trả lời và Excel UNT."><input type="radio" name="pnc-che" value="tu_luan"> ✍ <b>Chỉ tự luận</b></label></div>
+        <div class="so3" id="pnc-tl-o" hidden>
+          <label style="background:#fdf2f8;color:#9d174d">Tự luận <input type="number" id="pnc-tl-so" min="1" max="30" value="6"><small>học sinh trình bày lời giải</small></label>
+          <label style="background:#fdf2f8;color:#9d174d">Dòng làm bài mỗi câu <input type="number" id="pnc-dong" min="0" max="25" value="6"><small>0 = không kẻ dòng</small></label></div>
+        <div class="so3" id="pnc-3loai">
           <label style="background:#eef2ff;color:#3730a3">Trắc nghiệm <input type="number" id="pnc-tn" min="0" max="30" value="6"><small>câu chọn đáp án A–D</small></label>
           <label style="background:#f0fdfa;color:#115e59">Đúng / Sai <input type="number" id="pnc-ds-so" min="0" max="12" value="2"><small>mỗi câu 4 ý a–d</small></label>
           <label style="background:#fff7ed;color:#9a3412">Trả lời ngắn <input type="number" id="pnc-tln" min="0" max="20" value="4"><small>đáp số ≤ 4 kí tự</small></label></div>
@@ -2210,9 +2216,9 @@ function pncVeDs(){
   const q=boDauTC($("#pnc-tim").value).trim();let h="",ch="";
   for(const b of PNC.bai){if(q&&!boDauTC(b.ten_bai+" "+b.ten_chuong).includes(q))continue;
     if(b.ten_chuong!==ch){ch=b.ten_chuong;h+=`<div class="ch">${esc(ch)}</div>`}
-    const t=b.dem.TN+b.dem.DS+b.dem.TLN;
+    const tl=pncTuLuan(),t=tl?(b.dem.TL||0):b.dem.TN+b.dem.DS+b.dem.TLN;
     h+=`<button class="b${PNC.chon&&PNC.chon.bai===b.bai?" on":""}" data-b="${esc(b.bai)}"${t?"":" style='opacity:.5'"}><b>Bài ${b.so_bai}. ${esc(b.ten_bai)}</b>
-      <small><i class="pnc-tn">TN ${b.dem.TN}</i><i class="pnc-ds">Đ/S ${b.dem.DS}</i><i class="pnc-tln">TLN ${b.dem.TLN}</i><i class="${b.co_kt?"pnc-kt":"pnc-kt0"}">${b.co_kt?"✓ kiến thức":"chưa có kiến thức"}</i></small></button>`}
+      <small><i class="pnc-tn">TN ${b.dem.TN}</i><i class="pnc-ds">Đ/S ${b.dem.DS}</i><i class="pnc-tln">TLN ${b.dem.TLN}</i><i class="pnc-tl">TL ${b.dem.TL||0}</i><i class="${b.co_kt?"pnc-kt":"pnc-kt0"}">${b.co_kt?"✓ kiến thức":"chưa có kiến thức"}</i></small></button>`}
   $("#pnc-ds").innerHTML=h||"<p class='nho' style='padding:8px'>Không có bài nào.</p>";
 }
 function pncChon(b){PNC.chon=b;PNC.seed=Date.now();pncVeDs();
@@ -2222,7 +2228,7 @@ function pncChon(b){PNC.chon=b;PNC.seed=Date.now();pncVeDs();
   $("#pnc-tao").disabled=false;$("#pnc-ai-kt").checked=!b.co_kt;$("#pnc-ai-pv").hidden=true;$("#pnc-ai-pv").value="";$("#pnc-ai-tt").textContent="";
   pncTaiLo().then(pncXem)}
 async function pncTaiLo(chon){
-  const r=await api("/api/pnc/lo",{bai:PNC.chon.bai});const ten={TN:"TN",DS:"Đ/S",TLN:"TLN"};
+  const r=await api("/api/pnc/lo",{bai:PNC.chon.bai});const ten={TN:"TN",DS:"Đ/S",TLN:"TLN",TL:"Tự luận"};
   $("#pnc-nguon").innerHTML=`<option value="">🏦 Ngân hàng — tự chọn theo mẫu</option>`+(r.lo||[]).map(x=>{
     const t={};x.nhom.forEach(g=>{const v=t[g.loai]??=[0,0];v[0]++;v[1]+=g.tt.length});
     const d=x.luc.replace(/^(\d+)-(\d+)-(\d+)T/,"$3/$2 ");
@@ -2230,13 +2236,17 @@ async function pncTaiLo(chon){
   if(chon) $("#pnc-nguon").value=chon;
   pncNguon();
 }
+function pncTuLuan(){return (document.querySelector('input[name="pnc-che"]:checked')||{}).value==="tu_luan"}
+function pncChe(){const tl=pncTuLuan();$("#pnc-tl-o").hidden=!tl;$("#pnc-3loai").hidden=tl;
+  $("#pnc-tao").textContent=tl?"🖨 Tạo phiếu tự luận · lời giải":"🖨 Tạo phiếu · lời giải · Excel UNT";pncVeDs();pncXem()}
 function pncNguon(){const ai=!!$("#pnc-nguon").value;
-  document.querySelectorAll("#pnc-tn,#pnc-ds-so,#pnc-tln,#pnc-vd,#pnc-vd-dang,#pnc-dang input").forEach(x=>x.disabled=ai);
+  document.querySelectorAll("#pnc-tn,#pnc-ds-so,#pnc-tln,#pnc-tl-so,#pnc-vd,#pnc-vd-dang,#pnc-dang input,input[name='pnc-che']").forEach(x=>x.disabled=ai);
   if(!ai)$("#pnc-vd").disabled=$("#pnc-vd-dang").checked;
   $("#pnc-xem-nut").textContent=ai?"🔍 Xem lượt AI":"🔍 Xem / đổi bộ khác"}
 function pncCfg(){const b=PNC.chon,[co,kho]=$("#pnc-co").value.split("|");
   return {bai:b.bai,dang:[...document.querySelectorAll("#pnc-dang input:checked")].map(x=>x.value),
-    so:{TN:+$("#pnc-tn").value||0,DS:+$("#pnc-ds-so").value||0,TLN:+$("#pnc-tln").value||0},so_vd:+$("#pnc-vd").value||1,vd_theo_dang:$("#pnc-vd-dang").checked,
+    che_do:pncTuLuan()?"tu_luan":"3loai",so_dong:$("#pnc-dong").value===""?6:+$("#pnc-dong").value,
+    so:pncTuLuan()?{TN:0,DS:0,TLN:0,TL:+$("#pnc-tl-so").value||6}:{TN:+$("#pnc-tn").value||0,DS:+$("#pnc-ds-so").value||0,TLN:+$("#pnc-tln").value||0,TL:0},so_vd:+$("#pnc-vd").value||1,vd_theo_dang:$("#pnc-vd-dang").checked,
     so_ma:+$("#pnc-so-ma").value||1,ma_bat_dau:$("#pnc-ma-dau").value.trim()||"001",co_chu:+co,kho,kem_pp:$("#pnc-pp").checked,
     tiet_kiem:$("#pnc-tk").checked,lam_bai:$("#pnc-lb").checked,so_cot_tk:+$("#pnc-cot").value||2,trinh_chieu:$("#pnc-tc").checked,
     giao_vien:$("#pnc-gv").value.trim(),ten:$("#pnc-ten").value.trim(),mau_trinh_bay:document.querySelector('input[name="pnc-mau"]:checked').value,seed:PNC.seed,
@@ -2245,9 +2255,9 @@ async function pncXem(){
   if(!PNC.chon)return;$("#pnc-xem").textContent="Đang chọn câu…";
   const r=await api("/api/pnc/xem",{cau_hinh:pncCfg()});
   if(!r.ok){$("#pnc-xem").textContent=r.loi;return}
-  const ten={TN:["Trắc nghiệm","#4f46e5"],DS:["Đúng / Sai","#0d9488"],TLN:["Trả lời ngắn","#ea580c"]};let h="",tong=0;
+  const ten={TN:["Trắc nghiệm","#4f46e5"],DS:["Đúng / Sai","#0d9488"],TLN:["Trả lời ngắn","#ea580c"],TL:["Tự luận","#be185d"]};let h="",tong=0;
   if($("#pnc-nguon").value) h+=`<div style="color:#6b21a8;margin-bottom:4px">🤖 Phiếu dùng đúng các câu của lượt AI này (ví dụ + câu tương tự AI soạn).</div>`;
-  for(const l of ["TN","DS","TLN"]){const v=r.nhom[l];if(!v)continue;
+  for(const l of ["TN","DS","TLN","TL"]){const v=r.nhom[l];if(!v)continue;
     for(const g of v){tong+=g.tt.length;h+=`<div class="nhom" style="border-left-color:${ten[l][1]}"><b style="color:${ten[l][1]}">${ten[l][0]}</b> · 🔎 ví dụ (mức ${g.vd.muc||"?"}) — ${esc(g.ten_dang)} · ✍ <b>${g.tt.length}</b> câu theo mẫu
       <div class="vd">${g.vd.de}${g.vd.de.length>=220?"…":""}</div></div>`}}
   h+=(r.thieu||[]).map(x=>`<div style="color:#b45309">⚠ ${esc(x)}</div>`).join("");
@@ -2277,7 +2287,7 @@ $("#pnc-ai-chep").onclick=async e=>{const p=$("#pnc-ai-pv").value||await pncProm
   setTimeout(()=>e.target.textContent="📋 Chép prompt",1600)};
 async function pncSauNhap(r){
   if(!r||!r.ok)return; await pncTaiLo(r.lo.id); await pncXem();
-  const ten={TN:"Trắc nghiệm",DS:"Đúng/Sai",TLN:"Trả lời ngắn"};
+  const ten={TN:"Trắc nghiệm",DS:"Đúng/Sai",TLN:"Trả lời ngắn",TL:"Tự luận"};
   $("#pnc-ai-tt").textContent="✓ Đã nhập: "+Object.entries(r.tom||{}).map(([l,v])=>`${ten[l]||l} ${v[0]} ví dụ + ${v[1]} câu tương tự`).join(" · ")+" — đã chọn lượt này làm nguồn câu."}
 $("#pnc-ai-nhap").onclick=async()=>{
   const v=$("#pnc-ai-dan").value.trim();if(!v){alert("Dán kết quả AI trước.");return}
@@ -2293,7 +2303,8 @@ $("#pnc-ai-api").onclick=async()=>{
   hopThoai("🤖 AI đang soạn phiếu nghiên cứu bài học…","Đang chuẩn bị…");
   let s; for(;;){await new Promise(t=>setTimeout(t,2000));s=await api("/api/trang-thai");$("#ht-noi").textContent=s.nhat_ky||"…";if(s.xong)break}
   await pncSauNhap(s.ket_qua); await tai();};
-["#pnc-tn","#pnc-ds-so","#pnc-tln","#pnc-vd"].forEach(x=>$(x).onchange=pncXem);
+["#pnc-tn","#pnc-ds-so","#pnc-tln","#pnc-tl-so","#pnc-vd"].forEach(x=>$(x).onchange=pncXem);
+document.querySelectorAll("input[name='pnc-che']").forEach(x=>x.onchange=pncChe);
 $("#pnc-vd-dang").onchange=()=>{$("#pnc-vd").disabled=$("#pnc-vd-dang").checked;pncXem()};
 $("#pnc-dang").onchange=pncXem;
 $("#pnc-so-ma").oninput=()=>{if(PNC.chon)$("#pnc-tt").textContent=$("#pnc-tt").textContent.replace(/× \d+ mã/,`× ${+$("#pnc-so-ma").value||1} mã`)};
@@ -2304,7 +2315,7 @@ $("#pnc-tao").onclick=async()=>{
     $("#hop-pnc").style.display="none";
     hopThoai(`Đã tạo: ${r.thu_muc}`,r.nhat_ky+(r.bien_dich?"\nĐang biên dịch PDF…":""),[["Mở thư mục",()=>api("/api/mo",{duong_dan:r.thu_muc}),true]]);
     if(r.bien_dich) theoDoi(r.nhat_ky);}
-  finally{b.disabled=false;b.textContent="🖨 Tạo phiếu · lời giải · Excel UNT"}};
+  finally{b.disabled=false;b.textContent=pncTuLuan()?"🖨 Tạo phiếu tự luận · lời giải":"🖨 Tạo phiếu · lời giải · Excel UNT"}};
 
 // ---------------- SAO LƯU & CHUYỂN MÁY
 function slVe(r){
