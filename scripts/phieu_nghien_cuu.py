@@ -622,6 +622,8 @@ def tao(cfg, in_ra=print, chi_tinh=False):
         them.append(r"\usepackage{anyfontsize}\makeatletter\renewcommand\normalsize{\@setfontsize\normalsize{14}{17}}\normalsize\makeatother")
     mau = mau.replace("\\begin{document}", "\n".join(them) + "\n\\begin{document}", 1)
     mau_goc = mau_tk
+    hai_cot = cfg.get("so_cot_tk", 2) != 1           # bản tiết kiệm / phiếu làm bài: 2 cột (mặc định) hoặc 1 cột
+    cot_mo, cot_dong = ("\n\\begin{multicols}{2}\n", "\n\\end{multicols}\n") if hai_cot else ("\n", "\n")
     if cfg.get("lam_bai"):                          # ✏ phiếu làm bài tiết kiệm: chữ 10, 2 cột, mỗi câu 1 dòng làm bài
         mau_lb = re.sub(r"\\documentclass\[\d+pt,", r"\\documentclass[10pt,", mau_goc, count=1)
         mau_lb = re.sub(r"\\usepackage\[a4paper,[^\]]*\]\{geometry\}",
@@ -675,7 +677,7 @@ def tao(cfg, in_ra=print, chi_tinh=False):
                       + cau_latex(k_vd, l, 0, "mauVD", giai=True, nhan="Ví dụ.") + "\n\\end{vdMau}")
                 hs.append(vd); gv_.append(vd)
                 hs_tk.append(r"\begin{vdMau}{mauVD}{VÍ DỤ " + str(so_vd) + r" — " + thoat(ten_dang(g["dang"])) + "}\n"
-                             + cau_latex(k_vd, l, 0, "mauVD", giai=True, nhan="Ví dụ.", hep=True) + "\n\\end{vdMau}")
+                             + cau_latex(k_vd, l, 0, "mauVD", giai=True, nhan="Ví dụ.", hep=hai_cot) + "\n\\end{vdMau}")
                 if mi == 0:
                     tc_nhom.append({"loai": l, "so_vd": so_vd, "dang": ten_dang(g["dang"]), "vd": k_vd, "tt": []})
                 if not g["tt"]:
@@ -692,7 +694,7 @@ def tao(cfg, in_ra=print, chi_tinh=False):
                         k = xao_tn(k, r_ma) if l == "TN" else xao_ds(k, r_ma) if l == "DS" else k
                     so += 1
                     hs.append(cau_latex(k, l, so, mau_l))
-                    hs_tk.append(cau_latex(k, l, so, mau_l, hep=True) + "\n<<DONG_LAM>>")
+                    hs_tk.append(cau_latex(k, l, so, mau_l, hep=hai_cot) + "\n<<DONG_LAM>>")
                     gv_.append(cau_latex(k, l, so, mau_l, giai=True))
                     if mi == 0:
                         tc_nhom[-1]["tt"].append((so, k))
@@ -719,15 +721,15 @@ def tao(cfg, in_ra=print, chi_tinh=False):
         if cfg.get("tiet_kiem"):
             than_tk = ("\\def\\maDeNC{" + ma + "}\n" + dau("PHIẾU NGHIÊN CỨU BÀI HỌC", ma, True) + "\n"
                        + r"\phanPhieu{I. KIẾN THỨC TRỌNG TÂM}" + "\n" + kien.replace("\\dongKe{7}", "\\dongKe{5}") + "\n"
-                       + r"\phanPhieu{II. THỰC HÀNH THEO MẪU}" + "\n\\begin{multicols}{2}\n" + "\n".join(hs_tk) + "\n\\end{multicols}\n"
+                       + r"\phanPhieu{II. THỰC HÀNH THEO MẪU}" + cot_mo + "\n".join(hs_tk) + cot_dong
                        + (r"\phanPhieu{BẢNG TRẢ LỜI}" + "\n" + bang(False) if cot_unt[ma] else "") + "\n" + het)
             ghi(os.path.join(out, f"De_{ma}_TietKiem.tex"), mau_phieu.gan_bieu_tuong(
                 mau_tk.replace("<<CHE_DO_LOI_GIAI>>", "\\anloigiai").replace("<<NOI_DUNG>>", than_tk.replace("<<DONG_LAM>>", ""))))
         if cfg.get("lam_bai"):
             than_lb = ("\\def\\maDeNC{" + ma + "}\n" + dau("PHIẾU NGHIÊN CỨU BÀI HỌC", ma, True) + "\n"
                        + r"\phanPhieu{I. KIẾN THỨC TRỌNG TÂM}" + "\n" + kien.replace("\\dongKe{7}", "\\dongKe{4}") + "\n"
-                       + r"\phanPhieu{II. THỰC HÀNH THEO MẪU}" + "\n\\begin{multicols}{2}\n" + "\n".join(hs_tk).replace("<<DONG_LAM>>", r"\dongLam")
-                       + "\n\\end{multicols}\n" + (r"\phanPhieu{BẢNG TRẢ LỜI}" + "\n" + bang(False) if cot_unt[ma] else "") + "\n" + het)
+                       + r"\phanPhieu{II. THỰC HÀNH THEO MẪU}" + cot_mo + "\n".join(hs_tk).replace("<<DONG_LAM>>", r"\dongLam")
+                       + cot_dong + (r"\phanPhieu{BẢNG TRẢ LỜI}" + "\n" + bang(False) if cot_unt[ma] else "") + "\n" + het)
             ghi(os.path.join(out, f"De_{ma}_LamBai.tex"), mau_phieu.gan_bieu_tuong(
                 mau_lb.replace("<<CHE_DO_LOI_GIAI>>", "\\anloigiai").replace("<<NOI_DUNG>>", than_lb)))
         ghi(os.path.join(out, f"De_{ma}_LoiGiai.tex"), mau_phieu.gan_bieu_tuong(mau.replace("<<CHE_DO_LOI_GIAI>>", "\\hienthiloigiai").replace("<<NOI_DUNG>>", than_gv)))
@@ -749,9 +751,9 @@ def tao(cfg, in_ra=print, chi_tinh=False):
     if tong_tt:
         in_ra("📊 DapAn_UNT.xlsx — " + str(tong_tt) + " câu × " + str(len(cac_ma)) + " mã đề")
     if cfg.get("lam_bai"):
-        in_ra("✏ Phiếu làm bài tiết kiệm: LamBai_<mã>.pdf (chữ 10, 2 cột, mỗi câu 1 dòng làm bài)")
+        in_ra(f"✏ Phiếu làm bài tiết kiệm: LamBai_<mã>.pdf (chữ 10, {2 if hai_cot else 1} cột, mỗi câu 1 dòng làm bài)")
     if cfg.get("tiet_kiem"):
-        in_ra("📄 Bản in tiết kiệm giấy: TietKiem_<mã>.pdf (chữ 11, phần thực hành 2 cột, ít mực)")
+        in_ra(f"📄 Bản in tiết kiệm giấy: TietKiem_<mã>.pdf (chữ 11, phần thực hành {2 if hai_cot else 1} cột, ít mực)")
     if cfg.get("trinh_chieu"):
         in_ra(f"🖥 Trình chiếu trên lớp: TrinhChieu_{cac_ma[0]}.pdf (16:9 — ví dụ → đáp án → lời giải; câu tự làm theo thứ tự mã {cac_ma[0]})")
     return out_goc

@@ -750,6 +750,7 @@ Một bài học SGK → phiếu nhiều mã đề, đọc rõ trên điện tho
 - **Xuất thêm** (tích sẵn):
   - **📄 Bản in tiết kiệm giấy** `TietKiem_<mã>.pdf`: chữ 11, lề hẹp, phần thực hành chia 2 cột, khung viền mảnh ít tô nền — thường còn khoảng nửa số trang;
   - **✏ Phiếu làm bài tiết kiệm** `LamBai_<mã>.pdf`: chữ 10, lề hẹp, 2 cột, dưới mỗi câu áp dụng có **1 dòng kẻ** để học sinh làm bài ngay trên phiếu;
+  - Ô **Bố cục** chọn **2 cột** (ít giấy nhất) hoặc **1 cột** (dòng làm bài kéo dài hết trang, dễ viết) cho cả hai bản trên;
   - **🖥 PDF trình chiếu trên lớp** `TrinhChieu_<mã đầu>.pdf` (Beamer 16:9, cùng giao diện Phiếu bài học): bìa → lộ trình bài học → kiến thức trọng tâm →
     mỗi phần một màu: slide mở phần → **ví dụ** (đề → bấm tiếp hiện đáp án → lời giải từng bước) → “Áp dụng tương tự” → từng **câu tự làm**
     (đề → đáp án → lời giải để chữa, đúng số câu trên phiếu mã đầu) → tổng kết.

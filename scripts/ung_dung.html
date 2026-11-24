@@ -1012,6 +1012,7 @@ tr.gop-h td{background:#dbeafe;text-align:left;font-weight:700;padding:8px 12px;
         <div class="hang" style="background:#f8fafc;border-radius:9px;padding:6px 8px"><b>Xuất thêm</b>
           <label class="hop" title="Bản phiếu học sinh chữ 11, phần thực hành chia 2 cột, khung viền mảnh ít tô nền — thường còn khoảng một nửa số trang"><input type="checkbox" id="pnc-tk" checked> 📄 Bản in tiết kiệm giấy <small>(chữ 11 · 2 cột · ít mực)</small></label>
           <label class="hop" title="Phiếu học sinh in tiết kiệm: chữ 10, 2 cột, dưới mỗi câu áp dụng có 1 dòng kẻ để học sinh làm bài ngay trên phiếu"><input type="checkbox" id="pnc-lb" checked> ✏ Phiếu làm bài tiết kiệm <small>(chữ 10 · mỗi câu 1 dòng làm bài)</small></label>
+          <label title="Bố cục phần thực hành của bản tiết kiệm và phiếu làm bài">Bố cục <select id="pnc-cot"><option value="2" selected>2 cột (ít giấy nhất)</option><option value="1">1 cột (dòng làm bài dài, dễ viết)</option></select></label>
           <label class="hop" title="Beamer 16:9: bìa, lộ trình, kiến thức trọng tâm, từng phần: ví dụ (đề → bấm hiện đáp án → lời giải) rồi các câu tự làm (đề → đáp án → lời giải để chữa)"><input type="checkbox" id="pnc-tc" checked> 🖥 PDF trình chiếu trên lớp <small>(16:9)</small></label></div>
         <div class="hang"><label>Cỡ chữ <select id="pnc-co"><option value="14|a4" selected>14 — A4, đọc rõ trên điện thoại</option><option value="14|a5">14 — khổ A5 (vừa màn hình điện thoại)</option><option value="12|a4">12 — A4 tiết kiệm giấy</option></select></label>
           <label class="hop"><input type="checkbox" id="pnc-pp"> Kiến thức kèm phương pháp từng dạng</label>
@@ -2237,7 +2238,7 @@ function pncCfg(){const b=PNC.chon,[co,kho]=$("#pnc-co").value.split("|");
   return {bai:b.bai,dang:[...document.querySelectorAll("#pnc-dang input:checked")].map(x=>x.value),
     so:{TN:+$("#pnc-tn").value||0,DS:+$("#pnc-ds-so").value||0,TLN:+$("#pnc-tln").value||0},so_vd:+$("#pnc-vd").value||1,vd_theo_dang:$("#pnc-vd-dang").checked,
     so_ma:+$("#pnc-so-ma").value||1,ma_bat_dau:$("#pnc-ma-dau").value.trim()||"001",co_chu:+co,kho,kem_pp:$("#pnc-pp").checked,
-    tiet_kiem:$("#pnc-tk").checked,lam_bai:$("#pnc-lb").checked,trinh_chieu:$("#pnc-tc").checked,
+    tiet_kiem:$("#pnc-tk").checked,lam_bai:$("#pnc-lb").checked,so_cot_tk:+$("#pnc-cot").value||2,trinh_chieu:$("#pnc-tc").checked,
     giao_vien:$("#pnc-gv").value.trim(),ten:$("#pnc-ten").value.trim(),mau_trinh_bay:document.querySelector('input[name="pnc-mau"]:checked').value,seed:PNC.seed,
     lo:$("#pnc-nguon").value||undefined}}
 async function pncXem(){
