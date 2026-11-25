@@ -232,6 +232,58 @@ LUAT_LOAI_TL = ("Mọi câu là **TỰ LUẬN**: `\\begin{bt}%[mã] … \\loigia
                 "   Đề có thể gồm vài ý nhỏ a), b) (cùng dạng); lời giải trình bày đầy đủ như bài làm mẫu của học sinh giỏi, có kết luận.")
 
 
+# Đối tượng học sinh → cách soạn (prompt AI). Khoá ngắn lưu trong cfg["doi_tuong"] và trong lượt AI.
+DOI_TUONG = {
+    "yeu": {
+        "ten": "Yếu", "vd": "Nhận biết (N)", "tt": "Nhận biết → Thông hiểu nhẹ (N, H); câu đầu gần như giống hệt ví dụ chỉ đổi số",
+        "mo_ta": "Học sinh mất gốc, hổng kiến thức lớp dưới, đọc đề chậm, dễ nản.",
+        "cach": [
+            "Số liệu nhỏ, đẹp (số nguyên, ít phân số, không căn phức tạp); đề ngắn 1–2 câu, một yêu cầu, không bẫy.",
+            "Lời giải ví dụ chia **rất nhỏ** từng bước, mỗi bước một phép tính; viết lại công thức trước khi thay số; nhắc lại kiến thức lớp dưới cần dùng (quy tắc dấu, chuyển vế, rút gọn…).",
+            "Câu tương tự bám sát khuôn ví dụ: chỉ thay số, giữ nguyên cách hỏi; câu sau mới đổi nhẹ một chi tiết.",
+            "Trước lời giải ví dụ có 1 dòng **“Cách làm:”** liệt kê các bước (Bước 1, 2, 3) để học sinh làm theo.",
+            "Kiến thức trọng tâm (nếu soạn) thật ngắn: chỉ công thức cốt lõi + 1 ví dụ số cụ thể, không chứng minh."]},
+    "tb": {
+        "ten": "Trung bình", "vd": "Nhận biết – Thông hiểu (N/H)", "tt": "Thông hiểu là chính (H), 1 câu cuối Vận dụng nhẹ",
+        "mo_ta": "Học sinh nắm được công thức cơ bản nhưng hay sai tính toán, chưa linh hoạt.",
+        "cach": [
+            "Số liệu vừa phải; đề rõ ràng, tránh ngữ cảnh dài.",
+            "Lời giải ví dụ từng bước, nêu lí do mỗi bước; chỉ ra **lỗi sai hay gặp** của dạng ở cuối ví dụ (1 dòng “Lưu ý:”).",
+            "Câu tương tự cùng khuôn, đổi số liệu và đổi nhẹ cách hỏi (hỏi xuôi / hỏi ngược) để học sinh hiểu chứ không chỉ chép."]},
+    "tbk": {
+        "ten": "Trung bình khá", "vd": "Thông hiểu (H)", "tt": "Thông hiểu → Vận dụng (H, V), tăng dần",
+        "mo_ta": "Học sinh làm tốt bài cơ bản, cần luyện để lên mức vận dụng.",
+        "cach": [
+            "Số liệu đa dạng hơn (phân số, căn đơn giản, tham số đơn giản).",
+            "Lời giải ví dụ đầy đủ nhưng gọn; cuối ví dụ có 1 dòng “Lưu ý:” nêu bẫy hay gặp.",
+            "Câu tương tự: nửa đầu cùng khuôn, nửa sau biến đổi (đổi giả thiết, thêm một bước trung gian, bài toán ngược) — vẫn đúng dạng."]},
+    "kg": {
+        "ten": "Khá giỏi", "vd": "Thông hiểu – Vận dụng (H/V)", "tt": "Vận dụng là chính (V), có câu Vận dụng cao (C) cuối nhóm",
+        "mo_ta": "Học sinh vững cơ bản, hướng tới điểm 8–9, cần bài nhiều bước và toán thực tế.",
+        "cach": [
+            "Đề nhiều bước, có tham số, kết hợp kiến thức trước trong chương; ưu tiên có 1 câu toán thực tế mỗi loại nếu dạng cho phép.",
+            "Lời giải ví dụ trình bày như bài mẫu: phân tích hướng giải (1 dòng “Hướng giải:”) rồi lời giải ngắn gọn, chặt chẽ; nêu cách kiểm tra nhanh / mẹo.",
+            "Câu tương tự không chỉ đổi số: đổi cách hỏi, thêm điều kiện, hỏi ngược, cài bẫy hợp lí (Đúng/Sai có ý dễ nhầm)."]},
+    "gioi": {
+        "ten": "Giỏi – nâng cao", "vd": "Vận dụng (V)", "tt": "Vận dụng → Vận dụng cao (V, C)",
+        "mo_ta": "Học sinh giỏi, ôn thi điểm cao / chọn học sinh giỏi, cần tư duy và bài khó.",
+        "cach": [
+            "Đề mức vận dụng – vận dụng cao: tham số, cực trị, bài toán thực tế mô hình hoá, kết hợp nhiều kiến thức; vẫn đúng dạng của nhóm và trong chương trình GDPT 2018.",
+            "Lời giải ví dụ: “Hướng giải:” nêu ý tưởng then chốt, lời giải chặt chẽ, có thể kèm cách giải khác hoặc nhận xét mở rộng (1–2 dòng).",
+            "Câu tương tự khó dần, mỗi câu một biến thể tư duy khác nhau (không lặp khuôn); có thể cài bẫy tinh tế, điều kiện ẩn.",
+            "Kiến thức trọng tâm (nếu soạn) thêm mục “Mở rộng / Kĩ thuật” ngắn gọn."]},
+}
+
+
+def _khoi_doi_tuong(dt):
+    x = DOI_TUONG.get(dt)
+    if not x:
+        return "", "Nhận biết – Thông hiểu", "độ khó bằng hoặc nhỉnh hơn ví dụ một chút"
+    k = (f"\n# ĐỐI TƯỢNG HỌC SINH: **{x['ten'].upper()}**\n{x['mo_ta']} Soạn **vừa sức** đúng đối tượng này:\n"
+         + "\n".join("- " + c for c in x["cach"]) + f"\n- Mức ví dụ minh hoạ: **{x['vd']}**. Mức câu tương tự: **{x['tt']}**.\n")
+    return k, x["vd"], f"mức {x['tt']}"
+
+
 def prompt_ai(cfg, kem_kt=True):
     """Prompt nhờ AI soạn ĐÚNG cấu trúc phiếu: (kiến thức trọng tâm) + từng nhóm ví dụ minh hoạ có lời giải → câu tương tự theo mẫu."""
     import kho_kien_thuc, de_ngoai
@@ -244,6 +296,7 @@ def prompt_ai(cfg, kem_kt=True):
     if not kh:
         raise ValueError("Chưa nhập số câu thực hành.")
     tu_luan = all(l == "TL" for _, l, _, _ in kh)
+    khoi_dt, muc_vd, muc_tt = _khoi_doi_tuong(cfg.get("doi_tuong"))
     lop = x["lop"]
     chung, dm, so_dm = de_ngoai._phan_chung([bai])
     ten = lambda d: (id_map.get(d, {}).get("type_name") or d).strip()
@@ -262,7 +315,7 @@ Bạn là giáo viên Toán lớp {lop} giỏi (chương trình GDPT 2018, sách
 — **Bài {x['so_bai']}. {x['ten_bai']}** ({x['ten_chuong']}) — đính kèm SGK / tài liệu nếu có thì bám sát.
 Phiếu gồm {'kiến thức trọng tâm của bài, sau đó ' if kem_kt else ''}phần thực hành theo mẫu {'**chỉ gồm câu TỰ LUẬN** (học sinh trình bày lời giải đầy đủ)' if tu_luan else 'với 3 loại câu như đề thi 2025'}. Mỗi nhóm:
 **1 VÍ DỤ MINH HOẠ có lời giải thật chi tiết** (học sinh đọc để học cách làm) → **các CÂU TƯƠNG TỰ** để học sinh tự làm theo đúng cách đó.
-
+{khoi_dt}
 **Chỉ soạn các dạng sau** (giáo viên đã chọn) — **mỗi nhóm là MỘT dạng, có ví dụ minh hoạ RIÊNG của dạng đó**; câu thuộc dạng khác
 thì nằm ở nhóm khác với ví dụ khác (vd câu 1–2 dạng A theo ví dụ 1, câu 3–4 dạng B theo ví dụ 2):
 {ds_dang}
@@ -275,9 +328,9 @@ thì nằm ở nhóm khác với ví dụ khác (vd câu 1–2 dạng A theo ví
 Quy tắc từng nhóm:
 1. Mở nhóm bằng một dòng riêng **chép đúng nguyên cột 1** (gồm cả mã dạng, vd `%%% NHOM {kh[0][0]} {kh[0][2]}`).
 2. Câu ĐẦU TIÊN của nhóm là **ví dụ minh hoạ**: dòng mở khối có thêm ` % vai: vi_du`, vd `\\begin{{{'bt' if tu_luan else 'ex'}}}%[mã] % vai: vi_du`.
-   Mức Nhận biết – Thông hiểu, tiêu biểu cho dạng; **lời giải từng bước** (mỗi bước một dòng, nêu rõ công thức / lí do), cuối kết luận {'kết quả' if tu_luan else 'đáp án'}.
+   Mức {muc_vd}, tiêu biểu cho dạng; **lời giải từng bước** (mỗi bước một dòng, nêu rõ công thức / lí do), cuối kết luận {'kết quả' if tu_luan else 'đáp án'}.
 3. Sau đó đúng số **câu tương tự** ở cột 5: **cùng dạng, cùng cách giải** với ví dụ, đổi số liệu / hàm số / ngữ cảnh (không chép lại ví dụ),
-   độ khó bằng hoặc nhỉnh hơn ví dụ một chút, câu sau khó hơn câu trước. Mỗi câu tương tự cũng có lời giải đầy đủ.
+   {muc_tt}, câu sau khó hơn câu trước. Mỗi câu tương tự cũng có lời giải đầy đủ.
 4. {LUAT_LOAI_TL if tu_luan else LUAT_LOAI}
 5. **Ví dụ và MỌI câu tương tự của nhóm đều đúng dạng ở cột 3** (cùng kiểu bài, cùng phương pháp giải) — không lấn sang dạng khác,
    không soạn dạng ngoài danh sách trên. Mã `%[…]` của từng câu là mã dạng của nhóm, thay `?` bằng chữ mức N / H / V / C.
@@ -304,7 +357,7 @@ def lo_ai(bai):
     return list(reversed(_doc_lo().get(bai) or []))
 
 
-def nhap_ai(bai, van_ban, ghi_kt="neu_trong", in_ra=print):
+def nhap_ai(bai, van_ban, ghi_kt="neu_trong", in_ra=print, doi_tuong=None):
     """Kết quả AI → (kiến thức vào kho kiến thức) + câu vào ngân hàng (câu tương tự gắn '% mau: <mã ví dụ>')
     → lưu một 'lượt AI' (đúng nhóm ví dụ → câu tương tự) để tạo phiếu. ghi_kt: neu_trong | ghi_de | khong."""
     import kho_kien_thuc, nhap_cau
@@ -380,7 +433,8 @@ def nhap_ai(bai, van_ban, ghi_kt="neu_trong", in_ra=print):
     ghi(p, "% nguon: AI soạn phiếu nghiên cứu bài học " + bai + "\n\n" + "\n\n".join(van) + "\n")
     bam = {}
     so_moi = nhap_cau.nhap([p], thu=False, in_ra=in_ra, bam_ra=bam)
-    lo = {"id": time.strftime("%Y%m%d%H%M%S"), "luc": time.strftime("%Y-%m-%dT%H:%M"), "nhom": [], "so_moi": so_moi}
+    lo = {"id": time.strftime("%Y%m%d%H%M%S"), "luc": time.strftime("%Y-%m-%dT%H:%M"), "nhom": [], "so_moi": so_moi,
+          "doi_tuong": doi_tuong if doi_tuong in DOI_TUONG else None}
     mat = 0
     for g in cau_truc:
         vd = bam.get(g["vd"])

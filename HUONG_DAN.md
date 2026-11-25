@@ -742,6 +742,10 @@ Một bài học SGK → phiếu nhiều mã đề, đọc rõ trên điện tho
   → **✍ Áp dụng tương tự**: các câu chọn theo mẫu — câu soạn “tương tự theo mẫu” của chính ví dụ đó trước, rồi cùng dạng, mức gần nhất, xếp dễ → khó.
 - Thầy chọn **số câu thực hành** từng loại, **số ví dụ minh hoạ** mỗi loại (nhiều ví dụ: mỗi ví dụ một dạng theo trình tự bài, câu thực hành chia đều),
   dạng dùng làm mẫu, tên phiếu. **🔍 Xem / đổi bộ khác** để xem trước ví dụ và số câu; phiếu tạo ra đúng bộ đang xem.
+- **Đối tượng học sinh** (khung 🤖 Soạn bằng AI): 🌱 Yếu · 📘 Trung bình · 📗 Trung bình khá (mặc định) · 🚀 Khá giỏi · 🏆 Giỏi – nâng cao.
+  Prompt ghi rõ đối tượng và cách soạn vừa sức: mức ví dụ (Yếu: Nhận biết … Giỏi: Vận dụng), mức câu tương tự, độ chi tiết lời giải
+  (Yếu: chia rất nhỏ từng bước + dòng “Cách làm”; Khá giỏi/Giỏi: “Hướng giải”, biến thể tư duy, bẫy hợp lí), số liệu, độ dài đề.
+  Lượt AI nhập vào ghi kèm đối tượng (hiện trong ô *Nguồn câu cho phiếu*).
 - **Chế độ ✍ Chỉ tự luận** (ô *Chế độ* trong khung số câu): phần thực hành chỉ gồm câu **tự luận** — ví dụ minh hoạ có lời giải từng bước →
   câu tương tự cùng dạng, dưới mỗi câu có **dòng kẻ làm bài** (ô *Dòng làm bài mỗi câu*, mặc định 6; 0 = không kẻ). Không có bảng trả lời
   và Excel UNT; `LoiGiai_<mã>.pdf` có lời giải chi tiết; bản tiết kiệm, phiếu làm bài (3 dòng mỗi câu) và trình chiếu vẫn xuất bình thường.

@@ -185,7 +185,7 @@ def pnc_ai_nen(d):
         t, cat, _ = xk.goi(p)
         if cat:
             ghi("  ⚠ AI trả lời bị cắt giữa chừng — câu cuối dở dang sẽ bị bỏ; nên giảm số câu hoặc chạy lại.")
-        r = PNC.nhap_ai(cfg.get("bai") or "", t, d.get("ghi_kt") or "neu_trong", ghi)
+        r = PNC.nhap_ai(cfg.get("bai") or "", t, d.get("ghi_kt") or "neu_trong", ghi, cfg.get("doi_tuong"))
         ra = {"ok": True, "lo": r["lo"], "tom": r["tom"]}
     except Exception as e:
         ghi(f"Lỗi: {e}")
@@ -1314,7 +1314,8 @@ class XuLy(BaseHTTPRequestHandler):
                         return self.gui(200, {"ok": True, "lo": PNC.lo_ai(d.get("bai") or "")})
                     if viec == "nhap":
                         dong = []
-                        r = PNC.nhap_ai(d.get("bai") or "", d.get("van_ban") or "", d.get("ghi_kt") or "neu_trong", dong.append)
+                        r = PNC.nhap_ai(d.get("bai") or "", d.get("van_ban") or "", d.get("ghi_kt") or "neu_trong", dong.append,
+                                        d.get("doi_tuong"))
                         return self.gui(200, {"ok": True, "lo": r["lo"], "tom": r["tom"], "kien_thuc": r["kien_thuc"], "nhat_ky": "\n".join(dong)})
                     if viec == "ai":
                         if cong_viec.get("dang_chay"):
