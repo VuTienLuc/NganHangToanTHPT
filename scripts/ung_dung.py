@@ -193,6 +193,32 @@ def pnc_ai_nen(d):
     cong_viec.update(dang_chay=False, xong=True, ket_qua=ra)
 
 
+def otlt_ai_nen(d):
+    """📚 Ôn thi lý thuyết: gọi AI (vai Soạn đề) theo prompt → trả nguyên văn kết quả để ứng dụng đọc, soát, trộn đề."""
+    def ghi(x):
+        cong_viec["nhat_ky"] += x + "\n"
+    ra = {"ok": False}
+    try:
+        import on_thi_ly_thuyet as OT, hoi_dong_ai as HD
+        vai = HD.phan_vai()
+        if not vai:
+            raise RuntimeError("Chưa có khoá API AI — bấm ⚙ Khoá AI… hoặc dùng 📝 Tạo prompt (chép – dán sang ChatGPT / Gemini / Claude).")
+        p = OT.prompt(d.get("cfg") or {})
+        nha = vai.get("soan")
+        ghi(f"🤖 {HD.ST.TEN_NHA.get(nha, nha)} đang soạn câu hỏi lý thuyết (1–3 phút)…")
+        xk = HD.xoay_cho("soan", nha, ghi=ghi)
+        xk.max_tok = max(xk.max_tok, 16000)
+        t, cat, _ = xk.goi(p)
+        if cat:
+            ghi("  ⚠ AI trả lời bị cắt giữa chừng — câu cuối dở dang sẽ bị bỏ; nên giảm số câu hoặc chạy lại.")
+        ghi("✅ Đã nhận kết quả — đang đọc và soát từng câu.")
+        ra = {"ok": True, "van_ban": t}
+    except Exception as e:
+        ghi(f"Lỗi: {e}")
+    ra["nhat_ky"] = cong_viec["nhat_ky"]
+    cong_viec.update(dang_chay=False, xong=True, ket_qua=ra)
+
+
 def khuon_nen(d):
     """🧬 Song sinh: các câu chỉ định → khuôn (dùng lại / AI viết) → N câu giống + M nâng cao, đã kiểm chứng → nhập kho."""
     def ghi(x):
@@ -1298,6 +1324,22 @@ class XuLy(BaseHTTPRequestHandler):
                             threading.Thread(target=bien_dich_nen, args=(rel,), daemon=True).start()
                         return self.gui(200, {"ok": True, "nhat_ky": "\n".join(dong), "thu_muc": rel, "bien_dich": dang_bd})
                 except Exception as e:
+                    return self.gui(200, {"ok": False, "loi": str(e)})
+                return self.gui(404, {"loi": "không có"})
+            if u.path.startswith("/api/otlt/"):      # 📚 ôn thi học kì — lý thuyết (công thức, định nghĩa, tính chất)
+                import on_thi_ly_thuyet as OT
+                viec = u.path.rsplit("/", 1)[1]
+                try:
+                    if viec == "prompt":
+                        return self.gui(200, {"ok": True, "noi_dung": OT.prompt(d.get("cfg") or {})})
+                    if viec == "ai":
+                        OT.prompt(d.get("cfg") or {})                      # báo lỗi cấu hình ngay
+                        if cong_viec.get("dang_chay"):
+                            return self.gui(200, {"ok": False, "loi": "Đang có việc khác chạy, đợi xong rồi bấm lại."})
+                        cong_viec.update(dang_chay=True, xong=False, nhat_ky="", ket_qua=None)
+                        threading.Thread(target=otlt_ai_nen, args=(dict(d),), daemon=True).start()
+                        return self.gui(200, {"ok": True})
+                except ValueError as e:
                     return self.gui(200, {"ok": False, "loi": str(e)})
                 return self.gui(404, {"loi": "không có"})
             if u.path.startswith("/api/pnc/"):       # 🔬 phiếu nghiên cứu bài học

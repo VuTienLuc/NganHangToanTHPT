@@ -376,6 +376,7 @@ def soan_ma_de(bo, ma_de):
             khoi.append("\\begin{multicols}{2}")
     else:
         khoi.append(f"\\section{{{mt.get('ten_ky_thi', ten)} -- Mã đề {ma_de}}}")
+    mot_phan = bool(mt.get("k12_khong_phan")) and sum(1 for l in CAC_LOAI if bo.get(l)) == 1   # chỉ một phần → không ghi "PHẦN I."
     for loai in CAC_LOAI:
         ds = bo.get(loai) or []
         if not ds:
@@ -385,7 +386,7 @@ def soan_ma_de(bo, ma_de):
         tep = f"{ten}_{ma_de}_{loai}"
         so_la_ma = SO_LA_MA[stt]; stt += 1
         if CHINH_THUC:
-            khoi.append(f"\\phanDe{{\\textbf{{PHẦN {so_la_ma}. {tieu}}} {loi.format(n=len(ds))}}}")
+            khoi.append(f"\\phanDe{{\\textbf{{{'' if mot_phan else f'PHẦN {so_la_ma}. '}{tieu}}} {loi.format(n=len(ds))}}}")
         else:
             khoi.append(f"\\subsection{{Phần {so_la_ma}. {tieu[:-1]}}}\n{loi.format(n=len(ds))}")
         khoi.append(f"\\setcounter{{{ct}}}{{0}}")
@@ -402,7 +403,7 @@ def soan_ma_de(bo, ma_de):
             CAU_THEO_DE.setdefault(ma_de, []).append({"loai": loai, "noi_dung": k, "dap_an": da or "", "muc": c["muc_chuan"]})
         if sf:
             khoi.append(f"\\Closesolutionfile{{{sf}}}")
-            bang.append(f"\\par\\noindent\\textbf{{PHẦN {so_la_ma}.}}\\par\n\\begin{{flushleft}}\n\\input{{{tm}/{tep}}}\n\\end{{flushleft}}")
+            bang.append(("" if mot_phan else f"\\par\\noindent\\textbf{{PHẦN {so_la_ma}.}}\\par\n") + f"\\begin{{flushleft}}\n\\input{{{tm}/{tep}}}\n\\end{{flushleft}}")
     if CHINH_THUC:
         if HAI_COT:
             khoi.append("\\end{multicols}")
@@ -727,9 +728,9 @@ if a.word or a.k12_giu_thu_tu or mt.get("xuat_word_k12"):
         ct_k12 = "svg" if a.word_svg or mt.get("word_cong_thuc") == "svg" else "equation"
         thu_tu_k12 = "goc" if a.k12_giu_thu_tu else (mt.get("k12_thu_tu") or "ma_de")
         if thu_tu_k12 in ("ma_de", "ca_hai"):
-            k12word.xuat(out_goc, cong_thuc=ct_k12)
+            k12word.xuat(out_goc, cong_thuc=ct_k12, khong_phan=bool(mt.get("k12_khong_phan")))
         if thu_tu_k12 in ("goc", "ca_hai"):
-            k12word.xuat(out_goc, cong_thuc=ct_k12, nguon="_k12_cau_goc.json")
+            k12word.xuat(out_goc, cong_thuc=ct_k12, nguon="_k12_cau_goc.json", khong_phan=bool(mt.get("k12_khong_phan")))
     except Exception as e:
         print("  ✗ Không xuất được Word:", e)
 if a.word_de or mt.get("xuat_word_de"):

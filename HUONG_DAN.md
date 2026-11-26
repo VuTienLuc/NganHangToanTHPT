@@ -734,6 +734,16 @@ Dùng khi thầy có một đề kiểm tra, phiếu hoặc bài học ở dạn
   (số mã đề, đảo câu/phương án/ý) xuất PDF đề + lời giải, Word, **DapAn.xlsx** (mẫu Chấm Phiếu AI) và **Beamer** trình chiếu lời giải
   (BeamerTrang / BeamerXanh từng mã đề) vào Thư mục đề.
 
+## 📚 Ôn thi lý thuyết (nút cạnh **Ôn thi học kì**)
+Đề trắc nghiệm 4 phương án **chỉ kiểm tra công thức, định nghĩa, tính chất** để học sinh ghi nhớ công thức giải toán (`scripts/on_thi_ly_thuyet.py`).
+1. Tích **nhiều bài** ở cột trái (đổi tab lớp để chọn bài nhiều lớp); mỗi bài một ô số câu. Chọn tỉ lệ **Nhận biết %** (còn lại Thông hiểu), tên đề, yêu cầu thêm.
+2. **📝 Tạo prompt / 📋 Chép prompt** → dán sang ChatGPT / Gemini / Claude; hoặc **⚡ Nhờ AI soạn luôn (API)**. Prompt yêu cầu:
+   chỉ lý thuyết, chỉ mức N/H, phương án nhiễu là **cách nhớ sai hay gặp** (sai dấu, đảo tử – mẫu, quên điều kiện, nhầm công thức gần giống…),
+   4 phương án cùng hình thức, đáp án rải đều A–D, lời giải có dòng **“Bẫy:”** giải thích từng phương án sai; kèm kiến thức đã lưu của bài (nếu có).
+3. Dán kết quả → **📥 Đọc kết quả**: xem từng câu (đáp án tô xanh, lời giải · bẫy), thống kê mức và phân bố đáp án A/B/C/D, câu lỗi khung đỏ, **🗑 Bỏ câu**.
+4. **🔀 Trộn nhiều mã đề…** → hộp Trộn đề (Word K12Online tích sẵn): PDF đề + lời giải từng mã, đáp án Excel (+UNT), Word K12Online
+   **chỉ đánh số Câu 1, 2, …** — không ghi “Phần I:” (đề chỉ một phần; PDF cũng bỏ chữ “PHẦN I.”). Hoặc **📥 Nhập vào ngân hàng** / **💾 Lưu file .tex**.
+
 ## 🔬 Phiếu nghiên cứu bài học (menu **Dạy học**)
 Một bài học SGK → phiếu nhiều mã đề, đọc rõ trên điện thoại.
 - Chọn lớp → chọn **bài** ở cột trái (mỗi bài hiện số câu TN / Đ-S / TLN có trong kho và đã có kiến thức trọng tâm chưa).

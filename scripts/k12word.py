@@ -599,8 +599,9 @@ def dap_so_tln(q, da):
     v = (q["tln"] or da or "").replace("$", "").replace("{,}", ",").replace("\\,", "").replace(" ", "").replace(".", ",")
     return v.replace("−", "-").replace("–", "-")
 
-def xuat(thu_muc_de, in_ra=print, cong_thuc="equation", nguon="_k12_cau.json"):
-    """cong_thuc = "equation" (Equation của Word) hoặc "svg" (ảnh SVG sắc nét, hạ đúng baseline → thẳng dòng)."""
+def xuat(thu_muc_de, in_ra=print, cong_thuc="equation", nguon="_k12_cau.json", khong_phan=False):
+    """cong_thuc = "equation" (Equation của Word) hoặc "svg" (ảnh SVG sắc nét, hạ đúng baseline → thẳng dòng).
+    khong_phan: đề chỉ có MỘT loại câu (vd ôn lý thuyết chỉ trắc nghiệm) → không ghi "Phần I:" + lời dẫn, chỉ đánh số Câu 1, 2, …"""
     tex = os.path.join(thu_muc_de, "tex")
     du_lieu = json.load(open(os.path.join(tex, nguon), encoding="utf-8"))
     manh, cau_tach = {}, {}
@@ -626,12 +627,14 @@ def xuat(thu_muc_de, in_ra=print, cong_thuc="equation", nguon="_k12_cau.json"):
     B, BU = ("b",), ("b", "u")
     for ma_de, ds in du_lieu.items():
         doc = Docx()
+        bo_phan = khong_phan and len({c["loai"] for c in ds}) == 1
         for loai, ten_phan, gioi_thieu in PHAN_K12:
             cac = [(i, c) for i, c in enumerate(ds) if c["loai"] == loai]
             if not cac:
                 continue
-            doc.doan(Docx.chu(ten_phan, B))
-            doc.doan(Docx.chu(gioi_thieu.format(n=len(cac))))
+            if not bo_phan:
+                doc.doan(Docx.chu(ten_phan, B))
+                doc.doan(Docx.chu(gioi_thieu.format(n=len(cac))))
             for so, (i, c) in enumerate(cac, 1):
                 q, da = cau_tach[(ma_de, i)], c.get("dap_an") or ""
                 ghi_cac_doan(doc, q["de"], anh, Docx.chu(f"Câu {so}:", B) + Docx.chu(" "))
